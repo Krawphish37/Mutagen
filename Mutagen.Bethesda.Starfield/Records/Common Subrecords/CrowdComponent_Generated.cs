@@ -54,21 +54,15 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region CDND
-        public Single? CDND { get; set; }
+        #region Density
+        public Single? Density { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Single? ICrowdComponentGetter.CDND => this.CDND;
+        Single? ICrowdComponentGetter.Density => this.Density;
         #endregion
-        #region CDNS
+        #region PopulationCount
+        public UInt32? PopulationCount { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _CDNS;
-        public MemorySlice<Byte>? CDNS
-        {
-            get => this._CDNS;
-            set => this._CDNS = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ICrowdComponentGetter.CDNS => this.CDNS;
+        UInt32? ICrowdComponentGetter.PopulationCount => this.PopulationCount;
         #endregion
         #region Items
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -125,19 +119,19 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             : base(initialValue)
             {
-                this.CDND = initialValue;
-                this.CDNS = initialValue;
+                this.Density = initialValue;
+                this.PopulationCount = initialValue;
                 this.Items = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CrowdComponentItem.Mask<TItem>?>>?>(initialValue, []);
             }
 
             public Mask(
-                TItem CDND,
-                TItem CDNS,
+                TItem Density,
+                TItem PopulationCount,
                 TItem Items)
             : base()
             {
-                this.CDND = CDND;
-                this.CDNS = CDNS;
+                this.Density = Density;
+                this.PopulationCount = PopulationCount;
                 this.Items = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CrowdComponentItem.Mask<TItem>?>>?>(Items, []);
             }
 
@@ -150,8 +144,8 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem CDND;
-            public TItem CDNS;
+            public TItem Density;
+            public TItem PopulationCount;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CrowdComponentItem.Mask<TItem>?>>?>? Items;
             #endregion
 
@@ -166,16 +160,16 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.CDND, rhs.CDND)) return false;
-                if (!object.Equals(this.CDNS, rhs.CDNS)) return false;
+                if (!object.Equals(this.Density, rhs.Density)) return false;
+                if (!object.Equals(this.PopulationCount, rhs.PopulationCount)) return false;
                 if (!object.Equals(this.Items, rhs.Items)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.CDND);
-                hash.Add(this.CDNS);
+                hash.Add(this.Density);
+                hash.Add(this.PopulationCount);
                 hash.Add(this.Items);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
@@ -187,8 +181,8 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (!eval(this.CDND)) return false;
-                if (!eval(this.CDNS)) return false;
+                if (!eval(this.Density)) return false;
+                if (!eval(this.PopulationCount)) return false;
                 if (this.Items != null)
                 {
                     if (!eval(this.Items.Overall)) return false;
@@ -209,8 +203,8 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (eval(this.CDND)) return true;
-                if (eval(this.CDNS)) return true;
+                if (eval(this.Density)) return true;
+                if (eval(this.PopulationCount)) return true;
                 if (this.Items != null)
                 {
                     if (eval(this.Items.Overall)) return true;
@@ -238,8 +232,8 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                obj.CDND = eval(this.CDND);
-                obj.CDNS = eval(this.CDNS);
+                obj.Density = eval(this.Density);
+                obj.PopulationCount = eval(this.PopulationCount);
                 if (Items != null)
                 {
                     obj.Items = new MaskItem<R, IEnumerable<MaskItemIndexed<R, CrowdComponentItem.Mask<R>?>>?>(eval(this.Items.Overall), []);
@@ -273,13 +267,13 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(CrowdComponent.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.CDND ?? true)
+                    if (printMask?.Density ?? true)
                     {
-                        sb.AppendItem(CDND, "CDND");
+                        sb.AppendItem(Density, "Density");
                     }
-                    if (printMask?.CDNS ?? true)
+                    if (printMask?.PopulationCount ?? true)
                     {
-                        sb.AppendItem(CDNS, "CDNS");
+                        sb.AppendItem(PopulationCount, "PopulationCount");
                     }
                     if ((printMask?.Items?.Overall ?? true)
                         && Items is {} ItemsItem)
@@ -311,8 +305,8 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
-            public Exception? CDND;
-            public Exception? CDNS;
+            public Exception? Density;
+            public Exception? PopulationCount;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CrowdComponentItem.ErrorMask?>>?>? Items;
             #endregion
 
@@ -322,10 +316,10 @@ namespace Mutagen.Bethesda.Starfield
                 CrowdComponent_FieldIndex enu = (CrowdComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case CrowdComponent_FieldIndex.CDND:
-                        return CDND;
-                    case CrowdComponent_FieldIndex.CDNS:
-                        return CDNS;
+                    case CrowdComponent_FieldIndex.Density:
+                        return Density;
+                    case CrowdComponent_FieldIndex.PopulationCount:
+                        return PopulationCount;
                     case CrowdComponent_FieldIndex.Items:
                         return Items;
                     default:
@@ -338,11 +332,11 @@ namespace Mutagen.Bethesda.Starfield
                 CrowdComponent_FieldIndex enu = (CrowdComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case CrowdComponent_FieldIndex.CDND:
-                        this.CDND = ex;
+                    case CrowdComponent_FieldIndex.Density:
+                        this.Density = ex;
                         break;
-                    case CrowdComponent_FieldIndex.CDNS:
-                        this.CDNS = ex;
+                    case CrowdComponent_FieldIndex.PopulationCount:
+                        this.PopulationCount = ex;
                         break;
                     case CrowdComponent_FieldIndex.Items:
                         this.Items = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CrowdComponentItem.ErrorMask?>>?>(ex, null);
@@ -358,11 +352,11 @@ namespace Mutagen.Bethesda.Starfield
                 CrowdComponent_FieldIndex enu = (CrowdComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case CrowdComponent_FieldIndex.CDND:
-                        this.CDND = (Exception?)obj;
+                    case CrowdComponent_FieldIndex.Density:
+                        this.Density = (Exception?)obj;
                         break;
-                    case CrowdComponent_FieldIndex.CDNS:
-                        this.CDNS = (Exception?)obj;
+                    case CrowdComponent_FieldIndex.PopulationCount:
+                        this.PopulationCount = (Exception?)obj;
                         break;
                     case CrowdComponent_FieldIndex.Items:
                         this.Items = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CrowdComponentItem.ErrorMask?>>?>)obj;
@@ -376,8 +370,8 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (CDND != null) return true;
-                if (CDNS != null) return true;
+                if (Density != null) return true;
+                if (PopulationCount != null) return true;
                 if (Items != null) return true;
                 return false;
             }
@@ -406,10 +400,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.PrintFillInternal(sb);
                 {
-                    sb.AppendItem(CDND, "CDND");
+                    sb.AppendItem(Density, "Density");
                 }
                 {
-                    sb.AppendItem(CDNS, "CDNS");
+                    sb.AppendItem(PopulationCount, "PopulationCount");
                 }
                 if (Items is {} ItemsItem)
                 {
@@ -437,8 +431,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.CDND = this.CDND.Combine(rhs.CDND);
-                ret.CDNS = this.CDNS.Combine(rhs.CDNS);
+                ret.Density = this.Density.Combine(rhs.Density);
+                ret.PopulationCount = this.PopulationCount.Combine(rhs.PopulationCount);
                 ret.Items = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CrowdComponentItem.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Items?.Overall, rhs.Items?.Overall), Noggog.ExceptionExt.Combine(this.Items?.Specific, rhs.Items?.Specific));
                 return ret;
             }
@@ -462,8 +456,8 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
-            public bool CDND;
-            public bool CDNS;
+            public bool Density;
+            public bool PopulationCount;
             public CrowdComponentItem.TranslationMask? Items;
             #endregion
 
@@ -473,8 +467,8 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.CDND = defaultOn;
-                this.CDNS = defaultOn;
+                this.Density = defaultOn;
+                this.PopulationCount = defaultOn;
             }
 
             #endregion
@@ -482,8 +476,8 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((CDND, null));
-                ret.Add((CDNS, null));
+                ret.Add((Density, null));
+                ret.Add((PopulationCount, null));
                 ret.Add((Items == null ? DefaultOn : !Items.GetCrystal().CopyNothing, Items?.GetCrystal()));
             }
 
@@ -562,8 +556,8 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkContainer,
         ILoquiObjectSetter<ICrowdComponent>
     {
-        new Single? CDND { get; set; }
-        new MemorySlice<Byte>? CDNS { get; set; }
+        new Single? Density { get; set; }
+        new UInt32? PopulationCount { get; set; }
         new ExtendedList<CrowdComponentItem> Items { get; }
     }
 
@@ -574,8 +568,8 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObject<ICrowdComponentGetter>
     {
         static new ILoquiRegistration StaticRegistration => CrowdComponent_Registration.Instance;
-        Single? CDND { get; }
-        ReadOnlyMemorySlice<Byte>? CDNS { get; }
+        Single? Density { get; }
+        UInt32? PopulationCount { get; }
         IReadOnlyList<ICrowdComponentItemGetter> Items { get; }
 
     }
@@ -721,8 +715,8 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum CrowdComponent_FieldIndex
     {
-        CDND = 0,
-        CDNS = 1,
+        Density = 0,
+        PopulationCount = 1,
         Items = 2,
     }
     #endregion
@@ -822,8 +816,8 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(ICrowdComponent item)
         {
             ClearPartial();
-            item.CDND = default;
-            item.CDNS = default;
+            item.Density = default;
+            item.PopulationCount = default;
             item.Items.Clear();
             base.Clear(item);
         }
@@ -893,8 +887,8 @@ namespace Mutagen.Bethesda.Starfield
             CrowdComponent.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.CDND = item.CDND.EqualsWithin(rhs.CDND);
-            ret.CDNS = MemorySliceExt.SequenceEqual(item.CDNS, rhs.CDNS);
+            ret.Density = item.Density.EqualsWithin(rhs.Density);
+            ret.PopulationCount = item.PopulationCount == rhs.PopulationCount;
             ret.Items = item.Items.CollectionEqualsHelper(
                 rhs.Items,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -948,15 +942,15 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if ((printMask?.CDND ?? true)
-                && item.CDND is {} CDNDItem)
+            if ((printMask?.Density ?? true)
+                && item.Density is {} DensityItem)
             {
-                sb.AppendItem(CDNDItem, "CDND");
+                sb.AppendItem(DensityItem, "Density");
             }
-            if ((printMask?.CDNS ?? true)
-                && item.CDNS is {} CDNSItem)
+            if ((printMask?.PopulationCount ?? true)
+                && item.PopulationCount is {} PopulationCountItem)
             {
-                sb.AppendLine($"CDNS => {SpanExt.ToHexString(CDNSItem)}");
+                sb.AppendItem(PopulationCountItem, "PopulationCount");
             }
             if (printMask?.Items?.Overall ?? true)
             {
@@ -991,13 +985,13 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IAComponentGetter)lhs, (IAComponentGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)CrowdComponent_FieldIndex.CDND) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CrowdComponent_FieldIndex.Density) ?? true))
             {
-                if (!lhs.CDND.EqualsWithin(rhs.CDND)) return false;
+                if (!lhs.Density.EqualsWithin(rhs.Density)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CrowdComponent_FieldIndex.CDNS) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CrowdComponent_FieldIndex.PopulationCount) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.CDNS, rhs.CDNS)) return false;
+                if (lhs.PopulationCount != rhs.PopulationCount) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)CrowdComponent_FieldIndex.Items) ?? true))
             {
@@ -1020,13 +1014,13 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ICrowdComponentGetter item)
         {
             var hash = new HashCode();
-            if (item.CDND is {} CDNDitem)
+            if (item.Density is {} Densityitem)
             {
-                hash.Add(CDNDitem);
+                hash.Add(Densityitem);
             }
-            if (item.CDNS is {} CDNSItem)
+            if (item.PopulationCount is {} PopulationCountitem)
             {
-                hash.AddBytes(CDNSItem);
+                hash.Add(PopulationCountitem);
             }
             foreach (var subItem in item.Items)
             {
@@ -1084,20 +1078,13 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)CrowdComponent_FieldIndex.CDND) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CrowdComponent_FieldIndex.Density) ?? true))
             {
-                item.CDND = rhs.CDND;
+                item.Density = rhs.Density;
             }
-            if ((copyMask?.GetShouldTranslate((int)CrowdComponent_FieldIndex.CDNS) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CrowdComponent_FieldIndex.PopulationCount) ?? true))
             {
-                if(rhs.CDNS is {} CDNSrhs)
-                {
-                    item.CDNS = CDNSrhs.ToArray();
-                }
-                else
-                {
-                    item.CDNS = default;
-                }
+                item.PopulationCount = rhs.PopulationCount;
             }
             if ((copyMask?.GetShouldTranslate((int)CrowdComponent_FieldIndex.Items) ?? true))
             {
@@ -1250,11 +1237,11 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.CDND,
+                item: item.Density,
                 header: translationParams.ConvertToCustom(RecordTypes.CDND));
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.CDNS,
+                item: item.PopulationCount,
                 header: translationParams.ConvertToCustom(RecordTypes.CDNS));
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ICrowdComponentItemGetter>.Instance.Write(
                 writer: writer,
@@ -1324,14 +1311,14 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.CDND:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.CDND = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)CrowdComponent_FieldIndex.CDND;
+                    item.Density = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    return (int)CrowdComponent_FieldIndex.Density;
                 }
                 case RecordTypeInts.CDNS:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.CDNS = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)CrowdComponent_FieldIndex.CDNS;
+                    item.PopulationCount = frame.ReadUInt32();
+                    return (int)CrowdComponent_FieldIndex.PopulationCount;
                 }
                 case RecordTypeInts.PRPS:
                 case RecordTypeInts.CTDA:
@@ -1404,13 +1391,13 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        #region CDND
-        private int? _CDNDLocation;
-        public Single? CDND => _CDNDLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _CDNDLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
+        #region Density
+        private int? _DensityLocation;
+        public Single? Density => _DensityLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DensityLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
         #endregion
-        #region CDNS
-        private int? _CDNSLocation;
-        public ReadOnlyMemorySlice<Byte>? CDNS => _CDNSLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _CDNSLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region PopulationCount
+        private int? _PopulationCountLocation;
+        public UInt32? PopulationCount => _PopulationCountLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _PopulationCountLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
         #endregion
         public IReadOnlyList<ICrowdComponentItemGetter> Items { get; private set; } = [];
         partial void CustomFactoryEnd(
@@ -1478,13 +1465,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.CDND:
                 {
-                    _CDNDLocation = (stream.Position - offset);
-                    return (int)CrowdComponent_FieldIndex.CDND;
+                    _DensityLocation = (stream.Position - offset);
+                    return (int)CrowdComponent_FieldIndex.Density;
                 }
                 case RecordTypeInts.CDNS:
                 {
-                    _CDNSLocation = (stream.Position - offset);
-                    return (int)CrowdComponent_FieldIndex.CDNS;
+                    _PopulationCountLocation = (stream.Position - offset);
+                    return (int)CrowdComponent_FieldIndex.PopulationCount;
                 }
                 case RecordTypeInts.PRPS:
                 case RecordTypeInts.CTDA:

@@ -73,10 +73,8 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         String? IAnimationGraphComponentGetter.ResponseFile => this.ResponseFile;
         #endregion
-        #region ENAM
-        public String? ENAM { get; set; }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? IAnimationGraphComponentGetter.ENAM => this.ENAM;
+        #region ControlsBaseSkeleton
+        public Boolean ControlsBaseSkeleton { get; set; } = default(Boolean);
         #endregion
 
         #region To String
@@ -123,7 +121,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.RigFile = initialValue;
                 this.AnimationsPath = initialValue;
                 this.ResponseFile = initialValue;
-                this.ENAM = initialValue;
+                this.ControlsBaseSkeleton = initialValue;
             }
 
             public Mask(
@@ -131,14 +129,14 @@ namespace Mutagen.Bethesda.Starfield
                 TItem RigFile,
                 TItem AnimationsPath,
                 TItem ResponseFile,
-                TItem ENAM)
+                TItem ControlsBaseSkeleton)
             : base()
             {
                 this.RootAnimationGraph = RootAnimationGraph;
                 this.RigFile = RigFile;
                 this.AnimationsPath = AnimationsPath;
                 this.ResponseFile = ResponseFile;
-                this.ENAM = ENAM;
+                this.ControlsBaseSkeleton = ControlsBaseSkeleton;
             }
 
             #pragma warning disable CS8618
@@ -154,7 +152,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem RigFile;
             public TItem AnimationsPath;
             public TItem ResponseFile;
-            public TItem ENAM;
+            public TItem ControlsBaseSkeleton;
             #endregion
 
             #region Equals
@@ -172,7 +170,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.RigFile, rhs.RigFile)) return false;
                 if (!object.Equals(this.AnimationsPath, rhs.AnimationsPath)) return false;
                 if (!object.Equals(this.ResponseFile, rhs.ResponseFile)) return false;
-                if (!object.Equals(this.ENAM, rhs.ENAM)) return false;
+                if (!object.Equals(this.ControlsBaseSkeleton, rhs.ControlsBaseSkeleton)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -182,7 +180,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.RigFile);
                 hash.Add(this.AnimationsPath);
                 hash.Add(this.ResponseFile);
-                hash.Add(this.ENAM);
+                hash.Add(this.ControlsBaseSkeleton);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -197,7 +195,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.RigFile)) return false;
                 if (!eval(this.AnimationsPath)) return false;
                 if (!eval(this.ResponseFile)) return false;
-                if (!eval(this.ENAM)) return false;
+                if (!eval(this.ControlsBaseSkeleton)) return false;
                 return true;
             }
             #endregion
@@ -210,7 +208,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.RigFile)) return true;
                 if (eval(this.AnimationsPath)) return true;
                 if (eval(this.ResponseFile)) return true;
-                if (eval(this.ENAM)) return true;
+                if (eval(this.ControlsBaseSkeleton)) return true;
                 return false;
             }
             #endregion
@@ -230,7 +228,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.RigFile = eval(this.RigFile);
                 obj.AnimationsPath = eval(this.AnimationsPath);
                 obj.ResponseFile = eval(this.ResponseFile);
-                obj.ENAM = eval(this.ENAM);
+                obj.ControlsBaseSkeleton = eval(this.ControlsBaseSkeleton);
             }
             #endregion
 
@@ -265,9 +263,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(ResponseFile, "ResponseFile");
                     }
-                    if (printMask?.ENAM ?? true)
+                    if (printMask?.ControlsBaseSkeleton ?? true)
                     {
-                        sb.AppendItem(ENAM, "ENAM");
+                        sb.AppendItem(ControlsBaseSkeleton, "ControlsBaseSkeleton");
                     }
                 }
             }
@@ -284,7 +282,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? RigFile;
             public Exception? AnimationsPath;
             public Exception? ResponseFile;
-            public Exception? ENAM;
+            public Exception? ControlsBaseSkeleton;
             #endregion
 
             #region IErrorMask
@@ -301,8 +299,8 @@ namespace Mutagen.Bethesda.Starfield
                         return AnimationsPath;
                     case AnimationGraphComponent_FieldIndex.ResponseFile:
                         return ResponseFile;
-                    case AnimationGraphComponent_FieldIndex.ENAM:
-                        return ENAM;
+                    case AnimationGraphComponent_FieldIndex.ControlsBaseSkeleton:
+                        return ControlsBaseSkeleton;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -325,8 +323,8 @@ namespace Mutagen.Bethesda.Starfield
                     case AnimationGraphComponent_FieldIndex.ResponseFile:
                         this.ResponseFile = ex;
                         break;
-                    case AnimationGraphComponent_FieldIndex.ENAM:
-                        this.ENAM = ex;
+                    case AnimationGraphComponent_FieldIndex.ControlsBaseSkeleton:
+                        this.ControlsBaseSkeleton = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -351,8 +349,8 @@ namespace Mutagen.Bethesda.Starfield
                     case AnimationGraphComponent_FieldIndex.ResponseFile:
                         this.ResponseFile = (Exception?)obj;
                         break;
-                    case AnimationGraphComponent_FieldIndex.ENAM:
-                        this.ENAM = (Exception?)obj;
+                    case AnimationGraphComponent_FieldIndex.ControlsBaseSkeleton:
+                        this.ControlsBaseSkeleton = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -367,7 +365,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (RigFile != null) return true;
                 if (AnimationsPath != null) return true;
                 if (ResponseFile != null) return true;
-                if (ENAM != null) return true;
+                if (ControlsBaseSkeleton != null) return true;
                 return false;
             }
             #endregion
@@ -407,7 +405,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(ResponseFile, "ResponseFile");
                 }
                 {
-                    sb.AppendItem(ENAM, "ENAM");
+                    sb.AppendItem(ControlsBaseSkeleton, "ControlsBaseSkeleton");
                 }
             }
             #endregion
@@ -421,7 +419,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.RigFile = this.RigFile.Combine(rhs.RigFile);
                 ret.AnimationsPath = this.AnimationsPath.Combine(rhs.AnimationsPath);
                 ret.ResponseFile = this.ResponseFile.Combine(rhs.ResponseFile);
-                ret.ENAM = this.ENAM.Combine(rhs.ENAM);
+                ret.ControlsBaseSkeleton = this.ControlsBaseSkeleton.Combine(rhs.ControlsBaseSkeleton);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -448,7 +446,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool RigFile;
             public bool AnimationsPath;
             public bool ResponseFile;
-            public bool ENAM;
+            public bool ControlsBaseSkeleton;
             #endregion
 
             #region Ctors
@@ -461,7 +459,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.RigFile = defaultOn;
                 this.AnimationsPath = defaultOn;
                 this.ResponseFile = defaultOn;
-                this.ENAM = defaultOn;
+                this.ControlsBaseSkeleton = defaultOn;
             }
 
             #endregion
@@ -473,7 +471,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((RigFile, null));
                 ret.Add((AnimationsPath, null));
                 ret.Add((ResponseFile, null));
-                ret.Add((ENAM, null));
+                ret.Add((ControlsBaseSkeleton, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -549,7 +547,7 @@ namespace Mutagen.Bethesda.Starfield
         new String? RigFile { get; set; }
         new String? AnimationsPath { get; set; }
         new String? ResponseFile { get; set; }
-        new String? ENAM { get; set; }
+        new Boolean ControlsBaseSkeleton { get; set; }
     }
 
     public partial interface IAnimationGraphComponentGetter :
@@ -562,7 +560,7 @@ namespace Mutagen.Bethesda.Starfield
         String? RigFile { get; }
         String? AnimationsPath { get; }
         String? ResponseFile { get; }
-        String? ENAM { get; }
+        Boolean ControlsBaseSkeleton { get; }
 
     }
 
@@ -711,7 +709,7 @@ namespace Mutagen.Bethesda.Starfield
         RigFile = 1,
         AnimationsPath = 2,
         ResponseFile = 3,
-        ENAM = 4,
+        ControlsBaseSkeleton = 4,
     }
     #endregion
 
@@ -810,7 +808,7 @@ namespace Mutagen.Bethesda.Starfield
             item.RigFile = default;
             item.AnimationsPath = default;
             item.ResponseFile = default;
-            item.ENAM = default;
+            item.ControlsBaseSkeleton = default(Boolean);
             base.Clear(item);
         }
         
@@ -882,7 +880,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.RigFile = string.Equals(item.RigFile, rhs.RigFile);
             ret.AnimationsPath = string.Equals(item.AnimationsPath, rhs.AnimationsPath);
             ret.ResponseFile = string.Equals(item.ResponseFile, rhs.ResponseFile);
-            ret.ENAM = string.Equals(item.ENAM, rhs.ENAM);
+            ret.ControlsBaseSkeleton = item.ControlsBaseSkeleton == rhs.ControlsBaseSkeleton;
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -952,10 +950,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(ResponseFileItem, "ResponseFile");
             }
-            if ((printMask?.ENAM ?? true)
-                && item.ENAM is {} ENAMItem)
+            if (printMask?.ControlsBaseSkeleton ?? true)
             {
-                sb.AppendItem(ENAMItem, "ENAM");
+                sb.AppendItem(item.ControlsBaseSkeleton, "ControlsBaseSkeleton");
             }
         }
         
@@ -992,9 +989,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!string.Equals(lhs.ResponseFile, rhs.ResponseFile)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.ENAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.ControlsBaseSkeleton) ?? true))
             {
-                if (!string.Equals(lhs.ENAM, rhs.ENAM)) return false;
+                if (lhs.ControlsBaseSkeleton != rhs.ControlsBaseSkeleton) return false;
             }
             return true;
         }
@@ -1029,10 +1026,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(ResponseFileitem);
             }
-            if (item.ENAM is {} ENAMitem)
-            {
-                hash.Add(ENAMitem);
-            }
+            hash.Add(item.ControlsBaseSkeleton);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -1097,9 +1091,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ResponseFile = rhs.ResponseFile;
             }
-            if ((copyMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.ENAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)AnimationGraphComponent_FieldIndex.ControlsBaseSkeleton) ?? true))
             {
-                item.ENAM = rhs.ENAM;
+                item.ControlsBaseSkeleton = rhs.ControlsBaseSkeleton;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1246,11 +1240,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.ResponseFile,
                 header: translationParams.ConvertToCustom(RecordTypes.DNAM),
                 binaryType: StringBinaryType.NullTerminate);
-            StringBinaryTranslation.Instance.WriteNullable(
+            BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
-                item: item.ENAM,
-                header: translationParams.ConvertToCustom(RecordTypes.ENAM),
-                binaryType: StringBinaryType.NullTerminateIfNotEmpty);
+                item: item.ControlsBaseSkeleton,
+                header: translationParams.ConvertToCustom(RecordTypes.ENAM));
         }
 
         public void Write(
@@ -1343,12 +1336,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.ENAM:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.ENAM = StringBinaryTranslation.Instance.Parse(
-                        reader: frame.SpawnWithLength(contentLength),
-                        stringBinaryType: StringBinaryType.NullTerminateIfNotEmpty,
-                        parseWhole: true);
-                    return (int)AnimationGraphComponent_FieldIndex.ENAM;
+                    item.ControlsBaseSkeleton = true;
+                    return (int)AnimationGraphComponent_FieldIndex.ControlsBaseSkeleton;
                 }
                 default:
                     return AComponentBinaryCreateTranslation.FillBinaryRecordTypes(
@@ -1422,9 +1411,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _ResponseFileLocation;
         public String? ResponseFile => _ResponseFileLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ResponseFileLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
-        #region ENAM
-        private int? _ENAMLocation;
-        public String? ENAM => _ENAMLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ENAMLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        #region ControlsBaseSkeleton
+        private int? _ControlsBaseSkeletonLocation;
+        public Boolean ControlsBaseSkeleton => _ControlsBaseSkeletonLocation.HasValue ? true : default(Boolean);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1511,8 +1500,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.ENAM:
                 {
-                    _ENAMLocation = (stream.Position - offset);
-                    return (int)AnimationGraphComponent_FieldIndex.ENAM;
+                    _ControlsBaseSkeletonLocation = (stream.Position - offset);
+                    return (int)AnimationGraphComponent_FieldIndex.ControlsBaseSkeleton;
                 }
                 default:
                     return base.FillRecordType(

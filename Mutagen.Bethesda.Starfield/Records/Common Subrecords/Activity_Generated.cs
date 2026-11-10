@@ -55,8 +55,8 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region ATAN
-        public String ATAN { get; set; } = string.Empty;
+        #region ActivityType
+        public String ActivityType { get; set; } = string.Empty;
         #endregion
         #region Name
         /// <summary>
@@ -157,7 +157,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.ATAN = initialValue;
+                this.ActivityType = initialValue;
                 this.Name = initialValue;
                 this.Description = initialValue;
                 this.ProgressionEvalutor = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ProgressionEvaluatorArgument.Mask<TItem>?>>?>(initialValue, []);
@@ -166,14 +166,14 @@ namespace Mutagen.Bethesda.Starfield
             }
 
             public Mask(
-                TItem ATAN,
+                TItem ActivityType,
                 TItem Name,
                 TItem Description,
                 TItem ProgressionEvalutor,
                 TItem ANAM,
                 TItem Configuration)
             {
-                this.ATAN = ATAN;
+                this.ActivityType = ActivityType;
                 this.Name = Name;
                 this.Description = Description;
                 this.ProgressionEvalutor = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ProgressionEvaluatorArgument.Mask<TItem>?>>?>(ProgressionEvalutor, []);
@@ -190,7 +190,7 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem ATAN;
+            public TItem ActivityType;
             public TItem Name;
             public TItem Description;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ProgressionEvaluatorArgument.Mask<TItem>?>>?>? ProgressionEvalutor;
@@ -208,7 +208,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.ATAN, rhs.ATAN)) return false;
+                if (!object.Equals(this.ActivityType, rhs.ActivityType)) return false;
                 if (!object.Equals(this.Name, rhs.Name)) return false;
                 if (!object.Equals(this.Description, rhs.Description)) return false;
                 if (!object.Equals(this.ProgressionEvalutor, rhs.ProgressionEvalutor)) return false;
@@ -219,7 +219,7 @@ namespace Mutagen.Bethesda.Starfield
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.ATAN);
+                hash.Add(this.ActivityType);
                 hash.Add(this.Name);
                 hash.Add(this.Description);
                 hash.Add(this.ProgressionEvalutor);
@@ -233,7 +233,7 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.ATAN)) return false;
+                if (!eval(this.ActivityType)) return false;
                 if (!eval(this.Name)) return false;
                 if (!eval(this.Description)) return false;
                 if (this.ProgressionEvalutor != null)
@@ -257,7 +257,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.ATAN)) return true;
+                if (eval(this.ActivityType)) return true;
                 if (eval(this.Name)) return true;
                 if (eval(this.Description)) return true;
                 if (this.ProgressionEvalutor != null)
@@ -288,7 +288,7 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.ATAN = eval(this.ATAN);
+                obj.ActivityType = eval(this.ActivityType);
                 obj.Name = eval(this.Name);
                 obj.Description = eval(this.Description);
                 if (ProgressionEvalutor != null)
@@ -326,9 +326,9 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(Activity.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.ATAN ?? true)
+                    if (printMask?.ActivityType ?? true)
                     {
-                        sb.AppendItem(ATAN, "ATAN");
+                        sb.AppendItem(ActivityType, "ActivityType");
                     }
                     if (printMask?.Name ?? true)
                     {
@@ -389,7 +389,7 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? ATAN;
+            public Exception? ActivityType;
             public Exception? Name;
             public Exception? Description;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ProgressionEvaluatorArgument.ErrorMask?>>?>? ProgressionEvalutor;
@@ -403,8 +403,8 @@ namespace Mutagen.Bethesda.Starfield
                 Activity_FieldIndex enu = (Activity_FieldIndex)index;
                 switch (enu)
                 {
-                    case Activity_FieldIndex.ATAN:
-                        return ATAN;
+                    case Activity_FieldIndex.ActivityType:
+                        return ActivityType;
                     case Activity_FieldIndex.Name:
                         return Name;
                     case Activity_FieldIndex.Description:
@@ -425,8 +425,8 @@ namespace Mutagen.Bethesda.Starfield
                 Activity_FieldIndex enu = (Activity_FieldIndex)index;
                 switch (enu)
                 {
-                    case Activity_FieldIndex.ATAN:
-                        this.ATAN = ex;
+                    case Activity_FieldIndex.ActivityType:
+                        this.ActivityType = ex;
                         break;
                     case Activity_FieldIndex.Name:
                         this.Name = ex;
@@ -453,8 +453,8 @@ namespace Mutagen.Bethesda.Starfield
                 Activity_FieldIndex enu = (Activity_FieldIndex)index;
                 switch (enu)
                 {
-                    case Activity_FieldIndex.ATAN:
-                        this.ATAN = (Exception?)obj;
+                    case Activity_FieldIndex.ActivityType:
+                        this.ActivityType = (Exception?)obj;
                         break;
                     case Activity_FieldIndex.Name:
                         this.Name = (Exception?)obj;
@@ -479,7 +479,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (ATAN != null) return true;
+                if (ActivityType != null) return true;
                 if (Name != null) return true;
                 if (Description != null) return true;
                 if (ProgressionEvalutor != null) return true;
@@ -511,7 +511,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(ATAN, "ATAN");
+                    sb.AppendItem(ActivityType, "ActivityType");
                 }
                 {
                     sb.AppendItem(Name, "Name");
@@ -551,7 +551,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.ATAN = this.ATAN.Combine(rhs.ATAN);
+                ret.ActivityType = this.ActivityType.Combine(rhs.ActivityType);
                 ret.Name = this.Name.Combine(rhs.Name);
                 ret.Description = this.Description.Combine(rhs.Description);
                 ret.ProgressionEvalutor = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ProgressionEvaluatorArgument.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.ProgressionEvalutor?.Overall, rhs.ProgressionEvalutor?.Overall), Noggog.ExceptionExt.Combine(this.ProgressionEvalutor?.Specific, rhs.ProgressionEvalutor?.Specific));
@@ -580,7 +580,7 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool ATAN;
+            public bool ActivityType;
             public bool Name;
             public bool Description;
             public ProgressionEvaluatorArgument.TranslationMask? ProgressionEvalutor;
@@ -595,7 +595,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.ATAN = defaultOn;
+                this.ActivityType = defaultOn;
                 this.Name = defaultOn;
                 this.Description = defaultOn;
                 this.ANAM = defaultOn;
@@ -615,7 +615,7 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((ATAN, null));
+                ret.Add((ActivityType, null));
                 ret.Add((Name, null));
                 ret.Add((Description, null));
                 ret.Add((ProgressionEvalutor == null ? DefaultOn : !ProgressionEvalutor.GetCrystal().CopyNothing, ProgressionEvalutor?.GetCrystal()));
@@ -703,7 +703,7 @@ namespace Mutagen.Bethesda.Starfield
         ITranslatedNamed,
         ITranslatedNamedRequired
     {
-        new String ATAN { get; set; }
+        new String ActivityType { get; set; }
         /// <summary>
         /// Aspects: INamed, INamedRequired, ITranslatedNamed, ITranslatedNamedRequired
         /// </summary>
@@ -731,7 +731,7 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => Activity_Registration.Instance;
-        String ATAN { get; }
+        String ActivityType { get; }
         #region Name
         /// <summary>
         /// Aspects: INamedGetter, INamedRequiredGetter, ITranslatedNamedGetter, ITranslatedNamedRequiredGetter
@@ -911,7 +911,7 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum Activity_FieldIndex
     {
-        ATAN = 0,
+        ActivityType = 0,
         Name = 1,
         Description = 2,
         ProgressionEvalutor = 3,
@@ -1018,7 +1018,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IActivity item)
         {
             ClearPartial();
-            item.ATAN = string.Empty;
+            item.ActivityType = string.Empty;
             item.Name = default;
             item.Description.Clear();
             item.ProgressionEvalutor.Clear();
@@ -1074,7 +1074,7 @@ namespace Mutagen.Bethesda.Starfield
             Activity.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.ATAN = string.Equals(item.ATAN, rhs.ATAN);
+            ret.ActivityType = string.Equals(item.ActivityType, rhs.ActivityType);
             ret.Name = object.Equals(item.Name, rhs.Name);
             ret.Description = object.Equals(item.Description, rhs.Description);
             ret.ProgressionEvalutor = item.ProgressionEvalutor.CollectionEqualsHelper(
@@ -1127,9 +1127,9 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             Activity.Mask<bool>? printMask = null)
         {
-            if (printMask?.ATAN ?? true)
+            if (printMask?.ActivityType ?? true)
             {
-                sb.AppendItem(item.ATAN, "ATAN");
+                sb.AppendItem(item.ActivityType, "ActivityType");
             }
             if ((printMask?.Name ?? true)
                 && item.Name is {} NameItem)
@@ -1171,9 +1171,9 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)Activity_FieldIndex.ATAN) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Activity_FieldIndex.ActivityType) ?? true))
             {
-                if (!string.Equals(lhs.ATAN, rhs.ATAN)) return false;
+                if (!string.Equals(lhs.ActivityType, rhs.ActivityType)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Activity_FieldIndex.Name) ?? true))
             {
@@ -1201,7 +1201,7 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IActivityGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.ATAN);
+            hash.Add(item.ActivityType);
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -1249,9 +1249,9 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)Activity_FieldIndex.ATAN) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Activity_FieldIndex.ActivityType) ?? true))
             {
-                item.ATAN = rhs.ATAN;
+                item.ActivityType = rhs.ActivityType;
             }
             if ((copyMask?.GetShouldTranslate((int)Activity_FieldIndex.Name) ?? true))
             {
@@ -1404,7 +1404,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             StringBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.ATAN,
+                item: item.ActivityType,
                 header: translationParams.ConvertToCustom(RecordTypes.ATAN),
                 binaryType: StringBinaryType.NullTerminate);
             StringBinaryTranslation.Instance.WriteNullable(
@@ -1485,13 +1485,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.ATAN:
                 {
-                    if (lastParsed.ShortCircuit((int)Activity_FieldIndex.ATAN, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)Activity_FieldIndex.ActivityType, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.ATAN = StringBinaryTranslation.Instance.Parse(
+                    item.ActivityType = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
-                    return (int)Activity_FieldIndex.ATAN;
+                    return (int)Activity_FieldIndex.ActivityType;
                 }
                 case RecordTypeInts.FULL:
                 {
@@ -1619,9 +1619,9 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        #region ATAN
-        private int? _ATANLocation;
-        public String ATAN => _ATANLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ATANLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : string.Empty;
+        #region ActivityType
+        private int? _ActivityTypeLocation;
+        public String ActivityType => _ActivityTypeLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ActivityTypeLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : string.Empty;
         #endregion
         #region Name
         private int? _NameLocation;
@@ -1713,9 +1713,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.ATAN:
                 {
-                    if (lastParsed.ShortCircuit((int)Activity_FieldIndex.ATAN, translationParams)) return ParseResult.Stop;
-                    _ATANLocation = (stream.Position - offset);
-                    return (int)Activity_FieldIndex.ATAN;
+                    if (lastParsed.ShortCircuit((int)Activity_FieldIndex.ActivityType, translationParams)) return ParseResult.Stop;
+                    _ActivityTypeLocation = (stream.Position - offset);
+                    return (int)Activity_FieldIndex.ActivityType;
                 }
                 case RecordTypeInts.FULL:
                 {

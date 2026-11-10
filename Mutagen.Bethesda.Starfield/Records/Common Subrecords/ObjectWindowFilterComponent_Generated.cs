@@ -53,21 +53,19 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region INTV
+        #region Filters
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _INTV;
-        public MemorySlice<Byte>? INTV
+        private ExtendedList<String>? _Filters;
+        public ExtendedList<String>? Filters
         {
-            get => this._INTV;
-            set => this._INTV = value;
+            get => this._Filters;
+            set => this._Filters = value;
         }
+        #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? IObjectWindowFilterComponentGetter.INTV => this.INTV;
+        IReadOnlyList<String>? IObjectWindowFilterComponentGetter.Filters => _Filters;
         #endregion
-        #region FLTR
-        public String? FLTR { get; set; }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? IObjectWindowFilterComponentGetter.FLTR => this.FLTR;
+
         #endregion
 
         #region To String
@@ -107,20 +105,10 @@ namespace Mutagen.Bethesda.Starfield
             IMask<TItem>
         {
             #region Ctors
-            public Mask(TItem initialValue)
-            : base(initialValue)
-            {
-                this.INTV = initialValue;
-                this.FLTR = initialValue;
-            }
-
-            public Mask(
-                TItem INTV,
-                TItem FLTR)
+            public Mask(TItem Filters)
             : base()
             {
-                this.INTV = INTV;
-                this.FLTR = FLTR;
+                this.Filters = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(Filters, []);
             }
 
             #pragma warning disable CS8618
@@ -132,8 +120,7 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem INTV;
-            public TItem FLTR;
+            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? Filters;
             #endregion
 
             #region Equals
@@ -147,15 +134,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.INTV, rhs.INTV)) return false;
-                if (!object.Equals(this.FLTR, rhs.FLTR)) return false;
+                if (!object.Equals(this.Filters, rhs.Filters)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.INTV);
-                hash.Add(this.FLTR);
+                hash.Add(this.Filters);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -166,8 +151,17 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (!eval(this.INTV)) return false;
-                if (!eval(this.FLTR)) return false;
+                if (this.Filters != null)
+                {
+                    if (!eval(this.Filters.Overall)) return false;
+                    if (this.Filters.Specific != null)
+                    {
+                        foreach (var item in this.Filters.Specific)
+                        {
+                            if (!eval(item.Value)) return false;
+                        }
+                    }
+                }
                 return true;
             }
             #endregion
@@ -176,8 +170,17 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (eval(this.INTV)) return true;
-                if (eval(this.FLTR)) return true;
+                if (this.Filters != null)
+                {
+                    if (eval(this.Filters.Overall)) return true;
+                    if (this.Filters.Specific != null)
+                    {
+                        foreach (var item in this.Filters.Specific)
+                        {
+                            if (!eval(item.Value)) return false;
+                        }
+                    }
+                }
                 return false;
             }
             #endregion
@@ -193,8 +196,20 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                obj.INTV = eval(this.INTV);
-                obj.FLTR = eval(this.FLTR);
+                if (Filters != null)
+                {
+                    obj.Filters = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.Filters.Overall), []);
+                    if (Filters.Specific != null)
+                    {
+                        var l = new List<(int Index, R Item)>();
+                        obj.Filters.Specific = l;
+                        foreach (var item in Filters.Specific)
+                        {
+                            R mask = eval(item.Value);
+                            l.Add((item.Index, mask));
+                        }
+                    }
+                }
             }
             #endregion
 
@@ -213,13 +228,26 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(ObjectWindowFilterComponent.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.INTV ?? true)
+                    if ((printMask?.Filters?.Overall ?? true)
+                        && Filters is {} FiltersItem)
                     {
-                        sb.AppendItem(INTV, "INTV");
-                    }
-                    if (printMask?.FLTR ?? true)
-                    {
-                        sb.AppendItem(FLTR, "FLTR");
+                        sb.AppendLine("Filters =>");
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(FiltersItem.Overall);
+                            if (FiltersItem.Specific != null)
+                            {
+                                foreach (var subItem in FiltersItem.Specific)
+                                {
+                                    using (sb.Brace())
+                                    {
+                                        {
+                                            sb.AppendItem(subItem);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -232,8 +260,7 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
-            public Exception? INTV;
-            public Exception? FLTR;
+            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? Filters;
             #endregion
 
             #region IErrorMask
@@ -242,10 +269,8 @@ namespace Mutagen.Bethesda.Starfield
                 ObjectWindowFilterComponent_FieldIndex enu = (ObjectWindowFilterComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case ObjectWindowFilterComponent_FieldIndex.INTV:
-                        return INTV;
-                    case ObjectWindowFilterComponent_FieldIndex.FLTR:
-                        return FLTR;
+                    case ObjectWindowFilterComponent_FieldIndex.Filters:
+                        return Filters;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -256,11 +281,8 @@ namespace Mutagen.Bethesda.Starfield
                 ObjectWindowFilterComponent_FieldIndex enu = (ObjectWindowFilterComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case ObjectWindowFilterComponent_FieldIndex.INTV:
-                        this.INTV = ex;
-                        break;
-                    case ObjectWindowFilterComponent_FieldIndex.FLTR:
-                        this.FLTR = ex;
+                    case ObjectWindowFilterComponent_FieldIndex.Filters:
+                        this.Filters = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -273,11 +295,8 @@ namespace Mutagen.Bethesda.Starfield
                 ObjectWindowFilterComponent_FieldIndex enu = (ObjectWindowFilterComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case ObjectWindowFilterComponent_FieldIndex.INTV:
-                        this.INTV = (Exception?)obj;
-                        break;
-                    case ObjectWindowFilterComponent_FieldIndex.FLTR:
-                        this.FLTR = (Exception?)obj;
+                    case ObjectWindowFilterComponent_FieldIndex.Filters:
+                        this.Filters = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -288,8 +307,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (INTV != null) return true;
-                if (FLTR != null) return true;
+                if (Filters != null) return true;
                 return false;
             }
             #endregion
@@ -316,11 +334,25 @@ namespace Mutagen.Bethesda.Starfield
             protected override void PrintFillInternal(StructuredStringBuilder sb)
             {
                 base.PrintFillInternal(sb);
+                if (Filters is {} FiltersItem)
                 {
-                    sb.AppendItem(INTV, "INTV");
-                }
-                {
-                    sb.AppendItem(FLTR, "FLTR");
+                    sb.AppendLine("Filters =>");
+                    using (sb.Brace())
+                    {
+                        sb.AppendItem(FiltersItem.Overall);
+                        if (FiltersItem.Specific != null)
+                        {
+                            foreach (var subItem in FiltersItem.Specific)
+                            {
+                                using (sb.Brace())
+                                {
+                                    {
+                                        sb.AppendItem(subItem);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
             #endregion
@@ -330,8 +362,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.INTV = this.INTV.Combine(rhs.INTV);
-                ret.FLTR = this.FLTR.Combine(rhs.FLTR);
+                ret.Filters = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.Filters?.Overall, rhs.Filters?.Overall), Noggog.ExceptionExt.Combine(this.Filters?.Specific, rhs.Filters?.Specific));
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -354,8 +385,7 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
-            public bool INTV;
-            public bool FLTR;
+            public bool Filters;
             #endregion
 
             #region Ctors
@@ -364,8 +394,7 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.INTV = defaultOn;
-                this.FLTR = defaultOn;
+                this.Filters = defaultOn;
             }
 
             #endregion
@@ -373,8 +402,7 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((INTV, null));
-                ret.Add((FLTR, null));
+                ret.Add((Filters, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -446,8 +474,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IObjectWindowFilterComponent>,
         IObjectWindowFilterComponentGetter
     {
-        new MemorySlice<Byte>? INTV { get; set; }
-        new String? FLTR { get; set; }
+        new ExtendedList<String>? Filters { get; set; }
     }
 
     public partial interface IObjectWindowFilterComponentGetter :
@@ -456,8 +483,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObject<IObjectWindowFilterComponentGetter>
     {
         static new ILoquiRegistration StaticRegistration => ObjectWindowFilterComponent_Registration.Instance;
-        ReadOnlyMemorySlice<Byte>? INTV { get; }
-        String? FLTR { get; }
+        IReadOnlyList<String>? Filters { get; }
 
     }
 
@@ -602,8 +628,7 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum ObjectWindowFilterComponent_FieldIndex
     {
-        INTV = 0,
-        FLTR = 1,
+        Filters = 0,
     }
     #endregion
 
@@ -614,9 +639,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 2;
+        public const ushort AdditionalFieldCount = 1;
 
-        public const ushort FieldCount = 2;
+        public const ushort FieldCount = 1;
 
         public static readonly Type MaskType = typeof(ObjectWindowFilterComponent.Mask<>);
 
@@ -649,8 +674,8 @@ namespace Mutagen.Bethesda.Starfield
             var triggers = RecordCollection.Factory(RecordTypes.BFCB);
             var all = RecordCollection.Factory(
                 RecordTypes.BFCB,
-                RecordTypes.INTV,
-                RecordTypes.FLTR);
+                RecordTypes.FLTR,
+                RecordTypes.INTV);
             return new RecordTriggerSpecs(
                 allRecordTypes: all,
                 triggeringRecordTypes: triggers);
@@ -695,8 +720,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IObjectWindowFilterComponent item)
         {
             ClearPartial();
-            item.INTV = default;
-            item.FLTR = default;
+            item.Filters = null;
             base.Clear(item);
         }
         
@@ -764,8 +788,10 @@ namespace Mutagen.Bethesda.Starfield
             ObjectWindowFilterComponent.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.INTV = MemorySliceExt.SequenceEqual(item.INTV, rhs.INTV);
-            ret.FLTR = string.Equals(item.FLTR, rhs.FLTR);
+            ret.Filters = item.Filters.CollectionEqualsHelper(
+                rhs.Filters,
+                (l, r) => string.Equals(l, r),
+                include);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -815,15 +841,20 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if ((printMask?.INTV ?? true)
-                && item.INTV is {} INTVItem)
+            if ((printMask?.Filters?.Overall ?? true)
+                && item.Filters is {} FiltersItem)
             {
-                sb.AppendLine($"INTV => {SpanExt.ToHexString(INTVItem)}");
-            }
-            if ((printMask?.FLTR ?? true)
-                && item.FLTR is {} FLTRItem)
-            {
-                sb.AppendItem(FLTRItem, "FLTR");
+                sb.AppendLine("Filters =>");
+                using (sb.Brace())
+                {
+                    foreach (var subItem in FiltersItem)
+                    {
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(subItem);
+                        }
+                    }
+                }
             }
         }
         
@@ -844,13 +875,9 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IAComponentGetter)lhs, (IAComponentGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)ObjectWindowFilterComponent_FieldIndex.INTV) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ObjectWindowFilterComponent_FieldIndex.Filters) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.INTV, rhs.INTV)) return false;
-            }
-            if ((equalsMask?.GetShouldTranslate((int)ObjectWindowFilterComponent_FieldIndex.FLTR) ?? true))
-            {
-                if (!string.Equals(lhs.FLTR, rhs.FLTR)) return false;
+                if (!lhs.Filters.SequenceEqualNullable(rhs.Filters)) return false;
             }
             return true;
         }
@@ -869,13 +896,12 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IObjectWindowFilterComponentGetter item)
         {
             var hash = new HashCode();
-            if (item.INTV is {} INTVItem)
+            if (item.Filters is {} Filtersitem)
             {
-                hash.AddBytes(INTVItem);
-            }
-            if (item.FLTR is {} FLTRitem)
-            {
-                hash.Add(FLTRitem);
+                foreach (var subItem in Filtersitem)
+                {
+                    hash.Add(subItem);
+                }
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -925,20 +951,31 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)ObjectWindowFilterComponent_FieldIndex.INTV) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ObjectWindowFilterComponent_FieldIndex.Filters) ?? true))
             {
-                if(rhs.INTV is {} INTVrhs)
+                errorMask?.PushIndex((int)ObjectWindowFilterComponent_FieldIndex.Filters);
+                try
                 {
-                    item.INTV = INTVrhs.ToArray();
+                    if ((rhs.Filters != null))
+                    {
+                        item.Filters = 
+                            rhs.Filters
+                            .ToExtendedList<String>();
+                    }
+                    else
+                    {
+                        item.Filters = null;
+                    }
                 }
-                else
+                catch (Exception ex)
+                when (errorMask != null)
                 {
-                    item.INTV = default;
+                    errorMask.ReportException(ex);
                 }
-            }
-            if ((copyMask?.GetShouldTranslate((int)ObjectWindowFilterComponent_FieldIndex.FLTR) ?? true))
-            {
-                item.FLTR = rhs.FLTR;
+                finally
+                {
+                    errorMask?.PopIndex();
+                }
             }
             DeepCopyInCustom(
                 item: item,
@@ -1065,15 +1102,14 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<String>.Instance.WriteWithCounter(
                 writer: writer,
-                item: item.INTV,
-                header: translationParams.ConvertToCustom(RecordTypes.INTV));
-            StringBinaryTranslation.Instance.WriteNullable(
-                writer: writer,
-                item: item.FLTR,
-                header: translationParams.ConvertToCustom(RecordTypes.FLTR),
-                binaryType: StringBinaryType.NullTerminate);
+                items: item.Filters,
+                counterType: RecordTypes.INTV,
+                counterLength: 4,
+                recordType: translationParams.ConvertToCustom(RecordTypes.FLTR),
+                subRecordPerItem: true,
+                transl: StringBinaryTranslation.Instance.Write);
         }
 
         public void Write(
@@ -1130,18 +1166,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.INTV:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.INTV = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)ObjectWindowFilterComponent_FieldIndex.INTV;
-                }
-                case RecordTypeInts.FLTR:
-                {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.FLTR = StringBinaryTranslation.Instance.Parse(
-                        reader: frame.SpawnWithLength(contentLength),
-                        stringBinaryType: StringBinaryType.NullTerminate,
-                        parseWhole: true);
-                    return (int)ObjectWindowFilterComponent_FieldIndex.FLTR;
+                    item.Filters = 
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<String>.Instance.ParsePerItem(
+                            reader: frame,
+                            countLengthLength: 4,
+                            countRecord: translationParams.ConvertToCustom(RecordTypes.INTV),
+                            triggeringRecord: translationParams.ConvertToCustom(RecordTypes.FLTR),
+                            transl: StringBinaryTranslation.Instance.Parse)
+                        .CastExtendedList<String>();
+                    return (int)ObjectWindowFilterComponent_FieldIndex.Filters;
                 }
                 default:
                     return AComponentBinaryCreateTranslation.FillBinaryRecordTypes(
@@ -1199,14 +1232,7 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        #region INTV
-        private int? _INTVLocation;
-        public ReadOnlyMemorySlice<Byte>? INTV => _INTVLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _INTVLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
-        #endregion
-        #region FLTR
-        private int? _FLTRLocation;
-        public String? FLTR => _FLTRLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _FLTRLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
-        #endregion
+        public IReadOnlyList<String>? Filters { get; private set; }
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
@@ -1272,13 +1298,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.INTV:
                 {
-                    _INTVLocation = (stream.Position - offset);
-                    return (int)ObjectWindowFilterComponent_FieldIndex.INTV;
-                }
-                case RecordTypeInts.FLTR:
-                {
-                    _FLTRLocation = (stream.Position - offset);
-                    return (int)ObjectWindowFilterComponent_FieldIndex.FLTR;
+                    this.Filters = BinaryOverlayList.FactoryByCountPerItem<String>(
+                        stream: stream,
+                        package: _package,
+                        countLength: 4,
+                        trigger: RecordTypes.FLTR,
+                        countType: RecordTypes.INTV,
+                        getter: (s, p) => BinaryStringUtility.ProcessWholeToZString(s, encoding: p.MetaData.Encodings.NonTranslated),
+                        skipHeader: true);
+                    return (int)ObjectWindowFilterComponent_FieldIndex.Filters;
                 }
                 default:
                     return base.FillRecordType(

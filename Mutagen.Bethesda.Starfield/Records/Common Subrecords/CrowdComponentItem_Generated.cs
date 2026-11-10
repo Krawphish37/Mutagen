@@ -10,6 +10,7 @@ using Loqui.Interfaces;
 using Loqui.Internal;
 using Mutagen.Bethesda.Binary;
 using Mutagen.Bethesda.Plugins;
+using Mutagen.Bethesda.Plugins.Aspects;
 using Mutagen.Bethesda.Plugins.Binary.Headers;
 using Mutagen.Bethesda.Plugins.Binary.Overlay;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
@@ -81,15 +82,28 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region STRV
-        public String? STRV { get; set; }
+        #region Name
+        /// <summary>
+        /// Aspects: INamed, INamedRequired
+        /// </summary>
+        public String? Name { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        String? ICrowdComponentItemGetter.STRV => this.STRV;
+        String? ICrowdComponentItemGetter.Name => this.Name;
+        #region Aspects
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        string INamedRequiredGetter.Name => this.Name ?? string.Empty;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        string INamedRequired.Name
+        {
+            get => this.Name ?? string.Empty;
+            set => this.Name = value;
+        }
         #endregion
-        #region FLTV
-        public Single? FLTV { get; set; }
+        #endregion
+        #region PopulationScale
+        public Single? PopulationScale { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Single? ICrowdComponentItemGetter.FLTV => this.FLTV;
+        Single? ICrowdComponentItemGetter.PopulationScale => this.PopulationScale;
         #endregion
 
         #region To String
@@ -132,20 +146,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.Properties = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CrowdComponentProperty.Mask<TItem>?>>?>(initialValue, []);
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(initialValue, []);
-                this.STRV = initialValue;
-                this.FLTV = initialValue;
+                this.Name = initialValue;
+                this.PopulationScale = initialValue;
             }
 
             public Mask(
                 TItem Properties,
                 TItem Conditions,
-                TItem STRV,
-                TItem FLTV)
+                TItem Name,
+                TItem PopulationScale)
             {
                 this.Properties = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CrowdComponentProperty.Mask<TItem>?>>?>(Properties, []);
                 this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(Conditions, []);
-                this.STRV = STRV;
-                this.FLTV = FLTV;
+                this.Name = Name;
+                this.PopulationScale = PopulationScale;
             }
 
             #pragma warning disable CS8618
@@ -159,8 +173,8 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, CrowdComponentProperty.Mask<TItem>?>>?>? Properties;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>? Conditions;
-            public TItem STRV;
-            public TItem FLTV;
+            public TItem Name;
+            public TItem PopulationScale;
             #endregion
 
             #region Equals
@@ -175,8 +189,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!object.Equals(this.Properties, rhs.Properties)) return false;
                 if (!object.Equals(this.Conditions, rhs.Conditions)) return false;
-                if (!object.Equals(this.STRV, rhs.STRV)) return false;
-                if (!object.Equals(this.FLTV, rhs.FLTV)) return false;
+                if (!object.Equals(this.Name, rhs.Name)) return false;
+                if (!object.Equals(this.PopulationScale, rhs.PopulationScale)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -184,8 +198,8 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.Properties);
                 hash.Add(this.Conditions);
-                hash.Add(this.STRV);
-                hash.Add(this.FLTV);
+                hash.Add(this.Name);
+                hash.Add(this.PopulationScale);
                 return hash.ToHashCode();
             }
 
@@ -218,8 +232,8 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (!eval(this.STRV)) return false;
-                if (!eval(this.FLTV)) return false;
+                if (!eval(this.Name)) return false;
+                if (!eval(this.PopulationScale)) return false;
                 return true;
             }
             #endregion
@@ -251,8 +265,8 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (eval(this.STRV)) return true;
-                if (eval(this.FLTV)) return true;
+                if (eval(this.Name)) return true;
+                if (eval(this.PopulationScale)) return true;
                 return false;
             }
             #endregion
@@ -297,8 +311,8 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.STRV = eval(this.STRV);
-                obj.FLTV = eval(this.FLTV);
+                obj.Name = eval(this.Name);
+                obj.PopulationScale = eval(this.PopulationScale);
             }
             #endregion
 
@@ -355,13 +369,13 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.STRV ?? true)
+                    if (printMask?.Name ?? true)
                     {
-                        sb.AppendItem(STRV, "STRV");
+                        sb.AppendItem(Name, "Name");
                     }
-                    if (printMask?.FLTV ?? true)
+                    if (printMask?.PopulationScale ?? true)
                     {
-                        sb.AppendItem(FLTV, "FLTV");
+                        sb.AppendItem(PopulationScale, "PopulationScale");
                     }
                 }
             }
@@ -389,8 +403,8 @@ namespace Mutagen.Bethesda.Starfield
             }
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CrowdComponentProperty.ErrorMask?>>?>? Properties;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>? Conditions;
-            public Exception? STRV;
-            public Exception? FLTV;
+            public Exception? Name;
+            public Exception? PopulationScale;
             #endregion
 
             #region IErrorMask
@@ -403,10 +417,10 @@ namespace Mutagen.Bethesda.Starfield
                         return Properties;
                     case CrowdComponentItem_FieldIndex.Conditions:
                         return Conditions;
-                    case CrowdComponentItem_FieldIndex.STRV:
-                        return STRV;
-                    case CrowdComponentItem_FieldIndex.FLTV:
-                        return FLTV;
+                    case CrowdComponentItem_FieldIndex.Name:
+                        return Name;
+                    case CrowdComponentItem_FieldIndex.PopulationScale:
+                        return PopulationScale;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -423,11 +437,11 @@ namespace Mutagen.Bethesda.Starfield
                     case CrowdComponentItem_FieldIndex.Conditions:
                         this.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(ex, null);
                         break;
-                    case CrowdComponentItem_FieldIndex.STRV:
-                        this.STRV = ex;
+                    case CrowdComponentItem_FieldIndex.Name:
+                        this.Name = ex;
                         break;
-                    case CrowdComponentItem_FieldIndex.FLTV:
-                        this.FLTV = ex;
+                    case CrowdComponentItem_FieldIndex.PopulationScale:
+                        this.PopulationScale = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -445,11 +459,11 @@ namespace Mutagen.Bethesda.Starfield
                     case CrowdComponentItem_FieldIndex.Conditions:
                         this.Conditions = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>)obj;
                         break;
-                    case CrowdComponentItem_FieldIndex.STRV:
-                        this.STRV = (Exception?)obj;
+                    case CrowdComponentItem_FieldIndex.Name:
+                        this.Name = (Exception?)obj;
                         break;
-                    case CrowdComponentItem_FieldIndex.FLTV:
-                        this.FLTV = (Exception?)obj;
+                    case CrowdComponentItem_FieldIndex.PopulationScale:
+                        this.PopulationScale = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -461,8 +475,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (Properties != null) return true;
                 if (Conditions != null) return true;
-                if (STRV != null) return true;
-                if (FLTV != null) return true;
+                if (Name != null) return true;
+                if (PopulationScale != null) return true;
                 return false;
             }
             #endregion
@@ -525,10 +539,10 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 {
-                    sb.AppendItem(STRV, "STRV");
+                    sb.AppendItem(Name, "Name");
                 }
                 {
-                    sb.AppendItem(FLTV, "FLTV");
+                    sb.AppendItem(PopulationScale, "PopulationScale");
                 }
             }
             #endregion
@@ -540,8 +554,8 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.Properties = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, CrowdComponentProperty.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Properties?.Overall, rhs.Properties?.Overall), Noggog.ExceptionExt.Combine(this.Properties?.Specific, rhs.Properties?.Specific));
                 ret.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Conditions?.Overall, rhs.Conditions?.Overall), Noggog.ExceptionExt.Combine(this.Conditions?.Specific, rhs.Conditions?.Specific));
-                ret.STRV = this.STRV.Combine(rhs.STRV);
-                ret.FLTV = this.FLTV.Combine(rhs.FLTV);
+                ret.Name = this.Name.Combine(rhs.Name);
+                ret.PopulationScale = this.PopulationScale.Combine(rhs.PopulationScale);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -567,8 +581,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool OnOverall;
             public CrowdComponentProperty.TranslationMask? Properties;
             public Condition.TranslationMask? Conditions;
-            public bool STRV;
-            public bool FLTV;
+            public bool Name;
+            public bool PopulationScale;
             #endregion
 
             #region Ctors
@@ -578,8 +592,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.STRV = defaultOn;
-                this.FLTV = defaultOn;
+                this.Name = defaultOn;
+                this.PopulationScale = defaultOn;
             }
 
             #endregion
@@ -597,8 +611,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 ret.Add((Properties == null ? DefaultOn : !Properties.GetCrystal().CopyNothing, Properties?.GetCrystal()));
                 ret.Add((Conditions == null ? DefaultOn : !Conditions.GetCrystal().CopyNothing, Conditions?.GetCrystal()));
-                ret.Add((STRV, null));
-                ret.Add((FLTV, null));
+                ret.Add((Name, null));
+                ret.Add((PopulationScale, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -675,19 +689,26 @@ namespace Mutagen.Bethesda.Starfield
     public partial interface ICrowdComponentItem :
         ICrowdComponentItemGetter,
         IFormLinkContainer,
-        ILoquiObjectSetter<ICrowdComponentItem>
+        ILoquiObjectSetter<ICrowdComponentItem>,
+        INamed,
+        INamedRequired
     {
         new ExtendedList<CrowdComponentProperty>? Properties { get; set; }
         new ExtendedList<Condition>? Conditions { get; set; }
-        new String? STRV { get; set; }
-        new Single? FLTV { get; set; }
+        /// <summary>
+        /// Aspects: INamed, INamedRequired
+        /// </summary>
+        new String? Name { get; set; }
+        new Single? PopulationScale { get; set; }
     }
 
     public partial interface ICrowdComponentItemGetter :
         ILoquiObject,
         IBinaryItem,
         IFormLinkContainerGetter,
-        ILoquiObject<ICrowdComponentItemGetter>
+        ILoquiObject<ICrowdComponentItemGetter>,
+        INamedGetter,
+        INamedRequiredGetter
     {
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonInstance();
@@ -698,8 +719,13 @@ namespace Mutagen.Bethesda.Starfield
         static ILoquiRegistration StaticRegistration => CrowdComponentItem_Registration.Instance;
         IReadOnlyList<ICrowdComponentPropertyGetter>? Properties { get; }
         IReadOnlyList<IConditionGetter>? Conditions { get; }
-        String? STRV { get; }
-        Single? FLTV { get; }
+        #region Name
+        /// <summary>
+        /// Aspects: INamedGetter, INamedRequiredGetter
+        /// </summary>
+        String? Name { get; }
+        #endregion
+        Single? PopulationScale { get; }
 
     }
 
@@ -871,8 +897,8 @@ namespace Mutagen.Bethesda.Starfield
     {
         Properties = 0,
         Conditions = 1,
-        STRV = 2,
-        FLTV = 3,
+        Name = 2,
+        PopulationScale = 3,
     }
     #endregion
 
@@ -974,8 +1000,8 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.Properties = null;
             item.Conditions = null;
-            item.STRV = default;
-            item.FLTV = default;
+            item.Name = default;
+            item.PopulationScale = default;
         }
         
         #region Mutagen
@@ -1035,8 +1061,8 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.Conditions,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
-            ret.STRV = string.Equals(item.STRV, rhs.STRV);
-            ret.FLTV = item.FLTV.EqualsWithin(rhs.FLTV);
+            ret.Name = string.Equals(item.Name, rhs.Name);
+            ret.PopulationScale = item.PopulationScale.EqualsWithin(rhs.PopulationScale);
         }
         
         public string Print(
@@ -1111,15 +1137,15 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.STRV ?? true)
-                && item.STRV is {} STRVItem)
+            if ((printMask?.Name ?? true)
+                && item.Name is {} NameItem)
             {
-                sb.AppendItem(STRVItem, "STRV");
+                sb.AppendItem(NameItem, "Name");
             }
-            if ((printMask?.FLTV ?? true)
-                && item.FLTV is {} FLTVItem)
+            if ((printMask?.PopulationScale ?? true)
+                && item.PopulationScale is {} PopulationScaleItem)
             {
-                sb.AppendItem(FLTVItem, "FLTV");
+                sb.AppendItem(PopulationScaleItem, "PopulationScale");
             }
         }
         
@@ -1138,13 +1164,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Conditions.SequenceEqualNullable(rhs.Conditions, (l, r) => ((ConditionCommon)((IConditionGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)CrowdComponentItem_FieldIndex.Conditions)))) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CrowdComponentItem_FieldIndex.STRV) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CrowdComponentItem_FieldIndex.Name) ?? true))
             {
-                if (!string.Equals(lhs.STRV, rhs.STRV)) return false;
+                if (!string.Equals(lhs.Name, rhs.Name)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CrowdComponentItem_FieldIndex.FLTV) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CrowdComponentItem_FieldIndex.PopulationScale) ?? true))
             {
-                if (!lhs.FLTV.EqualsWithin(rhs.FLTV)) return false;
+                if (!lhs.PopulationScale.EqualsWithin(rhs.PopulationScale)) return false;
             }
             return true;
         }
@@ -1166,13 +1192,13 @@ namespace Mutagen.Bethesda.Starfield
                     hash.Add(subItem);
                 }
             }
-            if (item.STRV is {} STRVitem)
+            if (item.Name is {} Nameitem)
             {
-                hash.Add(STRVitem);
+                hash.Add(Nameitem);
             }
-            if (item.FLTV is {} FLTVitem)
+            if (item.PopulationScale is {} PopulationScaleitem)
             {
-                hash.Add(FLTVitem);
+                hash.Add(PopulationScaleitem);
             }
             return hash.ToHashCode();
         }
@@ -1284,13 +1310,13 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)CrowdComponentItem_FieldIndex.STRV) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CrowdComponentItem_FieldIndex.Name) ?? true))
             {
-                item.STRV = rhs.STRV;
+                item.Name = rhs.Name;
             }
-            if ((copyMask?.GetShouldTranslate((int)CrowdComponentItem_FieldIndex.FLTV) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CrowdComponentItem_FieldIndex.PopulationScale) ?? true))
             {
-                item.FLTV = rhs.FLTV;
+                item.PopulationScale = rhs.PopulationScale;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1428,12 +1454,12 @@ namespace Mutagen.Bethesda.Starfield
                 });
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.STRV,
+                item: item.Name,
                 header: translationParams.ConvertToCustom(RecordTypes.STRV),
                 binaryType: StringBinaryType.NullTerminate);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                item: item.FLTV,
+                item: item.PopulationScale,
                 header: translationParams.ConvertToCustom(RecordTypes.FLTV));
         }
 
@@ -1505,20 +1531,20 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.STRV:
                 {
-                    if (lastParsed.ShortCircuit((int)CrowdComponentItem_FieldIndex.STRV, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)CrowdComponentItem_FieldIndex.Name, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.STRV = StringBinaryTranslation.Instance.Parse(
+                    item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
-                    return (int)CrowdComponentItem_FieldIndex.STRV;
+                    return (int)CrowdComponentItem_FieldIndex.Name;
                 }
                 case RecordTypeInts.FLTV:
                 {
-                    if (lastParsed.ShortCircuit((int)CrowdComponentItem_FieldIndex.FLTV, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)CrowdComponentItem_FieldIndex.PopulationScale, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.FLTV = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)CrowdComponentItem_FieldIndex.FLTV;
+                    item.PopulationScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    return (int)CrowdComponentItem_FieldIndex.PopulationScale;
                 }
                 default:
                     return ParseResult.Stop;
@@ -1591,13 +1617,17 @@ namespace Mutagen.Bethesda.Starfield
 
         public IReadOnlyList<ICrowdComponentPropertyGetter>? Properties { get; private set; }
         public IReadOnlyList<IConditionGetter>? Conditions { get; private set; }
-        #region STRV
-        private int? _STRVLocation;
-        public String? STRV => _STRVLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _STRVLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        #region Name
+        private int? _NameLocation;
+        public String? Name => _NameLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _NameLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
+        #region Aspects
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        string INamedRequiredGetter.Name => this.Name ?? string.Empty;
         #endregion
-        #region FLTV
-        private int? _FLTVLocation;
-        public Single? FLTV => _FLTVLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _FLTVLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
+        #endregion
+        #region PopulationScale
+        private int? _PopulationScaleLocation;
+        public Single? PopulationScale => _PopulationScaleLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _PopulationScaleLocation.Value, _package.MetaData.Constants).Float() : default(Single?);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1690,15 +1720,15 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.STRV:
                 {
-                    if (lastParsed.ShortCircuit((int)CrowdComponentItem_FieldIndex.STRV, translationParams)) return ParseResult.Stop;
-                    _STRVLocation = (stream.Position - offset);
-                    return (int)CrowdComponentItem_FieldIndex.STRV;
+                    if (lastParsed.ShortCircuit((int)CrowdComponentItem_FieldIndex.Name, translationParams)) return ParseResult.Stop;
+                    _NameLocation = (stream.Position - offset);
+                    return (int)CrowdComponentItem_FieldIndex.Name;
                 }
                 case RecordTypeInts.FLTV:
                 {
-                    if (lastParsed.ShortCircuit((int)CrowdComponentItem_FieldIndex.FLTV, translationParams)) return ParseResult.Stop;
-                    _FLTVLocation = (stream.Position - offset);
-                    return (int)CrowdComponentItem_FieldIndex.FLTV;
+                    if (lastParsed.ShortCircuit((int)CrowdComponentItem_FieldIndex.PopulationScale, translationParams)) return ParseResult.Stop;
+                    _PopulationScaleLocation = (stream.Position - offset);
+                    return (int)CrowdComponentItem_FieldIndex.PopulationScale;
                 }
                 default:
                     return ParseResult.Stop;

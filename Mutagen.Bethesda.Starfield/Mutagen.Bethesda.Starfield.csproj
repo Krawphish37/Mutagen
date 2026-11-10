@@ -7004,5 +7004,8 @@
     <Compile Include="Records\Major Records\NpcRaceOverrideElectromagneticShock_Generated.cs">
       <DependentUpon>Npc.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Common Subrecords\AdaptiveTriggerEffect_Generated.cs">
+      <DependentUpon>Component.xml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

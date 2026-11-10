@@ -53,16 +53,10 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region ESSF
+        #region Essential
+        public Boolean? Essential { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected MemorySlice<Byte>? _ESSF;
-        public MemorySlice<Byte>? ESSF
-        {
-            get => this._ESSF;
-            set => this._ESSF = value;
-        }
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte>? ISpaceshipEquipmentComponentGetter.ESSF => this.ESSF;
+        Boolean? ISpaceshipEquipmentComponentGetter.Essential => this.Essential;
         #endregion
 
         #region To String
@@ -102,10 +96,10 @@ namespace Mutagen.Bethesda.Starfield
             IMask<TItem>
         {
             #region Ctors
-            public Mask(TItem ESSF)
+            public Mask(TItem Essential)
             : base()
             {
-                this.ESSF = ESSF;
+                this.Essential = Essential;
             }
 
             #pragma warning disable CS8618
@@ -117,7 +111,7 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem ESSF;
+            public TItem Essential;
             #endregion
 
             #region Equals
@@ -131,13 +125,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.ESSF, rhs.ESSF)) return false;
+                if (!object.Equals(this.Essential, rhs.Essential)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.ESSF);
+                hash.Add(this.Essential);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -148,7 +142,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (!eval(this.ESSF)) return false;
+                if (!eval(this.Essential)) return false;
                 return true;
             }
             #endregion
@@ -157,7 +151,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (eval(this.ESSF)) return true;
+                if (eval(this.Essential)) return true;
                 return false;
             }
             #endregion
@@ -173,7 +167,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                obj.ESSF = eval(this.ESSF);
+                obj.Essential = eval(this.Essential);
             }
             #endregion
 
@@ -192,9 +186,9 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(SpaceshipEquipmentComponent.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.ESSF ?? true)
+                    if (printMask?.Essential ?? true)
                     {
-                        sb.AppendItem(ESSF, "ESSF");
+                        sb.AppendItem(Essential, "Essential");
                     }
                 }
             }
@@ -207,7 +201,7 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
-            public Exception? ESSF;
+            public Exception? Essential;
             #endregion
 
             #region IErrorMask
@@ -216,8 +210,8 @@ namespace Mutagen.Bethesda.Starfield
                 SpaceshipEquipmentComponent_FieldIndex enu = (SpaceshipEquipmentComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case SpaceshipEquipmentComponent_FieldIndex.ESSF:
-                        return ESSF;
+                    case SpaceshipEquipmentComponent_FieldIndex.Essential:
+                        return Essential;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -228,8 +222,8 @@ namespace Mutagen.Bethesda.Starfield
                 SpaceshipEquipmentComponent_FieldIndex enu = (SpaceshipEquipmentComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case SpaceshipEquipmentComponent_FieldIndex.ESSF:
-                        this.ESSF = ex;
+                    case SpaceshipEquipmentComponent_FieldIndex.Essential:
+                        this.Essential = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -242,8 +236,8 @@ namespace Mutagen.Bethesda.Starfield
                 SpaceshipEquipmentComponent_FieldIndex enu = (SpaceshipEquipmentComponent_FieldIndex)index;
                 switch (enu)
                 {
-                    case SpaceshipEquipmentComponent_FieldIndex.ESSF:
-                        this.ESSF = (Exception?)obj;
+                    case SpaceshipEquipmentComponent_FieldIndex.Essential:
+                        this.Essential = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -254,7 +248,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (ESSF != null) return true;
+                if (Essential != null) return true;
                 return false;
             }
             #endregion
@@ -282,7 +276,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.PrintFillInternal(sb);
                 {
-                    sb.AppendItem(ESSF, "ESSF");
+                    sb.AppendItem(Essential, "Essential");
                 }
             }
             #endregion
@@ -292,7 +286,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.ESSF = this.ESSF.Combine(rhs.ESSF);
+                ret.Essential = this.Essential.Combine(rhs.Essential);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -315,7 +309,7 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
-            public bool ESSF;
+            public bool Essential;
             #endregion
 
             #region Ctors
@@ -324,7 +318,7 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.ESSF = defaultOn;
+                this.Essential = defaultOn;
             }
 
             #endregion
@@ -332,7 +326,7 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((ESSF, null));
+                ret.Add((Essential, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -404,7 +398,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<ISpaceshipEquipmentComponent>,
         ISpaceshipEquipmentComponentGetter
     {
-        new MemorySlice<Byte>? ESSF { get; set; }
+        new Boolean? Essential { get; set; }
     }
 
     public partial interface ISpaceshipEquipmentComponentGetter :
@@ -413,7 +407,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObject<ISpaceshipEquipmentComponentGetter>
     {
         static new ILoquiRegistration StaticRegistration => SpaceshipEquipmentComponent_Registration.Instance;
-        ReadOnlyMemorySlice<Byte>? ESSF { get; }
+        Boolean? Essential { get; }
 
     }
 
@@ -558,7 +552,7 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum SpaceshipEquipmentComponent_FieldIndex
     {
-        ESSF = 0,
+        Essential = 0,
     }
     #endregion
 
@@ -649,7 +643,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(ISpaceshipEquipmentComponent item)
         {
             ClearPartial();
-            item.ESSF = default;
+            item.Essential = default;
             base.Clear(item);
         }
         
@@ -717,7 +711,7 @@ namespace Mutagen.Bethesda.Starfield
             SpaceshipEquipmentComponent.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.ESSF = MemorySliceExt.SequenceEqual(item.ESSF, rhs.ESSF);
+            ret.Essential = item.Essential == rhs.Essential;
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -767,10 +761,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if ((printMask?.ESSF ?? true)
-                && item.ESSF is {} ESSFItem)
+            if ((printMask?.Essential ?? true)
+                && item.Essential is {} EssentialItem)
             {
-                sb.AppendLine($"ESSF => {SpanExt.ToHexString(ESSFItem)}");
+                sb.AppendItem(EssentialItem, "Essential");
             }
         }
         
@@ -791,9 +785,9 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IAComponentGetter)lhs, (IAComponentGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)SpaceshipEquipmentComponent_FieldIndex.ESSF) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SpaceshipEquipmentComponent_FieldIndex.Essential) ?? true))
             {
-                if (!MemorySliceExt.SequenceEqual(lhs.ESSF, rhs.ESSF)) return false;
+                if (lhs.Essential != rhs.Essential) return false;
             }
             return true;
         }
@@ -812,9 +806,9 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ISpaceshipEquipmentComponentGetter item)
         {
             var hash = new HashCode();
-            if (item.ESSF is {} ESSFItem)
+            if (item.Essential is {} Essentialitem)
             {
-                hash.AddBytes(ESSFItem);
+                hash.Add(Essentialitem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -864,16 +858,9 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)SpaceshipEquipmentComponent_FieldIndex.ESSF) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SpaceshipEquipmentComponent_FieldIndex.Essential) ?? true))
             {
-                if(rhs.ESSF is {} ESSFrhs)
-                {
-                    item.ESSF = ESSFrhs.ToArray();
-                }
-                else
-                {
-                    item.ESSF = default;
-                }
+                item.Essential = rhs.Essential;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1000,10 +987,11 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
-            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            BooleanBinaryTranslation<MutagenFrame>.Instance.WriteNullable(
                 writer: writer,
-                item: item.ESSF,
-                header: translationParams.ConvertToCustom(RecordTypes.ESSF));
+                item: item.Essential,
+                header: translationParams.ConvertToCustom(RecordTypes.ESSF),
+                byteLength: 4);
         }
 
         public void Write(
@@ -1061,8 +1049,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ESSF:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.ESSF = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
-                    return (int)SpaceshipEquipmentComponent_FieldIndex.ESSF;
+                    item.Essential = BooleanBinaryTranslation<MutagenFrame>.Instance.Parse(
+                        reader: frame.SpawnWithLength(contentLength),
+                        byteLength: 4);
+                    return (int)SpaceshipEquipmentComponent_FieldIndex.Essential;
                 }
                 default:
                     return AComponentBinaryCreateTranslation.FillBinaryRecordTypes(
@@ -1120,9 +1110,9 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        #region ESSF
-        private int? _ESSFLocation;
-        public ReadOnlyMemorySlice<Byte>? ESSF => _ESSFLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _ESSFLocation.Value, _package.MetaData.Constants) : default(ReadOnlyMemorySlice<byte>?);
+        #region Essential
+        private int? _EssentialLocation;
+        public Boolean? Essential => _EssentialLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _EssentialLocation.Value, _package.MetaData.Constants)) >= 1 : default(Boolean?);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1189,8 +1179,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.ESSF:
                 {
-                    _ESSFLocation = (stream.Position - offset);
-                    return (int)SpaceshipEquipmentComponent_FieldIndex.ESSF;
+                    _EssentialLocation = (stream.Position - offset);
+                    return (int)SpaceshipEquipmentComponent_FieldIndex.Essential;
                 }
                 default:
                     return base.FillRecordType(
