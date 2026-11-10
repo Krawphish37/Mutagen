@@ -106,13 +106,11 @@ namespace Mutagen.Bethesda.Skyrim
             public Mask(
                 TItem Name,
                 TItem Flags,
-                TItem NameListPosition,
                 TItem Type,
                 TItem Target)
             : base(
                 Name: Name,
-                Flags: Flags,
-                NameListPosition: NameListPosition)
+                Flags: Flags)
             {
                 this.Type = Type;
                 this.Target = new MaskItem<TItem, APackageTarget.Mask<TItem>?>(Target, new APackageTarget.Mask<TItem>(Target));
@@ -615,9 +613,8 @@ namespace Mutagen.Bethesda.Skyrim
     {
         Name = 0,
         Flags = 1,
-        NameListPosition = 2,
-        Type = 3,
-        Target = 4,
+        Type = 2,
+        Target = 3,
     }
     #endregion
 
@@ -630,7 +627,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 2;
 
-        public const ushort FieldCount = 5;
+        public const ushort FieldCount = 4;
 
         public static readonly Type MaskType = typeof(PackageDataTarget.Mask<>);
 
@@ -849,8 +846,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case APackageData_FieldIndex.Name:
                     return (PackageDataTarget_FieldIndex)((int)index);
                 case APackageData_FieldIndex.Flags:
-                    return (PackageDataTarget_FieldIndex)((int)index);
-                case APackageData_FieldIndex.NameListPosition:
                     return (PackageDataTarget_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");
@@ -1097,9 +1092,6 @@ namespace Mutagen.Bethesda.Skyrim
             IPackageDataTargetGetter item,
             MutagenWriter writer)
         {
-            APackageDataBinaryWriteTranslation.WriteEmbedded(
-                item: item,
-                writer: writer);
         }
 
         public static void WriteRecordTypes(
@@ -1159,9 +1151,6 @@ namespace Mutagen.Bethesda.Skyrim
             IPackageDataTarget item,
             MutagenFrame frame)
         {
-            APackageDataBinaryCreateTranslation.FillBinaryStructs(
-                item: item,
-                frame: frame);
         }
 
         public static ParseResult FillBinaryRecordTypes(

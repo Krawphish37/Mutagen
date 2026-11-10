@@ -128,13 +128,11 @@ namespace Mutagen.Bethesda.Skyrim
             public Mask(
                 TItem Name,
                 TItem Flags,
-                TItem NameListPosition,
                 TItem Topics,
                 TItem TPIC)
             : base(
                 Name: Name,
-                Flags: Flags,
-                NameListPosition: NameListPosition)
+                Flags: Flags)
             {
                 this.Topics = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ATopicReference.Mask<TItem>?>>?>(Topics, []);
                 this.TPIC = TPIC;
@@ -697,9 +695,8 @@ namespace Mutagen.Bethesda.Skyrim
     {
         Name = 0,
         Flags = 1,
-        NameListPosition = 2,
-        Topics = 3,
-        TPIC = 4,
+        Topics = 2,
+        TPIC = 3,
     }
     #endregion
 
@@ -712,7 +709,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 2;
 
-        public const ushort FieldCount = 5;
+        public const ushort FieldCount = 4;
 
         public static readonly Type MaskType = typeof(PackageDataTopic.Mask<>);
 
@@ -822,7 +819,6 @@ namespace Mutagen.Bethesda.Skyrim
                 record: item,
                 frame: frame,
                 translationParams: translationParams,
-                fillStructs: PackageDataTopicBinaryCreateTranslation.FillBinaryStructs,
                 fillTyped: PackageDataTopicBinaryCreateTranslation.FillBinaryRecordTypes);
         }
         
@@ -946,8 +942,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case APackageData_FieldIndex.Name:
                     return (PackageDataTopic_FieldIndex)((int)index);
                 case APackageData_FieldIndex.Flags:
-                    return (PackageDataTopic_FieldIndex)((int)index);
-                case APackageData_FieldIndex.NameListPosition:
                     return (PackageDataTopic_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");
@@ -1215,9 +1209,6 @@ namespace Mutagen.Bethesda.Skyrim
             IPackageDataTopicGetter item,
             TypedWriteParams translationParams)
         {
-            APackageDataBinaryWriteTranslation.WriteEmbedded(
-                item: item,
-                writer: writer);
             WriteRecordTypes(
                 item: item,
                 writer: writer,

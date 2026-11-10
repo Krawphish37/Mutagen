@@ -107,12 +107,10 @@ namespace Mutagen.Bethesda.Skyrim
             public Mask(
                 TItem Name,
                 TItem Flags,
-                TItem NameListPosition,
                 TItem Location)
             : base(
                 Name: Name,
-                Flags: Flags,
-                NameListPosition: NameListPosition)
+                Flags: Flags)
             {
                 this.Location = new MaskItem<TItem, LocationTargetRadius.Mask<TItem>?>(Location, new LocationTargetRadius.Mask<TItem>(Location));
             }
@@ -585,8 +583,7 @@ namespace Mutagen.Bethesda.Skyrim
     {
         Name = 0,
         Flags = 1,
-        NameListPosition = 2,
-        Location = 3,
+        Location = 2,
     }
     #endregion
 
@@ -599,7 +596,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 1;
 
-        public const ushort FieldCount = 4;
+        public const ushort FieldCount = 3;
 
         public static readonly Type MaskType = typeof(PackageDataLocation.Mask<>);
 
@@ -707,7 +704,6 @@ namespace Mutagen.Bethesda.Skyrim
                 record: item,
                 frame: frame,
                 translationParams: translationParams,
-                fillStructs: PackageDataLocationBinaryCreateTranslation.FillBinaryStructs,
                 fillTyped: PackageDataLocationBinaryCreateTranslation.FillBinaryRecordTypes);
         }
         
@@ -812,8 +808,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case APackageData_FieldIndex.Name:
                     return (PackageDataLocation_FieldIndex)((int)index);
                 case APackageData_FieldIndex.Flags:
-                    return (PackageDataLocation_FieldIndex)((int)index);
-                case APackageData_FieldIndex.NameListPosition:
                     return (PackageDataLocation_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");
@@ -1063,9 +1057,6 @@ namespace Mutagen.Bethesda.Skyrim
             IPackageDataLocationGetter item,
             TypedWriteParams translationParams)
         {
-            APackageDataBinaryWriteTranslation.WriteEmbedded(
-                item: item,
-                writer: writer);
             WriteRecordTypes(
                 item: item,
                 writer: writer,

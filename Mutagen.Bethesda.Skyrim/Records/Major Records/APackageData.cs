@@ -20,6 +20,4 @@ partial class APackageDataBinaryOverlay
     string INamedRequiredGetter.Name => this.Name ?? string.Empty;
 
     public APackageData.Flag? Flags => throw new NotImplementedException();
-
-    public int? NameListPosition => throw new NotImplementedException();
 }

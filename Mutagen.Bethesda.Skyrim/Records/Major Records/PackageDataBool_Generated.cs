@@ -110,13 +110,11 @@ namespace Mutagen.Bethesda.Skyrim
             public Mask(
                 TItem Name,
                 TItem Flags,
-                TItem NameListPosition,
                 TItem Data,
                 TItem RawValue)
             : base(
                 Name: Name,
-                Flags: Flags,
-                NameListPosition: NameListPosition)
+                Flags: Flags)
             {
                 this.Data = Data;
                 this.RawValue = RawValue;
@@ -607,9 +605,8 @@ namespace Mutagen.Bethesda.Skyrim
     {
         Name = 0,
         Flags = 1,
-        NameListPosition = 2,
-        Data = 3,
-        RawValue = 4,
+        Data = 2,
+        RawValue = 3,
     }
     #endregion
 
@@ -622,7 +619,7 @@ namespace Mutagen.Bethesda.Skyrim
 
         public const ushort AdditionalFieldCount = 2;
 
-        public const ushort FieldCount = 5;
+        public const ushort FieldCount = 4;
 
         public static readonly Type MaskType = typeof(PackageDataBool.Mask<>);
 
@@ -835,8 +832,6 @@ namespace Mutagen.Bethesda.Skyrim
                 case APackageData_FieldIndex.Name:
                     return (PackageDataBool_FieldIndex)((int)index);
                 case APackageData_FieldIndex.Flags:
-                    return (PackageDataBool_FieldIndex)((int)index);
-                case APackageData_FieldIndex.NameListPosition:
                     return (PackageDataBool_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");
@@ -1057,9 +1052,6 @@ namespace Mutagen.Bethesda.Skyrim
             IPackageDataBoolGetter item,
             MutagenWriter writer)
         {
-            APackageDataBinaryWriteTranslation.WriteEmbedded(
-                item: item,
-                writer: writer);
         }
 
         public void Write(
@@ -1108,9 +1100,6 @@ namespace Mutagen.Bethesda.Skyrim
             IPackageDataBool item,
             MutagenFrame frame)
         {
-            APackageDataBinaryCreateTranslation.FillBinaryStructs(
-                item: item,
-                frame: frame);
         }
 
     }

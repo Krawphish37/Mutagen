@@ -16,7 +16,8 @@ namespace Mutagen.Bethesda.UnitTests.Plugins.Records.Skyrim;
 //   reads as true; the stored byte is kept in RawValue and written back while Data stays true.
 // - C117: the UNAM/BNAM/PNAM list after the procedure tree (names and flags of inputs) was written sorted by index,
 //   but records hold it in their own order (MQ304AlduinFlightGrabTemplate: 05 08 06 0A 0C 0D ..., while its data
-//   inputs are 05 0D 0E 0F 10 15). Each entry now keeps its place in that list (NameListPosition) for the writer.
+//   inputs are 05 0D 0E 0F 10 15). As for Starfield (C82), the package keeps the read order (internal
+//   ProcedureTreeDataOrder, kept by copies, not compared) and writes it while the indexes there are unchanged.
 // Each real package is read whole with both readers and written back byte for byte.
 public class PackageBoolAndNameOrderTests
 {
@@ -95,15 +96,29 @@ public class PackageBoolAndNameOrderTests
         ((PackageDataBool)copy2.Data[0x1F]).Data.ShouldBeTrue();
         ((PackageDataBool)copy2.Data[0x1F]).RawValue.ShouldBeNull();
     }
-
     [Fact]
     public void NameList_KeepsRecordOrder()
     {
         foreach (var pack in ReadBoth(AlduinGrab))
         {
-            pack.Data[0x08].NameListPosition.ShouldBe(1);
-            pack.Data[0x06].NameListPosition.ShouldBe(2);
             Write(pack).ShouldBe(Convert.FromHexString(AlduinGrab));
+            Write(pack.DeepCopy()).ShouldBe(Convert.FromHexString(AlduinGrab));
         }
+    }
+
+    [Fact]
+    public void NameList_OrderIsNotData()
+    {
+        var read = Package.CreateFromBinary(new MutagenFrame(new MutagenMemoryReadStream(Record(AlduinGrab), Meta())));
+        read.ProcedureTreeDataOrder.ShouldNotBeNull().Take(3).ShouldBe(new sbyte[] { 0x05, 0x08, 0x06 });
+        // Without the read order the list is written by index: other bytes, same data
+        var copy = read.DeepCopy();
+        copy.ProcedureTreeDataOrder = null;
+        var sorted = Write(copy);
+        sorted.ShouldNotBe(Convert.FromHexString(AlduinGrab));
+        var readSorted = Package.CreateFromBinary(new MutagenFrame(new MutagenMemoryReadStream(Record(Convert.ToHexString(sorted)), Meta())));
+        readSorted.Equals(read).ShouldBeTrue();
+        read.Equals(readSorted).ShouldBeTrue();
+        readSorted.GetHashCode().ShouldBe(read.GetHashCode());
     }
 }
