@@ -59,14 +59,14 @@
           <Enum name="Responsibility" enumName="Npc.ResponsibilityType" byteLength="1" />
           <Enum name="Mood" enumName="Npc.MoodType" byteLength="1" />
           <Enum name="Assistance" enumName="Npc.AssistanceType" byteLength="1" />
-          <UInt8 name="UnknownAIDT" />
+          <Bool name="HasReactionRadiusBehavior" byteLength="1" />
         </Fields>
       </Data>
       <List name="Packages">
         <FormLink refName="Package" recordType="PKID" />
       </List>
-      <RefDirect name="FLEE" refName="NpcFLEE" />
-      <List name="RDSAs" recordType="RDSA" >
+      <RefDirect name="FleeSettings" refName="NpcFLEE" />
+      <List name="ReactionRadiusBehaviors" recordType="RDSA" >
         <RefDirect refName="NpcRDSA" />
       </List>
       <List name="Keywords" counterRecType="KSIZ" recordType="KWDA">
@@ -184,10 +184,10 @@
       <FormLink name="KeywordsTemplate">
         <Interface>INpcTemplateTarget</Interface>
       </FormLink>
-      <FormLink name="Unknown1">
+      <FormLink name="ReactionRadiusTemplate">
         <Interface>INpcTemplateTarget</Interface>
       </FormLink>
-      <FormLink name="Unknown2">
+      <FormLink name="CombatStyleTemplate">
         <Interface>INpcTemplateTarget</Interface>
       </FormLink>
     </Fields>
@@ -205,12 +205,12 @@
   </Object>
   <Object name="NpcFLEE" objType="Subrecord" recordType="FLEE" >
     <Fields>
-      <FormLink name="UnknownLink1" refName="StarfieldMajorRecord" />
-      <FormLink name="UnknownLink2" refName="StarfieldMajorRecord" />
-      <FormLink name="UnknownLink3" refName="StarfieldMajorRecord" />
-      <Float name="UnknownFloat1" />
-      <Float name="UnknownFloat2" />
-      <Int32 name="UnknownInt" />
+      <FormLink name="FleeDistanceGlobal" refName="Global" />
+      <FormLink name="SafeTimerGlobal" refName="Global" />
+      <FormLink name="ChanceOfDiversionAnimationGlobal" refName="Global" />
+      <Float name="FleeDistance" />
+      <Float name="SafeTimer" />
+      <Float name="ChanceOfDiversionAnimation" />
     </Fields>
   </Object>
   <Object name="RankPlacement" objType="Subrecord" recordType="SNAM">
