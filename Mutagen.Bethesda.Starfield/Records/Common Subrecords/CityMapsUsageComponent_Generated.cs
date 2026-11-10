@@ -54,7 +54,9 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #region ModelPath
-        public String ModelPath { get; set; } = string.Empty;
+        public String? ModelPath { get; set; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        String? ICityMapsUsageComponentGetter.ModelPath => this.ModelPath;
         #endregion
 
         #region To String
@@ -396,7 +398,7 @@ namespace Mutagen.Bethesda.Starfield
         ICityMapsUsageComponentGetter,
         ILoquiObjectSetter<ICityMapsUsageComponent>
     {
-        new String ModelPath { get; set; }
+        new String? ModelPath { get; set; }
     }
 
     public partial interface ICityMapsUsageComponentGetter :
@@ -405,7 +407,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObject<ICityMapsUsageComponentGetter>
     {
         static new ILoquiRegistration StaticRegistration => CityMapsUsageComponent_Registration.Instance;
-        String ModelPath { get; }
+        String? ModelPath { get; }
 
     }
 
@@ -641,7 +643,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(ICityMapsUsageComponent item)
         {
             ClearPartial();
-            item.ModelPath = string.Empty;
+            item.ModelPath = default;
             base.Clear(item);
         }
         
@@ -759,9 +761,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if (printMask?.ModelPath ?? true)
+            if ((printMask?.ModelPath ?? true)
+                && item.ModelPath is {} ModelPathItem)
             {
-                sb.AppendItem(item.ModelPath, "ModelPath");
+                sb.AppendItem(ModelPathItem, "ModelPath");
             }
         }
         
@@ -803,7 +806,10 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ICityMapsUsageComponentGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.ModelPath);
+            if (item.ModelPath is {} ModelPathitem)
+            {
+                hash.Add(ModelPathitem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -981,12 +987,15 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
-            using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.MOD2)))
+            if (item.ModelPath is {} ModelPathFixedItem)
             {
-                StringBinaryTranslation.Instance.WriteNullPaddedFixedLength(
-                    writer: writer,
-                    item: item.ModelPath,
-                    byteLength: 260);
+                using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.MOD2)))
+                {
+                    StringBinaryTranslation.Instance.WriteNullPaddedFixedLength(
+                        writer: writer,
+                        item: ModelPathFixedItem,
+                        byteLength: 260);
+                }
             }
         }
 
@@ -1045,9 +1054,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MOD2:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    var dataFrame = frame.SpawnWithLength(contentLength);
-                    if (dataFrame.Remaining < 260) return null;
-                    item.ModelPath = StringBinaryTranslation.Instance.ParseNullPaddedFixedLength(dataFrame, byteLength: 260);
+                    item.ModelPath = StringBinaryTranslation.Instance.ParseNullPaddedFixedLength(frame.SpawnWithLength(contentLength), byteLength: contentLength);
                     return (int)CityMapsUsageComponent_FieldIndex.ModelPath;
                 }
                 default:
@@ -1106,11 +1113,9 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        private RangeInt32? _MOD2Location;
         #region ModelPath
-        private int _ModelPathLocation => _MOD2Location!.Value.Min;
-        private bool _ModelPath_IsSet => _MOD2Location.HasValue && _MOD2Location!.Value.Max - _ModelPathLocation + 1 >= 260;
-        public String ModelPath => _ModelPath_IsSet ? BinaryStringUtility.ProcessWholeToZString(_recordData.Slice(_ModelPathLocation, 260), encoding: _package.MetaData.Encodings.NonTranslated) : string.Empty;
+        private int? _ModelPathLocation;
+        public String? ModelPath => _ModelPathLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _ModelPathLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -1177,7 +1182,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.MOD2:
                 {
-                    _MOD2Location = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
+                    _ModelPathLocation = (stream.Position - offset);
                     return (int)CityMapsUsageComponent_FieldIndex.ModelPath;
                 }
                 default:

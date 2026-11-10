@@ -60,11 +60,33 @@ public class StringBinaryTranslationGeneration : PrimitiveBinaryTranslationGener
             {
                 throw new ArgumentException($"StringBinaryType.NullPaddedFixedLength requires a byteLength attribute on field {typeGen.Name}.");
             }
-            using (var args = sb.Call($"{this.NamespacePrefix}StringBinaryTranslation.Instance.WriteNullPaddedFixedLength"))
+            if (!data.RecordType.HasValue)
             {
-                args.Add($"writer: {writerAccessor}");
-                args.Add($"item: {AccessorTransform(typeGen, itemAccessor)}");
-                args.Add($"byteLength: {data.Length.Value}");
+                using (var args = sb.Call($"{this.NamespacePrefix}StringBinaryTranslation.Instance.WriteNullPaddedFixedLength"))
+                {
+                    args.Add($"writer: {writerAccessor}");
+                    args.Add($"item: {AccessorTransform(typeGen, itemAccessor)}");
+                    args.Add($"byteLength: {data.Length.Value}");
+                }
+                return;
+            }
+            // Its own subrecord: write the header around the fixed-length content (C125)
+            if (typeGen.Nullable)
+            {
+                sb.AppendLine($"if ({AccessorTransform(typeGen, itemAccessor)} is {{}} {typeGen.Name}FixedItem)");
+            }
+            using (sb.CurlyBrace(doIt: typeGen.Nullable))
+            {
+                sb.AppendLine($"using (HeaderExport.Subrecord({writerAccessor}, translationParams.ConvertToCustom({objGen.RecordTypeHeaderName(data.RecordType.Value)})))");
+                using (sb.CurlyBrace())
+                {
+                    using (var args = sb.Call($"{this.NamespacePrefix}StringBinaryTranslation.Instance.WriteNullPaddedFixedLength"))
+                    {
+                        args.Add($"writer: {writerAccessor}");
+                        args.Add($"item: {(typeGen.Nullable ? $"{typeGen.Name}FixedItem" : AccessorTransform(typeGen, itemAccessor))}");
+                        args.Add($"byteLength: {data.Length.Value}");
+                    }
+                }
             }
             return;
         }
@@ -113,6 +135,13 @@ public class StringBinaryTranslationGeneration : PrimitiveBinaryTranslationGener
             if (!data.Length.HasValue)
             {
                 throw new ArgumentException($"StringBinaryType.NullPaddedFixedLength requires a byteLength attribute on field {typeGen.Name}.");
+            }
+            if (data.HasTrigger)
+            {
+                // Its own subrecord: skip the header and read the whole content (C125)
+                sb.AppendLine($"{frameAccessor}.Position += {frameAccessor}.{nameof(MutagenBinaryReadStream.MetaData)}.{nameof(ParsingMeta.Constants)}.{nameof(GameConstants.SubConstants)}.{nameof(RecordHeaderConstants.HeaderLength)};");
+                sb.AppendLine($"{itemAccessor} = {this.NamespacePrefix}StringBinaryTranslation.Instance.ParseNullPaddedFixedLength({frameAccessor}.SpawnWithLength(contentLength), byteLength: contentLength);");
+                return;
             }
             sb.AppendLine($"{itemAccessor} = {this.NamespacePrefix}StringBinaryTranslation.Instance.ParseNullPaddedFixedLength({frameAccessor}, byteLength: {data.Length.Value});");
             return;
