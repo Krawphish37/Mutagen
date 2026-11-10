@@ -52,8 +52,8 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region Unknown
-        public Int32 Unknown { get; set; } = default(Int32);
+        #region Type
+        public EdgeLink.EdgeLinkType Type { get; set; } = default(EdgeLink.EdgeLinkType);
         #endregion
         #region Mesh
         private readonly IFormLink<IStarfieldMajorRecordGetter> _Mesh = new FormLink<IStarfieldMajorRecordGetter>();
@@ -68,8 +68,8 @@ namespace Mutagen.Bethesda.Starfield
         #region TriangleIndex
         public Int16 TriangleIndex { get; set; } = default(Int16);
         #endregion
-        #region Unknown2
-        public SByte Unknown2 { get; set; } = default(SByte);
+        #region EdgeIndex
+        public SByte EdgeIndex { get; set; } = default(SByte);
         #endregion
 
         #region To String
@@ -110,22 +110,22 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.Unknown = initialValue;
+                this.Type = initialValue;
                 this.Mesh = initialValue;
                 this.TriangleIndex = initialValue;
-                this.Unknown2 = initialValue;
+                this.EdgeIndex = initialValue;
             }
 
             public Mask(
-                TItem Unknown,
+                TItem Type,
                 TItem Mesh,
                 TItem TriangleIndex,
-                TItem Unknown2)
+                TItem EdgeIndex)
             {
-                this.Unknown = Unknown;
+                this.Type = Type;
                 this.Mesh = Mesh;
                 this.TriangleIndex = TriangleIndex;
-                this.Unknown2 = Unknown2;
+                this.EdgeIndex = EdgeIndex;
             }
 
             #pragma warning disable CS8618
@@ -137,10 +137,10 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem Unknown;
+            public TItem Type;
             public TItem Mesh;
             public TItem TriangleIndex;
-            public TItem Unknown2;
+            public TItem EdgeIndex;
             #endregion
 
             #region Equals
@@ -153,19 +153,19 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
+                if (!object.Equals(this.Type, rhs.Type)) return false;
                 if (!object.Equals(this.Mesh, rhs.Mesh)) return false;
                 if (!object.Equals(this.TriangleIndex, rhs.TriangleIndex)) return false;
-                if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
+                if (!object.Equals(this.EdgeIndex, rhs.EdgeIndex)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.Unknown);
+                hash.Add(this.Type);
                 hash.Add(this.Mesh);
                 hash.Add(this.TriangleIndex);
-                hash.Add(this.Unknown2);
+                hash.Add(this.EdgeIndex);
                 return hash.ToHashCode();
             }
 
@@ -174,10 +174,10 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.Unknown)) return false;
+                if (!eval(this.Type)) return false;
                 if (!eval(this.Mesh)) return false;
                 if (!eval(this.TriangleIndex)) return false;
-                if (!eval(this.Unknown2)) return false;
+                if (!eval(this.EdgeIndex)) return false;
                 return true;
             }
             #endregion
@@ -185,10 +185,10 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.Unknown)) return true;
+                if (eval(this.Type)) return true;
                 if (eval(this.Mesh)) return true;
                 if (eval(this.TriangleIndex)) return true;
-                if (eval(this.Unknown2)) return true;
+                if (eval(this.EdgeIndex)) return true;
                 return false;
             }
             #endregion
@@ -203,10 +203,10 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.Unknown = eval(this.Unknown);
+                obj.Type = eval(this.Type);
                 obj.Mesh = eval(this.Mesh);
                 obj.TriangleIndex = eval(this.TriangleIndex);
-                obj.Unknown2 = eval(this.Unknown2);
+                obj.EdgeIndex = eval(this.EdgeIndex);
             }
             #endregion
 
@@ -225,9 +225,9 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(EdgeLink.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.Unknown ?? true)
+                    if (printMask?.Type ?? true)
                     {
-                        sb.AppendItem(Unknown, "Unknown");
+                        sb.AppendItem(Type, "Type");
                     }
                     if (printMask?.Mesh ?? true)
                     {
@@ -237,9 +237,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(TriangleIndex, "TriangleIndex");
                     }
-                    if (printMask?.Unknown2 ?? true)
+                    if (printMask?.EdgeIndex ?? true)
                     {
-                        sb.AppendItem(Unknown2, "Unknown2");
+                        sb.AppendItem(EdgeIndex, "EdgeIndex");
                     }
                 }
             }
@@ -265,10 +265,10 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? Unknown;
+            public Exception? Type;
             public Exception? Mesh;
             public Exception? TriangleIndex;
-            public Exception? Unknown2;
+            public Exception? EdgeIndex;
             #endregion
 
             #region IErrorMask
@@ -277,14 +277,14 @@ namespace Mutagen.Bethesda.Starfield
                 EdgeLink_FieldIndex enu = (EdgeLink_FieldIndex)index;
                 switch (enu)
                 {
-                    case EdgeLink_FieldIndex.Unknown:
-                        return Unknown;
+                    case EdgeLink_FieldIndex.Type:
+                        return Type;
                     case EdgeLink_FieldIndex.Mesh:
                         return Mesh;
                     case EdgeLink_FieldIndex.TriangleIndex:
                         return TriangleIndex;
-                    case EdgeLink_FieldIndex.Unknown2:
-                        return Unknown2;
+                    case EdgeLink_FieldIndex.EdgeIndex:
+                        return EdgeIndex;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -295,8 +295,8 @@ namespace Mutagen.Bethesda.Starfield
                 EdgeLink_FieldIndex enu = (EdgeLink_FieldIndex)index;
                 switch (enu)
                 {
-                    case EdgeLink_FieldIndex.Unknown:
-                        this.Unknown = ex;
+                    case EdgeLink_FieldIndex.Type:
+                        this.Type = ex;
                         break;
                     case EdgeLink_FieldIndex.Mesh:
                         this.Mesh = ex;
@@ -304,8 +304,8 @@ namespace Mutagen.Bethesda.Starfield
                     case EdgeLink_FieldIndex.TriangleIndex:
                         this.TriangleIndex = ex;
                         break;
-                    case EdgeLink_FieldIndex.Unknown2:
-                        this.Unknown2 = ex;
+                    case EdgeLink_FieldIndex.EdgeIndex:
+                        this.EdgeIndex = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -317,8 +317,8 @@ namespace Mutagen.Bethesda.Starfield
                 EdgeLink_FieldIndex enu = (EdgeLink_FieldIndex)index;
                 switch (enu)
                 {
-                    case EdgeLink_FieldIndex.Unknown:
-                        this.Unknown = (Exception?)obj;
+                    case EdgeLink_FieldIndex.Type:
+                        this.Type = (Exception?)obj;
                         break;
                     case EdgeLink_FieldIndex.Mesh:
                         this.Mesh = (Exception?)obj;
@@ -326,8 +326,8 @@ namespace Mutagen.Bethesda.Starfield
                     case EdgeLink_FieldIndex.TriangleIndex:
                         this.TriangleIndex = (Exception?)obj;
                         break;
-                    case EdgeLink_FieldIndex.Unknown2:
-                        this.Unknown2 = (Exception?)obj;
+                    case EdgeLink_FieldIndex.EdgeIndex:
+                        this.EdgeIndex = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -337,10 +337,10 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (Unknown != null) return true;
+                if (Type != null) return true;
                 if (Mesh != null) return true;
                 if (TriangleIndex != null) return true;
-                if (Unknown2 != null) return true;
+                if (EdgeIndex != null) return true;
                 return false;
             }
             #endregion
@@ -367,7 +367,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(Unknown, "Unknown");
+                    sb.AppendItem(Type, "Type");
                 }
                 {
                     sb.AppendItem(Mesh, "Mesh");
@@ -376,7 +376,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(TriangleIndex, "TriangleIndex");
                 }
                 {
-                    sb.AppendItem(Unknown2, "Unknown2");
+                    sb.AppendItem(EdgeIndex, "EdgeIndex");
                 }
             }
             #endregion
@@ -386,10 +386,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
+                ret.Type = this.Type.Combine(rhs.Type);
                 ret.Mesh = this.Mesh.Combine(rhs.Mesh);
                 ret.TriangleIndex = this.TriangleIndex.Combine(rhs.TriangleIndex);
-                ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
+                ret.EdgeIndex = this.EdgeIndex.Combine(rhs.EdgeIndex);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -413,10 +413,10 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool Unknown;
+            public bool Type;
             public bool Mesh;
             public bool TriangleIndex;
-            public bool Unknown2;
+            public bool EdgeIndex;
             #endregion
 
             #region Ctors
@@ -426,10 +426,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.Unknown = defaultOn;
+                this.Type = defaultOn;
                 this.Mesh = defaultOn;
                 this.TriangleIndex = defaultOn;
-                this.Unknown2 = defaultOn;
+                this.EdgeIndex = defaultOn;
             }
 
             #endregion
@@ -445,10 +445,10 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((Unknown, null));
+                ret.Add((Type, null));
                 ret.Add((Mesh, null));
                 ret.Add((TriangleIndex, null));
-                ret.Add((Unknown2, null));
+                ret.Add((EdgeIndex, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -527,10 +527,10 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkContainer,
         ILoquiObjectSetter<IEdgeLink>
     {
-        new Int32 Unknown { get; set; }
+        new EdgeLink.EdgeLinkType Type { get; set; }
         new IFormLink<IStarfieldMajorRecordGetter> Mesh { get; set; }
         new Int16 TriangleIndex { get; set; }
-        new SByte Unknown2 { get; set; }
+        new SByte EdgeIndex { get; set; }
     }
 
     public partial interface IEdgeLinkGetter :
@@ -546,10 +546,10 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => EdgeLink_Registration.Instance;
-        Int32 Unknown { get; }
+        EdgeLink.EdgeLinkType Type { get; }
         IFormLinkGetter<IStarfieldMajorRecordGetter> Mesh { get; }
         Int16 TriangleIndex { get; }
-        SByte Unknown2 { get; }
+        SByte EdgeIndex { get; }
 
     }
 
@@ -719,10 +719,10 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum EdgeLink_FieldIndex
     {
-        Unknown = 0,
+        Type = 0,
         Mesh = 1,
         TriangleIndex = 2,
-        Unknown2 = 3,
+        EdgeIndex = 3,
     }
     #endregion
 
@@ -801,10 +801,10 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IEdgeLink item)
         {
             ClearPartial();
-            item.Unknown = default(Int32);
+            item.Type = default(EdgeLink.EdgeLinkType);
             item.Mesh.Clear();
             item.TriangleIndex = default(Int16);
-            item.Unknown2 = default(SByte);
+            item.EdgeIndex = default(SByte);
         }
         
         #region Mutagen
@@ -855,10 +855,10 @@ namespace Mutagen.Bethesda.Starfield
             EdgeLink.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Unknown = item.Unknown == rhs.Unknown;
+            ret.Type = item.Type == rhs.Type;
             ret.Mesh = item.Mesh.Equals(rhs.Mesh);
             ret.TriangleIndex = item.TriangleIndex == rhs.TriangleIndex;
-            ret.Unknown2 = item.Unknown2 == rhs.Unknown2;
+            ret.EdgeIndex = item.EdgeIndex == rhs.EdgeIndex;
         }
         
         public string Print(
@@ -903,9 +903,9 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             EdgeLink.Mask<bool>? printMask = null)
         {
-            if (printMask?.Unknown ?? true)
+            if (printMask?.Type ?? true)
             {
-                sb.AppendItem(item.Unknown, "Unknown");
+                sb.AppendItem(item.Type, "Type");
             }
             if (printMask?.Mesh ?? true)
             {
@@ -915,9 +915,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.TriangleIndex, "TriangleIndex");
             }
-            if (printMask?.Unknown2 ?? true)
+            if (printMask?.EdgeIndex ?? true)
             {
-                sb.AppendItem(item.Unknown2, "Unknown2");
+                sb.AppendItem(item.EdgeIndex, "EdgeIndex");
             }
         }
         
@@ -928,9 +928,9 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)EdgeLink_FieldIndex.Unknown) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)EdgeLink_FieldIndex.Type) ?? true))
             {
-                if (lhs.Unknown != rhs.Unknown) return false;
+                if (lhs.Type != rhs.Type) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)EdgeLink_FieldIndex.Mesh) ?? true))
             {
@@ -940,9 +940,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.TriangleIndex != rhs.TriangleIndex) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)EdgeLink_FieldIndex.Unknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)EdgeLink_FieldIndex.EdgeIndex) ?? true))
             {
-                if (lhs.Unknown2 != rhs.Unknown2) return false;
+                if (lhs.EdgeIndex != rhs.EdgeIndex) return false;
             }
             return true;
         }
@@ -950,10 +950,10 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IEdgeLinkGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Unknown);
+            hash.Add(item.Type);
             hash.Add(item.Mesh);
             hash.Add(item.TriangleIndex);
-            hash.Add(item.Unknown2);
+            hash.Add(item.EdgeIndex);
             return hash.ToHashCode();
         }
         
@@ -987,9 +987,9 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)EdgeLink_FieldIndex.Unknown) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)EdgeLink_FieldIndex.Type) ?? true))
             {
-                item.Unknown = rhs.Unknown;
+                item.Type = rhs.Type;
             }
             if ((copyMask?.GetShouldTranslate((int)EdgeLink_FieldIndex.Mesh) ?? true))
             {
@@ -999,9 +999,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.TriangleIndex = rhs.TriangleIndex;
             }
-            if ((copyMask?.GetShouldTranslate((int)EdgeLink_FieldIndex.Unknown2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)EdgeLink_FieldIndex.EdgeIndex) ?? true))
             {
-                item.Unknown2 = rhs.Unknown2;
+                item.EdgeIndex = rhs.EdgeIndex;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1111,12 +1111,15 @@ namespace Mutagen.Bethesda.Starfield
             IEdgeLinkGetter item,
             MutagenWriter writer)
         {
-            writer.Write(item.Unknown);
+            EnumBinaryTranslation<EdgeLink.EdgeLinkType, MutagenFrame, MutagenWriter>.Instance.Write(
+                writer,
+                item.Type,
+                length: 4);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
                 item: item.Mesh);
             writer.Write(item.TriangleIndex);
-            writer.Write(item.Unknown2);
+            writer.Write(item.EdgeIndex);
         }
 
         public void Write(
@@ -1150,10 +1153,12 @@ namespace Mutagen.Bethesda.Starfield
             IEdgeLink item,
             MutagenFrame frame)
         {
-            item.Unknown = frame.ReadInt32();
+            item.Type = EnumBinaryTranslation<EdgeLink.EdgeLinkType, MutagenFrame, MutagenWriter>.Instance.Parse(
+                reader: frame,
+                length: 4);
             item.Mesh.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             item.TriangleIndex = frame.ReadInt16();
-            item.Unknown2 = frame.ReadInt8();
+            item.EdgeIndex = frame.ReadInt8();
         }
 
     }
@@ -1220,10 +1225,10 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public Int32 Unknown => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x0, 0x4));
+        public EdgeLink.EdgeLinkType Type => (EdgeLink.EdgeLinkType)BinaryPrimitives.ReadInt32LittleEndian(_structData.Span.Slice(0x0, 0x4));
         public IFormLinkGetter<IStarfieldMajorRecordGetter> Mesh => FormLinkBinaryTranslation.Instance.OverlayFactory<IStarfieldMajorRecordGetter>(_package, _structData.Span.Slice(0x4, 0x4));
         public Int16 TriangleIndex => BinaryPrimitives.ReadInt16LittleEndian(_structData.Slice(0x8, 0x2));
-        public SByte Unknown2 => (sbyte)_structData.Slice(0xA, 0x1)[0];
+        public SByte EdgeIndex => (sbyte)_structData.Slice(0xA, 0x1)[0];
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

@@ -65,8 +65,15 @@ namespace Mutagen.Bethesda.Starfield
         #region Value
         public UInt32 Value { get; set; } = default(UInt32);
         #endregion
-        #region Unknown
-        public UInt32 Unknown { get; set; } = default(UInt32);
+        #region CurveTable
+        private readonly IFormLink<ICurveTableGetter> _CurveTable = new FormLink<ICurveTableGetter>();
+        public IFormLink<ICurveTableGetter> CurveTable
+        {
+            get => _CurveTable;
+            set => _CurveTable.SetTo(value);
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IFormLinkGetter<ICurveTableGetter> IResistanceDestructibleGetter.CurveTable => this.CurveTable;
         #endregion
 
         #region To String
@@ -109,17 +116,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DamageType = initialValue;
                 this.Value = initialValue;
-                this.Unknown = initialValue;
+                this.CurveTable = initialValue;
             }
 
             public Mask(
                 TItem DamageType,
                 TItem Value,
-                TItem Unknown)
+                TItem CurveTable)
             {
                 this.DamageType = DamageType;
                 this.Value = Value;
-                this.Unknown = Unknown;
+                this.CurveTable = CurveTable;
             }
 
             #pragma warning disable CS8618
@@ -133,7 +140,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public TItem DamageType;
             public TItem Value;
-            public TItem Unknown;
+            public TItem CurveTable;
             #endregion
 
             #region Equals
@@ -148,7 +155,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!object.Equals(this.DamageType, rhs.DamageType)) return false;
                 if (!object.Equals(this.Value, rhs.Value)) return false;
-                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
+                if (!object.Equals(this.CurveTable, rhs.CurveTable)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -156,7 +163,7 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.DamageType);
                 hash.Add(this.Value);
-                hash.Add(this.Unknown);
+                hash.Add(this.CurveTable);
                 return hash.ToHashCode();
             }
 
@@ -167,7 +174,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!eval(this.DamageType)) return false;
                 if (!eval(this.Value)) return false;
-                if (!eval(this.Unknown)) return false;
+                if (!eval(this.CurveTable)) return false;
                 return true;
             }
             #endregion
@@ -177,7 +184,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (eval(this.DamageType)) return true;
                 if (eval(this.Value)) return true;
-                if (eval(this.Unknown)) return true;
+                if (eval(this.CurveTable)) return true;
                 return false;
             }
             #endregion
@@ -194,7 +201,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 obj.DamageType = eval(this.DamageType);
                 obj.Value = eval(this.Value);
-                obj.Unknown = eval(this.Unknown);
+                obj.CurveTable = eval(this.CurveTable);
             }
             #endregion
 
@@ -221,9 +228,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Value, "Value");
                     }
-                    if (printMask?.Unknown ?? true)
+                    if (printMask?.CurveTable ?? true)
                     {
-                        sb.AppendItem(Unknown, "Unknown");
+                        sb.AppendItem(CurveTable, "CurveTable");
                     }
                 }
             }
@@ -251,7 +258,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             public Exception? DamageType;
             public Exception? Value;
-            public Exception? Unknown;
+            public Exception? CurveTable;
             #endregion
 
             #region IErrorMask
@@ -264,8 +271,8 @@ namespace Mutagen.Bethesda.Starfield
                         return DamageType;
                     case ResistanceDestructible_FieldIndex.Value:
                         return Value;
-                    case ResistanceDestructible_FieldIndex.Unknown:
-                        return Unknown;
+                    case ResistanceDestructible_FieldIndex.CurveTable:
+                        return CurveTable;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -282,8 +289,8 @@ namespace Mutagen.Bethesda.Starfield
                     case ResistanceDestructible_FieldIndex.Value:
                         this.Value = ex;
                         break;
-                    case ResistanceDestructible_FieldIndex.Unknown:
-                        this.Unknown = ex;
+                    case ResistanceDestructible_FieldIndex.CurveTable:
+                        this.CurveTable = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -301,8 +308,8 @@ namespace Mutagen.Bethesda.Starfield
                     case ResistanceDestructible_FieldIndex.Value:
                         this.Value = (Exception?)obj;
                         break;
-                    case ResistanceDestructible_FieldIndex.Unknown:
-                        this.Unknown = (Exception?)obj;
+                    case ResistanceDestructible_FieldIndex.CurveTable:
+                        this.CurveTable = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -314,7 +321,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (DamageType != null) return true;
                 if (Value != null) return true;
-                if (Unknown != null) return true;
+                if (CurveTable != null) return true;
                 return false;
             }
             #endregion
@@ -347,7 +354,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Value, "Value");
                 }
                 {
-                    sb.AppendItem(Unknown, "Unknown");
+                    sb.AppendItem(CurveTable, "CurveTable");
                 }
             }
             #endregion
@@ -359,7 +366,7 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.DamageType = this.DamageType.Combine(rhs.DamageType);
                 ret.Value = this.Value.Combine(rhs.Value);
-                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
+                ret.CurveTable = this.CurveTable.Combine(rhs.CurveTable);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -385,7 +392,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool OnOverall;
             public bool DamageType;
             public bool Value;
-            public bool Unknown;
+            public bool CurveTable;
             #endregion
 
             #region Ctors
@@ -397,7 +404,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.OnOverall = onOverall;
                 this.DamageType = defaultOn;
                 this.Value = defaultOn;
-                this.Unknown = defaultOn;
+                this.CurveTable = defaultOn;
             }
 
             #endregion
@@ -415,7 +422,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 ret.Add((DamageType, null));
                 ret.Add((Value, null));
-                ret.Add((Unknown, null));
+                ret.Add((CurveTable, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -496,7 +503,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         new IFormLink<IDamageTypeGetter> DamageType { get; set; }
         new UInt32 Value { get; set; }
-        new UInt32 Unknown { get; set; }
+        new IFormLink<ICurveTableGetter> CurveTable { get; set; }
     }
 
     public partial interface IResistanceDestructibleGetter :
@@ -514,7 +521,7 @@ namespace Mutagen.Bethesda.Starfield
         static ILoquiRegistration StaticRegistration => ResistanceDestructible_Registration.Instance;
         IFormLinkGetter<IDamageTypeGetter> DamageType { get; }
         UInt32 Value { get; }
-        UInt32 Unknown { get; }
+        IFormLinkGetter<ICurveTableGetter> CurveTable { get; }
 
     }
 
@@ -686,7 +693,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         DamageType = 0,
         Value = 1,
-        Unknown = 2,
+        CurveTable = 2,
     }
     #endregion
 
@@ -767,13 +774,14 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.DamageType.Clear();
             item.Value = default(UInt32);
-            item.Unknown = default(UInt32);
+            item.CurveTable.Clear();
         }
         
         #region Mutagen
         public void RemapLinks(IResistanceDestructible obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             obj.DamageType.Relink(mapping);
+            obj.CurveTable.Relink(mapping);
         }
         
         #endregion
@@ -820,7 +828,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ret.DamageType = item.DamageType.Equals(rhs.DamageType);
             ret.Value = item.Value == rhs.Value;
-            ret.Unknown = item.Unknown == rhs.Unknown;
+            ret.CurveTable = item.CurveTable.Equals(rhs.CurveTable);
         }
         
         public string Print(
@@ -873,9 +881,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Value, "Value");
             }
-            if (printMask?.Unknown ?? true)
+            if (printMask?.CurveTable ?? true)
             {
-                sb.AppendItem(item.Unknown, "Unknown");
+                sb.AppendItem(item.CurveTable.FormKey, "CurveTable");
             }
         }
         
@@ -894,9 +902,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Value != rhs.Value) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ResistanceDestructible_FieldIndex.Unknown) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ResistanceDestructible_FieldIndex.CurveTable) ?? true))
             {
-                if (lhs.Unknown != rhs.Unknown) return false;
+                if (!lhs.CurveTable.Equals(rhs.CurveTable)) return false;
             }
             return true;
         }
@@ -906,7 +914,7 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             hash.Add(item.DamageType);
             hash.Add(item.Value);
-            hash.Add(item.Unknown);
+            hash.Add(item.CurveTable);
             return hash.ToHashCode();
         }
         
@@ -922,6 +930,7 @@ namespace Mutagen.Bethesda.Starfield
         public IEnumerable<IFormLinkGetter> EnumerateFormLinks(IResistanceDestructibleGetter obj, bool iterateNestedRecords = true)
         {
             yield return FormLinkInformation.Factory(obj.DamageType);
+            yield return FormLinkInformation.Factory(obj.CurveTable);
             yield break;
         }
         
@@ -948,9 +957,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Value = rhs.Value;
             }
-            if ((copyMask?.GetShouldTranslate((int)ResistanceDestructible_FieldIndex.Unknown) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ResistanceDestructible_FieldIndex.CurveTable) ?? true))
             {
-                item.Unknown = rhs.Unknown;
+                item.CurveTable.SetTo(rhs.CurveTable.FormKey);
             }
             DeepCopyInCustom(
                 item: item,
@@ -1064,7 +1073,9 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.DamageType);
             writer.Write(item.Value);
-            writer.Write(item.Unknown);
+            FormLinkBinaryTranslation.Instance.Write(
+                writer: writer,
+                item: item.CurveTable);
         }
 
         public void Write(
@@ -1100,7 +1111,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             item.DamageType.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             item.Value = frame.ReadUInt32();
-            item.Unknown = frame.ReadUInt32();
+            item.CurveTable.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
         }
 
     }
@@ -1169,7 +1180,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public IFormLinkGetter<IDamageTypeGetter> DamageType => FormLinkBinaryTranslation.Instance.OverlayFactory<IDamageTypeGetter>(_package, _structData.Span.Slice(0x0, 0x4));
         public UInt32 Value => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x4, 0x4));
-        public UInt32 Unknown => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x8, 0x4));
+        public IFormLinkGetter<ICurveTableGetter> CurveTable => FormLinkBinaryTranslation.Instance.OverlayFactory<ICurveTableGetter>(_package, _structData.Span.Slice(0x8, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

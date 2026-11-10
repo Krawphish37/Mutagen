@@ -49,19 +49,19 @@
   </Object>
   <Object name="EdgeLink" objType="Subrecord">
     <Fields>
-      <Int32 name="Unknown" />
+      <Enum name="Type" enumName="EdgeLink.EdgeLinkType" byteLength="4" />
       <!-- A navigation mesh in NAVM records, a placed object in ship GenericBaseForms. -->
       <FormLink name="Mesh">
         <Interface>IStarfieldMajorRecord</Interface>
       </FormLink>
       <Int16 name="TriangleIndex" />
-      <Int8 name="Unknown2" />
+      <Int8 name="EdgeIndex" />
     </Fields>
   </Object>
   <Object name="DoorTriangle" objType="Subrecord">
     <Fields>
       <Int16 name="TriangleBeforeDoor" />
-      <Int32 name="Unknown" />
+      <UInt32 name="CrcHash" default="0xE48B73F3" />
       <FormLink name="Door" refName="PlacedObject" />
     </Fields>
   </Object>
@@ -69,7 +69,7 @@
     <Fields>
       <P3Float name="Location" />
       <Int16 name="TriangleIndex" />
-      <Int32 name="Unknown" />
+      <UInt32 name="Flags" />
     </Fields>
   </Object>
   <Object name="NavmeshGridArray" objType="Subrecord">

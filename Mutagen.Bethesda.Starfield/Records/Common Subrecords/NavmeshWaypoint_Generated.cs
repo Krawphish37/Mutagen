@@ -57,8 +57,8 @@ namespace Mutagen.Bethesda.Starfield
         #region TriangleIndex
         public Int16 TriangleIndex { get; set; } = default(Int16);
         #endregion
-        #region Unknown
-        public Int32 Unknown { get; set; } = default(Int32);
+        #region Flags
+        public UInt32 Flags { get; set; } = default(UInt32);
         #endregion
 
         #region To String
@@ -101,17 +101,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.Location = initialValue;
                 this.TriangleIndex = initialValue;
-                this.Unknown = initialValue;
+                this.Flags = initialValue;
             }
 
             public Mask(
                 TItem Location,
                 TItem TriangleIndex,
-                TItem Unknown)
+                TItem Flags)
             {
                 this.Location = Location;
                 this.TriangleIndex = TriangleIndex;
-                this.Unknown = Unknown;
+                this.Flags = Flags;
             }
 
             #pragma warning disable CS8618
@@ -125,7 +125,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public TItem Location;
             public TItem TriangleIndex;
-            public TItem Unknown;
+            public TItem Flags;
             #endregion
 
             #region Equals
@@ -140,7 +140,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!object.Equals(this.Location, rhs.Location)) return false;
                 if (!object.Equals(this.TriangleIndex, rhs.TriangleIndex)) return false;
-                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
+                if (!object.Equals(this.Flags, rhs.Flags)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -148,7 +148,7 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.Location);
                 hash.Add(this.TriangleIndex);
-                hash.Add(this.Unknown);
+                hash.Add(this.Flags);
                 return hash.ToHashCode();
             }
 
@@ -159,7 +159,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!eval(this.Location)) return false;
                 if (!eval(this.TriangleIndex)) return false;
-                if (!eval(this.Unknown)) return false;
+                if (!eval(this.Flags)) return false;
                 return true;
             }
             #endregion
@@ -169,7 +169,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (eval(this.Location)) return true;
                 if (eval(this.TriangleIndex)) return true;
-                if (eval(this.Unknown)) return true;
+                if (eval(this.Flags)) return true;
                 return false;
             }
             #endregion
@@ -186,7 +186,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 obj.Location = eval(this.Location);
                 obj.TriangleIndex = eval(this.TriangleIndex);
-                obj.Unknown = eval(this.Unknown);
+                obj.Flags = eval(this.Flags);
             }
             #endregion
 
@@ -213,9 +213,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(TriangleIndex, "TriangleIndex");
                     }
-                    if (printMask?.Unknown ?? true)
+                    if (printMask?.Flags ?? true)
                     {
-                        sb.AppendItem(Unknown, "Unknown");
+                        sb.AppendItem(Flags, "Flags");
                     }
                 }
             }
@@ -243,7 +243,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             public Exception? Location;
             public Exception? TriangleIndex;
-            public Exception? Unknown;
+            public Exception? Flags;
             #endregion
 
             #region IErrorMask
@@ -256,8 +256,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Location;
                     case NavmeshWaypoint_FieldIndex.TriangleIndex:
                         return TriangleIndex;
-                    case NavmeshWaypoint_FieldIndex.Unknown:
-                        return Unknown;
+                    case NavmeshWaypoint_FieldIndex.Flags:
+                        return Flags;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -274,8 +274,8 @@ namespace Mutagen.Bethesda.Starfield
                     case NavmeshWaypoint_FieldIndex.TriangleIndex:
                         this.TriangleIndex = ex;
                         break;
-                    case NavmeshWaypoint_FieldIndex.Unknown:
-                        this.Unknown = ex;
+                    case NavmeshWaypoint_FieldIndex.Flags:
+                        this.Flags = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -293,8 +293,8 @@ namespace Mutagen.Bethesda.Starfield
                     case NavmeshWaypoint_FieldIndex.TriangleIndex:
                         this.TriangleIndex = (Exception?)obj;
                         break;
-                    case NavmeshWaypoint_FieldIndex.Unknown:
-                        this.Unknown = (Exception?)obj;
+                    case NavmeshWaypoint_FieldIndex.Flags:
+                        this.Flags = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -306,7 +306,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (Location != null) return true;
                 if (TriangleIndex != null) return true;
-                if (Unknown != null) return true;
+                if (Flags != null) return true;
                 return false;
             }
             #endregion
@@ -339,7 +339,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(TriangleIndex, "TriangleIndex");
                 }
                 {
-                    sb.AppendItem(Unknown, "Unknown");
+                    sb.AppendItem(Flags, "Flags");
                 }
             }
             #endregion
@@ -351,7 +351,7 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.Location = this.Location.Combine(rhs.Location);
                 ret.TriangleIndex = this.TriangleIndex.Combine(rhs.TriangleIndex);
-                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
+                ret.Flags = this.Flags.Combine(rhs.Flags);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -377,7 +377,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool OnOverall;
             public bool Location;
             public bool TriangleIndex;
-            public bool Unknown;
+            public bool Flags;
             #endregion
 
             #region Ctors
@@ -389,7 +389,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.OnOverall = onOverall;
                 this.Location = defaultOn;
                 this.TriangleIndex = defaultOn;
-                this.Unknown = defaultOn;
+                this.Flags = defaultOn;
             }
 
             #endregion
@@ -407,7 +407,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 ret.Add((Location, null));
                 ret.Add((TriangleIndex, null));
-                ret.Add((Unknown, null));
+                ret.Add((Flags, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -482,7 +482,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         new P3Float Location { get; set; }
         new Int16 TriangleIndex { get; set; }
-        new Int32 Unknown { get; set; }
+        new UInt32 Flags { get; set; }
     }
 
     public partial interface INavmeshWaypointGetter :
@@ -499,7 +499,7 @@ namespace Mutagen.Bethesda.Starfield
         static ILoquiRegistration StaticRegistration => NavmeshWaypoint_Registration.Instance;
         P3Float Location { get; }
         Int16 TriangleIndex { get; }
-        Int32 Unknown { get; }
+        UInt32 Flags { get; }
 
     }
 
@@ -671,7 +671,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         Location = 0,
         TriangleIndex = 1,
-        Unknown = 2,
+        Flags = 2,
     }
     #endregion
 
@@ -752,7 +752,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.Location = default(P3Float);
             item.TriangleIndex = default(Int16);
-            item.Unknown = default(Int32);
+            item.Flags = default(UInt32);
         }
         
         #region Mutagen
@@ -804,7 +804,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ret.Location = item.Location.Equals(rhs.Location);
             ret.TriangleIndex = item.TriangleIndex == rhs.TriangleIndex;
-            ret.Unknown = item.Unknown == rhs.Unknown;
+            ret.Flags = item.Flags == rhs.Flags;
         }
         
         public string Print(
@@ -857,9 +857,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.TriangleIndex, "TriangleIndex");
             }
-            if (printMask?.Unknown ?? true)
+            if (printMask?.Flags ?? true)
             {
-                sb.AppendItem(item.Unknown, "Unknown");
+                sb.AppendItem(item.Flags, "Flags");
             }
         }
         
@@ -878,9 +878,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.TriangleIndex != rhs.TriangleIndex) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NavmeshWaypoint_FieldIndex.Unknown) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NavmeshWaypoint_FieldIndex.Flags) ?? true))
             {
-                if (lhs.Unknown != rhs.Unknown) return false;
+                if (lhs.Flags != rhs.Flags) return false;
             }
             return true;
         }
@@ -890,7 +890,7 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             hash.Add(item.Location);
             hash.Add(item.TriangleIndex);
-            hash.Add(item.Unknown);
+            hash.Add(item.Flags);
             return hash.ToHashCode();
         }
         
@@ -931,9 +931,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.TriangleIndex = rhs.TriangleIndex;
             }
-            if ((copyMask?.GetShouldTranslate((int)NavmeshWaypoint_FieldIndex.Unknown) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NavmeshWaypoint_FieldIndex.Flags) ?? true))
             {
-                item.Unknown = rhs.Unknown;
+                item.Flags = rhs.Flags;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1047,7 +1047,7 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.Location);
             writer.Write(item.TriangleIndex);
-            writer.Write(item.Unknown);
+            writer.Write(item.Flags);
         }
 
         public void Write(
@@ -1083,7 +1083,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             item.Location = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.TriangleIndex = frame.ReadInt16();
-            item.Unknown = frame.ReadInt32();
+            item.Flags = frame.ReadUInt32();
         }
 
     }
@@ -1151,7 +1151,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public P3Float Location => P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_structData.Slice(0x0, 0xC));
         public Int16 TriangleIndex => BinaryPrimitives.ReadInt16LittleEndian(_structData.Slice(0xC, 0x2));
-        public Int32 Unknown => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0xE, 0x4));
+        public UInt32 Flags => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0xE, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

@@ -55,8 +55,9 @@ namespace Mutagen.Bethesda.Starfield
         #region TriangleBeforeDoor
         public Int16 TriangleBeforeDoor { get; set; } = default(Int16);
         #endregion
-        #region Unknown
-        public Int32 Unknown { get; set; } = default(Int32);
+        #region CrcHash
+        public static readonly UInt32 CrcHashDefault = 0xE48B73F3;
+        public UInt32 CrcHash { get; set; } = CrcHashDefault;
         #endregion
         #region Door
         private readonly IFormLink<IPlacedObjectGetter> _Door = new FormLink<IPlacedObjectGetter>();
@@ -108,17 +109,17 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             {
                 this.TriangleBeforeDoor = initialValue;
-                this.Unknown = initialValue;
+                this.CrcHash = initialValue;
                 this.Door = initialValue;
             }
 
             public Mask(
                 TItem TriangleBeforeDoor,
-                TItem Unknown,
+                TItem CrcHash,
                 TItem Door)
             {
                 this.TriangleBeforeDoor = TriangleBeforeDoor;
-                this.Unknown = Unknown;
+                this.CrcHash = CrcHash;
                 this.Door = Door;
             }
 
@@ -132,7 +133,7 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public TItem TriangleBeforeDoor;
-            public TItem Unknown;
+            public TItem CrcHash;
             public TItem Door;
             #endregion
 
@@ -147,7 +148,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!object.Equals(this.TriangleBeforeDoor, rhs.TriangleBeforeDoor)) return false;
-                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
+                if (!object.Equals(this.CrcHash, rhs.CrcHash)) return false;
                 if (!object.Equals(this.Door, rhs.Door)) return false;
                 return true;
             }
@@ -155,7 +156,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 var hash = new HashCode();
                 hash.Add(this.TriangleBeforeDoor);
-                hash.Add(this.Unknown);
+                hash.Add(this.CrcHash);
                 hash.Add(this.Door);
                 return hash.ToHashCode();
             }
@@ -166,7 +167,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool All(Func<TItem, bool> eval)
             {
                 if (!eval(this.TriangleBeforeDoor)) return false;
-                if (!eval(this.Unknown)) return false;
+                if (!eval(this.CrcHash)) return false;
                 if (!eval(this.Door)) return false;
                 return true;
             }
@@ -176,7 +177,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Any(Func<TItem, bool> eval)
             {
                 if (eval(this.TriangleBeforeDoor)) return true;
-                if (eval(this.Unknown)) return true;
+                if (eval(this.CrcHash)) return true;
                 if (eval(this.Door)) return true;
                 return false;
             }
@@ -193,7 +194,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 obj.TriangleBeforeDoor = eval(this.TriangleBeforeDoor);
-                obj.Unknown = eval(this.Unknown);
+                obj.CrcHash = eval(this.CrcHash);
                 obj.Door = eval(this.Door);
             }
             #endregion
@@ -217,9 +218,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(TriangleBeforeDoor, "TriangleBeforeDoor");
                     }
-                    if (printMask?.Unknown ?? true)
+                    if (printMask?.CrcHash ?? true)
                     {
-                        sb.AppendItem(Unknown, "Unknown");
+                        sb.AppendItem(CrcHash, "CrcHash");
                     }
                     if (printMask?.Door ?? true)
                     {
@@ -250,7 +251,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             public Exception? TriangleBeforeDoor;
-            public Exception? Unknown;
+            public Exception? CrcHash;
             public Exception? Door;
             #endregion
 
@@ -262,8 +263,8 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case DoorTriangle_FieldIndex.TriangleBeforeDoor:
                         return TriangleBeforeDoor;
-                    case DoorTriangle_FieldIndex.Unknown:
-                        return Unknown;
+                    case DoorTriangle_FieldIndex.CrcHash:
+                        return CrcHash;
                     case DoorTriangle_FieldIndex.Door:
                         return Door;
                     default:
@@ -279,8 +280,8 @@ namespace Mutagen.Bethesda.Starfield
                     case DoorTriangle_FieldIndex.TriangleBeforeDoor:
                         this.TriangleBeforeDoor = ex;
                         break;
-                    case DoorTriangle_FieldIndex.Unknown:
-                        this.Unknown = ex;
+                    case DoorTriangle_FieldIndex.CrcHash:
+                        this.CrcHash = ex;
                         break;
                     case DoorTriangle_FieldIndex.Door:
                         this.Door = ex;
@@ -298,8 +299,8 @@ namespace Mutagen.Bethesda.Starfield
                     case DoorTriangle_FieldIndex.TriangleBeforeDoor:
                         this.TriangleBeforeDoor = (Exception?)obj;
                         break;
-                    case DoorTriangle_FieldIndex.Unknown:
-                        this.Unknown = (Exception?)obj;
+                    case DoorTriangle_FieldIndex.CrcHash:
+                        this.CrcHash = (Exception?)obj;
                         break;
                     case DoorTriangle_FieldIndex.Door:
                         this.Door = (Exception?)obj;
@@ -313,7 +314,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (TriangleBeforeDoor != null) return true;
-                if (Unknown != null) return true;
+                if (CrcHash != null) return true;
                 if (Door != null) return true;
                 return false;
             }
@@ -344,7 +345,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(TriangleBeforeDoor, "TriangleBeforeDoor");
                 }
                 {
-                    sb.AppendItem(Unknown, "Unknown");
+                    sb.AppendItem(CrcHash, "CrcHash");
                 }
                 {
                     sb.AppendItem(Door, "Door");
@@ -358,7 +359,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.TriangleBeforeDoor = this.TriangleBeforeDoor.Combine(rhs.TriangleBeforeDoor);
-                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
+                ret.CrcHash = this.CrcHash.Combine(rhs.CrcHash);
                 ret.Door = this.Door.Combine(rhs.Door);
                 return ret;
             }
@@ -384,7 +385,7 @@ namespace Mutagen.Bethesda.Starfield
             public readonly bool DefaultOn;
             public bool OnOverall;
             public bool TriangleBeforeDoor;
-            public bool Unknown;
+            public bool CrcHash;
             public bool Door;
             #endregion
 
@@ -396,7 +397,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
                 this.TriangleBeforeDoor = defaultOn;
-                this.Unknown = defaultOn;
+                this.CrcHash = defaultOn;
                 this.Door = defaultOn;
             }
 
@@ -414,7 +415,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 ret.Add((TriangleBeforeDoor, null));
-                ret.Add((Unknown, null));
+                ret.Add((CrcHash, null));
                 ret.Add((Door, null));
             }
 
@@ -495,7 +496,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<IDoorTriangle>
     {
         new Int16 TriangleBeforeDoor { get; set; }
-        new Int32 Unknown { get; set; }
+        new UInt32 CrcHash { get; set; }
         new IFormLink<IPlacedObjectGetter> Door { get; set; }
     }
 
@@ -513,7 +514,7 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => DoorTriangle_Registration.Instance;
         Int16 TriangleBeforeDoor { get; }
-        Int32 Unknown { get; }
+        UInt32 CrcHash { get; }
         IFormLinkGetter<IPlacedObjectGetter> Door { get; }
 
     }
@@ -685,7 +686,7 @@ namespace Mutagen.Bethesda.Starfield
     internal enum DoorTriangle_FieldIndex
     {
         TriangleBeforeDoor = 0,
-        Unknown = 1,
+        CrcHash = 1,
         Door = 2,
     }
     #endregion
@@ -766,7 +767,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.TriangleBeforeDoor = default(Int16);
-            item.Unknown = default(Int32);
+            item.CrcHash = DoorTriangle.CrcHashDefault;
             item.Door.Clear();
         }
         
@@ -819,7 +820,7 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.TriangleBeforeDoor = item.TriangleBeforeDoor == rhs.TriangleBeforeDoor;
-            ret.Unknown = item.Unknown == rhs.Unknown;
+            ret.CrcHash = item.CrcHash == rhs.CrcHash;
             ret.Door = item.Door.Equals(rhs.Door);
         }
         
@@ -869,9 +870,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.TriangleBeforeDoor, "TriangleBeforeDoor");
             }
-            if (printMask?.Unknown ?? true)
+            if (printMask?.CrcHash ?? true)
             {
-                sb.AppendItem(item.Unknown, "Unknown");
+                sb.AppendItem(item.CrcHash, "CrcHash");
             }
             if (printMask?.Door ?? true)
             {
@@ -890,9 +891,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.TriangleBeforeDoor != rhs.TriangleBeforeDoor) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)DoorTriangle_FieldIndex.Unknown) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)DoorTriangle_FieldIndex.CrcHash) ?? true))
             {
-                if (lhs.Unknown != rhs.Unknown) return false;
+                if (lhs.CrcHash != rhs.CrcHash) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)DoorTriangle_FieldIndex.Door) ?? true))
             {
@@ -905,7 +906,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.TriangleBeforeDoor);
-            hash.Add(item.Unknown);
+            hash.Add(item.CrcHash);
             hash.Add(item.Door);
             return hash.ToHashCode();
         }
@@ -944,9 +945,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.TriangleBeforeDoor = rhs.TriangleBeforeDoor;
             }
-            if ((copyMask?.GetShouldTranslate((int)DoorTriangle_FieldIndex.Unknown) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)DoorTriangle_FieldIndex.CrcHash) ?? true))
             {
-                item.Unknown = rhs.Unknown;
+                item.CrcHash = rhs.CrcHash;
             }
             if ((copyMask?.GetShouldTranslate((int)DoorTriangle_FieldIndex.Door) ?? true))
             {
@@ -1061,7 +1062,7 @@ namespace Mutagen.Bethesda.Starfield
             MutagenWriter writer)
         {
             writer.Write(item.TriangleBeforeDoor);
-            writer.Write(item.Unknown);
+            writer.Write(item.CrcHash);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
                 item: item.Door);
@@ -1099,7 +1100,7 @@ namespace Mutagen.Bethesda.Starfield
             MutagenFrame frame)
         {
             item.TriangleBeforeDoor = frame.ReadInt16();
-            item.Unknown = frame.ReadInt32();
+            item.CrcHash = frame.ReadUInt32();
             item.Door.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
         }
 
@@ -1168,7 +1169,7 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public Int16 TriangleBeforeDoor => BinaryPrimitives.ReadInt16LittleEndian(_structData.Slice(0x0, 0x2));
-        public Int32 Unknown => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x2, 0x4));
+        public UInt32 CrcHash => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x2, 0x4));
         public IFormLinkGetter<IPlacedObjectGetter> Door => FormLinkBinaryTranslation.Instance.OverlayFactory<IPlacedObjectGetter>(_package, _structData.Span.Slice(0x6, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,

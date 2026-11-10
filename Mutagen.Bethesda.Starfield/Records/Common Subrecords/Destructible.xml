@@ -20,7 +20,7 @@
     <Fields>
       <FormLink name="DamageType" refName="DamageType" />
       <UInt32 name="Value" />
-      <UInt32 name="Unknown" />
+      <FormLink name="CurveTable" refName="CurveTable" />
     </Fields>
   </Object>
   <Object name="DestructionStage" objType="Subrecord" endMarkerType="DSTF">
@@ -35,7 +35,8 @@
           <FormLink name="Explosion" refName="Explosion" />
           <FormLink name="Debris" refName="Debris" />
           <Int32 name="DebrisCount" />
-          <Float name="Unknown" />
+          <Break />
+          <Float name="ReplacementModelDelay" />
         </Fields>
       </Data>
       <String name="SequenceName" recordType="DSTA" nullable="True" />
