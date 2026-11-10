@@ -22,27 +22,27 @@ namespace Mutagen.Bethesda.UnitTests.Plugins.Records;
 public class NullableArrayEqualityTests
 {
     [Fact]
-    public void StarfieldSnapTemplateBnamBothNull()
+    public void StarfieldSnapTemplateBoundOverrideBothNull()
     {
         var item = new SF.SnapTemplate(TestConstants.Form1, SF.StarfieldRelease.Starfield);
-        item.BNAM.ShouldBeNull();
+        item.BoundOverride.ShouldBeNull();
         item.Equals(item.DeepCopy()).ShouldBeTrue();
         item.DeepCopy().Equals(item).ShouldBeTrue();
     }
 
     [Fact]
-    public void StarfieldSnapTemplateBnam()
+    public void StarfieldSnapTemplateBoundOverride()
     {
         var item = new SF.SnapTemplate(TestConstants.Form1, SF.StarfieldRelease.Starfield);
         var other = item.DeepCopy();
-        other.BNAM = new float[] { 1, 2, 3, 4, 5, 6 };
+        other.BoundOverride = new float[] { 1, 2, 3, 4, 5, 6 };
         item.Equals(other).ShouldBeFalse();
         other.Equals(item).ShouldBeFalse();
 
-        item.BNAM = new float[] { 1, 2, 3, 4, 5, 6 };
+        item.BoundOverride = new float[] { 1, 2, 3, 4, 5, 6 };
         item.Equals(other).ShouldBeTrue();
 
-        other.BNAM[5] = 7;
+        other.BoundOverride[5] = 7;
         item.Equals(other).ShouldBeFalse();
     }
 
@@ -165,8 +165,8 @@ public class NullableArrayEqualityTests
         var bytes = MakeSnapTemplateBytes(null);
         var direct = ReadDirect(bytes);
         var overlay = ReadOverlay(bytes);
-        direct.BNAM.ShouldBeNull();
-        overlay.BNAM.ShouldBeNull();
+        direct.BoundOverride.ShouldBeNull();
+        overlay.BoundOverride.ShouldBeNull();
         direct.Equals(overlay).ShouldBeTrue();
         overlay.Equals(direct).ShouldBeTrue();
         overlay.Equals(overlay.DeepCopy()).ShouldBeTrue();

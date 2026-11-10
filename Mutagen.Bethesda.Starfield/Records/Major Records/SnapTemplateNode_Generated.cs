@@ -155,20 +155,20 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IFormLinkGetter<IKeywordCommonGetter>>? IKeywordedGetter.Keywords => this.Keywords;
         #endregion
         #endregion
-        #region CNAM
-        public Color? CNAM { get; set; }
+        #region Color
+        public Color? Color { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        Color? ISnapTemplateNodeGetter.CNAM => this.CNAM;
+        Color? ISnapTemplateNodeGetter.Color => this.Color;
         #endregion
-        #region FNAM
-        public UInt32? FNAM { get; set; }
+        #region Flags
+        public SnapTemplateNode.Flag? Flags { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt32? ISnapTemplateNodeGetter.FNAM => this.FNAM;
+        SnapTemplateNode.Flag? ISnapTemplateNodeGetter.Flags => this.Flags;
         #endregion
-        #region SNST
-        public UInt32? SNST { get; set; }
+        #region StairwayType
+        public SnapTemplateNode.StairwayTypeEnum? StairwayType { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt32? ISnapTemplateNodeGetter.SNST => this.SNST;
+        SnapTemplateNode.StairwayTypeEnum? ISnapTemplateNodeGetter.StairwayType => this.StairwayType;
         #endregion
         #region AdjacentSnapNodes
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -239,9 +239,9 @@ namespace Mutagen.Bethesda.Starfield
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(initialValue, []);
                 this.Model = new MaskItem<TItem, Model.Mask<TItem>?>(initialValue, new Model.Mask<TItem>(initialValue));
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
-                this.CNAM = initialValue;
-                this.FNAM = initialValue;
-                this.SNST = initialValue;
+                this.Color = initialValue;
+                this.Flags = initialValue;
+                this.StairwayType = initialValue;
                 this.AdjacentSnapNodes = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.SnapAngles = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.ArtObject = initialValue;
@@ -261,9 +261,9 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Components,
                 TItem Model,
                 TItem Keywords,
-                TItem CNAM,
-                TItem FNAM,
-                TItem SNST,
+                TItem Color,
+                TItem Flags,
+                TItem StairwayType,
                 TItem AdjacentSnapNodes,
                 TItem SnapAngles,
                 TItem ArtObject)
@@ -282,9 +282,9 @@ namespace Mutagen.Bethesda.Starfield
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(Components, []);
                 this.Model = new MaskItem<TItem, Model.Mask<TItem>?>(Model, new Model.Mask<TItem>(Model));
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(Keywords, []);
-                this.CNAM = CNAM;
-                this.FNAM = FNAM;
-                this.SNST = SNST;
+                this.Color = Color;
+                this.Flags = Flags;
+                this.StairwayType = StairwayType;
                 this.AdjacentSnapNodes = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(AdjacentSnapNodes, []);
                 this.SnapAngles = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(SnapAngles, []);
                 this.ArtObject = ArtObject;
@@ -305,9 +305,9 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>? Components;
             public MaskItem<TItem, Model.Mask<TItem>?>? Model { get; set; }
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? Keywords;
-            public TItem CNAM;
-            public TItem FNAM;
-            public TItem SNST;
+            public TItem Color;
+            public TItem Flags;
+            public TItem StairwayType;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? AdjacentSnapNodes;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? SnapAngles;
             public TItem ArtObject;
@@ -330,9 +330,9 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Components, rhs.Components)) return false;
                 if (!object.Equals(this.Model, rhs.Model)) return false;
                 if (!object.Equals(this.Keywords, rhs.Keywords)) return false;
-                if (!object.Equals(this.CNAM, rhs.CNAM)) return false;
-                if (!object.Equals(this.FNAM, rhs.FNAM)) return false;
-                if (!object.Equals(this.SNST, rhs.SNST)) return false;
+                if (!object.Equals(this.Color, rhs.Color)) return false;
+                if (!object.Equals(this.Flags, rhs.Flags)) return false;
+                if (!object.Equals(this.StairwayType, rhs.StairwayType)) return false;
                 if (!object.Equals(this.AdjacentSnapNodes, rhs.AdjacentSnapNodes)) return false;
                 if (!object.Equals(this.SnapAngles, rhs.SnapAngles)) return false;
                 if (!object.Equals(this.ArtObject, rhs.ArtObject)) return false;
@@ -347,9 +347,9 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Components);
                 hash.Add(this.Model);
                 hash.Add(this.Keywords);
-                hash.Add(this.CNAM);
-                hash.Add(this.FNAM);
-                hash.Add(this.SNST);
+                hash.Add(this.Color);
+                hash.Add(this.Flags);
+                hash.Add(this.StairwayType);
                 hash.Add(this.AdjacentSnapNodes);
                 hash.Add(this.SnapAngles);
                 hash.Add(this.ArtObject);
@@ -402,9 +402,9 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (!eval(this.CNAM)) return false;
-                if (!eval(this.FNAM)) return false;
-                if (!eval(this.SNST)) return false;
+                if (!eval(this.Color)) return false;
+                if (!eval(this.Flags)) return false;
+                if (!eval(this.StairwayType)) return false;
                 if (this.AdjacentSnapNodes != null)
                 {
                     if (!eval(this.AdjacentSnapNodes.Overall)) return false;
@@ -475,9 +475,9 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (eval(this.CNAM)) return true;
-                if (eval(this.FNAM)) return true;
-                if (eval(this.SNST)) return true;
+                if (eval(this.Color)) return true;
+                if (eval(this.Flags)) return true;
+                if (eval(this.StairwayType)) return true;
                 if (this.AdjacentSnapNodes != null)
                 {
                     if (eval(this.AdjacentSnapNodes.Overall)) return true;
@@ -549,9 +549,9 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.CNAM = eval(this.CNAM);
-                obj.FNAM = eval(this.FNAM);
-                obj.SNST = eval(this.SNST);
+                obj.Color = eval(this.Color);
+                obj.Flags = eval(this.Flags);
+                obj.StairwayType = eval(this.StairwayType);
                 if (AdjacentSnapNodes != null)
                 {
                     obj.AdjacentSnapNodes = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.AdjacentSnapNodes.Overall), []);
@@ -655,17 +655,17 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.CNAM ?? true)
+                    if (printMask?.Color ?? true)
                     {
-                        sb.AppendItem(CNAM, "CNAM");
+                        sb.AppendItem(Color, "Color");
                     }
-                    if (printMask?.FNAM ?? true)
+                    if (printMask?.Flags ?? true)
                     {
-                        sb.AppendItem(FNAM, "FNAM");
+                        sb.AppendItem(Flags, "Flags");
                     }
-                    if (printMask?.SNST ?? true)
+                    if (printMask?.StairwayType ?? true)
                     {
-                        sb.AppendItem(SNST, "SNST");
+                        sb.AppendItem(StairwayType, "StairwayType");
                     }
                     if ((printMask?.AdjacentSnapNodes?.Overall ?? true)
                         && AdjacentSnapNodes is {} AdjacentSnapNodesItem)
@@ -730,9 +730,9 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>? Components;
             public MaskItem<Exception?, Model.ErrorMask?>? Model;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? Keywords;
-            public Exception? CNAM;
-            public Exception? FNAM;
-            public Exception? SNST;
+            public Exception? Color;
+            public Exception? Flags;
+            public Exception? StairwayType;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? AdjacentSnapNodes;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? SnapAngles;
             public Exception? ArtObject;
@@ -756,12 +756,12 @@ namespace Mutagen.Bethesda.Starfield
                         return Model;
                     case SnapTemplateNode_FieldIndex.Keywords:
                         return Keywords;
-                    case SnapTemplateNode_FieldIndex.CNAM:
-                        return CNAM;
-                    case SnapTemplateNode_FieldIndex.FNAM:
-                        return FNAM;
-                    case SnapTemplateNode_FieldIndex.SNST:
-                        return SNST;
+                    case SnapTemplateNode_FieldIndex.Color:
+                        return Color;
+                    case SnapTemplateNode_FieldIndex.Flags:
+                        return Flags;
+                    case SnapTemplateNode_FieldIndex.StairwayType:
+                        return StairwayType;
                     case SnapTemplateNode_FieldIndex.AdjacentSnapNodes:
                         return AdjacentSnapNodes;
                     case SnapTemplateNode_FieldIndex.SnapAngles:
@@ -796,14 +796,14 @@ namespace Mutagen.Bethesda.Starfield
                     case SnapTemplateNode_FieldIndex.Keywords:
                         this.Keywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
-                    case SnapTemplateNode_FieldIndex.CNAM:
-                        this.CNAM = ex;
+                    case SnapTemplateNode_FieldIndex.Color:
+                        this.Color = ex;
                         break;
-                    case SnapTemplateNode_FieldIndex.FNAM:
-                        this.FNAM = ex;
+                    case SnapTemplateNode_FieldIndex.Flags:
+                        this.Flags = ex;
                         break;
-                    case SnapTemplateNode_FieldIndex.SNST:
-                        this.SNST = ex;
+                    case SnapTemplateNode_FieldIndex.StairwayType:
+                        this.StairwayType = ex;
                         break;
                     case SnapTemplateNode_FieldIndex.AdjacentSnapNodes:
                         this.AdjacentSnapNodes = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
@@ -843,14 +843,14 @@ namespace Mutagen.Bethesda.Starfield
                     case SnapTemplateNode_FieldIndex.Keywords:
                         this.Keywords = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
-                    case SnapTemplateNode_FieldIndex.CNAM:
-                        this.CNAM = (Exception?)obj;
+                    case SnapTemplateNode_FieldIndex.Color:
+                        this.Color = (Exception?)obj;
                         break;
-                    case SnapTemplateNode_FieldIndex.FNAM:
-                        this.FNAM = (Exception?)obj;
+                    case SnapTemplateNode_FieldIndex.Flags:
+                        this.Flags = (Exception?)obj;
                         break;
-                    case SnapTemplateNode_FieldIndex.SNST:
-                        this.SNST = (Exception?)obj;
+                    case SnapTemplateNode_FieldIndex.StairwayType:
+                        this.StairwayType = (Exception?)obj;
                         break;
                     case SnapTemplateNode_FieldIndex.AdjacentSnapNodes:
                         this.AdjacentSnapNodes = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
@@ -876,9 +876,9 @@ namespace Mutagen.Bethesda.Starfield
                 if (Components != null) return true;
                 if (Model != null) return true;
                 if (Keywords != null) return true;
-                if (CNAM != null) return true;
-                if (FNAM != null) return true;
-                if (SNST != null) return true;
+                if (Color != null) return true;
+                if (Flags != null) return true;
+                if (StairwayType != null) return true;
                 if (AdjacentSnapNodes != null) return true;
                 if (SnapAngles != null) return true;
                 if (ArtObject != null) return true;
@@ -953,13 +953,13 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 {
-                    sb.AppendItem(CNAM, "CNAM");
+                    sb.AppendItem(Color, "Color");
                 }
                 {
-                    sb.AppendItem(FNAM, "FNAM");
+                    sb.AppendItem(Flags, "Flags");
                 }
                 {
-                    sb.AppendItem(SNST, "SNST");
+                    sb.AppendItem(StairwayType, "StairwayType");
                 }
                 if (AdjacentSnapNodes is {} AdjacentSnapNodesItem)
                 {
@@ -1018,9 +1018,9 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Components?.Overall, rhs.Components?.Overall), Noggog.ExceptionExt.Combine(this.Components?.Specific, rhs.Components?.Specific));
                 ret.Model = this.Model.Combine(rhs.Model, (l, r) => l.Combine(r));
                 ret.Keywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.Keywords?.Overall, rhs.Keywords?.Overall), Noggog.ExceptionExt.Combine(this.Keywords?.Specific, rhs.Keywords?.Specific));
-                ret.CNAM = this.CNAM.Combine(rhs.CNAM);
-                ret.FNAM = this.FNAM.Combine(rhs.FNAM);
-                ret.SNST = this.SNST.Combine(rhs.SNST);
+                ret.Color = this.Color.Combine(rhs.Color);
+                ret.Flags = this.Flags.Combine(rhs.Flags);
+                ret.StairwayType = this.StairwayType.Combine(rhs.StairwayType);
                 ret.AdjacentSnapNodes = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.AdjacentSnapNodes?.Overall, rhs.AdjacentSnapNodes?.Overall), Noggog.ExceptionExt.Combine(this.AdjacentSnapNodes?.Specific, rhs.AdjacentSnapNodes?.Specific));
                 ret.SnapAngles = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.SnapAngles?.Overall, rhs.SnapAngles?.Overall), Noggog.ExceptionExt.Combine(this.SnapAngles?.Specific, rhs.SnapAngles?.Specific));
                 ret.ArtObject = this.ArtObject.Combine(rhs.ArtObject);
@@ -1052,9 +1052,9 @@ namespace Mutagen.Bethesda.Starfield
             public AComponent.TranslationMask? Components;
             public Model.TranslationMask? Model;
             public bool Keywords;
-            public bool CNAM;
-            public bool FNAM;
-            public bool SNST;
+            public bool Color;
+            public bool Flags;
+            public bool StairwayType;
             public bool AdjacentSnapNodes;
             public bool SnapAngles;
             public bool ArtObject;
@@ -1068,9 +1068,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DirtinessScale = defaultOn;
                 this.Keywords = defaultOn;
-                this.CNAM = defaultOn;
-                this.FNAM = defaultOn;
-                this.SNST = defaultOn;
+                this.Color = defaultOn;
+                this.Flags = defaultOn;
+                this.StairwayType = defaultOn;
                 this.AdjacentSnapNodes = defaultOn;
                 this.SnapAngles = defaultOn;
                 this.ArtObject = defaultOn;
@@ -1087,9 +1087,9 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Components == null ? DefaultOn : !Components.GetCrystal().CopyNothing, Components?.GetCrystal()));
                 ret.Add((Model != null ? Model.OnOverall : DefaultOn, Model?.GetCrystal()));
                 ret.Add((Keywords, null));
-                ret.Add((CNAM, null));
-                ret.Add((FNAM, null));
-                ret.Add((SNST, null));
+                ret.Add((Color, null));
+                ret.Add((Flags, null));
+                ret.Add((StairwayType, null));
                 ret.Add((AdjacentSnapNodes, null));
                 ret.Add((SnapAngles, null));
                 ret.Add((ArtObject, null));
@@ -1268,9 +1268,9 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: IKeyworded&lt;IKeywordGetter&gt;
         /// </summary>
         new ExtendedList<IFormLinkGetter<IKeywordGetter>>? Keywords { get; set; }
-        new Color? CNAM { get; set; }
-        new UInt32? FNAM { get; set; }
-        new UInt32? SNST { get; set; }
+        new Color? Color { get; set; }
+        new SnapTemplateNode.Flag? Flags { get; set; }
+        new SnapTemplateNode.StairwayTypeEnum? StairwayType { get; set; }
         new ExtendedList<IFormLinkGetter<ISnapTemplateNodeGetter>> AdjacentSnapNodes { get; }
         new ExtendedList<Single> SnapAngles { get; }
         new IFormLinkNullable<IArtObjectGetter> ArtObject { get; set; }
@@ -1324,9 +1324,9 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? Keywords { get; }
         #endregion
-        Color? CNAM { get; }
-        UInt32? FNAM { get; }
-        UInt32? SNST { get; }
+        Color? Color { get; }
+        SnapTemplateNode.Flag? Flags { get; }
+        SnapTemplateNode.StairwayTypeEnum? StairwayType { get; }
         IReadOnlyList<IFormLinkGetter<ISnapTemplateNodeGetter>> AdjacentSnapNodes { get; }
         IReadOnlyList<Single> SnapAngles { get; }
         IFormLinkNullableGetter<IArtObjectGetter> ArtObject { get; }
@@ -1512,9 +1512,9 @@ namespace Mutagen.Bethesda.Starfield
         Components = 10,
         Model = 11,
         Keywords = 12,
-        CNAM = 13,
-        FNAM = 14,
-        SNST = 15,
+        Color = 13,
+        Flags = 14,
+        StairwayType = 15,
         AdjacentSnapNodes = 16,
         SnapAngles = 17,
         ArtObject = 18,
@@ -1634,9 +1634,9 @@ namespace Mutagen.Bethesda.Starfield
             item.Components.Clear();
             item.Model = null;
             item.Keywords = null;
-            item.CNAM = default;
-            item.FNAM = default;
-            item.SNST = default;
+            item.Color = default;
+            item.Flags = default;
+            item.StairwayType = default;
             item.AdjacentSnapNodes.Clear();
             item.SnapAngles.Clear();
             item.ArtObject.Clear();
@@ -1782,9 +1782,9 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.Keywords,
                 (l, r) => object.Equals(l, r),
                 include);
-            ret.CNAM = item.CNAM.ColorOnlyEquals(rhs.CNAM);
-            ret.FNAM = item.FNAM == rhs.FNAM;
-            ret.SNST = item.SNST == rhs.SNST;
+            ret.Color = item.Color.ColorOnlyEquals(rhs.Color);
+            ret.Flags = item.Flags == rhs.Flags;
+            ret.StairwayType = item.StairwayType == rhs.StairwayType;
             ret.AdjacentSnapNodes = item.AdjacentSnapNodes.CollectionEqualsHelper(
                 rhs.AdjacentSnapNodes,
                 (l, r) => object.Equals(l, r),
@@ -1890,20 +1890,20 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.CNAM ?? true)
-                && item.CNAM is {} CNAMItem)
+            if ((printMask?.Color ?? true)
+                && item.Color is {} ColorItem)
             {
-                sb.AppendItem(CNAMItem, "CNAM");
+                sb.AppendItem(ColorItem, "Color");
             }
-            if ((printMask?.FNAM ?? true)
-                && item.FNAM is {} FNAMItem)
+            if ((printMask?.Flags ?? true)
+                && item.Flags is {} FlagsItem)
             {
-                sb.AppendItem(FNAMItem, "FNAM");
+                sb.AppendItem(FlagsItem, "Flags");
             }
-            if ((printMask?.SNST ?? true)
-                && item.SNST is {} SNSTItem)
+            if ((printMask?.StairwayType ?? true)
+                && item.StairwayType is {} StairwayTypeItem)
             {
-                sb.AppendItem(SNSTItem, "SNST");
+                sb.AppendItem(StairwayTypeItem, "StairwayType");
             }
             if (printMask?.AdjacentSnapNodes?.Overall ?? true)
             {
@@ -2023,17 +2023,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Keywords.SequenceEqualNullable(rhs.Keywords)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SnapTemplateNode_FieldIndex.CNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SnapTemplateNode_FieldIndex.Color) ?? true))
             {
-                if (!lhs.CNAM.ColorOnlyEquals(rhs.CNAM)) return false;
+                if (!lhs.Color.ColorOnlyEquals(rhs.Color)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SnapTemplateNode_FieldIndex.FNAM) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SnapTemplateNode_FieldIndex.Flags) ?? true))
             {
-                if (lhs.FNAM != rhs.FNAM) return false;
+                if (lhs.Flags != rhs.Flags) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SnapTemplateNode_FieldIndex.SNST) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SnapTemplateNode_FieldIndex.StairwayType) ?? true))
             {
-                if (lhs.SNST != rhs.SNST) return false;
+                if (lhs.StairwayType != rhs.StairwayType) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)SnapTemplateNode_FieldIndex.AdjacentSnapNodes) ?? true))
             {
@@ -2096,17 +2096,17 @@ namespace Mutagen.Bethesda.Starfield
                     hash.Add(subItem);
                 }
             }
-            if (item.CNAM is {} CNAMitem)
+            if (item.Color is {} Coloritem)
             {
-                hash.Add(CNAMitem.ToArgb());
+                hash.Add(Coloritem.ToArgb());
             }
-            if (item.FNAM is {} FNAMitem)
+            if (item.Flags is {} Flagsitem)
             {
-                hash.Add(FNAMitem);
+                hash.Add(Flagsitem);
             }
-            if (item.SNST is {} SNSTitem)
+            if (item.StairwayType is {} StairwayTypeitem)
             {
-                hash.Add(SNSTitem);
+                hash.Add(StairwayTypeitem);
             }
             foreach (var subItem in item.AdjacentSnapNodes)
             {
@@ -2426,17 +2426,17 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)SnapTemplateNode_FieldIndex.CNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SnapTemplateNode_FieldIndex.Color) ?? true))
             {
-                item.CNAM = rhs.CNAM;
+                item.Color = rhs.Color;
             }
-            if ((copyMask?.GetShouldTranslate((int)SnapTemplateNode_FieldIndex.FNAM) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SnapTemplateNode_FieldIndex.Flags) ?? true))
             {
-                item.FNAM = rhs.FNAM;
+                item.Flags = rhs.Flags;
             }
-            if ((copyMask?.GetShouldTranslate((int)SnapTemplateNode_FieldIndex.SNST) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SnapTemplateNode_FieldIndex.StairwayType) ?? true))
             {
-                item.SNST = rhs.SNST;
+                item.StairwayType = rhs.StairwayType;
             }
             if ((copyMask?.GetShouldTranslate((int)SnapTemplateNode_FieldIndex.AdjacentSnapNodes) ?? true))
             {
@@ -2695,15 +2695,17 @@ namespace Mutagen.Bethesda.Starfield
                 });
             ColorBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
-                item: item.CNAM,
+                item: item.Color,
                 header: translationParams.ConvertToCustom(RecordTypes.CNAM));
-            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
-                writer: writer,
-                item: item.FNAM,
+            EnumBinaryTranslation<SnapTemplateNode.Flag, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.Flags,
+                length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.FNAM));
-            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
-                writer: writer,
-                item: item.SNST,
+            EnumBinaryTranslation<SnapTemplateNode.StairwayTypeEnum, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.StairwayType,
+                length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.SNST));
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ISnapTemplateNodeGetter>>.Instance.Write(
                 writer: writer,
@@ -2849,20 +2851,24 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.CNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.CNAM = frame.ReadColor(ColorBinaryType.Alpha);
-                    return (int)SnapTemplateNode_FieldIndex.CNAM;
+                    item.Color = frame.ReadColor(ColorBinaryType.Alpha);
+                    return (int)SnapTemplateNode_FieldIndex.Color;
                 }
                 case RecordTypeInts.FNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.FNAM = frame.ReadUInt32();
-                    return (int)SnapTemplateNode_FieldIndex.FNAM;
+                    item.Flags = EnumBinaryTranslation<SnapTemplateNode.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)SnapTemplateNode_FieldIndex.Flags;
                 }
                 case RecordTypeInts.SNST:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.SNST = frame.ReadUInt32();
-                    return (int)SnapTemplateNode_FieldIndex.SNST;
+                    item.StairwayType = EnumBinaryTranslation<SnapTemplateNode.StairwayTypeEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)SnapTemplateNode_FieldIndex.StairwayType;
                 }
                 case RecordTypeInts.NNAM:
                 {
@@ -2974,17 +2980,17 @@ namespace Mutagen.Bethesda.Starfield
         public IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? Keywords { get; private set; }
         IReadOnlyList<IFormLinkGetter<IKeywordCommonGetter>>? IKeywordedGetter.Keywords => this.Keywords;
         #endregion
-        #region CNAM
-        private int? _CNAMLocation;
-        public Color? CNAM => _CNAMLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _CNAMLocation.Value, _package.MetaData.Constants).ReadColor(ColorBinaryType.Alpha) : default(Color?);
+        #region Color
+        private int? _ColorLocation;
+        public Color? Color => _ColorLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _ColorLocation.Value, _package.MetaData.Constants).ReadColor(ColorBinaryType.Alpha) : default(Color?);
         #endregion
-        #region FNAM
-        private int? _FNAMLocation;
-        public UInt32? FNAM => _FNAMLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _FNAMLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
+        #region Flags
+        private int? _FlagsLocation;
+        public SnapTemplateNode.Flag? Flags => EnumBinaryTranslation<SnapTemplateNode.Flag, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_FlagsLocation, _recordData, _package, 4);
         #endregion
-        #region SNST
-        private int? _SNSTLocation;
-        public UInt32? SNST => _SNSTLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _SNSTLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
+        #region StairwayType
+        private int? _StairwayTypeLocation;
+        public SnapTemplateNode.StairwayTypeEnum? StairwayType => EnumBinaryTranslation<SnapTemplateNode.StairwayTypeEnum, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_StairwayTypeLocation, _recordData, _package, 4);
         #endregion
         public IReadOnlyList<IFormLinkGetter<ISnapTemplateNodeGetter>> AdjacentSnapNodes { get; private set; } = [];
         public IReadOnlyList<Single> SnapAngles { get; private set; } = [];
@@ -3119,18 +3125,18 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.CNAM:
                 {
-                    _CNAMLocation = (stream.Position - offset);
-                    return (int)SnapTemplateNode_FieldIndex.CNAM;
+                    _ColorLocation = (stream.Position - offset);
+                    return (int)SnapTemplateNode_FieldIndex.Color;
                 }
                 case RecordTypeInts.FNAM:
                 {
-                    _FNAMLocation = (stream.Position - offset);
-                    return (int)SnapTemplateNode_FieldIndex.FNAM;
+                    _FlagsLocation = (stream.Position - offset);
+                    return (int)SnapTemplateNode_FieldIndex.Flags;
                 }
                 case RecordTypeInts.SNST:
                 {
-                    _SNSTLocation = (stream.Position - offset);
-                    return (int)SnapTemplateNode_FieldIndex.SNST;
+                    _StairwayTypeLocation = (stream.Position - offset);
+                    return (int)SnapTemplateNode_FieldIndex.StairwayType;
                 }
                 case RecordTypeInts.NNAM:
                 {
