@@ -125,22 +125,22 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IFormLinkGetter<IKeywordCommonGetter>>? IKeywordedGetter.Keywords => this.Keywords;
         #endregion
         #endregion
-        #region SMLS
+        #region Sound
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private SoundReference? _SMLS;
-        public SoundReference? SMLS
+        private SoundReference? _Sound;
+        public SoundReference? Sound
         {
-            get => _SMLS;
-            set => _SMLS = value;
+            get => _Sound;
+            set => _Sound = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ISoundReferenceGetter? ISoundMarkerGetter.SMLS => this.SMLS;
+        ISoundReferenceGetter? ISoundMarkerGetter.Sound => this.Sound;
         #endregion
-        #region Unknown
-        public Int32 Unknown { get; set; } = default(Int32);
+        #region Level
+        public SoundLevel Level { get; set; } = default(SoundLevel);
         #endregion
-        #region Unknown2
-        public Single Unknown2 { get; set; } = default(Single);
+        #region Radius
+        public Single Radius { get; set; } = default(Single);
         #endregion
 
         #region To String
@@ -172,9 +172,9 @@ namespace Mutagen.Bethesda.Starfield
                 this.DirtinessScale = initialValue;
                 this.XALG = initialValue;
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
-                this.SMLS = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
-                this.Unknown = initialValue;
-                this.Unknown2 = initialValue;
+                this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
+                this.Level = initialValue;
+                this.Radius = initialValue;
             }
 
             public Mask(
@@ -190,9 +190,9 @@ namespace Mutagen.Bethesda.Starfield
                 TItem DirtinessScale,
                 TItem XALG,
                 TItem Keywords,
-                TItem SMLS,
-                TItem Unknown,
-                TItem Unknown2)
+                TItem Sound,
+                TItem Level,
+                TItem Radius)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -207,9 +207,9 @@ namespace Mutagen.Bethesda.Starfield
                 this.DirtinessScale = DirtinessScale;
                 this.XALG = XALG;
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(Keywords, []);
-                this.SMLS = new MaskItem<TItem, SoundReference.Mask<TItem>?>(SMLS, new SoundReference.Mask<TItem>(SMLS));
-                this.Unknown = Unknown;
-                this.Unknown2 = Unknown2;
+                this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(Sound, new SoundReference.Mask<TItem>(Sound));
+                this.Level = Level;
+                this.Radius = Radius;
             }
 
             #pragma warning disable CS8618
@@ -226,9 +226,9 @@ namespace Mutagen.Bethesda.Starfield
             public TItem DirtinessScale;
             public TItem XALG;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? Keywords;
-            public MaskItem<TItem, SoundReference.Mask<TItem>?>? SMLS { get; set; }
-            public TItem Unknown;
-            public TItem Unknown2;
+            public MaskItem<TItem, SoundReference.Mask<TItem>?>? Sound { get; set; }
+            public TItem Level;
+            public TItem Radius;
             #endregion
 
             #region Equals
@@ -247,9 +247,9 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.DirtinessScale, rhs.DirtinessScale)) return false;
                 if (!object.Equals(this.XALG, rhs.XALG)) return false;
                 if (!object.Equals(this.Keywords, rhs.Keywords)) return false;
-                if (!object.Equals(this.SMLS, rhs.SMLS)) return false;
-                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
-                if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
+                if (!object.Equals(this.Sound, rhs.Sound)) return false;
+                if (!object.Equals(this.Level, rhs.Level)) return false;
+                if (!object.Equals(this.Radius, rhs.Radius)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -260,9 +260,9 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.DirtinessScale);
                 hash.Add(this.XALG);
                 hash.Add(this.Keywords);
-                hash.Add(this.SMLS);
-                hash.Add(this.Unknown);
-                hash.Add(this.Unknown2);
+                hash.Add(this.Sound);
+                hash.Add(this.Level);
+                hash.Add(this.Radius);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -296,13 +296,13 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (SMLS != null)
+                if (Sound != null)
                 {
-                    if (!eval(this.SMLS.Overall)) return false;
-                    if (this.SMLS.Specific != null && !this.SMLS.Specific.All(eval)) return false;
+                    if (!eval(this.Sound.Overall)) return false;
+                    if (this.Sound.Specific != null && !this.Sound.Specific.All(eval)) return false;
                 }
-                if (!eval(this.Unknown)) return false;
-                if (!eval(this.Unknown2)) return false;
+                if (!eval(this.Level)) return false;
+                if (!eval(this.Radius)) return false;
                 return true;
             }
             #endregion
@@ -334,13 +334,13 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (SMLS != null)
+                if (Sound != null)
                 {
-                    if (eval(this.SMLS.Overall)) return true;
-                    if (this.SMLS.Specific != null && this.SMLS.Specific.Any(eval)) return true;
+                    if (eval(this.Sound.Overall)) return true;
+                    if (this.Sound.Specific != null && this.Sound.Specific.Any(eval)) return true;
                 }
-                if (eval(this.Unknown)) return true;
-                if (eval(this.Unknown2)) return true;
+                if (eval(this.Level)) return true;
+                if (eval(this.Radius)) return true;
                 return false;
             }
             #endregion
@@ -374,9 +374,9 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.SMLS = this.SMLS == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.SMLS.Overall), this.SMLS.Specific?.Translate(eval));
-                obj.Unknown = eval(this.Unknown);
-                obj.Unknown2 = eval(this.Unknown2);
+                obj.Sound = this.Sound == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.Sound.Overall), this.Sound.Specific?.Translate(eval));
+                obj.Level = eval(this.Level);
+                obj.Radius = eval(this.Radius);
             }
             #endregion
 
@@ -432,17 +432,17 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.SMLS?.Overall ?? true)
+                    if (printMask?.Sound?.Overall ?? true)
                     {
-                        SMLS?.Print(sb);
+                        Sound?.Print(sb);
                     }
-                    if (printMask?.Unknown ?? true)
+                    if (printMask?.Level ?? true)
                     {
-                        sb.AppendItem(Unknown, "Unknown");
+                        sb.AppendItem(Level, "Level");
                     }
-                    if (printMask?.Unknown2 ?? true)
+                    if (printMask?.Radius ?? true)
                     {
-                        sb.AppendItem(Unknown2, "Unknown2");
+                        sb.AppendItem(Radius, "Radius");
                     }
                 }
             }
@@ -460,9 +460,9 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? DirtinessScale;
             public Exception? XALG;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? Keywords;
-            public MaskItem<Exception?, SoundReference.ErrorMask?>? SMLS;
-            public Exception? Unknown;
-            public Exception? Unknown2;
+            public MaskItem<Exception?, SoundReference.ErrorMask?>? Sound;
+            public Exception? Level;
+            public Exception? Radius;
             #endregion
 
             #region IErrorMask
@@ -481,12 +481,12 @@ namespace Mutagen.Bethesda.Starfield
                         return XALG;
                     case SoundMarker_FieldIndex.Keywords:
                         return Keywords;
-                    case SoundMarker_FieldIndex.SMLS:
-                        return SMLS;
-                    case SoundMarker_FieldIndex.Unknown:
-                        return Unknown;
-                    case SoundMarker_FieldIndex.Unknown2:
-                        return Unknown2;
+                    case SoundMarker_FieldIndex.Sound:
+                        return Sound;
+                    case SoundMarker_FieldIndex.Level:
+                        return Level;
+                    case SoundMarker_FieldIndex.Radius:
+                        return Radius;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -512,14 +512,14 @@ namespace Mutagen.Bethesda.Starfield
                     case SoundMarker_FieldIndex.Keywords:
                         this.Keywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
-                    case SoundMarker_FieldIndex.SMLS:
-                        this.SMLS = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
+                    case SoundMarker_FieldIndex.Sound:
+                        this.Sound = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
-                    case SoundMarker_FieldIndex.Unknown:
-                        this.Unknown = ex;
+                    case SoundMarker_FieldIndex.Level:
+                        this.Level = ex;
                         break;
-                    case SoundMarker_FieldIndex.Unknown2:
-                        this.Unknown2 = ex;
+                    case SoundMarker_FieldIndex.Radius:
+                        this.Radius = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -547,14 +547,14 @@ namespace Mutagen.Bethesda.Starfield
                     case SoundMarker_FieldIndex.Keywords:
                         this.Keywords = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
-                    case SoundMarker_FieldIndex.SMLS:
-                        this.SMLS = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
+                    case SoundMarker_FieldIndex.Sound:
+                        this.Sound = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
-                    case SoundMarker_FieldIndex.Unknown:
-                        this.Unknown = (Exception?)obj;
+                    case SoundMarker_FieldIndex.Level:
+                        this.Level = (Exception?)obj;
                         break;
-                    case SoundMarker_FieldIndex.Unknown2:
-                        this.Unknown2 = (Exception?)obj;
+                    case SoundMarker_FieldIndex.Radius:
+                        this.Radius = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -570,9 +570,9 @@ namespace Mutagen.Bethesda.Starfield
                 if (DirtinessScale != null) return true;
                 if (XALG != null) return true;
                 if (Keywords != null) return true;
-                if (SMLS != null) return true;
-                if (Unknown != null) return true;
-                if (Unknown2 != null) return true;
+                if (Sound != null) return true;
+                if (Level != null) return true;
+                if (Radius != null) return true;
                 return false;
             }
             #endregion
@@ -627,12 +627,12 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                SMLS?.Print(sb);
+                Sound?.Print(sb);
                 {
-                    sb.AppendItem(Unknown, "Unknown");
+                    sb.AppendItem(Level, "Level");
                 }
                 {
-                    sb.AppendItem(Unknown2, "Unknown2");
+                    sb.AppendItem(Radius, "Radius");
                 }
             }
             #endregion
@@ -647,9 +647,9 @@ namespace Mutagen.Bethesda.Starfield
                 ret.DirtinessScale = this.DirtinessScale.Combine(rhs.DirtinessScale);
                 ret.XALG = this.XALG.Combine(rhs.XALG);
                 ret.Keywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.Keywords?.Overall, rhs.Keywords?.Overall), Noggog.ExceptionExt.Combine(this.Keywords?.Specific, rhs.Keywords?.Specific));
-                ret.SMLS = this.SMLS.Combine(rhs.SMLS, (l, r) => l.Combine(r));
-                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
-                ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
+                ret.Sound = this.Sound.Combine(rhs.Sound, (l, r) => l.Combine(r));
+                ret.Level = this.Level.Combine(rhs.Level);
+                ret.Radius = this.Radius.Combine(rhs.Radius);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -677,9 +677,9 @@ namespace Mutagen.Bethesda.Starfield
             public bool DirtinessScale;
             public bool XALG;
             public bool Keywords;
-            public SoundReference.TranslationMask? SMLS;
-            public bool Unknown;
-            public bool Unknown2;
+            public SoundReference.TranslationMask? Sound;
+            public bool Level;
+            public bool Radius;
             #endregion
 
             #region Ctors
@@ -691,8 +691,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.DirtinessScale = defaultOn;
                 this.XALG = defaultOn;
                 this.Keywords = defaultOn;
-                this.Unknown = defaultOn;
-                this.Unknown2 = defaultOn;
+                this.Level = defaultOn;
+                this.Radius = defaultOn;
             }
 
             #endregion
@@ -705,9 +705,9 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((DirtinessScale, null));
                 ret.Add((XALG, null));
                 ret.Add((Keywords, null));
-                ret.Add((SMLS != null ? SMLS.OnOverall : DefaultOn, SMLS?.GetCrystal()));
-                ret.Add((Unknown, null));
-                ret.Add((Unknown2, null));
+                ret.Add((Sound != null ? Sound.OnOverall : DefaultOn, Sound?.GetCrystal()));
+                ret.Add((Level, null));
+                ret.Add((Radius, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -876,9 +876,9 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: IKeyworded&lt;IKeywordGetter&gt;
         /// </summary>
         new ExtendedList<IFormLinkGetter<IKeywordGetter>>? Keywords { get; set; }
-        new SoundReference? SMLS { get; set; }
-        new Int32 Unknown { get; set; }
-        new Single Unknown2 { get; set; }
+        new SoundReference? Sound { get; set; }
+        new SoundLevel Level { get; set; }
+        new Single Radius { get; set; }
     }
 
     public partial interface ISoundMarkerInternal :
@@ -924,9 +924,9 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? Keywords { get; }
         #endregion
-        ISoundReferenceGetter? SMLS { get; }
-        Int32 Unknown { get; }
-        Single Unknown2 { get; }
+        ISoundReferenceGetter? Sound { get; }
+        SoundLevel Level { get; }
+        Single Radius { get; }
 
     }
 
@@ -1108,9 +1108,9 @@ namespace Mutagen.Bethesda.Starfield
         DirtinessScale = 9,
         XALG = 10,
         Keywords = 11,
-        SMLS = 12,
-        Unknown = 13,
-        Unknown2 = 14,
+        Sound = 12,
+        Level = 13,
+        Radius = 14,
     }
     #endregion
 
@@ -1214,9 +1214,9 @@ namespace Mutagen.Bethesda.Starfield
             item.DirtinessScale = default(Single);
             item.XALG = default;
             item.Keywords = null;
-            item.SMLS = null;
-            item.Unknown = default(Int32);
-            item.Unknown2 = default(Single);
+            item.Sound = null;
+            item.Level = default(SoundLevel);
+            item.Radius = default(Single);
             base.Clear(item);
         }
         
@@ -1236,7 +1236,7 @@ namespace Mutagen.Bethesda.Starfield
             base.RemapLinks(obj, mapping);
             obj.VirtualMachineAdapter?.RemapLinks(mapping);
             obj.Keywords?.RemapLinks(mapping);
-            obj.SMLS?.RemapLinks(mapping);
+            obj.Sound?.RemapLinks(mapping);
         }
         
         #endregion
@@ -1316,13 +1316,13 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.Keywords,
                 (l, r) => object.Equals(l, r),
                 include);
-            ret.SMLS = EqualsMaskHelper.EqualsHelper(
-                item.SMLS,
-                rhs.SMLS,
+            ret.Sound = EqualsMaskHelper.EqualsHelper(
+                item.Sound,
+                rhs.Sound,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
-            ret.Unknown = item.Unknown == rhs.Unknown;
-            ret.Unknown2 = item.Unknown2.EqualsWithin(rhs.Unknown2);
+            ret.Level = item.Level == rhs.Level;
+            ret.Radius = item.Radius.EqualsWithin(rhs.Radius);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -1405,18 +1405,18 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.SMLS?.Overall ?? true)
-                && item.SMLS is {} SMLSItem)
+            if ((printMask?.Sound?.Overall ?? true)
+                && item.Sound is {} SoundItem)
             {
-                SMLSItem?.Print(sb, "SMLS");
+                SoundItem?.Print(sb, "Sound");
             }
-            if (printMask?.Unknown ?? true)
+            if (printMask?.Level ?? true)
             {
-                sb.AppendItem(item.Unknown, "Unknown");
+                sb.AppendItem(item.Level, "Level");
             }
-            if (printMask?.Unknown2 ?? true)
+            if (printMask?.Radius ?? true)
             {
-                sb.AppendItem(item.Unknown2, "Unknown2");
+                sb.AppendItem(item.Radius, "Radius");
             }
         }
         
@@ -1496,21 +1496,21 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Keywords.SequenceEqualNullable(rhs.Keywords)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SoundMarker_FieldIndex.SMLS) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SoundMarker_FieldIndex.Sound) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.SMLS, rhs.SMLS, out var lhsSMLS, out var rhsSMLS, out var isSMLSEqual))
+                if (EqualsMaskHelper.RefEquality(lhs.Sound, rhs.Sound, out var lhsSound, out var rhsSound, out var isSoundEqual))
                 {
-                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsSMLS).CommonInstance()!).Equals(lhsSMLS, rhsSMLS, equalsMask?.GetSubCrystal((int)SoundMarker_FieldIndex.SMLS))) return false;
+                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsSound).CommonInstance()!).Equals(lhsSound, rhsSound, equalsMask?.GetSubCrystal((int)SoundMarker_FieldIndex.Sound))) return false;
                 }
-                else if (!isSMLSEqual) return false;
+                else if (!isSoundEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SoundMarker_FieldIndex.Unknown) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SoundMarker_FieldIndex.Level) ?? true))
             {
-                if (lhs.Unknown != rhs.Unknown) return false;
+                if (lhs.Level != rhs.Level) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SoundMarker_FieldIndex.Unknown2) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SoundMarker_FieldIndex.Radius) ?? true))
             {
-                if (!lhs.Unknown2.EqualsWithin(rhs.Unknown2)) return false;
+                if (!lhs.Radius.EqualsWithin(rhs.Radius)) return false;
             }
             return true;
         }
@@ -1557,12 +1557,12 @@ namespace Mutagen.Bethesda.Starfield
                     hash.Add(subItem);
                 }
             }
-            if (item.SMLS is {} SMLSitem)
+            if (item.Sound is {} Sounditem)
             {
-                hash.Add(SMLSitem);
+                hash.Add(Sounditem);
             }
-            hash.Add(item.Unknown);
-            hash.Add(item.Unknown2);
+            hash.Add(item.Level);
+            hash.Add(item.Radius);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -1606,9 +1606,9 @@ namespace Mutagen.Bethesda.Starfield
                     yield return FormLinkInformation.Factory(item);
                 }
             }
-            if (obj.SMLS is {} SMLSItems)
+            if (obj.Sound is {} SoundItems)
             {
-                foreach (var item in SMLSItems.EnumerateFormLinks(iterateNestedRecords))
+                foreach (var item in SoundItems.EnumerateFormLinks(iterateNestedRecords))
                 {
                     yield return item;
                 }
@@ -1792,20 +1792,20 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)SoundMarker_FieldIndex.SMLS) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SoundMarker_FieldIndex.Sound) ?? true))
             {
-                errorMask?.PushIndex((int)SoundMarker_FieldIndex.SMLS);
+                errorMask?.PushIndex((int)SoundMarker_FieldIndex.Sound);
                 try
                 {
-                    if(rhs.SMLS is {} rhsSMLS)
+                    if(rhs.Sound is {} rhsSound)
                     {
-                        item.SMLS = rhsSMLS.DeepCopy(
+                        item.Sound = rhsSound.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)SoundMarker_FieldIndex.SMLS));
+                            copyMask?.GetSubCrystal((int)SoundMarker_FieldIndex.Sound));
                     }
                     else
                     {
-                        item.SMLS = default;
+                        item.Sound = default;
                     }
                 }
                 catch (Exception ex)
@@ -1818,13 +1818,13 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)SoundMarker_FieldIndex.Unknown) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SoundMarker_FieldIndex.Level) ?? true))
             {
-                item.Unknown = rhs.Unknown;
+                item.Level = rhs.Level;
             }
-            if ((copyMask?.GetShouldTranslate((int)SoundMarker_FieldIndex.Unknown2) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SoundMarker_FieldIndex.Radius) ?? true))
             {
-                item.Unknown2 = rhs.Unknown2;
+                item.Radius = rhs.Radius;
             }
             DeepCopyInCustom(
                 item: item,
@@ -2027,22 +2027,25 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         item: subItem);
                 });
-            if (item.SMLS is {} SMLSItem)
+            if (item.Sound is {} SoundItem)
             {
                 using (HeaderExport.Subrecord(writer, RecordTypes.SMLS))
                 {
-                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)SMLSItem).BinaryWriteTranslator).Write(
-                        item: SMLSItem,
+                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)SoundItem).BinaryWriteTranslator).Write(
+                        item: SoundItem,
                         writer: writer,
                         translationParams: translationParams);
                 }
             }
             using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(RecordTypes.DEVT)))
             {
-                writer.Write(item.Unknown);
+                EnumBinaryTranslation<SoundLevel, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    item.Level,
+                    length: 4);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.Unknown2);
+                    item: item.Radius);
             }
         }
 
@@ -2152,18 +2155,20 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.SMLS:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
-                    item.SMLS = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
-                    return (int)SoundMarker_FieldIndex.SMLS;
+                    item.Sound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)SoundMarker_FieldIndex.Sound;
                 }
                 case RecordTypeInts.DEVT:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
-                    item.Unknown = dataFrame.ReadInt32();
+                    item.Level = EnumBinaryTranslation<SoundLevel, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: dataFrame,
+                        length: 4);
                     if (dataFrame.Remaining < 4) return null;
-                    item.Unknown2 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
-                    return (int)SoundMarker_FieldIndex.Unknown2;
+                    item.Radius = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    return (int)SoundMarker_FieldIndex.Radius;
                 }
                 case RecordTypeInts.XXXX:
                 {
@@ -2252,17 +2257,17 @@ namespace Mutagen.Bethesda.Starfield
         public IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? Keywords { get; private set; }
         IReadOnlyList<IFormLinkGetter<IKeywordCommonGetter>>? IKeywordedGetter.Keywords => this.Keywords;
         #endregion
-        public ISoundReferenceGetter? SMLS { get; private set; }
+        public ISoundReferenceGetter? Sound { get; private set; }
         private RangeInt32? _DEVTLocation;
-        #region Unknown
-        private int _UnknownLocation => _DEVTLocation!.Value.Min;
-        private bool _Unknown_IsSet => _DEVTLocation.HasValue && _DEVTLocation!.Value.Max - _UnknownLocation + 1 >= 4;
-        public Int32 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownLocation, 4)) : default(Int32);
+        #region Level
+        private int _LevelLocation => _DEVTLocation!.Value.Min;
+        private bool _Level_IsSet => _DEVTLocation.HasValue && _DEVTLocation!.Value.Max - _LevelLocation + 1 >= 4;
+        public SoundLevel Level => _Level_IsSet ? (SoundLevel)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_LevelLocation, 0x4)) : default(SoundLevel);
         #endregion
-        #region Unknown2
-        private int _Unknown2Location => _DEVTLocation!.Value.Min + 0x4;
-        private bool _Unknown2_IsSet => _DEVTLocation.HasValue && _DEVTLocation!.Value.Max - _Unknown2Location + 1 >= 4;
-        public Single Unknown2 => _Unknown2_IsSet ? _recordData.Slice(_Unknown2Location, 4).Float() : default(Single);
+        #region Radius
+        private int _RadiusLocation => _DEVTLocation!.Value.Min + 0x4;
+        private bool _Radius_IsSet => _DEVTLocation.HasValue && _DEVTLocation!.Value.Max - _RadiusLocation + 1 >= 4;
+        public Single Radius => _Radius_IsSet ? _recordData.Slice(_RadiusLocation, 4).Float() : default(Single);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -2374,16 +2379,16 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.SMLS:
                 {
                     stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
-                    this.SMLS = SoundReferenceBinaryOverlay.SoundReferenceFactory(
+                    this.Sound = SoundReferenceBinaryOverlay.SoundReferenceFactory(
                         stream: stream,
                         package: _package,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)SoundMarker_FieldIndex.SMLS;
+                    return (int)SoundMarker_FieldIndex.Sound;
                 }
                 case RecordTypeInts.DEVT:
                 {
                     _DEVTLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)SoundMarker_FieldIndex.Unknown2;
+                    return (int)SoundMarker_FieldIndex.Radius;
                 }
                 case RecordTypeInts.XXXX:
                 {

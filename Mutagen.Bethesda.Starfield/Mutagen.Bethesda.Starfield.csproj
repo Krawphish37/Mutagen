@@ -2611,6 +2611,9 @@
     <Compile Include="Records\Major Records\TerminalMenuItem.cs">
       <DependentUpon>TerminalMenu.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Major Records\SoundKeywordMapping.cs">
+      <DependentUpon>SoundKeywordMapping.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Major Records\VoiceType.cs">
       <DependentUpon>VoiceType.xml</DependentUpon>
     </Compile>
