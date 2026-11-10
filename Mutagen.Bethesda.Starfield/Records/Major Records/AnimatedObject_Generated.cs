@@ -78,10 +78,10 @@ namespace Mutagen.Bethesda.Starfield
         IVirtualMachineAdapterGetter? IScriptedGetter.VirtualMachineAdapter => this.VirtualMachineAdapter;
         #endregion
         #endregion
-        #region XALG
-        public UInt64? XALG { get; set; }
+        #region XalgFlags
+        public XalgFlag? XalgFlags { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt64? IAnimatedObjectGetter.XALG => this.XALG;
+        XalgFlag? IAnimatedObjectGetter.XalgFlags => this.XalgFlags;
         #endregion
         #region Components
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -141,7 +141,7 @@ namespace Mutagen.Bethesda.Starfield
             : base(initialValue)
             {
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(initialValue, new VirtualMachineAdapter.Mask<TItem>(initialValue));
-                this.XALG = initialValue;
+                this.XalgFlags = initialValue;
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(initialValue, []);
                 this.Model = new MaskItem<TItem, Model.Mask<TItem>?>(initialValue, new Model.Mask<TItem>(initialValue));
             }
@@ -155,7 +155,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
                 TItem VirtualMachineAdapter,
-                TItem XALG,
+                TItem XalgFlags,
                 TItem Components,
                 TItem Model)
             : base(
@@ -168,7 +168,7 @@ namespace Mutagen.Bethesda.Starfield
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
             {
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(VirtualMachineAdapter, new VirtualMachineAdapter.Mask<TItem>(VirtualMachineAdapter));
-                this.XALG = XALG;
+                this.XalgFlags = XalgFlags;
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(Components, []);
                 this.Model = new MaskItem<TItem, Model.Mask<TItem>?>(Model, new Model.Mask<TItem>(Model));
             }
@@ -183,7 +183,7 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>? VirtualMachineAdapter { get; set; }
-            public TItem XALG;
+            public TItem XalgFlags;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>? Components;
             public MaskItem<TItem, Model.Mask<TItem>?>? Model { get; set; }
             #endregion
@@ -200,7 +200,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
                 if (!object.Equals(this.VirtualMachineAdapter, rhs.VirtualMachineAdapter)) return false;
-                if (!object.Equals(this.XALG, rhs.XALG)) return false;
+                if (!object.Equals(this.XalgFlags, rhs.XalgFlags)) return false;
                 if (!object.Equals(this.Components, rhs.Components)) return false;
                 if (!object.Equals(this.Model, rhs.Model)) return false;
                 return true;
@@ -209,7 +209,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 var hash = new HashCode();
                 hash.Add(this.VirtualMachineAdapter);
-                hash.Add(this.XALG);
+                hash.Add(this.XalgFlags);
                 hash.Add(this.Components);
                 hash.Add(this.Model);
                 hash.Add(base.GetHashCode());
@@ -227,7 +227,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (!eval(this.VirtualMachineAdapter.Overall)) return false;
                     if (this.VirtualMachineAdapter.Specific != null && !this.VirtualMachineAdapter.Specific.All(eval)) return false;
                 }
-                if (!eval(this.XALG)) return false;
+                if (!eval(this.XalgFlags)) return false;
                 if (this.Components != null)
                 {
                     if (!eval(this.Components.Overall)) return false;
@@ -258,7 +258,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (eval(this.VirtualMachineAdapter.Overall)) return true;
                     if (this.VirtualMachineAdapter.Specific != null && this.VirtualMachineAdapter.Specific.Any(eval)) return true;
                 }
-                if (eval(this.XALG)) return true;
+                if (eval(this.XalgFlags)) return true;
                 if (this.Components != null)
                 {
                     if (eval(this.Components.Overall)) return true;
@@ -292,7 +292,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.Translate_InternalFill(obj, eval);
                 obj.VirtualMachineAdapter = this.VirtualMachineAdapter == null ? null : new MaskItem<R, VirtualMachineAdapter.Mask<R>?>(eval(this.VirtualMachineAdapter.Overall), this.VirtualMachineAdapter.Specific?.Translate(eval));
-                obj.XALG = eval(this.XALG);
+                obj.XalgFlags = eval(this.XalgFlags);
                 if (Components != null)
                 {
                     obj.Components = new MaskItem<R, IEnumerable<MaskItemIndexed<R, AComponent.Mask<R>?>>?>(eval(this.Components.Overall), []);
@@ -331,9 +331,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         VirtualMachineAdapter?.Print(sb);
                     }
-                    if (printMask?.XALG ?? true)
+                    if (printMask?.XalgFlags ?? true)
                     {
-                        sb.AppendItem(XALG, "XALG");
+                        sb.AppendItem(XalgFlags, "XalgFlags");
                     }
                     if ((printMask?.Components?.Overall ?? true)
                         && Components is {} ComponentsItem)
@@ -370,7 +370,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public MaskItem<Exception?, VirtualMachineAdapter.ErrorMask?>? VirtualMachineAdapter;
-            public Exception? XALG;
+            public Exception? XalgFlags;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>? Components;
             public MaskItem<Exception?, Model.ErrorMask?>? Model;
             #endregion
@@ -383,8 +383,8 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case AnimatedObject_FieldIndex.VirtualMachineAdapter:
                         return VirtualMachineAdapter;
-                    case AnimatedObject_FieldIndex.XALG:
-                        return XALG;
+                    case AnimatedObject_FieldIndex.XalgFlags:
+                        return XalgFlags;
                     case AnimatedObject_FieldIndex.Components:
                         return Components;
                     case AnimatedObject_FieldIndex.Model:
@@ -402,8 +402,8 @@ namespace Mutagen.Bethesda.Starfield
                     case AnimatedObject_FieldIndex.VirtualMachineAdapter:
                         this.VirtualMachineAdapter = new MaskItem<Exception?, VirtualMachineAdapter.ErrorMask?>(ex, null);
                         break;
-                    case AnimatedObject_FieldIndex.XALG:
-                        this.XALG = ex;
+                    case AnimatedObject_FieldIndex.XalgFlags:
+                        this.XalgFlags = ex;
                         break;
                     case AnimatedObject_FieldIndex.Components:
                         this.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(ex, null);
@@ -425,8 +425,8 @@ namespace Mutagen.Bethesda.Starfield
                     case AnimatedObject_FieldIndex.VirtualMachineAdapter:
                         this.VirtualMachineAdapter = (MaskItem<Exception?, VirtualMachineAdapter.ErrorMask?>?)obj;
                         break;
-                    case AnimatedObject_FieldIndex.XALG:
-                        this.XALG = (Exception?)obj;
+                    case AnimatedObject_FieldIndex.XalgFlags:
+                        this.XalgFlags = (Exception?)obj;
                         break;
                     case AnimatedObject_FieldIndex.Components:
                         this.Components = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>)obj;
@@ -444,7 +444,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (VirtualMachineAdapter != null) return true;
-                if (XALG != null) return true;
+                if (XalgFlags != null) return true;
                 if (Components != null) return true;
                 if (Model != null) return true;
                 return false;
@@ -475,7 +475,7 @@ namespace Mutagen.Bethesda.Starfield
                 base.PrintFillInternal(sb);
                 VirtualMachineAdapter?.Print(sb);
                 {
-                    sb.AppendItem(XALG, "XALG");
+                    sb.AppendItem(XalgFlags, "XalgFlags");
                 }
                 if (Components is {} ComponentsItem)
                 {
@@ -505,7 +505,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.VirtualMachineAdapter = this.VirtualMachineAdapter.Combine(rhs.VirtualMachineAdapter, (l, r) => l.Combine(r));
-                ret.XALG = this.XALG.Combine(rhs.XALG);
+                ret.XalgFlags = this.XalgFlags.Combine(rhs.XalgFlags);
                 ret.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Components?.Overall, rhs.Components?.Overall), Noggog.ExceptionExt.Combine(this.Components?.Specific, rhs.Components?.Specific));
                 ret.Model = this.Model.Combine(rhs.Model, (l, r) => l.Combine(r));
                 return ret;
@@ -531,7 +531,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public VirtualMachineAdapter.TranslationMask? VirtualMachineAdapter;
-            public bool XALG;
+            public bool XalgFlags;
             public AComponent.TranslationMask? Components;
             public Model.TranslationMask? Model;
             #endregion
@@ -542,7 +542,7 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.XALG = defaultOn;
+                this.XalgFlags = defaultOn;
             }
 
             #endregion
@@ -551,7 +551,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.GetCrystal(ret);
                 ret.Add((VirtualMachineAdapter != null ? VirtualMachineAdapter.OnOverall : DefaultOn, VirtualMachineAdapter?.GetCrystal()));
-                ret.Add((XALG, null));
+                ret.Add((XalgFlags, null));
                 ret.Add((Components == null ? DefaultOn : !Components.GetCrystal().CopyNothing, Components?.GetCrystal()));
                 ret.Add((Model != null ? Model.OnOverall : DefaultOn, Model?.GetCrystal()));
             }
@@ -713,7 +713,7 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: IHaveVirtualMachineAdapter, IScripted
         /// </summary>
         new VirtualMachineAdapter? VirtualMachineAdapter { get; set; }
-        new UInt64? XALG { get; set; }
+        new XalgFlag? XalgFlags { get; set; }
         new ExtendedList<AComponent> Components { get; }
         /// <summary>
         /// Aspects: IModeled
@@ -747,7 +747,7 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         IVirtualMachineAdapterGetter? VirtualMachineAdapter { get; }
         #endregion
-        UInt64? XALG { get; }
+        XalgFlag? XalgFlags { get; }
         IReadOnlyList<IAComponentGetter> Components { get; }
         #region Model
         /// <summary>
@@ -932,7 +932,7 @@ namespace Mutagen.Bethesda.Starfield
         Version2 = 5,
         StarfieldMajorRecordFlags = 6,
         VirtualMachineAdapter = 7,
-        XALG = 8,
+        XalgFlags = 8,
         Components = 9,
         Model = 10,
     }
@@ -1037,7 +1037,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.VirtualMachineAdapter = null;
-            item.XALG = default;
+            item.XalgFlags = default;
             item.Components.Clear();
             item.Model = null;
             base.Clear(item);
@@ -1164,7 +1164,7 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.VirtualMachineAdapter,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
-            ret.XALG = item.XALG == rhs.XALG;
+            ret.XalgFlags = item.XalgFlags == rhs.XalgFlags;
             ret.Components = item.Components.CollectionEqualsHelper(
                 rhs.Components,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -1228,10 +1228,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 VirtualMachineAdapterItem?.Print(sb, "VirtualMachineAdapter");
             }
-            if ((printMask?.XALG ?? true)
-                && item.XALG is {} XALGItem)
+            if ((printMask?.XalgFlags ?? true)
+                && item.XalgFlags is {} XalgFlagsItem)
             {
-                sb.AppendItem(XALGItem, "XALG");
+                sb.AppendItem(XalgFlagsItem, "XalgFlags");
             }
             if (printMask?.Components?.Overall ?? true)
             {
@@ -1310,9 +1310,9 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 else if (!isVirtualMachineAdapterEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)AnimatedObject_FieldIndex.XALG) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)AnimatedObject_FieldIndex.XalgFlags) ?? true))
             {
-                if (lhs.XALG != rhs.XALG) return false;
+                if (lhs.XalgFlags != rhs.XalgFlags) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)AnimatedObject_FieldIndex.Components) ?? true))
             {
@@ -1358,9 +1358,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(VirtualMachineAdapteritem);
             }
-            if (item.XALG is {} XALGitem)
+            if (item.XalgFlags is {} XalgFlagsitem)
             {
-                hash.Add(XALGitem);
+                hash.Add(XalgFlagsitem);
             }
             foreach (var subItem in item.Components)
             {
@@ -1561,9 +1561,9 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)AnimatedObject_FieldIndex.XALG) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)AnimatedObject_FieldIndex.XalgFlags) ?? true))
             {
-                item.XALG = rhs.XALG;
+                item.XalgFlags = rhs.XalgFlags;
             }
             if ((copyMask?.GetShouldTranslate((int)AnimatedObject_FieldIndex.Components) ?? true))
             {
@@ -1791,9 +1791,10 @@ namespace Mutagen.Bethesda.Starfield
                     writer: writer,
                     translationParams: translationParams.With(RecordTypes.XXXX));
             }
-            UInt64BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
-                writer: writer,
-                item: item.XALG,
+            EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.XalgFlags,
+                length: 8,
                 header: translationParams.ConvertToCustom(RecordTypes.XALG));
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IAComponentGetter>.Instance.Write(
                 writer: writer,
@@ -1891,8 +1892,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.XALG:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.XALG = frame.ReadUInt64();
-                    return (int)AnimatedObject_FieldIndex.XALG;
+                    item.XalgFlags = EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)AnimatedObject_FieldIndex.XalgFlags;
                 }
                 case RecordTypeInts.BFCB:
                 {
@@ -1988,9 +1991,9 @@ namespace Mutagen.Bethesda.Starfield
         public IVirtualMachineAdapterGetter? VirtualMachineAdapter => _VirtualMachineAdapterLocation.HasValue ? VirtualMachineAdapterBinaryOverlay.VirtualMachineAdapterFactory(_recordData.Slice(_VirtualMachineAdapterLocation!.Value.Min), _package, TypedParseParams.FromLengthOverride(_VirtualMachineAdapterLengthOverride)) : default;
         IAVirtualMachineAdapterGetter? IHaveVirtualMachineAdapterGetter.VirtualMachineAdapter => this.VirtualMachineAdapter;
         #endregion
-        #region XALG
-        private int? _XALGLocation;
-        public UInt64? XALG => _XALGLocation.HasValue ? BinaryPrimitives.ReadUInt64LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _XALGLocation.Value, _package.MetaData.Constants)) : default(UInt64?);
+        #region XalgFlags
+        private int? _XalgFlagsLocation;
+        public XalgFlag? XalgFlags => EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_XalgFlagsLocation, _recordData, _package, 8);
         #endregion
         public IReadOnlyList<IAComponentGetter> Components { get; private set; } = [];
         public IModelGetter? Model { get; private set; }
@@ -2075,8 +2078,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.XALG:
                 {
-                    _XALGLocation = (stream.Position - offset);
-                    return (int)AnimatedObject_FieldIndex.XALG;
+                    _XalgFlagsLocation = (stream.Position - offset);
+                    return (int)AnimatedObject_FieldIndex.XalgFlags;
                 }
                 case RecordTypeInts.BFCB:
                 {

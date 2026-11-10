@@ -99,10 +99,10 @@ namespace Mutagen.Bethesda.Starfield
         #region DirtinessScale
         public Single DirtinessScale { get; set; } = default(Single);
         #endregion
-        #region XALG
-        public UInt64? XALG { get; set; }
+        #region XalgFlags
+        public XalgFlag? XalgFlags { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt64? ISoundEchoMarkerGetter.XALG => this.XALG;
+        XalgFlag? ISoundEchoMarkerGetter.XalgFlags => this.XalgFlags;
         #endregion
         #region Description
         public String? Description { get; set; }
@@ -173,7 +173,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(initialValue, new VirtualMachineAdapter.Mask<TItem>(initialValue));
                 this.ObjectBounds = new MaskItem<TItem, ObjectBounds.Mask<TItem>?>(initialValue, new ObjectBounds.Mask<TItem>(initialValue));
                 this.DirtinessScale = initialValue;
-                this.XALG = initialValue;
+                this.XalgFlags = initialValue;
                 this.Description = initialValue;
                 this.ECHL = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.Markers = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, EchoMarker.Mask<TItem>?>>?>(initialValue, []);
@@ -191,7 +191,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem VirtualMachineAdapter,
                 TItem ObjectBounds,
                 TItem DirtinessScale,
-                TItem XALG,
+                TItem XalgFlags,
                 TItem Description,
                 TItem ECHL,
                 TItem Markers,
@@ -208,7 +208,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(VirtualMachineAdapter, new VirtualMachineAdapter.Mask<TItem>(VirtualMachineAdapter));
                 this.ObjectBounds = new MaskItem<TItem, ObjectBounds.Mask<TItem>?>(ObjectBounds, new ObjectBounds.Mask<TItem>(ObjectBounds));
                 this.DirtinessScale = DirtinessScale;
-                this.XALG = XALG;
+                this.XalgFlags = XalgFlags;
                 this.Description = Description;
                 this.ECHL = new MaskItem<TItem, SoundReference.Mask<TItem>?>(ECHL, new SoundReference.Mask<TItem>(ECHL));
                 this.Markers = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, EchoMarker.Mask<TItem>?>>?>(Markers, []);
@@ -227,7 +227,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>? VirtualMachineAdapter { get; set; }
             public MaskItem<TItem, ObjectBounds.Mask<TItem>?>? ObjectBounds { get; set; }
             public TItem DirtinessScale;
-            public TItem XALG;
+            public TItem XalgFlags;
             public TItem Description;
             public MaskItem<TItem, SoundReference.Mask<TItem>?>? ECHL { get; set; }
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, EchoMarker.Mask<TItem>?>>?>? Markers;
@@ -248,7 +248,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.VirtualMachineAdapter, rhs.VirtualMachineAdapter)) return false;
                 if (!object.Equals(this.ObjectBounds, rhs.ObjectBounds)) return false;
                 if (!object.Equals(this.DirtinessScale, rhs.DirtinessScale)) return false;
-                if (!object.Equals(this.XALG, rhs.XALG)) return false;
+                if (!object.Equals(this.XalgFlags, rhs.XalgFlags)) return false;
                 if (!object.Equals(this.Description, rhs.Description)) return false;
                 if (!object.Equals(this.ECHL, rhs.ECHL)) return false;
                 if (!object.Equals(this.Markers, rhs.Markers)) return false;
@@ -261,7 +261,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.VirtualMachineAdapter);
                 hash.Add(this.ObjectBounds);
                 hash.Add(this.DirtinessScale);
-                hash.Add(this.XALG);
+                hash.Add(this.XalgFlags);
                 hash.Add(this.Description);
                 hash.Add(this.ECHL);
                 hash.Add(this.Markers);
@@ -287,7 +287,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (this.ObjectBounds.Specific != null && !this.ObjectBounds.Specific.All(eval)) return false;
                 }
                 if (!eval(this.DirtinessScale)) return false;
-                if (!eval(this.XALG)) return false;
+                if (!eval(this.XalgFlags)) return false;
                 if (!eval(this.Description)) return false;
                 if (ECHL != null)
                 {
@@ -330,7 +330,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (this.ObjectBounds.Specific != null && this.ObjectBounds.Specific.Any(eval)) return true;
                 }
                 if (eval(this.DirtinessScale)) return true;
-                if (eval(this.XALG)) return true;
+                if (eval(this.XalgFlags)) return true;
                 if (eval(this.Description)) return true;
                 if (ECHL != null)
                 {
@@ -372,7 +372,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.VirtualMachineAdapter = this.VirtualMachineAdapter == null ? null : new MaskItem<R, VirtualMachineAdapter.Mask<R>?>(eval(this.VirtualMachineAdapter.Overall), this.VirtualMachineAdapter.Specific?.Translate(eval));
                 obj.ObjectBounds = this.ObjectBounds == null ? null : new MaskItem<R, ObjectBounds.Mask<R>?>(eval(this.ObjectBounds.Overall), this.ObjectBounds.Specific?.Translate(eval));
                 obj.DirtinessScale = eval(this.DirtinessScale);
-                obj.XALG = eval(this.XALG);
+                obj.XalgFlags = eval(this.XalgFlags);
                 obj.Description = eval(this.Description);
                 obj.ECHL = this.ECHL == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.ECHL.Overall), this.ECHL.Specific?.Translate(eval));
                 if (Markers != null)
@@ -421,9 +421,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(DirtinessScale, "DirtinessScale");
                     }
-                    if (printMask?.XALG ?? true)
+                    if (printMask?.XalgFlags ?? true)
                     {
-                        sb.AppendItem(XALG, "XALG");
+                        sb.AppendItem(XalgFlags, "XalgFlags");
                     }
                     if (printMask?.Description ?? true)
                     {
@@ -470,7 +470,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, VirtualMachineAdapter.ErrorMask?>? VirtualMachineAdapter;
             public MaskItem<Exception?, ObjectBounds.ErrorMask?>? ObjectBounds;
             public Exception? DirtinessScale;
-            public Exception? XALG;
+            public Exception? XalgFlags;
             public Exception? Description;
             public MaskItem<Exception?, SoundReference.ErrorMask?>? ECHL;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, EchoMarker.ErrorMask?>>?>? Markers;
@@ -489,8 +489,8 @@ namespace Mutagen.Bethesda.Starfield
                         return ObjectBounds;
                     case SoundEchoMarker_FieldIndex.DirtinessScale:
                         return DirtinessScale;
-                    case SoundEchoMarker_FieldIndex.XALG:
-                        return XALG;
+                    case SoundEchoMarker_FieldIndex.XalgFlags:
+                        return XalgFlags;
                     case SoundEchoMarker_FieldIndex.Description:
                         return Description;
                     case SoundEchoMarker_FieldIndex.ECHL:
@@ -518,8 +518,8 @@ namespace Mutagen.Bethesda.Starfield
                     case SoundEchoMarker_FieldIndex.DirtinessScale:
                         this.DirtinessScale = ex;
                         break;
-                    case SoundEchoMarker_FieldIndex.XALG:
-                        this.XALG = ex;
+                    case SoundEchoMarker_FieldIndex.XalgFlags:
+                        this.XalgFlags = ex;
                         break;
                     case SoundEchoMarker_FieldIndex.Description:
                         this.Description = ex;
@@ -553,8 +553,8 @@ namespace Mutagen.Bethesda.Starfield
                     case SoundEchoMarker_FieldIndex.DirtinessScale:
                         this.DirtinessScale = (Exception?)obj;
                         break;
-                    case SoundEchoMarker_FieldIndex.XALG:
-                        this.XALG = (Exception?)obj;
+                    case SoundEchoMarker_FieldIndex.XalgFlags:
+                        this.XalgFlags = (Exception?)obj;
                         break;
                     case SoundEchoMarker_FieldIndex.Description:
                         this.Description = (Exception?)obj;
@@ -580,7 +580,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (VirtualMachineAdapter != null) return true;
                 if (ObjectBounds != null) return true;
                 if (DirtinessScale != null) return true;
-                if (XALG != null) return true;
+                if (XalgFlags != null) return true;
                 if (Description != null) return true;
                 if (ECHL != null) return true;
                 if (Markers != null) return true;
@@ -617,7 +617,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(DirtinessScale, "DirtinessScale");
                 }
                 {
-                    sb.AppendItem(XALG, "XALG");
+                    sb.AppendItem(XalgFlags, "XalgFlags");
                 }
                 {
                     sb.AppendItem(Description, "Description");
@@ -653,7 +653,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.VirtualMachineAdapter = this.VirtualMachineAdapter.Combine(rhs.VirtualMachineAdapter, (l, r) => l.Combine(r));
                 ret.ObjectBounds = this.ObjectBounds.Combine(rhs.ObjectBounds, (l, r) => l.Combine(r));
                 ret.DirtinessScale = this.DirtinessScale.Combine(rhs.DirtinessScale);
-                ret.XALG = this.XALG.Combine(rhs.XALG);
+                ret.XalgFlags = this.XalgFlags.Combine(rhs.XalgFlags);
                 ret.Description = this.Description.Combine(rhs.Description);
                 ret.ECHL = this.ECHL.Combine(rhs.ECHL, (l, r) => l.Combine(r));
                 ret.Markers = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, EchoMarker.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Markers?.Overall, rhs.Markers?.Overall), Noggog.ExceptionExt.Combine(this.Markers?.Specific, rhs.Markers?.Specific));
@@ -683,7 +683,7 @@ namespace Mutagen.Bethesda.Starfield
             public VirtualMachineAdapter.TranslationMask? VirtualMachineAdapter;
             public ObjectBounds.TranslationMask? ObjectBounds;
             public bool DirtinessScale;
-            public bool XALG;
+            public bool XalgFlags;
             public bool Description;
             public SoundReference.TranslationMask? ECHL;
             public EchoMarker.TranslationMask? Markers;
@@ -697,7 +697,7 @@ namespace Mutagen.Bethesda.Starfield
                 : base(defaultOn, onOverall)
             {
                 this.DirtinessScale = defaultOn;
-                this.XALG = defaultOn;
+                this.XalgFlags = defaultOn;
                 this.Description = defaultOn;
             }
 
@@ -709,7 +709,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((VirtualMachineAdapter != null ? VirtualMachineAdapter.OnOverall : DefaultOn, VirtualMachineAdapter?.GetCrystal()));
                 ret.Add((ObjectBounds != null ? ObjectBounds.OnOverall : DefaultOn, ObjectBounds?.GetCrystal()));
                 ret.Add((DirtinessScale, null));
-                ret.Add((XALG, null));
+                ret.Add((XalgFlags, null));
                 ret.Add((Description, null));
                 ret.Add((ECHL != null ? ECHL.OnOverall : DefaultOn, ECHL?.GetCrystal()));
                 ret.Add((Markers == null ? DefaultOn : !Markers.GetCrystal().CopyNothing, Markers?.GetCrystal()));
@@ -876,7 +876,7 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         new ObjectBounds ObjectBounds { get; set; }
         new Single DirtinessScale { get; set; }
-        new UInt64? XALG { get; set; }
+        new XalgFlag? XalgFlags { get; set; }
         new String? Description { get; set; }
         new SoundReference? ECHL { get; set; }
         new ExtendedList<EchoMarker> Markers { get; }
@@ -918,7 +918,7 @@ namespace Mutagen.Bethesda.Starfield
         IObjectBoundsGetter ObjectBounds { get; }
         #endregion
         Single DirtinessScale { get; }
-        UInt64? XALG { get; }
+        XalgFlag? XalgFlags { get; }
         String? Description { get; }
         ISoundReferenceGetter? ECHL { get; }
         IReadOnlyList<IEchoMarkerGetter> Markers { get; }
@@ -1102,7 +1102,7 @@ namespace Mutagen.Bethesda.Starfield
         VirtualMachineAdapter = 7,
         ObjectBounds = 8,
         DirtinessScale = 9,
-        XALG = 10,
+        XalgFlags = 10,
         Description = 11,
         ECHL = 12,
         Markers = 13,
@@ -1220,7 +1220,7 @@ namespace Mutagen.Bethesda.Starfield
             item.VirtualMachineAdapter = null;
             item.ObjectBounds.Clear();
             item.DirtinessScale = default(Single);
-            item.XALG = default;
+            item.XalgFlags = default;
             item.Description = default;
             item.ECHL = null;
             item.Markers.Clear();
@@ -1320,7 +1320,7 @@ namespace Mutagen.Bethesda.Starfield
                 include);
             ret.ObjectBounds = MaskItemExt.Factory(item.ObjectBounds.GetEqualsMask(rhs.ObjectBounds, include), include);
             ret.DirtinessScale = item.DirtinessScale.EqualsWithin(rhs.DirtinessScale);
-            ret.XALG = item.XALG == rhs.XALG;
+            ret.XalgFlags = item.XalgFlags == rhs.XalgFlags;
             ret.Description = string.Equals(item.Description, rhs.Description);
             ret.ECHL = EqualsMaskHelper.EqualsHelper(
                 item.ECHL,
@@ -1398,10 +1398,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.DirtinessScale, "DirtinessScale");
             }
-            if ((printMask?.XALG ?? true)
-                && item.XALG is {} XALGItem)
+            if ((printMask?.XalgFlags ?? true)
+                && item.XalgFlags is {} XalgFlagsItem)
             {
-                sb.AppendItem(XALGItem, "XALG");
+                sb.AppendItem(XalgFlagsItem, "XalgFlags");
             }
             if ((printMask?.Description ?? true)
                 && item.Description is {} DescriptionItem)
@@ -1502,9 +1502,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.DirtinessScale.EqualsWithin(rhs.DirtinessScale)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SoundEchoMarker_FieldIndex.XALG) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SoundEchoMarker_FieldIndex.XalgFlags) ?? true))
             {
-                if (lhs.XALG != rhs.XALG) return false;
+                if (lhs.XalgFlags != rhs.XalgFlags) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)SoundEchoMarker_FieldIndex.Description) ?? true))
             {
@@ -1564,9 +1564,9 @@ namespace Mutagen.Bethesda.Starfield
             }
             hash.Add(item.ObjectBounds);
             hash.Add(item.DirtinessScale);
-            if (item.XALG is {} XALGitem)
+            if (item.XalgFlags is {} XalgFlagsitem)
             {
-                hash.Add(XALGitem);
+                hash.Add(XalgFlagsitem);
             }
             if (item.Description is {} Descriptionitem)
             {
@@ -1786,9 +1786,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.DirtinessScale = rhs.DirtinessScale;
             }
-            if ((copyMask?.GetShouldTranslate((int)SoundEchoMarker_FieldIndex.XALG) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SoundEchoMarker_FieldIndex.XalgFlags) ?? true))
             {
-                item.XALG = rhs.XALG;
+                item.XalgFlags = rhs.XalgFlags;
             }
             if ((copyMask?.GetShouldTranslate((int)SoundEchoMarker_FieldIndex.Description) ?? true))
             {
@@ -2055,9 +2055,10 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.DirtinessScale,
                 header: translationParams.ConvertToCustom(RecordTypes.ODTY));
-            UInt64BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
-                writer: writer,
-                item: item.XALG,
+            EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.XalgFlags,
+                length: 8,
                 header: translationParams.ConvertToCustom(RecordTypes.XALG));
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
@@ -2185,8 +2186,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.XALG:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.XALG = frame.ReadUInt64();
-                    return (int)SoundEchoMarker_FieldIndex.XALG;
+                    item.XalgFlags = EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)SoundEchoMarker_FieldIndex.XalgFlags;
                 }
                 case RecordTypeInts.NNAM:
                 {
@@ -2303,9 +2306,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _DirtinessScaleLocation;
         public Single DirtinessScale => _DirtinessScaleLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _DirtinessScaleLocation.Value, _package.MetaData.Constants).Float() : default(Single);
         #endregion
-        #region XALG
-        private int? _XALGLocation;
-        public UInt64? XALG => _XALGLocation.HasValue ? BinaryPrimitives.ReadUInt64LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _XALGLocation.Value, _package.MetaData.Constants)) : default(UInt64?);
+        #region XalgFlags
+        private int? _XalgFlagsLocation;
+        public XalgFlag? XalgFlags => EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_XalgFlagsLocation, _recordData, _package, 8);
         #endregion
         #region Description
         private int? _DescriptionLocation;
@@ -2405,8 +2408,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.XALG:
                 {
-                    _XALGLocation = (stream.Position - offset);
-                    return (int)SoundEchoMarker_FieldIndex.XALG;
+                    _XalgFlagsLocation = (stream.Position - offset);
+                    return (int)SoundEchoMarker_FieldIndex.XalgFlags;
                 }
                 case RecordTypeInts.NNAM:
                 {

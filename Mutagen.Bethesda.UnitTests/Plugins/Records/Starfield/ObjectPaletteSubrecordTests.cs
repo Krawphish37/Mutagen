@@ -127,7 +127,7 @@ public class ObjectPaletteSubrecordTests
         foreach (var hazard in ReadHazard(HazardBytes(), throwOnUnknown: true))
         {
             hazard.ObjectPaletteDefaults.ShouldNotBeNull();
-            hazard.XALG.ShouldBe(Xalg);
+            ((ulong?)hazard.XalgFlags).ShouldBe(Xalg);
         }
     }
 
@@ -147,7 +147,7 @@ public class ObjectPaletteSubrecordTests
         foreach (var decal in ReadDecal(DecalWithLayerBytes(), throwOnUnknown: true))
         {
             decal.DefaultLayer.FormKey.ShouldBe(new FormKey(TestModKey, LayerId));
-            decal.XALG.ShouldBeNull();
+            decal.XalgFlags.ShouldBeNull();
             decal.Material.FormKey.ShouldBe(new FormKey(TestModKey, MaterialId));
         }
     }
@@ -168,7 +168,7 @@ public class ObjectPaletteSubrecordTests
         foreach (var decal in ReadDecal(DecalWithXalgBytes(), throwOnUnknown: true))
         {
             decal.ObjectPaletteDefaults.ShouldNotBeNull();
-            decal.XALG.ShouldBe(Xalg);
+            ((ulong?)decal.XalgFlags).ShouldBe(Xalg);
             decal.DefaultLayer.IsNull.ShouldBeTrue();
         }
     }

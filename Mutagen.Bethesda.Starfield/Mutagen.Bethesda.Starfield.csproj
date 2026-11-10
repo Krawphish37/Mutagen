@@ -154,6 +154,7 @@
     <Compile Include="Enums\TargetType.cs" />
     <Compile Include="Enums\TimeOfDay.cs" />
     <Compile Include="Enums\TintType.cs" />
+    <Compile Include="Enums\XalgFlag.cs" />
     <Compile Include="Extensions\ModContextExt.cs" />
     <Compile Include="Interfaces\Aspect\IHasEffects.cs" />
     <Compile Include="Interfaces\Aspect\IEnchantable.cs" />

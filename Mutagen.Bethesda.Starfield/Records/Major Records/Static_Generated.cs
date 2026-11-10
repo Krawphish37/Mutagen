@@ -155,10 +155,10 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkNullableGetter<ISnapTemplateBehaviorGetter> IStaticGetter.SnapBehavior => this.SnapBehavior;
         #endregion
-        #region XALG
-        public UInt64? XALG { get; set; }
+        #region XalgFlags
+        public XalgFlag? XalgFlags { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt64? IStaticGetter.XALG => this.XALG;
+        XalgFlag? IStaticGetter.XalgFlags => this.XalgFlags;
         #endregion
         #region DefaultLayer
         private readonly IFormLinkNullable<ILayerGetter> _DefaultLayer = new FormLinkNullable<ILayerGetter>();
@@ -357,7 +357,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Transforms = new MaskItem<TItem, Transforms.Mask<TItem>?>(initialValue, new Transforms.Mask<TItem>(initialValue));
                 this.SnapTemplate = initialValue;
                 this.SnapBehavior = initialValue;
-                this.XALG = initialValue;
+                this.XalgFlags = initialValue;
                 this.DefaultLayer = initialValue;
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(initialValue, []);
                 this.ForcedLocations = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
@@ -389,7 +389,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Transforms,
                 TItem SnapTemplate,
                 TItem SnapBehavior,
-                TItem XALG,
+                TItem XalgFlags,
                 TItem DefaultLayer,
                 TItem Components,
                 TItem ForcedLocations,
@@ -420,7 +420,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Transforms = new MaskItem<TItem, Transforms.Mask<TItem>?>(Transforms, new Transforms.Mask<TItem>(Transforms));
                 this.SnapTemplate = SnapTemplate;
                 this.SnapBehavior = SnapBehavior;
-                this.XALG = XALG;
+                this.XalgFlags = XalgFlags;
                 this.DefaultLayer = DefaultLayer;
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(Components, []);
                 this.ForcedLocations = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(ForcedLocations, []);
@@ -453,7 +453,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, Transforms.Mask<TItem>?>? Transforms { get; set; }
             public TItem SnapTemplate;
             public TItem SnapBehavior;
-            public TItem XALG;
+            public TItem XalgFlags;
             public TItem DefaultLayer;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>? Components;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? ForcedLocations;
@@ -488,7 +488,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Transforms, rhs.Transforms)) return false;
                 if (!object.Equals(this.SnapTemplate, rhs.SnapTemplate)) return false;
                 if (!object.Equals(this.SnapBehavior, rhs.SnapBehavior)) return false;
-                if (!object.Equals(this.XALG, rhs.XALG)) return false;
+                if (!object.Equals(this.XalgFlags, rhs.XalgFlags)) return false;
                 if (!object.Equals(this.DefaultLayer, rhs.DefaultLayer)) return false;
                 if (!object.Equals(this.Components, rhs.Components)) return false;
                 if (!object.Equals(this.ForcedLocations, rhs.ForcedLocations)) return false;
@@ -515,7 +515,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Transforms);
                 hash.Add(this.SnapTemplate);
                 hash.Add(this.SnapBehavior);
-                hash.Add(this.XALG);
+                hash.Add(this.XalgFlags);
                 hash.Add(this.DefaultLayer);
                 hash.Add(this.Components);
                 hash.Add(this.ForcedLocations);
@@ -567,7 +567,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (!eval(this.SnapTemplate)) return false;
                 if (!eval(this.SnapBehavior)) return false;
-                if (!eval(this.XALG)) return false;
+                if (!eval(this.XalgFlags)) return false;
                 if (!eval(this.DefaultLayer)) return false;
                 if (this.Components != null)
                 {
@@ -661,7 +661,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 if (eval(this.SnapTemplate)) return true;
                 if (eval(this.SnapBehavior)) return true;
-                if (eval(this.XALG)) return true;
+                if (eval(this.XalgFlags)) return true;
                 if (eval(this.DefaultLayer)) return true;
                 if (this.Components != null)
                 {
@@ -742,7 +742,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Transforms = this.Transforms == null ? null : new MaskItem<R, Transforms.Mask<R>?>(eval(this.Transforms.Overall), this.Transforms.Specific?.Translate(eval));
                 obj.SnapTemplate = eval(this.SnapTemplate);
                 obj.SnapBehavior = eval(this.SnapBehavior);
-                obj.XALG = eval(this.XALG);
+                obj.XalgFlags = eval(this.XalgFlags);
                 obj.DefaultLayer = eval(this.DefaultLayer);
                 if (Components != null)
                 {
@@ -847,9 +847,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(SnapBehavior, "SnapBehavior");
                     }
-                    if (printMask?.XALG ?? true)
+                    if (printMask?.XalgFlags ?? true)
                     {
-                        sb.AppendItem(XALG, "XALG");
+                        sb.AppendItem(XalgFlags, "XalgFlags");
                     }
                     if (printMask?.DefaultLayer ?? true)
                     {
@@ -969,7 +969,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, Transforms.ErrorMask?>? Transforms;
             public Exception? SnapTemplate;
             public Exception? SnapBehavior;
-            public Exception? XALG;
+            public Exception? XalgFlags;
             public Exception? DefaultLayer;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>? Components;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? ForcedLocations;
@@ -1007,8 +1007,8 @@ namespace Mutagen.Bethesda.Starfield
                         return SnapTemplate;
                     case Static_FieldIndex.SnapBehavior:
                         return SnapBehavior;
-                    case Static_FieldIndex.XALG:
-                        return XALG;
+                    case Static_FieldIndex.XalgFlags:
+                        return XalgFlags;
                     case Static_FieldIndex.DefaultLayer:
                         return DefaultLayer;
                     case Static_FieldIndex.Components:
@@ -1069,8 +1069,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Static_FieldIndex.SnapBehavior:
                         this.SnapBehavior = ex;
                         break;
-                    case Static_FieldIndex.XALG:
-                        this.XALG = ex;
+                    case Static_FieldIndex.XalgFlags:
+                        this.XalgFlags = ex;
                         break;
                     case Static_FieldIndex.DefaultLayer:
                         this.DefaultLayer = ex;
@@ -1146,8 +1146,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Static_FieldIndex.SnapBehavior:
                         this.SnapBehavior = (Exception?)obj;
                         break;
-                    case Static_FieldIndex.XALG:
-                        this.XALG = (Exception?)obj;
+                    case Static_FieldIndex.XalgFlags:
+                        this.XalgFlags = (Exception?)obj;
                         break;
                     case Static_FieldIndex.DefaultLayer:
                         this.DefaultLayer = (Exception?)obj;
@@ -1205,7 +1205,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Transforms != null) return true;
                 if (SnapTemplate != null) return true;
                 if (SnapBehavior != null) return true;
-                if (XALG != null) return true;
+                if (XalgFlags != null) return true;
                 if (DefaultLayer != null) return true;
                 if (Components != null) return true;
                 if (ForcedLocations != null) return true;
@@ -1260,7 +1260,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(SnapBehavior, "SnapBehavior");
                 }
                 {
-                    sb.AppendItem(XALG, "XALG");
+                    sb.AppendItem(XalgFlags, "XalgFlags");
                 }
                 {
                     sb.AppendItem(DefaultLayer, "DefaultLayer");
@@ -1358,7 +1358,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Transforms = this.Transforms.Combine(rhs.Transforms, (l, r) => l.Combine(r));
                 ret.SnapTemplate = this.SnapTemplate.Combine(rhs.SnapTemplate);
                 ret.SnapBehavior = this.SnapBehavior.Combine(rhs.SnapBehavior);
-                ret.XALG = this.XALG.Combine(rhs.XALG);
+                ret.XalgFlags = this.XalgFlags.Combine(rhs.XalgFlags);
                 ret.DefaultLayer = this.DefaultLayer.Combine(rhs.DefaultLayer);
                 ret.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Components?.Overall, rhs.Components?.Overall), Noggog.ExceptionExt.Combine(this.Components?.Specific, rhs.Components?.Specific));
                 ret.ForcedLocations = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.ForcedLocations?.Overall, rhs.ForcedLocations?.Overall), Noggog.ExceptionExt.Combine(this.ForcedLocations?.Specific, rhs.ForcedLocations?.Specific));
@@ -1402,7 +1402,7 @@ namespace Mutagen.Bethesda.Starfield
             public Transforms.TranslationMask? Transforms;
             public bool SnapTemplate;
             public bool SnapBehavior;
-            public bool XALG;
+            public bool XalgFlags;
             public bool DefaultLayer;
             public AComponent.TranslationMask? Components;
             public bool ForcedLocations;
@@ -1427,7 +1427,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.DirtinessScale = defaultOn;
                 this.SnapTemplate = defaultOn;
                 this.SnapBehavior = defaultOn;
-                this.XALG = defaultOn;
+                this.XalgFlags = defaultOn;
                 this.DefaultLayer = defaultOn;
                 this.ForcedLocations = defaultOn;
                 this.Name = defaultOn;
@@ -1451,7 +1451,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Transforms != null ? Transforms.OnOverall : DefaultOn, Transforms?.GetCrystal()));
                 ret.Add((SnapTemplate, null));
                 ret.Add((SnapBehavior, null));
-                ret.Add((XALG, null));
+                ret.Add((XalgFlags, null));
                 ret.Add((DefaultLayer, null));
                 ret.Add((Components == null ? DefaultOn : !Components.GetCrystal().CopyNothing, Components?.GetCrystal()));
                 ret.Add((ForcedLocations, null));
@@ -1650,7 +1650,7 @@ namespace Mutagen.Bethesda.Starfield
         new Transforms? Transforms { get; set; }
         new IFormLinkNullable<ISnapTemplateGetter> SnapTemplate { get; set; }
         new IFormLinkNullable<ISnapTemplateBehaviorGetter> SnapBehavior { get; set; }
-        new UInt64? XALG { get; set; }
+        new XalgFlag? XalgFlags { get; set; }
         new IFormLinkNullable<ILayerGetter> DefaultLayer { get; set; }
         new ExtendedList<AComponent> Components { get; }
         new ExtendedList<IFormLinkGetter<ILocationReferenceTypeGetter>>? ForcedLocations { get; set; }
@@ -1721,7 +1721,7 @@ namespace Mutagen.Bethesda.Starfield
         ITransformsGetter? Transforms { get; }
         IFormLinkNullableGetter<ISnapTemplateGetter> SnapTemplate { get; }
         IFormLinkNullableGetter<ISnapTemplateBehaviorGetter> SnapBehavior { get; }
-        UInt64? XALG { get; }
+        XalgFlag? XalgFlags { get; }
         IFormLinkNullableGetter<ILayerGetter> DefaultLayer { get; }
         IReadOnlyList<IAComponentGetter> Components { get; }
         IReadOnlyList<IFormLinkGetter<ILocationReferenceTypeGetter>>? ForcedLocations { get; }
@@ -1929,7 +1929,7 @@ namespace Mutagen.Bethesda.Starfield
         Transforms = 12,
         SnapTemplate = 13,
         SnapBehavior = 14,
-        XALG = 15,
+        XalgFlags = 15,
         DefaultLayer = 16,
         Components = 17,
         ForcedLocations = 18,
@@ -2066,7 +2066,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Transforms = null;
             item.SnapTemplate.Clear();
             item.SnapBehavior.Clear();
-            item.XALG = default;
+            item.XalgFlags = default;
             item.DefaultLayer.Clear();
             item.Components.Clear();
             item.ForcedLocations = null;
@@ -2232,7 +2232,7 @@ namespace Mutagen.Bethesda.Starfield
                 include);
             ret.SnapTemplate = item.SnapTemplate.Equals(rhs.SnapTemplate);
             ret.SnapBehavior = item.SnapBehavior.Equals(rhs.SnapBehavior);
-            ret.XALG = item.XALG == rhs.XALG;
+            ret.XalgFlags = item.XalgFlags == rhs.XalgFlags;
             ret.DefaultLayer = item.DefaultLayer.Equals(rhs.DefaultLayer);
             ret.Components = item.Components.CollectionEqualsHelper(
                 rhs.Components,
@@ -2352,10 +2352,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.SnapBehavior.FormKeyNullable, "SnapBehavior");
             }
-            if ((printMask?.XALG ?? true)
-                && item.XALG is {} XALGItem)
+            if ((printMask?.XalgFlags ?? true)
+                && item.XalgFlags is {} XalgFlagsItem)
             {
-                sb.AppendItem(XALGItem, "XALG");
+                sb.AppendItem(XalgFlagsItem, "XalgFlags");
             }
             if (printMask?.DefaultLayer ?? true)
             {
@@ -2547,9 +2547,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.SnapBehavior.Equals(rhs.SnapBehavior)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Static_FieldIndex.XALG) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Static_FieldIndex.XalgFlags) ?? true))
             {
-                if (lhs.XALG != rhs.XALG) return false;
+                if (lhs.XalgFlags != rhs.XalgFlags) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Static_FieldIndex.DefaultLayer) ?? true))
             {
@@ -2663,9 +2663,9 @@ namespace Mutagen.Bethesda.Starfield
             }
             hash.Add(item.SnapTemplate);
             hash.Add(item.SnapBehavior);
-            if (item.XALG is {} XALGitem)
+            if (item.XalgFlags is {} XalgFlagsitem)
             {
-                hash.Add(XALGitem);
+                hash.Add(XalgFlagsitem);
             }
             hash.Add(item.DefaultLayer);
             foreach (var subItem in item.Components)
@@ -3064,9 +3064,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.SnapBehavior.SetTo(rhs.SnapBehavior.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)Static_FieldIndex.XALG) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Static_FieldIndex.XalgFlags) ?? true))
             {
-                item.XALG = rhs.XALG;
+                item.XalgFlags = rhs.XalgFlags;
             }
             if ((copyMask?.GetShouldTranslate((int)Static_FieldIndex.DefaultLayer) ?? true))
             {
@@ -3480,9 +3480,10 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.SnapBehavior,
                 header: translationParams.ConvertToCustom(RecordTypes.SNBH));
-            UInt64BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
-                writer: writer,
-                item: item.XALG,
+            EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.XalgFlags,
+                length: 8,
                 header: translationParams.ConvertToCustom(RecordTypes.XALG));
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
@@ -3694,8 +3695,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.XALG:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.XALG = frame.ReadUInt64();
-                    return (int)Static_FieldIndex.XALG;
+                    item.XalgFlags = EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)Static_FieldIndex.XalgFlags;
                 }
                 case RecordTypeInts.DEFL:
                 {
@@ -3889,9 +3892,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _SnapBehaviorLocation;
         public IFormLinkNullableGetter<ISnapTemplateBehaviorGetter> SnapBehavior => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ISnapTemplateBehaviorGetter>(_package, _recordData, _SnapBehaviorLocation);
         #endregion
-        #region XALG
-        private int? _XALGLocation;
-        public UInt64? XALG => _XALGLocation.HasValue ? BinaryPrimitives.ReadUInt64LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _XALGLocation.Value, _package.MetaData.Constants)) : default(UInt64?);
+        #region XalgFlags
+        private int? _XalgFlagsLocation;
+        public XalgFlag? XalgFlags => EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_XalgFlagsLocation, _recordData, _package, 8);
         #endregion
         #region DefaultLayer
         private int? _DefaultLayerLocation;
@@ -4057,8 +4060,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.XALG:
                 {
-                    _XALGLocation = (stream.Position - offset);
-                    return (int)Static_FieldIndex.XALG;
+                    _XalgFlagsLocation = (stream.Position - offset);
+                    return (int)Static_FieldIndex.XalgFlags;
                 }
                 case RecordTypeInts.DEFL:
                 {

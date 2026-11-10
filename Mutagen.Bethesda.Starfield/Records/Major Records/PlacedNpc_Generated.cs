@@ -92,10 +92,10 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region XALG
-        public UInt64? XALG { get; set; }
+        #region XalgFlags
+        public XalgFlag? XalgFlags { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt64? IPlacedNpcGetter.XALG => this.XALG;
+        XalgFlag? IPlacedNpcGetter.XalgFlags => this.XalgFlags;
         #endregion
         #region Base
         private readonly IFormLink<INpcGetter> _Base = new FormLink<INpcGetter>();
@@ -396,7 +396,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(initialValue, new VirtualMachineAdapter.Mask<TItem>(initialValue));
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(initialValue, []);
-                this.XALG = initialValue;
+                this.XalgFlags = initialValue;
                 this.Base = initialValue;
                 this.LevelModifier = initialValue;
                 this.Emittance = initialValue;
@@ -443,7 +443,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem StarfieldMajorRecordFlags,
                 TItem VirtualMachineAdapter,
                 TItem Components,
-                TItem XALG,
+                TItem XalgFlags,
                 TItem Base,
                 TItem LevelModifier,
                 TItem Emittance,
@@ -489,7 +489,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(VirtualMachineAdapter, new VirtualMachineAdapter.Mask<TItem>(VirtualMachineAdapter));
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(Components, []);
-                this.XALG = XALG;
+                this.XalgFlags = XalgFlags;
                 this.Base = Base;
                 this.LevelModifier = LevelModifier;
                 this.Emittance = Emittance;
@@ -537,7 +537,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>? VirtualMachineAdapter { get; set; }
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>? Components;
-            public TItem XALG;
+            public TItem XalgFlags;
             public TItem Base;
             public TItem LevelModifier;
             public TItem Emittance;
@@ -587,7 +587,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!base.Equals(rhs)) return false;
                 if (!object.Equals(this.VirtualMachineAdapter, rhs.VirtualMachineAdapter)) return false;
                 if (!object.Equals(this.Components, rhs.Components)) return false;
-                if (!object.Equals(this.XALG, rhs.XALG)) return false;
+                if (!object.Equals(this.XalgFlags, rhs.XalgFlags)) return false;
                 if (!object.Equals(this.Base, rhs.Base)) return false;
                 if (!object.Equals(this.LevelModifier, rhs.LevelModifier)) return false;
                 if (!object.Equals(this.Emittance, rhs.Emittance)) return false;
@@ -629,7 +629,7 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.VirtualMachineAdapter);
                 hash.Add(this.Components);
-                hash.Add(this.XALG);
+                hash.Add(this.XalgFlags);
                 hash.Add(this.Base);
                 hash.Add(this.LevelModifier);
                 hash.Add(this.Emittance);
@@ -691,7 +691,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (!eval(this.XALG)) return false;
+                if (!eval(this.XalgFlags)) return false;
                 if (!eval(this.Base)) return false;
                 if (!eval(this.LevelModifier)) return false;
                 if (!eval(this.Emittance)) return false;
@@ -820,7 +820,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (eval(this.XALG)) return true;
+                if (eval(this.XalgFlags)) return true;
                 if (eval(this.Base)) return true;
                 if (eval(this.LevelModifier)) return true;
                 if (eval(this.Emittance)) return true;
@@ -955,7 +955,7 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.XALG = eval(this.XALG);
+                obj.XalgFlags = eval(this.XalgFlags);
                 obj.Base = eval(this.Base);
                 obj.LevelModifier = eval(this.LevelModifier);
                 obj.Emittance = eval(this.Emittance);
@@ -1099,9 +1099,9 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.XALG ?? true)
+                    if (printMask?.XalgFlags ?? true)
                     {
-                        sb.AppendItem(XALG, "XALG");
+                        sb.AppendItem(XalgFlags, "XalgFlags");
                     }
                     if (printMask?.Base ?? true)
                     {
@@ -1331,7 +1331,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public MaskItem<Exception?, VirtualMachineAdapter.ErrorMask?>? VirtualMachineAdapter;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>? Components;
-            public Exception? XALG;
+            public Exception? XalgFlags;
             public Exception? Base;
             public Exception? LevelModifier;
             public Exception? Emittance;
@@ -1378,8 +1378,8 @@ namespace Mutagen.Bethesda.Starfield
                         return VirtualMachineAdapter;
                     case PlacedNpc_FieldIndex.Components:
                         return Components;
-                    case PlacedNpc_FieldIndex.XALG:
-                        return XALG;
+                    case PlacedNpc_FieldIndex.XalgFlags:
+                        return XalgFlags;
                     case PlacedNpc_FieldIndex.Base:
                         return Base;
                     case PlacedNpc_FieldIndex.LevelModifier:
@@ -1464,8 +1464,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedNpc_FieldIndex.Components:
                         this.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(ex, null);
                         break;
-                    case PlacedNpc_FieldIndex.XALG:
-                        this.XALG = ex;
+                    case PlacedNpc_FieldIndex.XalgFlags:
+                        this.XalgFlags = ex;
                         break;
                     case PlacedNpc_FieldIndex.Base:
                         this.Base = ex;
@@ -1586,8 +1586,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedNpc_FieldIndex.Components:
                         this.Components = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>)obj;
                         break;
-                    case PlacedNpc_FieldIndex.XALG:
-                        this.XALG = (Exception?)obj;
+                    case PlacedNpc_FieldIndex.XalgFlags:
+                        this.XalgFlags = (Exception?)obj;
                         break;
                     case PlacedNpc_FieldIndex.Base:
                         this.Base = (Exception?)obj;
@@ -1702,7 +1702,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (VirtualMachineAdapter != null) return true;
                 if (Components != null) return true;
-                if (XALG != null) return true;
+                if (XalgFlags != null) return true;
                 if (Base != null) return true;
                 if (LevelModifier != null) return true;
                 if (Emittance != null) return true;
@@ -1783,7 +1783,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 {
-                    sb.AppendItem(XALG, "XALG");
+                    sb.AppendItem(XalgFlags, "XalgFlags");
                 }
                 {
                     sb.AppendItem(Base, "Base");
@@ -1968,7 +1968,7 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.VirtualMachineAdapter = this.VirtualMachineAdapter.Combine(rhs.VirtualMachineAdapter, (l, r) => l.Combine(r));
                 ret.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Components?.Overall, rhs.Components?.Overall), Noggog.ExceptionExt.Combine(this.Components?.Specific, rhs.Components?.Specific));
-                ret.XALG = this.XALG.Combine(rhs.XALG);
+                ret.XalgFlags = this.XalgFlags.Combine(rhs.XalgFlags);
                 ret.Base = this.Base.Combine(rhs.Base);
                 ret.LevelModifier = this.LevelModifier.Combine(rhs.LevelModifier);
                 ret.Emittance = this.Emittance.Combine(rhs.Emittance);
@@ -2027,7 +2027,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public VirtualMachineAdapter.TranslationMask? VirtualMachineAdapter;
             public AComponent.TranslationMask? Components;
-            public bool XALG;
+            public bool XalgFlags;
             public bool Base;
             public bool LevelModifier;
             public bool Emittance;
@@ -2070,7 +2070,7 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
-                this.XALG = defaultOn;
+                this.XalgFlags = defaultOn;
                 this.Base = defaultOn;
                 this.LevelModifier = defaultOn;
                 this.Emittance = defaultOn;
@@ -2107,7 +2107,7 @@ namespace Mutagen.Bethesda.Starfield
                 base.GetCrystal(ret);
                 ret.Add((VirtualMachineAdapter != null ? VirtualMachineAdapter.OnOverall : DefaultOn, VirtualMachineAdapter?.GetCrystal()));
                 ret.Add((Components == null ? DefaultOn : !Components.GetCrystal().CopyNothing, Components?.GetCrystal()));
-                ret.Add((XALG, null));
+                ret.Add((XalgFlags, null));
                 ret.Add((Base, null));
                 ret.Add((LevelModifier, null));
                 ret.Add((Emittance, null));
@@ -2311,7 +2311,7 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         new VirtualMachineAdapter? VirtualMachineAdapter { get; set; }
         new ExtendedList<AComponent> Components { get; }
-        new UInt64? XALG { get; set; }
+        new XalgFlag? XalgFlags { get; set; }
         new IFormLink<INpcGetter> Base { get; set; }
         new Level? LevelModifier { get; set; }
         new IFormLinkNullable<IEmittanceGetter> Emittance { get; set; }
@@ -2383,7 +2383,7 @@ namespace Mutagen.Bethesda.Starfield
         IVirtualMachineAdapterGetter? VirtualMachineAdapter { get; }
         #endregion
         IReadOnlyList<IAComponentGetter> Components { get; }
-        UInt64? XALG { get; }
+        XalgFlag? XalgFlags { get; }
         IFormLinkGetter<INpcGetter> Base { get; }
         Level? LevelModifier { get; }
         IFormLinkNullableGetter<IEmittanceGetter> Emittance { get; }
@@ -2600,7 +2600,7 @@ namespace Mutagen.Bethesda.Starfield
         StarfieldMajorRecordFlags = 6,
         VirtualMachineAdapter = 7,
         Components = 8,
-        XALG = 9,
+        XalgFlags = 9,
         Base = 10,
         LevelModifier = 11,
         Emittance = 12,
@@ -2763,7 +2763,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.VirtualMachineAdapter = null;
             item.Components.Clear();
-            item.XALG = default;
+            item.XalgFlags = default;
             item.Base.Clear();
             item.LevelModifier = default;
             item.Emittance.Clear();
@@ -2933,7 +2933,7 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.Components,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
-            ret.XALG = item.XALG == rhs.XALG;
+            ret.XalgFlags = item.XalgFlags == rhs.XalgFlags;
             ret.Base = item.Base.Equals(rhs.Base);
             ret.LevelModifier = item.LevelModifier == rhs.LevelModifier;
             ret.Emittance = item.Emittance.Equals(rhs.Emittance);
@@ -3067,10 +3067,10 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.XALG ?? true)
-                && item.XALG is {} XALGItem)
+            if ((printMask?.XalgFlags ?? true)
+                && item.XalgFlags is {} XalgFlagsItem)
             {
-                sb.AppendItem(XALGItem, "XALG");
+                sb.AppendItem(XalgFlagsItem, "XalgFlags");
             }
             if (printMask?.Base ?? true)
             {
@@ -3337,9 +3337,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Components.SequenceEqual(rhs.Components, (l, r) => ((AComponentCommon)((IAComponentGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)PlacedNpc_FieldIndex.Components)))) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlacedNpc_FieldIndex.XALG) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlacedNpc_FieldIndex.XalgFlags) ?? true))
             {
-                if (lhs.XALG != rhs.XALG) return false;
+                if (lhs.XalgFlags != rhs.XalgFlags) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlacedNpc_FieldIndex.Base) ?? true))
             {
@@ -3529,9 +3529,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(subItem);
             }
-            if (item.XALG is {} XALGitem)
+            if (item.XalgFlags is {} XalgFlagsitem)
             {
-                hash.Add(XALGitem);
+                hash.Add(XalgFlagsitem);
             }
             hash.Add(item.Base);
             if (item.LevelModifier is {} LevelModifieritem)
@@ -3910,9 +3910,9 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)PlacedNpc_FieldIndex.XALG) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlacedNpc_FieldIndex.XalgFlags) ?? true))
             {
-                item.XALG = rhs.XALG;
+                item.XalgFlags = rhs.XalgFlags;
             }
             if ((copyMask?.GetShouldTranslate((int)PlacedNpc_FieldIndex.Base) ?? true))
             {
@@ -4448,9 +4448,10 @@ namespace Mutagen.Bethesda.Starfield
                         writer: subWriter,
                         translationParams: conv);
                 });
-            UInt64BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
-                writer: writer,
-                item: item.XALG,
+            EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.XalgFlags,
+                length: 8,
                 header: translationParams.ConvertToCustom(RecordTypes.XALG));
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
@@ -4738,8 +4739,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.XALG:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.XALG = frame.ReadUInt64();
-                    return (int)PlacedNpc_FieldIndex.XALG;
+                    item.XalgFlags = EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)PlacedNpc_FieldIndex.XalgFlags;
                 }
                 case RecordTypeInts.NAME:
                 {
@@ -5034,9 +5037,9 @@ namespace Mutagen.Bethesda.Starfield
         IAVirtualMachineAdapterGetter? IHaveVirtualMachineAdapterGetter.VirtualMachineAdapter => this.VirtualMachineAdapter;
         #endregion
         public IReadOnlyList<IAComponentGetter> Components { get; private set; } = [];
-        #region XALG
-        private int? _XALGLocation;
-        public UInt64? XALG => _XALGLocation.HasValue ? BinaryPrimitives.ReadUInt64LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _XALGLocation.Value, _package.MetaData.Constants)) : default(UInt64?);
+        #region XalgFlags
+        private int? _XalgFlagsLocation;
+        public XalgFlag? XalgFlags => EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_XalgFlagsLocation, _recordData, _package, 8);
         #endregion
         #region Base
         private int? _BaseLocation;
@@ -5237,8 +5240,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.XALG:
                 {
-                    _XALGLocation = (stream.Position - offset);
-                    return (int)PlacedNpc_FieldIndex.XALG;
+                    _XalgFlagsLocation = (stream.Position - offset);
+                    return (int)PlacedNpc_FieldIndex.XalgFlags;
                 }
                 case RecordTypeInts.NAME:
                 {

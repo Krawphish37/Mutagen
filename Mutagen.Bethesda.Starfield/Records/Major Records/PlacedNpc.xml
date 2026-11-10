@@ -4,7 +4,7 @@
     <Fields>
       <RefDirect name="VirtualMachineAdapter" refName="VirtualMachineAdapter" overflowRecordType="XXXX" />
       <RefList name="Components" refName="AComponent" />
-      <UInt64 name="XALG" recordType="XALG" unknown="true" />
+      <Enum name="XalgFlags" enumName="XalgFlag" recordType="XALG" byteLength="8" />
       <FormLink name="Base" refName="Npc" recordType="NAME" nullable="false" />
       <Enum name="LevelModifier" enumName="Level" byteLength="4" recordType="XLCM" />
       <FormLink name="Emittance" recordType="XEMI">

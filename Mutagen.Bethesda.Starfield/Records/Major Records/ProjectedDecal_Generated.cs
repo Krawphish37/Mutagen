@@ -122,10 +122,10 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkNullableGetter<ILayerGetter> IProjectedDecalGetter.DefaultLayer => this.DefaultLayer;
         #endregion
-        #region XALG
-        public UInt64? XALG { get; set; }
+        #region XalgFlags
+        public XalgFlag? XalgFlags { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt64? IProjectedDecalGetter.XALG => this.XALG;
+        XalgFlag? IProjectedDecalGetter.XalgFlags => this.XalgFlags;
         #endregion
         #region Components
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -244,7 +244,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.DirtinessScale = initialValue;
                 this.ObjectPaletteDefaults = new MaskItem<TItem, ObjectPaletteDefaults.Mask<TItem>?>(initialValue, new ObjectPaletteDefaults.Mask<TItem>(initialValue));
                 this.DefaultLayer = initialValue;
-                this.XALG = initialValue;
+                this.XalgFlags = initialValue;
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(initialValue, []);
                 this.Transforms = new MaskItem<TItem, Transforms.Mask<TItem>?>(initialValue, new Transforms.Mask<TItem>(initialValue));
                 this.PTTA = new MaskItem<TItem, PTTA.Mask<TItem>?>(initialValue, new PTTA.Mask<TItem>(initialValue));
@@ -272,7 +272,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem DirtinessScale,
                 TItem ObjectPaletteDefaults,
                 TItem DefaultLayer,
-                TItem XALG,
+                TItem XalgFlags,
                 TItem Components,
                 TItem Transforms,
                 TItem PTTA,
@@ -299,7 +299,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.DirtinessScale = DirtinessScale;
                 this.ObjectPaletteDefaults = new MaskItem<TItem, ObjectPaletteDefaults.Mask<TItem>?>(ObjectPaletteDefaults, new ObjectPaletteDefaults.Mask<TItem>(ObjectPaletteDefaults));
                 this.DefaultLayer = DefaultLayer;
-                this.XALG = XALG;
+                this.XalgFlags = XalgFlags;
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(Components, []);
                 this.Transforms = new MaskItem<TItem, Transforms.Mask<TItem>?>(Transforms, new Transforms.Mask<TItem>(Transforms));
                 this.PTTA = new MaskItem<TItem, PTTA.Mask<TItem>?>(PTTA, new PTTA.Mask<TItem>(PTTA));
@@ -328,7 +328,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem DirtinessScale;
             public MaskItem<TItem, ObjectPaletteDefaults.Mask<TItem>?>? ObjectPaletteDefaults { get; set; }
             public TItem DefaultLayer;
-            public TItem XALG;
+            public TItem XalgFlags;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>? Components;
             public MaskItem<TItem, Transforms.Mask<TItem>?>? Transforms { get; set; }
             public MaskItem<TItem, PTTA.Mask<TItem>?>? PTTA { get; set; }
@@ -359,7 +359,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.DirtinessScale, rhs.DirtinessScale)) return false;
                 if (!object.Equals(this.ObjectPaletteDefaults, rhs.ObjectPaletteDefaults)) return false;
                 if (!object.Equals(this.DefaultLayer, rhs.DefaultLayer)) return false;
-                if (!object.Equals(this.XALG, rhs.XALG)) return false;
+                if (!object.Equals(this.XalgFlags, rhs.XalgFlags)) return false;
                 if (!object.Equals(this.Components, rhs.Components)) return false;
                 if (!object.Equals(this.Transforms, rhs.Transforms)) return false;
                 if (!object.Equals(this.PTTA, rhs.PTTA)) return false;
@@ -382,7 +382,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.DirtinessScale);
                 hash.Add(this.ObjectPaletteDefaults);
                 hash.Add(this.DefaultLayer);
-                hash.Add(this.XALG);
+                hash.Add(this.XalgFlags);
                 hash.Add(this.Components);
                 hash.Add(this.Transforms);
                 hash.Add(this.PTTA);
@@ -422,7 +422,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (this.ObjectPaletteDefaults.Specific != null && !this.ObjectPaletteDefaults.Specific.All(eval)) return false;
                 }
                 if (!eval(this.DefaultLayer)) return false;
-                if (!eval(this.XALG)) return false;
+                if (!eval(this.XalgFlags)) return false;
                 if (this.Components != null)
                 {
                     if (!eval(this.Components.Overall)) return false;
@@ -479,7 +479,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (this.ObjectPaletteDefaults.Specific != null && this.ObjectPaletteDefaults.Specific.Any(eval)) return true;
                 }
                 if (eval(this.DefaultLayer)) return true;
-                if (eval(this.XALG)) return true;
+                if (eval(this.XalgFlags)) return true;
                 if (this.Components != null)
                 {
                     if (eval(this.Components.Overall)) return true;
@@ -531,7 +531,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.DirtinessScale = eval(this.DirtinessScale);
                 obj.ObjectPaletteDefaults = this.ObjectPaletteDefaults == null ? null : new MaskItem<R, ObjectPaletteDefaults.Mask<R>?>(eval(this.ObjectPaletteDefaults.Overall), this.ObjectPaletteDefaults.Specific?.Translate(eval));
                 obj.DefaultLayer = eval(this.DefaultLayer);
-                obj.XALG = eval(this.XALG);
+                obj.XalgFlags = eval(this.XalgFlags);
                 if (Components != null)
                 {
                     obj.Components = new MaskItem<R, IEnumerable<MaskItemIndexed<R, AComponent.Mask<R>?>>?>(eval(this.Components.Overall), []);
@@ -596,9 +596,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(DefaultLayer, "DefaultLayer");
                     }
-                    if (printMask?.XALG ?? true)
+                    if (printMask?.XalgFlags ?? true)
                     {
-                        sb.AppendItem(XALG, "XALG");
+                        sb.AppendItem(XalgFlags, "XalgFlags");
                     }
                     if ((printMask?.Components?.Overall ?? true)
                         && Components is {} ComponentsItem)
@@ -679,7 +679,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? DirtinessScale;
             public MaskItem<Exception?, ObjectPaletteDefaults.ErrorMask?>? ObjectPaletteDefaults;
             public Exception? DefaultLayer;
-            public Exception? XALG;
+            public Exception? XalgFlags;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>? Components;
             public MaskItem<Exception?, Transforms.ErrorMask?>? Transforms;
             public MaskItem<Exception?, PTTA.ErrorMask?>? PTTA;
@@ -710,8 +710,8 @@ namespace Mutagen.Bethesda.Starfield
                         return ObjectPaletteDefaults;
                     case ProjectedDecal_FieldIndex.DefaultLayer:
                         return DefaultLayer;
-                    case ProjectedDecal_FieldIndex.XALG:
-                        return XALG;
+                    case ProjectedDecal_FieldIndex.XalgFlags:
+                        return XalgFlags;
                     case ProjectedDecal_FieldIndex.Components:
                         return Components;
                     case ProjectedDecal_FieldIndex.Transforms:
@@ -761,8 +761,8 @@ namespace Mutagen.Bethesda.Starfield
                     case ProjectedDecal_FieldIndex.DefaultLayer:
                         this.DefaultLayer = ex;
                         break;
-                    case ProjectedDecal_FieldIndex.XALG:
-                        this.XALG = ex;
+                    case ProjectedDecal_FieldIndex.XalgFlags:
+                        this.XalgFlags = ex;
                         break;
                     case ProjectedDecal_FieldIndex.Components:
                         this.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(ex, null);
@@ -826,8 +826,8 @@ namespace Mutagen.Bethesda.Starfield
                     case ProjectedDecal_FieldIndex.DefaultLayer:
                         this.DefaultLayer = (Exception?)obj;
                         break;
-                    case ProjectedDecal_FieldIndex.XALG:
-                        this.XALG = (Exception?)obj;
+                    case ProjectedDecal_FieldIndex.XalgFlags:
+                        this.XalgFlags = (Exception?)obj;
                         break;
                     case ProjectedDecal_FieldIndex.Components:
                         this.Components = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>)obj;
@@ -879,7 +879,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (DirtinessScale != null) return true;
                 if (ObjectPaletteDefaults != null) return true;
                 if (DefaultLayer != null) return true;
-                if (XALG != null) return true;
+                if (XalgFlags != null) return true;
                 if (Components != null) return true;
                 if (Transforms != null) return true;
                 if (PTTA != null) return true;
@@ -928,7 +928,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(DefaultLayer, "DefaultLayer");
                 }
                 {
-                    sb.AppendItem(XALG, "XALG");
+                    sb.AppendItem(XalgFlags, "XalgFlags");
                 }
                 if (Components is {} ComponentsItem)
                 {
@@ -990,7 +990,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.DirtinessScale = this.DirtinessScale.Combine(rhs.DirtinessScale);
                 ret.ObjectPaletteDefaults = this.ObjectPaletteDefaults.Combine(rhs.ObjectPaletteDefaults, (l, r) => l.Combine(r));
                 ret.DefaultLayer = this.DefaultLayer.Combine(rhs.DefaultLayer);
-                ret.XALG = this.XALG.Combine(rhs.XALG);
+                ret.XalgFlags = this.XalgFlags.Combine(rhs.XalgFlags);
                 ret.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Components?.Overall, rhs.Components?.Overall), Noggog.ExceptionExt.Combine(this.Components?.Specific, rhs.Components?.Specific));
                 ret.Transforms = this.Transforms.Combine(rhs.Transforms, (l, r) => l.Combine(r));
                 ret.PTTA = this.PTTA.Combine(rhs.PTTA, (l, r) => l.Combine(r));
@@ -1030,7 +1030,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool DirtinessScale;
             public ObjectPaletteDefaults.TranslationMask? ObjectPaletteDefaults;
             public bool DefaultLayer;
-            public bool XALG;
+            public bool XalgFlags;
             public AComponent.TranslationMask? Components;
             public Transforms.TranslationMask? Transforms;
             public PTTA.TranslationMask? PTTA;
@@ -1053,7 +1053,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DirtinessScale = defaultOn;
                 this.DefaultLayer = defaultOn;
-                this.XALG = defaultOn;
+                this.XalgFlags = defaultOn;
                 this.SnapBehavior = defaultOn;
                 this.Material = defaultOn;
                 this.UnknownData1 = defaultOn;
@@ -1075,7 +1075,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((DirtinessScale, null));
                 ret.Add((ObjectPaletteDefaults != null ? ObjectPaletteDefaults.OnOverall : DefaultOn, ObjectPaletteDefaults?.GetCrystal()));
                 ret.Add((DefaultLayer, null));
-                ret.Add((XALG, null));
+                ret.Add((XalgFlags, null));
                 ret.Add((Components == null ? DefaultOn : !Components.GetCrystal().CopyNothing, Components?.GetCrystal()));
                 ret.Add((Transforms != null ? Transforms.OnOverall : DefaultOn, Transforms?.GetCrystal()));
                 ret.Add((PTTA != null ? PTTA.OnOverall : DefaultOn, PTTA?.GetCrystal()));
@@ -1263,7 +1263,7 @@ namespace Mutagen.Bethesda.Starfield
         new Single DirtinessScale { get; set; }
         new ObjectPaletteDefaults? ObjectPaletteDefaults { get; set; }
         new IFormLinkNullable<ILayerGetter> DefaultLayer { get; set; }
-        new UInt64? XALG { get; set; }
+        new XalgFlag? XalgFlags { get; set; }
         new ExtendedList<AComponent> Components { get; }
         new Transforms? Transforms { get; set; }
         new PTTA? PTTA { get; set; }
@@ -1317,7 +1317,7 @@ namespace Mutagen.Bethesda.Starfield
         Single DirtinessScale { get; }
         IObjectPaletteDefaultsGetter? ObjectPaletteDefaults { get; }
         IFormLinkNullableGetter<ILayerGetter> DefaultLayer { get; }
-        UInt64? XALG { get; }
+        XalgFlag? XalgFlags { get; }
         IReadOnlyList<IAComponentGetter> Components { get; }
         ITransformsGetter? Transforms { get; }
         IPTTAGetter? PTTA { get; }
@@ -1511,7 +1511,7 @@ namespace Mutagen.Bethesda.Starfield
         DirtinessScale = 9,
         ObjectPaletteDefaults = 10,
         DefaultLayer = 11,
-        XALG = 12,
+        XalgFlags = 12,
         Components = 13,
         Transforms = 14,
         PTTA = 15,
@@ -1632,7 +1632,7 @@ namespace Mutagen.Bethesda.Starfield
             item.DirtinessScale = default(Single);
             item.ObjectPaletteDefaults = null;
             item.DefaultLayer.Clear();
-            item.XALG = default;
+            item.XalgFlags = default;
             item.Components.Clear();
             item.Transforms = null;
             item.PTTA = null;
@@ -1773,7 +1773,7 @@ namespace Mutagen.Bethesda.Starfield
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.DefaultLayer = item.DefaultLayer.Equals(rhs.DefaultLayer);
-            ret.XALG = item.XALG == rhs.XALG;
+            ret.XalgFlags = item.XalgFlags == rhs.XalgFlags;
             ret.Components = item.Components.CollectionEqualsHelper(
                 rhs.Components,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -1868,10 +1868,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.DefaultLayer.FormKeyNullable, "DefaultLayer");
             }
-            if ((printMask?.XALG ?? true)
-                && item.XALG is {} XALGItem)
+            if ((printMask?.XalgFlags ?? true)
+                && item.XalgFlags is {} XalgFlagsItem)
             {
-                sb.AppendItem(XALGItem, "XALG");
+                sb.AppendItem(XalgFlagsItem, "XalgFlags");
             }
             if (printMask?.Components?.Overall ?? true)
             {
@@ -2015,9 +2015,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.DefaultLayer.Equals(rhs.DefaultLayer)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.XALG) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.XalgFlags) ?? true))
             {
-                if (lhs.XALG != rhs.XALG) return false;
+                if (lhs.XalgFlags != rhs.XalgFlags) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.Components) ?? true))
             {
@@ -2114,9 +2114,9 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(ObjectPaletteDefaultsitem);
             }
             hash.Add(item.DefaultLayer);
-            if (item.XALG is {} XALGitem)
+            if (item.XalgFlags is {} XalgFlagsitem)
             {
-                hash.Add(XALGitem);
+                hash.Add(XalgFlagsitem);
             }
             foreach (var subItem in item.Components)
             {
@@ -2398,9 +2398,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.DefaultLayer.SetTo(rhs.DefaultLayer.FormKeyNullable);
             }
-            if ((copyMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.XALG) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.XalgFlags) ?? true))
             {
-                item.XALG = rhs.XALG;
+                item.XalgFlags = rhs.XalgFlags;
             }
             if ((copyMask?.GetShouldTranslate((int)ProjectedDecal_FieldIndex.Components) ?? true))
             {
@@ -2719,9 +2719,10 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.DefaultLayer,
                 header: translationParams.ConvertToCustom(RecordTypes.DEFL));
-            UInt64BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
-                writer: writer,
-                item: item.XALG,
+            EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer,
+                item.XalgFlags,
+                length: 8,
                 header: translationParams.ConvertToCustom(RecordTypes.XALG));
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IAComponentGetter>.Instance.Write(
                 writer: writer,
@@ -2889,8 +2890,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.XALG:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.XALG = frame.ReadUInt64();
-                    return (int)ProjectedDecal_FieldIndex.XALG;
+                    item.XalgFlags = EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
+                        reader: frame,
+                        length: contentLength);
+                    return (int)ProjectedDecal_FieldIndex.XalgFlags;
                 }
                 case RecordTypeInts.BFCB:
                 {
@@ -3035,9 +3038,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _DefaultLayerLocation;
         public IFormLinkNullableGetter<ILayerGetter> DefaultLayer => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ILayerGetter>(_package, _recordData, _DefaultLayerLocation);
         #endregion
-        #region XALG
-        private int? _XALGLocation;
-        public UInt64? XALG => _XALGLocation.HasValue ? BinaryPrimitives.ReadUInt64LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _XALGLocation.Value, _package.MetaData.Constants)) : default(UInt64?);
+        #region XalgFlags
+        private int? _XalgFlagsLocation;
+        public XalgFlag? XalgFlags => EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_XalgFlagsLocation, _recordData, _package, 8);
         #endregion
         public IReadOnlyList<IAComponentGetter> Components { get; private set; } = [];
         #region Transforms
@@ -3189,8 +3192,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.XALG:
                 {
-                    _XALGLocation = (stream.Position - offset);
-                    return (int)ProjectedDecal_FieldIndex.XALG;
+                    _XalgFlagsLocation = (stream.Position - offset);
+                    return (int)ProjectedDecal_FieldIndex.XalgFlags;
                 }
                 case RecordTypeInts.BFCB:
                 {
