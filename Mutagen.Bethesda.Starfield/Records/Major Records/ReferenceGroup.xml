@@ -12,9 +12,7 @@
       <FormLink name="LNAM" recordType="LNAM" unknown="true" >
         <Interface>IPlaced</Interface>
       </FormLink>
-      <List name="MNAM" recordType="MNAM" unknown="true" >
-        <UInt32 />
-      </List>
+      <P3Float name="MNAM" recordType="MNAM" unknown="true" />
     </Fields>
   </Object>
 </Loqui>

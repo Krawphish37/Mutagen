@@ -141,18 +141,9 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<IPlacedGetter> IReferenceGroupGetter.LNAM => this.LNAM;
         #endregion
         #region MNAM
+        public P3Float? MNAM { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ExtendedList<UInt32>? _MNAM;
-        public ExtendedList<UInt32>? MNAM
-        {
-            get => this._MNAM;
-            set => this._MNAM = value;
-        }
-        #region Interface Members
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReadOnlyList<UInt32>? IReferenceGroupGetter.MNAM => _MNAM;
-        #endregion
-
+        P3Float? IReferenceGroupGetter.MNAM => this.MNAM;
         #endregion
 
         #region To String
@@ -185,7 +176,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Reference = initialValue;
                 this.PackIn = initialValue;
                 this.LNAM = initialValue;
-                this.MNAM = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
+                this.MNAM = initialValue;
             }
 
             public Mask(
@@ -218,7 +209,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Reference = Reference;
                 this.PackIn = PackIn;
                 this.LNAM = LNAM;
-                this.MNAM = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(MNAM, []);
+                this.MNAM = MNAM;
             }
 
             #pragma warning disable CS8618
@@ -236,7 +227,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Reference;
             public TItem PackIn;
             public TItem LNAM;
-            public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? MNAM;
+            public TItem MNAM;
             #endregion
 
             #region Equals
@@ -300,17 +291,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Reference)) return false;
                 if (!eval(this.PackIn)) return false;
                 if (!eval(this.LNAM)) return false;
-                if (this.MNAM != null)
-                {
-                    if (!eval(this.MNAM.Overall)) return false;
-                    if (this.MNAM.Specific != null)
-                    {
-                        foreach (var item in this.MNAM.Specific)
-                        {
-                            if (!eval(item.Value)) return false;
-                        }
-                    }
-                }
+                if (!eval(this.MNAM)) return false;
                 return true;
             }
             #endregion
@@ -340,17 +321,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Reference)) return true;
                 if (eval(this.PackIn)) return true;
                 if (eval(this.LNAM)) return true;
-                if (this.MNAM != null)
-                {
-                    if (eval(this.MNAM.Overall)) return true;
-                    if (this.MNAM.Specific != null)
-                    {
-                        foreach (var item in this.MNAM.Specific)
-                        {
-                            if (!eval(item.Value)) return false;
-                        }
-                    }
-                }
+                if (eval(this.MNAM)) return true;
                 return false;
             }
             #endregion
@@ -386,20 +357,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Reference = eval(this.Reference);
                 obj.PackIn = eval(this.PackIn);
                 obj.LNAM = eval(this.LNAM);
-                if (MNAM != null)
-                {
-                    obj.MNAM = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.MNAM.Overall), []);
-                    if (MNAM.Specific != null)
-                    {
-                        var l = new List<(int Index, R Item)>();
-                        obj.MNAM.Specific = l;
-                        foreach (var item in MNAM.Specific)
-                        {
-                            R mask = eval(item.Value);
-                            l.Add((item.Index, mask));
-                        }
-                    }
-                }
+                obj.MNAM = eval(this.MNAM);
             }
             #endregion
 
@@ -457,26 +415,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(LNAM, "LNAM");
                     }
-                    if ((printMask?.MNAM?.Overall ?? true)
-                        && MNAM is {} MNAMItem)
+                    if (printMask?.MNAM ?? true)
                     {
-                        sb.AppendLine("MNAM =>");
-                        using (sb.Brace())
-                        {
-                            sb.AppendItem(MNAMItem.Overall);
-                            if (MNAMItem.Specific != null)
-                            {
-                                foreach (var subItem in MNAMItem.Specific)
-                                {
-                                    using (sb.Brace())
-                                    {
-                                        {
-                                            sb.AppendItem(subItem);
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        sb.AppendItem(MNAM, "MNAM");
                     }
                 }
             }
@@ -495,7 +436,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Reference;
             public Exception? PackIn;
             public Exception? LNAM;
-            public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? MNAM;
+            public Exception? MNAM;
             #endregion
 
             #region IErrorMask
@@ -547,7 +488,7 @@ namespace Mutagen.Bethesda.Starfield
                         this.LNAM = ex;
                         break;
                     case ReferenceGroup_FieldIndex.MNAM:
-                        this.MNAM = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
+                        this.MNAM = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -579,7 +520,7 @@ namespace Mutagen.Bethesda.Starfield
                         this.LNAM = (Exception?)obj;
                         break;
                     case ReferenceGroup_FieldIndex.MNAM:
-                        this.MNAM = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
+                        this.MNAM = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -654,25 +595,8 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(LNAM, "LNAM");
                 }
-                if (MNAM is {} MNAMItem)
                 {
-                    sb.AppendLine("MNAM =>");
-                    using (sb.Brace())
-                    {
-                        sb.AppendItem(MNAMItem.Overall);
-                        if (MNAMItem.Specific != null)
-                        {
-                            foreach (var subItem in MNAMItem.Specific)
-                            {
-                                using (sb.Brace())
-                                {
-                                    {
-                                        sb.AppendItem(subItem);
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    sb.AppendItem(MNAM, "MNAM");
                 }
             }
             #endregion
@@ -688,7 +612,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Reference = this.Reference.Combine(rhs.Reference);
                 ret.PackIn = this.PackIn.Combine(rhs.PackIn);
                 ret.LNAM = this.LNAM.Combine(rhs.LNAM);
-                ret.MNAM = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.MNAM?.Overall, rhs.MNAM?.Overall), Noggog.ExceptionExt.Combine(this.MNAM?.Specific, rhs.MNAM?.Specific));
+                ret.MNAM = this.MNAM.Combine(rhs.MNAM);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -913,7 +837,7 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLinkNullable<IPlacedGetter> Reference { get; set; }
         new IFormLinkNullable<IPackInGetter> PackIn { get; set; }
         new IFormLinkNullable<IPlacedGetter> LNAM { get; set; }
-        new ExtendedList<UInt32>? MNAM { get; set; }
+        new P3Float? MNAM { get; set; }
     }
 
     public partial interface IReferenceGroupInternal :
@@ -953,7 +877,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<IPlacedGetter> Reference { get; }
         IFormLinkNullableGetter<IPackInGetter> PackIn { get; }
         IFormLinkNullableGetter<IPlacedGetter> LNAM { get; }
-        IReadOnlyList<UInt32>? MNAM { get; }
+        P3Float? MNAM { get; }
 
     }
 
@@ -1241,7 +1165,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Reference.Clear();
             item.PackIn.Clear();
             item.LNAM.Clear();
-            item.MNAM = null;
+            item.MNAM = default;
             base.Clear(item);
         }
         
@@ -1368,10 +1292,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.Reference = item.Reference.Equals(rhs.Reference);
             ret.PackIn = item.PackIn.Equals(rhs.PackIn);
             ret.LNAM = item.LNAM.Equals(rhs.LNAM);
-            ret.MNAM = item.MNAM.CollectionEqualsHelper(
-                rhs.MNAM,
-                (l, r) => l == r,
-                include);
+            ret.MNAM = item.MNAM.Equals(rhs.MNAM);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -1457,20 +1378,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.LNAM.FormKeyNullable, "LNAM");
             }
-            if ((printMask?.MNAM?.Overall ?? true)
+            if ((printMask?.MNAM ?? true)
                 && item.MNAM is {} MNAMItem)
             {
-                sb.AppendLine("MNAM =>");
-                using (sb.Brace())
-                {
-                    foreach (var subItem in MNAMItem)
-                    {
-                        using (sb.Brace())
-                        {
-                            sb.AppendItem(subItem);
-                        }
-                    }
-                }
+                sb.AppendItem(MNAMItem, "MNAM");
             }
         }
         
@@ -1552,7 +1463,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)ReferenceGroup_FieldIndex.MNAM) ?? true))
             {
-                if (!lhs.MNAM.SequenceEqualNullable(rhs.MNAM)) return false;
+                if (!lhs.MNAM.Equals(rhs.MNAM)) return false;
             }
             return true;
         }
@@ -1599,10 +1510,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.LNAM);
             if (item.MNAM is {} MNAMitem)
             {
-                foreach (var subItem in MNAMitem)
-                {
-                    hash.Add(subItem);
-                }
+                hash.Add(MNAMitem);
             }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -1835,29 +1743,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((copyMask?.GetShouldTranslate((int)ReferenceGroup_FieldIndex.MNAM) ?? true))
             {
-                errorMask?.PushIndex((int)ReferenceGroup_FieldIndex.MNAM);
-                try
-                {
-                    if ((rhs.MNAM != null))
-                    {
-                        item.MNAM = 
-                            rhs.MNAM
-                            .ToExtendedList<UInt32>();
-                    }
-                    else
-                    {
-                        item.MNAM = null;
-                    }
-                }
-                catch (Exception ex)
-                when (errorMask != null)
-                {
-                    errorMask.ReportException(ex);
-                }
-                finally
-                {
-                    errorMask?.PopIndex();
-                }
+                item.MNAM = rhs.MNAM;
             }
             DeepCopyInCustom(
                 item: item,
@@ -2063,11 +1949,10 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.LNAM,
                 header: translationParams.ConvertToCustom(RecordTypes.LNAM));
-            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<UInt32>.Instance.Write(
+            P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
                 writer: writer,
-                items: item.MNAM,
-                recordType: translationParams.ConvertToCustom(RecordTypes.MNAM),
-                transl: UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write);
+                item: item.MNAM,
+                header: translationParams.ConvertToCustom(RecordTypes.MNAM));
         }
 
         public void Write(
@@ -2183,11 +2068,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.MNAM = 
-                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<UInt32>.Instance.Parse(
-                            reader: frame.SpawnWithLength(contentLength),
-                            transl: UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse)
-                        .CastExtendedList<UInt32>();
+                    item.MNAM = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
                     return (int)ReferenceGroup_FieldIndex.MNAM;
                 }
                 case RecordTypeInts.XXXX:
@@ -2282,7 +2163,10 @@ namespace Mutagen.Bethesda.Starfield
         private int? _LNAMLocation;
         public IFormLinkNullableGetter<IPlacedGetter> LNAM => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IPlacedGetter>(_package, _recordData, _LNAMLocation);
         #endregion
-        public IReadOnlyList<UInt32>? MNAM { get; private set; }
+        #region MNAM
+        private int? _MNAMLocation;
+        public P3Float? MNAM => _MNAMLocation.HasValue ? P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(HeaderTranslation.ExtractSubrecordMemory(_recordData, _MNAMLocation.Value, _package.MetaData.Constants)) : default(P3Float?);
+        #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
@@ -2393,12 +2277,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.MNAM:
                 {
-                    this.MNAM = BinaryOverlayList.FactoryByStartIndexWithTrigger<UInt32>(
-                        stream: stream,
-                        package: _package,
-                        finalPos: finalPos,
-                        itemLength: 4,
-                        getter: (s, p) => BinaryPrimitives.ReadUInt32LittleEndian(s));
+                    _MNAMLocation = (stream.Position - offset);
                     return (int)ReferenceGroup_FieldIndex.MNAM;
                 }
                 case RecordTypeInts.XXXX:
