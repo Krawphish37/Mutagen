@@ -105,7 +105,9 @@ namespace Mutagen.Bethesda.Starfield
                 TItem VirtualMachineAdapter,
                 TItem Components,
                 TItem Emittance,
+                TItem LocationRefTypes,
                 TItem RagdollData,
+                TItem Layer,
                 TItem ReferenceGroup,
                 TItem SourcePackIn,
                 TItem IgnoredBySandbox,
@@ -114,9 +116,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem IsLinkedRefTransient,
                 TItem Ownership,
                 TItem EncounterLocation,
-                TItem Layer,
                 TItem HeadTrackingWeight,
-                TItem LocationRefTypes,
                 TItem EnableParent,
                 TItem ActivationPoint,
                 TItem Scale,
@@ -135,7 +135,9 @@ namespace Mutagen.Bethesda.Starfield
                 VirtualMachineAdapter: VirtualMachineAdapter,
                 Components: Components,
                 Emittance: Emittance,
+                LocationRefTypes: LocationRefTypes,
                 RagdollData: RagdollData,
+                Layer: Layer,
                 ReferenceGroup: ReferenceGroup,
                 SourcePackIn: SourcePackIn,
                 IgnoredBySandbox: IgnoredBySandbox,
@@ -144,9 +146,7 @@ namespace Mutagen.Bethesda.Starfield
                 IsLinkedRefTransient: IsLinkedRefTransient,
                 Ownership: Ownership,
                 EncounterLocation: EncounterLocation,
-                Layer: Layer,
                 HeadTrackingWeight: HeadTrackingWeight,
-                LocationRefTypes: LocationRefTypes,
                 EnableParent: EnableParent,
                 ActivationPoint: ActivationPoint,
                 Scale: Scale,
@@ -734,18 +734,18 @@ namespace Mutagen.Bethesda.Starfield
         VirtualMachineAdapter = 7,
         Components = 8,
         Emittance = 9,
-        RagdollData = 10,
-        ReferenceGroup = 11,
-        SourcePackIn = 12,
-        IgnoredBySandbox = 13,
-        OwnerFactionRank = 14,
-        LinkedReferences = 15,
-        IsLinkedRefTransient = 16,
-        Ownership = 17,
-        EncounterLocation = 18,
-        Layer = 19,
-        HeadTrackingWeight = 20,
-        LocationRefTypes = 21,
+        LocationRefTypes = 10,
+        RagdollData = 11,
+        Layer = 12,
+        ReferenceGroup = 13,
+        SourcePackIn = 14,
+        IgnoredBySandbox = 15,
+        OwnerFactionRank = 16,
+        LinkedReferences = 17,
+        IsLinkedRefTransient = 18,
+        Ownership = 19,
+        EncounterLocation = 20,
+        HeadTrackingWeight = 21,
         EnableParent = 22,
         ActivationPoint = 23,
         Scale = 24,
@@ -1020,7 +1020,11 @@ namespace Mutagen.Bethesda.Starfield
                     return (PlacedArrow_FieldIndex)((int)index);
                 case APlacedTrap_FieldIndex.Emittance:
                     return (PlacedArrow_FieldIndex)((int)index);
+                case APlacedTrap_FieldIndex.LocationRefTypes:
+                    return (PlacedArrow_FieldIndex)((int)index);
                 case APlacedTrap_FieldIndex.RagdollData:
+                    return (PlacedArrow_FieldIndex)((int)index);
+                case APlacedTrap_FieldIndex.Layer:
                     return (PlacedArrow_FieldIndex)((int)index);
                 case APlacedTrap_FieldIndex.ReferenceGroup:
                     return (PlacedArrow_FieldIndex)((int)index);
@@ -1038,11 +1042,7 @@ namespace Mutagen.Bethesda.Starfield
                     return (PlacedArrow_FieldIndex)((int)index);
                 case APlacedTrap_FieldIndex.EncounterLocation:
                     return (PlacedArrow_FieldIndex)((int)index);
-                case APlacedTrap_FieldIndex.Layer:
-                    return (PlacedArrow_FieldIndex)((int)index);
                 case APlacedTrap_FieldIndex.HeadTrackingWeight:
-                    return (PlacedArrow_FieldIndex)((int)index);
-                case APlacedTrap_FieldIndex.LocationRefTypes:
                     return (PlacedArrow_FieldIndex)((int)index);
                 case APlacedTrap_FieldIndex.EnableParent:
                     return (PlacedArrow_FieldIndex)((int)index);

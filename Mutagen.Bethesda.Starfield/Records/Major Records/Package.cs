@@ -461,8 +461,9 @@ partial class PackageBinaryWriteTranslation
             writer.Write(item.DataInputVersion);
         }
 
-        HashSet<sbyte> addedKeys = new HashSet<sbyte>();
-        foreach (var kv in data.OrderBy(k => k.Key))
+        // In the order the data inputs are held: a record read from a file keeps the file's order, which is not always by index
+        var addedKeys = new List<sbyte>();
+        foreach (var kv in data)
         {
             var val = kv.Value;
             var typeStr = val switch
@@ -561,7 +562,7 @@ partial class PackageBinaryWriteTranslation
         writer.Write(addedKeys.Count);
         writer.Position = jumpForwardPos;
 
-        foreach (var k in addedKeys.OrderBy(k => k))
+        foreach (var k in addedKeys)
         {
             using (HeaderExport.Subrecord(writer, RecordTypes.UNAM))
             {
@@ -578,7 +579,8 @@ partial class PackageBinaryWriteTranslation
         }
     
         var data = item.Data;
-        foreach (var val in data.OrderBy(k => k.Key))
+        // By index read as unsigned, as Starfield.esm holds them (0x00..0x7F, then 0x80..0xFF)
+        foreach (var val in data.OrderBy(k => (byte)k.Key))
         {
             var name = val.Value.Name;
             var flags = val.Value.Flags;

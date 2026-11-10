@@ -12,11 +12,13 @@
       </FormLink>
       <Float name="Radius" recordType="XRDS" />
       <RefList name="RagdollData" refName="RagdollData" recordType="XRGD" />
+      <P3Float name="RagdollBipedRotation" recordType="XRGB" />
       <FormLink name="ReferenceGroup" recordType="XRFG" refName="ReferenceGroup" />
+      <FormLink name="Layer" refName="Layer" recordType="XLYR" />
       <FormLink name="SourcePackIn" refName="PackIn" recordType="XPCS"/>
       <FormLink name="PersistentLocation" recordType="XLCN" refName="Location" />
-      <Bool name="IsIgnoredBySandbox" boolAsMarker="XIS2" />
       <Int32 name="FactionRank" recordType="XRNK" />
+      <RefDirect name="EnableParent" refName="EnableParent" />
       <RefList name="PowerLinks" refName="PowerLink" />
       <RefList name="LinkedReferences" refName="LinkedReferences"  />
       <Bool name="IsLinkedRefTransient" boolAsMarker="XLKT" />
@@ -26,21 +28,19 @@
       <Float name="GeometryDirtinessScale" recordType="XGDS" />
       <RefDirect name="GroupedPackIn" refName="GroupedPackIn" />
       <UInt32 name="BlueprintPartOrigin" recordType="XBPO" />
-      <FormLink name="Layer" refName="Layer" recordType="XLYR" />
       <FormLink name="Location" refName="Location" recordType="XLRL" />
       <Float name="HeadTrackingWeight" recordType="XHTW" />
       <List name="LocationRefTypes" recordType="XLRT">
         <FormLink refName="LocationReferenceType" />
       </List>
+      <Bool name="IsIgnoredBySandbox" boolAsMarker="XIS2" />
       <List name="LayeredMaterialSwaps" recordType="XLMS" >
         <FormLink refName="LayeredMaterialSwap" />
       </List>
       <FormLink name="AttachRef" recordType="XATR">
         <Interface>IPlaced</Interface>
       </FormLink>
-      <P3Float name="RagdollBipedRotation" recordType="XRGB" />
       <Percent name="Health" recordType="XHLT" />
-      <RefDirect name="EnableParent" refName="EnableParent" />
       <Bool name="IsActivationPoint" boolAsMarker="XATP" />
       <Float name="Scale" recordType="XSCL" />
       <CustomLogic name="PlacementParse" recordType="DATA" />

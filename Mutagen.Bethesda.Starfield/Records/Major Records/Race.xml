@@ -190,12 +190,12 @@
       <List name="ActorKeywords">
         <FormLink recordType="SAKD" refName="Keyword" />
       </List>
+      <List name="TargetKeywords">
+        <FormLink recordType="STKD" refName="Keyword" />
+      </List>
       <String name="BehaviorGraph" recordType="SGNM" />
       <List name="AnimationPaths">
         <String recordType="SAPT" />
-      </List>
-      <List name="TargetKeywords">
-        <FormLink recordType="STKD" refName="Keyword" />
       </List>
       <Enum name="Role" enumName="Subgraph.SubgraphRole" binary="Custom" recordType="SRAF" nullable="False" />
       <Enum name="Perspective" enumName="Perspective" binary="NoGeneration" />
