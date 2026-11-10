@@ -43,7 +43,14 @@
       <FormLink name="AttackRace" refName="Race" recordType="ATKR" />
       <RefList name="Attacks" refName="Attack" />
       <FormLink name="SpectatorOverridePackageList" refName="FormList" recordType="SPOR" />
+      <FormLink name="ObserveDeadBodyOverridePackageList" refName="FormList" recordType="OCOR" />
+      <FormLink name="GuardWarnOverridePackageList" refName="FormList" recordType="GWOR" />
       <FormLink name="CombatOverridePackageList" refName="FormList" recordType="ECOR" />
+      <!-- OCOR, GWOR, FCPL, RCLR, RPLD, RPLI: none in Starfield.esm; the Creation Kit writes them into mods (xEdit names) -->
+      <FormLink name="FollowerCommandPackageList" refName="FormList" recordType="FCPL" />
+      <FormLink name="FollowerElevatorPackageList" refName="FormList" recordType="RCLR" />
+      <FormLink name="SoundDetectionPackageList" refName="FormList" recordType="RPLD" />
+      <FormLink name="SightDetectionPackageList" refName="FormList" recordType="RPLI" />
       <RefList name="Perks" counterRecType="PRKZ" refName="PerkPlacement" />
       <RefList name="Properties" refName="ObjectProperty" recordType="PRPS" />
       <List name="ForcedLocations" recordType="FTYP" >

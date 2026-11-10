@@ -332,6 +332,26 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkNullableGetter<IFormListGetter> INpcGetter.SpectatorOverridePackageList => this.SpectatorOverridePackageList;
         #endregion
+        #region ObserveDeadBodyOverridePackageList
+        private readonly IFormLinkNullable<IFormListGetter> _ObserveDeadBodyOverridePackageList = new FormLinkNullable<IFormListGetter>();
+        public IFormLinkNullable<IFormListGetter> ObserveDeadBodyOverridePackageList
+        {
+            get => _ObserveDeadBodyOverridePackageList;
+            set => _ObserveDeadBodyOverridePackageList.SetTo(value);
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IFormLinkNullableGetter<IFormListGetter> INpcGetter.ObserveDeadBodyOverridePackageList => this.ObserveDeadBodyOverridePackageList;
+        #endregion
+        #region GuardWarnOverridePackageList
+        private readonly IFormLinkNullable<IFormListGetter> _GuardWarnOverridePackageList = new FormLinkNullable<IFormListGetter>();
+        public IFormLinkNullable<IFormListGetter> GuardWarnOverridePackageList
+        {
+            get => _GuardWarnOverridePackageList;
+            set => _GuardWarnOverridePackageList.SetTo(value);
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IFormLinkNullableGetter<IFormListGetter> INpcGetter.GuardWarnOverridePackageList => this.GuardWarnOverridePackageList;
+        #endregion
         #region CombatOverridePackageList
         private readonly IFormLinkNullable<IFormListGetter> _CombatOverridePackageList = new FormLinkNullable<IFormListGetter>();
         public IFormLinkNullable<IFormListGetter> CombatOverridePackageList
@@ -341,6 +361,46 @@ namespace Mutagen.Bethesda.Starfield
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IFormLinkNullableGetter<IFormListGetter> INpcGetter.CombatOverridePackageList => this.CombatOverridePackageList;
+        #endregion
+        #region FollowerCommandPackageList
+        private readonly IFormLinkNullable<IFormListGetter> _FollowerCommandPackageList = new FormLinkNullable<IFormListGetter>();
+        public IFormLinkNullable<IFormListGetter> FollowerCommandPackageList
+        {
+            get => _FollowerCommandPackageList;
+            set => _FollowerCommandPackageList.SetTo(value);
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IFormLinkNullableGetter<IFormListGetter> INpcGetter.FollowerCommandPackageList => this.FollowerCommandPackageList;
+        #endregion
+        #region FollowerElevatorPackageList
+        private readonly IFormLinkNullable<IFormListGetter> _FollowerElevatorPackageList = new FormLinkNullable<IFormListGetter>();
+        public IFormLinkNullable<IFormListGetter> FollowerElevatorPackageList
+        {
+            get => _FollowerElevatorPackageList;
+            set => _FollowerElevatorPackageList.SetTo(value);
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IFormLinkNullableGetter<IFormListGetter> INpcGetter.FollowerElevatorPackageList => this.FollowerElevatorPackageList;
+        #endregion
+        #region SoundDetectionPackageList
+        private readonly IFormLinkNullable<IFormListGetter> _SoundDetectionPackageList = new FormLinkNullable<IFormListGetter>();
+        public IFormLinkNullable<IFormListGetter> SoundDetectionPackageList
+        {
+            get => _SoundDetectionPackageList;
+            set => _SoundDetectionPackageList.SetTo(value);
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IFormLinkNullableGetter<IFormListGetter> INpcGetter.SoundDetectionPackageList => this.SoundDetectionPackageList;
+        #endregion
+        #region SightDetectionPackageList
+        private readonly IFormLinkNullable<IFormListGetter> _SightDetectionPackageList = new FormLinkNullable<IFormListGetter>();
+        public IFormLinkNullable<IFormListGetter> SightDetectionPackageList
+        {
+            get => _SightDetectionPackageList;
+            set => _SightDetectionPackageList.SetTo(value);
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IFormLinkNullableGetter<IFormListGetter> INpcGetter.SightDetectionPackageList => this.SightDetectionPackageList;
         #endregion
         #region Perks
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -929,7 +989,13 @@ namespace Mutagen.Bethesda.Starfield
                 this.AttackRace = initialValue;
                 this.Attacks = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Attack.Mask<TItem>?>>?>(initialValue, []);
                 this.SpectatorOverridePackageList = initialValue;
+                this.ObserveDeadBodyOverridePackageList = initialValue;
+                this.GuardWarnOverridePackageList = initialValue;
                 this.CombatOverridePackageList = initialValue;
+                this.FollowerCommandPackageList = initialValue;
+                this.FollowerElevatorPackageList = initialValue;
+                this.SoundDetectionPackageList = initialValue;
+                this.SightDetectionPackageList = initialValue;
                 this.Perks = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, PerkPlacement.Mask<TItem>?>>?>(initialValue, []);
                 this.Properties = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectProperty.Mask<TItem>?>>?>(initialValue, []);
                 this.ForcedLocations = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
@@ -1030,7 +1096,13 @@ namespace Mutagen.Bethesda.Starfield
                 TItem AttackRace,
                 TItem Attacks,
                 TItem SpectatorOverridePackageList,
+                TItem ObserveDeadBodyOverridePackageList,
+                TItem GuardWarnOverridePackageList,
                 TItem CombatOverridePackageList,
+                TItem FollowerCommandPackageList,
+                TItem FollowerElevatorPackageList,
+                TItem SoundDetectionPackageList,
+                TItem SightDetectionPackageList,
                 TItem Perks,
                 TItem Properties,
                 TItem ForcedLocations,
@@ -1130,7 +1202,13 @@ namespace Mutagen.Bethesda.Starfield
                 this.AttackRace = AttackRace;
                 this.Attacks = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Attack.Mask<TItem>?>>?>(Attacks, []);
                 this.SpectatorOverridePackageList = SpectatorOverridePackageList;
+                this.ObserveDeadBodyOverridePackageList = ObserveDeadBodyOverridePackageList;
+                this.GuardWarnOverridePackageList = GuardWarnOverridePackageList;
                 this.CombatOverridePackageList = CombatOverridePackageList;
+                this.FollowerCommandPackageList = FollowerCommandPackageList;
+                this.FollowerElevatorPackageList = FollowerElevatorPackageList;
+                this.SoundDetectionPackageList = SoundDetectionPackageList;
+                this.SightDetectionPackageList = SightDetectionPackageList;
                 this.Perks = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, PerkPlacement.Mask<TItem>?>>?>(Perks, []);
                 this.Properties = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectProperty.Mask<TItem>?>>?>(Properties, []);
                 this.ForcedLocations = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(ForcedLocations, []);
@@ -1232,7 +1310,13 @@ namespace Mutagen.Bethesda.Starfield
             public TItem AttackRace;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Attack.Mask<TItem>?>>?>? Attacks;
             public TItem SpectatorOverridePackageList;
+            public TItem ObserveDeadBodyOverridePackageList;
+            public TItem GuardWarnOverridePackageList;
             public TItem CombatOverridePackageList;
+            public TItem FollowerCommandPackageList;
+            public TItem FollowerElevatorPackageList;
+            public TItem SoundDetectionPackageList;
+            public TItem SightDetectionPackageList;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, PerkPlacement.Mask<TItem>?>>?>? Perks;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectProperty.Mask<TItem>?>>?>? Properties;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? ForcedLocations;
@@ -1336,7 +1420,13 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.AttackRace, rhs.AttackRace)) return false;
                 if (!object.Equals(this.Attacks, rhs.Attacks)) return false;
                 if (!object.Equals(this.SpectatorOverridePackageList, rhs.SpectatorOverridePackageList)) return false;
+                if (!object.Equals(this.ObserveDeadBodyOverridePackageList, rhs.ObserveDeadBodyOverridePackageList)) return false;
+                if (!object.Equals(this.GuardWarnOverridePackageList, rhs.GuardWarnOverridePackageList)) return false;
                 if (!object.Equals(this.CombatOverridePackageList, rhs.CombatOverridePackageList)) return false;
+                if (!object.Equals(this.FollowerCommandPackageList, rhs.FollowerCommandPackageList)) return false;
+                if (!object.Equals(this.FollowerElevatorPackageList, rhs.FollowerElevatorPackageList)) return false;
+                if (!object.Equals(this.SoundDetectionPackageList, rhs.SoundDetectionPackageList)) return false;
+                if (!object.Equals(this.SightDetectionPackageList, rhs.SightDetectionPackageList)) return false;
                 if (!object.Equals(this.Perks, rhs.Perks)) return false;
                 if (!object.Equals(this.Properties, rhs.Properties)) return false;
                 if (!object.Equals(this.ForcedLocations, rhs.ForcedLocations)) return false;
@@ -1432,7 +1522,13 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.AttackRace);
                 hash.Add(this.Attacks);
                 hash.Add(this.SpectatorOverridePackageList);
+                hash.Add(this.ObserveDeadBodyOverridePackageList);
+                hash.Add(this.GuardWarnOverridePackageList);
                 hash.Add(this.CombatOverridePackageList);
+                hash.Add(this.FollowerCommandPackageList);
+                hash.Add(this.FollowerElevatorPackageList);
+                hash.Add(this.SoundDetectionPackageList);
+                hash.Add(this.SightDetectionPackageList);
                 hash.Add(this.Perks);
                 hash.Add(this.Properties);
                 hash.Add(this.ForcedLocations);
@@ -1604,7 +1700,13 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (!eval(this.SpectatorOverridePackageList)) return false;
+                if (!eval(this.ObserveDeadBodyOverridePackageList)) return false;
+                if (!eval(this.GuardWarnOverridePackageList)) return false;
                 if (!eval(this.CombatOverridePackageList)) return false;
+                if (!eval(this.FollowerCommandPackageList)) return false;
+                if (!eval(this.FollowerElevatorPackageList)) return false;
+                if (!eval(this.SoundDetectionPackageList)) return false;
+                if (!eval(this.SightDetectionPackageList)) return false;
                 if (this.Perks != null)
                 {
                     if (!eval(this.Perks.Overall)) return false;
@@ -1950,7 +2052,13 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 if (eval(this.SpectatorOverridePackageList)) return true;
+                if (eval(this.ObserveDeadBodyOverridePackageList)) return true;
+                if (eval(this.GuardWarnOverridePackageList)) return true;
                 if (eval(this.CombatOverridePackageList)) return true;
+                if (eval(this.FollowerCommandPackageList)) return true;
+                if (eval(this.FollowerElevatorPackageList)) return true;
+                if (eval(this.SoundDetectionPackageList)) return true;
+                if (eval(this.SightDetectionPackageList)) return true;
                 if (this.Perks != null)
                 {
                     if (eval(this.Perks.Overall)) return true;
@@ -2287,7 +2395,13 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
                 obj.SpectatorOverridePackageList = eval(this.SpectatorOverridePackageList);
+                obj.ObserveDeadBodyOverridePackageList = eval(this.ObserveDeadBodyOverridePackageList);
+                obj.GuardWarnOverridePackageList = eval(this.GuardWarnOverridePackageList);
                 obj.CombatOverridePackageList = eval(this.CombatOverridePackageList);
+                obj.FollowerCommandPackageList = eval(this.FollowerCommandPackageList);
+                obj.FollowerElevatorPackageList = eval(this.FollowerElevatorPackageList);
+                obj.SoundDetectionPackageList = eval(this.SoundDetectionPackageList);
+                obj.SightDetectionPackageList = eval(this.SightDetectionPackageList);
                 if (Perks != null)
                 {
                     obj.Perks = new MaskItem<R, IEnumerable<MaskItemIndexed<R, PerkPlacement.Mask<R>?>>?>(eval(this.Perks.Overall), []);
@@ -2750,9 +2864,33 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(SpectatorOverridePackageList, "SpectatorOverridePackageList");
                     }
+                    if (printMask?.ObserveDeadBodyOverridePackageList ?? true)
+                    {
+                        sb.AppendItem(ObserveDeadBodyOverridePackageList, "ObserveDeadBodyOverridePackageList");
+                    }
+                    if (printMask?.GuardWarnOverridePackageList ?? true)
+                    {
+                        sb.AppendItem(GuardWarnOverridePackageList, "GuardWarnOverridePackageList");
+                    }
                     if (printMask?.CombatOverridePackageList ?? true)
                     {
                         sb.AppendItem(CombatOverridePackageList, "CombatOverridePackageList");
+                    }
+                    if (printMask?.FollowerCommandPackageList ?? true)
+                    {
+                        sb.AppendItem(FollowerCommandPackageList, "FollowerCommandPackageList");
+                    }
+                    if (printMask?.FollowerElevatorPackageList ?? true)
+                    {
+                        sb.AppendItem(FollowerElevatorPackageList, "FollowerElevatorPackageList");
+                    }
+                    if (printMask?.SoundDetectionPackageList ?? true)
+                    {
+                        sb.AppendItem(SoundDetectionPackageList, "SoundDetectionPackageList");
+                    }
+                    if (printMask?.SightDetectionPackageList ?? true)
+                    {
+                        sb.AppendItem(SightDetectionPackageList, "SightDetectionPackageList");
                     }
                     if ((printMask?.Perks?.Overall ?? true)
                         && Perks is {} PerksItem)
@@ -3273,7 +3411,13 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? AttackRace;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Attack.ErrorMask?>>?>? Attacks;
             public Exception? SpectatorOverridePackageList;
+            public Exception? ObserveDeadBodyOverridePackageList;
+            public Exception? GuardWarnOverridePackageList;
             public Exception? CombatOverridePackageList;
+            public Exception? FollowerCommandPackageList;
+            public Exception? FollowerElevatorPackageList;
+            public Exception? SoundDetectionPackageList;
+            public Exception? SightDetectionPackageList;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, PerkPlacement.ErrorMask?>>?>? Perks;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectProperty.ErrorMask?>>?>? Properties;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? ForcedLocations;
@@ -3401,8 +3545,20 @@ namespace Mutagen.Bethesda.Starfield
                         return Attacks;
                     case Npc_FieldIndex.SpectatorOverridePackageList:
                         return SpectatorOverridePackageList;
+                    case Npc_FieldIndex.ObserveDeadBodyOverridePackageList:
+                        return ObserveDeadBodyOverridePackageList;
+                    case Npc_FieldIndex.GuardWarnOverridePackageList:
+                        return GuardWarnOverridePackageList;
                     case Npc_FieldIndex.CombatOverridePackageList:
                         return CombatOverridePackageList;
+                    case Npc_FieldIndex.FollowerCommandPackageList:
+                        return FollowerCommandPackageList;
+                    case Npc_FieldIndex.FollowerElevatorPackageList:
+                        return FollowerElevatorPackageList;
+                    case Npc_FieldIndex.SoundDetectionPackageList:
+                        return SoundDetectionPackageList;
+                    case Npc_FieldIndex.SightDetectionPackageList:
+                        return SightDetectionPackageList;
                     case Npc_FieldIndex.Perks:
                         return Perks;
                     case Npc_FieldIndex.Properties:
@@ -3622,8 +3778,26 @@ namespace Mutagen.Bethesda.Starfield
                     case Npc_FieldIndex.SpectatorOverridePackageList:
                         this.SpectatorOverridePackageList = ex;
                         break;
+                    case Npc_FieldIndex.ObserveDeadBodyOverridePackageList:
+                        this.ObserveDeadBodyOverridePackageList = ex;
+                        break;
+                    case Npc_FieldIndex.GuardWarnOverridePackageList:
+                        this.GuardWarnOverridePackageList = ex;
+                        break;
                     case Npc_FieldIndex.CombatOverridePackageList:
                         this.CombatOverridePackageList = ex;
+                        break;
+                    case Npc_FieldIndex.FollowerCommandPackageList:
+                        this.FollowerCommandPackageList = ex;
+                        break;
+                    case Npc_FieldIndex.FollowerElevatorPackageList:
+                        this.FollowerElevatorPackageList = ex;
+                        break;
+                    case Npc_FieldIndex.SoundDetectionPackageList:
+                        this.SoundDetectionPackageList = ex;
+                        break;
+                    case Npc_FieldIndex.SightDetectionPackageList:
+                        this.SightDetectionPackageList = ex;
                         break;
                     case Npc_FieldIndex.Perks:
                         this.Perks = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, PerkPlacement.ErrorMask?>>?>(ex, null);
@@ -3906,8 +4080,26 @@ namespace Mutagen.Bethesda.Starfield
                     case Npc_FieldIndex.SpectatorOverridePackageList:
                         this.SpectatorOverridePackageList = (Exception?)obj;
                         break;
+                    case Npc_FieldIndex.ObserveDeadBodyOverridePackageList:
+                        this.ObserveDeadBodyOverridePackageList = (Exception?)obj;
+                        break;
+                    case Npc_FieldIndex.GuardWarnOverridePackageList:
+                        this.GuardWarnOverridePackageList = (Exception?)obj;
+                        break;
                     case Npc_FieldIndex.CombatOverridePackageList:
                         this.CombatOverridePackageList = (Exception?)obj;
+                        break;
+                    case Npc_FieldIndex.FollowerCommandPackageList:
+                        this.FollowerCommandPackageList = (Exception?)obj;
+                        break;
+                    case Npc_FieldIndex.FollowerElevatorPackageList:
+                        this.FollowerElevatorPackageList = (Exception?)obj;
+                        break;
+                    case Npc_FieldIndex.SoundDetectionPackageList:
+                        this.SoundDetectionPackageList = (Exception?)obj;
+                        break;
+                    case Npc_FieldIndex.SightDetectionPackageList:
+                        this.SightDetectionPackageList = (Exception?)obj;
                         break;
                     case Npc_FieldIndex.Perks:
                         this.Perks = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, PerkPlacement.ErrorMask?>>?>)obj;
@@ -4130,7 +4322,13 @@ namespace Mutagen.Bethesda.Starfield
                 if (AttackRace != null) return true;
                 if (Attacks != null) return true;
                 if (SpectatorOverridePackageList != null) return true;
+                if (ObserveDeadBodyOverridePackageList != null) return true;
+                if (GuardWarnOverridePackageList != null) return true;
                 if (CombatOverridePackageList != null) return true;
+                if (FollowerCommandPackageList != null) return true;
+                if (FollowerElevatorPackageList != null) return true;
+                if (SoundDetectionPackageList != null) return true;
+                if (SightDetectionPackageList != null) return true;
                 if (Perks != null) return true;
                 if (Properties != null) return true;
                 if (ForcedLocations != null) return true;
@@ -4354,7 +4552,25 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(SpectatorOverridePackageList, "SpectatorOverridePackageList");
                 }
                 {
+                    sb.AppendItem(ObserveDeadBodyOverridePackageList, "ObserveDeadBodyOverridePackageList");
+                }
+                {
+                    sb.AppendItem(GuardWarnOverridePackageList, "GuardWarnOverridePackageList");
+                }
+                {
                     sb.AppendItem(CombatOverridePackageList, "CombatOverridePackageList");
+                }
+                {
+                    sb.AppendItem(FollowerCommandPackageList, "FollowerCommandPackageList");
+                }
+                {
+                    sb.AppendItem(FollowerElevatorPackageList, "FollowerElevatorPackageList");
+                }
+                {
+                    sb.AppendItem(SoundDetectionPackageList, "SoundDetectionPackageList");
+                }
+                {
+                    sb.AppendItem(SightDetectionPackageList, "SightDetectionPackageList");
                 }
                 if (Perks is {} PerksItem)
                 {
@@ -4803,7 +5019,13 @@ namespace Mutagen.Bethesda.Starfield
                 ret.AttackRace = this.AttackRace.Combine(rhs.AttackRace);
                 ret.Attacks = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Attack.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Attacks?.Overall, rhs.Attacks?.Overall), Noggog.ExceptionExt.Combine(this.Attacks?.Specific, rhs.Attacks?.Specific));
                 ret.SpectatorOverridePackageList = this.SpectatorOverridePackageList.Combine(rhs.SpectatorOverridePackageList);
+                ret.ObserveDeadBodyOverridePackageList = this.ObserveDeadBodyOverridePackageList.Combine(rhs.ObserveDeadBodyOverridePackageList);
+                ret.GuardWarnOverridePackageList = this.GuardWarnOverridePackageList.Combine(rhs.GuardWarnOverridePackageList);
                 ret.CombatOverridePackageList = this.CombatOverridePackageList.Combine(rhs.CombatOverridePackageList);
+                ret.FollowerCommandPackageList = this.FollowerCommandPackageList.Combine(rhs.FollowerCommandPackageList);
+                ret.FollowerElevatorPackageList = this.FollowerElevatorPackageList.Combine(rhs.FollowerElevatorPackageList);
+                ret.SoundDetectionPackageList = this.SoundDetectionPackageList.Combine(rhs.SoundDetectionPackageList);
+                ret.SightDetectionPackageList = this.SightDetectionPackageList.Combine(rhs.SightDetectionPackageList);
                 ret.Perks = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, PerkPlacement.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Perks?.Overall, rhs.Perks?.Overall), Noggog.ExceptionExt.Combine(this.Perks?.Specific, rhs.Perks?.Specific));
                 ret.Properties = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectProperty.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Properties?.Overall, rhs.Properties?.Overall), Noggog.ExceptionExt.Combine(this.Properties?.Specific, rhs.Properties?.Specific));
                 ret.ForcedLocations = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.ForcedLocations?.Overall, rhs.ForcedLocations?.Overall), Noggog.ExceptionExt.Combine(this.ForcedLocations?.Specific, rhs.ForcedLocations?.Specific));
@@ -4916,7 +5138,13 @@ namespace Mutagen.Bethesda.Starfield
             public bool AttackRace;
             public Attack.TranslationMask? Attacks;
             public bool SpectatorOverridePackageList;
+            public bool ObserveDeadBodyOverridePackageList;
+            public bool GuardWarnOverridePackageList;
             public bool CombatOverridePackageList;
+            public bool FollowerCommandPackageList;
+            public bool FollowerElevatorPackageList;
+            public bool SoundDetectionPackageList;
+            public bool SightDetectionPackageList;
             public PerkPlacement.TranslationMask? Perks;
             public ObjectProperty.TranslationMask? Properties;
             public bool ForcedLocations;
@@ -5005,7 +5233,13 @@ namespace Mutagen.Bethesda.Starfield
                 this.Skin = defaultOn;
                 this.AttackRace = defaultOn;
                 this.SpectatorOverridePackageList = defaultOn;
+                this.ObserveDeadBodyOverridePackageList = defaultOn;
+                this.GuardWarnOverridePackageList = defaultOn;
                 this.CombatOverridePackageList = defaultOn;
+                this.FollowerCommandPackageList = defaultOn;
+                this.FollowerElevatorPackageList = defaultOn;
+                this.SoundDetectionPackageList = defaultOn;
+                this.SightDetectionPackageList = defaultOn;
                 this.ForcedLocations = defaultOn;
                 this.NativeTerminal = defaultOn;
                 this.Aggression = defaultOn;
@@ -5089,7 +5323,13 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((AttackRace, null));
                 ret.Add((Attacks == null ? DefaultOn : !Attacks.GetCrystal().CopyNothing, Attacks?.GetCrystal()));
                 ret.Add((SpectatorOverridePackageList, null));
+                ret.Add((ObserveDeadBodyOverridePackageList, null));
+                ret.Add((GuardWarnOverridePackageList, null));
                 ret.Add((CombatOverridePackageList, null));
+                ret.Add((FollowerCommandPackageList, null));
+                ret.Add((FollowerElevatorPackageList, null));
+                ret.Add((SoundDetectionPackageList, null));
+                ret.Add((SightDetectionPackageList, null));
                 ret.Add((Perks == null ? DefaultOn : !Perks.GetCrystal().CopyNothing, Perks?.GetCrystal()));
                 ret.Add((Properties == null ? DefaultOn : !Properties.GetCrystal().CopyNothing, Properties?.GetCrystal()));
                 ret.Add((ForcedLocations, null));
@@ -5365,7 +5605,13 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLinkNullable<IRaceGetter> AttackRace { get; set; }
         new ExtendedList<Attack> Attacks { get; }
         new IFormLinkNullable<IFormListGetter> SpectatorOverridePackageList { get; set; }
+        new IFormLinkNullable<IFormListGetter> ObserveDeadBodyOverridePackageList { get; set; }
+        new IFormLinkNullable<IFormListGetter> GuardWarnOverridePackageList { get; set; }
         new IFormLinkNullable<IFormListGetter> CombatOverridePackageList { get; set; }
+        new IFormLinkNullable<IFormListGetter> FollowerCommandPackageList { get; set; }
+        new IFormLinkNullable<IFormListGetter> FollowerElevatorPackageList { get; set; }
+        new IFormLinkNullable<IFormListGetter> SoundDetectionPackageList { get; set; }
+        new IFormLinkNullable<IFormListGetter> SightDetectionPackageList { get; set; }
         new ExtendedList<PerkPlacement>? Perks { get; set; }
         new ExtendedList<ObjectProperty>? Properties { get; set; }
         new ExtendedList<IFormLinkGetter<ILocationReferenceTypeGetter>>? ForcedLocations { get; set; }
@@ -5519,7 +5765,13 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<IRaceGetter> AttackRace { get; }
         IReadOnlyList<IAttackGetter> Attacks { get; }
         IFormLinkNullableGetter<IFormListGetter> SpectatorOverridePackageList { get; }
+        IFormLinkNullableGetter<IFormListGetter> ObserveDeadBodyOverridePackageList { get; }
+        IFormLinkNullableGetter<IFormListGetter> GuardWarnOverridePackageList { get; }
         IFormLinkNullableGetter<IFormListGetter> CombatOverridePackageList { get; }
+        IFormLinkNullableGetter<IFormListGetter> FollowerCommandPackageList { get; }
+        IFormLinkNullableGetter<IFormListGetter> FollowerElevatorPackageList { get; }
+        IFormLinkNullableGetter<IFormListGetter> SoundDetectionPackageList { get; }
+        IFormLinkNullableGetter<IFormListGetter> SightDetectionPackageList { get; }
         IReadOnlyList<IPerkPlacementGetter>? Perks { get; }
         IReadOnlyList<IObjectPropertyGetter>? Properties { get; }
         IReadOnlyList<IFormLinkGetter<ILocationReferenceTypeGetter>>? ForcedLocations { get; }
@@ -5800,68 +6052,74 @@ namespace Mutagen.Bethesda.Starfield
         AttackRace = 33,
         Attacks = 34,
         SpectatorOverridePackageList = 35,
-        CombatOverridePackageList = 36,
-        Perks = 37,
-        Properties = 38,
-        ForcedLocations = 39,
-        NativeTerminal = 40,
-        Items = 41,
-        Aggression = 42,
-        Confidence = 43,
-        EnergyLevel = 44,
-        Responsibility = 45,
-        Mood = 46,
-        Assistance = 47,
-        UnknownAIDT = 48,
-        Packages = 49,
-        FLEE = 50,
-        RDSAs = 51,
-        Keywords = 52,
-        AttachParentSlots = 53,
-        ObjectTemplates = 54,
-        HasStopMarker = 55,
-        Class = 56,
-        Name = 57,
-        ShortName = 58,
-        LongName = 59,
-        CalculatedHealth = 60,
-        CalculatedActionPoints = 61,
-        FarAwayModelDistance = 62,
-        GearedUpWeapons = 63,
-        Unused = 64,
-        HCLR = 65,
-        BCLR = 66,
-        HeadParts = 67,
-        CombatStyle = 68,
-        NAM5 = 69,
-        HeightMin = 70,
-        HeightMax = 71,
-        Weight = 72,
-        Sounds = 73,
-        InheritsSoundsFrom = 74,
-        CompanionInfoQuest = 75,
-        CompanionInfoDialogue = 76,
-        DefaultOutfit = 77,
-        SpaceOutfit = 78,
-        DefaultPackageList = 79,
-        CrimeFaction = 80,
-        FormationFaction = 81,
-        Tints = 82,
-        BodyMorphRegionValues = 83,
-        FaceDialPositions = 84,
-        FaceMorphs = 85,
-        MorphBlends = 86,
-        ActivateTextOverride = 87,
-        SkinToneIndex = 88,
-        EYEC = 89,
-        HairColor = 90,
-        FacialHairColor = 91,
-        EyebrowColor = 92,
-        EyeColor = 93,
-        JewelryColor = 94,
-        TeethColor = 95,
-        Pronoun = 96,
-        RaceOverrides = 97,
+        ObserveDeadBodyOverridePackageList = 36,
+        GuardWarnOverridePackageList = 37,
+        CombatOverridePackageList = 38,
+        FollowerCommandPackageList = 39,
+        FollowerElevatorPackageList = 40,
+        SoundDetectionPackageList = 41,
+        SightDetectionPackageList = 42,
+        Perks = 43,
+        Properties = 44,
+        ForcedLocations = 45,
+        NativeTerminal = 46,
+        Items = 47,
+        Aggression = 48,
+        Confidence = 49,
+        EnergyLevel = 50,
+        Responsibility = 51,
+        Mood = 52,
+        Assistance = 53,
+        UnknownAIDT = 54,
+        Packages = 55,
+        FLEE = 56,
+        RDSAs = 57,
+        Keywords = 58,
+        AttachParentSlots = 59,
+        ObjectTemplates = 60,
+        HasStopMarker = 61,
+        Class = 62,
+        Name = 63,
+        ShortName = 64,
+        LongName = 65,
+        CalculatedHealth = 66,
+        CalculatedActionPoints = 67,
+        FarAwayModelDistance = 68,
+        GearedUpWeapons = 69,
+        Unused = 70,
+        HCLR = 71,
+        BCLR = 72,
+        HeadParts = 73,
+        CombatStyle = 74,
+        NAM5 = 75,
+        HeightMin = 76,
+        HeightMax = 77,
+        Weight = 78,
+        Sounds = 79,
+        InheritsSoundsFrom = 80,
+        CompanionInfoQuest = 81,
+        CompanionInfoDialogue = 82,
+        DefaultOutfit = 83,
+        SpaceOutfit = 84,
+        DefaultPackageList = 85,
+        CrimeFaction = 86,
+        FormationFaction = 87,
+        Tints = 88,
+        BodyMorphRegionValues = 89,
+        FaceDialPositions = 90,
+        FaceMorphs = 91,
+        MorphBlends = 92,
+        ActivateTextOverride = 93,
+        SkinToneIndex = 94,
+        EYEC = 95,
+        HairColor = 96,
+        FacialHairColor = 97,
+        EyebrowColor = 98,
+        EyeColor = 99,
+        JewelryColor = 100,
+        TeethColor = 101,
+        Pronoun = 102,
+        RaceOverrides = 103,
     }
     #endregion
 
@@ -5872,9 +6130,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 91;
+        public const ushort AdditionalFieldCount = 97;
 
-        public const ushort FieldCount = 98;
+        public const ushort FieldCount = 104;
 
         public static readonly Type MaskType = typeof(Npc.Mask<>);
 
@@ -5939,7 +6197,13 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.ATKS,
                 RecordTypes.ATKT,
                 RecordTypes.SPOR,
+                RecordTypes.OCOR,
+                RecordTypes.GWOR,
                 RecordTypes.ECOR,
+                RecordTypes.FCPL,
+                RecordTypes.RCLR,
+                RecordTypes.RPLD,
+                RecordTypes.RPLI,
                 RecordTypes.PRKR,
                 RecordTypes.PRKZ,
                 RecordTypes.PRPS,
@@ -6083,7 +6347,13 @@ namespace Mutagen.Bethesda.Starfield
             item.AttackRace.Clear();
             item.Attacks.Clear();
             item.SpectatorOverridePackageList.Clear();
+            item.ObserveDeadBodyOverridePackageList.Clear();
+            item.GuardWarnOverridePackageList.Clear();
             item.CombatOverridePackageList.Clear();
+            item.FollowerCommandPackageList.Clear();
+            item.FollowerElevatorPackageList.Clear();
+            item.SoundDetectionPackageList.Clear();
+            item.SightDetectionPackageList.Clear();
             item.Perks = null;
             item.Properties = null;
             item.ForcedLocations = null;
@@ -6180,7 +6450,13 @@ namespace Mutagen.Bethesda.Starfield
             obj.AttackRace.Relink(mapping);
             obj.Attacks.RemapLinks(mapping);
             obj.SpectatorOverridePackageList.Relink(mapping);
+            obj.ObserveDeadBodyOverridePackageList.Relink(mapping);
+            obj.GuardWarnOverridePackageList.Relink(mapping);
             obj.CombatOverridePackageList.Relink(mapping);
+            obj.FollowerCommandPackageList.Relink(mapping);
+            obj.FollowerElevatorPackageList.Relink(mapping);
+            obj.SoundDetectionPackageList.Relink(mapping);
+            obj.SightDetectionPackageList.Relink(mapping);
             obj.Perks?.RemapLinks(mapping);
             obj.Properties?.RemapLinks(mapping);
             obj.ForcedLocations?.RemapLinks(mapping);
@@ -6365,7 +6641,13 @@ namespace Mutagen.Bethesda.Starfield
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
             ret.SpectatorOverridePackageList = item.SpectatorOverridePackageList.Equals(rhs.SpectatorOverridePackageList);
+            ret.ObserveDeadBodyOverridePackageList = item.ObserveDeadBodyOverridePackageList.Equals(rhs.ObserveDeadBodyOverridePackageList);
+            ret.GuardWarnOverridePackageList = item.GuardWarnOverridePackageList.Equals(rhs.GuardWarnOverridePackageList);
             ret.CombatOverridePackageList = item.CombatOverridePackageList.Equals(rhs.CombatOverridePackageList);
+            ret.FollowerCommandPackageList = item.FollowerCommandPackageList.Equals(rhs.FollowerCommandPackageList);
+            ret.FollowerElevatorPackageList = item.FollowerElevatorPackageList.Equals(rhs.FollowerElevatorPackageList);
+            ret.SoundDetectionPackageList = item.SoundDetectionPackageList.Equals(rhs.SoundDetectionPackageList);
+            ret.SightDetectionPackageList = item.SightDetectionPackageList.Equals(rhs.SightDetectionPackageList);
             ret.Perks = item.Perks.CollectionEqualsHelper(
                 rhs.Perks,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -6699,9 +6981,33 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.SpectatorOverridePackageList.FormKeyNullable, "SpectatorOverridePackageList");
             }
+            if (printMask?.ObserveDeadBodyOverridePackageList ?? true)
+            {
+                sb.AppendItem(item.ObserveDeadBodyOverridePackageList.FormKeyNullable, "ObserveDeadBodyOverridePackageList");
+            }
+            if (printMask?.GuardWarnOverridePackageList ?? true)
+            {
+                sb.AppendItem(item.GuardWarnOverridePackageList.FormKeyNullable, "GuardWarnOverridePackageList");
+            }
             if (printMask?.CombatOverridePackageList ?? true)
             {
                 sb.AppendItem(item.CombatOverridePackageList.FormKeyNullable, "CombatOverridePackageList");
+            }
+            if (printMask?.FollowerCommandPackageList ?? true)
+            {
+                sb.AppendItem(item.FollowerCommandPackageList.FormKeyNullable, "FollowerCommandPackageList");
+            }
+            if (printMask?.FollowerElevatorPackageList ?? true)
+            {
+                sb.AppendItem(item.FollowerElevatorPackageList.FormKeyNullable, "FollowerElevatorPackageList");
+            }
+            if (printMask?.SoundDetectionPackageList ?? true)
+            {
+                sb.AppendItem(item.SoundDetectionPackageList.FormKeyNullable, "SoundDetectionPackageList");
+            }
+            if (printMask?.SightDetectionPackageList ?? true)
+            {
+                sb.AppendItem(item.SightDetectionPackageList.FormKeyNullable, "SightDetectionPackageList");
             }
             if ((printMask?.Perks?.Overall ?? true)
                 && item.Perks is {} PerksItem)
@@ -7321,9 +7627,33 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.SpectatorOverridePackageList.Equals(rhs.SpectatorOverridePackageList)) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.ObserveDeadBodyOverridePackageList) ?? true))
+            {
+                if (!lhs.ObserveDeadBodyOverridePackageList.Equals(rhs.ObserveDeadBodyOverridePackageList)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.GuardWarnOverridePackageList) ?? true))
+            {
+                if (!lhs.GuardWarnOverridePackageList.Equals(rhs.GuardWarnOverridePackageList)) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.CombatOverridePackageList) ?? true))
             {
                 if (!lhs.CombatOverridePackageList.Equals(rhs.CombatOverridePackageList)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.FollowerCommandPackageList) ?? true))
+            {
+                if (!lhs.FollowerCommandPackageList.Equals(rhs.FollowerCommandPackageList)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.FollowerElevatorPackageList) ?? true))
+            {
+                if (!lhs.FollowerElevatorPackageList.Equals(rhs.FollowerElevatorPackageList)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.SoundDetectionPackageList) ?? true))
+            {
+                if (!lhs.SoundDetectionPackageList.Equals(rhs.SoundDetectionPackageList)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.SightDetectionPackageList) ?? true))
+            {
+                if (!lhs.SightDetectionPackageList.Equals(rhs.SightDetectionPackageList)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.Perks) ?? true))
             {
@@ -7672,7 +8002,13 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(subItem);
             }
             hash.Add(item.SpectatorOverridePackageList);
+            hash.Add(item.ObserveDeadBodyOverridePackageList);
+            hash.Add(item.GuardWarnOverridePackageList);
             hash.Add(item.CombatOverridePackageList);
+            hash.Add(item.FollowerCommandPackageList);
+            hash.Add(item.FollowerElevatorPackageList);
+            hash.Add(item.SoundDetectionPackageList);
+            hash.Add(item.SightDetectionPackageList);
             if (item.Perks is {} Perksitem)
             {
                 foreach (var subItem in Perksitem)
@@ -7980,9 +8316,33 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return SpectatorOverridePackageListInfo;
             }
+            if (FormLinkInformation.TryFactory(obj.ObserveDeadBodyOverridePackageList, out var ObserveDeadBodyOverridePackageListInfo))
+            {
+                yield return ObserveDeadBodyOverridePackageListInfo;
+            }
+            if (FormLinkInformation.TryFactory(obj.GuardWarnOverridePackageList, out var GuardWarnOverridePackageListInfo))
+            {
+                yield return GuardWarnOverridePackageListInfo;
+            }
             if (FormLinkInformation.TryFactory(obj.CombatOverridePackageList, out var CombatOverridePackageListInfo))
             {
                 yield return CombatOverridePackageListInfo;
+            }
+            if (FormLinkInformation.TryFactory(obj.FollowerCommandPackageList, out var FollowerCommandPackageListInfo))
+            {
+                yield return FollowerCommandPackageListInfo;
+            }
+            if (FormLinkInformation.TryFactory(obj.FollowerElevatorPackageList, out var FollowerElevatorPackageListInfo))
+            {
+                yield return FollowerElevatorPackageListInfo;
+            }
+            if (FormLinkInformation.TryFactory(obj.SoundDetectionPackageList, out var SoundDetectionPackageListInfo))
+            {
+                yield return SoundDetectionPackageListInfo;
+            }
+            if (FormLinkInformation.TryFactory(obj.SightDetectionPackageList, out var SightDetectionPackageListInfo))
+            {
+                yield return SightDetectionPackageListInfo;
             }
             if (obj.Perks is {} PerksItem)
             {
@@ -8568,9 +8928,33 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.SpectatorOverridePackageList.SetTo(rhs.SpectatorOverridePackageList.FormKeyNullable);
             }
+            if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.ObserveDeadBodyOverridePackageList) ?? true))
+            {
+                item.ObserveDeadBodyOverridePackageList.SetTo(rhs.ObserveDeadBodyOverridePackageList.FormKeyNullable);
+            }
+            if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.GuardWarnOverridePackageList) ?? true))
+            {
+                item.GuardWarnOverridePackageList.SetTo(rhs.GuardWarnOverridePackageList.FormKeyNullable);
+            }
             if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.CombatOverridePackageList) ?? true))
             {
                 item.CombatOverridePackageList.SetTo(rhs.CombatOverridePackageList.FormKeyNullable);
+            }
+            if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.FollowerCommandPackageList) ?? true))
+            {
+                item.FollowerCommandPackageList.SetTo(rhs.FollowerCommandPackageList.FormKeyNullable);
+            }
+            if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.FollowerElevatorPackageList) ?? true))
+            {
+                item.FollowerElevatorPackageList.SetTo(rhs.FollowerElevatorPackageList.FormKeyNullable);
+            }
+            if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.SoundDetectionPackageList) ?? true))
+            {
+                item.SoundDetectionPackageList.SetTo(rhs.SoundDetectionPackageList.FormKeyNullable);
+            }
+            if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.SightDetectionPackageList) ?? true))
+            {
+                item.SightDetectionPackageList.SetTo(rhs.SightDetectionPackageList.FormKeyNullable);
             }
             if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.Perks) ?? true))
             {
@@ -9585,8 +9969,32 @@ namespace Mutagen.Bethesda.Starfield
                 header: translationParams.ConvertToCustom(RecordTypes.SPOR));
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
+                item: item.ObserveDeadBodyOverridePackageList,
+                header: translationParams.ConvertToCustom(RecordTypes.OCOR));
+            FormLinkBinaryTranslation.Instance.WriteNullable(
+                writer: writer,
+                item: item.GuardWarnOverridePackageList,
+                header: translationParams.ConvertToCustom(RecordTypes.GWOR));
+            FormLinkBinaryTranslation.Instance.WriteNullable(
+                writer: writer,
                 item: item.CombatOverridePackageList,
                 header: translationParams.ConvertToCustom(RecordTypes.ECOR));
+            FormLinkBinaryTranslation.Instance.WriteNullable(
+                writer: writer,
+                item: item.FollowerCommandPackageList,
+                header: translationParams.ConvertToCustom(RecordTypes.FCPL));
+            FormLinkBinaryTranslation.Instance.WriteNullable(
+                writer: writer,
+                item: item.FollowerElevatorPackageList,
+                header: translationParams.ConvertToCustom(RecordTypes.RCLR));
+            FormLinkBinaryTranslation.Instance.WriteNullable(
+                writer: writer,
+                item: item.SoundDetectionPackageList,
+                header: translationParams.ConvertToCustom(RecordTypes.RPLD));
+            FormLinkBinaryTranslation.Instance.WriteNullable(
+                writer: writer,
+                item: item.SightDetectionPackageList,
+                header: translationParams.ConvertToCustom(RecordTypes.RPLI));
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IPerkPlacementGetter>.Instance.WriteWithCounter(
                 writer: writer,
                 items: item.Perks,
@@ -10232,11 +10640,47 @@ namespace Mutagen.Bethesda.Starfield
                     item.SpectatorOverridePackageList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     return (int)Npc_FieldIndex.SpectatorOverridePackageList;
                 }
+                case RecordTypeInts.OCOR:
+                {
+                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
+                    item.ObserveDeadBodyOverridePackageList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)Npc_FieldIndex.ObserveDeadBodyOverridePackageList;
+                }
+                case RecordTypeInts.GWOR:
+                {
+                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
+                    item.GuardWarnOverridePackageList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)Npc_FieldIndex.GuardWarnOverridePackageList;
+                }
                 case RecordTypeInts.ECOR:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CombatOverridePackageList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     return (int)Npc_FieldIndex.CombatOverridePackageList;
+                }
+                case RecordTypeInts.FCPL:
+                {
+                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
+                    item.FollowerCommandPackageList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)Npc_FieldIndex.FollowerCommandPackageList;
+                }
+                case RecordTypeInts.RCLR:
+                {
+                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
+                    item.FollowerElevatorPackageList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)Npc_FieldIndex.FollowerElevatorPackageList;
+                }
+                case RecordTypeInts.RPLD:
+                {
+                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
+                    item.SoundDetectionPackageList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)Npc_FieldIndex.SoundDetectionPackageList;
+                }
+                case RecordTypeInts.RPLI:
+                {
+                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
+                    item.SightDetectionPackageList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)Npc_FieldIndex.SightDetectionPackageList;
                 }
                 case RecordTypeInts.PRKR:
                 case RecordTypeInts.PRKZ:
@@ -10883,9 +11327,33 @@ namespace Mutagen.Bethesda.Starfield
         private int? _SpectatorOverridePackageListLocation;
         public IFormLinkNullableGetter<IFormListGetter> SpectatorOverridePackageList => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IFormListGetter>(_package, _recordData, _SpectatorOverridePackageListLocation);
         #endregion
+        #region ObserveDeadBodyOverridePackageList
+        private int? _ObserveDeadBodyOverridePackageListLocation;
+        public IFormLinkNullableGetter<IFormListGetter> ObserveDeadBodyOverridePackageList => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IFormListGetter>(_package, _recordData, _ObserveDeadBodyOverridePackageListLocation);
+        #endregion
+        #region GuardWarnOverridePackageList
+        private int? _GuardWarnOverridePackageListLocation;
+        public IFormLinkNullableGetter<IFormListGetter> GuardWarnOverridePackageList => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IFormListGetter>(_package, _recordData, _GuardWarnOverridePackageListLocation);
+        #endregion
         #region CombatOverridePackageList
         private int? _CombatOverridePackageListLocation;
         public IFormLinkNullableGetter<IFormListGetter> CombatOverridePackageList => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IFormListGetter>(_package, _recordData, _CombatOverridePackageListLocation);
+        #endregion
+        #region FollowerCommandPackageList
+        private int? _FollowerCommandPackageListLocation;
+        public IFormLinkNullableGetter<IFormListGetter> FollowerCommandPackageList => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IFormListGetter>(_package, _recordData, _FollowerCommandPackageListLocation);
+        #endregion
+        #region FollowerElevatorPackageList
+        private int? _FollowerElevatorPackageListLocation;
+        public IFormLinkNullableGetter<IFormListGetter> FollowerElevatorPackageList => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IFormListGetter>(_package, _recordData, _FollowerElevatorPackageListLocation);
+        #endregion
+        #region SoundDetectionPackageList
+        private int? _SoundDetectionPackageListLocation;
+        public IFormLinkNullableGetter<IFormListGetter> SoundDetectionPackageList => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IFormListGetter>(_package, _recordData, _SoundDetectionPackageListLocation);
+        #endregion
+        #region SightDetectionPackageList
+        private int? _SightDetectionPackageListLocation;
+        public IFormLinkNullableGetter<IFormListGetter> SightDetectionPackageList => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IFormListGetter>(_package, _recordData, _SightDetectionPackageListLocation);
         #endregion
         public IReadOnlyList<IPerkPlacementGetter>? Perks { get; private set; }
         public IReadOnlyList<IObjectPropertyGetter>? Properties { get; private set; }
@@ -11334,10 +11802,40 @@ namespace Mutagen.Bethesda.Starfield
                     _SpectatorOverridePackageListLocation = (stream.Position - offset);
                     return (int)Npc_FieldIndex.SpectatorOverridePackageList;
                 }
+                case RecordTypeInts.OCOR:
+                {
+                    _ObserveDeadBodyOverridePackageListLocation = (stream.Position - offset);
+                    return (int)Npc_FieldIndex.ObserveDeadBodyOverridePackageList;
+                }
+                case RecordTypeInts.GWOR:
+                {
+                    _GuardWarnOverridePackageListLocation = (stream.Position - offset);
+                    return (int)Npc_FieldIndex.GuardWarnOverridePackageList;
+                }
                 case RecordTypeInts.ECOR:
                 {
                     _CombatOverridePackageListLocation = (stream.Position - offset);
                     return (int)Npc_FieldIndex.CombatOverridePackageList;
+                }
+                case RecordTypeInts.FCPL:
+                {
+                    _FollowerCommandPackageListLocation = (stream.Position - offset);
+                    return (int)Npc_FieldIndex.FollowerCommandPackageList;
+                }
+                case RecordTypeInts.RCLR:
+                {
+                    _FollowerElevatorPackageListLocation = (stream.Position - offset);
+                    return (int)Npc_FieldIndex.FollowerElevatorPackageList;
+                }
+                case RecordTypeInts.RPLD:
+                {
+                    _SoundDetectionPackageListLocation = (stream.Position - offset);
+                    return (int)Npc_FieldIndex.SoundDetectionPackageList;
+                }
+                case RecordTypeInts.RPLI:
+                {
+                    _SightDetectionPackageListLocation = (stream.Position - offset);
+                    return (int)Npc_FieldIndex.SightDetectionPackageList;
                 }
                 case RecordTypeInts.PRKR:
                 case RecordTypeInts.PRKZ:
