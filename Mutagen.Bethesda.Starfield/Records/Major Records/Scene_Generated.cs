@@ -3269,9 +3269,21 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Flagsitem);
             }
-            hash.Add(item.Phases);
-            hash.Add(item.Actors);
-            hash.Add(item.Actions);
+            foreach (var subItem in item.Phases)
+            {
+                hash.Add(subItem);
+            }
+            foreach (var subItem in item.Actors)
+            {
+                hash.Add(subItem);
+            }
+            if (item.Actions is {} Actionsitem)
+            {
+                foreach (var subItem in Actionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.Quest);
             if (item.LastActionIndex is {} LastActionIndexitem)
             {
@@ -3279,9 +3291,12 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (item.VNAM is {} VNAMItem)
             {
-                hash.Add(VNAMItem);
+                hash.AddBytes(VNAMItem);
             }
-            hash.Add(item.Conditions);
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             if (item.SetParentQuestStage is {} SetParentQuestStageitem)
             {
                 hash.Add(SetParentQuestStageitem);
@@ -3306,8 +3321,20 @@ namespace Mutagen.Bethesda.Starfield
             }
             hash.Add(item.SCPP);
             hash.Add(item.IsSpeechChallenge);
-            hash.Add(item.MandatoryNextChallenges);
-            hash.Add(item.ExcludedChallenges);
+            if (item.MandatoryNextChallenges is {} MandatoryNextChallengesitem)
+            {
+                foreach (var subItem in MandatoryNextChallengesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.ExcludedChallenges is {} ExcludedChallengesitem)
+            {
+                foreach (var subItem in ExcludedChallengesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.ChallengeRisk is {} ChallengeRiskitem)
             {
                 hash.Add(ChallengeRiskitem);
@@ -3319,9 +3346,27 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.ChallengeRepeatable);
             hash.Add(item.ChallengeDefault);
             hash.Add(item.SPPQ);
-            hash.Add(item.ChallengeAndKeywords);
-            hash.Add(item.ChallengePerks);
-            hash.Add(item.ChallengeOrKeywords);
+            if (item.ChallengeAndKeywords is {} ChallengeAndKeywordsitem)
+            {
+                foreach (var subItem in ChallengeAndKeywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.ChallengePerks is {} ChallengePerksitem)
+            {
+                foreach (var subItem in ChallengePerksitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.ChallengeOrKeywords is {} ChallengeOrKeywordsitem)
+            {
+                foreach (var subItem in ChallengeOrKeywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.ShowOneDialogueTrack);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();

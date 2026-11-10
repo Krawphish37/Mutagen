@@ -2024,14 +2024,23 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ISurfaceBlockGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.DataFile is {} DataFileitem)
             {
                 hash.Add(DataFileitem);
             }
             hash.Add(item.Size);
             hash.Add(item.Height);
-            hash.Add(item.Connections);
+            if (item.Connections is {} Connectionsitem)
+            {
+                foreach (var subItem in Connectionsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             if (item.Rarity is {} Rarityitem)
             {
                 hash.Add(Rarityitem);

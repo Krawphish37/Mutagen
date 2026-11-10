@@ -1246,7 +1246,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.ShadowOffset);
             hash.Add(item.Unknown1);
             hash.Add(item.Unknown2);
-            hash.Add(item.Unknown2Unused);
+            hash.AddBytes(item.Unknown2Unused);
             return hash.ToHashCode();
         }
         
@@ -1581,8 +1581,8 @@ namespace Mutagen.Bethesda.Starfield
         public Single InnerFov => _structData.Slice(0x10, 0x4).Float();
         public Single ShadowOffset => _structData.Slice(0x14, 0x4).Float();
         public UInt32 Unknown1 => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x18, 0x4));
-        public Byte Unknown2 => _structData.Length <= 0x1C ? default : _structData.Span[0x1C];
-        public ReadOnlyMemorySlice<Byte> Unknown2Unused => _structData.Span.Length <= 0x1D ? UtilityTranslation.Zeros.Slice(3) : _structData.Span.Slice(0x1D, 0x3).ToArray();
+        public Byte Unknown2 => _structData.Length <= 0x1C ? default(Byte) : _structData.Span[0x1C];
+        public ReadOnlyMemorySlice<Byte> Unknown2Unused => _structData.Span.Length <= 0x1D ? UtilityTranslation.Zeros.Slice(0, 3) : _structData.Span.Slice(0x1D, 0x3).ToArray();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

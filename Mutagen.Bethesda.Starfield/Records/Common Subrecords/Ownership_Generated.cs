@@ -968,7 +968,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Owner);
             hash.Add(item.Unknown);
             hash.Add(item.NoCrime);
-            hash.Add(item.NoCrimeUnused);
+            hash.AddBytes(item.NoCrimeUnused);
             return hash.ToHashCode();
         }
         
@@ -1266,23 +1266,23 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _XOWNLocation;
         #region Owner
         private int _OwnerLocation => _XOWNLocation!.Value.Min;
-        private bool _Owner_IsSet => _XOWNLocation.HasValue;
+        private bool _Owner_IsSet => _XOWNLocation.HasValue && _XOWNLocation!.Value.Max - _OwnerLocation + 1 >= 4;
         public IFormLinkGetter<IOwnerGetter> Owner => _Owner_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IOwnerGetter>(_package, _recordData.Span.Slice(_OwnerLocation, 0x4), isSet: _Owner_IsSet) : FormLink<IOwnerGetter>.Null;
         #endregion
         #region Unknown
         private int _UnknownLocation => _XOWNLocation!.Value.Min + 0x4;
-        private bool _Unknown_IsSet => _XOWNLocation.HasValue;
+        private bool _Unknown_IsSet => _XOWNLocation.HasValue && _XOWNLocation!.Value.Max - _UnknownLocation + 1 >= 4;
         public Int32 Unknown => _Unknown_IsSet ? BinaryPrimitives.ReadInt32LittleEndian(_recordData.Slice(_UnknownLocation, 4)) : default(Int32);
         #endregion
         #region NoCrime
         private int _NoCrimeLocation => _XOWNLocation!.Value.Min + 0x8;
-        private bool _NoCrime_IsSet => _XOWNLocation.HasValue;
+        private bool _NoCrime_IsSet => _XOWNLocation.HasValue && _XOWNLocation!.Value.Max - _NoCrimeLocation + 1 >= 1;
         public Boolean NoCrime => _NoCrime_IsSet ? _recordData.Slice(_NoCrimeLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region NoCrimeUnused
         private int _NoCrimeUnusedLocation => _XOWNLocation!.Value.Min + 0x9;
         private bool _NoCrimeUnused_IsSet => _XOWNLocation.HasValue;
-        public ReadOnlyMemorySlice<Byte> NoCrimeUnused => _NoCrimeUnused_IsSet ? _recordData.Span.Slice(_NoCrimeUnusedLocation, 3).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
+        public ReadOnlyMemorySlice<Byte> NoCrimeUnused => _NoCrimeUnused_IsSet ? _recordData.Span.Slice(_NoCrimeUnusedLocation, 3).ToArray() : UtilityTranslation.Zeros.Slice(0, 3);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,

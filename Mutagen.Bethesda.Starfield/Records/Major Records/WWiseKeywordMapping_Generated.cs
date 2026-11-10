@@ -1292,8 +1292,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(MappingTemplateitem);
             }
-            hash.Add(item.Keywords);
-            hash.Add(item.Items);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Items is {} Itemsitem)
+            {
+                foreach (var subItem in Itemsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

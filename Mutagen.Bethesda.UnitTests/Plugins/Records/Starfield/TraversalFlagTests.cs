@@ -52,7 +52,8 @@ public class TraversalFlagTests
         foreach (var cell in Read(NoFormID))
         {
             var trav = cell.Traversals!.Single();
-            trav.Flags.ShouldBe(TraversalReference.Flag.NoTraversalFormID);
+            trav.Flags.ShouldBe((TraversalReference.Flag)0); // the fixes chain keeps bit 2 out of Flags (it follows whether Traversal is set)
+            trav.Traversal.IsNull.ShouldBeTrue();
             trav.Traversal.IsNull.ShouldBeTrue();
             trav.Unknown1.ShouldBe(6);
             WritesBack(cell, NoFormID);
@@ -67,7 +68,7 @@ public class TraversalFlagTests
         foreach (var cell in Read(xtv2))
         {
             var trav = cell.Traversals!.Single();
-            trav.Flags.ShouldBe(TraversalReference.Flag.Unknown0 | TraversalReference.Flag.NoTraversalFormID);
+            trav.Flags.ShouldBe(TraversalReference.Flag.Unknown0); // bit 2 is kept out of Flags on the fixes chain
             trav.Traversal.IsNull.ShouldBeTrue();
             WritesBack(cell, xtv2);
         }

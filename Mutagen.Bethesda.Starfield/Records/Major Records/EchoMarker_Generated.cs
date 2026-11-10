@@ -94,6 +94,20 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         Boolean? IEchoMarkerGetter.TriggerRelease => this.TriggerRelease;
         #endregion
+        #region Conditions
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private ExtendedList<Condition> _Conditions = new ExtendedList<Condition>();
+        public ExtendedList<Condition> Conditions
+        {
+            get => this._Conditions;
+            init => this._Conditions = value;
+        }
+        #region Interface Members
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IReadOnlyList<IConditionGetter> IEchoMarkerGetter.Conditions => _Conditions;
+        #endregion
+
+        #endregion
         #region Description
         public String? Description { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -145,6 +159,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ActionAtLimit = initialValue;
                 this.Use = initialValue;
                 this.TriggerRelease = initialValue;
+                this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(initialValue, []);
                 this.Description = initialValue;
             }
 
@@ -156,6 +171,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem ActionAtLimit,
                 TItem Use,
                 TItem TriggerRelease,
+                TItem Conditions,
                 TItem Description)
             {
                 this.WwiseGuid = WwiseGuid;
@@ -165,6 +181,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ActionAtLimit = ActionAtLimit;
                 this.Use = Use;
                 this.TriggerRelease = TriggerRelease;
+                this.Conditions = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>(Conditions, []);
                 this.Description = Description;
             }
 
@@ -184,6 +201,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem ActionAtLimit;
             public TItem Use;
             public TItem TriggerRelease;
+            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Condition.Mask<TItem>?>>?>? Conditions;
             public TItem Description;
             #endregion
 
@@ -204,6 +222,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.ActionAtLimit, rhs.ActionAtLimit)) return false;
                 if (!object.Equals(this.Use, rhs.Use)) return false;
                 if (!object.Equals(this.TriggerRelease, rhs.TriggerRelease)) return false;
+                if (!object.Equals(this.Conditions, rhs.Conditions)) return false;
                 if (!object.Equals(this.Description, rhs.Description)) return false;
                 return true;
             }
@@ -217,6 +236,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.ActionAtLimit);
                 hash.Add(this.Use);
                 hash.Add(this.TriggerRelease);
+                hash.Add(this.Conditions);
                 hash.Add(this.Description);
                 return hash.ToHashCode();
             }
@@ -237,6 +257,18 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.ActionAtLimit)) return false;
                 if (!eval(this.Use)) return false;
                 if (!eval(this.TriggerRelease)) return false;
+                if (this.Conditions != null)
+                {
+                    if (!eval(this.Conditions.Overall)) return false;
+                    if (this.Conditions.Specific != null)
+                    {
+                        foreach (var item in this.Conditions.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
                 if (!eval(this.Description)) return false;
                 return true;
             }
@@ -256,6 +288,18 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.ActionAtLimit)) return true;
                 if (eval(this.Use)) return true;
                 if (eval(this.TriggerRelease)) return true;
+                if (this.Conditions != null)
+                {
+                    if (eval(this.Conditions.Overall)) return true;
+                    if (this.Conditions.Specific != null)
+                    {
+                        foreach (var item in this.Conditions.Specific)
+                        {
+                            if (!eval(item.Overall)) return false;
+                            if (item.Specific != null && !item.Specific.All(eval)) return false;
+                        }
+                    }
+                }
                 if (eval(this.Description)) return true;
                 return false;
             }
@@ -278,6 +322,21 @@ namespace Mutagen.Bethesda.Starfield
                 obj.ActionAtLimit = eval(this.ActionAtLimit);
                 obj.Use = eval(this.Use);
                 obj.TriggerRelease = eval(this.TriggerRelease);
+                if (Conditions != null)
+                {
+                    obj.Conditions = new MaskItem<R, IEnumerable<MaskItemIndexed<R, Condition.Mask<R>?>>?>(eval(this.Conditions.Overall), []);
+                    if (Conditions.Specific != null)
+                    {
+                        var l = new List<MaskItemIndexed<R, Condition.Mask<R>?>>();
+                        obj.Conditions.Specific = l;
+                        foreach (var item in Conditions.Specific)
+                        {
+                            MaskItemIndexed<R, Condition.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, Condition.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
+                            if (mask == null) continue;
+                            l.Add(mask);
+                        }
+                    }
+                }
                 obj.Description = eval(this.Description);
             }
             #endregion
@@ -325,6 +384,25 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(TriggerRelease, "TriggerRelease");
                     }
+                    if ((printMask?.Conditions?.Overall ?? true)
+                        && Conditions is {} ConditionsItem)
+                    {
+                        sb.AppendLine("Conditions =>");
+                        using (sb.Brace())
+                        {
+                            sb.AppendItem(ConditionsItem.Overall);
+                            if (ConditionsItem.Specific != null)
+                            {
+                                foreach (var subItem in ConditionsItem.Specific)
+                                {
+                                    using (sb.Brace())
+                                    {
+                                        subItem?.Print(sb);
+                                    }
+                                }
+                            }
+                        }
+                    }
                     if (printMask?.Description ?? true)
                     {
                         sb.AppendItem(Description, "Description");
@@ -360,6 +438,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? ActionAtLimit;
             public Exception? Use;
             public Exception? TriggerRelease;
+            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>? Conditions;
             public Exception? Description;
             #endregion
 
@@ -383,6 +462,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Use;
                     case EchoMarker_FieldIndex.TriggerRelease:
                         return TriggerRelease;
+                    case EchoMarker_FieldIndex.Conditions:
+                        return Conditions;
                     case EchoMarker_FieldIndex.Description:
                         return Description;
                     default:
@@ -415,6 +496,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case EchoMarker_FieldIndex.TriggerRelease:
                         this.TriggerRelease = ex;
+                        break;
+                    case EchoMarker_FieldIndex.Conditions:
+                        this.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(ex, null);
                         break;
                     case EchoMarker_FieldIndex.Description:
                         this.Description = ex;
@@ -450,6 +534,9 @@ namespace Mutagen.Bethesda.Starfield
                     case EchoMarker_FieldIndex.TriggerRelease:
                         this.TriggerRelease = (Exception?)obj;
                         break;
+                    case EchoMarker_FieldIndex.Conditions:
+                        this.Conditions = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>)obj;
+                        break;
                     case EchoMarker_FieldIndex.Description:
                         this.Description = (Exception?)obj;
                         break;
@@ -468,6 +555,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (ActionAtLimit != null) return true;
                 if (Use != null) return true;
                 if (TriggerRelease != null) return true;
+                if (Conditions != null) return true;
                 if (Description != null) return true;
                 return false;
             }
@@ -513,6 +601,24 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(TriggerRelease, "TriggerRelease");
                 }
+                if (Conditions is {} ConditionsItem)
+                {
+                    sb.AppendLine("Conditions =>");
+                    using (sb.Brace())
+                    {
+                        sb.AppendItem(ConditionsItem.Overall);
+                        if (ConditionsItem.Specific != null)
+                        {
+                            foreach (var subItem in ConditionsItem.Specific)
+                            {
+                                using (sb.Brace())
+                                {
+                                    subItem?.Print(sb);
+                                }
+                            }
+                        }
+                    }
+                }
                 {
                     sb.AppendItem(Description, "Description");
                 }
@@ -531,6 +637,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.ActionAtLimit = this.ActionAtLimit.Combine(rhs.ActionAtLimit);
                 ret.Use = this.Use.Combine(rhs.Use);
                 ret.TriggerRelease = this.TriggerRelease.Combine(rhs.TriggerRelease);
+                ret.Conditions = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Condition.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Conditions?.Overall, rhs.Conditions?.Overall), Noggog.ExceptionExt.Combine(this.Conditions?.Specific, rhs.Conditions?.Specific));
                 ret.Description = this.Description.Combine(rhs.Description);
                 return ret;
             }
@@ -562,6 +669,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool ActionAtLimit;
             public bool Use;
             public bool TriggerRelease;
+            public Condition.TranslationMask? Conditions;
             public bool Description;
             #endregion
 
@@ -601,6 +709,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((ActionAtLimit, null));
                 ret.Add((Use, null));
                 ret.Add((TriggerRelease, null));
+                ret.Add((Conditions == null ? DefaultOn : !Conditions.GetCrystal().CopyNothing, Conditions?.GetCrystal()));
                 ret.Add((Description, null));
             }
 
@@ -687,6 +796,7 @@ namespace Mutagen.Bethesda.Starfield
         new EchoMarker.ActionAtLimitType? ActionAtLimit { get; set; }
         new EchoMarker.UseType? Use { get; set; }
         new Boolean? TriggerRelease { get; set; }
+        new ExtendedList<Condition> Conditions { get; }
         new String? Description { get; set; }
     }
 
@@ -710,6 +820,7 @@ namespace Mutagen.Bethesda.Starfield
         EchoMarker.ActionAtLimitType? ActionAtLimit { get; }
         EchoMarker.UseType? Use { get; }
         Boolean? TriggerRelease { get; }
+        IReadOnlyList<IConditionGetter> Conditions { get; }
         String? Description { get; }
 
     }
@@ -887,7 +998,8 @@ namespace Mutagen.Bethesda.Starfield
         ActionAtLimit = 4,
         Use = 5,
         TriggerRelease = 6,
-        Description = 7,
+        Conditions = 7,
+        Description = 8,
     }
     #endregion
 
@@ -898,9 +1010,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 8;
+        public const ushort AdditionalFieldCount = 9;
 
-        public const ushort FieldCount = 8;
+        public const ushort FieldCount = 9;
 
         public static readonly Type MaskType = typeof(EchoMarker.Mask<>);
 
@@ -929,6 +1041,16 @@ namespace Mutagen.Bethesda.Starfield
         public static RecordTriggerSpecs TriggerSpecs => _recordSpecs.Value;
         private static readonly Lazy<RecordTriggerSpecs> _recordSpecs = new Lazy<RecordTriggerSpecs>(() =>
         {
+            var triggers = RecordCollection.Factory(
+                RecordTypes.ECTE,
+                RecordTypes.ECSH,
+                RecordTypes.ANAM,
+                RecordTypes.BNAM,
+                RecordTypes.CNAM,
+                RecordTypes.DNAM,
+                RecordTypes.ENAM,
+                RecordTypes.CTDA,
+                RecordTypes.NNAM);
             var all = RecordCollection.Factory(
                 RecordTypes.ECTE,
                 RecordTypes.ECSH,
@@ -937,8 +1059,14 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.CNAM,
                 RecordTypes.DNAM,
                 RecordTypes.ENAM,
-                RecordTypes.NNAM);
-            return new RecordTriggerSpecs(allRecordTypes: all);
+                RecordTypes.CTDA,
+                RecordTypes.NNAM,
+                RecordTypes.CITC,
+                RecordTypes.CIS1,
+                RecordTypes.CIS2);
+            return new RecordTriggerSpecs(
+                allRecordTypes: all,
+                triggeringRecordTypes: triggers);
         });
         public static readonly Type BinaryWriteTranslation = typeof(EchoMarkerBinaryWriteTranslation);
         #region Interface
@@ -987,6 +1115,7 @@ namespace Mutagen.Bethesda.Starfield
             item.ActionAtLimit = default;
             item.Use = default;
             item.TriggerRelease = default;
+            item.Conditions.Clear();
             item.Description = default;
         }
         
@@ -994,6 +1123,7 @@ namespace Mutagen.Bethesda.Starfield
         public void RemapLinks(IEchoMarker obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             obj.Sound?.RemapLinks(mapping);
+            obj.Conditions.RemapLinks(mapping);
         }
         
         #endregion
@@ -1049,6 +1179,10 @@ namespace Mutagen.Bethesda.Starfield
             ret.ActionAtLimit = item.ActionAtLimit == rhs.ActionAtLimit;
             ret.Use = item.Use == rhs.Use;
             ret.TriggerRelease = item.TriggerRelease == rhs.TriggerRelease;
+            ret.Conditions = item.Conditions.CollectionEqualsHelper(
+                rhs.Conditions,
+                (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
+                include);
             ret.Description = string.Equals(item.Description, rhs.Description);
         }
         
@@ -1129,6 +1263,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(TriggerReleaseItem, "TriggerRelease");
             }
+            if (printMask?.Conditions?.Overall ?? true)
+            {
+                sb.AppendLine("Conditions =>");
+                using (sb.Brace())
+                {
+                    foreach (var subItem in item.Conditions)
+                    {
+                        using (sb.Brace())
+                        {
+                            subItem?.Print(sb, "Item");
+                        }
+                    }
+                }
+            }
             if ((printMask?.Description ?? true)
                 && item.Description is {} DescriptionItem)
             {
@@ -1175,6 +1323,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.TriggerRelease != rhs.TriggerRelease) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.Conditions) ?? true))
+            {
+                if (!lhs.Conditions.SequenceEqual(rhs.Conditions, (l, r) => ((ConditionCommon)((IConditionGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)EchoMarker_FieldIndex.Conditions)))) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.Description) ?? true))
             {
                 if (!string.Equals(lhs.Description, rhs.Description)) return false;
@@ -1213,6 +1365,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(TriggerReleaseitem);
             }
+            foreach (var subItem in item.Conditions)
+            {
+                hash.Add(subItem);
+            }
             if (item.Description is {} Descriptionitem)
             {
                 hash.Add(Descriptionitem);
@@ -1237,6 +1393,10 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     yield return item;
                 }
+            }
+            foreach (var item in obj.Conditions.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
+            {
+                yield return FormLinkInformation.Factory(item);
             }
             yield break;
         }
@@ -1305,6 +1465,30 @@ namespace Mutagen.Bethesda.Starfield
             if ((copyMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.TriggerRelease) ?? true))
             {
                 item.TriggerRelease = rhs.TriggerRelease;
+            }
+            if ((copyMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.Conditions) ?? true))
+            {
+                errorMask?.PushIndex((int)EchoMarker_FieldIndex.Conditions);
+                try
+                {
+                    item.Conditions.SetTo(
+                        rhs.Conditions
+                        .Select(r =>
+                        {
+                            return r.DeepCopy(
+                                errorMask: errorMask,
+                                default(TranslationCrystal));
+                        }));
+                }
+                catch (Exception ex)
+                when (errorMask != null)
+                {
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)EchoMarker_FieldIndex.Description) ?? true))
             {
@@ -1455,6 +1639,17 @@ namespace Mutagen.Bethesda.Starfield
                 writer: writer,
                 item: item.TriggerRelease,
                 header: translationParams.ConvertToCustom(RecordTypes.ENAM));
+            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IConditionGetter>.Instance.Write(
+                writer: writer,
+                items: item.Conditions,
+                transl: (MutagenWriter subWriter, IConditionGetter subItem, TypedWriteParams conv) =>
+                {
+                    var Item = subItem;
+                    ((ConditionBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
+                        item: Item,
+                        writer: subWriter,
+                        translationParams: conv);
+                });
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
                 item: item.Description,
@@ -1554,6 +1749,17 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TriggerRelease = frame.ReadBoolean();
                     return (int)EchoMarker_FieldIndex.TriggerRelease;
+                }
+                case RecordTypeInts.CTDA:
+                {
+                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.Conditions, translationParams)) return ParseResult.Stop;
+                    item.Conditions.SetTo(
+                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
+                            reader: frame,
+                            triggeringRecord: Condition_Registration.TriggerSpecs,
+                            translationParams: translationParams,
+                            transl: Condition.TryCreateFromBinary));
+                    return (int)EchoMarker_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.NNAM:
                 {
@@ -1659,6 +1865,7 @@ namespace Mutagen.Bethesda.Starfield
         private int? _TriggerReleaseLocation;
         public Boolean? TriggerRelease => _TriggerReleaseLocation.HasValue ? HeaderTranslation.ExtractSubrecordMemory(_recordData, _TriggerReleaseLocation.Value, _package.MetaData.Constants)[0] >= 1 : default(Boolean?);
         #endregion
+        public IReadOnlyList<IConditionGetter> Conditions { get; private set; } = [];
         #region Description
         private int? _DescriptionLocation;
         public String? Description => _DescriptionLocation.HasValue ? BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(_recordData, _DescriptionLocation.Value, _package.MetaData.Constants), encoding: _package.MetaData.Encodings.NonTranslated) : default(string?);
@@ -1771,6 +1978,22 @@ namespace Mutagen.Bethesda.Starfield
                     if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.TriggerRelease, translationParams)) return ParseResult.Stop;
                     _TriggerReleaseLocation = (stream.Position - offset);
                     return (int)EchoMarker_FieldIndex.TriggerRelease;
+                }
+                case RecordTypeInts.CTDA:
+                {
+                    if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.Conditions, translationParams)) return ParseResult.Stop;
+                    this.Conditions = BinaryOverlayList.FactoryByArray<IConditionGetter>(
+                        mem: stream.RemainingMemory,
+                        package: _package,
+                        translationParams: translationParams,
+                        getter: (s, p, recConv) => ConditionBinaryOverlay.ConditionFactory(new OverlayStream(s, p), p, recConv),
+                        locs: ParseRecordLocations(
+                            stream: stream,
+                            trigger: Condition_Registration.TriggerSpecs,
+                            triggersAlwaysAreNewRecords: true,
+                            constants: _package.MetaData.Constants.SubConstants,
+                            skipHeader: false));
+                    return (int)EchoMarker_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.NNAM:
                 {

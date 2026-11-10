@@ -2072,7 +2072,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.FogMax);
             hash.Add(item.LightFadeBegin);
             hash.Add(item.LightFadeEnd);
-            hash.Add(item.UnknownColor);
+            hash.Add(item.UnknownColor.ToArgb());
             hash.Add(item.NearHeightMid);
             hash.Add(item.NearHeightRange);
             hash.Add(item.FogColorHighNear.ToArgb());

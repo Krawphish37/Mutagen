@@ -3746,10 +3746,45 @@ namespace Mutagen.Bethesda.Starfield
                 case "ICellXCLAItemGetter":
                 case "ICellXCLAItem":
                     break;
+                case "IBiomeObjectPackInTarget":
+                case "IBiomeObjectPackInTargetGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IBiomeObjectPackInTargetGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IBiomeObjectPackInTargetGetter);
+                    break;
+                case "ICellOrObject":
+                case "ICellOrObjectGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is ICellOrObjectGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is ICellOrObjectGetter);
+                    break;
+                case "IKeywordLinkedReference":
+                case "IKeywordLinkedReferenceGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IKeywordLinkedReferenceGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IKeywordLinkedReferenceGetter);
+                    break;
+                case "IOwner":
+                case "IOwnerGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IOwnerGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IOwnerGetter);
+                    break;
                 case "IPlaced":
                 case "IPlacedGetter":
                     obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey));
                     obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey));
+                    break;
+                case "IPlacedSimple":
+                case "IPlacedSimpleGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPlacedSimpleGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPlacedSimpleGetter);
+                    break;
+                case "IPlacedThing":
+                case "IPlacedThingGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPlacedThingGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is IPlacedThingGetter);
+                    break;
+                case "ITraversalTarget":
+                case "ITraversalTargetGetter":
+                    obj.Persistent.RemoveWhere(i => keys.Contains(i.FormKey) && i is ITraversalTargetGetter);
+                    obj.Temporary.RemoveWhere(i => keys.Contains(i.FormKey) && i is ITraversalTargetGetter);
                     break;
                 case "LinkedReferences":
                 case "ILinkedReferencesGetter":
@@ -3784,6 +3819,10 @@ namespace Mutagen.Bethesda.Starfield
                 case "IWaterCurrentVelocity":
                     break;
                 default:
+                    if (InterfaceEnumerationHelper.TryRemoveInterfaceRecordsFor(GameCategory.Starfield, obj, keys, type))
+                    {
+                        break;
+                    }
                     if (throwIfUnknown)
                     {
                         throw new ArgumentException($"Unknown major record type: {type}");
@@ -4558,7 +4597,10 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ICellGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Components);
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
@@ -4588,7 +4630,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(XILSitem);
             }
-            hash.Add(item.XCLAs);
+            foreach (var subItem in item.XCLAs)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.CellSkyRegion);
             if (item.Ownership is {} Ownershipitem)
             {
@@ -4600,8 +4645,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(WaterTypeitem);
             }
-            hash.Add(item.ShipBlueprintSnapLinks);
-            hash.Add(item.WaterCurrentVelocities);
+            if (item.ShipBlueprintSnapLinks is {} ShipBlueprintSnapLinksitem)
+            {
+                foreach (var subItem in ShipBlueprintSnapLinksitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.WaterCurrentVelocities is {} WaterCurrentVelocitiesitem)
+            {
+                foreach (var subItem in WaterCurrentVelocitiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.AcousticSpace);
             hash.Add(item.ImageSpace);
             if (item.WaterEnvironmentMap is {} WaterEnvironmentMapitem)
@@ -4619,23 +4676,41 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(GlobalDirtLayerInheritBiomeLayeritem);
             }
             hash.Add(item.TimeOfDay);
-            hash.Add(item.LinkedReferences);
+            foreach (var subItem in item.LinkedReferences)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.IsLinkedRefTransient);
             if (item.EnvironmentMap is {} EnvironmentMapitem)
             {
                 hash.Add(EnvironmentMapitem);
             }
-            hash.Add(item.Traversals);
+            if (item.Traversals is {} Traversalsitem)
+            {
+                foreach (var subItem in Traversalsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.NumTraversalFluffBytes);
-            hash.Add(item.NavigationMeshes);
+            foreach (var subItem in item.NavigationMeshes)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Timestamp);
             hash.Add(item.UnknownGroupData);
             hash.Add(item.PersistentTimestamp);
             hash.Add(item.PersistentUnknownGroupData);
-            hash.Add(item.Persistent);
+            foreach (var subItem in item.Persistent)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.TemporaryTimestamp);
             hash.Add(item.TemporaryUnknownGroupData);
-            hash.Add(item.Temporary);
+            foreach (var subItem in item.Temporary)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -4835,19 +4910,21 @@ namespace Mutagen.Bethesda.Starfield
                 case "IAPlacedTrapGetter":
                 case "IAPlacedTrap":
                 case "IAPlacedTrapInternal":
-                    foreach (var subItem in obj.Persistent)
+                case "PlacedArrow":
+                case "PlacedBeam":
+                case "PlacedFlame":
+                case "PlacedCone":
+                case "PlacedBarrier":
+                case "PlacedTrap":
+                case "PlacedHazard":
+                case "PlacedMissile":
+                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
-                    foreach (var subItem in obj.Temporary)
+                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
                     yield break;
                 case "CellShipBlueprintSnapLink":
@@ -4860,19 +4937,13 @@ namespace Mutagen.Bethesda.Starfield
                     yield break;
                 case "IPlacedGetter":
                 case "IPlaced":
-                    foreach (var subItem in obj.Persistent)
+                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
-                    foreach (var subItem in obj.Temporary)
+                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
                     yield break;
                 case "LinkedReferences":
@@ -4899,38 +4970,26 @@ namespace Mutagen.Bethesda.Starfield
                 case "IPlacedNpcGetter":
                 case "IPlacedNpc":
                 case "IPlacedNpcInternal":
-                    foreach (var subItem in obj.Persistent)
+                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
-                    foreach (var subItem in obj.Temporary)
+                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
                     yield break;
                 case "PlacedObject":
                 case "IPlacedObjectGetter":
                 case "IPlacedObject":
                 case "IPlacedObjectInternal":
-                    foreach (var subItem in obj.Persistent)
+                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
-                    foreach (var subItem in obj.Temporary)
+                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return subItem;
-                        }
+                        yield return subItem;
                     }
                     yield break;
                 case "TraversalReference":
@@ -5098,55 +5157,57 @@ namespace Mutagen.Bethesda.Starfield
                 case "IAPlacedTrapGetter":
                 case "IAPlacedTrap":
                 case "IAPlacedTrapInternal":
-                    foreach (var subItem in obj.Persistent)
+                case "PlacedArrow":
+                case "PlacedBeam":
+                case "PlacedFlame":
+                case "PlacedCone":
+                case "PlacedBarrier":
+                case "PlacedTrap":
+                case "PlacedHazard":
+                case "PlacedMissile":
+                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.Persistent.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.Persistent.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
+                                return dup;
+                            });
                     }
-                    foreach (var subItem in obj.Temporary)
+                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.Temporary.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.Temporary.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
+                                return dup;
+                            });
                     }
                     yield break;
                 case "CellShipBlueprintSnapLink":
@@ -5159,55 +5220,49 @@ namespace Mutagen.Bethesda.Starfield
                     yield break;
                 case "IPlacedGetter":
                 case "IPlaced":
-                    foreach (var subItem in obj.Persistent)
+                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.Persistent.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.Persistent.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
+                                return dup;
+                            });
                     }
-                    foreach (var subItem in obj.Temporary)
+                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.Temporary.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.Temporary.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
+                                return dup;
+                            });
                     }
                     yield break;
                 case "LinkedReferences":
@@ -5248,110 +5303,98 @@ namespace Mutagen.Bethesda.Starfield
                 case "IPlacedNpcGetter":
                 case "IPlacedNpc":
                 case "IPlacedNpcInternal":
-                    foreach (var subItem in obj.Persistent)
+                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.Persistent.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.Persistent.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
+                                return dup;
+                            });
                     }
-                    foreach (var subItem in obj.Temporary)
+                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.Temporary.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.Temporary.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
+                                return dup;
+                            });
                     }
                     yield break;
                 case "PlacedObject":
                 case "IPlacedObjectGetter":
                 case "IPlacedObject":
                 case "IPlacedObjectInternal":
-                    foreach (var subItem in obj.Persistent)
+                    foreach (var subItem in obj.Persistent.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.Persistent.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.Persistent.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.Persistent.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Persistent.Add(dup);
+                                return dup;
+                            });
                     }
-                    foreach (var subItem in obj.Temporary)
+                    foreach (var subItem in obj.Temporary.WhereAssignableTo(type))
                     {
-                        if (type.IsAssignableFrom(subItem.GetType()))
-                        {
-                            yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
-                                modKey: modKey,
-                                record: subItem,
-                                parent: curContext,
-                                getOrAddAsOverride: (m, r) =>
-                                {
-                                    var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
-                                    var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
-                                    if (ret != null) return ret;
-                                    ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
-                                    parent.Temporary.Add(ret);
-                                    return ret;
-                                },
-                                duplicateInto: (m, r, e, f) =>
-                                {
-                                    var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
-                                    getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
-                                    return dup;
-                                });
-                        }
+                        yield return new ModContext<IStarfieldMod, IStarfieldModGetter, IPlaced, IPlacedGetter>(
+                            modKey: modKey,
+                            record: subItem,
+                            parent: curContext,
+                            getOrAddAsOverride: (m, r) =>
+                            {
+                                var parent = getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey));
+                                var ret = parent.Temporary.FirstOrDefault(x => x.FormKey == r.FormKey);
+                                if (ret != null) return ret;
+                                ret = (IPlaced)((IPlacedGetter)r).DeepCopy();
+                                parent.Temporary.Add(ret);
+                                return ret;
+                            },
+                            duplicateInto: (m, r, e, f) =>
+                            {
+                                var dup = (IPlaced)((IPlacedGetter)r).Duplicate(f ?? m.GetNextFormKey(e));
+                                getOrAddAsOverride(m, linkCache.Resolve<ICellGetter>(obj.FormKey)).Temporary.Add(dup);
+                                return dup;
+                            });
                     }
                     yield break;
                 case "TraversalReference":
@@ -5427,13 +5470,21 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         #region Duplicate
+        private static readonly Cell.TranslationMask DuplicateMask = new(defaultOn: true)
+        {
+            NavigationMeshes = false,
+            Persistent = false,
+            Temporary = false,
+        };
+        private static readonly TranslationCrystal DuplicateCrystal = DuplicateMask.GetCrystal();
+        
         public Cell Duplicate(
             ICellGetter item,
             FormKey formKey,
             TranslationCrystal? copyMask)
         {
             var newRec = new Cell(formKey, item.FormVersion);
-            newRec.DeepCopyIn(item, default(ErrorMaskBuilder?), copyMask);
+            newRec.DeepCopyIn(item, default(ErrorMaskBuilder?), copyMask ?? DuplicateCrystal);
             return newRec;
         }
         

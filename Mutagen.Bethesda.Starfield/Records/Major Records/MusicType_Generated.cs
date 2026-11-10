@@ -1460,7 +1460,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(StabilityIntervalMillisecondsitem);
             }
-            hash.Add(item.Tracks);
+            if (item.Tracks is {} Tracksitem)
+            {
+                foreach (var subItem in Tracksitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }

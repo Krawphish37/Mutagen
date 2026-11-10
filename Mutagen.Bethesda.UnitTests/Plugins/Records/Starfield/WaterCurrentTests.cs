@@ -44,8 +44,8 @@ public class WaterCurrentTests
             v[2].Unknown.ToArray().ShouldBe(Hex("03-00-00-00"));
             var written = GameConstants.Starfield.MajorRecord(Write(w => cell.WriteToBinary(w)));
             written.FindSubrecord(new RecordType("XWCN")).Content.ToArray().ShouldBe(Hex(CellCount));
-            // Mutagen's float writer writes -0.0 (the 4th velocity's Z) as 0.0; everything else is written back as read.
-            written.FindSubrecord(new RecordType("XWCU")).Content.ToArray().ShouldBe(Hex(CellVelocities.Replace("80-BF-00-00-00-80", "80-BF-00-00-00-00")));
+            // -0.0 (the 4th velocity's Z) is written back as -0.0 on the fixes chain (and with C80); everything is written back as read.
+            written.FindSubrecord(new RecordType("XWCU")).Content.ToArray().ShouldBe(Hex(CellVelocities));
         }
     }
 

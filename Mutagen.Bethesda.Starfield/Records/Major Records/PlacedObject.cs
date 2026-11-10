@@ -285,6 +285,8 @@ partial class PlacedObjectBinaryOverlay
     {
         _placementLocation = stream.Position - offset;
         return (int)PlacedObject_FieldIndex.HasPlacementData;
+    }
+}
 
 public partial class PlacedObjectShipArrival
 {

@@ -1345,7 +1345,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(FastWalkitem);
             }
             hash.Add(item.ClampMaxAnimationSpeeds);
-            hash.Add(item.FlagsUnused);
+            hash.AddBytes(item.FlagsUnused);
             hash.Add(item.DisplayForNonCharacters);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -1911,13 +1911,13 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _INTVLocation;
         #region ClampMaxAnimationSpeeds
         private int _ClampMaxAnimationSpeedsLocation => _INTVLocation!.Value.Min;
-        private bool _ClampMaxAnimationSpeeds_IsSet => _INTVLocation.HasValue;
+        private bool _ClampMaxAnimationSpeeds_IsSet => _INTVLocation.HasValue && _INTVLocation!.Value.Max - _ClampMaxAnimationSpeedsLocation + 1 >= 1;
         public Boolean ClampMaxAnimationSpeeds => _ClampMaxAnimationSpeeds_IsSet ? _recordData.Slice(_ClampMaxAnimationSpeedsLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region FlagsUnused
         private int _FlagsUnusedLocation => _INTVLocation!.Value.Min + 0x1;
         private bool _FlagsUnused_IsSet => _INTVLocation.HasValue;
-        public ReadOnlyMemorySlice<Byte> FlagsUnused => _FlagsUnused_IsSet ? _recordData.Span.Slice(_FlagsUnusedLocation, 3).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
+        public ReadOnlyMemorySlice<Byte> FlagsUnused => _FlagsUnused_IsSet ? _recordData.Span.Slice(_FlagsUnusedLocation, 3).ToArray() : UtilityTranslation.Zeros.Slice(0, 3);
         #endregion
         #region DisplayForNonCharacters
         private int? _DisplayForNonCharactersLocation;

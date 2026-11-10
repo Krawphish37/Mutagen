@@ -123,14 +123,14 @@ namespace Mutagen.Bethesda.Starfield
         String? IPhotoModeFeatureGetter.Texture => this.Texture;
         #endregion
         #region ImageSpace
-        private readonly IFormLinkNullable<IImageSpaceGetter> _ImageSpace = new FormLinkNullable<IImageSpaceGetter>();
-        public IFormLinkNullable<IImageSpaceGetter> ImageSpace
+        private readonly IFormLinkNullable<IImageSpaceAdapterGetter> _ImageSpace = new FormLinkNullable<IImageSpaceAdapterGetter>();
+        public IFormLinkNullable<IImageSpaceAdapterGetter> ImageSpace
         {
             get => _ImageSpace;
             set => _ImageSpace.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkNullableGetter<IImageSpaceGetter> IPhotoModeFeatureGetter.ImageSpace => this.ImageSpace;
+        IFormLinkNullableGetter<IImageSpaceAdapterGetter> IPhotoModeFeatureGetter.ImageSpace => this.ImageSpace;
         #endregion
 
         #region To String
@@ -870,7 +870,7 @@ namespace Mutagen.Bethesda.Starfield
         new UInt32 ContentHeight { get; set; }
         new PhotoModeFeature.Flag Flags { get; set; }
         new String? Texture { get; set; }
-        new IFormLinkNullable<IImageSpaceGetter> ImageSpace { get; set; }
+        new IFormLinkNullable<IImageSpaceAdapterGetter> ImageSpace { get; set; }
     }
 
     public partial interface IPhotoModeFeatureInternal :
@@ -908,7 +908,7 @@ namespace Mutagen.Bethesda.Starfield
         UInt32 ContentHeight { get; }
         PhotoModeFeature.Flag Flags { get; }
         String? Texture { get; }
-        IFormLinkNullableGetter<IImageSpaceGetter> ImageSpace { get; }
+        IFormLinkNullableGetter<IImageSpaceAdapterGetter> ImageSpace { get; }
 
     }
 
@@ -2102,43 +2102,43 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _FNAMLocation;
         #region FeatureType
         private int _FeatureTypeLocation => _FNAMLocation!.Value.Min;
-        private bool _FeatureType_IsSet => _FNAMLocation.HasValue;
-        public PhotoModeFeature.Mode FeatureType => _FeatureType_IsSet ? (PhotoModeFeature.Mode)_recordData.Span.Slice(_FeatureTypeLocation, 0x1)[0] : default;
+        private bool _FeatureType_IsSet => _FNAMLocation.HasValue && _FNAMLocation!.Value.Max - _FeatureTypeLocation + 1 >= 1;
+        public PhotoModeFeature.Mode FeatureType => _FeatureType_IsSet ? (PhotoModeFeature.Mode)_recordData.Span.Slice(_FeatureTypeLocation, 0x1)[0] : default(PhotoModeFeature.Mode);
         #endregion
         #region XOffset
         private int _XOffsetLocation => _FNAMLocation!.Value.Min + 0x1;
-        private bool _XOffset_IsSet => _FNAMLocation.HasValue;
+        private bool _XOffset_IsSet => _FNAMLocation.HasValue && _FNAMLocation!.Value.Max - _XOffsetLocation + 1 >= 4;
         public Single XOffset => _XOffset_IsSet ? _recordData.Slice(_XOffsetLocation, 4).Float() : default(Single);
         #endregion
         #region YOffset
         private int _YOffsetLocation => _FNAMLocation!.Value.Min + 0x5;
-        private bool _YOffset_IsSet => _FNAMLocation.HasValue;
+        private bool _YOffset_IsSet => _FNAMLocation.HasValue && _FNAMLocation!.Value.Max - _YOffsetLocation + 1 >= 4;
         public Single YOffset => _YOffset_IsSet ? _recordData.Slice(_YOffsetLocation, 4).Float() : default(Single);
         #endregion
         #region TextureWidth
         private int _TextureWidthLocation => _FNAMLocation!.Value.Min + 0x9;
-        private bool _TextureWidth_IsSet => _FNAMLocation.HasValue;
+        private bool _TextureWidth_IsSet => _FNAMLocation.HasValue && _FNAMLocation!.Value.Max - _TextureWidthLocation + 1 >= 4;
         public UInt32 TextureWidth => _TextureWidth_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_TextureWidthLocation, 4)) : default(UInt32);
         #endregion
         #region TextureHeight
         private int _TextureHeightLocation => _FNAMLocation!.Value.Min + 0xD;
-        private bool _TextureHeight_IsSet => _FNAMLocation.HasValue;
+        private bool _TextureHeight_IsSet => _FNAMLocation.HasValue && _FNAMLocation!.Value.Max - _TextureHeightLocation + 1 >= 4;
         public UInt32 TextureHeight => _TextureHeight_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_TextureHeightLocation, 4)) : default(UInt32);
         #endregion
         #region ContentWidth
         private int _ContentWidthLocation => _FNAMLocation!.Value.Min + 0x11;
-        private bool _ContentWidth_IsSet => _FNAMLocation.HasValue;
+        private bool _ContentWidth_IsSet => _FNAMLocation.HasValue && _FNAMLocation!.Value.Max - _ContentWidthLocation + 1 >= 4;
         public UInt32 ContentWidth => _ContentWidth_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_ContentWidthLocation, 4)) : default(UInt32);
         #endregion
         #region ContentHeight
         private int _ContentHeightLocation => _FNAMLocation!.Value.Min + 0x15;
-        private bool _ContentHeight_IsSet => _FNAMLocation.HasValue;
+        private bool _ContentHeight_IsSet => _FNAMLocation.HasValue && _FNAMLocation!.Value.Max - _ContentHeightLocation + 1 >= 4;
         public UInt32 ContentHeight => _ContentHeight_IsSet ? BinaryPrimitives.ReadUInt32LittleEndian(_recordData.Slice(_ContentHeightLocation, 4)) : default(UInt32);
         #endregion
         #region Flags
         private int _FlagsLocation => _FNAMLocation!.Value.Min + 0x19;
-        private bool _Flags_IsSet => _FNAMLocation.HasValue;
-        public PhotoModeFeature.Flag Flags => _Flags_IsSet ? (PhotoModeFeature.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default;
+        private bool _Flags_IsSet => _FNAMLocation.HasValue && _FNAMLocation!.Value.Max - _FlagsLocation + 1 >= 4;
+        public PhotoModeFeature.Flag Flags => _Flags_IsSet ? (PhotoModeFeature.Flag)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x4)) : default(PhotoModeFeature.Flag);
         #endregion
         #region Texture
         private int? _TextureLocation;
@@ -2146,7 +2146,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region ImageSpace
         private int? _ImageSpaceLocation;
-        public IFormLinkNullableGetter<IImageSpaceGetter> ImageSpace => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IImageSpaceGetter>(_package, _recordData, _ImageSpaceLocation);
+        public IFormLinkNullableGetter<IImageSpaceAdapterGetter> ImageSpace => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IImageSpaceAdapterGetter>(_package, _recordData, _ImageSpaceLocation);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,

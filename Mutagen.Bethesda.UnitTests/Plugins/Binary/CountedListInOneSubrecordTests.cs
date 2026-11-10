@@ -39,7 +39,7 @@ public class CountedListInOneSubrecordTests
             triggeringRecord: new RecordType("XWCU"),
             transl: Item,
             skipHeader: true);
-        list.Select(x => (x.First, x.Second)).ShouldBe(new[] { (1u, 2u), (3u, 4u) });
+        list.Select(x => (x.X, x.Y)).ShouldBe(new[] { (1u, 2u), (3u, 4u) });
         // Positioned at the next subrecord
         frame.Position.ShouldBe(10 + 6 + 16);
     }
@@ -54,7 +54,7 @@ public class CountedListInOneSubrecordTests
             countRecord: new RecordType("XWCN"),
             triggeringRecord: new RecordType("XWCU"),
             transl: Item);
-        list[0].First.ShouldBe(BitConverter.ToUInt32("XWCU"u8));
+        list[0].X.ShouldBe(BitConverter.ToUInt32("XWCU"u8));
     }
 
     [Fact]

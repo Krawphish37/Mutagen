@@ -58,6 +58,7 @@ public class ExactFloatTests
         {
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(writer, BitConverter.UInt32BitsToSingle(bits));
         }
-        stream.ToArray().ShouldBe(new byte[4]);
+        // The fixes chain already writes -0.0 as -0.0 for every game (fix/keep-negative-zero-floats); float.Epsilon still becomes 0
+        stream.ToArray().ShouldBe(bits == 0x8000_0000u ? BitConverter.GetBytes(bits) : new byte[4]);
     }
 }

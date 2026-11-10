@@ -1838,7 +1838,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.WaveScrollAmountV);
             hash.Add(item.RandomTimeOffsetRange);
             hash.Add(item.IsAnimated);
-            hash.Add(item.IsAnimatedUnused);
+            hash.AddBytes(item.IsAnimatedUnused);
             return hash.ToHashCode();
         }
         
@@ -2085,9 +2085,7 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.RotationPivotV);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.StaticRotation,
-                divisor: 57.295799255371094f,
-                multiplier: null);
+                item: item.StaticRotation);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.AnimatedRotationSpeed);
@@ -2096,9 +2094,7 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.AnimatedWaveRotationSpeed);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.AnimatedWaveRotation,
-                divisor: 57.295799255371094f,
-                multiplier: null);
+                item: item.AnimatedWaveRotation);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.StaticScaleU);
@@ -2179,16 +2175,10 @@ namespace Mutagen.Bethesda.Starfield
             item.StaticOffsetV = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.RotationPivotU = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.RotationPivotV = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.StaticRotation = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
-                reader: frame,
-                multiplier: 57.295799255371094f,
-                divisor: null);
+            item.StaticRotation = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.AnimatedRotationSpeed = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.AnimatedWaveRotationSpeed = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.AnimatedWaveRotation = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
-                reader: frame,
-                multiplier: 57.295799255371094f,
-                divisor: null);
+            item.AnimatedWaveRotation = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.StaticScaleU = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.StaticScaleV = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.WaveScalingSpeedU = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
@@ -2273,10 +2263,10 @@ namespace Mutagen.Bethesda.Starfield
         public Single StaticOffsetV => _structData.Slice(0x4, 0x4).Float();
         public Single RotationPivotU => _structData.Slice(0x8, 0x4).Float();
         public Single RotationPivotV => _structData.Slice(0xC, 0x4).Float();
-        public Single StaticRotation => _structData.Slice(0x10, 0x4).Float() * 57.2958f;
+        public Single StaticRotation => _structData.Slice(0x10, 0x4).Float();
         public Single AnimatedRotationSpeed => _structData.Slice(0x14, 0x4).Float();
         public Single AnimatedWaveRotationSpeed => _structData.Slice(0x18, 0x4).Float();
-        public Single AnimatedWaveRotation => _structData.Slice(0x1C, 0x4).Float() * 57.2958f;
+        public Single AnimatedWaveRotation => _structData.Slice(0x1C, 0x4).Float();
         public Single StaticScaleU => _structData.Slice(0x20, 0x4).Float();
         public Single StaticScaleV => _structData.Slice(0x24, 0x4).Float();
         public Single WaveScalingSpeedU => _structData.Slice(0x28, 0x4).Float();

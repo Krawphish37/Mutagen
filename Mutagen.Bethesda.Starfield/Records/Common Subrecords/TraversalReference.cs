@@ -18,6 +18,8 @@ public partial class TraversalReference
     [Flags]
     public enum Flag
     {
+        Unknown0 = 0x1,
+        Unknown1 = 0x2,
         NoTraversalFormID = 0x4
     }
 }

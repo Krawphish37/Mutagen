@@ -969,7 +969,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Actor);
             hash.Add(item.Ref);
             hash.Add(item.SetEnableStateToOppositeOfParent);
-            hash.Add(item.SetEnableStateToOppositeOfParentUnused);
+            hash.AddBytes(item.SetEnableStateToOppositeOfParentUnused);
             return hash.ToHashCode();
         }
         

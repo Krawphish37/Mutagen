@@ -79,6 +79,11 @@ namespace Mutagen.Bethesda.Starfield
         IVirtualMachineAdapterGetter? IScriptedGetter.VirtualMachineAdapter => this.VirtualMachineAdapter;
         #endregion
         #endregion
+        #region XALG
+        public UInt64? XALG { get; set; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        UInt64? IRaceGetter.XALG => this.XALG;
+        #endregion
         #region Components
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private ExtendedList<AComponent> _Components = new ExtendedList<AComponent>();
@@ -561,6 +566,16 @@ namespace Mutagen.Bethesda.Starfield
         public IGenderedItem<ChargenAndSkintones?>? ChargenAndSkintones { get; set; }
         IGenderedItemGetter<IChargenAndSkintonesGetter?>? IRaceGetter.ChargenAndSkintones => this.ChargenAndSkintones;
         #endregion
+        #region MorphRace
+        private readonly IFormLinkNullable<IRaceGetter> _MorphRace = new FormLinkNullable<IRaceGetter>();
+        public IFormLinkNullable<IRaceGetter> MorphRace
+        {
+            get => _MorphRace;
+            set => _MorphRace.SetTo(value);
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IFormLinkNullableGetter<IRaceGetter> IRaceGetter.MorphRace => this.MorphRace;
+        #endregion
         #region ArmorRace
         private readonly IFormLinkNullable<IRaceGetter> _ArmorRace = new FormLinkNullable<IRaceGetter>();
         public IFormLinkNullable<IRaceGetter> ArmorRace
@@ -664,6 +679,7 @@ namespace Mutagen.Bethesda.Starfield
             : base(initialValue)
             {
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(initialValue, new VirtualMachineAdapter.Mask<TItem>(initialValue));
+                this.XALG = initialValue;
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(initialValue, []);
                 this.Name = initialValue;
                 this.Description = initialValue;
@@ -738,6 +754,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.BaseMovementSwimDefault = initialValue;
                 this.BaseMovementFlyDefault = initialValue;
                 this.ChargenAndSkintones = new MaskItem<TItem, GenderedItem<MaskItem<TItem, ChargenAndSkintones.Mask<TItem>?>?>?>(initialValue, default);
+                this.MorphRace = initialValue;
                 this.ArmorRace = initialValue;
                 this.SubgraphTemplateRace = initialValue;
                 this.Subgraphs = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Subgraph.Mask<TItem>?>>?>(initialValue, []);
@@ -758,6 +775,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
                 TItem VirtualMachineAdapter,
+                TItem XALG,
                 TItem Components,
                 TItem Name,
                 TItem Description,
@@ -832,6 +850,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem BaseMovementSwimDefault,
                 TItem BaseMovementFlyDefault,
                 TItem ChargenAndSkintones,
+                TItem MorphRace,
                 TItem ArmorRace,
                 TItem SubgraphTemplateRace,
                 TItem Subgraphs,
@@ -851,6 +870,7 @@ namespace Mutagen.Bethesda.Starfield
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
             {
                 this.VirtualMachineAdapter = new MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>(VirtualMachineAdapter, new VirtualMachineAdapter.Mask<TItem>(VirtualMachineAdapter));
+                this.XALG = XALG;
                 this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(Components, []);
                 this.Name = Name;
                 this.Description = Description;
@@ -925,6 +945,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.BaseMovementSwimDefault = BaseMovementSwimDefault;
                 this.BaseMovementFlyDefault = BaseMovementFlyDefault;
                 this.ChargenAndSkintones = new MaskItem<TItem, GenderedItem<MaskItem<TItem, ChargenAndSkintones.Mask<TItem>?>?>?>(ChargenAndSkintones, default);
+                this.MorphRace = MorphRace;
                 this.ArmorRace = ArmorRace;
                 this.SubgraphTemplateRace = SubgraphTemplateRace;
                 this.Subgraphs = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Subgraph.Mask<TItem>?>>?>(Subgraphs, []);
@@ -946,6 +967,7 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public MaskItem<TItem, VirtualMachineAdapter.Mask<TItem>?>? VirtualMachineAdapter { get; set; }
+            public TItem XALG;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>? Components;
             public TItem Name;
             public TItem Description;
@@ -1020,6 +1042,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem BaseMovementSwimDefault;
             public TItem BaseMovementFlyDefault;
             public MaskItem<TItem, GenderedItem<MaskItem<TItem, ChargenAndSkintones.Mask<TItem>?>?>?>? ChargenAndSkintones;
+            public TItem MorphRace;
             public TItem ArmorRace;
             public TItem SubgraphTemplateRace;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, Subgraph.Mask<TItem>?>>?>? Subgraphs;
@@ -1043,6 +1066,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
                 if (!object.Equals(this.VirtualMachineAdapter, rhs.VirtualMachineAdapter)) return false;
+                if (!object.Equals(this.XALG, rhs.XALG)) return false;
                 if (!object.Equals(this.Components, rhs.Components)) return false;
                 if (!object.Equals(this.Name, rhs.Name)) return false;
                 if (!object.Equals(this.Description, rhs.Description)) return false;
@@ -1117,6 +1141,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.BaseMovementSwimDefault, rhs.BaseMovementSwimDefault)) return false;
                 if (!object.Equals(this.BaseMovementFlyDefault, rhs.BaseMovementFlyDefault)) return false;
                 if (!object.Equals(this.ChargenAndSkintones, rhs.ChargenAndSkintones)) return false;
+                if (!object.Equals(this.MorphRace, rhs.MorphRace)) return false;
                 if (!object.Equals(this.ArmorRace, rhs.ArmorRace)) return false;
                 if (!object.Equals(this.SubgraphTemplateRace, rhs.SubgraphTemplateRace)) return false;
                 if (!object.Equals(this.Subgraphs, rhs.Subgraphs)) return false;
@@ -1132,6 +1157,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 var hash = new HashCode();
                 hash.Add(this.VirtualMachineAdapter);
+                hash.Add(this.XALG);
                 hash.Add(this.Components);
                 hash.Add(this.Name);
                 hash.Add(this.Description);
@@ -1206,6 +1232,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.BaseMovementSwimDefault);
                 hash.Add(this.BaseMovementFlyDefault);
                 hash.Add(this.ChargenAndSkintones);
+                hash.Add(this.MorphRace);
                 hash.Add(this.ArmorRace);
                 hash.Add(this.SubgraphTemplateRace);
                 hash.Add(this.Subgraphs);
@@ -1230,6 +1257,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (!eval(this.VirtualMachineAdapter.Overall)) return false;
                     if (this.VirtualMachineAdapter.Specific != null && !this.VirtualMachineAdapter.Specific.All(eval)) return false;
                 }
+                if (!eval(this.XALG)) return false;
                 if (this.Components != null)
                 {
                     if (!eval(this.Components.Overall)) return false;
@@ -1419,6 +1447,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!GenderedItem.AllMask(
                     this.ChargenAndSkintones,
                     eval: eval)) return false;
+                if (!eval(this.MorphRace)) return false;
                 if (!eval(this.ArmorRace)) return false;
                 if (!eval(this.SubgraphTemplateRace)) return false;
                 if (this.Subgraphs != null)
@@ -1465,6 +1494,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (eval(this.VirtualMachineAdapter.Overall)) return true;
                     if (this.VirtualMachineAdapter.Specific != null && this.VirtualMachineAdapter.Specific.Any(eval)) return true;
                 }
+                if (eval(this.XALG)) return true;
                 if (this.Components != null)
                 {
                     if (eval(this.Components.Overall)) return true;
@@ -1654,6 +1684,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (GenderedItem.AnyMask(
                     this.ChargenAndSkintones,
                     eval: eval)) return true;
+                if (eval(this.MorphRace)) return true;
                 if (eval(this.ArmorRace)) return true;
                 if (eval(this.SubgraphTemplateRace)) return true;
                 if (this.Subgraphs != null)
@@ -1703,6 +1734,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.Translate_InternalFill(obj, eval);
                 obj.VirtualMachineAdapter = this.VirtualMachineAdapter == null ? null : new MaskItem<R, VirtualMachineAdapter.Mask<R>?>(eval(this.VirtualMachineAdapter.Overall), this.VirtualMachineAdapter.Specific?.Translate(eval));
+                obj.XALG = eval(this.XALG);
                 if (Components != null)
                 {
                     obj.Components = new MaskItem<R, IEnumerable<MaskItemIndexed<R, AComponent.Mask<R>?>>?>(eval(this.Components.Overall), []);
@@ -1914,6 +1946,7 @@ namespace Mutagen.Bethesda.Starfield
                     this.ChargenAndSkintones,
                     eval,
                     (m, e) => m?.Translate(e));
+                obj.MorphRace = eval(this.MorphRace);
                 obj.ArmorRace = eval(this.ArmorRace);
                 obj.SubgraphTemplateRace = eval(this.SubgraphTemplateRace);
                 if (Subgraphs != null)
@@ -1975,6 +2008,10 @@ namespace Mutagen.Bethesda.Starfield
                     if (printMask?.VirtualMachineAdapter?.Overall ?? true)
                     {
                         VirtualMachineAdapter?.Print(sb);
+                    }
+                    if (printMask?.XALG ?? true)
+                    {
+                        sb.AppendItem(XALG, "XALG");
                     }
                     if ((printMask?.Components?.Overall ?? true)
                         && Components is {} ComponentsItem)
@@ -2433,6 +2470,10 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendLine($"ChargenAndSkintones => {ChargenAndSkintones}");
                     }
+                    if (printMask?.MorphRace ?? true)
+                    {
+                        sb.AppendItem(MorphRace, "MorphRace");
+                    }
                     if (printMask?.ArmorRace ?? true)
                     {
                         sb.AppendItem(ArmorRace, "ArmorRace");
@@ -2512,6 +2553,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public MaskItem<Exception?, VirtualMachineAdapter.ErrorMask?>? VirtualMachineAdapter;
+            public Exception? XALG;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>? Components;
             public Exception? Name;
             public Exception? Description;
@@ -2586,6 +2628,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? BaseMovementSwimDefault;
             public Exception? BaseMovementFlyDefault;
             public MaskItem<Exception?, GenderedItem<Exception?>?>? ChargenAndSkintones;
+            public Exception? MorphRace;
             public Exception? ArmorRace;
             public Exception? SubgraphTemplateRace;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Subgraph.ErrorMask?>>?>? Subgraphs;
@@ -2605,6 +2648,8 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case Race_FieldIndex.VirtualMachineAdapter:
                         return VirtualMachineAdapter;
+                    case Race_FieldIndex.XALG:
+                        return XALG;
                     case Race_FieldIndex.Components:
                         return Components;
                     case Race_FieldIndex.Name:
@@ -2753,6 +2798,8 @@ namespace Mutagen.Bethesda.Starfield
                         return BaseMovementFlyDefault;
                     case Race_FieldIndex.ChargenAndSkintones:
                         return ChargenAndSkintones;
+                    case Race_FieldIndex.MorphRace:
+                        return MorphRace;
                     case Race_FieldIndex.ArmorRace:
                         return ArmorRace;
                     case Race_FieldIndex.SubgraphTemplateRace:
@@ -2783,6 +2830,9 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case Race_FieldIndex.VirtualMachineAdapter:
                         this.VirtualMachineAdapter = new MaskItem<Exception?, VirtualMachineAdapter.ErrorMask?>(ex, null);
+                        break;
+                    case Race_FieldIndex.XALG:
+                        this.XALG = ex;
                         break;
                     case Race_FieldIndex.Components:
                         this.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(ex, null);
@@ -3006,6 +3056,9 @@ namespace Mutagen.Bethesda.Starfield
                     case Race_FieldIndex.ChargenAndSkintones:
                         this.ChargenAndSkintones = new MaskItem<Exception?, GenderedItem<Exception?>?>(ex, null);
                         break;
+                    case Race_FieldIndex.MorphRace:
+                        this.MorphRace = ex;
+                        break;
                     case Race_FieldIndex.ArmorRace:
                         this.ArmorRace = ex;
                         break;
@@ -3046,6 +3099,9 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case Race_FieldIndex.VirtualMachineAdapter:
                         this.VirtualMachineAdapter = (MaskItem<Exception?, VirtualMachineAdapter.ErrorMask?>?)obj;
+                        break;
+                    case Race_FieldIndex.XALG:
+                        this.XALG = (Exception?)obj;
                         break;
                     case Race_FieldIndex.Components:
                         this.Components = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>)obj;
@@ -3269,6 +3325,9 @@ namespace Mutagen.Bethesda.Starfield
                     case Race_FieldIndex.ChargenAndSkintones:
                         this.ChargenAndSkintones = (MaskItem<Exception?, GenderedItem<Exception?>?>?)obj;
                         break;
+                    case Race_FieldIndex.MorphRace:
+                        this.MorphRace = (Exception?)obj;
+                        break;
                     case Race_FieldIndex.ArmorRace:
                         this.ArmorRace = (Exception?)obj;
                         break;
@@ -3306,6 +3365,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (VirtualMachineAdapter != null) return true;
+                if (XALG != null) return true;
                 if (Components != null) return true;
                 if (Name != null) return true;
                 if (Description != null) return true;
@@ -3380,6 +3440,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (BaseMovementSwimDefault != null) return true;
                 if (BaseMovementFlyDefault != null) return true;
                 if (ChargenAndSkintones != null) return true;
+                if (MorphRace != null) return true;
                 if (ArmorRace != null) return true;
                 if (SubgraphTemplateRace != null) return true;
                 if (Subgraphs != null) return true;
@@ -3416,6 +3477,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.PrintFillInternal(sb);
                 VirtualMachineAdapter?.Print(sb);
+                {
+                    sb.AppendItem(XALG, "XALG");
+                }
                 if (Components is {} ComponentsItem)
                 {
                     sb.AppendLine("Components =>");
@@ -3796,6 +3860,9 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendLine($"ChargenAndSkintones => {ChargenAndSkintones}");
                 }
                 {
+                    sb.AppendItem(MorphRace, "MorphRace");
+                }
+                {
                     sb.AppendItem(ArmorRace, "ArmorRace");
                 }
                 {
@@ -3862,6 +3929,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.VirtualMachineAdapter = this.VirtualMachineAdapter.Combine(rhs.VirtualMachineAdapter, (l, r) => l.Combine(r));
+                ret.XALG = this.XALG.Combine(rhs.XALG);
                 ret.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Components?.Overall, rhs.Components?.Overall), Noggog.ExceptionExt.Combine(this.Components?.Specific, rhs.Components?.Specific));
                 ret.Name = this.Name.Combine(rhs.Name);
                 ret.Description = this.Description.Combine(rhs.Description);
@@ -3936,6 +4004,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.BaseMovementSwimDefault = this.BaseMovementSwimDefault.Combine(rhs.BaseMovementSwimDefault);
                 ret.BaseMovementFlyDefault = this.BaseMovementFlyDefault.Combine(rhs.BaseMovementFlyDefault);
                 ret.ChargenAndSkintones = new MaskItem<Exception?, GenderedItem<Exception?>?>(Noggog.ExceptionExt.Combine(this.ChargenAndSkintones?.Overall, rhs.ChargenAndSkintones?.Overall), GenderedItem.Combine(this.ChargenAndSkintones?.Specific, rhs.ChargenAndSkintones?.Specific));
+                ret.MorphRace = this.MorphRace.Combine(rhs.MorphRace);
                 ret.ArmorRace = this.ArmorRace.Combine(rhs.ArmorRace);
                 ret.SubgraphTemplateRace = this.SubgraphTemplateRace.Combine(rhs.SubgraphTemplateRace);
                 ret.Subgraphs = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, Subgraph.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Subgraphs?.Overall, rhs.Subgraphs?.Overall), Noggog.ExceptionExt.Combine(this.Subgraphs?.Specific, rhs.Subgraphs?.Specific));
@@ -3968,6 +4037,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             #region Members
             public VirtualMachineAdapter.TranslationMask? VirtualMachineAdapter;
+            public bool XALG;
             public AComponent.TranslationMask? Components;
             public bool Name;
             public bool Description;
@@ -4042,6 +4112,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool BaseMovementSwimDefault;
             public bool BaseMovementFlyDefault;
             public GenderedItem<ChargenAndSkintones.TranslationMask>? ChargenAndSkintones;
+            public bool MorphRace;
             public bool ArmorRace;
             public bool SubgraphTemplateRace;
             public Subgraph.TranslationMask? Subgraphs;
@@ -4059,6 +4130,7 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
+                this.XALG = defaultOn;
                 this.Name = defaultOn;
                 this.Description = defaultOn;
                 this.ActorEffect = defaultOn;
@@ -4119,6 +4191,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.BaseMovementDefault = defaultOn;
                 this.BaseMovementSwimDefault = defaultOn;
                 this.BaseMovementFlyDefault = defaultOn;
+                this.MorphRace = defaultOn;
                 this.ArmorRace = defaultOn;
                 this.SubgraphTemplateRace = defaultOn;
                 this.IdleChatterTimeMin = defaultOn;
@@ -4133,6 +4206,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.GetCrystal(ret);
                 ret.Add((VirtualMachineAdapter != null ? VirtualMachineAdapter.OnOverall : DefaultOn, VirtualMachineAdapter?.GetCrystal()));
+                ret.Add((XALG, null));
                 ret.Add((Components == null ? DefaultOn : !Components.GetCrystal().CopyNothing, Components?.GetCrystal()));
                 ret.Add((Name, null));
                 ret.Add((Description, null));
@@ -4142,8 +4216,8 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Keywords, null));
                 ret.Add((Properties == null ? DefaultOn : !Properties.GetCrystal().CopyNothing, Properties?.GetCrystal()));
                 ret.Add((BodyPartData, null));
-                ret.Add((Height != null || DefaultOn, null));
-                ret.Add((DefaultWeight != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystal(Height, DefaultOn));
+                ret.Add(GenderedItem.GetCrystalMask(DefaultWeight, DefaultOn, m => m.OnOverall));
                 ret.Add((Flags, null));
                 ret.Add((AccelerationRate, null));
                 ret.Add((DecelerationRate, null));
@@ -4187,13 +4261,13 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((ElectromagneticShockHealthDrainRate, null));
                 ret.Add((ElectromagneticShockHealthAfterRecovery, null));
                 ret.Add((ElectromagneticShockImmunityDurationAfterRecovery, null));
-                ret.Add((SkeletalModel != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystalMask(SkeletalModel, DefaultOn, m => m.OnOverall));
                 ret.Add((MovementTypeNames, null));
-                ret.Add((Voices != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystal(Voices, DefaultOn));
                 ret.Add((FacegenMainClamp, null));
                 ret.Add((FacegenFaceClamp, null));
                 ret.Add((Attacks == null ? DefaultOn : !Attacks.GetCrystal().CopyNothing, Attacks?.GetCrystal()));
-                ret.Add((BodyData != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystalMask(BodyData, DefaultOn, m => m.OnOverall));
                 ret.Add((AimAssistPose, null));
                 ret.Add((ImpactMaterialType, null));
                 ret.Add((WED0 != null ? WED0.OnOverall : DefaultOn, WED0?.GetCrystal()));
@@ -4206,14 +4280,15 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((BaseMovementDefault, null));
                 ret.Add((BaseMovementSwimDefault, null));
                 ret.Add((BaseMovementFlyDefault, null));
-                ret.Add((ChargenAndSkintones != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystalMask(ChargenAndSkintones, DefaultOn, m => m.OnOverall));
+                ret.Add((MorphRace, null));
                 ret.Add((ArmorRace, null));
                 ret.Add((SubgraphTemplateRace, null));
                 ret.Add((Subgraphs == null ? DefaultOn : !Subgraphs.GetCrystal().CopyNothing, Subgraphs?.GetCrystal()));
                 ret.Add((IdleChatterTimeMin, null));
                 ret.Add((IdleChatterTimeMax, null));
                 ret.Add((DialogueQuest, null));
-                ret.Add((HeadPartsAndBoneModifiers != null || DefaultOn, null));
+                ret.Add(GenderedItem.GetCrystalMask(HeadPartsAndBoneModifiers, DefaultOn, m => m.OnOverall));
                 ret.Add((MannequinSkinSwaps == null ? DefaultOn : !MannequinSkinSwaps.GetCrystal().CopyNothing, MannequinSkinSwaps?.GetCrystal()));
                 ret.Add((PluralName, null));
             }
@@ -4380,6 +4455,7 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: IHaveVirtualMachineAdapter, IScripted
         /// </summary>
         new VirtualMachineAdapter? VirtualMachineAdapter { get; set; }
+        new UInt64? XALG { get; set; }
         new ExtendedList<AComponent> Components { get; }
         /// <summary>
         /// Aspects: INamed, INamedRequired, ITranslatedNamed, ITranslatedNamedRequired
@@ -4460,6 +4536,7 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLinkNullable<IMovementTypeGetter> BaseMovementSwimDefault { get; set; }
         new IFormLinkNullable<IMovementTypeGetter> BaseMovementFlyDefault { get; set; }
         new IGenderedItem<ChargenAndSkintones?>? ChargenAndSkintones { get; set; }
+        new IFormLinkNullable<IRaceGetter> MorphRace { get; set; }
         new IFormLinkNullable<IRaceGetter> ArmorRace { get; set; }
         new IFormLinkNullable<IRaceGetter> SubgraphTemplateRace { get; set; }
         new ExtendedList<Subgraph> Subgraphs { get; }
@@ -4510,6 +4587,7 @@ namespace Mutagen.Bethesda.Starfield
         /// </summary>
         IVirtualMachineAdapterGetter? VirtualMachineAdapter { get; }
         #endregion
+        UInt64? XALG { get; }
         IReadOnlyList<IAComponentGetter> Components { get; }
         #region Name
         /// <summary>
@@ -4594,6 +4672,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<IMovementTypeGetter> BaseMovementSwimDefault { get; }
         IFormLinkNullableGetter<IMovementTypeGetter> BaseMovementFlyDefault { get; }
         IGenderedItemGetter<IChargenAndSkintonesGetter?>? ChargenAndSkintones { get; }
+        IFormLinkNullableGetter<IRaceGetter> MorphRace { get; }
         IFormLinkNullableGetter<IRaceGetter> ArmorRace { get; }
         IFormLinkNullableGetter<IRaceGetter> SubgraphTemplateRace { get; }
         IReadOnlyList<ISubgraphGetter> Subgraphs { get; }
@@ -4780,89 +4859,91 @@ namespace Mutagen.Bethesda.Starfield
         Version2 = 5,
         StarfieldMajorRecordFlags = 6,
         VirtualMachineAdapter = 7,
-        Components = 8,
-        Name = 9,
-        Description = 10,
-        ActorEffect = 11,
-        Skin = 12,
-        FirstPersonFlags = 13,
-        Keywords = 14,
-        Properties = 15,
-        BodyPartData = 16,
-        Height = 17,
-        DefaultWeight = 18,
-        Flags = 19,
-        AccelerationRate = 20,
-        DecelerationRate = 21,
-        Size = 22,
-        HeadBipedObject = 23,
-        HairBipedObject = 24,
-        InjuredHealthPercent = 25,
-        ShieldBipedObject = 26,
-        BeardBipedObject = 27,
-        BodyBipedObject = 28,
-        AimAngleTolerance = 29,
-        FlightRadius = 30,
-        AngularAccelerationRate = 31,
-        AngularTolerance = 32,
-        Unknown1 = 33,
-        Unknown2 = 34,
-        Unknown3 = 35,
-        PipboyBipedObject = 36,
-        XpValue = 37,
-        OnCrippleDebrisScale = 38,
-        OnCrippleDebrisCount = 39,
-        OnCrippleDecalCount = 40,
-        Explosion = 41,
-        Debris = 42,
-        ImpactDataSet = 43,
-        OrientationLimitsPitch = 44,
-        OrientationLimitsRoll = 45,
-        BleedoutHealthPercent = 46,
-        BleedoutChance = 47,
-        BleedoutRecoverChance = 48,
-        BleedoutTimeMin = 49,
-        BleedoutTimeMax = 50,
-        BleedoutHealthDrainRate = 51,
-        MaxSize = 52,
-        IntelligenceLevel = 53,
-        SupportsElectromagneticShock = 54,
-        ElectromagneticShockRecoverChance = 55,
-        ElectromagneticShockTimeMin = 56,
-        ElectromagneticShockTimeMax = 57,
-        ElectromagneticShockRecoverChanceOnDamageReceived = 58,
-        ElectromagneticShockHealthDrainRate = 59,
-        ElectromagneticShockHealthAfterRecovery = 60,
-        ElectromagneticShockImmunityDurationAfterRecovery = 61,
-        SkeletalModel = 62,
-        MovementTypeNames = 63,
-        Voices = 64,
-        FacegenMainClamp = 65,
-        FacegenFaceClamp = 66,
-        Attacks = 67,
-        BodyData = 68,
-        AimAssistPose = 69,
-        ImpactMaterialType = 70,
-        WED0 = 71,
-        WED1 = 72,
-        BipedObjects = 73,
-        MovementDataOverrides = 74,
-        EquipmentFlags = 75,
-        EquipmentSlots = 76,
-        UnarmedWeapon = 77,
-        BaseMovementDefault = 78,
-        BaseMovementSwimDefault = 79,
-        BaseMovementFlyDefault = 80,
-        ChargenAndSkintones = 81,
-        ArmorRace = 82,
-        SubgraphTemplateRace = 83,
-        Subgraphs = 84,
-        IdleChatterTimeMin = 85,
-        IdleChatterTimeMax = 86,
-        DialogueQuest = 87,
-        HeadPartsAndBoneModifiers = 88,
-        MannequinSkinSwaps = 89,
-        PluralName = 90,
+        XALG = 8,
+        Components = 9,
+        Name = 10,
+        Description = 11,
+        ActorEffect = 12,
+        Skin = 13,
+        FirstPersonFlags = 14,
+        Keywords = 15,
+        Properties = 16,
+        BodyPartData = 17,
+        Height = 18,
+        DefaultWeight = 19,
+        Flags = 20,
+        AccelerationRate = 21,
+        DecelerationRate = 22,
+        Size = 23,
+        HeadBipedObject = 24,
+        HairBipedObject = 25,
+        InjuredHealthPercent = 26,
+        ShieldBipedObject = 27,
+        BeardBipedObject = 28,
+        BodyBipedObject = 29,
+        AimAngleTolerance = 30,
+        FlightRadius = 31,
+        AngularAccelerationRate = 32,
+        AngularTolerance = 33,
+        Unknown1 = 34,
+        Unknown2 = 35,
+        Unknown3 = 36,
+        PipboyBipedObject = 37,
+        XpValue = 38,
+        OnCrippleDebrisScale = 39,
+        OnCrippleDebrisCount = 40,
+        OnCrippleDecalCount = 41,
+        Explosion = 42,
+        Debris = 43,
+        ImpactDataSet = 44,
+        OrientationLimitsPitch = 45,
+        OrientationLimitsRoll = 46,
+        BleedoutHealthPercent = 47,
+        BleedoutChance = 48,
+        BleedoutRecoverChance = 49,
+        BleedoutTimeMin = 50,
+        BleedoutTimeMax = 51,
+        BleedoutHealthDrainRate = 52,
+        MaxSize = 53,
+        IntelligenceLevel = 54,
+        SupportsElectromagneticShock = 55,
+        ElectromagneticShockRecoverChance = 56,
+        ElectromagneticShockTimeMin = 57,
+        ElectromagneticShockTimeMax = 58,
+        ElectromagneticShockRecoverChanceOnDamageReceived = 59,
+        ElectromagneticShockHealthDrainRate = 60,
+        ElectromagneticShockHealthAfterRecovery = 61,
+        ElectromagneticShockImmunityDurationAfterRecovery = 62,
+        SkeletalModel = 63,
+        MovementTypeNames = 64,
+        Voices = 65,
+        FacegenMainClamp = 66,
+        FacegenFaceClamp = 67,
+        Attacks = 68,
+        BodyData = 69,
+        AimAssistPose = 70,
+        ImpactMaterialType = 71,
+        WED0 = 72,
+        WED1 = 73,
+        BipedObjects = 74,
+        MovementDataOverrides = 75,
+        EquipmentFlags = 76,
+        EquipmentSlots = 77,
+        UnarmedWeapon = 78,
+        BaseMovementDefault = 79,
+        BaseMovementSwimDefault = 80,
+        BaseMovementFlyDefault = 81,
+        ChargenAndSkintones = 82,
+        MorphRace = 83,
+        ArmorRace = 84,
+        SubgraphTemplateRace = 85,
+        Subgraphs = 86,
+        IdleChatterTimeMin = 87,
+        IdleChatterTimeMax = 88,
+        DialogueQuest = 89,
+        HeadPartsAndBoneModifiers = 90,
+        MannequinSkinSwaps = 91,
+        PluralName = 92,
     }
     #endregion
 
@@ -4873,9 +4954,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 84;
+        public const ushort AdditionalFieldCount = 86;
 
-        public const ushort FieldCount = 91;
+        public const ushort FieldCount = 93;
 
         public static readonly Type MaskType = typeof(Race.Mask<>);
 
@@ -4914,6 +4995,7 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.DFTM,
                 RecordTypes.VMAD,
                 RecordTypes.XXXX,
+                RecordTypes.XALG,
                 RecordTypes.BFCB,
                 RecordTypes.BFCE,
                 RecordTypes.FULL,
@@ -4964,6 +5046,7 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.SWMV,
                 RecordTypes.FLMV,
                 RecordTypes.RPRF,
+                RecordTypes.NAM8,
                 RecordTypes.RNAM,
                 RecordTypes.SRAC,
                 RecordTypes.SADD,
@@ -5028,6 +5111,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.VirtualMachineAdapter = null;
+            item.XALG = default;
             item.Components.Clear();
             item.Name = default;
             item.Description.Clear();
@@ -5106,6 +5190,7 @@ namespace Mutagen.Bethesda.Starfield
             item.BaseMovementSwimDefault.Clear();
             item.BaseMovementFlyDefault.Clear();
             item.ChargenAndSkintones = null;
+            item.MorphRace.Clear();
             item.ArmorRace.Clear();
             item.SubgraphTemplateRace.Clear();
             item.Subgraphs.Clear();
@@ -5158,6 +5243,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.BaseMovementSwimDefault.Relink(mapping);
             obj.BaseMovementFlyDefault.Relink(mapping);
             obj.ChargenAndSkintones?.RemapLinks(mapping);
+            obj.MorphRace.Relink(mapping);
             obj.ArmorRace.Relink(mapping);
             obj.SubgraphTemplateRace.Relink(mapping);
             obj.Subgraphs.RemapLinks(mapping);
@@ -5273,6 +5359,7 @@ namespace Mutagen.Bethesda.Starfield
                 rhs.VirtualMachineAdapter,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
+            ret.XALG = item.XALG == rhs.XALG;
             ret.Components = item.Components.CollectionEqualsHelper(
                 rhs.Components,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -5403,6 +5490,7 @@ namespace Mutagen.Bethesda.Starfield
                 rhs: rhs.ChargenAndSkintones,
                 maskGetter: (l, r, i) => EqualsMaskHelper.EqualsHelper(l, r, (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl), i),
                 include: include);
+            ret.MorphRace = item.MorphRace.Equals(rhs.MorphRace);
             ret.ArmorRace = item.ArmorRace.Equals(rhs.ArmorRace);
             ret.SubgraphTemplateRace = item.SubgraphTemplateRace.Equals(rhs.SubgraphTemplateRace);
             ret.Subgraphs = item.Subgraphs.CollectionEqualsHelper(
@@ -5475,6 +5563,11 @@ namespace Mutagen.Bethesda.Starfield
                 && item.VirtualMachineAdapter is {} VirtualMachineAdapterItem)
             {
                 VirtualMachineAdapterItem?.Print(sb, "VirtualMachineAdapter");
+            }
+            if ((printMask?.XALG ?? true)
+                && item.XALG is {} XALGItem)
+            {
+                sb.AppendItem(XALGItem, "XALG");
             }
             if (printMask?.Components?.Overall ?? true)
             {
@@ -5873,6 +5966,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 ChargenAndSkintonesItem?.Print(sb, "ChargenAndSkintones");
             }
+            if (printMask?.MorphRace ?? true)
+            {
+                sb.AppendItem(item.MorphRace.FormKeyNullable, "MorphRace");
+            }
             if (printMask?.ArmorRace ?? true)
             {
                 sb.AppendItem(item.ArmorRace.FormKeyNullable, "ArmorRace");
@@ -5990,6 +6087,10 @@ namespace Mutagen.Bethesda.Starfield
                     if (!((VirtualMachineAdapterCommon)((IVirtualMachineAdapterGetter)lhsVirtualMachineAdapter).CommonInstance()!).Equals(lhsVirtualMachineAdapter, rhsVirtualMachineAdapter, equalsMask?.GetSubCrystal((int)Race_FieldIndex.VirtualMachineAdapter))) return false;
                 }
                 else if (!isVirtualMachineAdapterEqual) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.XALG) ?? true))
+            {
+                if (lhs.XALG != rhs.XALG) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.Components) ?? true))
             {
@@ -6261,7 +6362,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.BipedObjects) ?? true))
             {
-                if (!lhs.BipedObjects.SequenceEqualNullable(rhs.BipedObjects)) return false;
+                if (!lhs.BipedObjects.DictEqualsNullable(rhs.BipedObjects)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.MovementDataOverrides) ?? true))
             {
@@ -6294,6 +6395,10 @@ namespace Mutagen.Bethesda.Starfield
             if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.ChargenAndSkintones) ?? true))
             {
                 if (!Equals(lhs.ChargenAndSkintones, rhs.ChargenAndSkintones)) return false;
+            }
+            if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.MorphRace) ?? true))
+            {
+                if (!lhs.MorphRace.Equals(rhs.MorphRace)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Race_FieldIndex.ArmorRace) ?? true))
             {
@@ -6363,20 +6468,42 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(VirtualMachineAdapteritem);
             }
-            hash.Add(item.Components);
+            if (item.XALG is {} XALGitem)
+            {
+                hash.Add(XALGitem);
+            }
+            foreach (var subItem in item.Components)
+            {
+                hash.Add(subItem);
+            }
             if (item.Name is {} Nameitem)
             {
                 hash.Add(Nameitem);
             }
             hash.Add(item.Description);
-            hash.Add(item.ActorEffect);
+            foreach (var subItem in item.ActorEffect)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.Skin);
             if (item.FirstPersonFlags is {} FirstPersonFlagsitem)
             {
                 hash.Add(FirstPersonFlagsitem);
             }
-            hash.Add(item.Keywords);
-            hash.Add(item.Properties);
+            if (item.Keywords is {} Keywordsitem)
+            {
+                foreach (var subItem in Keywordsitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
+            if (item.Properties is {} Propertiesitem)
+            {
+                foreach (var subItem in Propertiesitem)
+                {
+                    hash.Add(subItem);
+                }
+            }
             hash.Add(item.BodyPartData);
             hash.Add(HashCode.Combine(item.Height.Male, item.Height.Female));
             hash.Add(HashCode.Combine(item.DefaultWeight.Male, item.DefaultWeight.Female));
@@ -6394,9 +6521,9 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.FlightRadius);
             hash.Add(item.AngularAccelerationRate);
             hash.Add(item.AngularTolerance);
-            hash.Add(item.Unknown1);
+            hash.AddBytes(item.Unknown1);
             hash.Add(item.Unknown2);
-            hash.Add(item.Unknown3);
+            hash.AddBytes(item.Unknown3);
             hash.Add(item.PipboyBipedObject);
             hash.Add(item.XpValue);
             hash.Add(item.OnCrippleDebrisScale);
@@ -6427,11 +6554,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(HashCode.Combine(SkeletalModelitem.Male, SkeletalModelitem.Female));
             }
-            hash.Add(item.MovementTypeNames);
+            foreach (var subItem in item.MovementTypeNames)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(HashCode.Combine(item.Voices.Male, item.Voices.Female));
             hash.Add(item.FacegenMainClamp);
             hash.Add(item.FacegenFaceClamp);
-            hash.Add(item.Attacks);
+            foreach (var subItem in item.Attacks)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(HashCode.Combine(item.BodyData.Male, item.BodyData.Female));
             hash.Add(item.AimAssistPose);
             hash.Add(item.ImpactMaterialType);
@@ -6443,13 +6576,27 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(WED1item);
             }
-            hash.Add(item.BipedObjects);
-            hash.Add(item.MovementDataOverrides);
+            if (item.BipedObjects is {} BipedObjectsitem)
+            {
+                var BipedObjectsHash = 0;
+                foreach (var subItem in BipedObjectsitem)
+                {
+                    BipedObjectsHash += HashCode.Combine(subItem.Key, subItem.Value);
+                }
+                hash.Add(BipedObjectsHash);
+            }
+            foreach (var subItem in item.MovementDataOverrides)
+            {
+                hash.Add(subItem);
+            }
             if (item.EquipmentFlags is {} EquipmentFlagsitem)
             {
                 hash.Add(EquipmentFlagsitem);
             }
-            hash.Add(item.EquipmentSlots);
+            foreach (var subItem in item.EquipmentSlots)
+            {
+                hash.Add(subItem);
+            }
             hash.Add(item.UnarmedWeapon);
             hash.Add(item.BaseMovementDefault);
             hash.Add(item.BaseMovementSwimDefault);
@@ -6458,9 +6605,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(HashCode.Combine(ChargenAndSkintonesitem.Male, ChargenAndSkintonesitem.Female));
             }
+            hash.Add(item.MorphRace);
             hash.Add(item.ArmorRace);
             hash.Add(item.SubgraphTemplateRace);
-            hash.Add(item.Subgraphs);
+            foreach (var subItem in item.Subgraphs)
+            {
+                hash.Add(subItem);
+            }
             if (item.IdleChatterTimeMin is {} IdleChatterTimeMinitem)
             {
                 hash.Add(IdleChatterTimeMinitem);
@@ -6474,7 +6625,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(HashCode.Combine(HeadPartsAndBoneModifiersitem.Male, HeadPartsAndBoneModifiersitem.Female));
             }
-            hash.Add(item.MannequinSkinSwaps);
+            foreach (var subItem in item.MannequinSkinSwaps)
+            {
+                hash.Add(subItem);
+            }
             if (item.PluralName is {} PluralNameitem)
             {
                 hash.Add(PluralNameitem);
@@ -6624,6 +6778,10 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     yield return FormLinkInformation.Factory(item);
                 }
+            }
+            if (FormLinkInformation.TryFactory(obj.MorphRace, out var MorphRaceInfo))
+            {
+                yield return MorphRaceInfo;
             }
             if (FormLinkInformation.TryFactory(obj.ArmorRace, out var ArmorRaceInfo))
             {
@@ -6799,6 +6957,10 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.XALG) ?? true))
+            {
+                item.XALG = rhs.XALG;
+            }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.Components) ?? true))
             {
                 errorMask?.PushIndex((int)Race_FieldIndex.Components);
@@ -6921,16 +7083,32 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.BodyPartData.SetTo(rhs.BodyPartData.FormKeyNullable);
             }
-            item.Height = new GenderedItem<Single>(
-                male: rhs.Height.Male,
-                female: rhs.Height.Female);
-            item.DefaultWeight = new GenderedItem<Weight>(
-                male: rhs.DefaultWeight.Male.DeepCopy(
-                    errorMask: errorMask,
-                    default(TranslationCrystal)),
-                female: rhs.DefaultWeight.Female.DeepCopy(
-                    errorMask: errorMask,
-                    default(TranslationCrystal)));
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.Height) ?? true))
+            {
+                var HeightCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.Height);
+                item.Height = new GenderedItem<Single>(
+                    male: (HeightCrystal?.GetShouldTranslate(0) ?? true)
+                        ? rhs.Height.Male
+                        : item.Height.Male,
+                    female: (HeightCrystal?.GetShouldTranslate(1) ?? true)
+                        ? rhs.Height.Female
+                        : item.Height.Female);
+            }
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.DefaultWeight) ?? true))
+            {
+                var DefaultWeightCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.DefaultWeight);
+                item.DefaultWeight = new GenderedItem<Weight>(
+                    male: (DefaultWeightCrystal?.GetShouldTranslate(0) ?? true)
+                        ? rhs.DefaultWeight.Male.DeepCopy(
+                            errorMask: errorMask,
+                            DefaultWeightCrystal?.GetSubCrystal(0))
+                        : item.DefaultWeight.Male,
+                    female: (DefaultWeightCrystal?.GetShouldTranslate(1) ?? true)
+                        ? rhs.DefaultWeight.Female.DeepCopy(
+                            errorMask: errorMask,
+                            DefaultWeightCrystal?.GetSubCrystal(1))
+                        : item.DefaultWeight.Female);
+            }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.Flags) ?? true))
             {
                 item.Flags = rhs.Flags;
@@ -7103,19 +7281,27 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ElectromagneticShockImmunityDurationAfterRecovery = rhs.ElectromagneticShockImmunityDurationAfterRecovery;
             }
-            if (rhs.SkeletalModel is not {} rhsSkeletalModelitem)
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.SkeletalModel) ?? true))
             {
-                item.SkeletalModel = null;
-            }
-            else
-            {
-                item.SkeletalModel = new GenderedItem<SkeletalModel?>(
-                    male: rhsSkeletalModelitem.Male?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)),
-                    female: rhsSkeletalModelitem.Female?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)));
+                var SkeletalModelCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.SkeletalModel);
+                if (rhs.SkeletalModel is not {} rhsSkeletalModelitem)
+                {
+                    item.SkeletalModel = null;
+                }
+                else
+                {
+                    item.SkeletalModel = new GenderedItem<SkeletalModel?>(
+                        male: (SkeletalModelCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsSkeletalModelitem.Male?.DeepCopy(
+                                errorMask: errorMask,
+                                SkeletalModelCrystal?.GetSubCrystal(0))
+                            : item.SkeletalModel?.Male,
+                        female: (SkeletalModelCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsSkeletalModelitem.Female?.DeepCopy(
+                                errorMask: errorMask,
+                                SkeletalModelCrystal?.GetSubCrystal(1))
+                            : item.SkeletalModel?.Female);
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.MovementTypeNames) ?? true))
             {
@@ -7134,9 +7320,17 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            item.Voices = new GenderedItem<IFormLinkGetter<IVoiceTypeGetter>>(
-                male: new FormLink<IVoiceTypeGetter>(rhs.Voices.Male.FormKey),
-                female: new FormLink<IVoiceTypeGetter>(rhs.Voices.Female.FormKey));
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.Voices) ?? true))
+            {
+                var VoicesCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.Voices);
+                item.Voices = new GenderedItem<IFormLinkGetter<IVoiceTypeGetter>>(
+                    male: (VoicesCrystal?.GetShouldTranslate(0) ?? true)
+                        ? new FormLink<IVoiceTypeGetter>(rhs.Voices.Male.FormKey)
+                        : item.Voices.Male,
+                    female: (VoicesCrystal?.GetShouldTranslate(1) ?? true)
+                        ? new FormLink<IVoiceTypeGetter>(rhs.Voices.Female.FormKey)
+                        : item.Voices.Female);
+            }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.FacegenMainClamp) ?? true))
             {
                 item.FacegenMainClamp = rhs.FacegenMainClamp;
@@ -7169,13 +7363,21 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            item.BodyData = new GenderedItem<BodyData?>(
-                male: rhs.BodyData.Male?.DeepCopy(
-                    errorMask: errorMask,
-                    default(TranslationCrystal)),
-                female: rhs.BodyData.Female?.DeepCopy(
-                    errorMask: errorMask,
-                    default(TranslationCrystal)));
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.BodyData) ?? true))
+            {
+                var BodyDataCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.BodyData);
+                item.BodyData = new GenderedItem<BodyData?>(
+                    male: (BodyDataCrystal?.GetShouldTranslate(0) ?? true)
+                        ? rhs.BodyData.Male?.DeepCopy(
+                            errorMask: errorMask,
+                            BodyDataCrystal?.GetSubCrystal(0))
+                        : item.BodyData.Male,
+                    female: (BodyDataCrystal?.GetShouldTranslate(1) ?? true)
+                        ? rhs.BodyData.Female?.DeepCopy(
+                            errorMask: errorMask,
+                            BodyDataCrystal?.GetSubCrystal(1))
+                        : item.BodyData.Female);
+            }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.AimAssistPose) ?? true))
             {
                 item.AimAssistPose.SetTo(rhs.AimAssistPose.FormKeyNullable);
@@ -7316,19 +7518,31 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.BaseMovementFlyDefault.SetTo(rhs.BaseMovementFlyDefault.FormKeyNullable);
             }
-            if (rhs.ChargenAndSkintones is not {} rhsChargenAndSkintonesitem)
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.ChargenAndSkintones) ?? true))
             {
-                item.ChargenAndSkintones = null;
+                var ChargenAndSkintonesCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.ChargenAndSkintones);
+                if (rhs.ChargenAndSkintones is not {} rhsChargenAndSkintonesitem)
+                {
+                    item.ChargenAndSkintones = null;
+                }
+                else
+                {
+                    item.ChargenAndSkintones = new GenderedItem<ChargenAndSkintones?>(
+                        male: (ChargenAndSkintonesCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsChargenAndSkintonesitem.Male?.DeepCopy(
+                                errorMask: errorMask,
+                                ChargenAndSkintonesCrystal?.GetSubCrystal(0))
+                            : item.ChargenAndSkintones?.Male,
+                        female: (ChargenAndSkintonesCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsChargenAndSkintonesitem.Female?.DeepCopy(
+                                errorMask: errorMask,
+                                ChargenAndSkintonesCrystal?.GetSubCrystal(1))
+                            : item.ChargenAndSkintones?.Female);
+                }
             }
-            else
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.MorphRace) ?? true))
             {
-                item.ChargenAndSkintones = new GenderedItem<ChargenAndSkintones?>(
-                    male: rhsChargenAndSkintonesitem.Male?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)),
-                    female: rhsChargenAndSkintonesitem.Female?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)));
+                item.MorphRace.SetTo(rhs.MorphRace.FormKeyNullable);
             }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.ArmorRace) ?? true))
             {
@@ -7374,19 +7588,27 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.DialogueQuest.SetTo(rhs.DialogueQuest.FormKeyNullable);
             }
-            if (rhs.HeadPartsAndBoneModifiers is not {} rhsHeadPartsAndBoneModifiersitem)
+            if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.HeadPartsAndBoneModifiers) ?? true))
             {
-                item.HeadPartsAndBoneModifiers = null;
-            }
-            else
-            {
-                item.HeadPartsAndBoneModifiers = new GenderedItem<HeadPartsAndBoneModifiers?>(
-                    male: rhsHeadPartsAndBoneModifiersitem.Male?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)),
-                    female: rhsHeadPartsAndBoneModifiersitem.Female?.DeepCopy(
-                        errorMask: errorMask,
-                        default(TranslationCrystal)));
+                var HeadPartsAndBoneModifiersCrystal = copyMask?.GetSubCrystal((int)Race_FieldIndex.HeadPartsAndBoneModifiers);
+                if (rhs.HeadPartsAndBoneModifiers is not {} rhsHeadPartsAndBoneModifiersitem)
+                {
+                    item.HeadPartsAndBoneModifiers = null;
+                }
+                else
+                {
+                    item.HeadPartsAndBoneModifiers = new GenderedItem<HeadPartsAndBoneModifiers?>(
+                        male: (HeadPartsAndBoneModifiersCrystal?.GetShouldTranslate(0) ?? true)
+                            ? rhsHeadPartsAndBoneModifiersitem.Male?.DeepCopy(
+                                errorMask: errorMask,
+                                HeadPartsAndBoneModifiersCrystal?.GetSubCrystal(0))
+                            : item.HeadPartsAndBoneModifiers?.Male,
+                        female: (HeadPartsAndBoneModifiersCrystal?.GetShouldTranslate(1) ?? true)
+                            ? rhsHeadPartsAndBoneModifiersitem.Female?.DeepCopy(
+                                errorMask: errorMask,
+                                HeadPartsAndBoneModifiersCrystal?.GetSubCrystal(1))
+                            : item.HeadPartsAndBoneModifiers?.Female);
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)Race_FieldIndex.MannequinSkinSwaps) ?? true))
             {
@@ -7592,6 +7814,10 @@ namespace Mutagen.Bethesda.Starfield
                     writer: writer,
                     translationParams: translationParams.With(RecordTypes.XXXX));
             }
+            UInt64BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
+                writer: writer,
+                item: item.XALG,
+                header: translationParams.ConvertToCustom(RecordTypes.XALG));
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IAComponentGetter>.Instance.Write(
                 writer: writer,
                 items: item.Components,
@@ -7972,6 +8198,10 @@ namespace Mutagen.Bethesda.Starfield
                 });
             FormLinkBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
+                item: item.MorphRace,
+                header: translationParams.ConvertToCustom(RecordTypes.NAM8));
+            FormLinkBinaryTranslation.Instance.WriteNullable(
+                writer: writer,
                 item: item.ArmorRace,
                 header: translationParams.ConvertToCustom(RecordTypes.RNAM));
             FormLinkBinaryTranslation.Instance.WriteNullable(
@@ -8173,6 +8403,12 @@ namespace Mutagen.Bethesda.Starfield
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
                     return (int)Race_FieldIndex.VirtualMachineAdapter;
+                }
+                case RecordTypeInts.XALG:
+                {
+                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
+                    item.XALG = frame.ReadUInt64();
+                    return (int)Race_FieldIndex.XALG;
                 }
                 case RecordTypeInts.BFCB:
                 {
@@ -8645,6 +8881,12 @@ namespace Mutagen.Bethesda.Starfield
                     item.BaseMovementFlyDefault.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     return (int)Race_FieldIndex.BaseMovementFlyDefault;
                 }
+                case RecordTypeInts.NAM8:
+                {
+                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
+                    item.MorphRace.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    return (int)Race_FieldIndex.MorphRace;
+                }
                 case RecordTypeInts.RNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
@@ -8804,6 +9046,10 @@ namespace Mutagen.Bethesda.Starfield
         public IVirtualMachineAdapterGetter? VirtualMachineAdapter => _VirtualMachineAdapterLocation.HasValue ? VirtualMachineAdapterBinaryOverlay.VirtualMachineAdapterFactory(_recordData.Slice(_VirtualMachineAdapterLocation!.Value.Min), _package, TypedParseParams.FromLengthOverride(_VirtualMachineAdapterLengthOverride)) : default;
         IAVirtualMachineAdapterGetter? IHaveVirtualMachineAdapterGetter.VirtualMachineAdapter => this.VirtualMachineAdapter;
         #endregion
+        #region XALG
+        private int? _XALGLocation;
+        public UInt64? XALG => _XALGLocation.HasValue ? BinaryPrimitives.ReadUInt64LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _XALGLocation.Value, _package.MetaData.Constants)) : default(UInt64?);
+        #endregion
         public IReadOnlyList<IAComponentGetter> Components { get; private set; } = [];
         #region Name
         private int? _NameLocation;
@@ -8842,7 +9088,7 @@ namespace Mutagen.Bethesda.Starfield
         private RangeInt32? _DAT2Location;
         #region Height
         private int _HeightLocation => _DAT2Location!.Value.Min;
-        private bool _Height_IsSet => _DAT2Location.HasValue;
+        private bool _Height_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _HeightLocation + 1 >= 8;
         public IGenderedItemGetter<Single> Height
         {
             get
@@ -8857,7 +9103,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region DefaultWeight
         private int _DefaultWeightLocation => _DAT2Location!.Value.Min + 0x8;
-        private bool _DefaultWeight_IsSet => _DAT2Location.HasValue;
+        private bool _DefaultWeight_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _DefaultWeightLocation + 1 >= 24;
         public IGenderedItemGetter<IWeightGetter> DefaultWeight
         {
             get
@@ -8872,217 +9118,217 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region Flags
         private int _FlagsLocation => _DAT2Location!.Value.Min + 0x20;
-        private bool _Flags_IsSet => _DAT2Location.HasValue;
-        public Race.Flag Flags => _Flags_IsSet ? (Race.Flag)BinaryPrimitives.ReadInt64LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x8)) : default;
+        private bool _Flags_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _FlagsLocation + 1 >= 8;
+        public Race.Flag Flags => _Flags_IsSet ? (Race.Flag)BinaryPrimitives.ReadInt64LittleEndian(_recordData.Span.Slice(_FlagsLocation, 0x8)) : default(Race.Flag);
         #endregion
         #region AccelerationRate
         private int _AccelerationRateLocation => _DAT2Location!.Value.Min + 0x28;
-        private bool _AccelerationRate_IsSet => _DAT2Location.HasValue;
+        private bool _AccelerationRate_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _AccelerationRateLocation + 1 >= 4;
         public Single AccelerationRate => _AccelerationRate_IsSet ? _recordData.Slice(_AccelerationRateLocation, 4).Float() : default(Single);
         #endregion
         #region DecelerationRate
         private int _DecelerationRateLocation => _DAT2Location!.Value.Min + 0x2C;
-        private bool _DecelerationRate_IsSet => _DAT2Location.HasValue;
+        private bool _DecelerationRate_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _DecelerationRateLocation + 1 >= 4;
         public Single DecelerationRate => _DecelerationRate_IsSet ? _recordData.Slice(_DecelerationRateLocation, 4).Float() : default(Single);
         #endregion
         #region Size
         private int _SizeLocation => _DAT2Location!.Value.Min + 0x30;
-        private bool _Size_IsSet => _DAT2Location.HasValue;
-        public Size Size => _Size_IsSet ? (Size)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SizeLocation, 0x4)) : default;
+        private bool _Size_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _SizeLocation + 1 >= 4;
+        public Size Size => _Size_IsSet ? (Size)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_SizeLocation, 0x4)) : default(Size);
         #endregion
         #region HeadBipedObject
         private int _HeadBipedObjectLocation => _DAT2Location!.Value.Min + 0x34;
-        private bool _HeadBipedObject_IsSet => _DAT2Location.HasValue;
-        public BipedObject HeadBipedObject => _HeadBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_HeadBipedObjectLocation, 0x4)) : default;
+        private bool _HeadBipedObject_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _HeadBipedObjectLocation + 1 >= 4;
+        public BipedObject HeadBipedObject => _HeadBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_HeadBipedObjectLocation, 0x4)) : Race.HeadBipedObjectDefault;
         #endregion
         #region HairBipedObject
         private int _HairBipedObjectLocation => _DAT2Location!.Value.Min + 0x38;
-        private bool _HairBipedObject_IsSet => _DAT2Location.HasValue;
-        public BipedObject HairBipedObject => _HairBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_HairBipedObjectLocation, 0x4)) : default;
+        private bool _HairBipedObject_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _HairBipedObjectLocation + 1 >= 4;
+        public BipedObject HairBipedObject => _HairBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_HairBipedObjectLocation, 0x4)) : Race.HairBipedObjectDefault;
         #endregion
         #region InjuredHealthPercent
         private int _InjuredHealthPercentLocation => _DAT2Location!.Value.Min + 0x3C;
-        private bool _InjuredHealthPercent_IsSet => _DAT2Location.HasValue;
+        private bool _InjuredHealthPercent_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _InjuredHealthPercentLocation + 1 >= 4;
         public Single InjuredHealthPercent => _InjuredHealthPercent_IsSet ? _recordData.Slice(_InjuredHealthPercentLocation, 4).Float() : default(Single);
         #endregion
         #region ShieldBipedObject
         private int _ShieldBipedObjectLocation => _DAT2Location!.Value.Min + 0x40;
-        private bool _ShieldBipedObject_IsSet => _DAT2Location.HasValue;
-        public BipedObject ShieldBipedObject => _ShieldBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_ShieldBipedObjectLocation, 0x4)) : default;
+        private bool _ShieldBipedObject_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _ShieldBipedObjectLocation + 1 >= 4;
+        public BipedObject ShieldBipedObject => _ShieldBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_ShieldBipedObjectLocation, 0x4)) : Race.ShieldBipedObjectDefault;
         #endregion
         #region BeardBipedObject
         private int _BeardBipedObjectLocation => _DAT2Location!.Value.Min + 0x44;
-        private bool _BeardBipedObject_IsSet => _DAT2Location.HasValue;
-        public BipedObject BeardBipedObject => _BeardBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_BeardBipedObjectLocation, 0x4)) : default;
+        private bool _BeardBipedObject_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _BeardBipedObjectLocation + 1 >= 4;
+        public BipedObject BeardBipedObject => _BeardBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_BeardBipedObjectLocation, 0x4)) : Race.BeardBipedObjectDefault;
         #endregion
         #region BodyBipedObject
         private int _BodyBipedObjectLocation => _DAT2Location!.Value.Min + 0x48;
-        private bool _BodyBipedObject_IsSet => _DAT2Location.HasValue;
-        public BipedObject BodyBipedObject => _BodyBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_BodyBipedObjectLocation, 0x4)) : default;
+        private bool _BodyBipedObject_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _BodyBipedObjectLocation + 1 >= 4;
+        public BipedObject BodyBipedObject => _BodyBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_BodyBipedObjectLocation, 0x4)) : Race.BodyBipedObjectDefault;
         #endregion
         #region AimAngleTolerance
         private int _AimAngleToleranceLocation => _DAT2Location!.Value.Min + 0x4C;
-        private bool _AimAngleTolerance_IsSet => _DAT2Location.HasValue;
+        private bool _AimAngleTolerance_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _AimAngleToleranceLocation + 1 >= 4;
         public Single AimAngleTolerance => _AimAngleTolerance_IsSet ? _recordData.Slice(_AimAngleToleranceLocation, 4).Float() : default(Single);
         #endregion
         #region FlightRadius
         private int _FlightRadiusLocation => _DAT2Location!.Value.Min + 0x50;
-        private bool _FlightRadius_IsSet => _DAT2Location.HasValue;
+        private bool _FlightRadius_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _FlightRadiusLocation + 1 >= 4;
         public Single FlightRadius => _FlightRadius_IsSet ? _recordData.Slice(_FlightRadiusLocation, 4).Float() : default(Single);
         #endregion
         #region AngularAccelerationRate
         private int _AngularAccelerationRateLocation => _DAT2Location!.Value.Min + 0x54;
-        private bool _AngularAccelerationRate_IsSet => _DAT2Location.HasValue;
+        private bool _AngularAccelerationRate_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _AngularAccelerationRateLocation + 1 >= 4;
         public Single AngularAccelerationRate => _AngularAccelerationRate_IsSet ? _recordData.Slice(_AngularAccelerationRateLocation, 4).Float() : default(Single);
         #endregion
         #region AngularTolerance
         private int _AngularToleranceLocation => _DAT2Location!.Value.Min + 0x58;
-        private bool _AngularTolerance_IsSet => _DAT2Location.HasValue;
+        private bool _AngularTolerance_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _AngularToleranceLocation + 1 >= 4;
         public Single AngularTolerance => _AngularTolerance_IsSet ? _recordData.Slice(_AngularToleranceLocation, 4).Float() : default(Single);
         #endregion
         #region Unknown1
         private int _Unknown1Location => _DAT2Location!.Value.Min + 0x5C;
         private bool _Unknown1_IsSet => _DAT2Location.HasValue;
-        public ReadOnlyMemorySlice<Byte> Unknown1 => _Unknown1_IsSet ? _recordData.Span.Slice(_Unknown1Location, 28).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
+        public ReadOnlyMemorySlice<Byte> Unknown1 => _Unknown1_IsSet ? _recordData.Span.Slice(_Unknown1Location, 28).ToArray() : new byte[28];
         #endregion
         #region Unknown2
         private int _Unknown2Location => _DAT2Location!.Value.Min + 0x78;
-        private bool _Unknown2_IsSet => _DAT2Location.HasValue;
+        private bool _Unknown2_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _Unknown2Location + 1 >= 4;
         public Single Unknown2 => _Unknown2_IsSet ? _recordData.Slice(_Unknown2Location, 4).Float() : default(Single);
         #endregion
         #region Unknown3
         private int _Unknown3Location => _DAT2Location!.Value.Min + 0x7C;
         private bool _Unknown3_IsSet => _DAT2Location.HasValue;
-        public ReadOnlyMemorySlice<Byte> Unknown3 => _Unknown3_IsSet ? _recordData.Span.Slice(_Unknown3Location, 4).ToArray() : ReadOnlyMemorySlice<byte>.Empty;
+        public ReadOnlyMemorySlice<Byte> Unknown3 => _Unknown3_IsSet ? _recordData.Span.Slice(_Unknown3Location, 4).ToArray() : UtilityTranslation.Zeros.Slice(0, 4);
         #endregion
         #region PipboyBipedObject
         private int _PipboyBipedObjectLocation => _DAT2Location!.Value.Min + 0x80;
-        private bool _PipboyBipedObject_IsSet => _DAT2Location.HasValue;
-        public BipedObject PipboyBipedObject => _PipboyBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_PipboyBipedObjectLocation, 0x4)) : default;
+        private bool _PipboyBipedObject_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _PipboyBipedObjectLocation + 1 >= 4;
+        public BipedObject PipboyBipedObject => _PipboyBipedObject_IsSet ? (BipedObject)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_PipboyBipedObjectLocation, 0x4)) : Race.PipboyBipedObjectDefault;
         #endregion
         #region XpValue
         private int _XpValueLocation => _DAT2Location!.Value.Min + 0x84;
-        private bool _XpValue_IsSet => _DAT2Location.HasValue;
+        private bool _XpValue_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _XpValueLocation + 1 >= 2;
         public Int16 XpValue => _XpValue_IsSet ? BinaryPrimitives.ReadInt16LittleEndian(_recordData.Slice(_XpValueLocation, 2)) : default(Int16);
         #endregion
         #region OnCrippleDebrisScale
         private int _OnCrippleDebrisScaleLocation => _DAT2Location!.Value.Min + 0x86;
-        private bool _OnCrippleDebrisScale_IsSet => _DAT2Location.HasValue;
+        private bool _OnCrippleDebrisScale_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _OnCrippleDebrisScaleLocation + 1 >= 4;
         public Single OnCrippleDebrisScale => _OnCrippleDebrisScale_IsSet ? _recordData.Slice(_OnCrippleDebrisScaleLocation, 4).Float() : default(Single);
         #endregion
         #region OnCrippleDebrisCount
         private int _OnCrippleDebrisCountLocation => _DAT2Location!.Value.Min + 0x8A;
-        private bool _OnCrippleDebrisCount_IsSet => _DAT2Location.HasValue;
-        public Byte OnCrippleDebrisCount => _OnCrippleDebrisCount_IsSet ? _recordData.Span[_OnCrippleDebrisCountLocation] : default;
+        private bool _OnCrippleDebrisCount_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _OnCrippleDebrisCountLocation + 1 >= 1;
+        public Byte OnCrippleDebrisCount => _OnCrippleDebrisCount_IsSet ? _recordData.Span[_OnCrippleDebrisCountLocation] : default(Byte);
         #endregion
         #region OnCrippleDecalCount
         private int _OnCrippleDecalCountLocation => _DAT2Location!.Value.Min + 0x8B;
-        private bool _OnCrippleDecalCount_IsSet => _DAT2Location.HasValue;
-        public Byte OnCrippleDecalCount => _OnCrippleDecalCount_IsSet ? _recordData.Span[_OnCrippleDecalCountLocation] : default;
+        private bool _OnCrippleDecalCount_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _OnCrippleDecalCountLocation + 1 >= 1;
+        public Byte OnCrippleDecalCount => _OnCrippleDecalCount_IsSet ? _recordData.Span[_OnCrippleDecalCountLocation] : default(Byte);
         #endregion
         #region Explosion
         private int _ExplosionLocation => _DAT2Location!.Value.Min + 0x8C;
-        private bool _Explosion_IsSet => _DAT2Location.HasValue;
+        private bool _Explosion_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _ExplosionLocation + 1 >= 4;
         public IFormLinkGetter<IExplosionGetter> Explosion => _Explosion_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IExplosionGetter>(_package, _recordData.Span.Slice(_ExplosionLocation, 0x4), isSet: _Explosion_IsSet) : FormLink<IExplosionGetter>.Null;
         #endregion
         #region Debris
         private int _DebrisLocation => _DAT2Location!.Value.Min + 0x90;
-        private bool _Debris_IsSet => _DAT2Location.HasValue;
+        private bool _Debris_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _DebrisLocation + 1 >= 4;
         public IFormLinkGetter<IDebrisGetter> Debris => _Debris_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IDebrisGetter>(_package, _recordData.Span.Slice(_DebrisLocation, 0x4), isSet: _Debris_IsSet) : FormLink<IDebrisGetter>.Null;
         #endregion
         #region ImpactDataSet
         private int _ImpactDataSetLocation => _DAT2Location!.Value.Min + 0x94;
-        private bool _ImpactDataSet_IsSet => _DAT2Location.HasValue;
+        private bool _ImpactDataSet_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _ImpactDataSetLocation + 1 >= 4;
         public IFormLinkGetter<IImpactDataSetGetter> ImpactDataSet => _ImpactDataSet_IsSet ? FormLinkBinaryTranslation.Instance.OverlayFactory<IImpactDataSetGetter>(_package, _recordData.Span.Slice(_ImpactDataSetLocation, 0x4), isSet: _ImpactDataSet_IsSet) : FormLink<IImpactDataSetGetter>.Null;
         #endregion
         #region OrientationLimitsPitch
         private int _OrientationLimitsPitchLocation => _DAT2Location!.Value.Min + 0x98;
-        private bool _OrientationLimitsPitch_IsSet => _DAT2Location.HasValue;
+        private bool _OrientationLimitsPitch_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _OrientationLimitsPitchLocation + 1 >= 4;
         public Single OrientationLimitsPitch => _OrientationLimitsPitch_IsSet ? _recordData.Slice(_OrientationLimitsPitchLocation, 4).Float() : default(Single);
         #endregion
         #region OrientationLimitsRoll
         private int _OrientationLimitsRollLocation => _DAT2Location!.Value.Min + 0x9C;
-        private bool _OrientationLimitsRoll_IsSet => _DAT2Location.HasValue;
+        private bool _OrientationLimitsRoll_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _OrientationLimitsRollLocation + 1 >= 4;
         public Single OrientationLimitsRoll => _OrientationLimitsRoll_IsSet ? _recordData.Slice(_OrientationLimitsRollLocation, 4).Float() : default(Single);
         #endregion
         #region BleedoutHealthPercent
         private int _BleedoutHealthPercentLocation => _DAT2Location!.Value.Min + 0xA0;
-        private bool _BleedoutHealthPercent_IsSet => _DAT2Location.HasValue;
+        private bool _BleedoutHealthPercent_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _BleedoutHealthPercentLocation + 1 >= 4;
         public Single BleedoutHealthPercent => _BleedoutHealthPercent_IsSet ? _recordData.Slice(_BleedoutHealthPercentLocation, 4).Float() : default(Single);
         #endregion
         #region BleedoutChance
         private int _BleedoutChanceLocation => _DAT2Location!.Value.Min + 0xA4;
-        private bool _BleedoutChance_IsSet => _DAT2Location.HasValue;
+        private bool _BleedoutChance_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _BleedoutChanceLocation + 1 >= 4;
         public Single BleedoutChance => _BleedoutChance_IsSet ? _recordData.Slice(_BleedoutChanceLocation, 4).Float() : default(Single);
         #endregion
         #region BleedoutRecoverChance
         private int _BleedoutRecoverChanceLocation => _DAT2Location!.Value.Min + 0xA8;
-        private bool _BleedoutRecoverChance_IsSet => _DAT2Location.HasValue;
+        private bool _BleedoutRecoverChance_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _BleedoutRecoverChanceLocation + 1 >= 4;
         public Single BleedoutRecoverChance => _BleedoutRecoverChance_IsSet ? _recordData.Slice(_BleedoutRecoverChanceLocation, 4).Float() : default(Single);
         #endregion
         #region BleedoutTimeMin
         private int _BleedoutTimeMinLocation => _DAT2Location!.Value.Min + 0xAC;
-        private bool _BleedoutTimeMin_IsSet => _DAT2Location.HasValue;
+        private bool _BleedoutTimeMin_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _BleedoutTimeMinLocation + 1 >= 4;
         public Single BleedoutTimeMin => _BleedoutTimeMin_IsSet ? _recordData.Slice(_BleedoutTimeMinLocation, 4).Float() : default(Single);
         #endregion
         #region BleedoutTimeMax
         private int _BleedoutTimeMaxLocation => _DAT2Location!.Value.Min + 0xB0;
-        private bool _BleedoutTimeMax_IsSet => _DAT2Location.HasValue;
+        private bool _BleedoutTimeMax_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _BleedoutTimeMaxLocation + 1 >= 4;
         public Single BleedoutTimeMax => _BleedoutTimeMax_IsSet ? _recordData.Slice(_BleedoutTimeMaxLocation, 4).Float() : default(Single);
         #endregion
         #region BleedoutHealthDrainRate
         private int _BleedoutHealthDrainRateLocation => _DAT2Location!.Value.Min + 0xB4;
-        private bool _BleedoutHealthDrainRate_IsSet => _DAT2Location.HasValue;
+        private bool _BleedoutHealthDrainRate_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _BleedoutHealthDrainRateLocation + 1 >= 4;
         public Single BleedoutHealthDrainRate => _BleedoutHealthDrainRate_IsSet ? _recordData.Slice(_BleedoutHealthDrainRateLocation, 4).Float() : default(Single);
         #endregion
         #region MaxSize
         private int _MaxSizeLocation => _DAT2Location!.Value.Min + 0xB8;
-        private bool _MaxSize_IsSet => _DAT2Location.HasValue;
-        public Size MaxSize => _MaxSize_IsSet ? (Size)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_MaxSizeLocation, 0x4)) : default;
+        private bool _MaxSize_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _MaxSizeLocation + 1 >= 4;
+        public Size MaxSize => _MaxSize_IsSet ? (Size)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_MaxSizeLocation, 0x4)) : default(Size);
         #endregion
         #region IntelligenceLevel
         private int _IntelligenceLevelLocation => _DAT2Location!.Value.Min + 0xBC;
-        private bool _IntelligenceLevel_IsSet => _DAT2Location.HasValue;
-        public Race.IntelligenceLevelType IntelligenceLevel => _IntelligenceLevel_IsSet ? (Race.IntelligenceLevelType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_IntelligenceLevelLocation, 0x4)) : default;
+        private bool _IntelligenceLevel_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _IntelligenceLevelLocation + 1 >= 4;
+        public Race.IntelligenceLevelType IntelligenceLevel => _IntelligenceLevel_IsSet ? (Race.IntelligenceLevelType)BinaryPrimitives.ReadInt32LittleEndian(_recordData.Span.Slice(_IntelligenceLevelLocation, 0x4)) : default(Race.IntelligenceLevelType);
         #endregion
         #region SupportsElectromagneticShock
         private int _SupportsElectromagneticShockLocation => _DAT2Location!.Value.Min + 0xC0;
-        private bool _SupportsElectromagneticShock_IsSet => _DAT2Location.HasValue;
+        private bool _SupportsElectromagneticShock_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _SupportsElectromagneticShockLocation + 1 >= 1;
         public Boolean SupportsElectromagneticShock => _SupportsElectromagneticShock_IsSet ? _recordData.Slice(_SupportsElectromagneticShockLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         #region ElectromagneticShockRecoverChance
         private int _ElectromagneticShockRecoverChanceLocation => _DAT2Location!.Value.Min + 0xC1;
-        private bool _ElectromagneticShockRecoverChance_IsSet => _DAT2Location.HasValue;
+        private bool _ElectromagneticShockRecoverChance_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _ElectromagneticShockRecoverChanceLocation + 1 >= 4;
         public Single ElectromagneticShockRecoverChance => _ElectromagneticShockRecoverChance_IsSet ? _recordData.Slice(_ElectromagneticShockRecoverChanceLocation, 4).Float() : default(Single);
         #endregion
         #region ElectromagneticShockTimeMin
         private int _ElectromagneticShockTimeMinLocation => _DAT2Location!.Value.Min + 0xC5;
-        private bool _ElectromagneticShockTimeMin_IsSet => _DAT2Location.HasValue;
+        private bool _ElectromagneticShockTimeMin_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _ElectromagneticShockTimeMinLocation + 1 >= 4;
         public Single ElectromagneticShockTimeMin => _ElectromagneticShockTimeMin_IsSet ? _recordData.Slice(_ElectromagneticShockTimeMinLocation, 4).Float() : default(Single);
         #endregion
         #region ElectromagneticShockTimeMax
         private int _ElectromagneticShockTimeMaxLocation => _DAT2Location!.Value.Min + 0xC9;
-        private bool _ElectromagneticShockTimeMax_IsSet => _DAT2Location.HasValue;
+        private bool _ElectromagneticShockTimeMax_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _ElectromagneticShockTimeMaxLocation + 1 >= 4;
         public Single ElectromagneticShockTimeMax => _ElectromagneticShockTimeMax_IsSet ? _recordData.Slice(_ElectromagneticShockTimeMaxLocation, 4).Float() : default(Single);
         #endregion
         #region ElectromagneticShockRecoverChanceOnDamageReceived
         private int _ElectromagneticShockRecoverChanceOnDamageReceivedLocation => _DAT2Location!.Value.Min + 0xCD;
-        private bool _ElectromagneticShockRecoverChanceOnDamageReceived_IsSet => _DAT2Location.HasValue;
+        private bool _ElectromagneticShockRecoverChanceOnDamageReceived_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _ElectromagneticShockRecoverChanceOnDamageReceivedLocation + 1 >= 4;
         public Single ElectromagneticShockRecoverChanceOnDamageReceived => _ElectromagneticShockRecoverChanceOnDamageReceived_IsSet ? _recordData.Slice(_ElectromagneticShockRecoverChanceOnDamageReceivedLocation, 4).Float() : default(Single);
         #endregion
         #region ElectromagneticShockHealthDrainRate
         private int _ElectromagneticShockHealthDrainRateLocation => _DAT2Location!.Value.Min + 0xD1;
-        private bool _ElectromagneticShockHealthDrainRate_IsSet => _DAT2Location.HasValue;
+        private bool _ElectromagneticShockHealthDrainRate_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _ElectromagneticShockHealthDrainRateLocation + 1 >= 4;
         public Single ElectromagneticShockHealthDrainRate => _ElectromagneticShockHealthDrainRate_IsSet ? _recordData.Slice(_ElectromagneticShockHealthDrainRateLocation, 4).Float() : default(Single);
         #endregion
         #region ElectromagneticShockHealthAfterRecovery
         private int _ElectromagneticShockHealthAfterRecoveryLocation => _DAT2Location!.Value.Min + 0xD5;
-        private bool _ElectromagneticShockHealthAfterRecovery_IsSet => _DAT2Location.HasValue;
+        private bool _ElectromagneticShockHealthAfterRecovery_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _ElectromagneticShockHealthAfterRecoveryLocation + 1 >= 4;
         public Single ElectromagneticShockHealthAfterRecovery => _ElectromagneticShockHealthAfterRecovery_IsSet ? _recordData.Slice(_ElectromagneticShockHealthAfterRecoveryLocation, 4).Float() : default(Single);
         #endregion
         #region ElectromagneticShockImmunityDurationAfterRecovery
         private int _ElectromagneticShockImmunityDurationAfterRecoveryLocation => _DAT2Location!.Value.Min + 0xD9;
-        private bool _ElectromagneticShockImmunityDurationAfterRecovery_IsSet => _DAT2Location.HasValue;
+        private bool _ElectromagneticShockImmunityDurationAfterRecovery_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _ElectromagneticShockImmunityDurationAfterRecoveryLocation + 1 >= 4;
         public Single ElectromagneticShockImmunityDurationAfterRecovery => _ElectromagneticShockImmunityDurationAfterRecovery_IsSet ? _recordData.Slice(_ElectromagneticShockImmunityDurationAfterRecoveryLocation, 4).Float() : default(Single);
         #endregion
         #region MNAMLogic
@@ -9166,6 +9412,10 @@ namespace Mutagen.Bethesda.Starfield
         #region ChargenAndSkintones
         private IGenderedItemGetter<IChargenAndSkintonesGetter?>? _ChargenAndSkintonesOverlay;
         public IGenderedItemGetter<IChargenAndSkintonesGetter?>? ChargenAndSkintones => _ChargenAndSkintonesOverlay;
+        #endregion
+        #region MorphRace
+        private int? _MorphRaceLocation;
+        public IFormLinkNullableGetter<IRaceGetter> MorphRace => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<IRaceGetter>(_package, _recordData, _MorphRaceLocation);
         #endregion
         #region ArmorRace
         private int? _ArmorRaceLocation;
@@ -9275,6 +9525,11 @@ namespace Mutagen.Bethesda.Starfield
                         stream.Position += lastParsed.LengthOverride.Value;
                     }
                     return (int)Race_FieldIndex.VirtualMachineAdapter;
+                }
+                case RecordTypeInts.XALG:
+                {
+                    _XALGLocation = (stream.Position - offset);
+                    return (int)Race_FieldIndex.XALG;
                 }
                 case RecordTypeInts.BFCB:
                 {
@@ -9633,6 +9888,11 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     _BaseMovementFlyDefaultLocation = (stream.Position - offset);
                     return (int)Race_FieldIndex.BaseMovementFlyDefault;
+                }
+                case RecordTypeInts.NAM8:
+                {
+                    _MorphRaceLocation = (stream.Position - offset);
+                    return (int)Race_FieldIndex.MorphRace;
                 }
                 case RecordTypeInts.RNAM:
                 {

@@ -909,7 +909,7 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             hash.Add(item.LuminanceScale);
             hash.Add(item.OverrideEnabled);
-            hash.Add(item.OverrideEnabledUnused);
+            hash.AddBytes(item.OverrideEnabledUnused);
             return hash.ToHashCode();
         }
         
