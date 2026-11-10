@@ -486,8 +486,8 @@ namespace Mutagen.Bethesda.Starfield
         #region Assistance
         public Npc.AssistanceType Assistance { get; set; } = default(Npc.AssistanceType);
         #endregion
-        #region UnknownAIDT
-        public Byte UnknownAIDT { get; set; } = default(Byte);
+        #region HasReactionRadiusBehavior
+        public Boolean HasReactionRadiusBehavior { get; set; } = default(Boolean);
         #endregion
         #region Packages
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -503,28 +503,28 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #endregion
-        #region FLEE
+        #region FleeSettings
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private NpcFLEE? _FLEE;
-        public NpcFLEE? FLEE
+        private NpcFLEE? _FleeSettings;
+        public NpcFLEE? FleeSettings
         {
-            get => _FLEE;
-            set => _FLEE = value;
+            get => _FleeSettings;
+            set => _FleeSettings = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        INpcFLEEGetter? INpcGetter.FLEE => this.FLEE;
+        INpcFLEEGetter? INpcGetter.FleeSettings => this.FleeSettings;
         #endregion
-        #region RDSAs
+        #region ReactionRadiusBehaviors
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ExtendedList<NpcRDSA>? _RDSAs;
-        public ExtendedList<NpcRDSA>? RDSAs
+        private ExtendedList<NpcRDSA>? _ReactionRadiusBehaviors;
+        public ExtendedList<NpcRDSA>? ReactionRadiusBehaviors
         {
-            get => this._RDSAs;
-            set => this._RDSAs = value;
+            get => this._ReactionRadiusBehaviors;
+            set => this._ReactionRadiusBehaviors = value;
         }
         #region Interface Members
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReadOnlyList<INpcRDSAGetter>? INpcGetter.RDSAs => _RDSAs;
+        IReadOnlyList<INpcRDSAGetter>? INpcGetter.ReactionRadiusBehaviors => _ReactionRadiusBehaviors;
         #endregion
 
         #endregion
@@ -1007,10 +1007,10 @@ namespace Mutagen.Bethesda.Starfield
                 this.Responsibility = initialValue;
                 this.Mood = initialValue;
                 this.Assistance = initialValue;
-                this.UnknownAIDT = initialValue;
+                this.HasReactionRadiusBehavior = initialValue;
                 this.Packages = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
-                this.FLEE = new MaskItem<TItem, NpcFLEE.Mask<TItem>?>(initialValue, new NpcFLEE.Mask<TItem>(initialValue));
-                this.RDSAs = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, NpcRDSA.Mask<TItem>?>>?>(initialValue, []);
+                this.FleeSettings = new MaskItem<TItem, NpcFLEE.Mask<TItem>?>(initialValue, new NpcFLEE.Mask<TItem>(initialValue));
+                this.ReactionRadiusBehaviors = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, NpcRDSA.Mask<TItem>?>>?>(initialValue, []);
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.AttachParentSlots = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(initialValue, []);
                 this.ObjectTemplates = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectTemplate.Mask<TItem>?>>?>(initialValue, []);
@@ -1114,10 +1114,10 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Responsibility,
                 TItem Mood,
                 TItem Assistance,
-                TItem UnknownAIDT,
+                TItem HasReactionRadiusBehavior,
                 TItem Packages,
-                TItem FLEE,
-                TItem RDSAs,
+                TItem FleeSettings,
+                TItem ReactionRadiusBehaviors,
                 TItem Keywords,
                 TItem AttachParentSlots,
                 TItem ObjectTemplates,
@@ -1220,10 +1220,10 @@ namespace Mutagen.Bethesda.Starfield
                 this.Responsibility = Responsibility;
                 this.Mood = Mood;
                 this.Assistance = Assistance;
-                this.UnknownAIDT = UnknownAIDT;
+                this.HasReactionRadiusBehavior = HasReactionRadiusBehavior;
                 this.Packages = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(Packages, []);
-                this.FLEE = new MaskItem<TItem, NpcFLEE.Mask<TItem>?>(FLEE, new NpcFLEE.Mask<TItem>(FLEE));
-                this.RDSAs = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, NpcRDSA.Mask<TItem>?>>?>(RDSAs, []);
+                this.FleeSettings = new MaskItem<TItem, NpcFLEE.Mask<TItem>?>(FleeSettings, new NpcFLEE.Mask<TItem>(FleeSettings));
+                this.ReactionRadiusBehaviors = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, NpcRDSA.Mask<TItem>?>>?>(ReactionRadiusBehaviors, []);
                 this.Keywords = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(Keywords, []);
                 this.AttachParentSlots = new MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>(AttachParentSlots, []);
                 this.ObjectTemplates = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectTemplate.Mask<TItem>?>>?>(ObjectTemplates, []);
@@ -1328,10 +1328,10 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Responsibility;
             public TItem Mood;
             public TItem Assistance;
-            public TItem UnknownAIDT;
+            public TItem HasReactionRadiusBehavior;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? Packages;
-            public MaskItem<TItem, NpcFLEE.Mask<TItem>?>? FLEE { get; set; }
-            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, NpcRDSA.Mask<TItem>?>>?>? RDSAs;
+            public MaskItem<TItem, NpcFLEE.Mask<TItem>?>? FleeSettings { get; set; }
+            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, NpcRDSA.Mask<TItem>?>>?>? ReactionRadiusBehaviors;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? Keywords;
             public MaskItem<TItem, IEnumerable<(int Index, TItem Value)>?>? AttachParentSlots;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, ObjectTemplate.Mask<TItem>?>>?>? ObjectTemplates;
@@ -1438,10 +1438,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Responsibility, rhs.Responsibility)) return false;
                 if (!object.Equals(this.Mood, rhs.Mood)) return false;
                 if (!object.Equals(this.Assistance, rhs.Assistance)) return false;
-                if (!object.Equals(this.UnknownAIDT, rhs.UnknownAIDT)) return false;
+                if (!object.Equals(this.HasReactionRadiusBehavior, rhs.HasReactionRadiusBehavior)) return false;
                 if (!object.Equals(this.Packages, rhs.Packages)) return false;
-                if (!object.Equals(this.FLEE, rhs.FLEE)) return false;
-                if (!object.Equals(this.RDSAs, rhs.RDSAs)) return false;
+                if (!object.Equals(this.FleeSettings, rhs.FleeSettings)) return false;
+                if (!object.Equals(this.ReactionRadiusBehaviors, rhs.ReactionRadiusBehaviors)) return false;
                 if (!object.Equals(this.Keywords, rhs.Keywords)) return false;
                 if (!object.Equals(this.AttachParentSlots, rhs.AttachParentSlots)) return false;
                 if (!object.Equals(this.ObjectTemplates, rhs.ObjectTemplates)) return false;
@@ -1540,10 +1540,10 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Responsibility);
                 hash.Add(this.Mood);
                 hash.Add(this.Assistance);
-                hash.Add(this.UnknownAIDT);
+                hash.Add(this.HasReactionRadiusBehavior);
                 hash.Add(this.Packages);
-                hash.Add(this.FLEE);
-                hash.Add(this.RDSAs);
+                hash.Add(this.FleeSettings);
+                hash.Add(this.ReactionRadiusBehaviors);
                 hash.Add(this.Keywords);
                 hash.Add(this.AttachParentSlots);
                 hash.Add(this.ObjectTemplates);
@@ -1761,7 +1761,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Responsibility)) return false;
                 if (!eval(this.Mood)) return false;
                 if (!eval(this.Assistance)) return false;
-                if (!eval(this.UnknownAIDT)) return false;
+                if (!eval(this.HasReactionRadiusBehavior)) return false;
                 if (this.Packages != null)
                 {
                     if (!eval(this.Packages.Overall)) return false;
@@ -1773,17 +1773,17 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (FLEE != null)
+                if (FleeSettings != null)
                 {
-                    if (!eval(this.FLEE.Overall)) return false;
-                    if (this.FLEE.Specific != null && !this.FLEE.Specific.All(eval)) return false;
+                    if (!eval(this.FleeSettings.Overall)) return false;
+                    if (this.FleeSettings.Specific != null && !this.FleeSettings.Specific.All(eval)) return false;
                 }
-                if (this.RDSAs != null)
+                if (this.ReactionRadiusBehaviors != null)
                 {
-                    if (!eval(this.RDSAs.Overall)) return false;
-                    if (this.RDSAs.Specific != null)
+                    if (!eval(this.ReactionRadiusBehaviors.Overall)) return false;
+                    if (this.ReactionRadiusBehaviors.Specific != null)
                     {
-                        foreach (var item in this.RDSAs.Specific)
+                        foreach (var item in this.ReactionRadiusBehaviors.Specific)
                         {
                             if (!eval(item.Overall)) return false;
                             if (item.Specific != null && !item.Specific.All(eval)) return false;
@@ -2113,7 +2113,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Responsibility)) return true;
                 if (eval(this.Mood)) return true;
                 if (eval(this.Assistance)) return true;
-                if (eval(this.UnknownAIDT)) return true;
+                if (eval(this.HasReactionRadiusBehavior)) return true;
                 if (this.Packages != null)
                 {
                     if (eval(this.Packages.Overall)) return true;
@@ -2125,17 +2125,17 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                if (FLEE != null)
+                if (FleeSettings != null)
                 {
-                    if (eval(this.FLEE.Overall)) return true;
-                    if (this.FLEE.Specific != null && this.FLEE.Specific.Any(eval)) return true;
+                    if (eval(this.FleeSettings.Overall)) return true;
+                    if (this.FleeSettings.Specific != null && this.FleeSettings.Specific.Any(eval)) return true;
                 }
-                if (this.RDSAs != null)
+                if (this.ReactionRadiusBehaviors != null)
                 {
-                    if (eval(this.RDSAs.Overall)) return true;
-                    if (this.RDSAs.Specific != null)
+                    if (eval(this.ReactionRadiusBehaviors.Overall)) return true;
+                    if (this.ReactionRadiusBehaviors.Specific != null)
                     {
-                        foreach (var item in this.RDSAs.Specific)
+                        foreach (var item in this.ReactionRadiusBehaviors.Specific)
                         {
                             if (!eval(item.Overall)) return false;
                             if (item.Specific != null && !item.Specific.All(eval)) return false;
@@ -2468,7 +2468,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Responsibility = eval(this.Responsibility);
                 obj.Mood = eval(this.Mood);
                 obj.Assistance = eval(this.Assistance);
-                obj.UnknownAIDT = eval(this.UnknownAIDT);
+                obj.HasReactionRadiusBehavior = eval(this.HasReactionRadiusBehavior);
                 if (Packages != null)
                 {
                     obj.Packages = new MaskItem<R, IEnumerable<(int Index, R Value)>?>(eval(this.Packages.Overall), []);
@@ -2483,15 +2483,15 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                obj.FLEE = this.FLEE == null ? null : new MaskItem<R, NpcFLEE.Mask<R>?>(eval(this.FLEE.Overall), this.FLEE.Specific?.Translate(eval));
-                if (RDSAs != null)
+                obj.FleeSettings = this.FleeSettings == null ? null : new MaskItem<R, NpcFLEE.Mask<R>?>(eval(this.FleeSettings.Overall), this.FleeSettings.Specific?.Translate(eval));
+                if (ReactionRadiusBehaviors != null)
                 {
-                    obj.RDSAs = new MaskItem<R, IEnumerable<MaskItemIndexed<R, NpcRDSA.Mask<R>?>>?>(eval(this.RDSAs.Overall), []);
-                    if (RDSAs.Specific != null)
+                    obj.ReactionRadiusBehaviors = new MaskItem<R, IEnumerable<MaskItemIndexed<R, NpcRDSA.Mask<R>?>>?>(eval(this.ReactionRadiusBehaviors.Overall), []);
+                    if (ReactionRadiusBehaviors.Specific != null)
                     {
                         var l = new List<MaskItemIndexed<R, NpcRDSA.Mask<R>?>>();
-                        obj.RDSAs.Specific = l;
-                        foreach (var item in RDSAs.Specific)
+                        obj.ReactionRadiusBehaviors.Specific = l;
+                        foreach (var item in ReactionRadiusBehaviors.Specific)
                         {
                             MaskItemIndexed<R, NpcRDSA.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, NpcRDSA.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
                             if (mask == null) continue;
@@ -2998,9 +2998,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Assistance, "Assistance");
                     }
-                    if (printMask?.UnknownAIDT ?? true)
+                    if (printMask?.HasReactionRadiusBehavior ?? true)
                     {
-                        sb.AppendItem(UnknownAIDT, "UnknownAIDT");
+                        sb.AppendItem(HasReactionRadiusBehavior, "HasReactionRadiusBehavior");
                     }
                     if ((printMask?.Packages?.Overall ?? true)
                         && Packages is {} PackagesItem)
@@ -3023,20 +3023,20 @@ namespace Mutagen.Bethesda.Starfield
                             }
                         }
                     }
-                    if (printMask?.FLEE?.Overall ?? true)
+                    if (printMask?.FleeSettings?.Overall ?? true)
                     {
-                        FLEE?.Print(sb);
+                        FleeSettings?.Print(sb);
                     }
-                    if ((printMask?.RDSAs?.Overall ?? true)
-                        && RDSAs is {} RDSAsItem)
+                    if ((printMask?.ReactionRadiusBehaviors?.Overall ?? true)
+                        && ReactionRadiusBehaviors is {} ReactionRadiusBehaviorsItem)
                     {
-                        sb.AppendLine("RDSAs =>");
+                        sb.AppendLine("ReactionRadiusBehaviors =>");
                         using (sb.Brace())
                         {
-                            sb.AppendItem(RDSAsItem.Overall);
-                            if (RDSAsItem.Specific != null)
+                            sb.AppendItem(ReactionRadiusBehaviorsItem.Overall);
+                            if (ReactionRadiusBehaviorsItem.Specific != null)
                             {
-                                foreach (var subItem in RDSAsItem.Specific)
+                                foreach (var subItem in ReactionRadiusBehaviorsItem.Specific)
                                 {
                                     using (sb.Brace())
                                     {
@@ -3429,10 +3429,10 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Responsibility;
             public Exception? Mood;
             public Exception? Assistance;
-            public Exception? UnknownAIDT;
+            public Exception? HasReactionRadiusBehavior;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? Packages;
-            public MaskItem<Exception?, NpcFLEE.ErrorMask?>? FLEE;
-            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, NpcRDSA.ErrorMask?>>?>? RDSAs;
+            public MaskItem<Exception?, NpcFLEE.ErrorMask?>? FleeSettings;
+            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, NpcRDSA.ErrorMask?>>?>? ReactionRadiusBehaviors;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? Keywords;
             public MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>? AttachParentSlots;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectTemplate.ErrorMask?>>?>? ObjectTemplates;
@@ -3581,14 +3581,14 @@ namespace Mutagen.Bethesda.Starfield
                         return Mood;
                     case Npc_FieldIndex.Assistance:
                         return Assistance;
-                    case Npc_FieldIndex.UnknownAIDT:
-                        return UnknownAIDT;
+                    case Npc_FieldIndex.HasReactionRadiusBehavior:
+                        return HasReactionRadiusBehavior;
                     case Npc_FieldIndex.Packages:
                         return Packages;
-                    case Npc_FieldIndex.FLEE:
-                        return FLEE;
-                    case Npc_FieldIndex.RDSAs:
-                        return RDSAs;
+                    case Npc_FieldIndex.FleeSettings:
+                        return FleeSettings;
+                    case Npc_FieldIndex.ReactionRadiusBehaviors:
+                        return ReactionRadiusBehaviors;
                     case Npc_FieldIndex.Keywords:
                         return Keywords;
                     case Npc_FieldIndex.AttachParentSlots:
@@ -3832,17 +3832,17 @@ namespace Mutagen.Bethesda.Starfield
                     case Npc_FieldIndex.Assistance:
                         this.Assistance = ex;
                         break;
-                    case Npc_FieldIndex.UnknownAIDT:
-                        this.UnknownAIDT = ex;
+                    case Npc_FieldIndex.HasReactionRadiusBehavior:
+                        this.HasReactionRadiusBehavior = ex;
                         break;
                     case Npc_FieldIndex.Packages:
                         this.Packages = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
                         break;
-                    case Npc_FieldIndex.FLEE:
-                        this.FLEE = new MaskItem<Exception?, NpcFLEE.ErrorMask?>(ex, null);
+                    case Npc_FieldIndex.FleeSettings:
+                        this.FleeSettings = new MaskItem<Exception?, NpcFLEE.ErrorMask?>(ex, null);
                         break;
-                    case Npc_FieldIndex.RDSAs:
-                        this.RDSAs = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, NpcRDSA.ErrorMask?>>?>(ex, null);
+                    case Npc_FieldIndex.ReactionRadiusBehaviors:
+                        this.ReactionRadiusBehaviors = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, NpcRDSA.ErrorMask?>>?>(ex, null);
                         break;
                     case Npc_FieldIndex.Keywords:
                         this.Keywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(ex, null);
@@ -4134,17 +4134,17 @@ namespace Mutagen.Bethesda.Starfield
                     case Npc_FieldIndex.Assistance:
                         this.Assistance = (Exception?)obj;
                         break;
-                    case Npc_FieldIndex.UnknownAIDT:
-                        this.UnknownAIDT = (Exception?)obj;
+                    case Npc_FieldIndex.HasReactionRadiusBehavior:
+                        this.HasReactionRadiusBehavior = (Exception?)obj;
                         break;
                     case Npc_FieldIndex.Packages:
                         this.Packages = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
                         break;
-                    case Npc_FieldIndex.FLEE:
-                        this.FLEE = (MaskItem<Exception?, NpcFLEE.ErrorMask?>?)obj;
+                    case Npc_FieldIndex.FleeSettings:
+                        this.FleeSettings = (MaskItem<Exception?, NpcFLEE.ErrorMask?>?)obj;
                         break;
-                    case Npc_FieldIndex.RDSAs:
-                        this.RDSAs = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, NpcRDSA.ErrorMask?>>?>)obj;
+                    case Npc_FieldIndex.ReactionRadiusBehaviors:
+                        this.ReactionRadiusBehaviors = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, NpcRDSA.ErrorMask?>>?>)obj;
                         break;
                     case Npc_FieldIndex.Keywords:
                         this.Keywords = (MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>)obj;
@@ -4340,10 +4340,10 @@ namespace Mutagen.Bethesda.Starfield
                 if (Responsibility != null) return true;
                 if (Mood != null) return true;
                 if (Assistance != null) return true;
-                if (UnknownAIDT != null) return true;
+                if (HasReactionRadiusBehavior != null) return true;
                 if (Packages != null) return true;
-                if (FLEE != null) return true;
-                if (RDSAs != null) return true;
+                if (FleeSettings != null) return true;
+                if (ReactionRadiusBehaviors != null) return true;
                 if (Keywords != null) return true;
                 if (AttachParentSlots != null) return true;
                 if (ObjectTemplates != null) return true;
@@ -4668,7 +4668,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Assistance, "Assistance");
                 }
                 {
-                    sb.AppendItem(UnknownAIDT, "UnknownAIDT");
+                    sb.AppendItem(HasReactionRadiusBehavior, "HasReactionRadiusBehavior");
                 }
                 if (Packages is {} PackagesItem)
                 {
@@ -4690,16 +4690,16 @@ namespace Mutagen.Bethesda.Starfield
                         }
                     }
                 }
-                FLEE?.Print(sb);
-                if (RDSAs is {} RDSAsItem)
+                FleeSettings?.Print(sb);
+                if (ReactionRadiusBehaviors is {} ReactionRadiusBehaviorsItem)
                 {
-                    sb.AppendLine("RDSAs =>");
+                    sb.AppendLine("ReactionRadiusBehaviors =>");
                     using (sb.Brace())
                     {
-                        sb.AppendItem(RDSAsItem.Overall);
-                        if (RDSAsItem.Specific != null)
+                        sb.AppendItem(ReactionRadiusBehaviorsItem.Overall);
+                        if (ReactionRadiusBehaviorsItem.Specific != null)
                         {
-                            foreach (var subItem in RDSAsItem.Specific)
+                            foreach (var subItem in ReactionRadiusBehaviorsItem.Specific)
                             {
                                 using (sb.Brace())
                                 {
@@ -5037,10 +5037,10 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Responsibility = this.Responsibility.Combine(rhs.Responsibility);
                 ret.Mood = this.Mood.Combine(rhs.Mood);
                 ret.Assistance = this.Assistance.Combine(rhs.Assistance);
-                ret.UnknownAIDT = this.UnknownAIDT.Combine(rhs.UnknownAIDT);
+                ret.HasReactionRadiusBehavior = this.HasReactionRadiusBehavior.Combine(rhs.HasReactionRadiusBehavior);
                 ret.Packages = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.Packages?.Overall, rhs.Packages?.Overall), Noggog.ExceptionExt.Combine(this.Packages?.Specific, rhs.Packages?.Specific));
-                ret.FLEE = this.FLEE.Combine(rhs.FLEE, (l, r) => l.Combine(r));
-                ret.RDSAs = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, NpcRDSA.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.RDSAs?.Overall, rhs.RDSAs?.Overall), Noggog.ExceptionExt.Combine(this.RDSAs?.Specific, rhs.RDSAs?.Specific));
+                ret.FleeSettings = this.FleeSettings.Combine(rhs.FleeSettings, (l, r) => l.Combine(r));
+                ret.ReactionRadiusBehaviors = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, NpcRDSA.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.ReactionRadiusBehaviors?.Overall, rhs.ReactionRadiusBehaviors?.Overall), Noggog.ExceptionExt.Combine(this.ReactionRadiusBehaviors?.Specific, rhs.ReactionRadiusBehaviors?.Specific));
                 ret.Keywords = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.Keywords?.Overall, rhs.Keywords?.Overall), Noggog.ExceptionExt.Combine(this.Keywords?.Specific, rhs.Keywords?.Specific));
                 ret.AttachParentSlots = new MaskItem<Exception?, IEnumerable<(int Index, Exception Value)>?>(Noggog.ExceptionExt.Combine(this.AttachParentSlots?.Overall, rhs.AttachParentSlots?.Overall), Noggog.ExceptionExt.Combine(this.AttachParentSlots?.Specific, rhs.AttachParentSlots?.Specific));
                 ret.ObjectTemplates = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, ObjectTemplate.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.ObjectTemplates?.Overall, rhs.ObjectTemplates?.Overall), Noggog.ExceptionExt.Combine(this.ObjectTemplates?.Specific, rhs.ObjectTemplates?.Specific));
@@ -5156,10 +5156,10 @@ namespace Mutagen.Bethesda.Starfield
             public bool Responsibility;
             public bool Mood;
             public bool Assistance;
-            public bool UnknownAIDT;
+            public bool HasReactionRadiusBehavior;
             public bool Packages;
-            public NpcFLEE.TranslationMask? FLEE;
-            public NpcRDSA.TranslationMask? RDSAs;
+            public NpcFLEE.TranslationMask? FleeSettings;
+            public NpcRDSA.TranslationMask? ReactionRadiusBehaviors;
             public bool Keywords;
             public bool AttachParentSlots;
             public ObjectTemplate.TranslationMask? ObjectTemplates;
@@ -5248,7 +5248,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Responsibility = defaultOn;
                 this.Mood = defaultOn;
                 this.Assistance = defaultOn;
-                this.UnknownAIDT = defaultOn;
+                this.HasReactionRadiusBehavior = defaultOn;
                 this.Packages = defaultOn;
                 this.Keywords = defaultOn;
                 this.AttachParentSlots = defaultOn;
@@ -5341,10 +5341,10 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Responsibility, null));
                 ret.Add((Mood, null));
                 ret.Add((Assistance, null));
-                ret.Add((UnknownAIDT, null));
+                ret.Add((HasReactionRadiusBehavior, null));
                 ret.Add((Packages, null));
-                ret.Add((FLEE != null ? FLEE.OnOverall : DefaultOn, FLEE?.GetCrystal()));
-                ret.Add((RDSAs == null ? DefaultOn : !RDSAs.GetCrystal().CopyNothing, RDSAs?.GetCrystal()));
+                ret.Add((FleeSettings != null ? FleeSettings.OnOverall : DefaultOn, FleeSettings?.GetCrystal()));
+                ret.Add((ReactionRadiusBehaviors == null ? DefaultOn : !ReactionRadiusBehaviors.GetCrystal().CopyNothing, ReactionRadiusBehaviors?.GetCrystal()));
                 ret.Add((Keywords, null));
                 ret.Add((AttachParentSlots, null));
                 ret.Add((ObjectTemplates == null ? DefaultOn : !ObjectTemplates.GetCrystal().CopyNothing, ObjectTemplates?.GetCrystal()));
@@ -5623,10 +5623,10 @@ namespace Mutagen.Bethesda.Starfield
         new Npc.ResponsibilityType Responsibility { get; set; }
         new Npc.MoodType Mood { get; set; }
         new Npc.AssistanceType Assistance { get; set; }
-        new Byte UnknownAIDT { get; set; }
+        new Boolean HasReactionRadiusBehavior { get; set; }
         new ExtendedList<IFormLinkGetter<IPackageGetter>> Packages { get; }
-        new NpcFLEE? FLEE { get; set; }
-        new ExtendedList<NpcRDSA>? RDSAs { get; set; }
+        new NpcFLEE? FleeSettings { get; set; }
+        new ExtendedList<NpcRDSA>? ReactionRadiusBehaviors { get; set; }
         /// <summary>
         /// Aspects: IKeyworded&lt;IKeywordGetter&gt;
         /// </summary>
@@ -5783,10 +5783,10 @@ namespace Mutagen.Bethesda.Starfield
         Npc.ResponsibilityType Responsibility { get; }
         Npc.MoodType Mood { get; }
         Npc.AssistanceType Assistance { get; }
-        Byte UnknownAIDT { get; }
+        Boolean HasReactionRadiusBehavior { get; }
         IReadOnlyList<IFormLinkGetter<IPackageGetter>> Packages { get; }
-        INpcFLEEGetter? FLEE { get; }
-        IReadOnlyList<INpcRDSAGetter>? RDSAs { get; }
+        INpcFLEEGetter? FleeSettings { get; }
+        IReadOnlyList<INpcRDSAGetter>? ReactionRadiusBehaviors { get; }
         #region Keywords
         /// <summary>
         /// Aspects: IKeywordedGetter&lt;IKeywordGetter&gt;
@@ -6070,10 +6070,10 @@ namespace Mutagen.Bethesda.Starfield
         Responsibility = 51,
         Mood = 52,
         Assistance = 53,
-        UnknownAIDT = 54,
+        HasReactionRadiusBehavior = 54,
         Packages = 55,
-        FLEE = 56,
-        RDSAs = 57,
+        FleeSettings = 56,
+        ReactionRadiusBehaviors = 57,
         Keywords = 58,
         AttachParentSlots = 59,
         ObjectTemplates = 60,
@@ -6365,10 +6365,10 @@ namespace Mutagen.Bethesda.Starfield
             item.Responsibility = default(Npc.ResponsibilityType);
             item.Mood = default(Npc.MoodType);
             item.Assistance = default(Npc.AssistanceType);
-            item.UnknownAIDT = default(Byte);
+            item.HasReactionRadiusBehavior = default(Boolean);
             item.Packages.Clear();
-            item.FLEE = null;
-            item.RDSAs = null;
+            item.FleeSettings = null;
+            item.ReactionRadiusBehaviors = null;
             item.Keywords = null;
             item.AttachParentSlots = null;
             item.ObjectTemplates = null;
@@ -6463,8 +6463,8 @@ namespace Mutagen.Bethesda.Starfield
             obj.NativeTerminal.Relink(mapping);
             obj.Items?.RemapLinks(mapping);
             obj.Packages.RemapLinks(mapping);
-            obj.FLEE?.RemapLinks(mapping);
-            obj.RDSAs?.RemapLinks(mapping);
+            obj.FleeSettings?.RemapLinks(mapping);
+            obj.ReactionRadiusBehaviors?.RemapLinks(mapping);
             obj.Keywords?.RemapLinks(mapping);
             obj.AttachParentSlots?.RemapLinks(mapping);
             obj.ObjectTemplates?.RemapLinks(mapping);
@@ -6671,18 +6671,18 @@ namespace Mutagen.Bethesda.Starfield
             ret.Responsibility = item.Responsibility == rhs.Responsibility;
             ret.Mood = item.Mood == rhs.Mood;
             ret.Assistance = item.Assistance == rhs.Assistance;
-            ret.UnknownAIDT = item.UnknownAIDT == rhs.UnknownAIDT;
+            ret.HasReactionRadiusBehavior = item.HasReactionRadiusBehavior == rhs.HasReactionRadiusBehavior;
             ret.Packages = item.Packages.CollectionEqualsHelper(
                 rhs.Packages,
                 (l, r) => object.Equals(l, r),
                 include);
-            ret.FLEE = EqualsMaskHelper.EqualsHelper(
-                item.FLEE,
-                rhs.FLEE,
+            ret.FleeSettings = EqualsMaskHelper.EqualsHelper(
+                item.FleeSettings,
+                rhs.FleeSettings,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
-            ret.RDSAs = item.RDSAs.CollectionEqualsHelper(
-                rhs.RDSAs,
+            ret.ReactionRadiusBehaviors = item.ReactionRadiusBehaviors.CollectionEqualsHelper(
+                rhs.ReactionRadiusBehaviors,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
                 include);
             ret.Keywords = item.Keywords.CollectionEqualsHelper(
@@ -7097,9 +7097,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Assistance, "Assistance");
             }
-            if (printMask?.UnknownAIDT ?? true)
+            if (printMask?.HasReactionRadiusBehavior ?? true)
             {
-                sb.AppendItem(item.UnknownAIDT, "UnknownAIDT");
+                sb.AppendItem(item.HasReactionRadiusBehavior, "HasReactionRadiusBehavior");
             }
             if (printMask?.Packages?.Overall ?? true)
             {
@@ -7115,18 +7115,18 @@ namespace Mutagen.Bethesda.Starfield
                     }
                 }
             }
-            if ((printMask?.FLEE?.Overall ?? true)
-                && item.FLEE is {} FLEEItem)
+            if ((printMask?.FleeSettings?.Overall ?? true)
+                && item.FleeSettings is {} FleeSettingsItem)
             {
-                FLEEItem?.Print(sb, "FLEE");
+                FleeSettingsItem?.Print(sb, "FleeSettings");
             }
-            if ((printMask?.RDSAs?.Overall ?? true)
-                && item.RDSAs is {} RDSAsItem)
+            if ((printMask?.ReactionRadiusBehaviors?.Overall ?? true)
+                && item.ReactionRadiusBehaviors is {} ReactionRadiusBehaviorsItem)
             {
-                sb.AppendLine("RDSAs =>");
+                sb.AppendLine("ReactionRadiusBehaviors =>");
                 using (sb.Brace())
                 {
-                    foreach (var subItem in RDSAsItem)
+                    foreach (var subItem in ReactionRadiusBehaviorsItem)
                     {
                         using (sb.Brace())
                         {
@@ -7699,25 +7699,25 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Assistance != rhs.Assistance) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.UnknownAIDT) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.HasReactionRadiusBehavior) ?? true))
             {
-                if (lhs.UnknownAIDT != rhs.UnknownAIDT) return false;
+                if (lhs.HasReactionRadiusBehavior != rhs.HasReactionRadiusBehavior) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.Packages) ?? true))
             {
                 if (!lhs.Packages.SequenceEqualNullable(rhs.Packages)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.FLEE) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.FleeSettings) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.FLEE, rhs.FLEE, out var lhsFLEE, out var rhsFLEE, out var isFLEEEqual))
+                if (EqualsMaskHelper.RefEquality(lhs.FleeSettings, rhs.FleeSettings, out var lhsFleeSettings, out var rhsFleeSettings, out var isFleeSettingsEqual))
                 {
-                    if (!((NpcFLEECommon)((INpcFLEEGetter)lhsFLEE).CommonInstance()!).Equals(lhsFLEE, rhsFLEE, equalsMask?.GetSubCrystal((int)Npc_FieldIndex.FLEE))) return false;
+                    if (!((NpcFLEECommon)((INpcFLEEGetter)lhsFleeSettings).CommonInstance()!).Equals(lhsFleeSettings, rhsFleeSettings, equalsMask?.GetSubCrystal((int)Npc_FieldIndex.FleeSettings))) return false;
                 }
-                else if (!isFLEEEqual) return false;
+                else if (!isFleeSettingsEqual) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.RDSAs) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.ReactionRadiusBehaviors) ?? true))
             {
-                if (!lhs.RDSAs.SequenceEqualNullable(rhs.RDSAs, (l, r) => ((NpcRDSACommon)((INpcRDSAGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)Npc_FieldIndex.RDSAs)))) return false;
+                if (!lhs.ReactionRadiusBehaviors.SequenceEqualNullable(rhs.ReactionRadiusBehaviors, (l, r) => ((NpcRDSACommon)((INpcRDSAGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)Npc_FieldIndex.ReactionRadiusBehaviors)))) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Npc_FieldIndex.Keywords) ?? true))
             {
@@ -8044,18 +8044,18 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Responsibility);
             hash.Add(item.Mood);
             hash.Add(item.Assistance);
-            hash.Add(item.UnknownAIDT);
+            hash.Add(item.HasReactionRadiusBehavior);
             foreach (var subItem in item.Packages)
             {
                 hash.Add(subItem);
             }
-            if (item.FLEE is {} FLEEitem)
+            if (item.FleeSettings is {} FleeSettingsitem)
             {
-                hash.Add(FLEEitem);
+                hash.Add(FleeSettingsitem);
             }
-            if (item.RDSAs is {} RDSAsitem)
+            if (item.ReactionRadiusBehaviors is {} ReactionRadiusBehaviorsitem)
             {
-                foreach (var subItem in RDSAsitem)
+                foreach (var subItem in ReactionRadiusBehaviorsitem)
                 {
                     hash.Add(subItem);
                 }
@@ -8381,16 +8381,16 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return FormLinkInformation.Factory(item);
             }
-            if (obj.FLEE is {} FLEEItems)
+            if (obj.FleeSettings is {} FleeSettingsItems)
             {
-                foreach (var item in FLEEItems.EnumerateFormLinks(iterateNestedRecords))
+                foreach (var item in FleeSettingsItems.EnumerateFormLinks(iterateNestedRecords))
                 {
                     yield return item;
                 }
             }
-            if (obj.RDSAs is {} RDSAsItem)
+            if (obj.ReactionRadiusBehaviors is {} ReactionRadiusBehaviorsItem)
             {
-                foreach (var item in RDSAsItem.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
+                foreach (var item in ReactionRadiusBehaviorsItem.SelectMany(f => f.EnumerateFormLinks(iterateNestedRecords)))
                 {
                     yield return FormLinkInformation.Factory(item);
                 }
@@ -9107,9 +9107,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Assistance = rhs.Assistance;
             }
-            if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.UnknownAIDT) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.HasReactionRadiusBehavior) ?? true))
             {
-                item.UnknownAIDT = rhs.UnknownAIDT;
+                item.HasReactionRadiusBehavior = rhs.HasReactionRadiusBehavior;
             }
             if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.Packages) ?? true))
             {
@@ -9130,20 +9130,20 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.FLEE) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.FleeSettings) ?? true))
             {
-                errorMask?.PushIndex((int)Npc_FieldIndex.FLEE);
+                errorMask?.PushIndex((int)Npc_FieldIndex.FleeSettings);
                 try
                 {
-                    if(rhs.FLEE is {} rhsFLEE)
+                    if(rhs.FleeSettings is {} rhsFleeSettings)
                     {
-                        item.FLEE = rhsFLEE.DeepCopy(
+                        item.FleeSettings = rhsFleeSettings.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)Npc_FieldIndex.FLEE));
+                            copyMask?.GetSubCrystal((int)Npc_FieldIndex.FleeSettings));
                     }
                     else
                     {
-                        item.FLEE = default;
+                        item.FleeSettings = default;
                     }
                 }
                 catch (Exception ex)
@@ -9156,15 +9156,15 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
-            if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.RDSAs) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Npc_FieldIndex.ReactionRadiusBehaviors) ?? true))
             {
-                errorMask?.PushIndex((int)Npc_FieldIndex.RDSAs);
+                errorMask?.PushIndex((int)Npc_FieldIndex.ReactionRadiusBehaviors);
                 try
                 {
-                    if ((rhs.RDSAs != null))
+                    if ((rhs.ReactionRadiusBehaviors != null))
                     {
-                        item.RDSAs = 
-                            rhs.RDSAs
+                        item.ReactionRadiusBehaviors = 
+                            rhs.ReactionRadiusBehaviors
                             .Select(r =>
                             {
                                 return r.DeepCopy(
@@ -9175,7 +9175,7 @@ namespace Mutagen.Bethesda.Starfield
                     }
                     else
                     {
-                        item.RDSAs = null;
+                        item.ReactionRadiusBehaviors = null;
                     }
                 }
                 catch (Exception ex)
@@ -10071,7 +10071,7 @@ namespace Mutagen.Bethesda.Starfield
                     writer,
                     item.Assistance,
                     length: 1);
-                writer.Write(item.UnknownAIDT);
+                writer.Write(item.HasReactionRadiusBehavior);
             }
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IPackageGetter>>.Instance.Write(
                 writer: writer,
@@ -10083,16 +10083,16 @@ namespace Mutagen.Bethesda.Starfield
                         item: subItem,
                         header: translationParams.ConvertToCustom(RecordTypes.PKID));
                 });
-            if (item.FLEE is {} FLEEItem)
+            if (item.FleeSettings is {} FleeSettingsItem)
             {
-                ((NpcFLEEBinaryWriteTranslation)((IBinaryItem)FLEEItem).BinaryWriteTranslator).Write(
-                    item: FLEEItem,
+                ((NpcFLEEBinaryWriteTranslation)((IBinaryItem)FleeSettingsItem).BinaryWriteTranslator).Write(
+                    item: FleeSettingsItem,
                     writer: writer,
                     translationParams: translationParams);
             }
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<INpcRDSAGetter>.Instance.Write(
                 writer: writer,
-                items: item.RDSAs,
+                items: item.ReactionRadiusBehaviors,
                 recordType: translationParams.ConvertToCustom(RecordTypes.RDSA),
                 transl: (MutagenWriter subWriter, INpcRDSAGetter subItem, TypedWriteParams conv) =>
                 {
@@ -10766,8 +10766,8 @@ namespace Mutagen.Bethesda.Starfield
                         reader: dataFrame,
                         length: 1);
                     if (dataFrame.Remaining < 1) return null;
-                    item.UnknownAIDT = dataFrame.ReadUInt8();
-                    return (int)Npc_FieldIndex.UnknownAIDT;
+                    item.HasReactionRadiusBehavior = dataFrame.ReadBoolean();
+                    return (int)Npc_FieldIndex.HasReactionRadiusBehavior;
                 }
                 case RecordTypeInts.PKID:
                 {
@@ -10780,18 +10780,18 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.FLEE:
                 {
-                    item.FLEE = Mutagen.Bethesda.Starfield.NpcFLEE.CreateFromBinary(frame: frame);
-                    return (int)Npc_FieldIndex.FLEE;
+                    item.FleeSettings = Mutagen.Bethesda.Starfield.NpcFLEE.CreateFromBinary(frame: frame);
+                    return (int)Npc_FieldIndex.FleeSettings;
                 }
                 case RecordTypeInts.RDSA:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.RDSAs = 
+                    item.ReactionRadiusBehaviors = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NpcRDSA>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: NpcRDSA.TryCreateFromBinary)
                         .CastExtendedList<NpcRDSA>();
-                    return (int)Npc_FieldIndex.RDSAs;
+                    return (int)Npc_FieldIndex.ReactionRadiusBehaviors;
                 }
                 case RecordTypeInts.KSIZ:
                 case RecordTypeInts.KWDA:
@@ -11397,17 +11397,17 @@ namespace Mutagen.Bethesda.Starfield
         private bool _Assistance_IsSet => _AIDTLocation.HasValue && _AIDTLocation!.Value.Max - _AssistanceLocation + 1 >= 1;
         public Npc.AssistanceType Assistance => _Assistance_IsSet ? (Npc.AssistanceType)_recordData.Span.Slice(_AssistanceLocation, 0x1)[0] : default(Npc.AssistanceType);
         #endregion
-        #region UnknownAIDT
-        private int _UnknownAIDTLocation => _AIDTLocation!.Value.Min + 0x6;
-        private bool _UnknownAIDT_IsSet => _AIDTLocation.HasValue && _AIDTLocation!.Value.Max - _UnknownAIDTLocation + 1 >= 1;
-        public Byte UnknownAIDT => _UnknownAIDT_IsSet ? _recordData.Span[_UnknownAIDTLocation] : default(Byte);
+        #region HasReactionRadiusBehavior
+        private int _HasReactionRadiusBehaviorLocation => _AIDTLocation!.Value.Min + 0x6;
+        private bool _HasReactionRadiusBehavior_IsSet => _AIDTLocation.HasValue && _AIDTLocation!.Value.Max - _HasReactionRadiusBehaviorLocation + 1 >= 1;
+        public Boolean HasReactionRadiusBehavior => _HasReactionRadiusBehavior_IsSet ? _recordData.Slice(_HasReactionRadiusBehaviorLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         public IReadOnlyList<IFormLinkGetter<IPackageGetter>> Packages { get; private set; } = [];
-        #region FLEE
-        private RangeInt32? _FLEELocation;
-        public INpcFLEEGetter? FLEE => _FLEELocation.HasValue ? NpcFLEEBinaryOverlay.NpcFLEEFactory(_recordData.Slice(_FLEELocation!.Value.Min), _package) : default;
+        #region FleeSettings
+        private RangeInt32? _FleeSettingsLocation;
+        public INpcFLEEGetter? FleeSettings => _FleeSettingsLocation.HasValue ? NpcFLEEBinaryOverlay.NpcFLEEFactory(_recordData.Slice(_FleeSettingsLocation!.Value.Min), _package) : default;
         #endregion
-        public IReadOnlyList<INpcRDSAGetter>? RDSAs { get; private set; }
+        public IReadOnlyList<INpcRDSAGetter>? ReactionRadiusBehaviors { get; private set; }
         #region Keywords
         public IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? Keywords { get; private set; }
         IReadOnlyList<IFormLinkGetter<IKeywordCommonGetter>>? IKeywordedGetter.Keywords => this.Keywords;
@@ -11896,7 +11896,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.AIDT:
                 {
                     _AIDTLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)Npc_FieldIndex.UnknownAIDT;
+                    return (int)Npc_FieldIndex.HasReactionRadiusBehavior;
                 }
                 case RecordTypeInts.PKID:
                 {
@@ -11914,18 +11914,18 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.FLEE:
                 {
-                    _FLEELocation = new RangeInt32((stream.Position - offset), finalPos - offset);
-                    return (int)Npc_FieldIndex.FLEE;
+                    _FleeSettingsLocation = new RangeInt32((stream.Position - offset), finalPos - offset);
+                    return (int)Npc_FieldIndex.FleeSettings;
                 }
                 case RecordTypeInts.RDSA:
                 {
-                    this.RDSAs = BinaryOverlayList.FactoryByStartIndexWithTrigger<INpcRDSAGetter>(
+                    this.ReactionRadiusBehaviors = BinaryOverlayList.FactoryByStartIndexWithTrigger<INpcRDSAGetter>(
                         stream: stream,
                         package: _package,
                         finalPos: finalPos,
                         itemLength: 80,
                         getter: (s, p) => NpcRDSABinaryOverlay.NpcRDSAFactory(s, p));
-                    return (int)Npc_FieldIndex.RDSAs;
+                    return (int)Npc_FieldIndex.ReactionRadiusBehaviors;
                 }
                 case RecordTypeInts.KSIZ:
                 case RecordTypeInts.KWDA:
