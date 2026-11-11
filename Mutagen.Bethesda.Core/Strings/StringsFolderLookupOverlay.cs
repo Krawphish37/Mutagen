@@ -131,7 +131,7 @@ public sealed class StringsFolderLookupOverlay : IStringsFolderLookup
         var ret = new TranslatedString(defaultLanguage)
         {
             StringsLookup = this,
-            StringsKey = key,
+            _stringsKey = key,
             StringsSource = source,
         };
         ret.ResolveAllStringSources();

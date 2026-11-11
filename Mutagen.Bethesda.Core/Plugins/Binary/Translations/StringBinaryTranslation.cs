@@ -135,7 +135,7 @@ public sealed class StringBinaryTranslation
                 return new TranslatedString(reader.MetaData.TranslatedTargetLanguage)
                 {
                     StringsLookup = reader.MetaData.StringsLookup,
-                    StringsKey = key,
+                    _stringsKey = key,
                     StringsSource = source,
                 };
             }
@@ -186,7 +186,7 @@ public sealed class StringBinaryTranslation
                 return new TranslatedString(parsingBundle.TranslatedTargetLanguage)
                 {
                     StringsLookup = parsingBundle.StringsLookup,
-                    StringsKey = key,
+                    _stringsKey = key,
                     StringsSource = source,
                 };
             }

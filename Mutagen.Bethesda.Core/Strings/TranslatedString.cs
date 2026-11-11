@@ -45,10 +45,57 @@ public sealed class TranslatedString : ITranslatedString, IEquatable<TranslatedS
 
     // Alternate way of populating a Translated String
     // Will cause it to act in a lazy lookup fashion
-    public uint? StringsKey { get; internal set; }
+    internal uint? _stringsKey;
     internal IStringsFolderLookup? StringsLookup;
     internal StringsSource StringsSource;
     private ModKey? _resolvedFromMod;
+
+    /// <summary>
+    /// The ID of this text in its plugin's .strings tables (null for a text without one: a new text, or one read from
+    /// a plugin that isn't localized).<br/>
+    /// Writing that same plugin keeps the ID, as long as the text under it is the same everywhere it is used.
+    /// Setting it keeps <see cref="StringsKeySource"/> and <see cref="StringsKeyPlugin"/>; use
+    /// <see cref="SetStringsKey"/> to give a text built some other way (e.g. from JSON) the ID it had in its plugin.
+    /// </summary>
+    public uint? StringsKey
+    {
+        get => _stringsKey;
+        set
+        {
+            lock (_lock)
+            {
+                // A text still looked up from its tables is read in full first, so it keeps its text
+                ResolveAllStringSources();
+                _stringsKey = value;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Which of the plugin's .strings tables <see cref="StringsKey"/> belongs to
+    /// </summary>
+    public StringsSource StringsKeySource => StringsSource;
+
+    /// <summary>
+    /// The plugin whose .strings tables <see cref="StringsKey"/> belongs to (null: none)
+    /// </summary>
+    public ModKey? StringsKeyPlugin => StringsMod;
+
+    /// <summary>
+    /// Ties this text to entry <paramref name="key"/> of <paramref name="plugin"/>'s .strings tables of kind
+    /// <paramref name="source"/>, as if it had been read from that plugin, so writing that plugin keeps the ID.
+    /// The text itself is not changed. A null key removes the tie.
+    /// </summary>
+    public void SetStringsKey(uint? key, StringsSource source, ModKey plugin)
+    {
+        lock (_lock)
+        {
+            ResolveAllStringSources();
+            _stringsKey = key;
+            StringsSource = source;
+            _resolvedFromMod = key == null ? default(ModKey?) : plugin;
+        }
+    }
 
     /// <summary>
     /// The plugin whose string tables StringsKey belongs to

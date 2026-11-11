@@ -118,6 +118,13 @@ internal static class SubrecordOrder
     public static bool TryGet(object record, out Entry[] order) => Orders.TryGetValue(record, out order!);
 
     /// <summary>
+    /// Gives a record a noted order (RoundTripMixIn.SetSubrecordOrder: a record rebuilt from another form)
+    /// </summary>
+    public static void Set(object record, Entry[] order) => Orders.AddOrUpdate(record, order);
+
+    public static void Remove(object record) => Orders.Remove(record);
+
+    /// <summary>
     /// Writes <paramref name="written"/> (a record's subrecords in Mutagen's order) in the order of <paramref name="order"/>
     /// when they are the record's subrecords unchanged. Returns false, writing nothing, when they aren't.
     /// </summary>

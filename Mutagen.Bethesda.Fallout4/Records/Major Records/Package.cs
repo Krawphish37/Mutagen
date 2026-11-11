@@ -12,9 +12,15 @@ namespace Mutagen.Bethesda.Fallout4;
 
 partial class Package
 {
-    // The order of the names/flags after the procedure tree (UNAM BNAM PNAM) as read; not part of the record's data
-    // (not compared; copies keep it). Fallout4.esm mostly holds them by index, but not always (C117).
-    internal IReadOnlyList<sbyte>? ProcedureTreeDataOrder { get; set; }
+    /// <summary>
+    /// The order the package's data inputs (by index) had in the names/flags list after the procedure tree (UNAM, BNAM,
+    /// PNAM) of the file it was read from. The list is written in this order while it holds exactly the indexes the
+    /// package has there; otherwise (and when null) by index.<br/>
+    /// It is not part of the record's data: Equals and GetHashCode ignore it, and copies keep it. Set it on a package
+    /// rebuilt from another form (e.g. JSON) to write it back like its file. A package read with the overlay gives it
+    /// through <see cref="PackageMixIn.GetProcedureTreeDataOrder"/>.
+    /// </summary>
+    public IReadOnlyList<sbyte>? ProcedureTreeDataOrder { get; set; }
 }
 
 partial class Package
@@ -595,5 +601,21 @@ partial class PackageBinaryOverlay
             factory: PackageBranchBinaryOverlay.PackageBranchFactory);
         ProcedureTreeDataOrder = PackageBinaryCreateTranslation.AbsorbPackageData(
             new MutagenInterfaceReadStream(stream, _package.MetaData), _packageData);
+    }
+}
+
+public static partial class PackageMixIn
+{
+    /// <summary>
+    /// The package's <see cref="Package.ProcedureTreeDataOrder"/>, for a package read either way (full import or overlay)
+    /// </summary>
+    public static IReadOnlyList<sbyte>? GetProcedureTreeDataOrder(this IPackageGetter package)
+    {
+        return package switch
+        {
+            Package p => p.ProcedureTreeDataOrder,
+            PackageBinaryOverlay overlay => overlay.ProcedureTreeDataOrder,
+            _ => null,
+        };
     }
 }
