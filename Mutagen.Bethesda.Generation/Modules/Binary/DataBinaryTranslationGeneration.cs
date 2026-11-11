@@ -75,7 +75,9 @@ public class DataBinaryTranslationGeneration : BinaryTranslationGeneration
         var enumTypes = dataType.GetEnumTypes();
         if (enumTypes.Count > 0)
         {
-            sb.AppendLine($"public {objGen.ObjectName}.{dataType.EnumName} {dataType.StateName} {{ get; private set; }}");
+            // An optional subrecord counts as absent until it is found
+            var initial = dataType.Optional ? $" = {objGen.ObjectName}.{dataType.EnumName}.Absent;" : null;
+            sb.AppendLine($"public {objGen.ObjectName}.{dataType.EnumName} {dataType.StateName} {{ get; private set; }}{initial}");
         }
 
         switch (typeGen.GetFieldData().BinaryOverlayFallback)
@@ -187,9 +189,9 @@ public class DataBinaryTranslationGeneration : BinaryTranslationGeneration
                 break;
         }
         sb.AppendLine($"_{dataType.GetFieldData().RecordType}Location = new({locationAccessor} + _package.{nameof(BinaryOverlayFactoryPackage.MetaData)}.{nameof(ParsingMeta.Constants)}.SubConstants.TypeAndLengthLength, finalPos - offset - 1);");
-        if (dataType.Nullable)
+        if (dataType.Optional)
         {
-            sb.AppendLine($"this.{dataType.StateName} = {objGen.ObjectName}.{dataType.EnumName}.Has;");
+            sb.AppendLine($"this.{dataType.StateName} &= ~{objGen.ObjectName}.{dataType.EnumName}.Absent;");
         }
         if (await NeedsInlineEndingPositions(objGen, dataType))
         {

@@ -31,7 +31,7 @@ public class TopLevelGroupOrderTests
     public void GameplayOptionGroupsFollowAvmdAndPrecedeGwed(IFileSystem fileSystem, ModPath filePath, StarfieldMod mod)
     {
         mod.GravityWielderEffectDatas.AddNew("TestGravityWielder");
-        mod.GameplayOptionsGroups.AddNew("TestOptionsGroup").Options = new GameplayOptionsGroupLeaf();
+        mod.GameplayOptionsGroups.AddNew("TestOptionsGroup");
         mod.GameplayOptions.AddNew("TestOption");
         mod.ActorValueModulations.AddNew("TestModulation");
         mod.TimeOfDays.AddNew("TestTimeOfDay");

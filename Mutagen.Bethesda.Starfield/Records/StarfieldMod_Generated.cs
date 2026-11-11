@@ -17674,6 +17674,7 @@ namespace Mutagen.Bethesda.Starfield
             toDo.Add(() => WriteGroupParallel(item.GravityWielderEffectDatas, 178, outputStreams, writer.MetaData, param.Parallel));
             Parallel.Invoke(param.Parallel.ParallelOptions, toDo.ToArray());
             PluginUtilityTranslation.CompileStreamsInto(
+                item,
                 outputStreams.WhereNotNull(),
                 writer.BaseStream);
         }
@@ -32338,7 +32339,7 @@ namespace Mutagen.Bethesda.Starfield
             BinaryWriteParameters? param = null)
         {
             param ??= BinaryWriteParameters.Default;
-            if (param.Parallel.MaxDegreeOfParallelism != 1)
+            if (param.Parallel.MaxDegreeOfParallelism != 1 || (importMask == null && PluginUtilityTranslation.HasKeptEmptyGroups(item)))
             {
                 StarfieldModCommon.WriteParallel(
                     item: item,

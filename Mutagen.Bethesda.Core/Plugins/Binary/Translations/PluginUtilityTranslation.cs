@@ -109,6 +109,13 @@ internal static class PluginUtilityTranslation
             MutagenFrame targetFrame = frame;
             if (record.IsCompressed)
             {
+                if (fieldStarts != null)
+                {
+                    // Keep the compressed content as read, to write it back while the record is unchanged (CompressedOriginals)
+                    var compressedStart = frame.Position;
+                    CompressedOriginals.Remember(record, frame.ReadMemory(checked((int)frame.Remaining), readSafe: true));
+                    frame.Position = compressedStart;
+                }
                 targetFrame = frame.Decompress();
             }
 
@@ -462,6 +469,7 @@ internal static class PluginUtilityTranslation
             nextRecordType: modHeader.RecordType,
             contentLength: checked((int)modHeader.ContentLength),
             translationParams: null);
+        var emptyGroups = new EmptyTopLevelGroups.Collector(frame.MetaData.Constants);
         while (!frame.Complete)
         {
             var groupHeader = frame.GetGroupHeader();
@@ -469,6 +477,7 @@ internal static class PluginUtilityTranslation
             {
                 throw new ArgumentException("Did not see GRUP header as expected.");
             }
+            emptyGroups.Saw(groupHeader);
 
             var len = checked((int)groupHeader.ContentLength);
             var finalPos = frame.Position + groupHeader.TotalLength;
@@ -487,6 +496,7 @@ internal static class PluginUtilityTranslation
             }
         }
 
+        emptyGroups.Finish(record);
         frame.SetToFinalPosition();
         return record;
     }
@@ -520,6 +530,14 @@ internal static class PluginUtilityTranslation
             s.CopyTo(outStream);
         }
     }
+
+    /// <summary>
+    /// Writes a mod's top-level group streams, with the empty top-level groups it was read with in their places
+    /// </summary>
+    internal static void CompileStreamsInto(object mod, IEnumerable<Stream> inStreams, Stream outStream)
+        => EmptyTopLevelGroups.Compile(mod, inStreams, outStream);
+
+    internal static bool HasKeptEmptyGroups(object mod) => EmptyTopLevelGroups.TryGet(mod, out _);
 
     internal static void CompileStreamsInto(IEnumerable<Stream> inStreams, Stream outStream)
     {
@@ -673,7 +691,14 @@ internal static class PluginUtilityTranslation
                 }
 
                 writer.MetaData.FormVersion = item.FormVersion;
-                using (CompressionExport.Compression(item.IsCompressed, writer, out var writerToUse))
+                // The compressed content the record was read with, written again if the record still holds exactly it
+                ReadOnlyMemorySlice<byte>? compressedOriginal =
+                    item.IsCompressed
+                    && writer.MetaData.Constants.KeepSubrecordOrder
+                    && CompressedOriginals.TryGet(item, out var original)
+                        ? (ReadOnlyMemorySlice<byte>?)original
+                        : null;
+                using (CompressionExport.Compression(item.IsCompressed, writer, compressedOriginal, out var writerToUse))
                 {
                     if (writer.MetaData.Constants.KeepSubrecordOrder
                         && SubrecordOrder.TryGet(item, out var order))

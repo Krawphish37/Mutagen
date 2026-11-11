@@ -69,8 +69,13 @@ public static class Decompression
                 compessionStream.ReadExactly(buf, majorMeta.HeaderLength, checked((int)uncompressedLength));
             }
 
+            var compressedContent = stream.RemainingMemory.Slice(majorMeta.HeaderLength, checked((int)majorMeta.ContentLength));
             stream.Position += checked((int)majorMeta.TotalLength);
-            stream = new OverlayStream(buf, stream.MetaData);
+            stream = new OverlayStream(buf, stream.MetaData)
+            {
+                // Kept to write back while the record is unchanged (Starfield)
+                CompressedOriginal = stream.MetaData.Constants.KeepSubrecordOrder ? (ReadOnlyMemorySlice<byte>?)compressedContent : null
+            };
         }
 
         return stream;

@@ -6,6 +6,16 @@ using RecordTypes = Mutagen.Bethesda.Starfield.Internals.RecordTypes;
 
 namespace Mutagen.Bethesda.Starfield;
 
+public partial class GameplayOptionsGroup
+{
+    // A new record starts with an empty leaf, so it can be written (C140). Options is required: an explicit null still
+    // throws on write, naming the field.
+    partial void CustomCtor()
+    {
+        Options = new GameplayOptionsGroupLeaf();
+    }
+}
+
 internal partial class GameplayOptionsGroupBinaryOverlay
 {
     public IAGameplayOptionsNodeGetter Options { get; private set; } = null!;

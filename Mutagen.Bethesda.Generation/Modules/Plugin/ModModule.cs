@@ -609,6 +609,7 @@ public class ModModule : GenerationModule
             using (var args = sb.Call(
                        $"{nameof(PluginUtilityTranslation)}.{nameof(PluginUtilityTranslation.CompileStreamsInto)}"))
             {
+                args.Add("item");
                 args.Add("outputStreams.WhereNotNull()");
                 args.Add("writer.BaseStream");
             }

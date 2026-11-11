@@ -917,6 +917,13 @@
       <xs:element name="RecordTypeVersioning" type="RecordTypeVersioningType" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute name="recordType" />
+    <xs:attribute name="optional" type="xs:boolean" default="false" >
+      <xs:annotation>
+        <xs:documentation>
+          The subrecord may be absent. The state enum gets an Absent flag, set when the object was read without it; the subrecord is written only while it is off, so a new object writes it.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
     <xs:attribute name="binaryOverlay" type="MutagenBinaryType" >
       <xs:annotation>
         <xs:documentation>

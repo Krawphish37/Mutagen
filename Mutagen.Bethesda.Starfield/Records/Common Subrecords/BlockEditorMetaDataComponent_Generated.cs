@@ -851,7 +851,8 @@ namespace Mutagen.Bethesda.Starfield
         public enum DAT2DataType
         {
             Break0 = 1,
-            Break1 = 2
+            Break1 = 2,
+            Absent = 4
         }
         #endregion
 
@@ -1235,6 +1236,7 @@ namespace Mutagen.Bethesda.Starfield
             MutagenFrame frame,
             TypedParseParams translationParams)
         {
+            item.DAT2DataTypeState |= BlockEditorMetaDataComponent.DAT2DataType.Absent;
             PluginUtilityTranslation.SubrecordParse(
                 record: item,
                 frame: frame,
@@ -1767,54 +1769,57 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
-            using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(writer.MetaData.FormVersion!.Value switch
+            if (!item.DAT2DataTypeState.HasFlag(BlockEditorMetaDataComponent.DAT2DataType.Absent))
             {
-                <= 558 => RecordTypes.DATA,
-                _ => RecordTypes.DAT2
-            }
-            )))
-            {
-                StringBinaryTranslation.Instance.Write(
-                    writer: writer,
-                    item: item.CreatedTime,
-                    binaryType: StringBinaryType.PrependLength);
-                EnumBinaryTranslation<BlockEditorMetaDataComponent.SourceTypeOption, MutagenFrame, MutagenWriter>.Instance.Write(
-                    writer,
-                    item.SourceType,
-                    length: 1);
-                StringBinaryTranslation.Instance.Write(
-                    writer: writer,
-                    item: item.AlsoCreatedTime,
-                    binaryType: StringBinaryType.PrependLength);
-                StringBinaryTranslation.Instance.Write(
-                    writer: writer,
-                    item: item.SourceEditorID,
-                    binaryType: StringBinaryType.PrependLength);
-                Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IBlockEditorMetaDataItemGetter>.Instance.Write(
-                    writer: writer,
-                    items: item.UnknownItems,
-                    countLengthLength: 4,
-                    transl: (MutagenWriter subWriter, IBlockEditorMetaDataItemGetter subItem, TypedWriteParams conv) =>
-                    {
-                        var Item = subItem;
-                        ((BlockEditorMetaDataItemBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
-                            item: Item,
-                            writer: subWriter,
-                            translationParams: conv);
-                    });
-                writer.Write(item.LocationX);
-                writer.Write(item.LocationY);
-                writer.Write(item.PlanetSystemId);
-                writer.Write(item.SatelliteId);
-                if (!item.DAT2DataTypeState.HasFlag(BlockEditorMetaDataComponent.DAT2DataType.Break0))
+                using (HeaderExport.Subrecord(writer, translationParams.ConvertToCustom(writer.MetaData.FormVersion!.Value switch
                 {
-                    writer.Write(item.Longitude);
-                    if (!item.DAT2DataTypeState.HasFlag(BlockEditorMetaDataComponent.DAT2DataType.Break1))
+                    <= 558 => RecordTypes.DATA,
+                    _ => RecordTypes.DAT2
+                }
+                )))
+                {
+                    StringBinaryTranslation.Instance.Write(
+                        writer: writer,
+                        item: item.CreatedTime,
+                        binaryType: StringBinaryType.PrependLength);
+                    EnumBinaryTranslation<BlockEditorMetaDataComponent.SourceTypeOption, MutagenFrame, MutagenWriter>.Instance.Write(
+                        writer,
+                        item.SourceType,
+                        length: 1);
+                    StringBinaryTranslation.Instance.Write(
+                        writer: writer,
+                        item: item.AlsoCreatedTime,
+                        binaryType: StringBinaryType.PrependLength);
+                    StringBinaryTranslation.Instance.Write(
+                        writer: writer,
+                        item: item.SourceEditorID,
+                        binaryType: StringBinaryType.PrependLength);
+                    Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IBlockEditorMetaDataItemGetter>.Instance.Write(
+                        writer: writer,
+                        items: item.UnknownItems,
+                        countLengthLength: 4,
+                        transl: (MutagenWriter subWriter, IBlockEditorMetaDataItemGetter subItem, TypedWriteParams conv) =>
+                        {
+                            var Item = subItem;
+                            ((BlockEditorMetaDataItemBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
+                                item: Item,
+                                writer: subWriter,
+                                translationParams: conv);
+                        });
+                    writer.Write(item.LocationX);
+                    writer.Write(item.LocationY);
+                    writer.Write(item.PlanetSystemId);
+                    writer.Write(item.SatelliteId);
+                    if (!item.DAT2DataTypeState.HasFlag(BlockEditorMetaDataComponent.DAT2DataType.Break0))
                     {
-                        writer.Write(item.Latitude);
-                        ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                            writer: writer,
-                            item: item.UnknownEnding);
+                        writer.Write(item.Longitude);
+                        if (!item.DAT2DataTypeState.HasFlag(BlockEditorMetaDataComponent.DAT2DataType.Break1))
+                        {
+                            writer.Write(item.Latitude);
+                            ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+                                writer: writer,
+                                item: item.UnknownEnding);
+                        }
                     }
                 }
             }
@@ -1887,6 +1892,7 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
+                    item.DAT2DataTypeState &= ~BlockEditorMetaDataComponent.DAT2DataType.Absent;
                     item.CreatedTime = StringBinaryTranslation.Instance.Parse(
                         reader: dataFrame,
                         stringBinaryType: StringBinaryType.PrependLength,
@@ -1991,7 +1997,7 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         private RangeInt32? _DAT2Location;
-        public BlockEditorMetaDataComponent.DAT2DataType DAT2DataTypeState { get; private set; }
+        public BlockEditorMetaDataComponent.DAT2DataType DAT2DataTypeState { get; private set; } = BlockEditorMetaDataComponent.DAT2DataType.Absent;
         #region CreatedTime
         private int _CreatedTimeLocation => _DAT2Location!.Value.Min;
         private bool _CreatedTime_IsSet => _DAT2Location.HasValue;
@@ -2123,6 +2129,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.DAT2:
                 {
                     _DAT2Location = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
+                    this.DAT2DataTypeState &= ~BlockEditorMetaDataComponent.DAT2DataType.Absent;
                     var subLen = _package.MetaData.Constants.SubrecordHeader(_recordData.Slice((stream.Position - offset))).ContentLength;
                     var ret = this;
                     var package = _package;

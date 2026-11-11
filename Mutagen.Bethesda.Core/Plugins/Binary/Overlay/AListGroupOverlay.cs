@@ -35,6 +35,8 @@ internal sealed class GroupListOverlay<T> : IReadOnlyList<T>
     private T ConstructWrapper(int pos)
     {
         ReadOnlyMemorySlice<byte> slice = _data.Slice(pos);
+        var original = slice;
+        ReadOnlyMemorySlice<byte>? compressedContent = null;
         var majorMeta = _package.MetaData.Constants.MajorRecordHeader(slice);
         if (majorMeta.IsCompressed)
         {
@@ -49,10 +51,15 @@ internal sealed class GroupListOverlay<T> : IReadOnlyList<T>
             {
                 stream.ReadExactly(buf, majorMeta.HeaderLength, checked((int)uncompressedLength));
             }
+            compressedContent = original.Slice(majorMeta.HeaderLength, checked((int)majorMeta.ContentLength));
             slice = new MemorySlice<byte>(buf);
         }
         return LoquiBinaryOverlayTranslation<T>.Create(
-            stream: new OverlayStream(slice, _package),
+            stream: new OverlayStream(slice, _package)
+            {
+                // Kept to write back while the record is unchanged (Starfield)
+                CompressedOriginal = _package.MetaData.Constants.KeepSubrecordOrder ? compressedContent : null
+            },
             package: _package,
             recordTypeConverter: null);
     }

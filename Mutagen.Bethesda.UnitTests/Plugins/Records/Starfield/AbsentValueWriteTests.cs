@@ -182,6 +182,7 @@ public class AbsentValueWriteTests
     public void GameplayOptionsGroup_NullOptions_ThrowsNamingTheField()
     {
         var gpog = new GameplayOptionsGroup(TestFormKey, StarfieldRelease.Starfield);
+        gpog.Options = null!;
         var ex = Should.Throw<Exception>(() => Write(w => gpog.WriteToBinary(w)));
         ex.GetBaseException().Message.ShouldBe("Options was null");
     }
