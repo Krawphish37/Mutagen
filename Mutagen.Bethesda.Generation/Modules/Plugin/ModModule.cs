@@ -557,6 +557,7 @@ public class ModModule : GenerationModule
             args.Add($"{nameof(MutagenWriter)} writer");
             args.Add($"{nameof(BinaryWriteParameters)} param");
             args.Add($"ModKey modKey");
+            args.Add($"GroupMask? importMask = null");
         }
         using (sb.CurlyBrace())
         {
@@ -593,6 +594,8 @@ public class ModModule : GenerationModule
                 }
 
                 var groupTarget = loqui.GetGroupTarget().GetObjectData();
+                // A group the import mask leaves out is not written, as in the serial writer
+                sb.AppendLine($"if (importMask?.{field.Name} ?? true)");
                 if (!loqui.TargetObjectGeneration.IsListGroup()
                     && groupTarget.CustomBinaryEnd == CustomEnd.Off 
                     && groupTarget.Subgroups.Count == 0)

@@ -3449,6 +3449,7 @@ public class PluginTranslationModule : BinaryTranslationModule
                             args.Add($"writer: {writerNameToUse}");
                             args.AddPassArg("param");
                             args.AddPassArg("modKey");
+                            args.AddPassArg("importMask");
                         }
                         sb.AppendLine("return;");
                     }

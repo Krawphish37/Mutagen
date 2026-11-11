@@ -12475,7 +12475,8 @@ namespace Mutagen.Bethesda.Fallout4
             IFallout4ModGetter item,
             MutagenWriter writer,
             BinaryWriteParameters param,
-            ModKey modKey)
+            ModKey modKey,
+            GroupMask? importMask = null)
         {
             ModHeaderWriteLogic.WriteHeader(
                 param: param,
@@ -12485,131 +12486,257 @@ namespace Mutagen.Bethesda.Fallout4
                 modKey: modKey);
             Stream[] outputStreams = new Stream[126];
             List<Action> toDo = new List<Action>();
+            if (importMask?.GameSettings ?? true)
             toDo.Add(() => WriteGroupParallel(item.GameSettings, 0, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Keywords ?? true)
             toDo.Add(() => WriteGroupParallel(item.Keywords, 1, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.LocationReferenceTypes ?? true)
             toDo.Add(() => WriteGroupParallel(item.LocationReferenceTypes, 2, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Actions ?? true)
             toDo.Add(() => WriteGroupParallel(item.Actions, 3, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Transforms ?? true)
             toDo.Add(() => WriteGroupParallel(item.Transforms, 4, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Components ?? true)
             toDo.Add(() => WriteGroupParallel(item.Components, 5, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.TextureSets ?? true)
             toDo.Add(() => WriteGroupParallel(item.TextureSets, 6, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Globals ?? true)
             toDo.Add(() => WriteGroupParallel(item.Globals, 7, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.DamageTypes ?? true)
             toDo.Add(() => WriteGroupParallel(item.DamageTypes, 8, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Classes ?? true)
             toDo.Add(() => WriteGroupParallel(item.Classes, 9, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Factions ?? true)
             toDo.Add(() => WriteGroupParallel(item.Factions, 10, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.HeadParts ?? true)
             toDo.Add(() => WriteGroupParallel(item.HeadParts, 11, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Races ?? true)
             toDo.Add(() => WriteGroupParallel(item.Races, 12, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.SoundMarkers ?? true)
             toDo.Add(() => WriteGroupParallel(item.SoundMarkers, 13, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.AcousticSpaces ?? true)
             toDo.Add(() => WriteGroupParallel(item.AcousticSpaces, 14, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.MagicEffects ?? true)
             toDo.Add(() => WriteGroupParallel(item.MagicEffects, 15, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.LandscapeTextures ?? true)
             toDo.Add(() => WriteGroupParallel(item.LandscapeTextures, 16, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.ObjectEffects ?? true)
             toDo.Add(() => WriteGroupParallel(item.ObjectEffects, 17, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Spells ?? true)
             toDo.Add(() => WriteGroupParallel(item.Spells, 18, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Activators ?? true)
             toDo.Add(() => WriteGroupParallel(item.Activators, 19, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.TalkingActivators ?? true)
             toDo.Add(() => WriteGroupParallel(item.TalkingActivators, 20, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Armors ?? true)
             toDo.Add(() => WriteGroupParallel(item.Armors, 21, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Books ?? true)
             toDo.Add(() => WriteGroupParallel(item.Books, 22, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Containers ?? true)
             toDo.Add(() => WriteGroupParallel(item.Containers, 23, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Doors ?? true)
             toDo.Add(() => WriteGroupParallel(item.Doors, 24, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Ingredients ?? true)
             toDo.Add(() => WriteGroupParallel(item.Ingredients, 25, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Lights ?? true)
             toDo.Add(() => WriteGroupParallel(item.Lights, 26, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.MiscItems ?? true)
             toDo.Add(() => WriteGroupParallel(item.MiscItems, 27, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Statics ?? true)
             toDo.Add(() => WriteGroupParallel(item.Statics, 28, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.StaticCollections ?? true)
             toDo.Add(() => WriteGroupParallel(item.StaticCollections, 29, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.MovableStatics ?? true)
             toDo.Add(() => WriteGroupParallel(item.MovableStatics, 30, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Grasses ?? true)
             toDo.Add(() => WriteGroupParallel(item.Grasses, 31, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Trees ?? true)
             toDo.Add(() => WriteGroupParallel(item.Trees, 32, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Florae ?? true)
             toDo.Add(() => WriteGroupParallel(item.Florae, 33, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Furniture ?? true)
             toDo.Add(() => WriteGroupParallel(item.Furniture, 34, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Weapons ?? true)
             toDo.Add(() => WriteGroupParallel(item.Weapons, 35, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Ammunitions ?? true)
             toDo.Add(() => WriteGroupParallel(item.Ammunitions, 36, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Npcs ?? true)
             toDo.Add(() => WriteGroupParallel(item.Npcs, 37, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.LeveledNpcs ?? true)
             toDo.Add(() => WriteGroupParallel(item.LeveledNpcs, 38, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Keys ?? true)
             toDo.Add(() => WriteGroupParallel(item.Keys, 39, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Ingestibles ?? true)
             toDo.Add(() => WriteGroupParallel(item.Ingestibles, 40, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.IdleMarkers ?? true)
             toDo.Add(() => WriteGroupParallel(item.IdleMarkers, 41, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Holotapes ?? true)
             toDo.Add(() => WriteGroupParallel(item.Holotapes, 42, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Projectiles ?? true)
             toDo.Add(() => WriteGroupParallel(item.Projectiles, 43, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Hazards ?? true)
             toDo.Add(() => WriteGroupParallel(item.Hazards, 44, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.BendableSplines ?? true)
             toDo.Add(() => WriteGroupParallel(item.BendableSplines, 45, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Terminals ?? true)
             toDo.Add(() => WriteGroupParallel(item.Terminals, 46, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.LeveledItems ?? true)
             toDo.Add(() => WriteGroupParallel(item.LeveledItems, 47, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Weather ?? true)
             toDo.Add(() => WriteGroupParallel(item.Weather, 48, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Climates ?? true)
             toDo.Add(() => WriteGroupParallel(item.Climates, 49, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.ShaderParticleGeometries ?? true)
             toDo.Add(() => WriteGroupParallel(item.ShaderParticleGeometries, 50, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.VisualEffects ?? true)
             toDo.Add(() => WriteGroupParallel(item.VisualEffects, 51, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Regions ?? true)
             toDo.Add(() => WriteGroupParallel(item.Regions, 52, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.NavigationMeshInfoMaps ?? true)
             toDo.Add(() => WriteGroupParallel(item.NavigationMeshInfoMaps, 53, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Cells ?? true)
             toDo.Add(() => WriteCellsParallel(item.Cells, 54, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Worldspaces ?? true)
             toDo.Add(() => WriteWorldspacesParallel(item.Worldspaces, 55, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Quests ?? true)
             toDo.Add(() => WriteQuestsParallel(item.Quests, 56, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.IdleAnimations ?? true)
             toDo.Add(() => WriteGroupParallel(item.IdleAnimations, 57, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Packages ?? true)
             toDo.Add(() => WriteGroupParallel(item.Packages, 58, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.CombatStyles ?? true)
             toDo.Add(() => WriteGroupParallel(item.CombatStyles, 59, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.LoadScreens ?? true)
             toDo.Add(() => WriteGroupParallel(item.LoadScreens, 60, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.AnimatedObjects ?? true)
             toDo.Add(() => WriteGroupParallel(item.AnimatedObjects, 61, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Waters ?? true)
             toDo.Add(() => WriteGroupParallel(item.Waters, 62, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.EffectShaders ?? true)
             toDo.Add(() => WriteGroupParallel(item.EffectShaders, 63, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Explosions ?? true)
             toDo.Add(() => WriteGroupParallel(item.Explosions, 64, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Debris ?? true)
             toDo.Add(() => WriteGroupParallel(item.Debris, 65, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.ImageSpaces ?? true)
             toDo.Add(() => WriteGroupParallel(item.ImageSpaces, 66, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.ImageSpaceAdapters ?? true)
             toDo.Add(() => WriteGroupParallel(item.ImageSpaceAdapters, 67, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.FormLists ?? true)
             toDo.Add(() => WriteGroupParallel(item.FormLists, 68, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Perks ?? true)
             toDo.Add(() => WriteGroupParallel(item.Perks, 69, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.BodyParts ?? true)
             toDo.Add(() => WriteGroupParallel(item.BodyParts, 70, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.AddonNodes ?? true)
             toDo.Add(() => WriteGroupParallel(item.AddonNodes, 71, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.ActorValueInformation ?? true)
             toDo.Add(() => WriteGroupParallel(item.ActorValueInformation, 72, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.CameraShots ?? true)
             toDo.Add(() => WriteGroupParallel(item.CameraShots, 73, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.CameraPaths ?? true)
             toDo.Add(() => WriteGroupParallel(item.CameraPaths, 74, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.VoiceTypes ?? true)
             toDo.Add(() => WriteGroupParallel(item.VoiceTypes, 75, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.MaterialTypes ?? true)
             toDo.Add(() => WriteGroupParallel(item.MaterialTypes, 76, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Impacts ?? true)
             toDo.Add(() => WriteGroupParallel(item.Impacts, 77, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.ImpactDataSets ?? true)
             toDo.Add(() => WriteGroupParallel(item.ImpactDataSets, 78, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.ArmorAddons ?? true)
             toDo.Add(() => WriteGroupParallel(item.ArmorAddons, 79, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.EncounterZones ?? true)
             toDo.Add(() => WriteGroupParallel(item.EncounterZones, 80, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Locations ?? true)
             toDo.Add(() => WriteGroupParallel(item.Locations, 81, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Messages ?? true)
             toDo.Add(() => WriteGroupParallel(item.Messages, 82, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.DefaultObjectManagers ?? true)
             toDo.Add(() => WriteGroupParallel(item.DefaultObjectManagers, 83, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.DefaultObjects ?? true)
             toDo.Add(() => WriteGroupParallel(item.DefaultObjects, 84, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.LightingTemplates ?? true)
             toDo.Add(() => WriteGroupParallel(item.LightingTemplates, 85, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.MusicTypes ?? true)
             toDo.Add(() => WriteGroupParallel(item.MusicTypes, 86, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Footsteps ?? true)
             toDo.Add(() => WriteGroupParallel(item.Footsteps, 87, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.FootstepSets ?? true)
             toDo.Add(() => WriteGroupParallel(item.FootstepSets, 88, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.StoryManagerBranchNodes ?? true)
             toDo.Add(() => WriteGroupParallel(item.StoryManagerBranchNodes, 89, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.StoryManagerQuestNodes ?? true)
             toDo.Add(() => WriteGroupParallel(item.StoryManagerQuestNodes, 90, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.StoryManagerEventNodes ?? true)
             toDo.Add(() => WriteGroupParallel(item.StoryManagerEventNodes, 91, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.MusicTracks ?? true)
             toDo.Add(() => WriteGroupParallel(item.MusicTracks, 92, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.DialogViews ?? true)
             toDo.Add(() => WriteGroupParallel(item.DialogViews, 93, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.EquipTypes ?? true)
             toDo.Add(() => WriteGroupParallel(item.EquipTypes, 94, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Relationships ?? true)
             toDo.Add(() => WriteGroupParallel(item.Relationships, 95, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.AssociationTypes ?? true)
             toDo.Add(() => WriteGroupParallel(item.AssociationTypes, 96, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Outfits ?? true)
             toDo.Add(() => WriteGroupParallel(item.Outfits, 97, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.ArtObjects ?? true)
             toDo.Add(() => WriteGroupParallel(item.ArtObjects, 98, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.MaterialObjects ?? true)
             toDo.Add(() => WriteGroupParallel(item.MaterialObjects, 99, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.MovementTypes ?? true)
             toDo.Add(() => WriteGroupParallel(item.MovementTypes, 100, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.SoundDescriptors ?? true)
             toDo.Add(() => WriteGroupParallel(item.SoundDescriptors, 101, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.SoundCategories ?? true)
             toDo.Add(() => WriteGroupParallel(item.SoundCategories, 102, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.SoundOutputModels ?? true)
             toDo.Add(() => WriteGroupParallel(item.SoundOutputModels, 103, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.CollisionLayers ?? true)
             toDo.Add(() => WriteGroupParallel(item.CollisionLayers, 104, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Colors ?? true)
             toDo.Add(() => WriteGroupParallel(item.Colors, 105, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.ReverbParameters ?? true)
             toDo.Add(() => WriteGroupParallel(item.ReverbParameters, 106, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.PackIns ?? true)
             toDo.Add(() => WriteGroupParallel(item.PackIns, 107, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.ReferenceGroups ?? true)
             toDo.Add(() => WriteGroupParallel(item.ReferenceGroups, 108, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.AimModels ?? true)
             toDo.Add(() => WriteGroupParallel(item.AimModels, 109, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Layers ?? true)
             toDo.Add(() => WriteGroupParallel(item.Layers, 110, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.ConstructibleObjects ?? true)
             toDo.Add(() => WriteGroupParallel(item.ConstructibleObjects, 111, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.ObjectModifications ?? true)
             toDo.Add(() => WriteGroupParallel(item.ObjectModifications, 112, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.MaterialSwaps ?? true)
             toDo.Add(() => WriteGroupParallel(item.MaterialSwaps, 113, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.Zooms ?? true)
             toDo.Add(() => WriteGroupParallel(item.Zooms, 114, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.InstanceNamingRules ?? true)
             toDo.Add(() => WriteGroupParallel(item.InstanceNamingRules, 115, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.SoundKeywordMappings ?? true)
             toDo.Add(() => WriteGroupParallel(item.SoundKeywordMappings, 116, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.AudioEffectChains ?? true)
             toDo.Add(() => WriteGroupParallel(item.AudioEffectChains, 117, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.SceneCollections ?? true)
             toDo.Add(() => WriteGroupParallel(item.SceneCollections, 118, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.AttractionRules ?? true)
             toDo.Add(() => WriteGroupParallel(item.AttractionRules, 119, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.AudioCategorySnapshots ?? true)
             toDo.Add(() => WriteGroupParallel(item.AudioCategorySnapshots, 120, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.AnimationSoundTagSets ?? true)
             toDo.Add(() => WriteGroupParallel(item.AnimationSoundTagSets, 121, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.NavigationMeshObstacleManagers ?? true)
             toDo.Add(() => WriteGroupParallel(item.NavigationMeshObstacleManagers, 122, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.LensFlares ?? true)
             toDo.Add(() => WriteGroupParallel(item.LensFlares, 123, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.GodRays ?? true)
             toDo.Add(() => WriteGroupParallel(item.GodRays, 124, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.ObjectVisibilityManagers ?? true)
             toDo.Add(() => WriteGroupParallel(item.ObjectVisibilityManagers, 125, outputStreams, writer.MetaData, param.Parallel));
             Parallel.Invoke(param.Parallel.ParallelOptions, toDo.ToArray());
             PluginUtilityTranslation.CompileStreamsInto(
@@ -22714,7 +22841,8 @@ namespace Mutagen.Bethesda.Fallout4
                     item: item,
                     writer: writer,
                     param: param,
-                    modKey: modKey);
+                    modKey: modKey,
+                    importMask: importMask);
                 return;
             }
             ModHeaderWriteLogic.WriteHeader(
