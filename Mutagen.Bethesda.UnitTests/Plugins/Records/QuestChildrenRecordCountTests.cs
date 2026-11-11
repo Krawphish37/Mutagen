@@ -15,7 +15,12 @@ public class QuestChildrenRecordCountTests
     private static void WrittenCountMatchesFile(IModGetter mod, GameRelease release)
     {
         using var stream = new MemoryStream();
-        mod.WriteToBinary(stream);
+        // Mutagen's recount (records + groups). Starfield's default instead counts as its Creation Kit does (records + 1,
+        // see HeaderCountsDefaultTests), so the recount is asked for by name.
+        mod.WriteToBinary(stream, new Mutagen.Bethesda.Plugins.Binary.Parameters.BinaryWriteParameters
+        {
+            RecordCount = Mutagen.Bethesda.Plugins.Binary.Parameters.RecordCountOption.Iterate,
+        });
         var bytes = stream.ToArray();
 
         var meta = GameConstants.Get(release);

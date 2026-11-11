@@ -40,7 +40,7 @@ public sealed record BinaryWriteParameters
     /// <summary>
     /// Logic to use to keep a mod's record count in sync
     /// </summary>
-    public RecordCountOption RecordCount { get; init; } = RecordCountOption.Iterate;
+    public RecordCountOption RecordCount { get; init; } = RecordCountOption.Auto;
 
     /// <summary>
     /// Logic to use to keep a mod's master list ordering in sync<br/>
@@ -51,7 +51,7 @@ public sealed record BinaryWriteParameters
     /// <summary>
     /// Logic to use to locate a mod header's next formID to use based on the record content
     /// </summary>
-    public NextFormIDOption NextFormID { get; init; } = NextFormIDOption.Iterate;
+    public NextFormIDOption NextFormID { get; init; } = NextFormIDOption.Auto;
 
     /// <summary>
     /// Logic to use to determine minimum allowed FormID.  Null is default behavior, which checks header version
