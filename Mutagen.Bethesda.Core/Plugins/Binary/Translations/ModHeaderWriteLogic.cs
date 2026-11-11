@@ -213,6 +213,18 @@ internal sealed class ModHeaderWriteLogic
 
     private void SetNextFormID(IModGetter mod, IModHeaderCommon modHeader)
     {
+        if (_params.NextFormID == NextFormIDOption.Auto && OverriddenFormsBaseline.Applies(mod))
+        {
+            // Starfield: the value as read while still right (OverriddenFormsBaseline.HeaderCounts); an overlay can't
+            // change, so it keeps it
+            if (OverriddenFormsBaseline.IsUnchangeable(mod)) return;
+            if (OverriddenFormsBaseline.HeaderCounts.NextObjectId(
+                    OverriddenFormsBaseline.GetSnapshot(mod), modHeader.NextFormID, _nextFormID) is { } kept)
+            {
+                modHeader.NextFormID = kept;
+                return;
+            }
+        }
         if (_params.NextFormID != NextFormIDOption.NoCheck)
         {
             bool? forceLowerBound = null;
@@ -226,6 +238,15 @@ internal sealed class ModHeaderWriteLogic
 
     private void SetNumRecords(IModGetter mod, IModHeaderCommon modHeader)
     {
+        if (_params.RecordCount == RecordCountOption.Auto && OverriddenFormsBaseline.Applies(mod))
+        {
+            // Starfield: the Creation Kit counts records + 1, groups not counted; a mod read from a file keeps its count
+            // moved by the change in records (OverriddenFormsBaseline.HeaderCounts). An overlay can't change.
+            if (OverriddenFormsBaseline.IsUnchangeable(mod)) return;
+            modHeader.NumRecords = OverriddenFormsBaseline.HeaderCounts.RecordCount(
+                OverriddenFormsBaseline.GetSnapshot(mod), modHeader.NumRecords, _numRecords);
+            return;
+        }
         if (_params.RecordCount != RecordCountOption.NoCheck)
         {
             // Can't use raw count, as more gets considered in this tally
@@ -286,6 +307,7 @@ internal sealed class ModHeaderWriteLogic
             case RecordCountOption.NoCheck:
                 break;
             case RecordCountOption.Iterate:
+            case RecordCountOption.Auto:
                 _recordIterationActions.Add(maj => _numRecords++);
                 break;
             default:
@@ -349,6 +371,7 @@ internal sealed class ModHeaderWriteLogic
             case NextFormIDOption.NoCheck:
                 break;
             case NextFormIDOption.Iterate:
+            case NextFormIDOption.Auto:
                 _recordIterationActions.Add(maj =>
                 {
                     var fk = maj.FormKey;
