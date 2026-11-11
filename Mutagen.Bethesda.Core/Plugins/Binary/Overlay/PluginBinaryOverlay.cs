@@ -93,6 +93,7 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
             lastParsed: lastParsed,
             translationParams: null);
         stream.Position = (int)headerMeta.TotalLength;
+        var emptyGroups = new Mutagen.Bethesda.Plugins.Binary.Translations.EmptyTopLevelGroups.Collector(package.MetaData.Constants);
         while (!stream.Complete)
         {
             GroupHeader groupMeta = stream.GetGroupHeader(package);
@@ -100,6 +101,7 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
             {
                 throw new ArgumentException("Did not see GRUP header as expected.");
             }
+            emptyGroups.Saw(groupMeta);
             minimumFinalPos = checked((int)(stream.Position + groupMeta.TotalLength));
             var parsed = fill(
                 stream: stream,
@@ -116,6 +118,7 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
             }
             lastParsed = parsed;
         }
+        if (fill.Target is { } readMod) emptyGroups.Finish(readMod);
     }
 
     public void FillMajorRecords(
@@ -306,6 +309,11 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
         // Where each field's subrecords start, to note records whose subrecords come in an order Mutagen does not write
         var fieldStarts = stream.MetaData.Constants.KeepSubrecordOrder ? SubrecordOrder.FieldStarts : null;
         var firstField = fieldStarts?.Count ?? 0;
+        if (stream.CompressedOriginal is { } compressedOriginal)
+        {
+            // The compressed content as read, to write it back while the record is unchanged
+            CompressedOriginals.Remember(majorReference, compressedOriginal);
+        }
         try
         {
             if (FillSubrecordTypes(

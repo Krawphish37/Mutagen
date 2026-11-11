@@ -13,10 +13,15 @@ public class DataType : SetMarkerType
     public const string MIN = "Min";
     public List<int> BreakIndices = new List<int>();
     public List<DataTypeRange> RangeIndices = new List<DataTypeRange>();
-    public bool HasStateLogic => this.BreakIndices.Count > 0 || this.RangeIndices.Count > 0;
+    public bool HasStateLogic => this.Optional || this.BreakIndices.Count > 0 || this.RangeIndices.Count > 0;
     public string EnumName => $"{this.GetFieldData().RecordType.Value.Type}DataType";
     public string StateName => $"{this.EnumName}State";
     public override bool Nullable => false;
+    /// <summary>
+    /// The subrecord may be absent (xml optional="true"). The state enum then gets an Absent flag: set when the record
+    /// holding it was read without it, and the subrecord is written only while it is off (so a new object writes it).
+    /// </summary>
+    public bool Optional { get; private set; }
 
     public class DataTypeRange
     {
@@ -45,6 +50,7 @@ public class DataType : SetMarkerType
     public override async Task Load(XElement node, bool requireName = true)
     {
         this.Node = node;
+        this.Optional = node.GetAttribute<bool>("optional", defaultVal: false);
         var data = this.CustomData.GetOrAdd(Mutagen.Bethesda.Generation.Constants.DataKey, () => new MutagenFieldData(this)) as MutagenFieldData;
         if (node.TryGetAttribute("recordType", out var recType))
         {
@@ -104,10 +110,6 @@ public class DataType : SetMarkerType
                 {
                     typical.PreSetEvent += (sb) =>
                     {
-                        if (this.Nullable)
-                        {
-                            sb.AppendLine($"this.{this.StateName} |= {this.EnumName}.Has;");
-                        }
                         foreach (var b in subField.EncounteredBreaks)
                         {
                             sb.AppendLine($"this.{this.StateName} &= ~{this.EnumName}.Break{b};");
@@ -170,6 +172,8 @@ public class DataType : SetMarkerType
             }
         }
 
+        // Last, so the Break and Range values stay as they were
+        if (Optional) enumTypes.Add("Absent");
         return enumTypes;
     }
 }

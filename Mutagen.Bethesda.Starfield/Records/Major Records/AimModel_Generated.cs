@@ -103,7 +103,20 @@ namespace Mutagen.Bethesda.Starfield
         public Single RecoilBaseStability { get; set; } = default(Single);
         #endregion
         #region ConeOfFireIgnoresMovement
-        public Boolean ConeOfFireIgnoresMovement { get; set; } = default(Boolean);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Boolean _ConeOfFireIgnoresMovement;
+        public Boolean ConeOfFireIgnoresMovement
+        {
+            get => this._ConeOfFireIgnoresMovement;
+            set
+            {
+                this.ANAMDataTypeState &= ~ANAMDataType.Break0;
+                this._ConeOfFireIgnoresMovement = value;
+            }
+        }
+        #endregion
+        #region ANAMDataTypeState
+        public AimModel.ANAMDataType ANAMDataTypeState { get; set; } = default(AimModel.ANAMDataType);
         #endregion
 
         #region To String
@@ -147,6 +160,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ConeOfFireIronSightsMult = initialValue;
                 this.RecoilBaseStability = initialValue;
                 this.ConeOfFireIgnoresMovement = initialValue;
+                this.ANAMDataTypeState = initialValue;
             }
 
             public Mask(
@@ -175,7 +189,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem RecoilArcRotate,
                 TItem ConeOfFireIronSightsMult,
                 TItem RecoilBaseStability,
-                TItem ConeOfFireIgnoresMovement)
+                TItem ConeOfFireIgnoresMovement,
+                TItem ANAMDataTypeState)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -204,6 +219,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ConeOfFireIronSightsMult = ConeOfFireIronSightsMult;
                 this.RecoilBaseStability = RecoilBaseStability;
                 this.ConeOfFireIgnoresMovement = ConeOfFireIgnoresMovement;
+                this.ANAMDataTypeState = ANAMDataTypeState;
             }
 
             #pragma warning disable CS8618
@@ -232,6 +248,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem ConeOfFireIronSightsMult;
             public TItem RecoilBaseStability;
             public TItem ConeOfFireIgnoresMovement;
+            public TItem ANAMDataTypeState;
             #endregion
 
             #region Equals
@@ -262,6 +279,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.ConeOfFireIronSightsMult, rhs.ConeOfFireIronSightsMult)) return false;
                 if (!object.Equals(this.RecoilBaseStability, rhs.RecoilBaseStability)) return false;
                 if (!object.Equals(this.ConeOfFireIgnoresMovement, rhs.ConeOfFireIgnoresMovement)) return false;
+                if (!object.Equals(this.ANAMDataTypeState, rhs.ANAMDataTypeState)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -284,6 +302,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.ConeOfFireIronSightsMult);
                 hash.Add(this.RecoilBaseStability);
                 hash.Add(this.ConeOfFireIgnoresMovement);
+                hash.Add(this.ANAMDataTypeState);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -311,6 +330,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.ConeOfFireIronSightsMult)) return false;
                 if (!eval(this.RecoilBaseStability)) return false;
                 if (!eval(this.ConeOfFireIgnoresMovement)) return false;
+                if (!eval(this.ANAMDataTypeState)) return false;
                 return true;
             }
             #endregion
@@ -336,6 +356,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.ConeOfFireIronSightsMult)) return true;
                 if (eval(this.RecoilBaseStability)) return true;
                 if (eval(this.ConeOfFireIgnoresMovement)) return true;
+                if (eval(this.ANAMDataTypeState)) return true;
                 return false;
             }
             #endregion
@@ -368,6 +389,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.ConeOfFireIronSightsMult = eval(this.ConeOfFireIronSightsMult);
                 obj.RecoilBaseStability = eval(this.RecoilBaseStability);
                 obj.ConeOfFireIgnoresMovement = eval(this.ConeOfFireIgnoresMovement);
+                obj.ANAMDataTypeState = eval(this.ANAMDataTypeState);
             }
             #endregion
 
@@ -454,6 +476,10 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(ConeOfFireIgnoresMovement, "ConeOfFireIgnoresMovement");
                     }
+                    if (printMask?.ANAMDataTypeState ?? true)
+                    {
+                        sb.AppendItem(ANAMDataTypeState, "ANAMDataTypeState");
+                    }
                 }
             }
             #endregion
@@ -482,6 +508,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? ConeOfFireIronSightsMult;
             public Exception? RecoilBaseStability;
             public Exception? ConeOfFireIgnoresMovement;
+            public Exception? ANAMDataTypeState;
             #endregion
 
             #region IErrorMask
@@ -524,6 +551,8 @@ namespace Mutagen.Bethesda.Starfield
                         return RecoilBaseStability;
                     case AimModel_FieldIndex.ConeOfFireIgnoresMovement:
                         return ConeOfFireIgnoresMovement;
+                    case AimModel_FieldIndex.ANAMDataTypeState:
+                        return ANAMDataTypeState;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -584,6 +613,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case AimModel_FieldIndex.ConeOfFireIgnoresMovement:
                         this.ConeOfFireIgnoresMovement = ex;
+                        break;
+                    case AimModel_FieldIndex.ANAMDataTypeState:
+                        this.ANAMDataTypeState = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -647,6 +679,9 @@ namespace Mutagen.Bethesda.Starfield
                     case AimModel_FieldIndex.ConeOfFireIgnoresMovement:
                         this.ConeOfFireIgnoresMovement = (Exception?)obj;
                         break;
+                    case AimModel_FieldIndex.ANAMDataTypeState:
+                        this.ANAMDataTypeState = (Exception?)obj;
+                        break;
                     default:
                         base.SetNthMask(index, obj);
                         break;
@@ -673,6 +708,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (ConeOfFireIronSightsMult != null) return true;
                 if (RecoilBaseStability != null) return true;
                 if (ConeOfFireIgnoresMovement != null) return true;
+                if (ANAMDataTypeState != null) return true;
                 return false;
             }
             #endregion
@@ -750,6 +786,9 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(ConeOfFireIgnoresMovement, "ConeOfFireIgnoresMovement");
                 }
+                {
+                    sb.AppendItem(ANAMDataTypeState, "ANAMDataTypeState");
+                }
             }
             #endregion
 
@@ -775,6 +814,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.ConeOfFireIronSightsMult = this.ConeOfFireIronSightsMult.Combine(rhs.ConeOfFireIronSightsMult);
                 ret.RecoilBaseStability = this.RecoilBaseStability.Combine(rhs.RecoilBaseStability);
                 ret.ConeOfFireIgnoresMovement = this.ConeOfFireIgnoresMovement.Combine(rhs.ConeOfFireIgnoresMovement);
+                ret.ANAMDataTypeState = this.ANAMDataTypeState.Combine(rhs.ANAMDataTypeState);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -814,6 +854,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool ConeOfFireIronSightsMult;
             public bool RecoilBaseStability;
             public bool ConeOfFireIgnoresMovement;
+            public bool ANAMDataTypeState;
             #endregion
 
             #region Ctors
@@ -839,6 +880,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.ConeOfFireIronSightsMult = defaultOn;
                 this.RecoilBaseStability = defaultOn;
                 this.ConeOfFireIgnoresMovement = defaultOn;
+                this.ANAMDataTypeState = defaultOn;
             }
 
             #endregion
@@ -863,6 +905,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((ConeOfFireIronSightsMult, null));
                 ret.Add((RecoilBaseStability, null));
                 ret.Add((ConeOfFireIgnoresMovement, null));
+                ret.Add((ANAMDataTypeState, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -924,6 +967,11 @@ namespace Mutagen.Bethesda.Starfield
 
         protected override Type LinkType => typeof(IAimModel);
 
+        [Flags]
+        public enum ANAMDataType
+        {
+            Break0 = 1
+        }
         #region Equals and Hash
         public override bool Equals(object? obj)
         {
@@ -1024,6 +1072,7 @@ namespace Mutagen.Bethesda.Starfield
         new Single ConeOfFireIronSightsMult { get; set; }
         new Single RecoilBaseStability { get; set; }
         new Boolean ConeOfFireIgnoresMovement { get; set; }
+        new AimModel.ANAMDataType ANAMDataTypeState { get; set; }
     }
 
     public partial interface IAimModelInternal :
@@ -1058,6 +1107,7 @@ namespace Mutagen.Bethesda.Starfield
         Single ConeOfFireIronSightsMult { get; }
         Single RecoilBaseStability { get; }
         Boolean ConeOfFireIgnoresMovement { get; }
+        AimModel.ANAMDataType ANAMDataTypeState { get; }
 
     }
 
@@ -1253,6 +1303,7 @@ namespace Mutagen.Bethesda.Starfield
         ConeOfFireIronSightsMult = 23,
         RecoilBaseStability = 24,
         ConeOfFireIgnoresMovement = 25,
+        ANAMDataTypeState = 26,
     }
     #endregion
 
@@ -1263,9 +1314,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 17;
+        public const ushort AdditionalFieldCount = 18;
 
-        public const ushort FieldCount = 26;
+        public const ushort FieldCount = 27;
 
         public static readonly Type MaskType = typeof(AimModel.Mask<>);
 
@@ -1360,6 +1411,7 @@ namespace Mutagen.Bethesda.Starfield
             item.ConeOfFireIronSightsMult = default(Single);
             item.RecoilBaseStability = default(Single);
             item.ConeOfFireIgnoresMovement = default(Boolean);
+            item.ANAMDataTypeState = default(AimModel.ANAMDataType);
             base.Clear(item);
         }
         
@@ -1461,6 +1513,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.ConeOfFireIronSightsMult = item.ConeOfFireIronSightsMult.EqualsWithin(rhs.ConeOfFireIronSightsMult);
             ret.RecoilBaseStability = item.RecoilBaseStability.EqualsWithin(rhs.RecoilBaseStability);
             ret.ConeOfFireIgnoresMovement = item.ConeOfFireIgnoresMovement == rhs.ConeOfFireIgnoresMovement;
+            ret.ANAMDataTypeState = item.ANAMDataTypeState == rhs.ANAMDataTypeState;
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -1577,6 +1630,10 @@ namespace Mutagen.Bethesda.Starfield
             if (printMask?.ConeOfFireIgnoresMovement ?? true)
             {
                 sb.AppendItem(item.ConeOfFireIgnoresMovement, "ConeOfFireIgnoresMovement");
+            }
+            if (printMask?.ANAMDataTypeState ?? true)
+            {
+                sb.AppendItem(item.ANAMDataTypeState, "ANAMDataTypeState");
             }
         }
         
@@ -1704,6 +1761,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.ConeOfFireIgnoresMovement != rhs.ConeOfFireIgnoresMovement) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)AimModel_FieldIndex.ANAMDataTypeState) ?? true))
+            {
+                if (lhs.ANAMDataTypeState != rhs.ANAMDataTypeState) return false;
+            }
             return true;
         }
         
@@ -1749,6 +1810,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.ConeOfFireIronSightsMult);
             hash.Add(item.RecoilBaseStability);
             hash.Add(item.ConeOfFireIgnoresMovement);
+            hash.Add(item.ANAMDataTypeState);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -1942,6 +2004,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ConeOfFireIgnoresMovement = rhs.ConeOfFireIgnoresMovement;
             }
+            if ((copyMask?.GetShouldTranslate((int)AimModel_FieldIndex.ANAMDataTypeState) ?? true))
+            {
+                item.ANAMDataTypeState = rhs.ANAMDataTypeState;
+            }
             DeepCopyInCustom(
                 item: item,
                 rhs: rhs,
@@ -2102,6 +2168,15 @@ namespace Mutagen.Bethesda.Starfield
     {
         public new static readonly AimModelBinaryWriteTranslation Instance = new();
 
+        public static void WriteEmbedded(
+            IAimModelGetter item,
+            MutagenWriter writer)
+        {
+            StarfieldMajorRecordBinaryWriteTranslation.WriteEmbedded(
+                item: item,
+                writer: writer);
+        }
+
         public static void WriteRecordTypes(
             IAimModelGetter item,
             MutagenWriter writer,
@@ -2159,7 +2234,10 @@ namespace Mutagen.Bethesda.Starfield
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.RecoilBaseStability);
-                writer.Write(item.ConeOfFireIgnoresMovement);
+                if (!item.ANAMDataTypeState.HasFlag(AimModel.ANAMDataType.Break0))
+                {
+                    writer.Write(item.ConeOfFireIgnoresMovement);
+                }
             }
         }
 
@@ -2217,6 +2295,15 @@ namespace Mutagen.Bethesda.Starfield
         public new static readonly AimModelBinaryCreateTranslation Instance = new AimModelBinaryCreateTranslation();
 
         public override RecordType RecordType => RecordTypes.AMDL;
+        public static void FillBinaryStructs(
+            IAimModelInternal item,
+            MutagenFrame frame)
+        {
+            StarfieldMajorRecordBinaryCreateTranslation.FillBinaryStructs(
+                item: item,
+                frame: frame);
+        }
+
         public static ParseResult FillBinaryRecordTypes(
             IAimModelInternal item,
             MutagenFrame frame,
@@ -2265,6 +2352,11 @@ namespace Mutagen.Bethesda.Starfield
                     item.ConeOfFireIronSightsMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     item.RecoilBaseStability = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (dataFrame.Complete)
+                    {
+                        item.ANAMDataTypeState |= AimModel.ANAMDataType.Break0;
+                        return (int)AimModel_FieldIndex.RecoilBaseStability;
+                    }
                     if (dataFrame.Remaining < 1) return null;
                     item.ConeOfFireIgnoresMovement = dataFrame.ReadBoolean();
                     return (int)AimModel_FieldIndex.ConeOfFireIgnoresMovement;
@@ -2328,6 +2420,7 @@ namespace Mutagen.Bethesda.Starfield
 
 
         private RangeInt32? _ANAMLocation;
+        public AimModel.ANAMDataType ANAMDataTypeState { get; private set; }
         #region ConeOfFireDegreesX
         private int _ConeOfFireDegreesXLocation => _ANAMLocation!.Value.Min;
         private bool _ConeOfFireDegreesX_IsSet => _ANAMLocation.HasValue && _ANAMLocation!.Value.Max - _ConeOfFireDegreesXLocation + 1 >= 4;
@@ -2410,7 +2503,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region ConeOfFireIgnoresMovement
         private int _ConeOfFireIgnoresMovementLocation => _ANAMLocation!.Value.Min + 0x40;
-        private bool _ConeOfFireIgnoresMovement_IsSet => _ANAMLocation.HasValue && _ANAMLocation!.Value.Max - _ConeOfFireIgnoresMovementLocation + 1 >= 1;
+        private bool _ConeOfFireIgnoresMovement_IsSet => _ANAMLocation.HasValue && !ANAMDataTypeState.HasFlag(AimModel.ANAMDataType.Break0) && _ANAMLocation!.Value.Max - _ConeOfFireIgnoresMovementLocation + 1 >= 1;
         public Boolean ConeOfFireIgnoresMovement => _ConeOfFireIgnoresMovement_IsSet ? _recordData.Slice(_ConeOfFireIgnoresMovementLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
         partial void CustomFactoryEnd(
@@ -2485,6 +2578,11 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ANAM:
                 {
                     _ANAMLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
+                    var subLen = _package.MetaData.Constants.SubrecordHeader(_recordData.Slice((stream.Position - offset))).ContentLength;
+                    if (subLen <= 0x40)
+                    {
+                        this.ANAMDataTypeState |= AimModel.ANAMDataType.Break0;
+                    }
                     return (int)AimModel_FieldIndex.ConeOfFireIgnoresMovement;
                 }
                 default:

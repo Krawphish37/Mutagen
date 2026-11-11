@@ -11907,6 +11907,7 @@ namespace Mutagen.Bethesda.Skyrim
             toDo.Add(() => WriteGroupParallel(item.LensFlares, 113, outputStreams, writer.MetaData, param.Parallel));
             Parallel.Invoke(param.Parallel.ParallelOptions, toDo.ToArray());
             PluginUtilityTranslation.CompileStreamsInto(
+                item,
                 outputStreams.WhereNotNull(),
                 writer.BaseStream);
         }
@@ -21248,7 +21249,7 @@ namespace Mutagen.Bethesda.Skyrim
             BinaryWriteParameters? param = null)
         {
             param ??= BinaryWriteParameters.Default;
-            if (param.Parallel.MaxDegreeOfParallelism != 1)
+            if (param.Parallel.MaxDegreeOfParallelism != 1 || (importMask == null && PluginUtilityTranslation.HasKeptEmptyGroups(item)))
             {
                 SkyrimModCommon.WriteParallel(
                     item: item,

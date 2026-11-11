@@ -2159,6 +2159,9 @@
     <Compile Include="Records\Major Records\Cell.cs">
       <DependentUpon>Cell.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Major Records\CellChildLayout.cs">
+      <DependentUpon>Cell.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Major Records\CellGrid.cs">
       <DependentUpon>Cell.xml</DependentUpon>
     </Compile>

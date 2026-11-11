@@ -9,6 +9,11 @@ internal sealed class OverlayStream : IMutagenReadStream
     public ParsingMeta MetaData { get; }
 
     public ReadOnlyMemorySlice<byte> Data { get; private set; }
+
+    /// <summary>
+    /// For a stream over a record decompressed from its file: the record's compressed content as read (CompressedOriginals)
+    /// </summary>
+    public ReadOnlyMemorySlice<byte>? CompressedOriginal { get; init; }
     public int Position
     {
         get => _readStream.PositionInt;

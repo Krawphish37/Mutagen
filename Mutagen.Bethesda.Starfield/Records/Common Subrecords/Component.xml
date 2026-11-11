@@ -482,7 +482,8 @@
   </Object>
   <Object name="BlockEditorMetaDataComponent" objType="Subrecord" baseClass="AComponent">
     <Fields>
-      <Data recordType="DAT2">
+      <!-- optional: a component can be an empty BFCB..BFCE block (kgcdoom.esm OverlayBlockkgcDoomDR023World (00BA67:kgcdoom.esm)) -->
+      <Data recordType="DAT2" optional="true">
         <Fields>
           <String name="CreatedTime" binaryType="PrependLength" />
           <Enum name="SourceType" enumName="BlockEditorMetaDataComponent.SourceTypeOption" byteLength="1" />

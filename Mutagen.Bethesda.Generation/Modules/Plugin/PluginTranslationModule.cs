@@ -1386,13 +1386,9 @@ public class PluginTranslationModule : BinaryTranslationModule
         {
             sb.AppendLine($"{frameAccessor}.Position += {frameAccessor}.{nameof(MutagenBinaryReadStream.MetaData)}.{nameof(ParsingMeta.Constants)}.{nameof(GameConstants.SubConstants)}.{nameof(RecordHeaderConstants.HeaderLength)};");
             sb.AppendLine($"var dataFrame = {frameAccessor}.SpawnWithLength(contentLength);");
-            if (set.Nullable)
+            if (set.Optional)
             {
-                sb.AppendLine($"if (!dataFrame.Complete)");
-                using (sb.CurlyBrace())
-                {
-                    sb.AppendLine($"item.{set.StateName} = {obj.ObjectName}.{set.EnumName}.Has;");
-                }
+                sb.AppendLine($"item.{set.StateName} &= ~{obj.ObjectName}.{set.EnumName}.Absent;");
             }
             bool isInRange = false;
             foreach (var subField in set.IterateFieldsWithMeta())
@@ -2099,6 +2095,14 @@ public class PluginTranslationModule : BinaryTranslationModule
         if (NeedsClear(obj))
         {
             sb.AppendLine($"{accessor}.Clear();");
+        }
+
+        // An optional subrecord counts as absent until it is read
+        foreach (var optionalData in obj.IterateFields(expandSets: SetMarkerType.ExpandSets.FalseAndInclude)
+                     .OfType<DataType>()
+                     .Where(d => d.Optional))
+        {
+            sb.AppendLine($"{accessor}.{optionalData.StateName} |= {obj.ObjectName}.{optionalData.EnumName}.Absent;");
         }
 
         if (await obj.IsMajorRecord())
@@ -3426,7 +3430,8 @@ public class PluginTranslationModule : BinaryTranslationModule
                 if (obj.GetObjectType() == ObjectType.Mod)
                 {
                     sb.AppendLine($"param ??= {nameof(BinaryWriteParameters)}.{nameof(BinaryWriteParameters.Default)};");
-                    sb.AppendLine($"if (param.Parallel.{nameof(ParallelWriteParameters.MaxDegreeOfParallelism)} != 1)");
+                    // A mod read with empty top-level groups is written through the group streams, which put them back (EmptyTopLevelGroups)
+                    sb.AppendLine($"if (param.Parallel.{nameof(ParallelWriteParameters.MaxDegreeOfParallelism)} != 1 || (importMask == null && {nameof(PluginUtilityTranslation)}.{nameof(PluginUtilityTranslation.HasKeptEmptyGroups)}(item)))");
                     using (sb.CurlyBrace())
                     {
                         using (var args = sb.Call(
@@ -3758,11 +3763,12 @@ public class PluginTranslationModule : BinaryTranslationModule
                         var accessor = Accessor.FromType(field, "item");
                         if (field is DataType dataType)
                         {
-                            if (dataType.Nullable)
+                            if (dataType.Optional)
                             {
-                                sb.AppendLine($"if (item.{dataType.StateName}.HasFlag({obj.Name}.{dataType.EnumName}.Has))");
+                                // Read without it: not written back
+                                sb.AppendLine($"if (!item.{dataType.StateName}.HasFlag({obj.Name}.{dataType.EnumName}.Absent))");
                             }
-                            using (sb.CurlyBrace(doIt: dataType.Nullable))
+                            using (sb.CurlyBrace(doIt: dataType.Optional))
                             {
                                 string writerAccess = WriterMemberName;
                                 if (fieldData.OverflowRecordType.HasValue)

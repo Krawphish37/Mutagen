@@ -73,6 +73,11 @@ public sealed class ParsingMeta
 
     public bool ThrowOnUnknown { get; set; }
 
+    /// <summary>
+    /// Full import: keep each compressed record's stream as read (see BinaryReadParameters.KeepCompressedRecords)
+    /// </summary>
+    public bool KeepCompressedRecords { get; set; }
+
     public IFileSystem FileSystem { get; set; } = IFileSystemExt.DefaultFilesystem;
 
     public ParsingMeta(
@@ -147,6 +152,7 @@ public sealed class ParsingMeta
             Absorb(readParameters.StringsParam);
         }
         ThrowOnUnknown = readParameters.ThrowOnUnknownSubrecord;
+        KeepCompressedRecords = readParameters.KeepCompressedRecords;
         Parallel = readParameters.Parallel;
         FileSystem = readParameters.FileSystem.GetOrDefault();
         LinkCache = readParameters.LinkCache;

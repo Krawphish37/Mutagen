@@ -1348,8 +1348,28 @@ public record BinaryReadMutableBuilder<TMod, TModGetter, TGroupMask> : BinaryRea
             _param = _param with
             {
                 Params = _param.Params with
-                { 
+                {
                     ThrowOnUnknownSubrecord = shouldThrow
+                }
+            }
+        };
+    }
+
+    /// <summary>
+    /// Keeps each compressed record's zlib stream as read, so an unchanged record is written back with the same bytes
+    /// (games that keep their file layout: Starfield). Costs about the size of the compressed records.
+    /// </summary>
+    /// <param name="keep">Whether to keep them</param>
+    /// <returns>Builder object to continue customization</returns>
+    public BinaryReadMutableBuilder<TMod, TModGetter, TGroupMask> KeepCompressedRecords(bool keep = true)
+    {
+        return this with
+        {
+            _param = _param with
+            {
+                Params = _param.Params with
+                {
+                    KeepCompressedRecords = keep
                 }
             }
         };

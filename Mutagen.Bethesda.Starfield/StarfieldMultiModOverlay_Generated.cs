@@ -202,13 +202,13 @@ internal class StarfieldMultiModOverlay : IStarfieldModDisposableGetter
     private MergedGroup<IParticleSystemDefineCollisionGetter>? _particleSystemDefineCollisions;
     private MergedGroup<ISunPresetGetter>? _sunPresets;
     private MergedGroup<IPhotoModeFeatureGetter>? _photoModeFeatures;
-    private MergedGroup<IGameplayOptionGetter>? _gameplayOptions;
-    private MergedGroup<IGameplayOptionsGroupGetter>? _gameplayOptionsGroups;
     private MergedGroup<ITimeOfDayRecordGetter>? _timeOfDays;
     private MergedGroup<IActorValueModulationGetter>? _actorValueModulations;
     private MergedGroup<IChallengeGetter>? _challenges;
     private MergedGroup<IFacialExpressionGetter>? _facialExpressions;
     private MergedGroup<IPERSGetter>? _pERS;
+    private MergedGroup<IGameplayOptionGetter>? _gameplayOptions;
+    private MergedGroup<IGameplayOptionsGroupGetter>? _gameplayOptionsGroups;
     private MergedGroup<IGravityWielderEffectDataGetter>? _gravityWielderEffectDatas;
 
     /// <summary>
@@ -760,12 +760,6 @@ internal class StarfieldMultiModOverlay : IStarfieldModDisposableGetter
     public IStarfieldGroupGetter<IPhotoModeFeatureGetter> PhotoModeFeatures =>
         _photoModeFeatures ??= new MergedGroup<IPhotoModeFeatureGetter>(
             _sourceMods.Select(m => m.PhotoModeFeatures));
-    public IStarfieldGroupGetter<IGameplayOptionGetter> GameplayOptions =>
-        _gameplayOptions ??= new MergedGroup<IGameplayOptionGetter>(
-            _sourceMods.Select(m => m.GameplayOptions));
-    public IStarfieldGroupGetter<IGameplayOptionsGroupGetter> GameplayOptionsGroups =>
-        _gameplayOptionsGroups ??= new MergedGroup<IGameplayOptionsGroupGetter>(
-            _sourceMods.Select(m => m.GameplayOptionsGroups));
     public IStarfieldGroupGetter<ITimeOfDayRecordGetter> TimeOfDays =>
         _timeOfDays ??= new MergedGroup<ITimeOfDayRecordGetter>(
             _sourceMods.Select(m => m.TimeOfDays));
@@ -781,6 +775,12 @@ internal class StarfieldMultiModOverlay : IStarfieldModDisposableGetter
     public IStarfieldGroupGetter<IPERSGetter> PERS =>
         _pERS ??= new MergedGroup<IPERSGetter>(
             _sourceMods.Select(m => m.PERS));
+    public IStarfieldGroupGetter<IGameplayOptionGetter> GameplayOptions =>
+        _gameplayOptions ??= new MergedGroup<IGameplayOptionGetter>(
+            _sourceMods.Select(m => m.GameplayOptions));
+    public IStarfieldGroupGetter<IGameplayOptionsGroupGetter> GameplayOptionsGroups =>
+        _gameplayOptionsGroups ??= new MergedGroup<IGameplayOptionsGroupGetter>(
+            _sourceMods.Select(m => m.GameplayOptionsGroups));
     public IStarfieldGroupGetter<IGravityWielderEffectDataGetter> GravityWielderEffectDatas =>
         _gravityWielderEffectDatas ??= new MergedGroup<IGravityWielderEffectDataGetter>(
             _sourceMods.Select(m => m.GravityWielderEffectDatas));

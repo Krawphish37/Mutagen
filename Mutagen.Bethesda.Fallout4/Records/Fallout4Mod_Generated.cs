@@ -12613,6 +12613,7 @@ namespace Mutagen.Bethesda.Fallout4
             toDo.Add(() => WriteGroupParallel(item.ObjectVisibilityManagers, 125, outputStreams, writer.MetaData, param.Parallel));
             Parallel.Invoke(param.Parallel.ParallelOptions, toDo.ToArray());
             PluginUtilityTranslation.CompileStreamsInto(
+                item,
                 outputStreams.WhereNotNull(),
                 writer.BaseStream);
         }
@@ -22707,7 +22708,7 @@ namespace Mutagen.Bethesda.Fallout4
             BinaryWriteParameters? param = null)
         {
             param ??= BinaryWriteParameters.Default;
-            if (param.Parallel.MaxDegreeOfParallelism != 1)
+            if (param.Parallel.MaxDegreeOfParallelism != 1 || (importMask == null && PluginUtilityTranslation.HasKeptEmptyGroups(item)))
             {
                 Fallout4ModCommon.WriteParallel(
                     item: item,

@@ -107,7 +107,12 @@ partial class CellBinaryCreateTranslation
             {
                 return;
             }
+            // An empty children group (no persistent or temporary group in it) is kept too (N10)
+            var emptyGroup = groupMeta.ContentLength == 0;
             var subFrame = frame.SpawnWithLength(groupMeta.ContentLength);
+            // Child-group layout as read (C137/C138): which group came first, and where the navmeshes sat among the temporaries
+            bool sawTemporary = false, temporaryFirst = false;
+            var temporaryPattern = new List<bool>();
             while (!subFrame.Complete)
             {
                 var persistGroupMeta = frame.GetGroupHeader();
@@ -122,9 +127,11 @@ partial class CellBinaryCreateTranslation
                     case GroupTypeEnum.CellTemporaryChildren:
                         ParseTemporary(
                             itemFrame,
-                            obj);
+                            obj, temporaryPattern);
+                        sawTemporary = true;
                         break;
                     case GroupTypeEnum.CellPersistentChildren:
+                        if (sawTemporary) temporaryFirst = true;
                         ParseTypical(
                             itemFrame,
                             obj);
@@ -133,6 +140,7 @@ partial class CellBinaryCreateTranslation
                         throw new NotImplementedException();
                 }
             }
+            CellChildLayout.Remember(obj, temporaryFirst, temporaryPattern, emptyGroup);
         }
         catch (Exception ex)
         {
@@ -199,7 +207,7 @@ partial class CellBinaryCreateTranslation
                 }));
     }
 
-    static void ParseTemporary(MutagenFrame frame, ICellInternal obj)
+    static void ParseTemporary(MutagenFrame frame, ICellInternal obj, List<bool> pattern)
     {
         var groupMeta = frame.ReadGroupHeader();
         var formKey = FormKey.Factory(
@@ -216,6 +224,7 @@ partial class CellBinaryCreateTranslation
             reader: frame,
             transl: (MutagenFrame r, RecordType header, [MaybeNullWhen(false)] out IPlaced placed) =>
             {
+                if (header.TypeInt != RecordTypeInts.NAVM) pattern.Add(false);
                 switch (header.TypeInt)
                 {
                     case RecordTypeInts.ACHR:
@@ -249,7 +258,7 @@ partial class CellBinaryCreateTranslation
                         placed = PlacedTrap.CreateFromBinary(r);
                         return true;
                     default:
-                        if (ParseTemporaryOutliers(frame, obj))
+                        if (ParseTemporaryOutliers(frame, obj, pattern))
                         {
                             placed = null!;
                             return false;
@@ -260,12 +269,13 @@ partial class CellBinaryCreateTranslation
         obj.Temporary.SetTo(new ExtendedList<IPlaced>(items));
     }
 
-    static bool ParseTemporaryOutliers(MutagenFrame frame, ICellInternal obj)
+    static bool ParseTemporaryOutliers(MutagenFrame frame, ICellInternal obj, List<bool> pattern)
     {
         var majorMeta = frame.GetMajorRecordHeader();
         var nextHeader = majorMeta.RecordType;
         if (nextHeader.Equals(RecordTypes.NAVM))
         {
+            pattern.Add(true);
             obj.NavigationMeshes.Add(
                 NavigationMesh.CreateFromBinary(
                     frame.SpawnWithLength(majorMeta.TotalLength),
@@ -290,9 +300,13 @@ partial class CellBinaryWriteTranslation
         try
         {
             var navMeshes = obj.NavigationMeshes;
+            // The layout read from the file (C137/C138, N10), while the cell still holds as many navmeshes and temporaries
+            var layout = CellChildLayout.TryGet(obj, out var l) && l.Fits(navMeshes.Count, obj.Temporary?.Count ?? 0) ? l : null;
             if ((obj.Persistent?.Count ?? 0) == 0
                 && (obj.Temporary?.Count ?? 0) == 0
                 && navMeshes.Count == 0
+                // A cell read with an empty children group gets it back (N10)
+                && layout?.EmptyGroup != true
                 ) return;
             using (HeaderExport.Header(writer, RecordTypes.GRUP, ObjectType.Group))
             {
@@ -302,7 +316,11 @@ partial class CellBinaryWriteTranslation
                 writer.Write((int)GroupTypeEnum.CellChildren);
                 writer.Write(obj.Timestamp);
                 writer.Write(obj.UnknownGroupData);
-                if (obj.Persistent?.Count > 0)
+                var temporary = obj.Temporary ?? Array.Empty<IPlacedGetter>();
+                var hasPersistent = obj.Persistent?.Count > 0;
+                var hasTemporary = temporary.Count > 0 || navMeshes.Count > 0;
+
+                void WritePersistent()
                 {
                     using (HeaderExport.Header(writer, RecordTypes.GRUP, ObjectType.Group))
                     {
@@ -318,8 +336,8 @@ partial class CellBinaryWriteTranslation
                             transl: WritePlaced);
                     }
                 }
-                if (obj.Temporary?.Count > 0
-                    || navMeshes.Count > 0)
+
+                void WriteTemporary()
                 {
                     using (HeaderExport.Header(writer, RecordTypes.GRUP, ObjectType.Group))
                     {
@@ -329,15 +347,43 @@ partial class CellBinaryWriteTranslation
                         writer.Write((int)GroupTypeEnum.CellTemporaryChildren);
                         writer.Write(obj.TemporaryTimestamp);
                         writer.Write(obj.TemporaryUnknownGroupData);
-                        foreach (var navMesh in navMeshes)
+                        if (layout == null)
                         {
-                            navMesh.WriteToBinary(writer);
+                            // Mutagen's layout: navmeshes first
+                            foreach (var navMesh in navMeshes)
+                            {
+                                navMesh.WriteToBinary(writer);
+                            }
+                            ListBinaryTranslation<IPlacedGetter>.Instance.Write(
+                                writer: writer,
+                                items: temporary,
+                                transl: WritePlaced);
                         }
-                        ListBinaryTranslation<IPlacedGetter>.Instance.Write(
-                            writer: writer,
-                            items: obj.Temporary,
-                            transl: WritePlaced);
+                        else
+                        {
+                            // As read: runs of navmeshes and temporaries, navmeshes first
+                            int nav = 0, placed = 0;
+                            for (int i = 0; i < layout.Runs.Length; i++)
+                            {
+                                for (int k = 0; k < layout.Runs[i]; k++)
+                                {
+                                    if (i % 2 == 0) navMeshes[nav++].WriteToBinary(writer);
+                                    else WritePlaced(writer, temporary[placed++]);
+                                }
+                            }
+                        }
                     }
+                }
+
+                if (layout?.TemporaryFirst == true)
+                {
+                    if (hasTemporary) WriteTemporary();
+                    if (hasPersistent) WritePersistent();
+                }
+                else
+                {
+                    if (hasPersistent) WritePersistent();
+                    if (hasTemporary) WriteTemporary();
                 }
             }
         }
@@ -484,7 +530,10 @@ partial class CellBinaryOverlay
         this._grupData = stream.ReadMemory(checked((int)groupMeta.TotalLength));
         stream = new OverlayStream(this._grupData.Value, stream.MetaData);
         finalPos = stream.Length;
+        var emptyGroup = groupMeta.ContentLength == 0;
         stream.Position += groupMeta.HeaderLength;
+        bool sawTemporary = false, temporaryFirst = false;
+        var temporaryPattern = new List<bool>();
         while (!stream.Complete)
         {
             var subGroupLocation = stream.Position;
@@ -563,6 +612,7 @@ partial class CellBinaryOverlay
             {
                 case GroupTypeEnum.CellPersistentChildren:
                     {
+                        if (sawTemporary) temporaryFirst = true;
                         this._persistentLocation = checked((int)subGroupLocation);
                         var contentSpan = stream.ReadMemory(checked((int)subGroupMeta.ContentLength));
                         this.Persistent = BinaryOverlayList.FactoryByArray<IPlacedGetter>(
@@ -579,11 +629,14 @@ partial class CellBinaryOverlay
                     }
                 case GroupTypeEnum.CellTemporaryChildren:
                     {
+                        sawTemporary = true;
                         this._temporaryLocation = checked((int)subGroupLocation);
                         List<int> ret = new List<int>();
                         var subStartPos = stream.Position;
                         var endPos = stream.Position + subGroupMeta.ContentLength;
                         var contentSpan = stream.GetMemory(checked((int)subGroupMeta.ContentLength));
+                        // Navmeshes can sit anywhere among the temporaries; their places are kept (C138)
+                        var navLocs = new List<int>();
                         while (stream.Position < endPos)
                         {
                             var majorMeta = stream.GetMajorRecordHeader();
@@ -591,6 +644,7 @@ partial class CellBinaryOverlay
                             if (TypicalPlacedTypes.TriggeringRecordTypes.Contains(recType))
                             {
                                 ret.Add(checked((int)(stream.Position - subStartPos)));
+                                temporaryPattern.Add(false);
                                 stream.Position += (int)majorMeta.TotalLength;
                             }
                             else
@@ -598,20 +652,22 @@ partial class CellBinaryOverlay
                                 switch (recType.TypeInt)
                                 {
                                     case RecordTypeInts.NAVM:
-                                        this.NavigationMeshes = BinaryOverlayList.FactoryByArray<INavigationMeshGetter>(
-                                            mem: stream.RemainingMemory,
-                                            package: _package,
-                                            getter: (s, p) => NavigationMeshBinaryOverlay.NavigationMeshFactory(s, p),
-                                            locs: ParseRecordLocations(
-                                                stream: stream,
-                                                constants: _package.MetaData.Constants.MajorConstants,
-                                                trigger: recType,
-                                                skipHeader: false));
+                                        navLocs.Add(checked((int)(stream.Position - subStartPos)));
+                                        temporaryPattern.Add(true);
+                                        stream.Position += (int)majorMeta.TotalLength;
                                         break;
                                     default:
                                         throw new NotImplementedException();
                                 }
                             }
+                        }
+                        if (navLocs.Count > 0)
+                        {
+                            this.NavigationMeshes = BinaryOverlayList.FactoryByArray<INavigationMeshGetter>(
+                                mem: contentSpan,
+                                package: _package,
+                                getter: (s, p) => NavigationMeshBinaryOverlay.NavigationMeshFactory(s, p),
+                                locs: navLocs.ToArray());
                         }
                         this.Temporary = BinaryOverlayList.FactoryByArray<IPlacedGetter>(
                             contentSpan,
@@ -625,6 +681,7 @@ partial class CellBinaryOverlay
                     throw new NotImplementedException();
             }
         }
+        CellChildLayout.Remember(this, temporaryFirst, temporaryPattern, emptyGroup);
     }
 
     partial void TraversalsCustomParse(OverlayStream stream, int finalPos, int offset, RecordType type, PreviousParse lastParsed)

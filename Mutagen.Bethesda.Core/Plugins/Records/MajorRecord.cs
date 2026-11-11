@@ -236,5 +236,7 @@ internal partial class MajorRecordSetterTranslationCommon
         bool deepCopy)
     {
         Mutagen.Bethesda.Plugins.Binary.Translations.SubrecordOrder.Copy(rhs, item);
+        // And the compressed content it was read with (CompressedOriginals), written only while the copy holds exactly it
+        Mutagen.Bethesda.Plugins.Binary.Translations.CompressedOriginals.Copy(rhs, item);
     }
 }
