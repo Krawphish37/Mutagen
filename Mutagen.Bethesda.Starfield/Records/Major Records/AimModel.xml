@@ -20,6 +20,8 @@
           <Float name="RecoilArcRotate" />
           <Float name="ConeOfFireIronSightsMult" />
           <Float name="RecoilBaseStability" />
+          <!-- Older aim models (form version 575, e.g. weap_starlight.esm) end here: 64 bytes, no last byte. xEdit SetOptionalFrom(16). -->
+          <Break />
           <Bool name="ConeOfFireIgnoresMovement" byteLength="1" />
         </Fields>
       </Data>
