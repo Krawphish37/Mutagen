@@ -187,6 +187,51 @@ public class ExactFileLayoutTests
         return Swap(bytes, records[i].Pos, records[i].Length, records[i + 1].Length);
     }
 
+    // N10: an empty children group (24 bytes, nothing in it) after a cell without children, as in
+    // BlueprintShips-Starfield.esm (16 cells) and BlueprintShips-SFBGS050.esm (1). The enclosing groups grow by 24.
+    private static byte[] EmptyChildrenGroup(byte[] bytes)
+    {
+        var groups = Groups(bytes);
+        var subBlock = groups.Single(g => g.Type == (int)GroupTypeEnum.InteriorCellSubBlock);
+        var cell = Records(bytes, subBlock).Single();
+        cell.Type.ShouldBe("CELL");
+        var insert = new byte[HeaderLength];
+        Encoding.ASCII.GetBytes("GRUP").CopyTo(insert, 0);
+        BitConverter.GetBytes(HeaderLength).CopyTo(insert, 4);
+        bytes.AsSpan(cell.Pos + 12, 4).CopyTo(insert.AsSpan(8));
+        BitConverter.GetBytes((int)GroupTypeEnum.CellChildren).CopyTo(insert, 12);
+        BitConverter.GetBytes(0x34C1).CopyTo(insert, 16);
+        BitConverter.GetBytes(3).CopyTo(insert, 20);
+        var pos = cell.Pos + cell.Length;
+        var ret = Insert(bytes, pos, insert);
+        foreach (var g in groups.Where(g => g.Pos < pos && pos <= g.Pos + g.Size))
+        {
+            BitConverter.GetBytes(g.Size + HeaderLength).CopyTo(ret, g.Pos + 4);
+        }
+        return ret;
+    }
+
+    [Theory, MutagenModAutoData(GameRelease.Starfield)]
+    public void Cell_EmptyChildrenGroup_WrittenBackAsRead(IFileSystem fileSystem, ModPath filePath, StarfieldMod mod)
+    {
+        AddCell(mod, persistent: 0, temporary: 0, navmeshes: 0);
+        var mutagenLayout = WriteMod(mod, filePath, fileSystem);
+        Groups(mutagenLayout).ShouldNotContain(g => g.Type == (int)GroupTypeEnum.CellChildren);
+        var input = EmptyChildrenGroup(mutagenLayout);
+
+        ShouldRewriteIdentical(input, filePath, fileSystem);
+
+        // Exported and given to a cell that has none
+        var read = ReadMutable(input, filePath, fileSystem);
+        var cell = read.EnumerateMajorRecords<ICell>().Single();
+        var layout = cell.GetChildGroupLayout().ShouldNotBeNull();
+        cell.SetChildGroupLayout(null);
+        var outPath = OutPath(fileSystem, filePath);
+        WriteMod(read, outPath, fileSystem).ShouldBe(mutagenLayout);
+        cell.SetChildGroupLayout(layout);
+        WriteMod(read, outPath, fileSystem).ShouldBe(input);
+    }
+
     [Theory, MutagenModAutoData(GameRelease.Starfield)]
     public void Cell_TemporaryGroupFirst_WrittenBackAsRead(IFileSystem fileSystem, ModPath filePath, StarfieldMod mod)
     {

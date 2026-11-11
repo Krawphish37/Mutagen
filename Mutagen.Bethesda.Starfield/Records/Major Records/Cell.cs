@@ -107,6 +107,8 @@ partial class CellBinaryCreateTranslation
             {
                 return;
             }
+            // An empty children group (no persistent or temporary group in it) is kept too (N10)
+            var emptyGroup = groupMeta.ContentLength == 0;
             var subFrame = frame.SpawnWithLength(groupMeta.ContentLength);
             // Child-group layout as read (C137/C138): which group came first, and where the navmeshes sat among the temporaries
             bool sawTemporary = false, temporaryFirst = false;
@@ -138,7 +140,7 @@ partial class CellBinaryCreateTranslation
                         throw new NotImplementedException();
                 }
             }
-            CellChildLayout.Remember(obj, temporaryFirst, temporaryPattern);
+            CellChildLayout.Remember(obj, temporaryFirst, temporaryPattern, emptyGroup);
         }
         catch (Exception ex)
         {
@@ -298,9 +300,13 @@ partial class CellBinaryWriteTranslation
         try
         {
             var navMeshes = obj.NavigationMeshes;
+            // The layout read from the file (C137/C138, N10), while the cell still holds as many navmeshes and temporaries
+            var layout = CellChildLayout.TryGet(obj, out var l) && l.Fits(navMeshes.Count, obj.Temporary?.Count ?? 0) ? l : null;
             if ((obj.Persistent?.Count ?? 0) == 0
                 && (obj.Temporary?.Count ?? 0) == 0
                 && navMeshes.Count == 0
+                // A cell read with an empty children group gets it back (N10)
+                && layout?.EmptyGroup != true
                 ) return;
             using (HeaderExport.Header(writer, RecordTypes.GRUP, ObjectType.Group))
             {
@@ -313,8 +319,6 @@ partial class CellBinaryWriteTranslation
                 var temporary = obj.Temporary ?? Array.Empty<IPlacedGetter>();
                 var hasPersistent = obj.Persistent?.Count > 0;
                 var hasTemporary = temporary.Count > 0 || navMeshes.Count > 0;
-                // The layout read from the file (C137/C138), while the cell still holds as many navmeshes and temporaries
-                var layout = CellChildLayout.TryGet(obj, out var l) && l.Fits(navMeshes.Count, temporary.Count) ? l : null;
 
                 void WritePersistent()
                 {
@@ -526,6 +530,7 @@ partial class CellBinaryOverlay
         this._grupData = stream.ReadMemory(checked((int)groupMeta.TotalLength));
         stream = new OverlayStream(this._grupData.Value, stream.MetaData);
         finalPos = stream.Length;
+        var emptyGroup = groupMeta.ContentLength == 0;
         stream.Position += groupMeta.HeaderLength;
         bool sawTemporary = false, temporaryFirst = false;
         var temporaryPattern = new List<bool>();
@@ -676,7 +681,7 @@ partial class CellBinaryOverlay
                     throw new NotImplementedException();
             }
         }
-        CellChildLayout.Remember(this, temporaryFirst, temporaryPattern);
+        CellChildLayout.Remember(this, temporaryFirst, temporaryPattern, emptyGroup);
     }
 
     partial void TraversalsCustomParse(OverlayStream stream, int finalPos, int offset, RecordType type, PreviousParse lastParsed)

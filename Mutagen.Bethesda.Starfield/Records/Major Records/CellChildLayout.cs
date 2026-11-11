@@ -7,7 +7,8 @@ namespace Mutagen.Bethesda.Starfield;
 /// Keeps the layout of a cell's children group as it was read (C137, C138): whether the temporary children group came
 /// before the persistent one, and where the navmeshes sat among the temporary children. Mutagen writes persistent
 /// first and navmeshes first; the Creation Kit doesn't always (Starfield.esm: 1,511 cells with the temporary group
-/// first; darkstar.esm: 96 cells with the navmesh after the placed objects).<br/>
+/// first; darkstar.esm: 96 cells with the navmesh after the placed objects). It also keeps an empty children group
+/// (N10: BlueprintShips-Starfield.esm 16 cells, BlueprintShips-SFBGS050.esm 1), which Mutagen would leave out.<br/>
 /// Only a layout that differs from Mutagen's is noted. It is used on write while the cell still holds as many
 /// navmeshes and temporary children as it was read with; otherwise Mutagen's layout is written. A copy (DeepCopy,
 /// DeepCopyIn) takes it over. It doesn't take part in Equals.
@@ -16,7 +17,8 @@ internal static class CellChildLayout
 {
     /// <param name="TemporaryFirst">The temporary children group came before the persistent one</param>
     /// <param name="Runs">The temporary group's records as alternating runs: navmeshes, temporaries, navmeshes, ...</param>
-    internal sealed record Layout(bool TemporaryFirst, int[] Runs)
+    /// <param name="EmptyGroup">The cell had a children group with nothing in it (BlueprintShips-Starfield.esm: 16 cells)</param>
+    internal sealed record Layout(bool TemporaryFirst, int[] Runs, bool EmptyGroup = false)
     {
         public bool Fits(int navmeshes, int temporaries)
         {
@@ -36,8 +38,14 @@ internal static class CellChildLayout
     /// Notes a cell's layout as read, if it differs from Mutagen's
     /// </summary>
     /// <param name="temporaryPattern">The temporary group's records in read order: true for a navmesh</param>
-    internal static void Remember(object cell, bool temporaryFirst, IReadOnlyList<bool> temporaryPattern)
+    /// <param name="emptyGroup">The children group had nothing in it</param>
+    internal static void Remember(object cell, bool temporaryFirst, IReadOnlyList<bool> temporaryPattern, bool emptyGroup = false)
     {
+        if (emptyGroup)
+        {
+            Layouts.AddOrUpdate(cell, new Layout(false, new[] { 0 }, EmptyGroup: true));
+            return;
+        }
         var runs = new List<int> { 0 };
         foreach (var isNavmesh in temporaryPattern)
         {
@@ -69,7 +77,7 @@ internal static class CellChildLayout
     {
         if (!Layouts.TryGetValue(cell, out var layout)) return null;
         var bytes = new byte[1 + 4 * layout.Runs.Length];
-        bytes[0] = layout.TemporaryFirst ? (byte)1 : (byte)0;
+        bytes[0] = (byte)((layout.TemporaryFirst ? 1 : 0) | (layout.EmptyGroup ? 2 : 0));
         for (int i = 0; i < layout.Runs.Length; i++)
         {
             BinaryPrimitives.WriteInt32LittleEndian(bytes.AsSpan(1 + 4 * i), layout.Runs[i]);
@@ -89,7 +97,7 @@ internal static class CellChildLayout
             throw new FormatException($"Not a cell child-group layout: {value}");
         }
         var bytes = Convert.FromBase64String(value.Substring(Prefix.Length));
-        if (bytes.Length < 1 || (bytes.Length - 1) % 4 != 0 || bytes[0] > 1)
+        if (bytes.Length < 1 || (bytes.Length - 1) % 4 != 0 || bytes[0] > 3)
         {
             throw new FormatException($"Not a cell child-group layout: {value}");
         }
@@ -99,7 +107,7 @@ internal static class CellChildLayout
             runs[i] = BinaryPrimitives.ReadInt32LittleEndian(bytes.AsSpan(1 + 4 * i));
             if (runs[i] < 0) throw new FormatException($"Not a cell child-group layout: {value}");
         }
-        Layouts.AddOrUpdate(cell, new Layout(bytes[0] == 1, runs));
+        Layouts.AddOrUpdate(cell, new Layout((bytes[0] & 1) != 0, runs, EmptyGroup: (bytes[0] & 2) != 0));
     }
 }
 
