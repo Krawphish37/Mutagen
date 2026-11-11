@@ -269,6 +269,14 @@ internal sealed class ModHeaderWriteLogic
             case MastersListContentOption.NoCheck:
                 _modKeys.Set(mod.MasterReferences.Select(m => new KeyValuePair<ModKey, FormKey?>(m.Master, FormKey.Null)));
                 break;
+            case MastersListContentOption.Auto:
+                // Starfield, read from a file (or given its read state): every master it was read with stays, referenced
+                // or not; the walk below adds the ones its records now reference. Otherwise as Iterate.
+                if (OverriddenFormsBaseline.Applies(mod) && OverriddenFormsBaseline.WasRead(mod))
+                {
+                    _modKeys.Set(mod.MasterReferences.Select(m => new KeyValuePair<ModKey, FormKey?>(m.Master, FormKey.Null)));
+                }
+                goto case MastersListContentOption.Iterate;
             case MastersListContentOption.Iterate:
                 _recordIterationActions.Add(maj =>
                 {

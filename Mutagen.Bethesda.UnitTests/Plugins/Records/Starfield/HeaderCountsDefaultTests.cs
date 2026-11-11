@@ -263,6 +263,31 @@ public class HeaderCountsDefaultTests
         WriteDefault(s, removed).Count.ShouldBe(stored - 1);
     }
 
+    // A master no record references any more stays in a read (or rebuilt, with a baseline) plugin's list: the CK and
+    // xEdit leave it in, and dropping it moves every master index after it. weap_starlight's real TES4 lists
+    // Starfield.esm; here its only record is its own keyword.
+    [Fact]
+    public void UnreferencedMaster_IsKept_ReadOrRebuilt()
+    {
+        var s = Make("weap_starlight.esm", MasterStyle.Full, Hex(XeditTes4).Concat(Group("KYWD", Hex(XeditKywd))).ToArray());
+        var full = ReadFull(s);
+        using var overlay = ReadOverlay(s);
+        foreach (var mod in new IStarfieldModGetter[] { full, overlay, (IStarfieldModGetter)full.DeepCopy(), (IStarfieldModGetter)overlay.DeepCopy() })
+        {
+            WriteDefault(s, mod).Tes4.ShouldBe(Hex(XeditTes4));
+        }
+        var rebuilt = Rebuild(full);
+        rebuilt.SetHeaderStatsBaseline(full.GetHeaderStatsBaseline());
+        WriteDefault(s, rebuilt).Tes4.ShouldBe(Hex(XeditTes4));
+        // A new mod, and an explicit Iterate, list only the masters the records reference (none here)
+        var iterated = Write(s, ReadFull(s), p => new BinaryWriteParameters
+        {
+            FileSystem = s.Fs, MasterFlagsLookup = s.Lo, MastersListContent = MastersListContentOption.Iterate
+        });
+        Encoding.ASCII.GetString(iterated.Tes4).ShouldNotContain("MAST");
+        Encoding.ASCII.GetString(WriteDefault(s, Rebuild(full)).Tes4).ShouldNotContain("MAST");
+    }
+
     [Fact]
     public void ExplicitOptions_WorkAsBefore()
     {
