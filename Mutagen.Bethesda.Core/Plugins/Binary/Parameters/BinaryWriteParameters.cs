@@ -114,9 +114,10 @@ public sealed record BinaryWriteParameters
     public IFileSystem? FileSystem { get; init; }
 
     /// <summary>
-    /// Logic to use to ensure a mod overridden forms list is accurate
+    /// Logic to use to ensure a mod overridden forms list is accurate (Auto: the game's default; for every game but
+    /// Starfield that is NoCheck, as before)
     /// </summary>
-    public OverriddenFormsOption OverriddenFormsOption { get; init; } = OverriddenFormsOption.NoCheck;
+    public OverriddenFormsOption OverriddenFormsOption { get; init; } = OverriddenFormsOption.Auto;
 
     /// <summary>
     /// Aligns a mod's ModKey to a path's implied ModKey.

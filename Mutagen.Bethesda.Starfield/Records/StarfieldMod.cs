@@ -226,6 +226,8 @@ partial class StarfieldModSetterTranslationCommon
         mod.SetModKey(rhs.ModKey);
         // A copy is written the way the mod it copies was read (own FormIDs in its style or as a full index)
         Mutagen.Bethesda.Plugins.Masters.OwnFormIdStyle.Copy(rhs, item);
+        // ... and keeps the overridden-forms list of the file it came from while the records it covers are unchanged
+        Mutagen.Bethesda.Plugins.Records.OverriddenFormsBaseline.Copy(rhs, item);
     }
 
     public partial StarfieldMod DeepCopyGetNew(IStarfieldModGetter item)

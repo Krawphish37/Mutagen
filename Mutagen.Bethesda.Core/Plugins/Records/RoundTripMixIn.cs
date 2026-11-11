@@ -63,6 +63,30 @@ public static class RoundTripMixIn
         });
     }
 
+    /// <summary>
+    /// Starfield: the records that met the overridden-forms rule (TES4 ONAM) when this mod was read from its file,
+    /// sorted (null when not known, e.g. a new mod).<br/>
+    /// With the default write (<see cref="Mutagen.Bethesda.Plugins.Binary.Parameters.OverriddenFormsOption.Auto"/>),
+    /// a mod whose records meeting the rule are still these writes its overridden-forms list as it holds it (the
+    /// Creation Kit's list, order and all); otherwise the list is updated by the difference. Store the value next to
+    /// the mod's list and give it back with <see cref="SetOverriddenFormsBaseline"/> on a mod rebuilt from the same
+    /// data.
+    /// </summary>
+    public static IReadOnlyList<FormKey>? GetOverriddenFormsBaseline(this IModGetter mod)
+    {
+        var set = OverriddenFormsBaseline.Get(mod);
+        return set == null ? null : OverriddenFormsBaseline.Sorted(set).ToArray();
+    }
+
+    /// <summary>
+    /// Gives a mod the baseline of <see cref="GetOverriddenFormsBaseline"/> (null removes it: the list is then
+    /// computed on write)
+    /// </summary>
+    public static void SetOverriddenFormsBaseline(this IMod mod, IEnumerable<FormKey>? formKeys)
+    {
+        OverriddenFormsBaseline.Set(mod, formKeys);
+    }
+
     private const string SubrecordOrderPrefix = "SO1:";
     private const int SubrecordOrderEntryLength = 13;
 
