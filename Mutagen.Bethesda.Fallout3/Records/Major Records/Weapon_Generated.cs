@@ -10151,6 +10151,7 @@ namespace Mutagen.Bethesda.Fallout3
                     item.LimbDamageMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Complete)
                     {
+                        item.PowerAttackAnimationOverride = Weapon.PowerAttackAnimationOverrideDefault;
                         item.DNAMDataTypeState |= Weapon.DNAMDataType.Break0;
                         return (int)Weapon_FieldIndex.LimbDamageMult;
                     }
@@ -10158,6 +10159,7 @@ namespace Mutagen.Bethesda.Fallout3
                     item.ResistType = dataFrame.ReadInt32();
                     if (dataFrame.Complete)
                     {
+                        item.PowerAttackAnimationOverride = Weapon.PowerAttackAnimationOverrideDefault;
                         item.DNAMDataTypeState |= Weapon.DNAMDataType.Break1;
                         return (int)Weapon_FieldIndex.ResistType;
                     }
@@ -10169,6 +10171,7 @@ namespace Mutagen.Bethesda.Fallout3
                     item.SemiAutomaticFireDelayMax = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Complete)
                     {
+                        item.PowerAttackAnimationOverride = Weapon.PowerAttackAnimationOverrideDefault;
                         item.DNAMDataTypeState |= Weapon.DNAMDataType.Break2;
                         return (int)Weapon_FieldIndex.SemiAutomaticFireDelayMax;
                     }
@@ -10194,6 +10197,7 @@ namespace Mutagen.Bethesda.Fallout3
                     item.ValueAMod3 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Complete)
                     {
+                        item.PowerAttackAnimationOverride = Weapon.PowerAttackAnimationOverrideDefault;
                         item.DNAMDataTypeState |= Weapon.DNAMDataType.Break3;
                         return (int)Weapon_FieldIndex.ValueAMod3;
                     }

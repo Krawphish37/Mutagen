@@ -7730,6 +7730,16 @@ namespace Mutagen.Bethesda.Fallout4
                     item.FogDistanceNightMax = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Complete)
                     {
+                        item.FogDistanceDayNearHeightMid = Weather.FogDistanceDayNearHeightMidDefault;
+                        item.FogDistanceDayNearHeightRange = Weather.FogDistanceDayNearHeightRangeDefault;
+                        item.FogDistanceNightNearHeightMid = Weather.FogDistanceNightNearHeightMidDefault;
+                        item.FogDistanceNightNearHeightRange = Weather.FogDistanceNightNearHeightRangeDefault;
+                        item.FogDistanceDayHighDensityScale = Weather.FogDistanceDayHighDensityScaleDefault;
+                        item.FogDistanceNightHighDensityScale = Weather.FogDistanceNightHighDensityScaleDefault;
+                        item.FogDistanceDayFarHeightMid = Weather.FogDistanceDayFarHeightMidDefault;
+                        item.FogDistanceDayFarHeightRange = Weather.FogDistanceDayFarHeightRangeDefault;
+                        item.FogDistanceNightFarHeightMid = Weather.FogDistanceNightFarHeightMidDefault;
+                        item.FogDistanceNightFarHeightRange = Weather.FogDistanceNightFarHeightRangeDefault;
                         item.FNAMDataTypeState |= Weather.FNAMDataType.Break0;
                         return (int)Weather_FieldIndex.FogDistanceNightMax;
                     }
@@ -7747,6 +7757,10 @@ namespace Mutagen.Bethesda.Fallout4
                     item.FogDistanceNightHighDensityScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Complete)
                     {
+                        item.FogDistanceDayFarHeightMid = Weather.FogDistanceDayFarHeightMidDefault;
+                        item.FogDistanceDayFarHeightRange = Weather.FogDistanceDayFarHeightRangeDefault;
+                        item.FogDistanceNightFarHeightMid = Weather.FogDistanceNightFarHeightMidDefault;
+                        item.FogDistanceNightFarHeightRange = Weather.FogDistanceNightFarHeightRangeDefault;
                         item.FNAMDataTypeState |= Weather.FNAMDataType.Break1;
                         return (int)Weather_FieldIndex.FogDistanceNightHighDensityScale;
                     }
