@@ -28,6 +28,15 @@ public enum ModOwnFormIdStyle
 }
 
 /// <summary>
+/// What a header's record count and next object ID were computed against when a plugin was read (Starfield;
+/// <see cref="RoundTripMixIn.GetHeaderStatsBaseline"/>)
+/// </summary>
+/// <param name="RecordsRead">How many records the plugin had (the TES4 header and groups not counted)</param>
+/// <param name="HighestOwnObjectId">The highest object ID among the plugin's own records (null: it had none)</param>
+/// <param name="NextObjectId">The header's next object ID as read</param>
+public sealed record ModHeaderStatsBaseline(uint RecordsRead, uint? HighestOwnObjectId, uint NextObjectId);
+
+/// <summary>
 /// What Mutagen keeps about a plugin and its records beyond their fields, so that a mod or record rebuilt from
 /// another form (JSON, a database) can be written back exactly like the file it came from.
 /// </summary>
@@ -85,6 +94,32 @@ public static class RoundTripMixIn
     public static void SetOverriddenFormsBaseline(this IMod mod, IEnumerable<FormKey>? formKeys)
     {
         OverriddenFormsBaseline.Set(mod, formKeys);
+    }
+
+    /// <summary>
+    /// Starfield: what the mod's header record count and next object ID (TES4 HEDR) were computed against when it was
+    /// read from its file (null when not known, e.g. a new mod).<br/>
+    /// With the default write (<see cref="Mutagen.Bethesda.Plugins.Binary.Parameters.RecordCountOption.Auto"/>,
+    /// <see cref="Mutagen.Bethesda.Plugins.Binary.Parameters.NextFormIDOption.Auto"/>), a mod with this baseline keeps
+    /// the count its header holds, moved by the records added or removed since, and keeps its next object ID while no
+    /// own record goes above the highest one read (or when it is the Creation Kit's FF001000, or still above every own
+    /// ID). Store the value next to the mod's header and give it back with <see cref="SetHeaderStatsBaseline"/> on a
+    /// mod rebuilt from the same data; without it a rebuilt mod is counted as a new one.
+    /// </summary>
+    public static ModHeaderStatsBaseline? GetHeaderStatsBaseline(this IModGetter mod)
+    {
+        var snapshot = OverriddenFormsBaseline.GetSnapshot(mod);
+        if (snapshot?.Records is not { } records) return null;
+        return new ModHeaderStatsBaseline(records, snapshot.MaxOwnId, snapshot.NextObjectId ?? mod.NextFormID);
+    }
+
+    /// <summary>
+    /// Gives a mod the baseline of <see cref="GetHeaderStatsBaseline"/> (null removes it: the header is then counted
+    /// as for a new mod)
+    /// </summary>
+    public static void SetHeaderStatsBaseline(this IMod mod, ModHeaderStatsBaseline? baseline)
+    {
+        OverriddenFormsBaseline.SetHeaderStats(mod, baseline?.RecordsRead, baseline?.HighestOwnObjectId, baseline?.NextObjectId);
     }
 
     private const string SubrecordOrderPrefix = "SO1:";

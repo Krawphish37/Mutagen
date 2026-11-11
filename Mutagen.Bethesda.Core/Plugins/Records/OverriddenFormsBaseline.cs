@@ -22,10 +22,11 @@ namespace Mutagen.Bethesda.Plugins.Records;
 internal static class OverriddenFormsBaseline
 {
     /// <summary>
-    /// The read state: the records that met the overridden-forms rule, and (when known) how many records the mod had
-    /// and the highest ID among its own records
+    /// The read state: the records that met the overridden-forms rule, how many records the mod had, the highest ID
+    /// among its own records and its header's next object ID. Each part may be unknown (null): a mod rebuilt from another
+    /// form gets back only the parts it is given (RoundTripMixIn).
     /// </summary>
-    internal sealed record Snapshot(IReadOnlySet<FormKey> Candidates, uint? Records, uint? MaxOwnId);
+    internal sealed record Snapshot(IReadOnlySet<FormKey>? Candidates, uint? Records, uint? MaxOwnId, uint? NextObjectId = null);
 
     private sealed class Holder
     {
@@ -88,7 +89,7 @@ internal static class OverriddenFormsBaseline
                 candidates.Add(fk);
             }
         }
-        return new Snapshot(candidates, records, maxOwn);
+        return new Snapshot(candidates, records, maxOwn, mod.NextFormID);
     }
 
     /// <summary>
@@ -114,16 +115,34 @@ internal static class OverriddenFormsBaseline
     }
 
     /// <summary>
-    /// Sets the overridden-forms baseline (the public API). The record count and highest own ID are then not known.
+    /// Sets the overridden-forms baseline (the public API; null removes it). The header stats part is kept.
     /// </summary>
     public static void Set(object mod, IEnumerable<FormKey>? formKeys)
     {
-        if (formKeys == null)
+        var current = GetSnapshot(mod);
+        Put(mod, new Snapshot(
+            formKeys == null ? null : new HashSet<FormKey>(formKeys),
+            current?.Records,
+            current?.MaxOwnId,
+            current?.NextObjectId));
+    }
+
+    /// <summary>
+    /// Sets the header stats baseline (the public API; null removes it): the number of records, the highest own ID and
+    /// the next object ID the mod had when read. The overridden-forms part is kept.
+    /// </summary>
+    public static void SetHeaderStats(object mod, uint? records, uint? maxOwnId, uint? nextObjectId)
+    {
+        Put(mod, new Snapshot(GetSnapshot(mod)?.Candidates, records, maxOwnId, nextObjectId));
+    }
+
+    private static void Put(object mod, Snapshot snapshot)
+    {
+        if (snapshot.Candidates == null && snapshot.Records == null && snapshot.MaxOwnId == null && snapshot.NextObjectId == null)
         {
             Mods.Remove(mod);
             return;
         }
-        var snapshot = new Snapshot(new HashSet<FormKey>(formKeys), null, null);
         Mods.AddOrUpdate(mod, new Holder(new Lazy<Snapshot>(() => snapshot), unchangeable: false));
     }
 

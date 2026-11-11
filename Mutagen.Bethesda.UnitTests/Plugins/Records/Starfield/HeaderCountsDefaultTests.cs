@@ -115,7 +115,16 @@ public class HeaderCountsDefaultTests
         Hex(CkTes4).Concat(Group("OMOD", Hex(CkOmod))).Concat(Group("COBJ", Hex(CkCobj))).ToArray());
 
     private static Setup XeditPlugin(uint? next = null) => Make("weap_starlight.esm", MasterStyle.Full,
-        (next is { } n ? WithNext(XeditTes4, n) : Hex(XeditTes4)).Concat(Group("KYWD", Hex(XeditKywd))).ToArray());
+        (next is { } n ? WithNext(XeditTes4, n) : Hex(XeditTes4)).Concat(Group("KYWD", Hex(XeditKywd), StarfieldOverride())).ToArray());
+
+    // An override of a Starfield.esm keyword, so the master stays referenced (an unreferenced master is dropped on the
+    // default write, MastersListContentOption.Iterate)
+    private static byte[] StarfieldOverride()
+    {
+        var edid = Encoding.ASCII.GetBytes("EDID").Concat(BitConverter.GetBytes((ushort)17)).Concat(Encoding.ASCII.GetBytes("StarfieldKeyword\0")).ToArray();
+        return Encoding.ASCII.GetBytes("KYWD").Concat(BitConverter.GetBytes(edid.Length)).Concat(new byte[4])
+            .Concat(BitConverter.GetBytes(0x00000ABCu)).Concat(Hex("000000003F020000")).Concat(edid).ToArray();
+    }
 
     [Fact]
     public void CkHeader_Rewrite_KeepsCountAndNext_BothReaders()
@@ -192,6 +201,91 @@ public class HeaderCountsDefaultTests
         var written = Write(s, mod, p => p with { MastersListContent = MastersListContentOption.Iterate });
         written.Count.ShouldBe(4u);
         written.Next.ShouldBe(0x803u);
+    }
+
+    // A mod rebuilt from fresh objects (as from JSON or a database) has no read state: with the default write its header
+    // is counted as a new mod's (weap_starlight 93 -> 2, kgcdoom-style FF001000 -> the highest own ID + 1). Given back
+    // the baseline from RoundTripMixIn, it writes the TES4 as read, and moves the count by the records added or removed.
+    private static StarfieldMod Rebuild(StarfieldMod read)
+    {
+        var mod = new StarfieldMod(read.ModKey, StarfieldRelease.Starfield);
+        mod.ModHeader.DeepCopyIn(read.ModHeader);
+        foreach (var r in read.Keywords) mod.Keywords.Add(r.DeepCopy());
+        foreach (var r in read.ObjectModifications) mod.ObjectModifications.Add(r.DeepCopy());
+        foreach (var r in read.ConstructibleObjects) mod.ConstructibleObjects.Add(r.DeepCopy());
+        mod.SetOwnFormIdStyle(read.GetOwnFormIdStyle());
+        return mod;
+    }
+
+    private static (byte[] Tes4, uint Count, uint Next) WriteDefault(Setup s, IStarfieldModGetter mod) =>
+        Write(s, mod, p => new BinaryWriteParameters { FileSystem = s.Fs, MasterFlagsLookup = s.Lo });
+
+    [Theory]
+    [InlineData("ck")]       // kgcdoom-style: records + 1, FF001000
+    [InlineData("xedit")]    // weap_starlight: records + groups, highest own ID + 1
+    [InlineData("stale")]    // darkstar-style: records + groups, a next object ID below the own IDs
+    public void RebuiltMod_WithHeaderStatsBaseline_WritesTheTes4AsRead(string kind)
+    {
+        var s = kind == "ck" ? CkPlugin() : XeditPlugin(next: kind == "stale" ? 0x800 : null);
+        var original = s.Fs.File.ReadAllBytes(s.Path);
+        var tes4 = original.AsSpan(0, 24 + BitConverter.ToInt32(original, 4)).ToArray();
+        var read = ReadFull(s);
+        var baseline = read.GetHeaderStatsBaseline();
+        baseline.ShouldNotBeNull();
+        baseline.RecordsRead.ShouldBe(2u);
+        baseline.HighestOwnObjectId.ShouldBe(kind == "ck" ? 0xAu : 0x80Bu);
+        baseline.NextObjectId.ShouldBe(kind == "ck" ? 0xFF001000u : kind == "stale" ? 0x800u : 0x888u);
+        using (var overlay = ReadOverlay(s))
+        {
+            overlay.GetHeaderStatsBaseline().ShouldBe(baseline);
+        }
+
+        // Without the baseline the rebuilt mod is counted as new
+        WriteDefault(s, Rebuild(read)).Tes4.ShouldNotBe(tes4);
+
+        var rebuilt = Rebuild(read);
+        rebuilt.SetHeaderStatsBaseline(baseline);
+        rebuilt.GetHeaderStatsBaseline().ShouldBe(baseline);
+        WriteDefault(s, rebuilt).Tes4.ShouldBe(tes4);
+
+        var stored = WriteDefault(s, read).Count;
+        // One record added: the count moves by one, the next object ID stays (the new ID is below the highest read)
+        var added = Rebuild(read);
+        added.SetHeaderStatsBaseline(baseline);
+        added.Keywords.Add(new Keyword(new FormKey(s.Plugin, kind == "ck" ? 0x005u : 0x801u), StarfieldRelease.Starfield) { EditorID = "Added" });
+        var a = WriteDefault(s, added);
+        a.Count.ShouldBe(stored + 1);
+        a.Next.ShouldBe(baseline.NextObjectId);
+        // One record removed: the count moves back by one
+        var removed = Rebuild(read);
+        removed.SetHeaderStatsBaseline(baseline);
+        if (kind == "ck") removed.ConstructibleObjects.Clear(); else removed.Keywords.Remove(removed.Keywords.Single(k => k.FormKey.ModKey == s.Plugin));
+        WriteDefault(s, removed).Count.ShouldBe(stored - 1);
+    }
+
+    // A master no record references any more stays in a read (or rebuilt, with a baseline) plugin's list: the CK and
+    // xEdit leave it in, and dropping it moves every master index after it. weap_starlight's real TES4 lists
+    // Starfield.esm; here its only record is its own keyword.
+    [Fact]
+    public void UnreferencedMaster_IsKept_ReadOrRebuilt()
+    {
+        var s = Make("weap_starlight.esm", MasterStyle.Full, Hex(XeditTes4).Concat(Group("KYWD", Hex(XeditKywd))).ToArray());
+        var full = ReadFull(s);
+        using var overlay = ReadOverlay(s);
+        foreach (var mod in new IStarfieldModGetter[] { full, overlay, (IStarfieldModGetter)full.DeepCopy(), (IStarfieldModGetter)overlay.DeepCopy() })
+        {
+            WriteDefault(s, mod).Tes4.ShouldBe(Hex(XeditTes4));
+        }
+        var rebuilt = Rebuild(full);
+        rebuilt.SetHeaderStatsBaseline(full.GetHeaderStatsBaseline());
+        WriteDefault(s, rebuilt).Tes4.ShouldBe(Hex(XeditTes4));
+        // A new mod, and an explicit Iterate, list only the masters the records reference (none here)
+        var iterated = Write(s, ReadFull(s), p => new BinaryWriteParameters
+        {
+            FileSystem = s.Fs, MasterFlagsLookup = s.Lo, MastersListContent = MastersListContentOption.Iterate
+        });
+        Encoding.ASCII.GetString(iterated.Tes4).ShouldNotContain("MAST");
+        Encoding.ASCII.GetString(WriteDefault(s, Rebuild(full)).Tes4).ShouldNotContain("MAST");
     }
 
     [Fact]

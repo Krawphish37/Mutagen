@@ -28,7 +28,7 @@ public sealed record BinaryWriteParameters
     /// Logic to use to keep a mod's master list content in sync<br/>
     /// This setting is just used to sync the contents of the list, not the order
     /// </summary>
-    public MastersListContentOption MastersListContent { get; init; } = MastersListContentOption.Iterate;
+    public MastersListContentOption MastersListContent { get; init; } = MastersListContentOption.Auto;
     
     /// <summary>
     /// A transformer function to take in the typical given masters, and transform them to provide the masters for actual use <br />

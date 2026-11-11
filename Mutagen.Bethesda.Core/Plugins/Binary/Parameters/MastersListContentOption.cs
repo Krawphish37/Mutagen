@@ -15,4 +15,12 @@ public enum MastersListContentOption
     /// Iterate source mod
     /// </summary>
     Iterate,
+
+    /// <summary>
+    /// The game's default. Starfield: a mod read from a file (or given its read state through RoundTripMixIn) keeps every
+    /// master it was read with, referenced or not (the Creation Kit and xEdit leave them in, and dropping one moves every
+    /// master index after it); masters its records now reference are added. Other games, and a mod not read from a
+    /// file: <see cref="Iterate"/>.
+    /// </summary>
+    Auto,
 }
