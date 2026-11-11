@@ -134,6 +134,11 @@ internal static class OverriddenFormsBaseline
     public static bool IsUnchangeable(object mod) => Mods.TryGetValue(mod, out var holder) && holder.Unchangeable;
 
     /// <summary>
+    /// Whether the mod was read from a file (or given its read state): its master list is then the file's
+    /// </summary>
+    public static bool WasRead(object mod) => Mods.TryGetValue(mod, out _);
+
+    /// <summary>
     /// A copy of a mod (DeepCopy) takes over its read state; the copy can change, so an overlay's is computed now
     /// </summary>
     public static void Copy(object from, object to)

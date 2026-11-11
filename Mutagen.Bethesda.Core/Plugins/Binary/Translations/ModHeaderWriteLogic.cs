@@ -137,11 +137,11 @@ internal sealed class ModHeaderWriteLogic
         _modKeys.Remove(mod.ModKey);
         _modKeys.Remove(ModKey.Null);
         var modKeysList = _modKeys.Keys.ToList();
-        SortMasters(modKeysList);
+        SortMasters(mod, modKeysList);
         if (_params.MastersContentCustomOverride != null)
         {
             modKeysList = _params.MastersContentCustomOverride(modKeysList).ToList();
-            SortMasters(modKeysList);
+            SortMasters(mod, modKeysList);
         }
         modKeysList = SpellMasters(mod, modKeysList);
         ret.SetTo(modKeysList.Select(m => new MasterReference()
@@ -389,12 +389,52 @@ internal sealed class ModHeaderWriteLogic
     #endregion
 
     #region Master Order Sync Logic
+    /// <summary>
+    /// Starfield, no ordering given: a mod read from a file keeps its masters in the file's order (the masters it still
+    /// has); masters it didn't have come after them, in the default order. The default order sorts by name, which put
+    /// Starfield.esm after "SFBGS..." and "ShatteredSpace.esm": darkstar.esm's Starfield.esm, sfbgs00d.esm,
+    /// sfbgs003.esm came back as sfbgs003.esm, sfbgs00d.esm, Starfield.esm, and every master FormID was re-encoded.
+    /// </summary>
+    private void SortMasters(IModGetter mod, List<ModKey> modKeys)
+    {
+        if (_params.MastersListOrdering == null
+            && OverriddenFormsBaseline.Applies(mod)
+            && OverriddenFormsBaseline.WasRead(mod))
+        {
+            var read = mod.MasterReferences.Select(m => m.Master).ToList();
+            var present = modKeys.ToHashSet();
+            var kept = read.Where(present.Contains).Distinct().ToList();
+            var keptSet = kept.ToHashSet();
+            var added = modKeys.Where(m => !keptSet.Contains(m)).ToList();
+            SortMasters(added);
+            modKeys.Clear();
+            modKeys.AddRange(kept);
+            modKeys.AddRange(added);
+            return;
+        }
+        SortMasters(modKeys);
+    }
+
+    private static readonly ModKey StarfieldEsm = ModKey.FromFileName("Starfield.esm");
+
+    private static readonly Comparer<ModKey> StarfieldMasterFirst = Comparer<ModKey>.Create((x, y) =>
+    {
+        var xFirst = x == StarfieldEsm;
+        var yFirst = y == StarfieldEsm;
+        if (xFirst != yFirst) return xFirst ? -1 : 1;
+        return ModKey.AlphabeticalAndMastersFirst.Compare(x, y);
+    });
+
     private void SortMasters(List<ModKey> modKeys)
     {
         switch (_params.MastersListOrdering)
         {
             case null:
-                modKeys.Sort(ModKey.AlphabeticalAndMastersFirst);
+                // Starfield: the game's own master first (by name it would come after its DLC, "SFBGS..." and
+                // "ShatteredSpace.esm"); the rest by name as before
+                modKeys.Sort(_category == GameCategory.Starfield
+                    ? StarfieldMasterFirst
+                    : ModKey.AlphabeticalAndMastersFirst);
                 return;
             case MastersListOrderingEnumOption e:
                 switch (e.Option)
