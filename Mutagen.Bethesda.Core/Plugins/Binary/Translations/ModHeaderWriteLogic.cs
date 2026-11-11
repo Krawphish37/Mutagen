@@ -24,7 +24,9 @@ internal sealed class ModHeaderWriteLogic
     private bool _usesOwnFormKeys;
     private uint _numRecords;
     private uint? _nextFormID;
-    private readonly HashSet<FormKey> _formKeyUniqueness = new();
+    // With the header FormID as read when it is kept (RawHeaderFormIds): two records of a file can read as one FormKey
+    // (02000869 and 03000869 with two masters) and still be written as the two FormIDs they are
+    private readonly HashSet<(FormKey FormKey, uint? Raw)> _formKeyUniqueness = new();
     private readonly GameCategory _category;
     private FormKey? _disallowedLowerFormKey;
     private uint _higherFormIDRange;
@@ -56,6 +58,8 @@ internal sealed class ModHeaderWriteLogic
         var modHeaderWriter = new ModHeaderWriteLogic(
             param: param,
             mod: mod);
+        // Records read as the same FormKey as a later one, written back in their place by the record writer
+        DuplicateRecords.BeginWrite(mod);
         modHeaderWriter.AddProcessors(mod, modHeader);
         modHeaderWriter.RunProcessors(mod);
         modHeaderWriter.PostProcessAdjustments(writer, mod, modHeader, 
@@ -334,7 +338,7 @@ internal sealed class ModHeaderWriteLogic
             case FormIDUniquenessOption.Iterate:
                 _recordIterationActions.Add(maj =>
                 {
-                    if (!_formKeyUniqueness.Add(maj.FormKey))
+                    if (!_formKeyUniqueness.Add((maj.FormKey, RawHeaderFormIds.Get(maj))))
                     {
                         throw new ArgumentException($"Two records with the same FormKey were encountered: {maj.FormKey}");
                     }

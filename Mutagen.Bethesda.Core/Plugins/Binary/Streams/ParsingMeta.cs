@@ -80,6 +80,11 @@ public sealed class ParsingMeta
 
     public IFileSystem FileSystem { get; set; } = IFileSystemExt.DefaultFilesystem;
 
+    /// <summary>
+    /// Records a later record with the same FormKey replaced in their group (shared by the parallel copies)
+    /// </summary>
+    internal Mutagen.Bethesda.Plugins.Records.DuplicateRecords.Set? Duplicates { get; set; }
+
     public ParsingMeta(
         GameConstants constants,
         ModKey modKey,

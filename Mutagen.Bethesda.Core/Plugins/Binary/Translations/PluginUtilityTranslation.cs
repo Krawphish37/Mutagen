@@ -93,11 +93,15 @@ internal static class PluginUtilityTranslation
         MajorRecordFill<M> fillTyped)
         where M : IMajorRecordGetter
     {
-        frame.MetaData.FormVersion = (ushort?)frame.Reader.GetMajorRecordHeader().FormVersion;
+        var majorHeader = frame.Reader.GetMajorRecordHeader();
+        frame.MetaData.FormVersion = (ushort?)majorHeader.FormVersion;
+        var rawFormId = majorHeader.FormID.Raw;
         frame = frame.SpawnWithFinalPosition(HeaderTranslation.ParseRecord(frame.Reader));
         fillStructs(
             record: record,
             frame: frame);
+        // A header FormID that isn't the one Mutagen writes for this FormKey is written back as read (RawHeaderFormIds)
+        RawHeaderFormIds.Remember(record, rawFormId, frame.MetaData);
         // Where each field's subrecords start, to note records whose subrecords come in an order Mutagen does not write
         var fieldStarts = frame.MetaData.Constants.KeepSubrecordOrder ? SubrecordOrder.FieldStarts : null;
         var firstField = fieldStarts?.Count ?? 0;
@@ -462,6 +466,8 @@ internal static class PluginUtilityTranslation
         // How the mod stores its own FormIDs, if read from its file, to write it back the same way
         Mutagen.Bethesda.Plugins.Masters.OwnFormIdStyle.Set(record,
             (frame.MetaData.MasterReferences as Mutagen.Bethesda.Plugins.Masters.SeparatedMasterPackage)?.OwnFormIdsStyled);
+        // Records a later record with the same FormKey replaces while reading are collected here (DuplicateRecords)
+        DuplicateRecords.Attach(record, frame.MetaData);
         fillTyped(
             record: record,
             frame: frame,
@@ -674,12 +680,38 @@ internal static class PluginUtilityTranslation
     {
         try
         {
+            // A record with the same FormKey that this one replaced while reading, and that came first (DuplicateRecords)
+            DuplicateRecords.WriteBefore(item, writer);
+            WriteMajorRecordItself(writer, translationParams, type, item, writeEmbedded, writeRecordTypes, endMarker);
+            // ... or that came after this one
+            DuplicateRecords.WriteAfter(item, writer);
+        }
+        catch (Exception ex)
+        {
+            RecordException.EnrichAndThrow(ex, item);
+            throw;
+        }
+    }
+
+    private static void WriteMajorRecordItself<TMajor>(
+        MutagenWriter writer,
+        TypedWriteParams translationParams,
+        RecordType type,
+        TMajor item,
+        Action<TMajor, MutagenWriter> writeEmbedded,
+        Action<TMajor, MutagenWriter, TypedWriteParams> writeRecordTypes,
+        RecordType? endMarker)
+        where TMajor : IMajorRecordGetter
+    {
+        {
             var headerPos = writer.Position;
             using (HeaderExport.Record(
                        writer: writer,
                        record: translationParams.ConvertToCustom(type)))
             {
                 writeEmbedded(item, writer);
+                // A header FormID read as stored, not as Mutagen would write it, goes back as read (RawHeaderFormIds)
+                RawHeaderFormIds.Restore(item, writer, headerPos);
                 // Starfield keeps what a deleted record holds. Writing the header only would lose it:
                 // a placed reference's base object, a global's value, a cell's data.
                 if (item.IsDeleted && writer.MetaData.Constants.Release.ToCategory() != GameCategory.Starfield)
@@ -737,11 +769,6 @@ internal static class PluginUtilityTranslation
                 }
                 writer.MetaData.FormVersion = null;
             }
-        }
-        catch (Exception ex)
-        {
-            RecordException.EnrichAndThrow(ex, item);
-            throw;
         }
     }
 
