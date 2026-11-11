@@ -1404,6 +1404,14 @@ public class PluginTranslationModule : BinaryTranslationModule
                     sb.AppendLine($"if (dataFrame.Complete)");
                     using (sb.CurlyBrace())
                     {
+                        // The fields the subrecord leaves out read as their declared defaults, as in the overlay. The class
+                        // can't start them there: Loqui drops the initializer of a field with a set hook (the break flags).
+                        foreach (var rest in set.IterateFieldsWithMeta().Where(f => f.FieldIndex >= subField.FieldIndex))
+                        {
+                            if (rest.Field is not TypicalTypeGeneration { HasDefault: true } typical) continue;
+                            if (!typical.Enabled || !typical.IntegrateField) continue;
+                            sb.AppendLine($"item.{typical.Name} = {obj.ObjectName}.{typical.DefaultValueMemberName};");
+                        }
                         sb.AppendLine($"item.{set.StateName} |= {obj.ObjectName}.{set.EnumName}.Break{subField.BreakIndex};");
                         string enumName = null;
                         for (int i = subField.FieldIndex - 1; i >= 0; i--)
