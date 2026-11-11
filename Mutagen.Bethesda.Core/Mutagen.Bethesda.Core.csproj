@@ -615,6 +615,7 @@
         <Compile Include="Translations\Binary\Int8BinaryTranslation.cs" />
         <Compile Include="Translations\Binary\ListBinaryTranslation.cs" />
         <Compile Include="Plugins\Records\Quadrant.cs" />
+        <Compile Include="Plugins\Records\DuplicateRecords.cs" />
         <Compile Include="Plugins\Records\OverriddenFormsBaseline.cs" />
         <Compile Include="Plugins\Records\RoundTripMixIn.cs" />
         <Compile Include="Strings\StringsLanguageFormat.cs" />

@@ -82,6 +82,7 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
             if (mod is Mutagen.Bethesda.Plugins.Records.IModGetter modGetter)
             {
                 Mutagen.Bethesda.Plugins.Records.OverriddenFormsBaseline.RememberOverlay(modGetter);
+                Mutagen.Bethesda.Plugins.Records.DuplicateRecords.Attach(modGetter, package.MetaData);
             }
         }
         var minimumFinalPos = checked((int)(stream.Position + headerMeta.TotalLength));

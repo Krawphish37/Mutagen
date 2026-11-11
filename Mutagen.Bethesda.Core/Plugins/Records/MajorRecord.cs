@@ -196,6 +196,11 @@ internal abstract partial class MajorRecordBinaryOverlay : IMajorRecordGetter
     public bool IsCompressed => Enums.HasFlag(MajorRecordFlagsRaw, Constants.CompressedFlag);
     public bool IsDeleted => Enums.HasFlag(MajorRecordFlagsRaw, Constants.DeletedFlag);
 
+    /// <summary>
+    /// The header FormID as stored in the file (RawHeaderFormIds)
+    /// </summary>
+    internal uint FormIdAsRead => System.Buffers.Binary.BinaryPrimitives.ReadUInt32LittleEndian(_structData.Span.Slice(0x4, 4));
+
     public ReadOnlyMemorySlice<byte>? UnknownSubrecords => _unknownSubrecords;
     private byte[]? _unknownSubrecords;
     public string? UnknownSubrecordsSource { get; private set; }
@@ -238,5 +243,7 @@ internal partial class MajorRecordSetterTranslationCommon
         Mutagen.Bethesda.Plugins.Binary.Translations.SubrecordOrder.Copy(rhs, item);
         // And the compressed content it was read with (CompressedOriginals), written only while the copy holds exactly it
         Mutagen.Bethesda.Plugins.Binary.Translations.CompressedOriginals.Copy(rhs, item);
+        // And its header FormID as read (RawHeaderFormIds), written only while it still means the copy's FormKey
+        RawHeaderFormIds.Copy(rhs, item);
     }
 }

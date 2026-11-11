@@ -228,6 +228,7 @@ partial class StarfieldModSetterTranslationCommon
         Mutagen.Bethesda.Plugins.Masters.OwnFormIdStyle.Copy(rhs, item);
         // ... and keeps the overridden-forms list of the file it came from while the records it covers are unchanged
         Mutagen.Bethesda.Plugins.Records.OverriddenFormsBaseline.Copy(rhs, item);
+        Mutagen.Bethesda.Plugins.Records.DuplicateRecords.Copy(rhs, item);
         // And with the empty top-level groups it was read with
         Mutagen.Bethesda.Plugins.Binary.Translations.EmptyTopLevelGroups.Copy(rhs, item);
     }

@@ -1537,13 +1537,41 @@ internal static class ListBinaryTranslationExt
             }
             catch (ArgumentException)
             {
-                throw new RecordCollisionException(
-                    reader.MetaData.ModKey,
-                    entry.FormKey, 
-                    typeof(T));
+                if (item is not ICache<T, FormKey> byFormKey
+                    || !byFormKey.TryGetValue(entry.FormKey, out var earlier))
+                {
+                    throw new RecordCollisionException(
+                        reader.MetaData.ModKey,
+                        entry.FormKey,
+                        typeof(T));
+                }
+                KeepLater(byFormKey, earlier, entry, reader.MetaData);
             }
         }
-    } 
+    }
+
+    /// <summary>
+    /// Two records of the group read as the same FormKey (DuplicateRecords): the group keeps the later one, in its own
+    /// place, as the game does; the earlier one is kept aside, to be written back where it was
+    /// </summary>
+    private static void KeepLater<T>(ICache<T, FormKey> cache, T earlier, T later, ParsingMeta meta)
+        where T : IMajorRecordGetter
+    {
+        var items = cache.Items.ToList();
+        var index = items.FindIndex(x => ReferenceEquals(x, earlier));
+        FormKey? after = index > 0 ? items[index - 1].FormKey : null;
+        FormKey? before = after == null
+            ? (index + 1 < items.Count ? items[index + 1].FormKey : later.FormKey)
+            : null;
+        // Rebuilt in file order, the later record at its own place (a cache keeps the order records are added in)
+        cache.Clear();
+        foreach (var x in items)
+        {
+            if (!ReferenceEquals(x, earlier)) cache.Add(x);
+        }
+        cache.Add(later);
+        (meta.Duplicates ??= new DuplicateRecords.Set()).Add(earlier, after, before, meta.ModKey, typeof(T));
+    }
     #endregion 
 }
  

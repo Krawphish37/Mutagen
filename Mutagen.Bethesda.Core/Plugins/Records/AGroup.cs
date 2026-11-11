@@ -292,6 +292,8 @@ internal sealed class GroupMajorRecordCacheWrapper<T> : IReadOnlyCache<T, FormKe
         where TStream : IMutagenReadStream
     {
         Dictionary<FormKey, int> locationDict = new Dictionary<FormKey, int>();
+        // The records' file order, kept only once two records of the group read as the same FormKey (DuplicateRecords)
+        List<FormKey>? order = null;
 
         stream.Position -= package.MetaData.Constants.GroupConstants.HeaderLength;
         var groupMeta = stream.GetGroupHeader(package.MetaData);
@@ -312,6 +314,7 @@ internal sealed class GroupMajorRecordCacheWrapper<T> : IReadOnlyCache<T, FormKe
                     try
                     {
                         locationDict.Add(formKey, checked((int)(stream.Position - offset)));
+                        order?.Add(formKey);
                     }
                     catch (ArgumentException)
                     {
@@ -332,22 +335,40 @@ internal sealed class GroupMajorRecordCacheWrapper<T> : IReadOnlyCache<T, FormKe
                 {
                     throw new RecordException(formKey: formKey, recordType: null, modKey: package.MetaData.ModKey, edid: null, message: "Unexpected type encountered when parsing MajorRecord locations: " + majorMeta.RecordType);
                 }
-                try
+                var pos = checked((int)(stream.Position - offset));
+                if (locationDict.TryGetValue(formKey, out var earlierPos))
                 {
-                    locationDict.Add(formKey, checked((int)(stream.Position - offset)));
+                    // The group keeps the later record, in its own place, as the game does; the earlier one is kept
+                    // aside, to be written back where it was
+                    order ??= locationDict.Keys.ToList();
+                    var index = order.IndexOf(formKey);
+                    FormKey? after = index > 0 ? order[index - 1] : null;
+                    FormKey? before = after == null ? (index + 1 < order.Count ? order[index + 1] : formKey) : null;
+                    order.RemoveAt(index);
+                    order.Add(formKey);
+                    locationDict[formKey] = pos;
+                    var earlier = LoquiBinaryOverlayTranslation<T>.Create(
+                        stream: new OverlayStream(data.Slice(earlierPos), package),
+                        package: package,
+                        recordTypeConverter: null);
+                    (package.MetaData.Duplicates ??= new DuplicateRecords.Set()).Add(
+                        earlier, after, before, package.MetaData.ModKey, typeof(T));
                 }
-                catch (ArgumentException)
+                else
                 {
-                    throw new RecordCollisionException(
-                        stream.MetaData.ModKey,
-                        formKey,
-                        typeof(T));
+                    locationDict.Add(formKey, pos);
+                    order?.Add(formKey);
                 }
                 stream.Position += checked((int)majorMeta.TotalLength);
                 lastParsed = formKey;
             }
         }
 
+        if (order != null)
+        {
+            // In file order (a dictionary keeps the order keys are added in)
+            locationDict = order.ToDictionary(k => k, k => locationDict[k]);
+        }
         return new GroupMajorRecordCacheWrapper<T>(
             locationDict,
             data,
