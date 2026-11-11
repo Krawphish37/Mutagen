@@ -15,8 +15,9 @@ namespace Mutagen.Bethesda.Plugins.Binary.Translations;
 /// Writing such a record serializes it as usual. When the uncompressed bytes are exactly the ones the kept stream
 /// holds, the kept stream is written; otherwise the new bytes are compressed. A changed record is never written
 /// with its old content.<br/>
-/// An overlay keeps a slice of the memory it reads from (no copy); a full import keeps a copy of each compressed
-/// record's stream. A copy (DeepCopy, DeepCopyIn) takes over the kept stream of the record it copies.
+/// An overlay keeps a slice of the memory it reads from (no copy). A full import keeps a copy of each compressed
+/// record's stream only when asked (BinaryReadParameters.KeepCompressedRecords): 1.2 GB for Starfield.esm.
+/// A copy (DeepCopy, DeepCopyIn) takes over the kept stream of the record it copies.
 /// </summary>
 internal static class CompressedOriginals
 {

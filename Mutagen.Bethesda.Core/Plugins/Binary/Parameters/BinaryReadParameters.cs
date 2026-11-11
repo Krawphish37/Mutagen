@@ -31,6 +31,14 @@ public record BinaryReadParameters
     /// Whether to treat unknown records as errors and throw an exception
     /// </summary>
     public bool ThrowOnUnknownSubrecord { get; init; } = false;
+
+    /// <summary>
+    /// Full import only: keep each compressed record's zlib stream as read, so an unchanged record is written back with
+    /// the same bytes even where Mutagen's compressor would encode it differently (games that keep their file layout:
+    /// Starfield). Costs about the size of the compressed records (1.2 GB for Starfield.esm). An overlay always keeps
+    /// them, at no cost (it reads them from memory it holds anyway).
+    /// </summary>
+    public bool KeepCompressedRecords { get; init; } = false;
     
     /// <summary>
     /// FileSystem to read from

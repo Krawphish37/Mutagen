@@ -109,7 +109,7 @@ internal static class PluginUtilityTranslation
             MutagenFrame targetFrame = frame;
             if (record.IsCompressed)
             {
-                if (fieldStarts != null)
+                if (fieldStarts != null && frame.MetaData.KeepCompressedRecords)
                 {
                     // Keep the compressed content as read, to write it back while the record is unchanged (CompressedOriginals)
                     var compressedStart = frame.Position;

@@ -106,13 +106,15 @@ public class ExactFileLayoutTests
         return fileSystem.File.ReadAllBytes(filePath);
     }
 
-    private static IStarfieldMod ReadMutable(byte[] bytes, ModPath filePath, IFileSystem fileSystem)
+    // A full import keeps compressed records' streams only when asked (it costs their size)
+    private static IStarfieldMod ReadMutable(byte[] bytes, ModPath filePath, IFileSystem fileSystem, bool keepCompressed = true)
     {
         fileSystem.File.WriteAllBytes(filePath, bytes);
         return StarfieldMod.Create(StarfieldRelease.Starfield)
             .FromPath(filePath)
             .WithNoLoadOrder()
             .Mutable()
+            .KeepCompressedRecords(keepCompressed)
             .WithFileSystem(fileSystem)
             .Construct();
     }
@@ -377,6 +379,17 @@ public class ExactFileLayoutTests
         var input = OtherCompression(WriteMod(ModWithCompressedKeyword(mod), filePath, fileSystem), out _, out _);
 
         ShouldRewriteIdentical(input, filePath, fileSystem);
+    }
+
+    [Theory, MutagenModAutoData(GameRelease.Starfield)]
+    public void CompressedRecord_FullImportNotAsked_CompressedAnew(IFileSystem fileSystem, ModPath filePath, StarfieldMod mod)
+    {
+        var mutagenLayout = WriteMod(ModWithCompressedKeyword(mod), filePath, fileSystem);
+        var input = OtherCompression(mutagenLayout, out _, out _);
+        var read = ReadMutable(input, filePath, fileSystem, keepCompressed: false);
+
+        read.Keywords.Single().GetOriginalCompressedData().ShouldBeNull();
+        WriteMod(read, OutPath(fileSystem, filePath), fileSystem).ShouldBe(mutagenLayout);
     }
 
     [Theory, MutagenModAutoData(GameRelease.Starfield)]
