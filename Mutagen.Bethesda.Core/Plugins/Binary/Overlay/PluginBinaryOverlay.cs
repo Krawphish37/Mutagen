@@ -78,6 +78,11 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
         {
             Mutagen.Bethesda.Plugins.Masters.OwnFormIdStyle.Set(mod,
                 (package.MetaData.MasterReferences as Mutagen.Bethesda.Plugins.Masters.SeparatedMasterPackage)?.OwnFormIdsStyled);
+            // Starfield: an overlay can't change, so its overridden-forms list is written as read (OverriddenFormsBaseline)
+            if (mod is Mutagen.Bethesda.Plugins.Records.IModGetter modGetter)
+            {
+                Mutagen.Bethesda.Plugins.Records.OverriddenFormsBaseline.RememberOverlay(modGetter);
+            }
         }
         var minimumFinalPos = checked((int)(stream.Position + headerMeta.TotalLength));
         fill(

@@ -143,12 +143,35 @@ internal sealed class ModHeaderWriteLogic
             modKeysList = _params.MastersContentCustomOverride(modKeysList).ToList();
             SortMasters(modKeysList);
         }
+        modKeysList = SpellMasters(mod, modKeysList);
         ret.SetTo(modKeysList.Select(m => new MasterReference()
         {
             Master = m,
             FileSize = mod.GameRelease.ToCategory().IncludesMasterReferenceDataSubrecords() ? 0 : null
         }));
         return ret;
+    }
+
+    /// <summary>
+    /// File names are compared without case, so the collected masters carry the spelling of whichever FormKey met
+    /// them first, which depends on the order records are visited in. Each master is written as the mod's own master
+    /// list spells it, else as the load order given for sorting does, else as collected.
+    /// </summary>
+    private List<ModKey> SpellMasters(IModGetter mod, List<ModKey> modKeysList)
+    {
+        var spelling = new Dictionary<ModKey, ModKey>();
+        if (_params.MastersListOrdering is MastersListOrderingByLoadOrder byLoadOrder)
+        {
+            foreach (var m in byLoadOrder.LoadOrder)
+            {
+                spelling[m] = m;
+            }
+        }
+        foreach (var m in mod.MasterReferences)
+        {
+            spelling[m.Master] = m.Master;
+        }
+        return modKeysList.Select(m => spelling.TryGetValue(m, out var spelled) ? spelled : m).ToList();
     }
 
     private void PostProcessAdjustments(
@@ -473,16 +496,27 @@ internal sealed class ModHeaderWriteLogic
             case OverriddenFormsOption.NoCheck:
                 break;
             case OverriddenFormsOption.Iterate:
-                _recordContextIterationActions.Add(context =>
+                CollectOverriddenForms();
+                break;
+            case OverriddenFormsOption.Auto:
+                // Starfield only. A mod that can't change (an overlay) keeps its list as read: nothing to compute
+                if (OverriddenFormsBaseline.Applies(_mod) && !OverriddenFormsBaseline.IsUnchangeable(_mod))
                 {
-                    if (context.Record.FormKey.ModKey == _modKey) return;
-                    if (Enums.HasFlag(context.Record.MajorRecordFlagsRaw, Constants.Persistent)) return;
-                    if (context.Parent?.Record is not IMajorRecordGetter parentMaj) return;
-                    if (parentMaj.Registration.Name == "Worldspace") return;
-                    _overriddenForms.Add(context.Record.FormKey);
-                });
+                    CollectOverriddenForms();
+                }
                 break;
         }
+    }
+
+    private void CollectOverriddenForms()
+    {
+        _recordContextIterationActions.Add(context =>
+        {
+            if (OverriddenFormsBaseline.IsCandidate(context, _modKey))
+            {
+                _overriddenForms.Add(context.Record.FormKey);
+            }
+        });
     }
 
     private void SetOverriddenForms(
@@ -500,9 +534,28 @@ internal sealed class ModHeaderWriteLogic
                 }
                 else
                 {
-                    modHeader.SetOverriddenForms(
-                        _overriddenForms.OrderBy(x => x.ModKey.FileName.String)
-                            .ThenBy(x => x.ID));
+                    modHeader.SetOverriddenForms(OverriddenFormsBaseline.Sorted(_overriddenForms));
+                }
+                break;
+            case OverriddenFormsOption.Auto:
+                if (!OverriddenFormsBaseline.Applies(_mod) || OverriddenFormsBaseline.IsUnchangeable(_mod)) break;
+                if (OverriddenFormsBaseline.Get(_mod) is { } baseline)
+                {
+                    // Read from a file (or given a baseline): the list as the mod holds it, updated only by what
+                    // changed since the read
+                    var current = _mod.OverriddenForms?.Select(x => x.FormKey).ToList();
+                    var updated = OverriddenFormsBaseline.Update(current, baseline, _overriddenForms);
+                    if (!ReferenceEquals(updated, current))
+                    {
+                        modHeader.SetOverriddenForms(updated);
+                    }
+                }
+                else
+                {
+                    // Not read from a file: computed, as Iterate
+                    modHeader.SetOverriddenForms(_overriddenForms.Count == 0
+                        ? null
+                        : OverriddenFormsBaseline.Sorted(_overriddenForms));
                 }
                 break;
         }

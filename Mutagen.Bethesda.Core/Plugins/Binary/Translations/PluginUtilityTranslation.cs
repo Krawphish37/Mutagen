@@ -488,6 +488,9 @@ internal static class PluginUtilityTranslation
         }
 
         frame.SetToFinalPosition();
+        // Starfield: which records met the overridden-forms rule when read, so the file's list is written back as it
+        // was while they are unchanged (OverriddenFormsBaseline)
+        OverriddenFormsBaseline.RememberRead(record);
         return record;
     }
 
