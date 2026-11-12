@@ -6,6 +6,7 @@ public partial class EffectShader
     public enum Flag
     {
         MembraneShaderOff = 0x0000_0001,
+        Unknown3 = 0x0000_0008,
         EdgeEffectInverse = 0x0000_0010,
         AffectSkinOnly = 0x0000_0020,
         IgnoreBaseGeometryTextureAlpha = 0x0000_0200,

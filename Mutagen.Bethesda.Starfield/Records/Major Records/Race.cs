@@ -73,6 +73,7 @@ public partial class Race
         UseQuadrupedController = 0x0010_0000_0000_0000,
         LowPriorityPushable = 0x0020_0000_0000_0000,
         CannotUsePlayableItems = 0x0040_0000_0000_0000,
+        Unknown55 = 0x0080_0000_0000_0000,
         Tunnels = 0x0200_0000_0000_0000,
         Hops = 0x0400_0000_0000_0000,
         Teleport = 0x0800_0000_0000_0000,

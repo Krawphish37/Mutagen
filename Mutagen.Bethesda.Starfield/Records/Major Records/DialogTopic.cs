@@ -23,7 +23,9 @@ public partial class DialogTopic
     [Flags]
     public enum TopicFlag
     {
-        DoAllBeforeRepeating = 0x1
+        DoAllBeforeRepeating = 0x1,
+        Unknown1 = 0x2,
+        Unknown2 = 0x4,
     }
 
     public enum CategoryEnum

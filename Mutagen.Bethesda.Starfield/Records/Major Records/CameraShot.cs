@@ -31,5 +31,6 @@ partial class CameraShot
         DoNotResetTargetSpring = 0x80,
         SelectableSceneCamera = 0x100,
         FreeCamera = 0x200,
+        Unknown10 = 0x400,
     }
 }

@@ -19,6 +19,6 @@ public partial class Faction
         CanBeOwner = 0x0_8000,
         IgnorePiracy = 0x1_0000,
         IgnoreSmuggling = 0x2_0000,
-        ReportCrimesByMembersAgainstMembers = 0x3_0000,
+        ReportCrimesByMembersAgainstMembers = 0x4_0000,
     }
 }

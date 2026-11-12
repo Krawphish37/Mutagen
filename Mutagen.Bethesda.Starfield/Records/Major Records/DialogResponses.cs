@@ -26,6 +26,7 @@ partial class DialogResponses
         EndRunningScene = 0x40,
         NeedsReview = 0x80,
         PlayerAddress = 0x100,
+        Unknown9 = 0x0200,
         CanMoveWhileGreeting = 0x400,
         NoLipFile = 0x800,
         DoNotGrayOut = 0x1000,

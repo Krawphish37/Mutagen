@@ -58,6 +58,7 @@ public partial class Npc
         Unique = 0x0000_0020,
         DoesntAffectStealthMeter = 0x0000_0040,
         //PcLevelMult = 0x0000_0080,
+        Unknown8 = 0x0000_0100,
         CalcForEachTemplate = 0x0000_0200,
         Protected = 0x0000_0800,
         Summonable = 0x0000_4000,

@@ -27,5 +27,7 @@ partial class SceneActor
         DialogueEnd = 0x020,
         ObsComPause = 0x040,
         ObsComEnd = 0x080,
+        ReactionRadiusPause = 0x100,
+        ReactionRadiusEnd = 0x200,
     }
 }

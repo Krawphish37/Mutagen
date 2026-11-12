@@ -7,5 +7,6 @@ public partial class IdleAnimation
     {
         Loose = 0x0001,
         Preview = 0x0002,
+        Unknown4 = 0x0010,
     }
 }

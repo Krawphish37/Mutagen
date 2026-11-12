@@ -41,6 +41,8 @@ public partial class Cell
         SunlightShadows = 0x0800,
         DistantLodOnly = 0x1000,
         PlayerFollowersCannotTravelHere = 0x2000,
+        Unknown14 = 0x00_4000,
+        Unknown15 = 0x00_8000,
         UseLocationAsName = 0x1_0000,
         UsePlanetGravity = 0x2_0000,
         UseImageSpaceVolumesInteriorCriteria = 0x8_0000,

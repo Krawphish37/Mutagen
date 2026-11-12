@@ -12,7 +12,10 @@ public partial class Book
     [Flags]
     public enum Flag
     {
-        CantBeTaken = 0x02
+        CantBeTaken = 0x02,
+        // Also set by the writer from Teaches: on when Teaches is a BookPerk, off otherwise
+        AddPerk = 0x10,
+        Unknown5 = 0x20,
     }
     
     public enum DataSlateTypeEnum

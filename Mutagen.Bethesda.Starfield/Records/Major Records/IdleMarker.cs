@@ -21,6 +21,7 @@ partial class IdleMarker
     {
         RunInSequence = 0x0001,
         DoOnce = 0x0004,
+        Unknown3 = 0x0008,
         IgnoredBySandbox = 0x0010,
         IgnoreConditionsForSandbox = 0x0020,
     }

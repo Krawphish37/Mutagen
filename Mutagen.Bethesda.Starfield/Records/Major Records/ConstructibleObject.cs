@@ -23,6 +23,7 @@ public partial class ConstructibleObject
     public enum Flag
     {
         FilterNotRequiredToLearn = 0x00000001,
+        Unknown1 = 0x0000_0002,
         ExcludeFromWorkshopLod = 0x00000004,
     }
 }
