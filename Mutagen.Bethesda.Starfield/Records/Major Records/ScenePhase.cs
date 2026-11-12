@@ -14,6 +14,7 @@ partial class ScenePhase
         StartWalkAwayPhase = 0x01,
         DoNotRunEndScriptsOnSceneJump = 0x02,
         StartInheritInTemplatedScenes = 0x04,
+        FxActionsDoAllOnce = 0x10,
     }
 }
 

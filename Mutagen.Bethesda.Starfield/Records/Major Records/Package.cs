@@ -89,9 +89,16 @@ partial class Package
         FriendlyFireComments = 0x0020,
         AggroRadiusBehavior = 0x0040,
         AllowIdleChatter = 0x0080,
+        // The CK sets this with a Chatter Off For Important Scene override (xEdit)
+        Unknown8 = 0x0100,
         WorldInteractions = 0x0200,
         OffForImportantScene = 0x0400,
         ReactToWarn = 0x0800,
+        // Bits 12-15 are always set together; xEdit thinks they are uncleared memory the CK never reads
+        Unknown12 = 0x1000,
+        Unknown13 = 0x2000,
+        Unknown14 = 0x4000,
+        Unknown15 = 0x8000,
     }
 
     public enum DayOfWeek

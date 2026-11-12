@@ -3,7 +3,7 @@
 partial class AQuestAlias
 {
     [Flags]
-    public enum Flag
+    public enum Flag : uint
     {
         ReservesLocationOrReference = 0x0000_0001,
         Optional = 0x0000_0002,
@@ -30,5 +30,13 @@ partial class AQuestAlias
         CanApplyDataToNonAliasedRefs = 0x0040_0000,
         IsCompanion = 0x0080_0000,
         OptionalAllScenes = 0x0100_0000,
+        // Bits 25, 26 and 31 are reference alias flags, 27-30 location alias flags (xEdit names)
+        MatchingRefFromCrowd = 0x0200_0000,
+        QuestObjectCargo = 0x0400_0000,
+        SearchShipLocations = 0x0800_0000,
+        MatchingLocPlanetsAndSystemsOnly = 0x1000_0000,
+        CurrentAliasSystem = 0x2000_0000,
+        CurrentAliasPlanet = 0x4000_0000,
+        Consumable = 0x8000_0000,
     }
 }

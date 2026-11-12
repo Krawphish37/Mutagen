@@ -33,6 +33,7 @@ public partial class Scene
         Interruptable = 0x0008,
         PlayerDialogue = 0x0010,
         PreventPlayerExitDialogue = 0x0020,
+        Unknown7 = 0x0_0080,
         SpeechChallenge = 0x0100,
         AllowDisableDialogueCamera = 0x0400,
         NoFollowerIdleChatter = 0x0800,
@@ -41,6 +42,7 @@ public partial class Scene
         ForcePrimaryActorAlias = 0x4000,
         Hailing = 0x8000,
         ShipDialogueOnly = 0x1_0000,
+        Unknown21 = 0x20_0000,
     }
 }
 

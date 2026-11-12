@@ -18,6 +18,7 @@ partial class Light
     [Flags]
     public enum Flag
     {
+        Unknown0 = 0x0000_0001,
         CanBeCarried = 0x0000_0002,
         OffByDefault = 0x0000_0010,
         DisableSpecular = 0x0000_0020,
@@ -25,6 +26,7 @@ partial class Light
         IsDirectSpotlight = 0x0000_0080,
         UsePbrValue = 0x0000_0100,
         FocusSpotlightBeam = 0x0000_0200,
+        Unknown10 = 0x0000_0400,
         ExternallyControlled = 0x0000_1000,
     }
 

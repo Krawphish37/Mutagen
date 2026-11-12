@@ -22,7 +22,8 @@ public partial class Container
     {
         AllowSoundsWhenAnimation = 0x01,
         Respawns = 0x02,
-        ShowOwner = 0x04
+        ShowOwner = 0x04,
+        Unknown3 = 0x08,
     }
 
     public enum Property

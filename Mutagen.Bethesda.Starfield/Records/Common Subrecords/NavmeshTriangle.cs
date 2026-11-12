@@ -14,5 +14,6 @@ public partial class NavmeshTriangle
         Water = 0x0200,
         Door = 0x0400,
         Found = 0x0800,
+        Unknown12 = 0x1000,
     }
 }

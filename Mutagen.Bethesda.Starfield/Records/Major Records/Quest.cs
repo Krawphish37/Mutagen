@@ -42,6 +42,13 @@ public partial class Quest
         KeepInstance = 0x2000,
         WantDormant = 0x4000,
         HasDialogueData = 0x8000,
+        Unknown16 = 0x1_0000,
+        Unknown17 = 0x2_0000,
+        ShipDialogueOnly = 0x4_0000,
+        CanBeRejected = 0x8_0000,
+        AudioLogOnly = 0x10_0000,
+        DoNotStopInterruptPackagesOnAliasFill = 0x20_0000,
+        DoNotDumpOldLocationEventParameter = 0x40_0000,
     }
 
     [Flags]

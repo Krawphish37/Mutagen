@@ -10,12 +10,17 @@ namespace Mutagen.Bethesda.Starfield;
 
 public partial class PlacedObject
 {
+    /// <summary>
+    /// XACT. A set of flags, as xEdit reads it: every reference in Starfield.esm and the official plugins that has XACT
+    /// stores 0xD (Use Default, Open, Open by Default). It was an ordinal enum (0-3), which left 0xD without a name.
+    /// </summary>
+    [Flags]
     public enum ActionFlag
     {
-        UseDefault,
-        Activate,
-        Open,
-        OpenByDefault,
+        UseDefault = 0x01,
+        Activate = 0x02,
+        Open = 0x04,
+        OpenByDefault = 0x08,
     }
 
     /// <summary>
