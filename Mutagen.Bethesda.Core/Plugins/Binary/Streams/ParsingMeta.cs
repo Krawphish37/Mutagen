@@ -126,10 +126,16 @@ public sealed class ParsingMeta
 
         if (stringsReadParameters.NonLocalizedEncodingOverride == null)
         {
-            var encodingProv = stringsReadParameters.EncodingProvider ?? MutagenEncoding.Default;
+            // Text stored in a plugin without strings files is one text, whatever language the strings files are read
+            // in: it is read with the encoding writing uses for it (the game's default), so it reads the same in every
+            // target language and writes back as it was read. Picking it by the target language read code page 1252
+            // text (e.g. 0x92 in "Samson’s Art", economy.esm) as U+FFFD in every language but English, and wrote it
+            // back as '?'. A caller's own encoding provider still chooses by the target language.
             Encodings = Encodings with
             {
-                NonLocalized = encodingProv.GetEncoding(Constants.Release, TranslatedTargetLanguage)
+                NonLocalized = stringsReadParameters.EncodingProvider is { } encodingProv
+                    ? encodingProv.GetEncoding(Constants.Release, TranslatedTargetLanguage)
+                    : Constants.Encodings.NonLocalized
             };
         }
         else

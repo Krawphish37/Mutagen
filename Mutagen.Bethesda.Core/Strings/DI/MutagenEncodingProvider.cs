@@ -44,26 +44,30 @@ public static class MutagenEncoding
         _1256 = new MutagenEncodingWrapper(
             CodePagesEncodingProvider.Instance.GetEncoding(1256)!);
         _utf8 = new MutagenEncodingWrapper(Encoding.UTF8);
+        // The UTF-8 the fallback encodings try first. It throws on bytes that aren't UTF-8, so those are read with the
+        // code page; Encoding.UTF8 puts U+FFFD in their place instead, so the code page was never used.
+        var utf8Strict = new MutagenEncodingWrapper(
+            new UTF8Encoding(encoderShouldEmitUTF8Identifier: false, throwOnInvalidBytes: true));
         _utf8_1250 = new MutagenEncodingFallbackWrapper(
-            _utf8,
+            utf8Strict,
             _1250);
         _utf8_932 = new MutagenEncodingFallbackWrapper(
-            _utf8,
+            utf8Strict,
             _932);
         _utf8_1251 = new MutagenEncodingFallbackWrapper(
-            _utf8,
+            utf8Strict,
             _1251);
         _utf8_1252 = new MutagenEncodingFallbackWrapper(
-            _utf8,
+            utf8Strict,
             _1252);
         _utf8_1253 = new MutagenEncodingFallbackWrapper(
-            _utf8,
+            utf8Strict,
             _1253);
         _utf8_1254 = new MutagenEncodingFallbackWrapper(
-            _utf8,
+            utf8Strict,
             _1254);
         _utf8_1256 = new MutagenEncodingFallbackWrapper(
-            _utf8,
+            utf8Strict,
             _1256);
     }
     
