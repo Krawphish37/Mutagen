@@ -279,8 +279,14 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
             }
             if (!masterFlagLookup.TryGetValue(master, out var mod))
             {
+                // A Starfield plugin's FormIDs can't be read without every master's style (Full, Medium or Small): it
+                // decides which list, and so which index, each master has. The game and xEdit don't load a plugin whose
+                // master is missing either, so this stays an error, with what to do about it.
                 throw new MissingModException(master,
-                    "Mod was missing from load order when constructing the separate mod lists needed for FormID translation.");
+                    $"{currentModKey} lists {master} as a master, but {master}'s master style (Full, Medium or Small) isn't known: " +
+                    "it is in neither the load order nor the master flags lookup given. Its FormIDs can't be read or written " +
+                    "without it. Put the master in the load order or data folder, or give its style with WithKnownMasters " +
+                    "(a KeyedMasterStyle in BinaryReadParameters/BinaryWriteParameters.MasterFlagsLookup).");
             }
 
             AddToList(mod, master);

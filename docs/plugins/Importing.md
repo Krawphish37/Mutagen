@@ -395,6 +395,19 @@ For Starfield, you must provide either:
 !!! danger "Required for Starfield"
     Failing to provide proper master information for Starfield mods will result in corrupted FormID resolution when the mod references light or medium masters.
 
+#### A Missing Master
+A Starfield plugin's FormIDs can't be read without knowing every master's style: the style decides which list, and so
+which index, each master has. When a master is in neither the load order nor the known masters, reading (or writing)
+throws a `MissingModException` naming the plugin and the master. The game and xEdit don't load a plugin whose master
+is missing either. Give the master's style with `WithKnownMasters` (or a `KeyedMasterStyle` in the parameters'
+`MasterFlagsLookup`) to read such a plugin anyway.
+
+#### Both the Small and the Medium Flag
+A header can't really be both. Mutagen reads one that has both flags as a Small (light) master, as xEdit does (it gives
+such a plugin a light slot). Writing it back with both flags is refused with a `ModHeaderMalformedException`, as xEdit
+refuses to save one; the default write (`HeaderSizeFlags` Auto) writes it as the Small master it was read as, and an
+explicit `HeaderSizeFlags` size writes that size.
+
 ### Group Masks
 Often, users are not interested in all records that a mod contains.  Group Masks are an optional parameter that allows you to specify which record types you are interested in importing.
 ```cs

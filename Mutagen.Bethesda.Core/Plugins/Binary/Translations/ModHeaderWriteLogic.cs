@@ -72,6 +72,7 @@ internal sealed class ModHeaderWriteLogic
             modHeaderWriter._constants.SeparateMasterLoadOrders
                 ? param.MasterFlagsLookup 
                 : null);
+        modHeaderWriter.RefuseBothSizes(modHeader);
         modHeader.WriteToBinary(writer);
     }
 
@@ -385,6 +386,20 @@ internal sealed class ModHeaderWriteLogic
     #endregion
 
     #region Size flags
+    /// <summary>
+    /// A header with both the Small and the Medium flag is read as Small, but not written: xEdit refuses to save one
+    /// too ("Small or medium flags are mutually exclusive"). HeaderSizeFlags Auto/Smallest/Small/Medium/Full set one size,
+    /// so only NoCheck (or a game where Auto changes nothing) can get here.
+    /// </summary>
+    private void RefuseBothSizes(IModHeaderCommon modHeader)
+    {
+        if (_constants.SmallMasterFlag is not { } small || _constants.MediumMasterFlag is not { } medium) return;
+        if (!Enums.HasFlag(modHeader.RawFlags, small) || !Enums.HasFlag(modHeader.RawFlags, medium)) return;
+        throw new ModHeaderMalformedException(_modKey,
+            $"{_modKey}'s header has both the Small (Light) and the Medium flag; a plugin can be only one. It was read as a " +
+            "Small master. Clear one flag, or write with HeaderSizeFlags Auto (the default for Starfield) or an explicit size.");
+    }
+
     /// <summary>
     /// HeaderSizeFlags: picks the size the mod is written with from its own records' object IDs (walked by
     /// AddCompactionTracking), sets the header's size and Master flags, and then runs the FormID compaction check for
