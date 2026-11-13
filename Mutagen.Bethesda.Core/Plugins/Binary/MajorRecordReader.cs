@@ -61,10 +61,10 @@ public sealed class MajorRecordReader : IDisposable
         param ??= BinaryReadParameters.Default;
         var meta = ParsingMeta.Factory(param, release, path);
         meta.Parallel = false;
-        var fileSystem = param.FileSystem.GetOrDefault();
         meta.RecordInfoCache = new RecordTypeInfoCacheReader(
             () => new MutagenBinaryReadStream(path, meta), path.ModKey, meta.LinkCache);
-        var stream = fileSystem.FileStream.New(path.Path, FileMode.Open, FileAccess.Read);
+        // Opened as every plugin read is (C175): PluginFileAccess with the caller's BinaryReadParameters.FileShare
+        var stream = PluginFileAccess.OpenRead(param.FileSystem, path.Path, param.FileShare);
         try
         {
             var header = new ModHeader(meta.Constants, ReadExactly(stream, 0, meta.Constants.MajorConstants.HeaderLength));
