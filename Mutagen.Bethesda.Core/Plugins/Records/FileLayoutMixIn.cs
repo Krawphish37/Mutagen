@@ -28,7 +28,7 @@ public static class FileLayoutMixIn
     /// <summary>
     /// A compressed record's content as it was read: its uncompressed length (4 bytes), then the zlib stream
     /// (null if the record wasn't read compressed, for a game that doesn't keep it, or for a full import read without
-    /// <see cref="Mutagen.Bethesda.Plugins.Binary.Parameters.BinaryReadParameters.KeepCompressedRecords"/>; an overlay always keeps it).
+    /// <see cref="Mutagen.Bethesda.Plugins.Binary.Parameters.BinaryReadParameters.KeepCompressedRecords"/> turned off; an overlay always keeps it).
     /// </summary>
     public static byte[]? GetOriginalCompressedData(this IMajorRecordGetter record) =>
         CompressedOriginals.TryGet(record, out var content) ? content.ToArray() : null;

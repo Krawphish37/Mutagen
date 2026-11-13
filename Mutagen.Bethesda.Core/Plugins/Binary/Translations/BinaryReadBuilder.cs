@@ -1357,7 +1357,8 @@ public record BinaryReadMutableBuilder<TMod, TModGetter, TGroupMask> : BinaryRea
 
     /// <summary>
     /// Keeps each compressed record's zlib stream as read, so an unchanged record is written back with the same bytes
-    /// (games that keep their file layout: Starfield). Costs about the size of the compressed records.
+    /// (games that keep their file layout: Starfield). On by default; costs about the size of the compressed records,
+    /// so pass false to save that.
     /// </summary>
     /// <param name="keep">Whether to keep them</param>
     /// <returns>Builder object to continue customization</returns>
