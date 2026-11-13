@@ -40,7 +40,7 @@ public class CreationKitNameTests
     {
         foreach (var kywd in ReadBoth<IKeywordGetter>(Record("KYWD", Hex(LinkedVehicleKeyword)), f => Keyword.CreateFromBinary(f), (s, p) => KeywordBinaryOverlay.KeywordFactory(s, p)))
         {
-            kywd.FormLinkTargetType.ShouldBe(47u);
+            kywd.FormLinkTarget!.Type.ShouldBe(47u);
             var written = GameConstants.Starfield.MajorRecord(Write(w => kywd.WriteToBinary(w)));
             written.Content.ToArray().ShouldBe(Hex(LinkedVehicleKeyword));
         }
