@@ -755,6 +755,17 @@ namespace Mutagen.Bethesda.Starfield
 
         public static readonly Type? GenericRegistrationType = null;
 
+        public static RecordTriggerSpecs TriggerSpecs => _recordSpecs.Value;
+        private static readonly Lazy<RecordTriggerSpecs> _recordSpecs = new Lazy<RecordTriggerSpecs>(() =>
+        {
+            var triggers = RecordCollection.Factory();
+            var all = RecordCollection.Factory(
+                RecordTypes.CIS1,
+                RecordTypes.CIS2);
+            return new RecordTriggerSpecs(
+                allRecordTypes: all,
+                triggeringRecordTypes: triggers);
+        });
         public static readonly Type BinaryWriteTranslation = typeof(IsScannedConditionDataBinaryWriteTranslation);
         #region Interface
         ProtocolKey ILoquiRegistration.ProtocolKey => ProtocolKey;
@@ -825,7 +836,8 @@ namespace Mutagen.Bethesda.Starfield
                 record: item,
                 frame: frame,
                 translationParams: translationParams,
-                fillStructs: IsScannedConditionDataBinaryCreateTranslation.FillBinaryStructs);
+                fillStructs: IsScannedConditionDataBinaryCreateTranslation.FillBinaryStructs,
+                fillTyped: IsScannedConditionDataBinaryCreateTranslation.FillBinaryRecordTypes);
         }
         
         public override void CopyInFromBinary(
@@ -1202,6 +1214,13 @@ namespace Mutagen.Bethesda.Starfield
             writer.Write(item.SecondParameter);
         }
 
+        public static void WriteRecordTypes(
+            IIsScannedConditionDataGetter item,
+            MutagenWriter writer,
+            TypedWriteParams translationParams)
+        {
+        }
+
         public void Write(
             MutagenWriter writer,
             IIsScannedConditionDataGetter item,
@@ -1210,6 +1229,10 @@ namespace Mutagen.Bethesda.Starfield
             WriteEmbedded(
                 item: item,
                 writer: writer);
+            WriteRecordTypes(
+                item: item,
+                writer: writer,
+                translationParams: translationParams);
         }
 
         public override void Write(
@@ -1249,6 +1272,23 @@ namespace Mutagen.Bethesda.Starfield
                 frame: frame);
             item.FirstParameter = frame.ReadInt32();
             item.SecondParameter = frame.ReadInt32();
+        }
+
+        public static ParseResult FillBinaryRecordTypes(
+            IIsScannedConditionData item,
+            MutagenFrame frame,
+            PreviousParse lastParsed,
+            Dictionary<RecordType, int>? recordParseCount,
+            RecordType nextRecordType,
+            int contentLength,
+            TypedParseParams translationParams = default)
+        {
+            nextRecordType = translationParams.ConvertToStandard(nextRecordType);
+            switch (nextRecordType.TypeInt)
+            {
+                default:
+                    return ParseResult.Stop;
+            }
         }
 
     }
