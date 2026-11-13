@@ -2231,6 +2231,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.FootstepSound.Relink(mapping);
             obj.ArtObject.Relink(mapping);
             obj.BodyPartData.Relink(mapping);
+            obj.BoneDataModifiers.RemapLinks(mapping);
         }
         
         public IEnumerable<IAssetLink> EnumerateListedAssetLinks(IArmorAddon obj, bool iterateNestedRecords = true)
@@ -2943,6 +2944,10 @@ namespace Mutagen.Bethesda.Starfield
             if (FormLinkInformation.TryFactory(obj.BodyPartData, out var BodyPartDataInfo))
             {
                 yield return BodyPartDataInfo;
+            }
+            foreach (var item in obj.BoneDataModifiers.SelectMany(l => l))
+            {
+                yield return FormLinkInformation.Factory(item);
             }
             yield break;
         }

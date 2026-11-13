@@ -13,6 +13,26 @@ namespace Mutagen.Bethesda.Generation.Modules.Plugin;
 
 public class ContainedFormLinksModule : AContainedLinksModule<FormLinkType>
 {
+    // For a gendered list: null when its items hold no links; else what selects the links from the items
+    private async Task<string?> GenderedListLinks(ListType list)
+    {
+        if (list.SubTypeGeneration is FormLinkType link && link.FormIDType == FormLinkType.FormIDTypeEnum.Normal)
+        {
+            return string.Empty;
+        }
+        if (list.SubTypeGeneration is LoquiType loqui)
+        {
+            switch (await HasLinks(loqui, includeBaseClass: true))
+            {
+                case Case.Yes:
+                    return $".SelectMany(f => f.{nameof(IFormLinkContainerGetter.EnumerateFormLinks)}(iterateNestedRecords))";
+                case Case.Maybe:
+                    return $".WhereCastable<{loqui.TypeName(getter: true)}, {nameof(IFormLinkContainerGetter)}>().SelectMany(f => f.{nameof(IFormLinkContainerGetter.EnumerateFormLinks)}(iterateNestedRecords))";
+            }
+        }
+        return null;
+    }
+
     public static ContainedFormLinksModule Instance = new();
 
     // A circular field (e.g. ScriptEntryStructs.Members, RefList<ScriptProperty>) can't be
@@ -176,6 +196,14 @@ public class ContainedFormLinksModule : AContainedLinksModule<FormLinkType>
                             string filterNulls = cont is GenderedType && ((GenderedType)cont).ItemNullable ? ".WhereNotNull()" : null;
                             subFg.AppendLine($"foreach (var item in {access}{filterNulls})");
                         }
+                        else if (cont is GenderedType genderedList
+                                 && genderedList.SubTypeGeneration is ListType subList
+                                 && await GenderedListLinks(subList) is { } listLinks)
+                        {
+                            // A gendered list (e.g. ArmorAddon bone data modifiers): the links of each half's items
+                            string filterNulls = genderedList.ItemNullable ? ".WhereNotNull()" : null;
+                            subFg.AppendLine($"foreach (var item in {access}{filterNulls}.SelectMany(l => l){listLinks})");
+                        }
                         else
                         {
                             continue;
@@ -313,7 +341,10 @@ public class ContainedFormLinksModule : AContainedLinksModule<FormLinkType>
                         if ((cont.SubTypeGeneration is LoquiType contLoqui
                              && await HasLinks(contLoqui, includeBaseClass: true) != Case.No)
                             || (cont.SubTypeGeneration is FormLinkType formIDType
-                                && formIDType.FormIDType == FormLinkType.FormIDTypeEnum.Normal))
+                                && formIDType.FormIDType == FormLinkType.FormIDTypeEnum.Normal)
+                            || (cont is GenderedType
+                                && cont.SubTypeGeneration is ListType subList
+                                && await GenderedListLinks(subList) != null))
                         {
                             sb.AppendLine($"obj.{field.Name}{(field.Nullable ? "?" : null)}.RemapLinks(mapping);");
                         }
