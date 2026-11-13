@@ -16,8 +16,10 @@ namespace Mutagen.Bethesda.Plugins.Binary.Translations;
 /// a hash of its bytes and the field it was read into.<br/>
 /// Writing a noted record writes it as usual into a buffer first. Mutagen writes fields in field order, so the file's
 /// subrecords sorted by field (keeping the file's order within a field) predict what an unchanged record writes.
-/// When the written subrecords are exactly that (same types and bytes, place by place), they are written in the
-/// file's order. If anything differs (the record was changed), Mutagen's order is kept.<br/>
+/// When the written subrecords are exactly that (same types and bytes; within one field, the k-th subrecord of a type
+/// written matching the k-th one of that type read, since a field such as a gendered pair can write its parts in
+/// another order than the file holds them), they are written in the file's order. If anything differs (the record
+/// was changed), Mutagen's order is kept.<br/>
 /// A copy (DeepCopy, DeepCopyIn) takes over the noted order of the record it copies.<br/>
 /// Two things Mutagen rewrites in an unchanged record are not counted as changes: an overlay can't be changed at all, so
 /// its subrecords only have to match by type and field; and in a full import, a subrecord whose read held a FormID
@@ -133,15 +135,37 @@ internal static class SubrecordOrder
     {
         var units = Units(written, writer.MetaData.Constants);
         if (units.Count != order.Length) return false;
-        // predicted[k]: the file's subrecord that Mutagen writes k-th (by field, then as read)
+        // predicted: the file's subrecords by field, then as read. Mutagen writes fields in field order, so the written
+        // subrecords of each field take the same places; within one field, it may write them in another order (a
+        // gendered field writes the male half, then the female: MOD2 FLLD MOD4 FLLD where the file holds MOD2 MOD4 ...
+        // FLLD FLLD). So within a field, each written subrecord is matched to the file's subrecord of its type in the
+        // same turn (the k-th FLLD written to the k-th FLLD read), which must have the same bytes.
         var predicted = Enumerable.Range(0, order.Length).OrderBy(i => order[i].Field).ToArray();
         var place = new int[order.Length];
-        for (int k = 0; k < predicted.Length; k++)
+        var ofType = new Dictionary<uint, Queue<int>>();
+        for (int start = 0; start < predicted.Length;)
         {
-            var expected = order[predicted[k]];
-            if (units[k].Type != expected.Type) return false;
-            if (!unchangeable && !expected.AnyBytes && units[k].Hash != expected.Hash) return false;
-            place[predicted[k]] = k;
+            var field = order[predicted[start]].Field;
+            var end = start;
+            while (end < predicted.Length && order[predicted[end]].Field == field) end++;
+            ofType.Clear();
+            for (int k = start; k < end; k++)
+            {
+                if (!ofType.TryGetValue(units[k].Type, out var queue))
+                {
+                    ofType[units[k].Type] = queue = new Queue<int>();
+                }
+                queue.Enqueue(k);
+            }
+            for (int j = start; j < end; j++)
+            {
+                var expected = order[predicted[j]];
+                if (!ofType.TryGetValue(expected.Type, out var queue) || queue.Count == 0) return false;
+                var k = queue.Dequeue();
+                if (!unchangeable && !expected.AnyBytes && units[k].Hash != expected.Hash) return false;
+                place[predicted[j]] = k;
+            }
+            start = end;
         }
         foreach (var k in place)
         {

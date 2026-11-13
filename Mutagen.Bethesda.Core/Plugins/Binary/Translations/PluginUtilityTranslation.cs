@@ -167,7 +167,9 @@ internal static class PluginUtilityTranslation
                 if (parsed.ParsedIndex is { } parsedIndex)
                 {
                     fieldStarts?.Add((checked((int)(subrecordStart - contentStart)), parsedIndex));
-                    if (parsedIndex < highestIndex)
+                    // A field read before one that comes earlier, or read again (a gendered field whose parts are split,
+                    // MOD2 MO2F FLLD XFLG FLLD): Mutagen may write its subrecords in another order
+                    if (parsedIndex <= highestIndex)
                     {
                         outOfOrder = true;
                     }
