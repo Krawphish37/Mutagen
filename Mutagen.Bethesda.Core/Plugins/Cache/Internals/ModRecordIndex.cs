@@ -53,35 +53,4 @@ internal static class ModRecordIndex
                 g => g.Key,
                 g => g.OrderBy(e => e.Width).Select(e => e.Getter).Distinct().ToArray());
     }
-
-    /// <summary>
-    /// Finds an overlay's record by FormKey through its record type
-    /// </summary>
-    /// <param name="mod">The plugin</param>
-    /// <param name="category">Its game</param>
-    /// <param name="formKey">The record</param>
-    /// <param name="typedLookup">Looks a FormKey up in one type's cache</param>
-    /// <param name="found">The record found, or null</param>
-    /// <returns>True if the index answered (found is the record, or null if the plugin has no such record); false if
-    /// the plugin has no index or the index couldn't place the record, so the caller should use its untyped cache</returns>
-    public static bool TryResolve<TItem>(
-        IModGetter mod,
-        GameCategory category,
-        FormKey formKey,
-        TypedLookup<TItem> typedLookup,
-        out TItem? found)
-        where TItem : class
-    {
-        found = null;
-        if (!TryGet(mod, out var index)) return false;
-        if (!index.TryGetRecordType(formKey, out var recordType)) return true;
-        foreach (var type in GetterTypesFor(category, recordType))
-        {
-            if (typedLookup(formKey, type, out found)) return true;
-        }
-        found = null;
-        return false;
-    }
-
-    public delegate bool TypedLookup<TItem>(FormKey formKey, Type type, out TItem? found) where TItem : class;
 }
