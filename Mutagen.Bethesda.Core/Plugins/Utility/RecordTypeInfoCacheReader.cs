@@ -82,6 +82,48 @@ public sealed class RecordTypeInfoCacheReader
         return list[n];
     }
 
+    private Dictionary<FormKey, RecordType>? _recordTypes;
+    private readonly object _recordTypesLock = new();
+
+    /// <summary>
+    /// The record type of a record of this plugin, from the plugin's record headers alone (no record is read). The
+    /// first call walks every record header of the file once and keeps a FormKey to record type table (Starfield.esm:
+    /// 3.8 million entries). Used by untyped link lookups so they only build the cache of the type they need.
+    /// </summary>
+    /// <returns>False if the plugin has no record with this FormKey</returns>
+    public bool TryGetRecordType(FormKey formKey, out RecordType recordType)
+    {
+        var table = _recordTypes ?? BuildRecordTypes();
+        return table.TryGetValue(formKey, out recordType);
+    }
+
+    private Dictionary<FormKey, RecordType> BuildRecordTypes()
+    {
+        lock (_recordTypesLock)
+        {
+            if (_recordTypes != null) return _recordTypes;
+            var ret = new Dictionary<FormKey, RecordType>();
+            using var stream = _streamCreator();
+            var modHeader = stream.GetModHeader();
+            stream.Position += modHeader.TotalLength;
+            while (!stream.Complete)
+            {
+                if (stream.TryGetGroupHeader(out var group, readSafe: false))
+                {
+                    // Step into every group: its records (and sub-groups) follow its header
+                    stream.Position += group.HeaderLength;
+                    continue;
+                }
+                var header = stream.GetMajorRecordHeader(readSafe: false);
+                // The first record of a FormKey wins, as in the overlay's groups
+                ret.TryAdd(FormKey.Factory(stream.MetaData.MasterReferences, header.FormID, reference: false), header.RecordType);
+                stream.Position += header.TotalLength;
+            }
+            _recordTypes = ret;
+            return ret;
+        }
+    }
+
     private CacheItem GetCacheItem<T>()
     {
         if (_cachedLocs.TryGetValue(typeof(T), out var cache)) return cache;

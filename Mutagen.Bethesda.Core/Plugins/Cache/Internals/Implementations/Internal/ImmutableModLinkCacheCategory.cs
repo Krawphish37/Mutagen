@@ -144,6 +144,13 @@ internal sealed class ImmutableModLinkCacheCategory<TKey>
             majorRec = default;
             return false;
         }
+        if (key is FormKey formKey
+            && type == typeof(IMajorRecordGetter)
+            && TryResolveUntyped(formKey, out var answered, out majorRec) is var found
+            && answered)
+        {
+            return found;
+        }
         var cache = GetCache(type, _parent.Category, _parent._sourceMod);
         if (!cache.TryGetValue(key, out majorRec))
         {
@@ -151,6 +158,34 @@ internal sealed class ImmutableModLinkCacheCategory<TKey>
             return false;
         }
         return true;
+    }
+
+    /// <summary>
+    /// An untyped FormKey lookup on an overlay: the record's type from the plugin's record headers, then only that
+    /// type's cache, instead of a cache of every record of the plugin (C177)
+    /// </summary>
+    /// <param name="answered">False when the plugin isn't an overlay or its record type isn't known: use the cache of
+    /// every record</param>
+    internal bool TryResolveUntyped(FormKey formKey, out bool answered, [MaybeNullWhen(false)] out LinkCacheItem majorRec)
+    {
+        majorRec = default;
+        answered = false;
+        if (!ModRecordIndex.TryGet(_parent._sourceMod, out var index)) return false;
+        if (!index.TryGetRecordType(formKey, out var recordType))
+        {
+            answered = true;
+            return false;
+        }
+        foreach (var getterType in ModRecordIndex.GetterTypesFor(_parent.Category, recordType))
+        {
+            if (GetCache(getterType, _parent.Category, _parent._sourceMod).TryGetValue((TKey)(object)formKey, out majorRec))
+            {
+                answered = true;
+                return true;
+            }
+        }
+        majorRec = default;
+        return false;
     }
 
     public IEnumerable<LinkCacheItem> AllIdentifiers(Type type, CancellationToken? cancel)
