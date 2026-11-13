@@ -71,6 +71,12 @@ public sealed record BinaryWriteParameters
     public FormIDCompactionOption FormIDCompaction { get; init; } = FormIDCompactionOption.Iterate;
 
     /// <summary>
+    /// Logic to use to set a mod's size flags (Small/Light, Medium, Full) and Master flag in its header (Auto: the
+    /// game's default; for every game but Starfield that is NoCheck, as before)
+    /// </summary>
+    public HeaderSizeFlagsOption HeaderSizeFlags { get; init; } = HeaderSizeFlagsOption.Auto;
+
+    /// <summary>
     /// Optional StringsWriter override, for mods that are able to localize.
     /// </summary>
     public StringsWriter? StringsWriter { get; init; }
