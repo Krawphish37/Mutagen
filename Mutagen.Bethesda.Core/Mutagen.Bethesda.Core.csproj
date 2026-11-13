@@ -803,6 +803,7 @@
         </Compile>
         <Compile Include="Plugins\Binary\Streams\RecordTypeConverter.cs" />
         <Compile Include="Plugins\Binary\Streams\MutagenBinaryReadStream.cs" />
+        <Compile Include="Plugins\Binary\Streams\PluginFileAccess.cs" />
         <Compile Include="Plugins\Binary\Streams\MutagenMemoryReadStream.cs" />
         <Compile Include="Plugins\Binary\Translations\ColorBinaryTranslation.cs" />
         <Compile Include="Plugins\Binary\Translations\IBinaryItem.cs" />

@@ -31,7 +31,7 @@ public sealed class MutagenBinaryReadStream : BinaryReadStream, IMutagenReadStre
         ParsingMeta metaData,
         int bufferSize = 4096,
         long offsetReference = 0)
-        : base(metaData.FileSystem.File.OpenRead(path.Path), bufferSize)
+        : base(PluginFileAccess.OpenRead(metaData.FileSystem, path.Path, metaData.FileShare), bufferSize)
     {
         _path = path;
         MetaData = metaData;
@@ -54,7 +54,7 @@ public sealed class MutagenBinaryReadStream : BinaryReadStream, IMutagenReadStre
         int bufferSize = 4096,
         long offsetReference = 0,
         IFileSystem? fileSystem = null)
-        : base(fileSystem.GetOrDefault().File.OpenRead(path), bufferSize)
+        : base(PluginFileAccess.OpenRead(fileSystem, path), bufferSize)
     {
         MetaData = new ParsingMeta(
             release, 

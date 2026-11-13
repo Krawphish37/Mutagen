@@ -179,9 +179,10 @@ public readonly struct ModHeaderFrame : IEnumerable<SubrecordPinFrame>
     public static ModHeaderFrame FromPath(
         ModPath path, 
         GameRelease release,
-        IFileSystem? fileSystem = null)
+        IFileSystem? fileSystem = null,
+        FileShare share = PluginFileAccess.DefaultShare)
     {
-        var fs = fileSystem.GetOrDefault().FileStream.New(path, FileMode.Open, FileAccess.Read);
+        var fs = PluginFileAccess.OpenRead(fileSystem, path, share);
         using var stream = new MutagenBinaryReadStream(fs, 
             new ParsingMeta(
                 release, 
