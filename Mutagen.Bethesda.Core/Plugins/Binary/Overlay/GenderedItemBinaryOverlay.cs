@@ -10,15 +10,15 @@ namespace Mutagen.Bethesda.Plugins.Binary.Overlay;
 
 internal sealed class GenderedItemBinaryOverlay<T> : IGenderedItemGetter<T>, IGenderedItemEquality
 {
-    private readonly ReadOnlyMemorySlice<byte> _recordData;
     private readonly BinaryOverlayFactoryPackage _package;
-    private readonly int? _male;
-    private readonly int? _female;
-    private readonly T _fallback;
+    private readonly ReadOnlyMemorySlice<byte>? _maleData;
+    private readonly ReadOnlyMemorySlice<byte>? _femaleData;
+    private readonly T _maleFallback;
+    private readonly T _femaleFallback;
     private readonly Func<ReadOnlyMemorySlice<byte>, BinaryOverlayFactoryPackage, T> _creator;
 
-    public T Male => _male.HasValue ? _creator(_recordData.Slice(_male.Value), _package) : _fallback;
-    public T Female => _female.HasValue ? _creator(_recordData.Slice(_female.Value), _package) : _fallback;
+    public T Male => _maleData.HasValue ? _creator(_maleData.Value, _package) : _maleFallback;
+    public T Female => _femaleData.HasValue ? _creator(_femaleData.Value, _package) : _femaleFallback;
 
     public T this[MaleFemaleGender gender] => gender == MaleFemaleGender.Male ? Male : Female;
 
@@ -28,14 +28,40 @@ internal sealed class GenderedItemBinaryOverlay<T> : IGenderedItemGetter<T>, IGe
         int? male,
         int? female,
         Func<ReadOnlyMemorySlice<byte>, BinaryOverlayFactoryPackage, T> creator,
-        T fallback)
+        T fallback,
+        IGenderedItemGetter<T>? existing)
     {
-        _recordData = bytes;
         _package = package;
-        _male = male;
-        _female = female;
         _creator = creator;
-        _fallback = fallback;
+        var prior = existing as GenderedItemBinaryOverlay<T>;
+        if (male.HasValue)
+        {
+            _maleData = bytes.Slice(male.Value);
+            _maleFallback = fallback;
+        }
+        else if (prior != null)
+        {
+            _maleData = prior._maleData;
+            _maleFallback = prior._maleFallback;
+        }
+        else
+        {
+            _maleFallback = existing != null ? existing.Male : fallback;
+        }
+        if (female.HasValue)
+        {
+            _femaleData = bytes.Slice(female.Value);
+            _femaleFallback = fallback;
+        }
+        else if (prior != null)
+        {
+            _femaleData = prior._femaleData;
+            _femaleFallback = prior._femaleFallback;
+        }
+        else
+        {
+            _femaleFallback = existing != null ? existing.Female : fallback;
+        }
     }
 
     public IEnumerator<T> GetEnumerator()
@@ -63,10 +89,10 @@ internal static class GenderedItemBinaryOverlay
         BinaryOverlayFactoryPackage package,
         Func<OverlayStream, BinaryOverlayFactoryPackage, TypedParseParams, T> creator,
         RecordTypeConverter femaleRecordConverter,
+        IGenderedItemGetter<T?>? existing,
         RecordTypeConverter? maleRecordConverter = null,
         bool shortCircuit = true,
         bool parseNonConvertedItems = false,
-        IGenderedItemGetter<T?>? existing = null,
         Func<T, MutagenFrame, TypedParseParams, T>? merge = null)
         where T : class
     {
@@ -141,32 +167,28 @@ internal static class GenderedItemBinaryOverlay
         RecordType female,
         int offset,
         Func<ReadOnlyMemorySlice<byte>, BinaryOverlayFactoryPackage, T> creator,
-        T fallback)
+        T fallback,
+        IGenderedItemGetter<T>? existing)
     {
         var initialPos = stream.Position;
         int? maleLoc = null, femaleLoc = null;
         for (int i = 0; i < 2; i++)
         {
             if (stream.Complete) break;
-            var recType = HeaderTranslation.ReadNextRecordType(stream,
-                package.MetaData.Constants.SubConstants.LengthLength, out var markerLen);
-            stream.Position += markerLen;
+            var markerHeader = stream.GetSubrecordHeader();
+            var recType = markerHeader.RecordType;
+            if (recType != male && recType != female) break;
+            stream.Position += markerHeader.TotalLength;
             if (recType == male)
             {
                 maleLoc = (ushort)(stream.Position - offset);
             }
-            else if (recType == female)
+            else
             {
                 femaleLoc = (ushort)(stream.Position - offset);
             }
-            else
-            {
-                break;
-            }
 
-            HeaderTranslation.ReadNextRecordType(stream, package.MetaData.Constants.SubConstants.LengthLength,
-                out var recLen);
-            stream.Position += recLen;
+            stream.Position += stream.GetSubrecordHeader().TotalLength;
         }
 
         var readLen = stream.Position - initialPos;
@@ -181,7 +203,8 @@ internal static class GenderedItemBinaryOverlay
             maleLoc,
             femaleLoc,
             creator,
-            fallback);
+            fallback,
+            existing);
     }
 
     internal static IGenderedItemGetter<T?> FactorySkipMarkersPreRead<T>(
@@ -190,39 +213,30 @@ internal static class GenderedItemBinaryOverlay
         RecordType male,
         RecordType female,
         Func<OverlayStream, BinaryOverlayFactoryPackage, TypedParseParams, T> creator,
+        IGenderedItemGetter<T?>? existing,
         TypedParseParams maleRecordConverter = default,
         TypedParseParams femaleRecordConverter = default)
         where T : class
     {
         var initialPos = stream.Position;
-        T? maleObj = null, femaleObj = null;
+        T? maleObj = existing?.Male, femaleObj = existing?.Female;
         for (int i = 0; i < 2; i++)
         {
             if (stream.Complete) break;
-            var recType = HeaderTranslation.ReadNextRecordType(stream,
-                package.MetaData.Constants.SubConstants.LengthLength, out var markerLen);
-            stream.Position += markerLen;
+            var markerHeader = stream.GetSubrecordHeader();
+            var recType = markerHeader.RecordType;
+            if (recType != male && recType != female) break;
+            stream.Position += markerHeader.TotalLength;
+            var startPos = stream.Position;
+            var item = creator(stream, package, recType == male ? maleRecordConverter : femaleRecordConverter);
+            if (startPos == stream.Position) continue;
             if (recType == male)
             {
-                var startPos = stream.Position;
-                maleObj = creator(stream, package, maleRecordConverter);
-                if (startPos == stream.Position)
-                {
-                    maleObj = null;
-                }
-            }
-            else if (recType == female)
-            {
-                var startPos = stream.Position;
-                femaleObj = creator(stream, package, femaleRecordConverter);
-                if (startPos == stream.Position)
-                {
-                    femaleObj = null;
-                }
+                maleObj = item;
             }
             else
             {
-                break;
+                femaleObj = item;
             }
         }
 
@@ -241,7 +255,8 @@ internal static class GenderedItemBinaryOverlay
         RecordType male,
         RecordType female,
         Func<OverlayStream, BinaryOverlayFactoryPackage, TypedParseParams, T> creator,
-        TypedParseParams translationParams)
+        TypedParseParams translationParams,
+        IGenderedItemGetter<T?>? existing)
         where T : class
     {
         return FactorySkipMarkersPreRead<T>(
@@ -250,6 +265,7 @@ internal static class GenderedItemBinaryOverlay
             male,
             female,
             creator,
+            existing,
             maleRecordConverter: translationParams,
             femaleRecordConverter: translationParams);
     }
@@ -261,7 +277,8 @@ internal static class GenderedItemBinaryOverlay
         RecordType female,
         RecordType marker,
         Func<OverlayStream, BinaryOverlayFactoryPackage, RecordTypeConverter?, T> creator,
-        TypedParseParams translationParams)
+        TypedParseParams translationParams,
+        IGenderedItemGetter<T?>? existing)
         where T : class
     {
         return FactorySkipMarkersPreRead<T>(
@@ -271,6 +288,7 @@ internal static class GenderedItemBinaryOverlay
             female,
             marker,
             creator,
+            existing,
             recordTypeConverter: translationParams.RecordTypeConverter,
             femaleRecordConverter: translationParams.RecordTypeConverter);
     }
@@ -282,12 +300,13 @@ internal static class GenderedItemBinaryOverlay
         RecordType female,
         RecordType marker,
         Func<OverlayStream, BinaryOverlayFactoryPackage, RecordTypeConverter?, T> creator,
+        IGenderedItemGetter<T?>? existing,
         RecordTypeConverter? recordTypeConverter = null,
         RecordTypeConverter? femaleRecordConverter = null)
         where T : class
     {
         var initialPos = stream.Position;
-        T? maleObj = null, femaleObj = null;
+        T? maleObj = existing?.Male, femaleObj = existing?.Female;
         for (int i = 0; i < 2; i++)
         {
             if (stream.Complete) break;
@@ -329,7 +348,8 @@ internal static class GenderedItemBinaryOverlay
         BinaryOverlayFactoryPackage package,
         RecordType male,
         RecordType female,
-        Func<ReadOnlyMemorySlice<byte>, BinaryOverlayFactoryPackage, T> creator)
+        Func<ReadOnlyMemorySlice<byte>, BinaryOverlayFactoryPackage, T> creator,
+        IGenderedItemGetter<T?>? existing)
         where T : class
     {
         int? maleLoc = null, femaleLoc = null;
@@ -351,7 +371,8 @@ internal static class GenderedItemBinaryOverlay
             maleLoc,
             femaleLoc,
             creator,
-            default);
+            default,
+            existing);
         stream.Position += lenParsed;
         return ret;
     }
@@ -361,10 +382,11 @@ internal static class GenderedItemBinaryOverlay
         BinaryOverlayFactoryPackage package,
         RecordType genderEnumRecord,
         Func<T> getDefault,
-        Func<OverlayStream, BinaryOverlayFactoryPackage, T> creator)
+        Func<OverlayStream, BinaryOverlayFactoryPackage, T> creator,
+        IGenderedItemGetter<T>? existing)
         where T : class
     {
-        T? male = null, female = null;
+        T? male = existing?.Male, female = existing?.Female;
         for (int i = 0; i < 2; i++)
         {
             if (!stream.TryReadSubrecord(genderEnumRecord, out var enumRec)) break;
@@ -388,7 +410,8 @@ internal static class GenderedItemBinaryOverlay
         RecordType male,
         RecordType female,
         Func<ReadOnlyMemorySlice<byte>, BinaryOverlayFactoryPackage, T> creator,
-        T fallback)
+        T fallback,
+        IGenderedItemGetter<T>? existing)
         where T : notnull
     {
         int? maleLoc = null, femaleLoc = null;
@@ -410,7 +433,8 @@ internal static class GenderedItemBinaryOverlay
             maleLoc,
             femaleLoc,
             creator,
-            fallback);
+            fallback,
+            existing);
         stream.Position += lenParsed;
         return ret;
     }

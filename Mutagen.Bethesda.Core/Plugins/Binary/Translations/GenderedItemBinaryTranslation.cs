@@ -34,11 +34,13 @@ internal sealed class GenderedItemBinaryTranslation
         MutagenFrame frame,
         RecordType genderEnumRecord,
         RecordType contentMarker,
-        BinarySubParseDelegate<MutagenFrame, TItem> transl)
+        BinarySubParseDelegate<MutagenFrame, TItem> transl,
+        IGenderedItemGetter<TItem>? existing)
         where TItem : new()
     {
         int i = 0;
-        TItem? male = default, female = default;
+        TItem? male = existing != null ? existing.Male : default;
+        TItem? female = existing != null ? existing.Female : default;
         while (i < 2 && frame.TryReadSubrecord(genderEnumRecord, out var markerRec))
         {
             i++;
@@ -89,42 +91,46 @@ internal sealed class GenderedItemBinaryTranslation
         MutagenFrame frame,
         BinaryMasterParseDelegate<TItem> transl,
         RecordTypeConverter femaleRecordConverter,
+        IGenderedItemGetter<TItem?>? existing,
         RecordTypeConverter? maleRecordConverter = null,
         bool shortCircuit = true,
-        IGenderedItemGetter<TItem?>? existing = null,
         BinaryMasterFillDelegate<TItem>? fill = null)
         where TItem : class
     {
-        var male = ParseHalf(frame, transl, fill, existing?.Male, new TypedParseParams(
+        var male = ParseHalf(frame, transl, fill, existing?.Male, maleRecordConverter, new TypedParseParams(
             lengthOverride: null,
             recordTypeConverter: maleRecordConverter,
             doNotShortCircuit: !shortCircuit));
-        var female = ParseHalf(frame, transl, fill, existing?.Female, new TypedParseParams(
+        var female = ParseHalf(frame, transl, fill, existing?.Female, femaleRecordConverter, new TypedParseParams(
             lengthOverride: null,
             recordTypeConverter: femaleRecordConverter,
             doNotShortCircuit: !shortCircuit));
         return new GenderedItem<TItem?>(male, female);
     }
 
+    // A gendered field triggered again later in the record keeps the halves already read: a half that can take more
+    // subrecords (fill) adds them; otherwise a held half is replaced only by a subrecord its own converter maps, and
+    // only when that subrecord reads
     private static TItem? ParseHalf<TItem>(
         MutagenFrame frame,
         BinaryMasterParseDelegate<TItem> transl,
         BinaryMasterFillDelegate<TItem>? fill,
         TItem? held,
+        RecordTypeConverter? converter,
         TypedParseParams translationParams)
         where TItem : class
     {
         if (held != null && fill != null)
         {
-            // The field was triggered again later in the record, so add to the half already read
             fill(frame, held, translationParams);
             return held;
         }
-        if (!transl(frame, out var item, translationParams))
+        if (held != null && converter != null
+            && (frame.Reader.Complete || !converter.ToConversions.ContainsKey(frame.GetSubrecordHeader().RecordType)))
         {
-            return null;
+            return held;
         }
-        return item;
+        return transl(frame, out var item, translationParams) ? item : held;
     }
 
     public static GenderedItem<TItem> ParseRequired<TItem>(
@@ -152,10 +158,11 @@ internal sealed class GenderedItemBinaryTranslation
         RecordType maleMarker,
         RecordType femaleMarker,
         BinarySubParseDelegate<MutagenFrame, TItem> transl,
-        bool skipMarker)
+        bool skipMarker,
+        IGenderedItemGetter<TItem?>? existing)
         where TItem : class
     {
-        TItem? male = default, female = default;
+        TItem? male = existing?.Male, female = existing?.Female;
         for (int i = 0; i < 2; i++)
         {
             if (frame.Reader.Complete) break;
@@ -204,9 +211,11 @@ internal sealed class GenderedItemBinaryTranslation
         RecordType femaleMarker,
         BinarySubParseDelegate<MutagenFrame, TItem> transl,
         bool skipMarker,
-        TItem fallback)
+        TItem fallback,
+        IGenderedItemGetter<TItem>? existing)
     {
-        TItem male = fallback, female = fallback;
+        TItem male = existing != null ? existing.Male : fallback;
+        TItem female = existing != null ? existing.Female : fallback;
         for (int i = 0; i < 2; i++)
         {
             if (frame.Reader.Complete) break;
@@ -257,12 +266,13 @@ internal sealed class GenderedItemBinaryTranslation
         RecordType maleMarker,
         RecordType femaleMarker,
         BinaryMasterParseDelegate<TItem> transl,
+        IGenderedItemGetter<TItem?>? existing,
         TypedParseParams maleRecordConverter = default,
         TypedParseParams femaleRecordConverter = default)
         where TItem : class
     {
         femaleRecordConverter = femaleRecordConverter.ShortCircuit();
-        TItem? male = default, female = default;
+        TItem? male = existing?.Male, female = existing?.Female;
         for (int i = 0; i < 2; i++)
         {
             if (frame.Reader.Complete) break;
@@ -271,17 +281,17 @@ internal sealed class GenderedItemBinaryTranslation
             if (type == maleMarker)
             {
                 frame.Position += subHeader.TotalLength;
-                if (!transl(frame, out male, maleRecordConverter))
+                if (transl(frame, out var item, maleRecordConverter))
                 {
-                    male = null;
+                    male = item;
                 }
             }
             else if (type == femaleMarker)
             {
                 frame.Position += subHeader.TotalLength;
-                if (!transl(frame, out female, femaleRecordConverter))
+                if (transl(frame, out var item, femaleRecordConverter))
                 {
-                    female = null;
+                    female = item;
                 }
             }
             else
@@ -297,11 +307,12 @@ internal sealed class GenderedItemBinaryTranslation
         RecordType maleMarker,
         RecordType femaleMarker,
         BinaryMasterParseDelegate<TItem> transl,
-        TypedParseParams translationParams)
+        TypedParseParams translationParams,
+        IGenderedItemGetter<TItem?>? existing)
         where TItem : class
     {
         return Parse<TItem>(frame, maleMarker, femaleMarker,
-            transl, maleRecordConverter: translationParams,
+            transl, existing, maleRecordConverter: translationParams,
             femaleRecordConverter: translationParams);
     }
 
@@ -369,10 +380,11 @@ internal sealed class GenderedItemBinaryTranslation
         RecordType maleMarker,
         RecordType femaleMarker,
         BinaryMasterParseDelegate<TItem> transl,
+        IGenderedItemGetter<TItem?>? existing,
         RecordTypeConverter? femaleRecordConverter = null)
         where TItem : class
     {
-        TItem? male = default, female = default;
+        TItem? male = existing?.Male, female = existing?.Female;
         for (int i = 0; i < 2; i++)
         {
             if (frame.Reader.Complete) break;

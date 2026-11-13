@@ -3916,6 +3916,12 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.MODL:
                 case RecordTypeInts.MODT:
                 case RecordTypeInts.MODS:
+                {
+                    item.MaleBipedModel = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
+                        frame: frame,
+                        translationParams: translationParams.DoNotShortCircuit());
+                    return (int)Armor_FieldIndex.MaleBipedModel;
+                }
                 case RecordTypeInts.MODB:
                 case RecordTypeInts.MODD:
                 {
@@ -4433,6 +4439,13 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.MODL:
                 case RecordTypeInts.MODT:
                 case RecordTypeInts.MODS:
+                {
+                    this.MaleBipedModel = ModelBinaryOverlay.ModelFactory(
+                        stream: stream,
+                        package: _package,
+                        translationParams: translationParams.DoNotShortCircuit());
+                    return (int)Armor_FieldIndex.MaleBipedModel;
+                }
                 case RecordTypeInts.MODB:
                 case RecordTypeInts.MODD:
                 {

@@ -9544,6 +9544,12 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.MODL:
                 case RecordTypeInts.MODT:
                 case RecordTypeInts.MODS:
+                {
+                    item.Model = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
+                        frame: frame,
+                        translationParams: translationParams.DoNotShortCircuit());
+                    return (int)Weapon_FieldIndex.Model;
+                }
                 case RecordTypeInts.MODB:
                 case RecordTypeInts.MODD:
                 {
@@ -11004,6 +11010,13 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.MODL:
                 case RecordTypeInts.MODT:
                 case RecordTypeInts.MODS:
+                {
+                    this.Model = ModelBinaryOverlay.ModelFactory(
+                        stream: stream,
+                        package: _package,
+                        translationParams: translationParams.DoNotShortCircuit());
+                    return (int)Weapon_FieldIndex.Model;
+                }
                 case RecordTypeInts.MODB:
                 case RecordTypeInts.MODD:
                 {

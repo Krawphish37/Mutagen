@@ -3214,7 +3214,8 @@ namespace Mutagen.Bethesda.Fallout3
                         frame: frame,
                         maleMarker: RecordTypes.MNAM,
                         femaleMarker: RecordTypes.FNAM,
-                        transl: HeadData.TryCreateFromBinary);
+                        transl: HeadData.TryCreateFromBinary,
+                        existing: item.HeadData);
                     return (int)Race_FieldIndex.HeadData;
                 }
                 case RecordTypeInts.NAM1:
@@ -3224,7 +3225,8 @@ namespace Mutagen.Bethesda.Fallout3
                         frame: frame,
                         maleMarker: RecordTypes.MNAM,
                         femaleMarker: RecordTypes.FNAM,
-                        transl: BodyData.TryCreateFromBinary);
+                        transl: BodyData.TryCreateFromBinary,
+                        existing: item.BodyData);
                     return (int)Race_FieldIndex.BodyData;
                 }
                 case RecordTypeInts.HNAM:
@@ -3254,7 +3256,8 @@ namespace Mutagen.Bethesda.Fallout3
                         frame: frame,
                         maleMarker: RecordTypes.MNAM,
                         femaleMarker: RecordTypes.FNAM,
-                        transl: FaceGenData.TryCreateFromBinary);
+                        transl: FaceGenData.TryCreateFromBinary,
+                        existing: item.FaceGenData);
                     return (int)Race_FieldIndex.FaceGenData;
                 }
                 default:
@@ -3567,7 +3570,8 @@ namespace Mutagen.Bethesda.Fallout3
                         female: RecordTypes.FNAM,
                         stream: stream,
                         creator: static (s, p, r) => HeadDataBinaryOverlay.HeadDataFactory(s, p, r),
-                        translationParams: translationParams);
+                        translationParams: translationParams,
+                        existing: _HeadDataOverlay);
                     return (int)Race_FieldIndex.HeadData;
                 }
                 case RecordTypeInts.NAM1:
@@ -3579,7 +3583,8 @@ namespace Mutagen.Bethesda.Fallout3
                         female: RecordTypes.FNAM,
                         stream: stream,
                         creator: static (s, p, r) => BodyDataBinaryOverlay.BodyDataFactory(s, p, r),
-                        translationParams: translationParams);
+                        translationParams: translationParams,
+                        existing: _BodyDataOverlay);
                     return (int)Race_FieldIndex.BodyData;
                 }
                 case RecordTypeInts.HNAM:
@@ -3611,7 +3616,8 @@ namespace Mutagen.Bethesda.Fallout3
                         female: RecordTypes.FNAM,
                         stream: stream,
                         creator: static (s, p, r) => FaceGenDataBinaryOverlay.FaceGenDataFactory(s, p, r),
-                        translationParams: translationParams);
+                        translationParams: translationParams,
+                        existing: _FaceGenDataOverlay);
                     return (int)Race_FieldIndex.FaceGenData;
                 }
                 default:
