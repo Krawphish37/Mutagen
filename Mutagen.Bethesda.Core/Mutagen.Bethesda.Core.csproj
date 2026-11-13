@@ -710,6 +710,7 @@
         <Compile Include="Plugins\Binary\Headers\VariableHeader.cs" />
         <Compile Include="Plugins\Binary\Streams\WritingBundle.cs" />
         <Compile Include="Plugins\Binary\Streams\ParsingMeta.cs" />
+        <Compile Include="Plugins\Binary\MajorRecordReader.cs" />
         <Compile Include="Strings\IStringsLookup.cs" />
         <Compile Include="Strings\ITranslatedString.cs" />
         <Compile Include="Strings\IStringsFolderLookup.cs" />
