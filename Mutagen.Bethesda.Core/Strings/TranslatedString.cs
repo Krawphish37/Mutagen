@@ -98,6 +98,37 @@ public sealed class TranslatedString : ITranslatedString, IEquatable<TranslatedS
     }
 
     /// <summary>
+    /// A text of a plugin's .strings tables: entry <paramref name="key"/> of its tables of kind
+    /// <paramref name="source"/>, with its text in every language <paramref name="lookup"/> has, looked up now, as
+    /// reading a localized plugin does. The text keeps the ID (<see cref="StringsKey"/>, <see cref="StringsKeySource"/>,
+    /// <see cref="StringsKeyPlugin"/>), so writing that plugin keeps it. An <see cref="IStringsFolderLookup"/> of one's
+    /// own can return it from <see cref="IStringsFolderLookup.CreateString"/>.
+    /// </summary>
+    /// <param name="key">The ID in the plugin's .strings tables</param>
+    /// <param name="source">Which of the plugin's tables the ID belongs to</param>
+    /// <param name="targetLanguage">The language the text is read and set in by default</param>
+    /// <param name="lookup">Where the texts are looked up; null: the text has the ID but no text yet</param>
+    /// <param name="plugin">The plugin whose tables the ID belongs to; null: the lookup's plugin when it is a
+    /// <see cref="StringsFolderLookupOverlay"/></param>
+    public static TranslatedString FromStringsKey(
+        uint key,
+        StringsSource source,
+        Language targetLanguage,
+        IStringsFolderLookup? lookup = null,
+        ModKey? plugin = null)
+    {
+        var ret = new TranslatedString(targetLanguage)
+        {
+            StringsLookup = lookup,
+            _stringsKey = key,
+            StringsSource = source,
+            _resolvedFromMod = plugin,
+        };
+        ret.ResolveAllStringSources();
+        return ret;
+    }
+
+    /// <summary>
     /// The plugin whose string tables StringsKey belongs to
     /// </summary>
     internal ModKey? StringsMod => (StringsLookup as StringsFolderLookupOverlay)?.ModKey ?? _resolvedFromMod;
