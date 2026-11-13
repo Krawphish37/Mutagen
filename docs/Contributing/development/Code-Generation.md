@@ -6,6 +6,21 @@ Each record is defined by an xml file that sits next to its handwritten partial 
 
 To change a record's structure, edit its xml and regenerate.  The `_Generated.cs` files should never be edited by hand, as they are overwritten on the next run.
 
+### Properties the generator adds that aren't xml fields
+A few properties of the generated classes have no `<Field>` of their own in the xml. The generator derives them from
+the xml's structure, or they come from a hand-written base class. Anything that reads the xml to describe a record
+(a schema, a serializer's field list) should derive them the same way rather than look for a field:
+
+| Property | Where it comes from | Type and values |
+|---|---|---|
+| `MajorFlags` | `majorFlag="true"` on a record's `<Object>` | `<Record>.MajorFlag`, a hand-written `[Flags]` enum in the record's partial class; a view of the record header's flags (`MajorRecordFlagsRaw`) |
+| `IsCompressed` (also `IsDeleted`) | the hand-written base class `MajorRecord` (Mutagen.Bethesda.Core), on every major record | `bool`; a view of the record header flag 0x40000 (compressed) / 0x20 (deleted) |
+| `Versioning` | one or more `<Break />` elements directly in an object's `<Fields>` | `<Object>.VersioningBreaks`, `[Flags]`: `Break0`, `Break1`, ... in xml order. A flag is set when the data ended at that break, and the writer stops there |
+| `<Sig>DataTypeState` | a `<Data recordType="SIG">` element that holds `<Break />` or `<Range>` elements, or is optional | `<Object>.<Sig>DataType`, `[Flags]`: `Break0`.., then `Range0`.., then `Absent` (an optional block that wasn't there), each a power of two in that order |
+
+These hold no data of their own beyond what the file's bytes say (the header flags, or how far a subrecord's data
+went), but they are written by the serializer and compared by equality like any field.
+
 ## Loqui
 The generation is built on top of [Loqui](https://github.com/Noggog/Loqui), a code generation library that is only really used by Mutagen.  Loqui provides the xml schema and the base generation of the classes, interfaces, masks, equality, and copying.  `Mutagen.Bethesda.Generation` layers the Bethesda specific pieces on top, such as binary translation and FormLink handling.
 
