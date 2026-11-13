@@ -17,6 +17,7 @@ the xml's structure, or they come from a hand-written base class. Anything that 
 | `IsCompressed` (also `IsDeleted`) | the hand-written base class `MajorRecord` (Mutagen.Bethesda.Core), on every major record | `bool`; a view of the record header flag 0x40000 (compressed) / 0x20 (deleted) |
 | `Versioning` | one or more `<Break />` elements directly in an object's `<Fields>` | `<Object>.VersioningBreaks`, `[Flags]`: `Break0`, `Break1`, ... in xml order. A flag is set when the data ended at that break, and the writer stops there |
 | `<Sig>DataTypeState` | a `<Data recordType="SIG">` element that holds `<Break />` or `<Range>` elements, or is optional | `<Object>.<Sig>DataType`, `[Flags]`: `Break0`.., then `Range0`.., then `Absent` (an optional block that wasn't there), each a power of two in that order |
+| `DataType` of `RegionData` (every game: Oblivion, Fallout 3, Skyrim, Fallout 4, Starfield) | hand-written in the partial class (`RegionData.cs`): abstract on `RegionData`, and each subclass (`RegionWeather`, `RegionSounds`, ...) returns its own constant | `RegionData.RegionDataType`; the first 4 bytes of RDAT. Reading picks the subclass from it, writing writes the subclass's value, so it is read-only and always agrees with the subclass. Not an xml field on purpose: as one it would be settable and could disagree with the subclass |
 
 These hold no data of their own beyond what the file's bytes say (the header flags, or how far a subrecord's data
 went), but they are written by the serializer and compared by equality like any field.
