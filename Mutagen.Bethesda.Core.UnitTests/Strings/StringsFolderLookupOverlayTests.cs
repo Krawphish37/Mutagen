@@ -426,4 +426,142 @@ public class StringsFolderLookupOverlayTests
         factory.InternalFactory(modKey).TryLookup(StringsSource.Normal, Language.English, id, out var str).ShouldBeTrue();
         str.ShouldBe("Hello");
     }
+
+    private static StringsFolderLookupFactory EnumerationFactory(IFileSystem fileSystem, DirectoryPath stringsFolder)
+    {
+        var gameRelease = Substitute.For<IGameReleaseContext>();
+        gameRelease.Release.Returns(GameRelease.SkyrimSE);
+        var archives = Substitute.For<IGetApplicableArchivePaths>();
+        archives.Get(Arg.Any<ModKey>()).Returns([]);
+        return new StringsFolderLookupFactory(
+            gameRelease,
+            Substitute.For<IDataDirectoryProvider>(),
+            archives,
+            fileSystem,
+            new StringsReadParameters { StringsFolderOverride = stringsFolder });
+    }
+
+    private static string EnumerationFilePath(DirectoryPath folder, ModKey modKey, Language language, StringsSource source)
+    {
+        return Path.Combine(folder.Path, StringsUtility.GetFileName(GameConstants.Get(GameRelease.SkyrimSE).StringsLanguageFormat!.Value, modKey, language, source));
+    }
+
+    [Theory, MutagenModAutoData]
+    internal void EnumerateStrings_ListsEveryStringOfEachTable(
+        IFileSystem fileSystem,
+        ModKey modKey,
+        DirectoryPath existingPath,
+        MutagenEncodingProvider encodingProvider)
+    {
+        var expected = new Dictionary<(StringsSource Source, Language Language), Dictionary<uint, string>>();
+        void Add(StringsWriter writer, string str, Language language, StringsSource source)
+        {
+            var id = writer.Register(str, language, source);
+            expected.GetOrAdd((source, language))[id] = str;
+        }
+        using (var writer = new StringsWriter(GameRelease.SkyrimSE, modKey, existingPath, encodingProvider, fileSystem))
+        {
+            Add(writer, "Iron Sword", Language.English, StringsSource.Normal);
+            Add(writer, "Steel Sword", Language.English, StringsSource.Normal);
+            Add(writer, "Daedric Sword", Language.English, StringsSource.Normal);
+            Add(writer, "A long description.", Language.English, StringsSource.DL);
+            Add(writer, "Hello there.", Language.English, StringsSource.IL);
+            Add(writer, "Hello again.", Language.English, StringsSource.IL);
+            Add(writer, "Épée de fer à l'œil", Language.French, StringsSource.Normal);
+        }
+        var overlay = EnumerationFactory(fileSystem, existingPath).InternalFactory(modKey);
+
+        foreach (var source in new[] { StringsSource.Normal, StringsSource.DL, StringsSource.IL })
+        {
+            foreach (var language in new[] { Language.English, Language.French })
+            {
+                var want = expected.TryGetValue((source, language), out var w) ? w : new Dictionary<uint, string>();
+                var listed = overlay.EnumerateStrings(source, language).ToArray();
+                listed.Select(x => x.Key).ShouldBeUnique();
+                listed.ToDictionary(x => x.Key, x => x.Value).ShouldBe(want, ignoreOrder: true);
+                overlay.GetStringsCount(source, language).ShouldBe(want.Count);
+                foreach (var item in listed)
+                {
+                    overlay.TryLookup(source, language, item.Key, out var looked).ShouldBeTrue();
+                    looked.ShouldBe(item.Value);
+                }
+            }
+        }
+    }
+
+    [Theory, MutagenModAutoData]
+    internal void EnumerateStrings_MissingTable(
+        IFileSystem fileSystem,
+        ModKey modKey,
+        DirectoryPath existingPath,
+        MutagenEncodingProvider encodingProvider)
+    {
+        using (var writer = new StringsWriter(GameRelease.SkyrimSE, modKey, existingPath, encodingProvider, fileSystem))
+        {
+            writer.Register("Iron Sword", Language.English, StringsSource.Normal);
+        }
+        fileSystem.File.Delete(EnumerationFilePath(existingPath, modKey, Language.English, StringsSource.DL));
+        var overlay = EnumerationFactory(fileSystem, existingPath).InternalFactory(modKey);
+
+        overlay.EnumerateStrings(StringsSource.DL, Language.English).ShouldBeEmpty();
+        overlay.EnumerateStrings(StringsSource.Normal, Language.German).ShouldBeEmpty();
+        overlay.GetStringsCount(StringsSource.DL, Language.English).ShouldBe(0);
+        overlay.TryGetTableSource(StringsSource.DL, Language.English, out _).ShouldBeFalse();
+        overlay.EnumerateTables().Select(x => (x.Source, x.Language))
+            .ShouldBe(new[] { (StringsSource.Normal, Language.English), (StringsSource.IL, Language.English) });
+    }
+
+    [Theory, MutagenModAutoData]
+    internal void EnumerateTables_LooseFiles(
+        IFileSystem fileSystem,
+        ModKey modKey,
+        DirectoryPath existingPath,
+        MutagenEncodingProvider encodingProvider)
+    {
+        uint id;
+        using (var writer = new StringsWriter(GameRelease.SkyrimSE, modKey, existingPath, encodingProvider, fileSystem))
+        {
+            id = writer.Register("Iron Sword", Language.English, StringsSource.Normal);
+            writer.Register("Épée de fer", Language.French, StringsSource.Normal);
+        }
+        var overlay = EnumerationFactory(fileSystem, existingPath).InternalFactory(modKey);
+
+        var tables = overlay.EnumerateTables().ToArray();
+        tables.Length.ShouldBe(6);
+        tables.Select(x => x.Source).Distinct().ShouldBe(new[] { StringsSource.Normal, StringsSource.DL, StringsSource.IL });
+        foreach (var table in tables)
+        {
+            table.FromArchive.ShouldBeFalse();
+            table.ArchivePath.ShouldBeNull();
+            table.ArchiveEntryPath.ShouldBeNull();
+            Path.GetFileName(table.SourcePath).ShouldBe(Path.GetFileName(EnumerationFilePath(existingPath, modKey, table.Language, table.Source)), StringCompareShould.IgnoreCase);
+            overlay.TryGetTableSource(table.Source, table.Language, out var same).ShouldBeTrue();
+            same.ShouldBe(table);
+        }
+
+        overlay.TryGetTableSource(StringsSource.Normal, Language.English, out var english).ShouldBeTrue();
+        overlay.TryLookup(StringsSource.Normal, Language.English, id, out _, out var lookupPath).ShouldBeTrue();
+        english.SourcePath.ShouldBe(lookupPath);
+    }
+
+    [Theory, MutagenModAutoData]
+    internal void EnumerateTables_DoesNotOpenStringsFiles(
+        IFileSystem fileSystem,
+        ModKey modKey,
+        DirectoryPath existingPath,
+        MutagenEncodingProvider encodingProvider)
+    {
+        using (var writer = new StringsWriter(GameRelease.SkyrimSE, modKey, existingPath, encodingProvider, fileSystem))
+        {
+            writer.Register("Iron Sword", Language.English, StringsSource.Normal);
+        }
+        var overlay = EnumerationFactory(fileSystem, existingPath).InternalFactory(modKey);
+
+        overlay.EnumerateTables().Count().ShouldBe(3);
+        overlay.TryGetTableSource(StringsSource.Normal, Language.English, out var table).ShouldBeTrue();
+        var enumeration = overlay.EnumerateStrings(StringsSource.Normal, Language.English);
+        // Nothing has read the file yet, so removing it now shows on first use
+        fileSystem.File.Delete(table.SourcePath);
+        Should.Throw<FileNotFoundException>(() => enumeration.ToArray());
+    }
 }
