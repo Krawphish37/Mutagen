@@ -215,13 +215,15 @@ public class ModCompactorTests
         StarfieldNpc n,
         Payload sut)
     {
-        var n2 = mod.Npcs.AddNew(FormKey.Factory($"010000:{mod.ModKey.FileName}"));
-        var n3 = mod.Npcs.AddReturn(
-            new StarfieldNpc(FormKey.Factory($"000030:{mod.ModKey.FileName}"), StarfieldRelease.Starfield));
+        // The new records first: the allocator hands out IDs above the highest own ID (C164), so after 010000 they
+        // would no longer fill 000801-001800
         for (int i = 0; i < 4096; i++)
         {
             mod.Npcs.AddNew();
         }
+        var n2 = mod.Npcs.AddNew(FormKey.Factory($"010000:{mod.ModKey.FileName}"));
+        var n3 = mod.Npcs.AddReturn(
+            new StarfieldNpc(FormKey.Factory($"000030:{mod.ModKey.FileName}"), StarfieldRelease.Starfield));
         mod.IsSmallMaster.ShouldBeFalse();
         mod.IsMediumMaster.ShouldBeFalse();
         var ret = sut.Sut.CompactToWithFallback(mod, MasterStyle.Small);
@@ -239,13 +241,15 @@ public class ModCompactorTests
         SkyrimNpc n,
         Payload sut)
     {
-        var n2 = mod.Npcs.AddNew(FormKey.Factory($"010000:{mod.ModKey.FileName}"));
-        var n3 = mod.Npcs.AddReturn(
-            new SkyrimNpc(FormKey.Factory($"000030:{mod.ModKey.FileName}"), SkyrimRelease.SkyrimSE));
+        // The new records first: the allocator hands out IDs above the highest own ID (C164), so after 010000 they
+        // would no longer fill 000801-001800
         for (int i = 0; i < 4096; i++)
         {
             mod.Npcs.AddNew();
         }
+        var n2 = mod.Npcs.AddNew(FormKey.Factory($"010000:{mod.ModKey.FileName}"));
+        var n3 = mod.Npcs.AddReturn(
+            new SkyrimNpc(FormKey.Factory($"000030:{mod.ModKey.FileName}"), SkyrimRelease.SkyrimSE));
         mod.IsSmallMaster.ShouldBeFalse();
         mod.IsMediumMaster.ShouldBeFalse();
         var ret = sut.Sut.CompactToWithFallback(mod, MasterStyle.Small);

@@ -14,8 +14,11 @@ namespace Mutagen.Bethesda.UnitTests.Plugins.Records.Starfield;
 // its own keyword 03000809 (test_ck.esm). SF1Edit read the next ID as 0x800 and added FE002800 (test_xedit.esm, next
 // 00000801). Mutagen's allocator counted up from the stored value, so the 10th new record of test_ck.esm (the 9th of
 // test_xedit.esm) got 0x809 and, added under that FormKey, replaced the plugin's own keyword. New IDs now start above the
-// highest own ID the mod was read with; a mod with nothing added is written back as read. The files' TES4 and KYWD group
-// below (their 4.5 MB NAVI override left out).
+// highest own ID the mod has, whatever way its records got there (walked once at the first allocation, nested records
+// included; own records added to a top-level group afterwards are noted), and stay within the mod's size: a Small
+// master's new IDs end at 0xFFF and a Medium master's at 0xFFFF (a stored FF001000, the CK's value, no longer gives a
+// Small plugin 0x1000), with a clear error when the range is used up. A mod with nothing added is written back as read.
+// The files' TES4 and KYWD group below (their 4.5 MB NAVI override left out).
 public class NextIdAfterCkExportTests
 {
     private const string CkTes4 = "54455334C700000001010000000000000000000046020000484544520C008FC2753F0400000000080003434E414D080044454641554C54004D4153540E00537461726669656C642E65736D004D4153540D0053464247533030442E65736D004D4153540D006461726B737461722E65736D004D4153540C006275626C756D692E65736D004D4153541A006461726B7374617270617463685F6275626C756D692E65736D004D4153540D0053464247533030332E65736D004D4153540D0053464247533030362E65736D00424E414D05004D61696E00494E4343040000000000";
@@ -122,5 +125,80 @@ public class NextIdAfterCkExportTests
         var mod = new StarfieldMod(ModKey.FromFileName("New.esm"), StarfieldRelease.Starfield);
         var first = mod.Keywords.AddNew().FormKey.ID;
         mod.Keywords.AddNew().FormKey.ID.ShouldBe(first + 1);
+    }
+
+    private static StarfieldMod NewMod(string name = "New.esm") => new(ModKey.FromFileName(name), StarfieldRelease.Starfield);
+
+    [Fact]
+    public void ExplicitFormKey_BeforeTheFirstAllocation_IsSkipped()
+    {
+        var mod = NewMod();
+        var next = mod.GetNextFormKey().ID; // the mod's first ID, before anything is added
+        var mod2 = NewMod();
+        mod2.Keywords.Add(new Keyword(new FormKey(mod2.ModKey, next + 5), StarfieldRelease.Starfield));
+        mod2.Keywords.AddNew().FormKey.ID.ShouldBe(next + 6);
+    }
+
+    [Fact]
+    public void ExplicitFormKey_AfterAnAllocation_IsSkipped()
+    {
+        var mod = NewMod();
+        var first = mod.Keywords.AddNew().FormKey.ID;
+        mod.Keywords.Add(new Keyword(new FormKey(mod.ModKey, first + 10), StarfieldRelease.Starfield));
+        mod.Weapons.Set(new Weapon(new FormKey(mod.ModKey, first + 20), StarfieldRelease.Starfield));
+        mod.Keywords.AddNew().FormKey.ID.ShouldBe(first + 21);
+    }
+
+    [Fact]
+    public void NestedOwnRecord_IsSeenByTheFirstAllocation()
+    {
+        var mod = NewMod();
+        var quest = new Quest(new FormKey(mod.ModKey, 0x800), StarfieldRelease.Starfield);
+        quest.DialogTopics.Add(new DialogTopic(new FormKey(mod.ModKey, 0xA00), StarfieldRelease.Starfield));
+        mod.Quests.Add(quest);
+        mod.Keywords.AddNew().FormKey.ID.ShouldBe(0xA01u);
+    }
+
+    [Fact]
+    public void Light_StoredFF001000_StaysInRange()
+    {
+        var mod = NewMod("Light.esm");
+        mod.IsSmallMaster = true;
+        mod.Keywords.Add(new Keyword(new FormKey(mod.ModKey, 0x805), StarfieldRelease.Starfield));
+        ((IMod)mod).NextFormID = 0xFF001000;
+        mod.Keywords.AddNew().FormKey.ID.ShouldBe(0x806u);
+        mod.Keywords.AddNew().FormKey.ID.ShouldBe(0x807u);
+    }
+
+    [Fact]
+    public void Light_NoOwnRecords_StartsAt800()
+    {
+        var mod = NewMod("Light.esm");
+        mod.IsSmallMaster = true;
+        ((IMod)mod).NextFormID = 0xFF001000;
+        mod.Keywords.AddNew().FormKey.ID.ShouldBe(0x800u);
+    }
+
+    [Fact]
+    public void Light_RangeUsedUp_Refuses()
+    {
+        var mod = NewMod("Light.esm");
+        mod.IsSmallMaster = true;
+        mod.Keywords.Add(new Keyword(new FormKey(mod.ModKey, 0xFFF), StarfieldRelease.Starfield));
+        var ex = Should.Throw<InvalidOperationException>(() => mod.Keywords.AddNew());
+        ex.Message.ShouldContain("0xFFF");
+        mod.Keywords.Count.ShouldBe(1);
+    }
+
+    [Fact]
+    public void Medium_StaysInRange_AndRefusesWhenFull()
+    {
+        var mod = NewMod("Medium.esm");
+        mod.IsMediumMaster = true;
+        mod.Keywords.Add(new Keyword(new FormKey(mod.ModKey, 0x1234), StarfieldRelease.Starfield));
+        ((IMod)mod).NextFormID = 0xFF010000;
+        mod.Keywords.AddNew().FormKey.ID.ShouldBe(0x1235u);
+        mod.Keywords.Add(new Keyword(new FormKey(mod.ModKey, 0xFFFF), StarfieldRelease.Starfield));
+        Should.Throw<InvalidOperationException>(() => mod.Keywords.AddNew());
     }
 }
