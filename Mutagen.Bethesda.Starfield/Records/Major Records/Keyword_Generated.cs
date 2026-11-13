@@ -112,10 +112,16 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         Keyword.TypeEnum? IKeywordGetter.Type => this.Type;
         #endregion
-        #region FormLinkTargetType
-        public UInt32? FormLinkTargetType { get; set; }
+        #region FormLinkTarget
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        UInt32? IKeywordGetter.FormLinkTargetType => this.FormLinkTargetType;
+        private KeywordFormLinkTarget? _FormLinkTarget;
+        public KeywordFormLinkTarget? FormLinkTarget
+        {
+            get => _FormLinkTarget;
+            set => _FormLinkTarget = value;
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IKeywordFormLinkTargetGetter? IKeywordGetter.FormLinkTarget => this.FormLinkTarget;
         #endregion
         #region FlashLinkageName
         public String? FlashLinkageName { get; set; }
@@ -198,7 +204,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Color = initialValue;
                 this.Notes = initialValue;
                 this.Type = initialValue;
-                this.FormLinkTargetType = initialValue;
+                this.FormLinkTarget = new MaskItem<TItem, KeywordFormLinkTarget.Mask<TItem>?>(initialValue, new KeywordFormLinkTarget.Mask<TItem>(initialValue));
                 this.FlashLinkageName = initialValue;
                 this.AttractionRule = initialValue;
                 this.Name = initialValue;
@@ -219,7 +225,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Color,
                 TItem Notes,
                 TItem Type,
-                TItem FormLinkTargetType,
+                TItem FormLinkTarget,
                 TItem FlashLinkageName,
                 TItem AttractionRule,
                 TItem Name)
@@ -239,7 +245,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Color = Color;
                 this.Notes = Notes;
                 this.Type = Type;
-                this.FormLinkTargetType = FormLinkTargetType;
+                this.FormLinkTarget = new MaskItem<TItem, KeywordFormLinkTarget.Mask<TItem>?>(FormLinkTarget, new KeywordFormLinkTarget.Mask<TItem>(FormLinkTarget));
                 this.FlashLinkageName = FlashLinkageName;
                 this.AttractionRule = AttractionRule;
                 this.Name = Name;
@@ -259,7 +265,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Color;
             public TItem Notes;
             public TItem Type;
-            public TItem FormLinkTargetType;
+            public MaskItem<TItem, KeywordFormLinkTarget.Mask<TItem>?>? FormLinkTarget { get; set; }
             public TItem FlashLinkageName;
             public TItem AttractionRule;
             public TItem Name;
@@ -281,7 +287,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Color, rhs.Color)) return false;
                 if (!object.Equals(this.Notes, rhs.Notes)) return false;
                 if (!object.Equals(this.Type, rhs.Type)) return false;
-                if (!object.Equals(this.FormLinkTargetType, rhs.FormLinkTargetType)) return false;
+                if (!object.Equals(this.FormLinkTarget, rhs.FormLinkTarget)) return false;
                 if (!object.Equals(this.FlashLinkageName, rhs.FlashLinkageName)) return false;
                 if (!object.Equals(this.AttractionRule, rhs.AttractionRule)) return false;
                 if (!object.Equals(this.Name, rhs.Name)) return false;
@@ -295,7 +301,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Color);
                 hash.Add(this.Notes);
                 hash.Add(this.Type);
-                hash.Add(this.FormLinkTargetType);
+                hash.Add(this.FormLinkTarget);
                 hash.Add(this.FlashLinkageName);
                 hash.Add(this.AttractionRule);
                 hash.Add(this.Name);
@@ -329,7 +335,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Color)) return false;
                 if (!eval(this.Notes)) return false;
                 if (!eval(this.Type)) return false;
-                if (!eval(this.FormLinkTargetType)) return false;
+                if (FormLinkTarget != null)
+                {
+                    if (!eval(this.FormLinkTarget.Overall)) return false;
+                    if (this.FormLinkTarget.Specific != null && !this.FormLinkTarget.Specific.All(eval)) return false;
+                }
                 if (!eval(this.FlashLinkageName)) return false;
                 if (!eval(this.AttractionRule)) return false;
                 if (!eval(this.Name)) return false;
@@ -361,7 +371,11 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Color)) return true;
                 if (eval(this.Notes)) return true;
                 if (eval(this.Type)) return true;
-                if (eval(this.FormLinkTargetType)) return true;
+                if (FormLinkTarget != null)
+                {
+                    if (eval(this.FormLinkTarget.Overall)) return true;
+                    if (this.FormLinkTarget.Specific != null && this.FormLinkTarget.Specific.Any(eval)) return true;
+                }
                 if (eval(this.FlashLinkageName)) return true;
                 if (eval(this.AttractionRule)) return true;
                 if (eval(this.Name)) return true;
@@ -399,7 +413,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Color = eval(this.Color);
                 obj.Notes = eval(this.Notes);
                 obj.Type = eval(this.Type);
-                obj.FormLinkTargetType = eval(this.FormLinkTargetType);
+                obj.FormLinkTarget = this.FormLinkTarget == null ? null : new MaskItem<R, KeywordFormLinkTarget.Mask<R>?>(eval(this.FormLinkTarget.Overall), this.FormLinkTarget.Specific?.Translate(eval));
                 obj.FlashLinkageName = eval(this.FlashLinkageName);
                 obj.AttractionRule = eval(this.AttractionRule);
                 obj.Name = eval(this.Name);
@@ -456,9 +470,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Type, "Type");
                     }
-                    if (printMask?.FormLinkTargetType ?? true)
+                    if (printMask?.FormLinkTarget?.Overall ?? true)
                     {
-                        sb.AppendItem(FormLinkTargetType, "FormLinkTargetType");
+                        FormLinkTarget?.Print(sb);
                     }
                     if (printMask?.FlashLinkageName ?? true)
                     {
@@ -488,7 +502,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Color;
             public Exception? Notes;
             public Exception? Type;
-            public Exception? FormLinkTargetType;
+            public MaskItem<Exception?, KeywordFormLinkTarget.ErrorMask?>? FormLinkTarget;
             public Exception? FlashLinkageName;
             public Exception? AttractionRule;
             public Exception? Name;
@@ -510,8 +524,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Notes;
                     case Keyword_FieldIndex.Type:
                         return Type;
-                    case Keyword_FieldIndex.FormLinkTargetType:
-                        return FormLinkTargetType;
+                    case Keyword_FieldIndex.FormLinkTarget:
+                        return FormLinkTarget;
                     case Keyword_FieldIndex.FlashLinkageName:
                         return FlashLinkageName;
                     case Keyword_FieldIndex.AttractionRule:
@@ -543,8 +557,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Keyword_FieldIndex.Type:
                         this.Type = ex;
                         break;
-                    case Keyword_FieldIndex.FormLinkTargetType:
-                        this.FormLinkTargetType = ex;
+                    case Keyword_FieldIndex.FormLinkTarget:
+                        this.FormLinkTarget = new MaskItem<Exception?, KeywordFormLinkTarget.ErrorMask?>(ex, null);
                         break;
                     case Keyword_FieldIndex.FlashLinkageName:
                         this.FlashLinkageName = ex;
@@ -581,8 +595,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Keyword_FieldIndex.Type:
                         this.Type = (Exception?)obj;
                         break;
-                    case Keyword_FieldIndex.FormLinkTargetType:
-                        this.FormLinkTargetType = (Exception?)obj;
+                    case Keyword_FieldIndex.FormLinkTarget:
+                        this.FormLinkTarget = (MaskItem<Exception?, KeywordFormLinkTarget.ErrorMask?>?)obj;
                         break;
                     case Keyword_FieldIndex.FlashLinkageName:
                         this.FlashLinkageName = (Exception?)obj;
@@ -607,7 +621,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Color != null) return true;
                 if (Notes != null) return true;
                 if (Type != null) return true;
-                if (FormLinkTargetType != null) return true;
+                if (FormLinkTarget != null) return true;
                 if (FlashLinkageName != null) return true;
                 if (AttractionRule != null) return true;
                 if (Name != null) return true;
@@ -665,9 +679,7 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     sb.AppendItem(Type, "Type");
                 }
-                {
-                    sb.AppendItem(FormLinkTargetType, "FormLinkTargetType");
-                }
+                FormLinkTarget?.Print(sb);
                 {
                     sb.AppendItem(FlashLinkageName, "FlashLinkageName");
                 }
@@ -690,7 +702,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Color = this.Color.Combine(rhs.Color);
                 ret.Notes = this.Notes.Combine(rhs.Notes);
                 ret.Type = this.Type.Combine(rhs.Type);
-                ret.FormLinkTargetType = this.FormLinkTargetType.Combine(rhs.FormLinkTargetType);
+                ret.FormLinkTarget = this.FormLinkTarget.Combine(rhs.FormLinkTarget, (l, r) => l.Combine(r));
                 ret.FlashLinkageName = this.FlashLinkageName.Combine(rhs.FlashLinkageName);
                 ret.AttractionRule = this.AttractionRule.Combine(rhs.AttractionRule);
                 ret.Name = this.Name.Combine(rhs.Name);
@@ -721,7 +733,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Color;
             public bool Notes;
             public bool Type;
-            public bool FormLinkTargetType;
+            public KeywordFormLinkTarget.TranslationMask? FormLinkTarget;
             public bool FlashLinkageName;
             public bool AttractionRule;
             public bool Name;
@@ -736,7 +748,6 @@ namespace Mutagen.Bethesda.Starfield
                 this.Color = defaultOn;
                 this.Notes = defaultOn;
                 this.Type = defaultOn;
-                this.FormLinkTargetType = defaultOn;
                 this.FlashLinkageName = defaultOn;
                 this.AttractionRule = defaultOn;
                 this.Name = defaultOn;
@@ -752,7 +763,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Color, null));
                 ret.Add((Notes, null));
                 ret.Add((Type, null));
-                ret.Add((FormLinkTargetType, null));
+                ret.Add((FormLinkTarget != null ? FormLinkTarget.OnOverall : DefaultOn, FormLinkTarget?.GetCrystal()));
                 ret.Add((FlashLinkageName, null));
                 ret.Add((AttractionRule, null));
                 ret.Add((Name, null));
@@ -932,7 +943,7 @@ namespace Mutagen.Bethesda.Starfield
         new Color? Color { get; set; }
         new String? Notes { get; set; }
         new Keyword.TypeEnum? Type { get; set; }
-        new UInt32? FormLinkTargetType { get; set; }
+        new KeywordFormLinkTarget? FormLinkTarget { get; set; }
         new String? FlashLinkageName { get; set; }
         new IFormLinkNullable<IAttractionRuleGetter> AttractionRule { get; set; }
         /// <summary>
@@ -983,7 +994,7 @@ namespace Mutagen.Bethesda.Starfield
         Color? Color { get; }
         String? Notes { get; }
         Keyword.TypeEnum? Type { get; }
-        UInt32? FormLinkTargetType { get; }
+        IKeywordFormLinkTargetGetter? FormLinkTarget { get; }
         String? FlashLinkageName { get; }
         IFormLinkNullableGetter<IAttractionRuleGetter> AttractionRule { get; }
         #region Name
@@ -1179,7 +1190,7 @@ namespace Mutagen.Bethesda.Starfield
         Color = 11,
         Notes = 12,
         Type = 13,
-        FormLinkTargetType = 14,
+        FormLinkTarget = 14,
         FlashLinkageName = 15,
         AttractionRule = 16,
         Name = 17,
@@ -1288,7 +1299,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Color = default;
             item.Notes = default;
             item.Type = default;
-            item.FormLinkTargetType = default;
+            item.FormLinkTarget = null;
             item.FlashLinkageName = default;
             item.AttractionRule.Clear();
             item.Name = default;
@@ -1415,7 +1426,11 @@ namespace Mutagen.Bethesda.Starfield
             ret.Color = item.Color.ColorOnlyEquals(rhs.Color);
             ret.Notes = string.Equals(item.Notes, rhs.Notes);
             ret.Type = item.Type == rhs.Type;
-            ret.FormLinkTargetType = item.FormLinkTargetType == rhs.FormLinkTargetType;
+            ret.FormLinkTarget = EqualsMaskHelper.EqualsHelper(
+                item.FormLinkTarget,
+                rhs.FormLinkTarget,
+                (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
+                include);
             ret.FlashLinkageName = string.Equals(item.FlashLinkageName, rhs.FlashLinkageName);
             ret.AttractionRule = item.AttractionRule.Equals(rhs.AttractionRule);
             ret.Name = object.Equals(item.Name, rhs.Name);
@@ -1502,10 +1517,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(TypeItem, "Type");
             }
-            if ((printMask?.FormLinkTargetType ?? true)
-                && item.FormLinkTargetType is {} FormLinkTargetTypeItem)
+            if ((printMask?.FormLinkTarget?.Overall ?? true)
+                && item.FormLinkTarget is {} FormLinkTargetItem)
             {
-                sb.AppendItem(FormLinkTargetTypeItem, "FormLinkTargetType");
+                FormLinkTargetItem?.Print(sb, "FormLinkTarget");
             }
             if ((printMask?.FlashLinkageName ?? true)
                 && item.FlashLinkageName is {} FlashLinkageNameItem)
@@ -1603,9 +1618,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Type != rhs.Type) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Keyword_FieldIndex.FormLinkTargetType) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Keyword_FieldIndex.FormLinkTarget) ?? true))
             {
-                if (lhs.FormLinkTargetType != rhs.FormLinkTargetType) return false;
+                if (EqualsMaskHelper.RefEquality(lhs.FormLinkTarget, rhs.FormLinkTarget, out var lhsFormLinkTarget, out var rhsFormLinkTarget, out var isFormLinkTargetEqual))
+                {
+                    if (!((KeywordFormLinkTargetCommon)((IKeywordFormLinkTargetGetter)lhsFormLinkTarget).CommonInstance()!).Equals(lhsFormLinkTarget, rhsFormLinkTarget, equalsMask?.GetSubCrystal((int)Keyword_FieldIndex.FormLinkTarget))) return false;
+                }
+                else if (!isFormLinkTargetEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Keyword_FieldIndex.FlashLinkageName) ?? true))
             {
@@ -1667,9 +1686,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 hash.Add(Typeitem);
             }
-            if (item.FormLinkTargetType is {} FormLinkTargetTypeitem)
+            if (item.FormLinkTarget is {} FormLinkTargetitem)
             {
-                hash.Add(FormLinkTargetTypeitem);
+                hash.Add(FormLinkTargetitem);
             }
             if (item.FlashLinkageName is {} FlashLinkageNameitem)
             {
@@ -1897,9 +1916,31 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Type = rhs.Type;
             }
-            if ((copyMask?.GetShouldTranslate((int)Keyword_FieldIndex.FormLinkTargetType) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Keyword_FieldIndex.FormLinkTarget) ?? true))
             {
-                item.FormLinkTargetType = rhs.FormLinkTargetType;
+                errorMask?.PushIndex((int)Keyword_FieldIndex.FormLinkTarget);
+                try
+                {
+                    if(rhs.FormLinkTarget is {} rhsFormLinkTarget)
+                    {
+                        item.FormLinkTarget = rhsFormLinkTarget.DeepCopy(
+                            errorMask: errorMask,
+                            copyMask?.GetSubCrystal((int)Keyword_FieldIndex.FormLinkTarget));
+                    }
+                    else
+                    {
+                        item.FormLinkTarget = default;
+                    }
+                }
+                catch (Exception ex)
+                when (errorMask != null)
+                {
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
+                }
             }
             if ((copyMask?.GetShouldTranslate((int)Keyword_FieldIndex.FlashLinkageName) ?? true))
             {
@@ -2114,10 +2155,13 @@ namespace Mutagen.Bethesda.Starfield
                 item.Type,
                 length: 4,
                 header: translationParams.ConvertToCustom(RecordTypes.TNAM));
-            UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.WriteNullable(
-                writer: writer,
-                item: item.FormLinkTargetType,
-                header: translationParams.ConvertToCustom(RecordTypes.FNAM));
+            if (item.FormLinkTarget is {} FormLinkTargetItem)
+            {
+                ((KeywordFormLinkTargetBinaryWriteTranslation)((IBinaryItem)FormLinkTargetItem).BinaryWriteTranslator).Write(
+                    item: FormLinkTargetItem,
+                    writer: writer,
+                    translationParams: translationParams);
+            }
             StringBinaryTranslation.Instance.WriteNullable(
                 writer: writer,
                 item: item.FlashLinkageName,
@@ -2243,9 +2287,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.FNAM:
                 {
-                    frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
-                    item.FormLinkTargetType = frame.ReadUInt32();
-                    return (int)Keyword_FieldIndex.FormLinkTargetType;
+                    item.FormLinkTarget = Mutagen.Bethesda.Starfield.KeywordFormLinkTarget.CreateFromBinary(frame: frame);
+                    return (int)Keyword_FieldIndex.FormLinkTarget;
                 }
                 case RecordTypeInts.ENAM:
                 {
@@ -2358,9 +2401,9 @@ namespace Mutagen.Bethesda.Starfield
         private int? _TypeLocation;
         public Keyword.TypeEnum? Type => EnumBinaryTranslation<Keyword.TypeEnum, MutagenFrame, MutagenWriter>.Instance.ParseRecordNullable(_TypeLocation, _recordData, _package, 4);
         #endregion
-        #region FormLinkTargetType
-        private int? _FormLinkTargetTypeLocation;
-        public UInt32? FormLinkTargetType => _FormLinkTargetTypeLocation.HasValue ? BinaryPrimitives.ReadUInt32LittleEndian(HeaderTranslation.ExtractSubrecordMemory(_recordData, _FormLinkTargetTypeLocation.Value, _package.MetaData.Constants)) : default(UInt32?);
+        #region FormLinkTarget
+        private RangeInt32? _FormLinkTargetLocation;
+        public IKeywordFormLinkTargetGetter? FormLinkTarget => _FormLinkTargetLocation.HasValue ? KeywordFormLinkTargetBinaryOverlay.KeywordFormLinkTargetFactory(_recordData.Slice(_FormLinkTargetLocation!.Value.Min), _package) : default;
         #endregion
         #region FlashLinkageName
         private int? _FlashLinkageNameLocation;
@@ -2487,8 +2530,8 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.FNAM:
                 {
-                    _FormLinkTargetTypeLocation = (stream.Position - offset);
-                    return (int)Keyword_FieldIndex.FormLinkTargetType;
+                    _FormLinkTargetLocation = new RangeInt32((stream.Position - offset), finalPos - offset);
+                    return (int)Keyword_FieldIndex.FormLinkTarget;
                 }
                 case RecordTypeInts.ENAM:
                 {

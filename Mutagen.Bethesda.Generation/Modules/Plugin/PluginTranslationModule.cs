@@ -3233,7 +3233,8 @@ public class PluginTranslationModule : BinaryTranslationModule
                         {
                             if (lengths.Field is BreakType breakType)
                             {
-                                sb.AppendLine($"if (ret.{structDataAccessor}.Length <= {lengths.PassedAccessor})");
+                                // A Break before the first field has no passed length: the check is against 0
+                                sb.AppendLine($"if (ret.{structDataAccessor}.Length <= {(string.IsNullOrWhiteSpace(lengths.PassedAccessor) ? "0" : lengths.PassedAccessor)})");
                                 using (sb.CurlyBrace())
                                 {
                                     sb.AppendLine($"ret.{VersioningModule.VersioningFieldName} |= {obj.ObjectName}.{VersioningModule.VersioningEnumName}.Break{breakIndex++};");
@@ -3278,7 +3279,8 @@ public class PluginTranslationModule : BinaryTranslationModule
                         {
                             if (lengths.Field is BreakType breakType)
                             {
-                                sb.AppendLine($"if (ret.{structDataAccessor}.Length <= {lengths.PassedAccessor})");
+                                // A Break before the first field has no passed length: the check is against 0
+                                sb.AppendLine($"if (ret.{structDataAccessor}.Length <= {(string.IsNullOrWhiteSpace(lengths.PassedAccessor) ? "0" : lengths.PassedAccessor)})");
                                 using (sb.CurlyBrace())
                                 {
                                     sb.AppendLine($"ret.{VersioningModule.VersioningFieldName} |= {obj.ObjectName}.{VersioningModule.VersioningEnumName}.Break{breakIndex++};");

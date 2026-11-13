@@ -866,6 +866,7 @@ internal class ProtocolDefinition_Starfield : IProtocolRegistration
             Key_Registration.Instance,
             Keyword_Registration.Instance,
             KeywordFormComponent_Registration.Instance,
+            KeywordFormLinkTarget_Registration.Instance,
             LandscapeTexture_Registration.Instance,
             LastCrippledConditionConditionData_Registration.Instance,
             Layer_Registration.Instance,

@@ -7,14 +7,23 @@
       <Color name="Color" recordType="CNAM" binaryType="Alpha" />
       <String name="Notes" recordType="DNAM" />
       <Enum name="Type" enumName="Keyword.TypeEnum" byteLength="4" recordType="TNAM" />
-      <!-- CK: the greyed drop-down under Type when Type = Form Link (0 = NONE). Only Form Link keywords set it: 0 on the
-           6 in Starfield.esm, 47 in SFBGS004.esm, 27 in SFBGS00D.esm. The values are engine form-type numbers (not confirmed
-           which numbering, so no enum). Checked in the Creation Kit 1.16.244.0. -->
-      <UInt32 name="FormLinkTargetType" recordType="FNAM" />
+      <!-- FNAM. CK: the greyed drop-down under Type when Type = Form Link (0 = NONE). Only Form Link keywords set it: 0 on
+           the 6 in Starfield.esm, 47 in SFBGS004.esm, 27 in SFBGS00D.esm. The values are engine form-type numbers (not
+           confirmed which numbering, so no enum). Checked in the Creation Kit 1.16.244.0.
+           Three states in the 370 plugins of the Data folder: 4 bytes on 9,774 keywords, absent on 1,241 (mods), and empty
+           (0 bytes) on 4 in darkstarpatch_bublumi.esm (000863, 000864, 000867, 000869), which no longer read (C157). An
+           object keeps all three: null when absent, Versioning Break0 when empty. -->
+      <RefDirect name="FormLinkTarget" refName="KeywordFormLinkTarget" />
       <String name="FlashLinkageName" recordType="ENAM" />
       <FormLink name="AttractionRule" refName="AttractionRule" recordType="DATA" />
       <String name="Name" recordType="FULL" translated="Normal" />
     </Fields>
     <LinkInterface>IKeywordLinkedReference</LinkInterface>
+  </Object>
+  <Object name="KeywordFormLinkTarget" objType="Subrecord" recordType="FNAM">
+    <Fields>
+      <Break />
+      <UInt32 name="Type" />
+    </Fields>
   </Object>
 </Loqui>
