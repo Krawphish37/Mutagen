@@ -278,6 +278,7 @@
         <Compile Include="Plugins\Cache\Internals\Implementations\Internal\ImmutableLoadOrderLinkCacheContextCategory.cs" />
         <Compile Include="Plugins\Cache\Internals\Implementations\Internal\ImmutableLoadOrderLinkCacheSimpleContextCategory.cs" />
         <Compile Include="Plugins\Cache\Internals\Implementations\Internal\ImmutableModLinkCacheCategory.cs" />
+        <Compile Include="Plugins\Cache\Internals\ModRecordIndex.cs" />
         <Compile Include="Plugins\Cache\Internals\Implementations\Internal\ImmutableModLinkCacheContextCategory.cs" />
         <Compile Include="Plugins\Cache\Internals\Implementations\Internal\ImmutableModLinkCacheSimpleContextCategory.cs" />
         <Compile Include="Plugins\Cache\Internals\Implementations\Internal\InternalImmutableLoadOrderLinkCache.cs" />

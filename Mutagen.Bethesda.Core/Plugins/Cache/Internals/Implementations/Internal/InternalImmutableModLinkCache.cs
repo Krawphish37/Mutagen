@@ -19,6 +19,14 @@ internal sealed class InternalImmutableModLinkCache
 
     public IReadOnlyList<IModGetter> PriorityOrder => ListedOrder;
 
+    // An untyped FormKey lookup: through the record's type when the plugin is an overlay (C177), else the cache of every record
+    private bool TryGetUntyped(FormKey formKey, [MaybeNullWhen(false)] out LinkCacheItem item)
+    {
+        var found = _formKeyCache.TryResolveUntyped(formKey, out var answered, out item);
+        if (answered) return found;
+        return _formKeyCache._untypedMajorRecords.Value.TryGetValue(formKey, out item);
+    }
+
     public InternalImmutableModLinkCache(IModGetter sourceMod, LinkCachePreferences? prefs = null)
     {
         _sourceMod = sourceMod;
@@ -62,7 +70,7 @@ internal sealed class InternalImmutableModLinkCache
             return false;
         }
             
-        if (_formKeyCache._untypedMajorRecords.Value.TryGetValue(formKey, out var item))
+        if (TryGetUntyped(formKey, out var item))
         {
             majorRec = item.Record;
             return true;
@@ -303,7 +311,7 @@ internal sealed class InternalImmutableModLinkCache
             return false;
         }
             
-        if (_formKeyCache._untypedMajorRecords.Value.TryGetValue(formKey, out var item))
+        if (TryGetUntyped(formKey, out var item))
         {
             editorId = item.EditorID;
             return true;

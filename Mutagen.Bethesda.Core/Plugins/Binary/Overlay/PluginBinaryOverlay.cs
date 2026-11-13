@@ -81,6 +81,11 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
             // Starfield: an overlay can't change, so its overridden-forms list is written as read (OverriddenFormsBaseline)
             if (mod is Mutagen.Bethesda.Plugins.Records.IModGetter modGetter)
             {
+                // Untyped link lookups find a record's type from the file's record headers (C177)
+                if (package.MetaData.RecordInfoCache is { } recordInfo)
+                {
+                    Mutagen.Bethesda.Plugins.Cache.Internals.ModRecordIndex.Register(modGetter, recordInfo);
+                }
                 Mutagen.Bethesda.Plugins.Records.OverriddenFormsBaseline.RememberOverlay(modGetter);
                 Mutagen.Bethesda.Plugins.Records.DuplicateRecords.Attach(modGetter, package.MetaData);
             }

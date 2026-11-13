@@ -156,6 +156,15 @@ internal sealed class ImmutableLoadOrderLinkCacheCategory<TKey>
             return false;
         }
 
+        // An untyped FormKey lookup: when every plugin is an overlay, find the record's type from the record headers
+        // of the plugins and look up only that type, instead of caching every record of every plugin (C177)
+        if (key is FormKey formKey
+            && type == typeof(IMajorRecordGetter))
+        {
+            var found = TryResolveThroughRecordTypes(formKey, modKey, out var answered, out majorRec);
+            if (answered) return found;
+        }
+
         DepthCache<TKey, LinkCacheItem> cache = GetTypeCache(type, out var enumerationType);
 
         // If we're done, we can just query without locking
@@ -192,6 +201,39 @@ internal sealed class ImmutableLoadOrderLinkCacheCategory<TKey>
             majorRec = default;
             return false;
         }
+    }
+
+    /// <summary>
+    /// Untyped lookup through the plugins' record types: the record's type in the highest-priority plugin that holds
+    /// the FormKey, then the winning record of that type
+    /// </summary>
+    /// <param name="answered">False when a plugin has no record header index (not an overlay) or the type isn't
+    /// known; the caller then uses its cache of every record</param>
+    private bool TryResolveThroughRecordTypes(
+        FormKey formKey,
+        ModKey? modKey,
+        out bool answered,
+        [MaybeNullWhen(false)] out LinkCacheItem majorRec)
+    {
+        majorRec = default;
+        answered = false;
+        for (int i = _listedOrder.Count - 1; i >= 0; i--)
+        {
+            if (!ModRecordIndex.TryGet(_listedOrder[i], out var index)) return false;
+            if (!index.TryGetRecordType(formKey, out var recordType)) continue;
+            foreach (var getterType in ModRecordIndex.GetterTypesFor(_gameCategory, recordType))
+            {
+                if (TryResolve((TKey)(object)formKey, modKey, getterType, out majorRec))
+                {
+                    answered = true;
+                    return true;
+                }
+            }
+            return false;
+        }
+        // No plugin holds it
+        answered = true;
+        return false;
     }
 
     public IEnumerable<LinkCacheItem> ResolveAll(
