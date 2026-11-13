@@ -78,6 +78,26 @@ public static class FormLinkRemappingMixIn
         gendered.Female?.RemapLinks(mapping);
     }
 
+    /// <summary>
+    /// A gendered list of links (e.g. ArmorAddon bone data modifiers)
+    /// </summary>
+    public static void RemapLinks<TMajorGetter>(this IGenderedItemGetter<IList<IFormLinkGetter<TMajorGetter>>?> gendered, IReadOnlyDictionary<FormKey, FormKey> mapping)
+        where TMajorGetter : class, IMajorRecordGetter
+    {
+        gendered.Male?.RemapLinks(mapping);
+        gendered.Female?.RemapLinks(mapping);
+    }
+
+    /// <summary>
+    /// A gendered list of objects that hold links
+    /// </summary>
+    public static void RemapLinks<TItem>(this IGenderedItemGetter<IList<TItem>?> gendered, IReadOnlyDictionary<FormKey, FormKey> mapping)
+        where TItem : IFormLinkContainer
+    {
+        gendered.Male?.RemapLinks(mapping);
+        gendered.Female?.RemapLinks(mapping);
+    }
+
     public static void RemapLinks<TMajorGetter>(this IGenderedItem<IFormLinkGetter<TMajorGetter>> gendered, IReadOnlyDictionary<FormKey, FormKey> mapping)
         where TMajorGetter : class, IMajorRecordGetter
     {
