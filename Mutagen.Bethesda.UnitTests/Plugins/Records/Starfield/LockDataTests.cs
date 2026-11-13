@@ -38,4 +38,33 @@ public class LockDataTests
         var written = GameConstants.Starfield.MajorRecord(Write(w => placed.WriteToBinary(w)));
         written.FindSubrecord(new RecordType("XLOC")).Content.ToArray().ShouldBe(Hex(Lock));
     }
+
+    // C154: a lock can end after its flags (12 bytes, no Unknown). It has to read with both readers and write back as
+    // 12 bytes, not grow to 16. Same lock as above without the tail.
+    private const string ShortLock = "FE-FD-5E-00-00-00-00-00-01-00-00-00";
+
+    [Theory]
+    [InlineData(Lock)]
+    [InlineData(ShortLock)]
+    public void Lock_BothReaders_WriteSameBytes(string xloc)
+    {
+        var bytes = Record("REFR", Subrecord("XLOC", xloc));
+        foreach (var placed in ReadBoth<IPlacedObjectGetter>(bytes, f => PlacedObject.CreateFromBinary(f), (s, p) => PlacedObjectBinaryOverlay.PlacedObjectFactory(s, p)))
+        {
+            placed.Lock!.Level.ShouldBe(LockLevel.Inaccessible);
+            ((int)placed.Lock!.Flags).ShouldBe(1);
+            placed.Lock!.Unknown.ShouldBe(0);
+            placed.Lock!.Versioning.HasFlag(LockData.VersioningBreaks.Break0).ShouldBe(xloc == ShortLock);
+            var written = GameConstants.Starfield.MajorRecord(Write(w => placed.WriteToBinary(w)));
+            written.FindSubrecord(new RecordType("XLOC")).Content.ToArray().ShouldBe(Hex(xloc));
+        }
+    }
+
+    [Fact]
+    public void NewLock_WritesTheUnknownTail()
+    {
+        var placed = new PlacedObject(new FormKey(TestModKey, 0x800), StarfieldRelease.Starfield) { Lock = new LockData { Unknown = 7 } };
+        var written = GameConstants.Starfield.MajorRecord(Write(w => placed.WriteToBinary(w)));
+        written.FindSubrecord(new RecordType("XLOC")).Content.Length.ShouldBe(16);
+    }
 }
