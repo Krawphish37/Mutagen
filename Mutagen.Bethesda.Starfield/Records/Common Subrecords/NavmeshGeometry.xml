@@ -19,7 +19,7 @@
       <RefList name="GridArrays" refName="NavmeshGridArray" />
       <Break />
       <Int32 name="Unknown3" />
-    </Fields>df
+    </Fields>
   </Object>
   <Object name="ANavmeshParent" abstract="true" objType="Subrecord">
   </Object>
