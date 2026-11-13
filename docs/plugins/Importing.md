@@ -28,6 +28,16 @@ Readonly objects keep reference to an open stream internally, so they can read w
 !!! info "Disposable"
     Binary Overlay objects implement `IDisposable`.  Putting them in `using` statements to close when appropriate is good practice.
 
+### Reading From Several Threads
+A readonly mod may be read from several threads at once. All of them share its one open stream, and every read from
+it is done under a lock on the stream (`PluginBinaryOverlay.LockExtractMemory`), which cuts a record's bytes out into its
+own memory; each group and record object a thread gets is its own, so threads share no parsing state. Reading on many
+threads therefore works, but the stream reads themselves take turns: for the most throughput, read one mod per thread,
+or copy the records you need (`DeepCopy`) and work on the copies.
+
+Disposing the mod while another thread still reads it is not safe. A mutable mod (created with `CreateFromBinary`) is a
+normal C# object: reading it from several threads is fine, changing it while others read it is not.
+
 ### Best Practices
 
 !!! warning "Avoid Repeated Access"
