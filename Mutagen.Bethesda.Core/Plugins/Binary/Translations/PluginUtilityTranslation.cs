@@ -215,6 +215,19 @@ internal static class PluginUtilityTranslation
                     rewritten,
                     firstRewritten);
             }
+            if (rewritten != null && rewritten.Count > firstRewritten)
+            {
+                // Own FormIDs in links stored in another form than Mutagen writes (a Small/Medium plugin mixing its full
+                // index and its FE/FD form): kept, to write unchanged links back as stored (OwnFormIdForms, C163)
+                targetFrame.Position = contentStart;
+                Mutagen.Bethesda.Plugins.Masters.OwnFormIdForms.Remember(
+                    record,
+                    targetFrame.ReadSpan(checked((int)(targetFrame.FinalLocation - contentStart))),
+                    frame.MetaData.Constants,
+                    frame.MetaData.MasterReferences,
+                    rewritten,
+                    firstRewritten);
+            }
 
             frame.SetToFinalPosition();
             frame.MetaData.FormVersion = null;
@@ -735,10 +748,15 @@ internal static class PluginUtilityTranslation
                     && CompressedOriginals.TryGet(item, out var original)
                         ? (ReadOnlyMemorySlice<byte>?)original
                         : null;
+                // Own FormIDs in links stored in another form than Mutagen writes, put back where unchanged (C163)
+                var ownForms = writer.MetaData.Constants.KeepSubrecordOrder
+                    ? Mutagen.Bethesda.Plugins.Masters.OwnFormIdForms.Get(item)
+                    : null;
                 using (CompressionExport.Compression(item.IsCompressed, writer, compressedOriginal, out var writerToUse))
                 {
+                    SubrecordOrder.Entry[]? order = null;
                     if (writer.MetaData.Constants.KeepSubrecordOrder
-                        && SubrecordOrder.TryGet(item, out var order))
+                        && (SubrecordOrder.TryGet(item, out order) || ownForms != null))
                     {
                         // Written as usual into a buffer, then in the order the record was read in, if it is unchanged
                         using var buffer = new MemoryStream();
@@ -753,7 +771,12 @@ internal static class PluginUtilityTranslation
                             }
                         }
                         var written = buffer.GetBuffer().AsSpan(0, checked((int)buffer.Length));
-                        if (!SubrecordOrder.TryWriteInOrder(written, order, writerToUse,
+                        if (ownForms != null)
+                        {
+                            Mutagen.Bethesda.Plugins.Masters.OwnFormIdForms.Restore(written, ownForms, writerToUse);
+                        }
+                        if (order == null
+                            || !SubrecordOrder.TryWriteInOrder(written, order, writerToUse,
                                 unchangeable: item is Mutagen.Bethesda.Plugins.Binary.Overlay.PluginBinaryOverlay))
                         {
                             writerToUse.Write(written);

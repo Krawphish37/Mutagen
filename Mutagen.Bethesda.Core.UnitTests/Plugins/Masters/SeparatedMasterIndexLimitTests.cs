@@ -65,7 +65,18 @@ public class SeparatedMasterIndexLimitTests
         var ex = Should.Throw<TooManyMastersException>(() => package.GetFormID(new FormKey(Current, 0x012345)));
         ex.CurrentMod.ShouldBe(Current);
         ex.Masters.Count.ShouldBe(253);
-        Should.Throw<TooManyMastersException>(() => ((SeparatedMasterPackage)package).CheckOwnIndexFits());
+        if (currentStyle == MasterStyle.Full)
+        {
+            Should.Throw<TooManyMastersException>(() => ((SeparatedMasterPackage)package).CheckOwnIndexFits());
+        }
+        else
+        {
+            // A Small/Medium mod's own FormIDs take its FE / FD form (decision A3, C163), so they fit; only an own
+            // object ID too big for that form needs the full index (above), which doesn't
+            ((SeparatedMasterPackage)package).CheckOwnIndexFits();
+            package.GetFormID(new FormKey(Current, 0x800)).ShouldBe(new FormID(currentStyle == MasterStyle.Small ? 0xFE000800 : 0xFD000800));
+            Should.Throw<TooManyMastersException>(() => ((SeparatedMasterPackage)package).CheckOwnFullIndexFits());
+        }
     }
 
     [Fact]

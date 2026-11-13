@@ -312,9 +312,7 @@ partial class CellBinaryWriteTranslation
                 ) return;
             using (HeaderExport.Header(writer, RecordTypes.GRUP, ObjectType.Group))
             {
-                FormKeyBinaryTranslation.Instance.Write(
-                    writer,
-                    obj);
+                Mutagen.Bethesda.Plugins.Records.RawHeaderFormIds.WriteGroupLabel(writer, obj);
                 writer.Write((int)GroupTypeEnum.CellChildren);
                 writer.Write(obj.Timestamp);
                 writer.Write(obj.UnknownGroupData);
@@ -326,9 +324,7 @@ partial class CellBinaryWriteTranslation
                 {
                     using (HeaderExport.Header(writer, RecordTypes.GRUP, ObjectType.Group))
                     {
-                        FormKeyBinaryTranslation.Instance.Write(
-                            writer,
-                            obj);
+                        Mutagen.Bethesda.Plugins.Records.RawHeaderFormIds.WriteGroupLabel(writer, obj);
                         writer.Write((int)GroupTypeEnum.CellPersistentChildren);
                         writer.Write(obj.PersistentTimestamp);
                         writer.Write(obj.PersistentUnknownGroupData);
@@ -343,9 +339,7 @@ partial class CellBinaryWriteTranslation
                 {
                     using (HeaderExport.Header(writer, RecordTypes.GRUP, ObjectType.Group))
                     {
-                        FormKeyBinaryTranslation.Instance.Write(
-                            writer,
-                            obj);
+                        Mutagen.Bethesda.Plugins.Records.RawHeaderFormIds.WriteGroupLabel(writer, obj);
                         writer.Write((int)GroupTypeEnum.CellTemporaryChildren);
                         writer.Write(obj.TemporaryTimestamp);
                         writer.Write(obj.TemporaryUnknownGroupData);

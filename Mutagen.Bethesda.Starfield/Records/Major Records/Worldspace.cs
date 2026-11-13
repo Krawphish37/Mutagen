@@ -157,9 +157,7 @@ partial class WorldspaceBinaryWriteTranslation
                 && topCell == null) return;
             using (HeaderExport.Header(writer, RecordTypes.GRUP, ObjectType.Group))
             {
-                FormKeyBinaryTranslation.Instance.Write(
-                    writer,
-                    obj);
+                Mutagen.Bethesda.Plugins.Records.RawHeaderFormIds.WriteGroupLabel(writer, obj);
                 writer.Write((int)GroupTypeEnum.WorldChildren);
                 writer.Write(obj.SubCellsTimestamp);
                 writer.Write(obj.SubCellsUnknown);

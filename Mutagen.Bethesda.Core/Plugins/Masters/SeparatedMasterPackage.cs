@@ -33,27 +33,62 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
     /// </summary>
     internal bool? OwnFormIdsStyled { get; private set; }
 
+    /// <summary>
+    /// The current mod's own size (its header flags): a Small or Medium mod can store its own FormIDs in two forms
+    /// </summary>
+    internal MasterStyle OwnHeaderStyle { get; private set; }
+
+    /// <summary>
+    /// Whether the current mod can store its own FormIDs in a form other than the one written (OwnFormIdForms, C163):
+    /// only a Small or Medium mod has two forms (its full index and its FE / FD form)
+    /// </summary>
+    internal bool HasOwnFormVariants => OwnHeaderStyle != MasterStyle.Full;
+
+    /// <summary>
+    /// Whether a FormID is the current mod's own FormID in a form of its own other than the one written: its full index
+    /// (the number of full masters), or for a Small mod FE + its small index, for a Medium mod FD + its medium index.
+    /// A master index past the list is not one of these (it reads as the mod too, decision 6.1, and is written as before).
+    /// </summary>
+    internal bool IsOwnFormVariant(uint raw)
+    {
+        uint id;
+        var top = raw >> 24;
+        if (top == _ownFullIndex)
+        {
+            id = raw & FormID.FullIdMask;
+        }
+        else if (OwnHeaderStyle == MasterStyle.Small && top == FormID.SmallMasterMarker
+                 && ((raw & FormID.LightMasterIndexMask) >> FormID.LightMasterIndexShift) == _ownSmallIndex)
+        {
+            id = raw & FormID.SmallIdMask;
+        }
+        else if (OwnHeaderStyle == MasterStyle.Medium && top == FormID.MediumMasterMarker
+                 && ((raw & FormID.MediumMasterIndexMask) >> FormID.MediumMasterIndexShift) == _ownMediumIndex)
+        {
+            id = raw & FormID.MediumIdMask;
+        }
+        else
+        {
+            return false;
+        }
+        if (id == 0) return false;
+        return GetFormID(new FormKey(CurrentMod, id)).Raw != raw;
+    }
+
+    // The indices the mod's own FormIDs take in each form: the number of masters of that size
+    private uint _ownFullIndex;
+    private uint _ownMediumIndex;
+    private uint _ownSmallIndex;
+
     private IReadOnlyDictionary<ModKey, MasterStyleIndex> _lookup = null!;
 
     internal static readonly IReadOnlySeparatedMasterPackage EmptyNull =
         NotSeparate(new MasterReferenceCollection(ModKey.Null));
 
-    // Official plugins that store their own FormIDs in their own style (the game's locked set). Only the default now:
-    // a plugin read from a file is written the way its own records were read (OwnFormIdStyle); this list applies to a
-    // plugin with no records of its own, one mixing both encodings, and mods not read from a file.
-    private static HashSet<ModKey> _starfieldMasters = new()
-    {
-        "OldMars.esm", 
-        "Constellation.esm", 
-        "SFBGS003.esm", 
-        "SFBGS004.esm", 
-        "SFBGS006.esm",
-        "SFBGS007.esm",
-        "SFBGS008.esm",
-        "SFBGS00D.esm",
-        "SFBGS047.esm",
-        "SFBGS050.esm"
-    };
+    // A Small or Medium mod's own FormIDs are in the form of its size (FE + small index, FD + medium index), as SF1Edit
+    // writes new records and every official Creation stores them (decision A3). FormIDs read in another form (its full
+    // index, as the Creation Kit writes a small .esm) are kept as stored where unchanged (RawHeaderFormIds,
+    // OwnFormIdForms: C147, C163). Only RoundTripMixIn.SetOwnFormIdStyle overrides the form (OwnFormIdStyle.GetExplicit).
 
     internal SeparatedMasterPackage()
     {
@@ -69,19 +104,22 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
         return Factory(release, currentModKey, style, masters, masterFlagLookup, ownFormIdsStyled: null);
     }
 
-    /// <param name="ownFormIdsStyled">How the mod stores its own FormIDs, if known from its file (OwnFormIdStyle)</param>
+    /// <param name="ownFormIdsStyled">How the mod stores its own FormIDs, if known from its file (OwnFormIdStyle), reported only</param>
+    /// <param name="ownFormIdsForm">The form to write them in, when set explicitly (OwnFormIdStyle.GetExplicit): true its
+    /// own style, false its full index; null the form of its size</param>
     internal static IReadOnlySeparatedMasterPackage Factory(
         GameRelease release,
         ModKey currentModKey,
         MasterStyle style,
         IReadOnlyMasterReferenceCollection masters,
         IReadOnlyCache<IModMasterStyledGetter, ModKey>? masterFlagLookup,
-        bool? ownFormIdsStyled)
+        bool? ownFormIdsStyled,
+        bool? ownFormIdsForm = null)
     {
         var constants = GameConstants.Get(release);
         if (constants.SeparateMasterLoadOrders)
         {
-            return SeparatedMasterPackage.Separate(currentModKey, style, masters, masterFlagLookup, ownFormIdsStyled);
+            return SeparatedMasterPackage.Separate(currentModKey, style, masters, masterFlagLookup, ownFormIdsStyled, ownFormIdsForm);
         }
         else
         {
@@ -229,7 +267,8 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
         MasterStyle style,
         IReadOnlyMasterReferenceCollection masters,
         IReadOnlyCache<IModMasterStyledGetter, ModKey>? masterFlagLookup,
-        bool? ownFormIdsStyled = null)
+        bool? ownFormIdsStyled = null,
+        bool? ownFormIdsForm = null)
     {
         var normal = new List<ModKey>();
         var medium = new List<ModKey>();
@@ -293,7 +332,7 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
         CheckMasterCount(currentModKey, MasterStyle.Medium, medium);
         CheckMasterCount(currentModKey, MasterStyle.Small, small);
 
-        if (ownFormIdsStyled ?? _starfieldMasters.Contains(currentModKey))
+        if (style != MasterStyle.Full && (ownFormIdsForm ?? true))
         {
             AddToListViaStyle(style, currentModKey);
         }
@@ -310,6 +349,10 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
             Raw = masters,
             CurrentMod = masters.CurrentMod,
             OwnFormIdsStyled = ownFormIdsStyled,
+            OwnHeaderStyle = style,
+            _ownFullIndex = (uint)normal.Count(m => m != currentModKey),
+            _ownMediumIndex = (uint)medium.Count(m => m != currentModKey),
+            _ownSmallIndex = (uint)small.Count(m => m != currentModKey),
         };
         var lookup = new Dictionary<ModKey, MasterStyleIndex>();
         FillLookup(ret.Full, lookup, MasterStyle.Full);
@@ -363,6 +406,15 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
         if (!TryLookupModKey(CurrentMod, reference: true, out var style, out var index)) return;
         if (index < IndexCapacity(style)) return;
         throw OwnIndexDoesNotFit(style, index);
+    }
+
+    /// <summary>
+    /// Throws if the mod's full index can't hold its own FormIDs (a Small/Medium mod writes an own object ID too big for
+    /// its FE / FD form with its full index)
+    /// </summary>
+    internal void CheckOwnFullIndexFits()
+    {
+        if (_ownFullIndex >= IndexCapacity(MasterStyle.Full)) throw OwnIndexDoesNotFit(MasterStyle.Full, _ownFullIndex);
     }
 
     private TooManyMastersException OwnIndexDoesNotFit(MasterStyle style, uint index)
@@ -464,6 +516,15 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
         {
             // Separate already checked the masters, so only the mod's own index can get here
             throw OwnIndexDoesNotFit(style, index);
+        }
+
+        if (style != MasterStyle.Full && formKey.ModKey == CurrentMod && formKey.ID > FormID.IdMask(style))
+        {
+            // The mod's own FormID in the form of its size has fewer ID bits, and masking would make it another record.
+            // Its full index holds the whole ID with the same meaning (such a FormID can't be one of the mod's records:
+            // the writer refuses new ones; it is a link stored that way, e.g. a master index past the list).
+            if (_ownFullIndex >= IndexCapacity(MasterStyle.Full)) throw OwnIndexDoesNotFit(MasterStyle.Full, _ownFullIndex);
+            return FormID.Factory(MasterStyle.Full, _ownFullIndex, formKey.ID);
         }
 
         return FormID.Factory(style, index, formKey.ID);

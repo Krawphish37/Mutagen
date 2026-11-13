@@ -245,5 +245,7 @@ internal partial class MajorRecordSetterTranslationCommon
         Mutagen.Bethesda.Plugins.Binary.Translations.CompressedOriginals.Copy(rhs, item);
         // And its header FormID as read (RawHeaderFormIds), written only while it still means the copy's FormKey
         RawHeaderFormIds.Copy(rhs, item);
+        // And the forms its links' own FormIDs were stored in (OwnFormIdForms), written only where a link is unchanged
+        Mutagen.Bethesda.Plugins.Masters.OwnFormIdForms.Copy(rhs, item);
     }
 }

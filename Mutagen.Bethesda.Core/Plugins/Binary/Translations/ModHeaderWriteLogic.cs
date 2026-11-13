@@ -87,7 +87,27 @@ internal sealed class ModHeaderWriteLogic
         AddCompactionTracking(modHeader);
         AddDisallowedLowerFormIDs();
         RegisterOverriddenFormsFishing();
+        AddOwnIdTracking();
     }
+
+    // The highest own object ID in a record header or a link (separated master games)
+    private uint? _highestOwnId;
+
+    private void AddOwnIdTracking()
+    {
+        if (!_constants.SeparateMasterLoadOrders) return;
+        _recordIterationActions.Add(maj =>
+        {
+            var fk = maj.FormKey;
+            if (fk.ModKey == _modKey && (_highestOwnId is not { } h || fk.ID > h)) _highestOwnId = fk.ID;
+        });
+        _formLinkIterationActions.Add((_, link) =>
+        {
+            var fk = link.FormKey;
+            if (fk.ModKey == _modKey && (_highestOwnId is not { } h || fk.ID > h)) _highestOwnId = fk.ID;
+        });
+    }
+
 
     private void RunProcessors(IModGetter mod)
     {
@@ -209,14 +229,22 @@ internal sealed class ModHeaderWriteLogic
             _masterStyle,
             writer.MetaData.MasterReferences,
             masterFlagLookup,
-            // A mod read from a file stores its own FormIDs as it did there
-            OwnFormIdStyle.Get(mod));
+            // Reported style of the file it was read from; the form written is the size's (FE / FD), or the one set
+            // through RoundTripMixIn.SetOwnFormIdStyle. FormIDs read in another form are kept per record (C147, C163).
+            OwnFormIdStyle.Get(mod),
+            OwnFormIdStyle.GetExplicit(mod));
 
         if (_usesOwnFormKeys
             && writer.MetaData.SeparatedMasterPackage is SeparatedMasterPackage separated)
         {
             // Refuse up front if the mod's own FormIDs will not fit, rather than partway through the records
             separated.CheckOwnIndexFits();
+            // An own object ID above what the size's form holds is written with the full index (never masked), which
+            // must fit too
+            if (_masterStyle != MasterStyle.Full && _highestOwnId > FormID.IdMask(_masterStyle))
+            {
+                separated.CheckOwnFullIndexFits();
+            }
         }
 
         modHeader.MasterReferences.SetTo(writer.MetaData.MasterReferences!.Masters.Select(m => m.DeepCopy()));

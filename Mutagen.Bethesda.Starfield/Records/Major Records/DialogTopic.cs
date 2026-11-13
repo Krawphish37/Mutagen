@@ -478,9 +478,7 @@ partial class DialogTopicBinaryWriteTranslation
             }
             using (HeaderExport.Header(writer, RecordTypes.GRUP, ObjectType.Group))
             {
-                FormKeyBinaryTranslation.Instance.Write(
-                    writer,
-                    obj);
+                Mutagen.Bethesda.Plugins.Records.RawHeaderFormIds.WriteGroupLabel(writer, obj);
                 writer.Write((int)GroupTypeEnum.TopicChildren);
                 writer.Write(obj.Timestamp);
                 writer.Write(obj.Unknown);
