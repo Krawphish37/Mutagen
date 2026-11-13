@@ -34,9 +34,20 @@ public sealed class SimpleFormKeyAllocator : IFormKeyAllocator
     {
         lock (Mod)
         {
-            return new FormKey(
-                Mod.ModKey,
-                checked(Mod.NextFormID++));
+            var next = Mod.NextFormID;
+            // A plugin read from a file can store a next object ID at or below its own records' highest one: the
+            // Creation Kit's export of a small .esm stores 03000800 (full-index form) next to its own record 03000809,
+            // and its plugins store FF001000 whatever their highest own ID. Counting up from there would hand out the ID
+            // of a record the mod already has, and adding a record under that FormKey replaces it. So a read mod's new
+            // IDs start above the highest own ID it was read with; the stored value (and its high byte) is otherwise
+            // kept, so a mod with nothing added is written back as read.
+            if (OverriddenFormsBaseline.GetSnapshot(Mod)?.MaxOwnId is { } maxOwnRead
+                && (next & FormID.FullIdMask) <= maxOwnRead)
+            {
+                next = (next & ~FormID.FullIdMask) | checked(maxOwnRead + 1);
+            }
+            Mod.NextFormID = checked(next + 1);
+            return new FormKey(Mod.ModKey, next);
         }
     }
 
