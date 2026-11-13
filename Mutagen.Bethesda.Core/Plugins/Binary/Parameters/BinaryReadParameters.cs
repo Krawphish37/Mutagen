@@ -35,10 +35,13 @@ public record BinaryReadParameters
     /// <summary>
     /// Full import only: keep each compressed record's zlib stream as read, so an unchanged record is written back with
     /// the same bytes even where Mutagen's compressor would encode it differently (games that keep their file layout:
-    /// Starfield). Costs about the size of the compressed records (1.2 GB for Starfield.esm). An overlay always keeps
-    /// them, at no cost (it reads them from memory it holds anyway).
+    /// Starfield; other games ignore it). On by default, so a full import writes the same file as an overlay does:
+    /// plugins compressed by another encoder (the CK, xEdit) otherwise come back with the same data in other bytes
+    /// (e.g. the NPC_ of darkstar.esm and of 8 DarkStar patches). Costs about the size of the compressed records
+    /// (1.2 GB for Starfield.esm); set false to save that. An overlay always keeps them, at no cost (it reads them from
+    /// memory it holds anyway).
     /// </summary>
-    public bool KeepCompressedRecords { get; init; } = false;
+    public bool KeepCompressedRecords { get; init; } = true;
     
     /// <summary>
     /// FileSystem to read from
