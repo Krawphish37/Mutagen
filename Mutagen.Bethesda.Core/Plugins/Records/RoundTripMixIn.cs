@@ -57,9 +57,10 @@ public static class RoundTripMixIn
     }
 
     /// <summary>
-    /// Sets how this mod writes the FormIDs of its own records when it is a Small or Medium plugin.
-    /// A mod read from a file already has the file's style; a mod built some other way has
-    /// <see cref="ModOwnFormIdStyle.Default"/> until this is set.
+    /// Sets how this mod writes the FormIDs of its own records when it is a Small or Medium plugin, for every own FormID
+    /// (record headers and links). Without it, a Small or Medium mod writes new own FormIDs in the form of its size (FE /
+    /// FD) and keeps the form each FormID read from its file was stored in; a mod rebuilt from another form (JSON) has
+    /// no stored forms, so set the style <see cref="GetOwnFormIdStyle"/> reported for the file to write it back the same.
     /// </summary>
     public static void SetOwnFormIdStyle(this IMod mod, ModOwnFormIdStyle style)
     {
@@ -69,7 +70,7 @@ public static class RoundTripMixIn
             ModOwnFormIdStyle.FullIndex => false,
             ModOwnFormIdStyle.Default => null,
             _ => throw new ArgumentOutOfRangeException(nameof(style)),
-        });
+        }, explicitly: true);
     }
 
     /// <summary>

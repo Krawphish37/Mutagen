@@ -147,8 +147,8 @@ public class RoundTripApiTests
         var rebuilt = Rebuild(read);
         rebuilt.GetOwnFormIdStyle().ShouldBe(ModOwnFormIdStyle.Default);
         GiveBackStringIds(read, rebuilt);
-        // Without the style: the plugin's own record is written with a full index
-        BitConverter.ToUInt32(WriteMesg(k, rebuilt), 12).ShouldBe(0x0100B9B6u);
+        // Without the style: the plugin's own record is written in the form of its size, FD (decision A3, C163)
+        BitConverter.ToUInt32(WriteMesg(k, rebuilt), 12).ShouldBe(BitConverter.ToUInt32(Hex(KgcdoomMesg), 12));
 
         rebuilt.SetOwnFormIdStyle(ModOwnFormIdStyle.OwnStyle);
         rebuilt.GetOwnFormIdStyle().ShouldBe(ModOwnFormIdStyle.OwnStyle);

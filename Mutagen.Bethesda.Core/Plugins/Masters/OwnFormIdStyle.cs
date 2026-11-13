@@ -10,23 +10,29 @@ namespace Mutagen.Bethesda.Plugins.Masters;
 /// lists (Starfield): in its own style (FE + small index, FD + medium index) or as a full index (its position after
 /// the full masters). Both occur: every official Small/Medium plugin uses its own style; mods do either (in one Data
 /// folder, 153 Small and 15 Medium mods use a full index, 31 Small and 11 Medium their own style, 10 Small mix both).
-/// Nothing in the file header tells them apart, so the record headers are read: a plugin whose own records all use one
-/// encoding is written back with it. A plugin with no records of its own, one that mixes both, or a mod that wasn't
-/// read from a file (a new mod, a copy into another mod) keeps the default (<see cref="SeparatedMasterPackage"/>).
+/// Nothing in the file header tells them apart, so the record headers are read, and the result is reported
+/// (RoundTripMixIn.GetOwnFormIdStyle). Writing doesn't follow it: a Small or Medium mod writes new own FormIDs in the
+/// form of its size and keeps each stored one in its stored form (decision A3; RawHeaderFormIds, OwnFormIdForms: C147,
+/// C163). Only a style set through RoundTripMixIn.SetOwnFormIdStyle decides the written form (a mod rebuilt from JSON).
 /// </summary>
 internal static class OwnFormIdStyle
 {
-    private static readonly ConditionalWeakTable<object, StrongBox<bool>> Mods = new();
+    private sealed record Style(bool OwnStyle, bool Explicit);
+
+    private static readonly ConditionalWeakTable<object, Style> Mods = new();
 
     /// <summary>
-    /// Notes how a mod read from a file stores its own FormIDs (true: its own style; false: a full index;
-    /// null: unknown, the default applies)
+    /// Notes how a mod stores its own FormIDs (true: its own style; false: a full index; null: unknown).<br/>
+    /// Read from its file (<paramref name="explicitly"/> false), it only reports the file's style: the mod writes new own
+    /// FormIDs in the form of its size, and each stored one in its stored form (RawHeaderFormIds, OwnFormIdForms, C163).
+    /// Set through RoundTripMixIn.SetOwnFormIdStyle (<paramref name="explicitly"/> true), it decides the form written
+    /// for every own FormID: a mod rebuilt from another form (JSON) has no stored forms to keep.
     /// </summary>
-    public static void Set(object mod, bool? ownStyle)
+    public static void Set(object mod, bool? ownStyle, bool explicitly = false)
     {
         if (ownStyle is { } s)
         {
-            Mods.AddOrUpdate(mod, new StrongBox<bool>(s));
+            Mods.AddOrUpdate(mod, new Style(s, explicitly));
         }
         else
         {
@@ -34,7 +40,12 @@ internal static class OwnFormIdStyle
         }
     }
 
-    public static bool? Get(object mod) => Mods.TryGetValue(mod, out var box) ? box.Value : null;
+    public static bool? Get(object mod) => Mods.TryGetValue(mod, out var style) ? style.OwnStyle : null;
+
+    /// <summary>
+    /// The style set through RoundTripMixIn.SetOwnFormIdStyle, if any (not the one noted from the file)
+    /// </summary>
+    public static bool? GetExplicit(object mod) => Mods.TryGetValue(mod, out var style) && style.Explicit ? style.OwnStyle : null;
 
     /// <summary>
     /// A copy of a mod (DeepCopy) is written the way the mod it copies was read
@@ -42,7 +53,8 @@ internal static class OwnFormIdStyle
     public static void Copy(object from, object to)
     {
         if (ReferenceEquals(from, to)) return;
-        Set(to, Get(from));
+        if (Mods.TryGetValue(from, out var style)) Mods.AddOrUpdate(to, style);
+        else Mods.Remove(to);
     }
 
     /// <summary>

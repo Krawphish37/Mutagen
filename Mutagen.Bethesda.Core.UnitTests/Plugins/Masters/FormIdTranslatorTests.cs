@@ -400,8 +400,9 @@ public class FormIdTranslatorTests
             .ShouldBe(new FormID(0x00000123));
         masterPackage.GetFormID(new FormKey(lightA, 0x123))
             .ShouldBe(new FormID(0xFE000123));
+        // A Small mod's own FormIDs take its FE form (decision A3, C163): FE + small index 1 + object ID
         masterPackage.GetFormID(new FormKey(originating, 0x123))
-            .ShouldBe(new FormID(0x01000123));
+            .ShouldBe(new FormID(0xFE001123));
     }
 
     [Theory, MutagenAutoData]
@@ -433,7 +434,8 @@ public class FormIdTranslatorTests
             .ShouldBe(new FormID(0x00000123));
         masterPackage.GetFormID(new FormKey(mediumA, 0x1234))
             .ShouldBe(new FormID(0xFD001234));
+        // A Medium mod's own FormIDs take its FD form (decision A3, C163): FD + medium index 1 + object ID
         masterPackage.GetFormID(new FormKey(originating, 0x1234))
-            .ShouldBe(new FormID(0x01001234));
+            .ShouldBe(new FormID(0xFD011234));
     }
 }

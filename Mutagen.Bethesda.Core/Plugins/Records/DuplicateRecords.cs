@@ -184,6 +184,24 @@ internal static class RawHeaderFormIds
     }
 
     /// <summary>
+    /// Writes a child group's label for its parent record (cell, worldspace, quest, topic children) in the form the parent's
+    /// header is written in: the FormID as read where it is kept (C163; e.g. a small plugin's topic 04000835 stored with
+    /// its full index), else Mutagen's
+    /// </summary>
+    public static void WriteGroupLabel(MutagenWriter writer, IMajorRecordGetter parent)
+    {
+        if (writer.MetaData.SeparatedMasterPackage is { } package
+            && Get(parent) is { } raw
+            && package.GetFormID(parent.FormKey).Raw != raw
+            && package.GetFormKey(new FormID(raw), reference: false) == parent.FormKey)
+        {
+            writer.Write(raw);
+            return;
+        }
+        FormKeyBinaryTranslation.Instance.Write(writer, parent);
+    }
+
+    /// <summary>
     /// After a record's header is written: puts back the FormID as read if it differs and still means the same record
     /// </summary>
     public static void Restore(IMajorRecordGetter record, MutagenWriter writer, long headerPos)
