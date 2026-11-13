@@ -38,23 +38,6 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
     internal static readonly IReadOnlySeparatedMasterPackage EmptyNull =
         NotSeparate(new MasterReferenceCollection(ModKey.Null));
 
-    // Official plugins that store their own FormIDs in their own style (the game's locked set). Only the default now:
-    // a plugin read from a file is written the way its own records were read (OwnFormIdStyle); this list applies to a
-    // plugin with no records of its own, one mixing both encodings, and mods not read from a file.
-    private static HashSet<ModKey> _starfieldMasters = new()
-    {
-        "OldMars.esm", 
-        "Constellation.esm", 
-        "SFBGS003.esm", 
-        "SFBGS004.esm", 
-        "SFBGS006.esm",
-        "SFBGS007.esm",
-        "SFBGS008.esm",
-        "SFBGS00D.esm",
-        "SFBGS047.esm",
-        "SFBGS050.esm"
-    };
-
     internal SeparatedMasterPackage()
     {
     }
@@ -293,7 +276,12 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
         CheckMasterCount(currentModKey, MasterStyle.Medium, medium);
         CheckMasterCount(currentModKey, MasterStyle.Small, small);
 
-        if (ownFormIdsStyled ?? _starfieldMasters.Contains(currentModKey))
+        // The mod's own FormIDs: in its own style (FE + small index, FD + medium index) or as a full index (its position
+        // after the full masters). Which one a plugin uses is read from its file (OwnFormIdStyle: every official Small or
+        // Medium plugin uses its own style, mods either). When the file can't tell (no own records, both encodings, or a
+        // mod not read from a file) it is a full index: what xEdit and the Creation Kit's small-.esm export write for a
+        // new plugin. (This replaced a hard-coded list of 10 official plugins; each of them is read in its own style.)
+        if (ownFormIdsStyled ?? false)
         {
             AddToListViaStyle(style, currentModKey);
         }

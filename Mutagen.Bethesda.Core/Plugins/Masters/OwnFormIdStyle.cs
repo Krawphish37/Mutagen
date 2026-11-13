@@ -12,7 +12,7 @@ namespace Mutagen.Bethesda.Plugins.Masters;
 /// folder, 153 Small and 15 Medium mods use a full index, 31 Small and 11 Medium their own style, 10 Small mix both).
 /// Nothing in the file header tells them apart, so the record headers are read: a plugin whose own records all use one
 /// encoding is written back with it. A plugin with no records of its own, one that mixes both, or a mod that wasn't
-/// read from a file (a new mod, a copy into another mod) keeps the default (<see cref="SeparatedMasterPackage"/>).
+/// read from a file (a new mod, a copy into another mod) gets a full index, the default (<see cref="SeparatedMasterPackage"/>).
 /// </summary>
 internal static class OwnFormIdStyle
 {
