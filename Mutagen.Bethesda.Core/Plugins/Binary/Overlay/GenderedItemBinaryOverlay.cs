@@ -119,13 +119,41 @@ internal static class GenderedItemBinaryOverlay
             {
                 femaleObj = ParseHalf(stream, package, creator, merge, femaleObj, femaleParams);
             }
-            else if ((parseNonConvertedItems || maleRecordConverter == null) && i == 0)
+            else if (maleRecordConverter == null && i == 0)
             {
                 maleObj = ParseHalf(stream, package, creator, merge, maleObj, maleParams);
             }
-            else if (parseNonConvertedItems && i == 1)
+            else if (parseNonConvertedItems && ((maleObj == null && i == 0) || femaleObj == null))
             {
-                femaleObj = ParseHalf(stream, package, creator, merge, femaleObj, femaleParams);
+                // A subrecord that isn't either half's own goes to a half not read yet
+                var male = maleObj == null && i == 0;
+                var startPos = stream.Position;
+                var item = creator(stream, package, male ? maleParams : femaleParams);
+                if (stream.Position == startPos) break;
+                if (male)
+                {
+                    maleObj = item;
+                }
+                else
+                {
+                    femaleObj = item;
+                }
+            }
+            else if (parseNonConvertedItems && merge != null && maleObj != null && femaleObj != null)
+            {
+                // Both halves are held: add it to them in turn (DarkStar patches: MOD2 MOD4 ... STOP FLLD FLLD)
+                if (i == 0)
+                {
+                    maleObj = ParseHalf(stream, package, creator, merge, maleObj, maleParams);
+                }
+                else
+                {
+                    femaleObj = ParseHalf(stream, package, creator, merge, femaleObj, femaleParams);
+                }
+            }
+            else
+            {
+                break;
             }
         }
 
@@ -138,7 +166,7 @@ internal static class GenderedItemBinaryOverlay
         return new GenderedItem<T?>(maleObj, femaleObj);
     }
 
-    private static T ParseHalf<T>(
+    private static T? ParseHalf<T>(
         OverlayStream stream,
         BinaryOverlayFactoryPackage package,
         Func<OverlayStream, BinaryOverlayFactoryPackage, TypedParseParams, T> creator,
@@ -149,8 +177,8 @@ internal static class GenderedItemBinaryOverlay
     {
         var startPos = stream.Position;
         var item = creator(stream, package, translationParams);
-        if (held == null || merge == null) return item;
         if (stream.Position == startPos) return held;
+        if (held == null || merge == null) return item;
 
         // The half was already read, so add these subrecords to it rather than replacing it
         stream.Position = startPos;

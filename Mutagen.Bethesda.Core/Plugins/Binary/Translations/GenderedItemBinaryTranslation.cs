@@ -97,40 +97,51 @@ internal sealed class GenderedItemBinaryTranslation
         BinaryMasterFillDelegate<TItem>? fill = null)
         where TItem : class
     {
-        var male = ParseHalf(frame, transl, fill, existing?.Male, maleRecordConverter, new TypedParseParams(
+        TItem? male = existing?.Male, female = existing?.Female;
+        male = ParseHalf(frame, transl, fill, male, female, maleRecordConverter, new TypedParseParams(
             lengthOverride: null,
             recordTypeConverter: maleRecordConverter,
             doNotShortCircuit: !shortCircuit));
-        var female = ParseHalf(frame, transl, fill, existing?.Female, femaleRecordConverter, new TypedParseParams(
+        female = ParseHalf(frame, transl, fill, female, male, femaleRecordConverter, new TypedParseParams(
             lengthOverride: null,
             recordTypeConverter: femaleRecordConverter,
             doNotShortCircuit: !shortCircuit));
         return new GenderedItem<TItem?>(male, female);
     }
 
-    // A gendered field triggered again later in the record keeps the halves already read: a half that can take more
-    // subrecords (fill) adds them; otherwise a held half is replaced only by a subrecord its own converter maps, and
-    // only when that subrecord reads
+    // A gendered field split by record type converters can be triggered again later in the record, so each half
+    // starts from the pair already read:
+    // - a half not read yet reads what follows (and stays unset if nothing of it follows);
+    // - a held half takes a subrecord its own converter maps: added to it (fill), or else replacing it;
+    // - a subrecord that isn't the half's own (e.g. FLLD) goes to a half not read yet; only once both halves are held
+    //   is it added to them in turn (DarkStar patches: MOD2 MOD4 ... STOP FLLD FLLD)
     private static TItem? ParseHalf<TItem>(
         MutagenFrame frame,
         BinaryMasterParseDelegate<TItem> transl,
         BinaryMasterFillDelegate<TItem>? fill,
         TItem? held,
+        TItem? other,
         RecordTypeConverter? converter,
         TypedParseParams translationParams)
         where TItem : class
     {
-        if (held != null && fill != null)
+        if (frame.Reader.Complete) return held;
+        var own = converter != null && converter.ToConversions.ContainsKey(frame.GetSubrecordHeader().RecordType);
+        if (held == null || own)
+        {
+            if (held != null && fill != null)
+            {
+                fill(frame, held, translationParams);
+                return held;
+            }
+            var startPos = frame.Position;
+            return transl(frame, out var item, translationParams) && frame.Position != startPos ? item : held;
+        }
+        if (other != null && fill != null)
         {
             fill(frame, held, translationParams);
-            return held;
         }
-        if (held != null && converter != null
-            && (frame.Reader.Complete || !converter.ToConversions.ContainsKey(frame.GetSubrecordHeader().RecordType)))
-        {
-            return held;
-        }
-        return transl(frame, out var item, translationParams) ? item : held;
+        return held;
     }
 
     public static GenderedItem<TItem> ParseRequired<TItem>(
