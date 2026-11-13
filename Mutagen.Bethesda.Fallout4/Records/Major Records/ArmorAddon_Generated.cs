@@ -2848,7 +2848,8 @@ namespace Mutagen.Bethesda.Fallout4
                         femaleMarker: RecordTypes.NAM1,
                         transl: FormLinkBinaryTranslation.Instance.Parse,
                         skipMarker: false,
-                        fallback: FormLinkNullable<ITextureSetGetter>.Null);
+                        fallback: FormLinkNullable<ITextureSetGetter>.Null,
+                        existing: item.SkinTexture);
                     return (int)ArmorAddon_FieldIndex.SkinTexture;
                 }
                 case RecordTypeInts.NAM2:
@@ -2860,7 +2861,8 @@ namespace Mutagen.Bethesda.Fallout4
                         femaleMarker: RecordTypes.NAM3,
                         transl: FormLinkBinaryTranslation.Instance.Parse,
                         skipMarker: false,
-                        fallback: FormLinkNullable<IFormListGetter>.Null);
+                        fallback: FormLinkNullable<IFormListGetter>.Null,
+                        existing: item.TextureSwapList);
                     return (int)ArmorAddon_FieldIndex.TextureSwapList;
                 }
                 case RecordTypeInts.MODL:
@@ -3168,7 +3170,8 @@ namespace Mutagen.Bethesda.Fallout4
                         female: RecordTypes.NAM1,
                         stream: stream,
                         creator: static (m, p) => FormLinkBinaryTranslation.Instance.NullableOverlayFactory<ITextureSetGetter>(p, HeaderTranslation.ExtractSubrecordMemory(m, p.MetaData.Constants)),
-                        fallback: FormLinkNullable<ITextureSetGetter>.Null);
+                        fallback: FormLinkNullable<ITextureSetGetter>.Null,
+                        existing: _SkinTextureOverlay);
                     return (int)ArmorAddon_FieldIndex.SkinTexture;
                 }
                 case RecordTypeInts.NAM2:
@@ -3180,7 +3183,8 @@ namespace Mutagen.Bethesda.Fallout4
                         female: RecordTypes.NAM3,
                         stream: stream,
                         creator: static (m, p) => FormLinkBinaryTranslation.Instance.NullableOverlayFactory<IFormListGetter>(p, HeaderTranslation.ExtractSubrecordMemory(m, p.MetaData.Constants)),
-                        fallback: FormLinkNullable<IFormListGetter>.Null);
+                        fallback: FormLinkNullable<IFormListGetter>.Null,
+                        existing: _TextureSwapListOverlay);
                     return (int)ArmorAddon_FieldIndex.TextureSwapList;
                 }
                 case RecordTypeInts.MODL:

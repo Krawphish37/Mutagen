@@ -3808,6 +3808,16 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MO3C:
                 case RecordTypeInts.MO2F:
                 case RecordTypeInts.MO3F:
+                {
+                    item.WorldModel = Mutagen.Bethesda.Plugins.Binary.Translations.GenderedItemBinaryTranslation.Parse<Model>(
+                        frame: frame,
+                        femaleRecordConverter: ArmorAddon_Registration.WorldModelFemaleConverter,
+                        maleRecordConverter: ArmorAddon_Registration.WorldModelMaleConverter,
+                        transl: Model.TryCreateFromBinary,
+                        existing: item.WorldModel,
+                        fill: static (r, i, p) => i.CopyInFromBinary(r, p));
+                    return (int)ArmorAddon_FieldIndex.WorldModel;
+                }
                 case RecordTypeInts.FLLD:
                 case RecordTypeInts.XFLG:
                 {
@@ -3915,7 +3925,8 @@ namespace Mutagen.Bethesda.Starfield
                         maleMarker: RecordTypes.MOD6,
                         femaleMarker: RecordTypes.MOD7,
                         transl: StringBinaryTranslation.Instance.Parse,
-                        skipMarker: false);
+                        skipMarker: false,
+                        existing: item.AltSkeleton);
                     return (int)ArmorAddon_FieldIndex.AltSkeleton;
                 }
                 case RecordTypeInts.NAM1:
@@ -4023,7 +4034,8 @@ namespace Mutagen.Bethesda.Starfield
                                     triggeringRecord: translationParams.ConvertToCustom(RecordTypes.BNAM),
                                     transl: FormLinkBinaryTranslation.Instance.Parse));
                             return true;
-                        });
+                        },
+                        existing: item.BoneDataModifiers);
                     return (int)ArmorAddon_FieldIndex.BoneDataModifiers;
                 }
                 case RecordTypeInts.XXXX:
@@ -4311,6 +4323,18 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MO3C:
                 case RecordTypeInts.MO2F:
                 case RecordTypeInts.MO3F:
+                {
+                    _WorldModelOverlay = GenderedItemBinaryOverlay.Factory<IModelGetter>(
+                        package: _package,
+                        stream: stream,
+                        creator: static (s, p, r) => ModelBinaryOverlay.ModelFactory(s, p, r),
+                        femaleRecordConverter: ArmorAddon_Registration.WorldModelFemaleConverter,
+                        maleRecordConverter: ArmorAddon_Registration.WorldModelMaleConverter,
+                        parseNonConvertedItems: true,
+                        existing: _WorldModelOverlay,
+                        merge: static (e, f, p) => { var m = e.DeepCopy(); m.CopyInFromBinary(f, p); return m; });
+                    return (int)ArmorAddon_FieldIndex.WorldModel;
+                }
                 case RecordTypeInts.FLLD:
                 case RecordTypeInts.XFLG:
                 {
@@ -4434,7 +4458,8 @@ namespace Mutagen.Bethesda.Starfield
                         male: RecordTypes.MOD6,
                         female: RecordTypes.MOD7,
                         stream: stream,
-                        creator: static (m, p) => BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(m, p.MetaData.Constants), encoding: p.MetaData.Encodings.NonTranslated));
+                        creator: static (m, p) => BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(m, p.MetaData.Constants), encoding: p.MetaData.Encodings.NonTranslated),
+                        existing: _AltSkeletonOverlay);
                     return (int)ArmorAddon_FieldIndex.AltSkeleton;
                 }
                 case RecordTypeInts.NAM1:
@@ -4535,7 +4560,8 @@ namespace Mutagen.Bethesda.Starfield
                                     trigger: RecordTypes.BNAM,
                                     skipHeader: true,
                                     translationParams: translationParams));
-                        });
+                        },
+                        existing: _BoneDataModifiersOverlay);
                     return (int)ArmorAddon_FieldIndex.BoneDataModifiers;
                 }
                 case RecordTypeInts.XXXX:

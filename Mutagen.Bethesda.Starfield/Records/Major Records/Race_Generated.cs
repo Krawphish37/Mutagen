@@ -8646,7 +8646,8 @@ namespace Mutagen.Bethesda.Starfield
                             maleMarker: RecordTypes.MNAM,
                             femaleMarker: RecordTypes.FNAM,
                             femaleRecordConverter: Race_Registration.ChargenAndSkintonesFemaleConverter,
-                            transl: ChargenAndSkintones.TryCreateFromBinary);
+                            transl: ChargenAndSkintones.TryCreateFromBinary,
+                            existing: item.ChargenAndSkintones);
                         return new ParseResult((int)Race_FieldIndex.ChargenAndSkintones, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Race_FieldIndex.DialogueQuest)
@@ -8655,7 +8656,8 @@ namespace Mutagen.Bethesda.Starfield
                             frame: frame,
                             maleMarker: RecordTypes.MNAM,
                             femaleMarker: RecordTypes.FNAM,
-                            transl: HeadPartsAndBoneModifiers.TryCreateFromBinary);
+                            transl: HeadPartsAndBoneModifiers.TryCreateFromBinary,
+                            existing: item.HeadPartsAndBoneModifiers);
                         return new ParseResult((int)Race_FieldIndex.HeadPartsAndBoneModifiers, nextRecordType);
                     }
                     else
@@ -8673,14 +8675,16 @@ namespace Mutagen.Bethesda.Starfield
                                     maleMarker: RecordTypes.MNAM,
                                     femaleMarker: RecordTypes.FNAM,
                                     femaleRecordConverter: Race_Registration.ChargenAndSkintonesFemaleConverter,
-                                    transl: ChargenAndSkintones.TryCreateFromBinary);
+                                    transl: ChargenAndSkintones.TryCreateFromBinary,
+                                    existing: item.ChargenAndSkintones);
                                 return new ParseResult((int)Race_FieldIndex.ChargenAndSkintones, nextRecordType);
                             case 2:
                                 item.HeadPartsAndBoneModifiers = Mutagen.Bethesda.Plugins.Binary.Translations.GenderedItemBinaryTranslation.Parse<HeadPartsAndBoneModifiers>(
                                     frame: frame,
                                     maleMarker: RecordTypes.MNAM,
                                     femaleMarker: RecordTypes.FNAM,
-                                    transl: HeadPartsAndBoneModifiers.TryCreateFromBinary);
+                                    transl: HeadPartsAndBoneModifiers.TryCreateFromBinary,
+                                    existing: item.HeadPartsAndBoneModifiers);
                                 return new ParseResult((int)Race_FieldIndex.HeadPartsAndBoneModifiers, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -8704,7 +8708,8 @@ namespace Mutagen.Bethesda.Starfield
                             maleMarker: RecordTypes.MNAM,
                             femaleMarker: RecordTypes.FNAM,
                             femaleRecordConverter: Race_Registration.ChargenAndSkintonesFemaleConverter,
-                            transl: ChargenAndSkintones.TryCreateFromBinary);
+                            transl: ChargenAndSkintones.TryCreateFromBinary,
+                            existing: item.ChargenAndSkintones);
                         return new ParseResult((int)Race_FieldIndex.ChargenAndSkintones, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Race_FieldIndex.DialogueQuest)
@@ -8713,7 +8718,8 @@ namespace Mutagen.Bethesda.Starfield
                             frame: frame,
                             maleMarker: RecordTypes.MNAM,
                             femaleMarker: RecordTypes.FNAM,
-                            transl: HeadPartsAndBoneModifiers.TryCreateFromBinary);
+                            transl: HeadPartsAndBoneModifiers.TryCreateFromBinary,
+                            existing: item.HeadPartsAndBoneModifiers);
                         return new ParseResult((int)Race_FieldIndex.HeadPartsAndBoneModifiers, nextRecordType);
                     }
                     else
@@ -8731,14 +8737,16 @@ namespace Mutagen.Bethesda.Starfield
                                     maleMarker: RecordTypes.MNAM,
                                     femaleMarker: RecordTypes.FNAM,
                                     femaleRecordConverter: Race_Registration.ChargenAndSkintonesFemaleConverter,
-                                    transl: ChargenAndSkintones.TryCreateFromBinary);
+                                    transl: ChargenAndSkintones.TryCreateFromBinary,
+                                    existing: item.ChargenAndSkintones);
                                 return new ParseResult((int)Race_FieldIndex.ChargenAndSkintones, nextRecordType);
                             case 2:
                                 item.HeadPartsAndBoneModifiers = Mutagen.Bethesda.Plugins.Binary.Translations.GenderedItemBinaryTranslation.Parse<HeadPartsAndBoneModifiers>(
                                     frame: frame,
                                     maleMarker: RecordTypes.MNAM,
                                     femaleMarker: RecordTypes.FNAM,
-                                    transl: HeadPartsAndBoneModifiers.TryCreateFromBinary);
+                                    transl: HeadPartsAndBoneModifiers.TryCreateFromBinary,
+                                    existing: item.HeadPartsAndBoneModifiers);
                                 return new ParseResult((int)Race_FieldIndex.HeadPartsAndBoneModifiers, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -8802,7 +8810,8 @@ namespace Mutagen.Bethesda.Starfield
                         frame: frame,
                         maleMarker: RecordTypes.MNAM,
                         femaleMarker: RecordTypes.FNAM,
-                        transl: BodyData.TryCreateFromBinary);
+                        transl: BodyData.TryCreateFromBinary,
+                        existing: item.BodyData);
                     return (int)Race_FieldIndex.BodyData;
                 }
                 case RecordTypeInts.ENAM:
@@ -9642,7 +9651,8 @@ namespace Mutagen.Bethesda.Starfield
                             female: RecordTypes.FNAM,
                             stream: stream,
                             creator: static (s, p, r) => ChargenAndSkintonesBinaryOverlay.ChargenAndSkintonesFactory(s, p, r),
-                            femaleRecordConverter: Race_Registration.ChargenAndSkintonesFemaleConverter);
+                            femaleRecordConverter: Race_Registration.ChargenAndSkintonesFemaleConverter,
+                            existing: _ChargenAndSkintonesOverlay);
                         return new ParseResult((int)Race_FieldIndex.ChargenAndSkintones, type);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Race_FieldIndex.DialogueQuest)
@@ -9653,7 +9663,8 @@ namespace Mutagen.Bethesda.Starfield
                             female: RecordTypes.FNAM,
                             stream: stream,
                             creator: static (s, p, r) => HeadPartsAndBoneModifiersBinaryOverlay.HeadPartsAndBoneModifiersFactory(s, p, r),
-                            translationParams: translationParams);
+                            translationParams: translationParams,
+                            existing: _HeadPartsAndBoneModifiersOverlay);
                         return new ParseResult((int)Race_FieldIndex.HeadPartsAndBoneModifiers, type);
                     }
                     else
@@ -9675,7 +9686,8 @@ namespace Mutagen.Bethesda.Starfield
                                     female: RecordTypes.FNAM,
                                     stream: stream,
                                     creator: static (s, p, r) => ChargenAndSkintonesBinaryOverlay.ChargenAndSkintonesFactory(s, p, r),
-                                    femaleRecordConverter: Race_Registration.ChargenAndSkintonesFemaleConverter);
+                                    femaleRecordConverter: Race_Registration.ChargenAndSkintonesFemaleConverter,
+                                    existing: _ChargenAndSkintonesOverlay);
                                 return new ParseResult((int)Race_FieldIndex.ChargenAndSkintones, type);
                             }
                             case 2:
@@ -9686,7 +9698,8 @@ namespace Mutagen.Bethesda.Starfield
                                     female: RecordTypes.FNAM,
                                     stream: stream,
                                     creator: static (s, p, r) => HeadPartsAndBoneModifiersBinaryOverlay.HeadPartsAndBoneModifiersFactory(s, p, r),
-                                    translationParams: translationParams);
+                                    translationParams: translationParams,
+                                    existing: _HeadPartsAndBoneModifiersOverlay);
                                 return new ParseResult((int)Race_FieldIndex.HeadPartsAndBoneModifiers, type);
                             }
                             default:
@@ -9712,7 +9725,8 @@ namespace Mutagen.Bethesda.Starfield
                             female: RecordTypes.FNAM,
                             stream: stream,
                             creator: static (s, p, r) => ChargenAndSkintonesBinaryOverlay.ChargenAndSkintonesFactory(s, p, r),
-                            femaleRecordConverter: Race_Registration.ChargenAndSkintonesFemaleConverter);
+                            femaleRecordConverter: Race_Registration.ChargenAndSkintonesFemaleConverter,
+                            existing: _ChargenAndSkintonesOverlay);
                         return new ParseResult((int)Race_FieldIndex.ChargenAndSkintones, type);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Race_FieldIndex.DialogueQuest)
@@ -9723,7 +9737,8 @@ namespace Mutagen.Bethesda.Starfield
                             female: RecordTypes.FNAM,
                             stream: stream,
                             creator: static (s, p, r) => HeadPartsAndBoneModifiersBinaryOverlay.HeadPartsAndBoneModifiersFactory(s, p, r),
-                            translationParams: translationParams);
+                            translationParams: translationParams,
+                            existing: _HeadPartsAndBoneModifiersOverlay);
                         return new ParseResult((int)Race_FieldIndex.HeadPartsAndBoneModifiers, type);
                     }
                     else
@@ -9745,7 +9760,8 @@ namespace Mutagen.Bethesda.Starfield
                                     female: RecordTypes.FNAM,
                                     stream: stream,
                                     creator: static (s, p, r) => ChargenAndSkintonesBinaryOverlay.ChargenAndSkintonesFactory(s, p, r),
-                                    femaleRecordConverter: Race_Registration.ChargenAndSkintonesFemaleConverter);
+                                    femaleRecordConverter: Race_Registration.ChargenAndSkintonesFemaleConverter,
+                                    existing: _ChargenAndSkintonesOverlay);
                                 return new ParseResult((int)Race_FieldIndex.ChargenAndSkintones, type);
                             }
                             case 2:
@@ -9756,7 +9772,8 @@ namespace Mutagen.Bethesda.Starfield
                                     female: RecordTypes.FNAM,
                                     stream: stream,
                                     creator: static (s, p, r) => HeadPartsAndBoneModifiersBinaryOverlay.HeadPartsAndBoneModifiersFactory(s, p, r),
-                                    translationParams: translationParams);
+                                    translationParams: translationParams,
+                                    existing: _HeadPartsAndBoneModifiersOverlay);
                                 return new ParseResult((int)Race_FieldIndex.HeadPartsAndBoneModifiers, type);
                             }
                             default:
@@ -9815,7 +9832,8 @@ namespace Mutagen.Bethesda.Starfield
                         female: RecordTypes.FNAM,
                         stream: stream,
                         creator: static (s, p, r) => BodyDataBinaryOverlay.BodyDataFactory(s, p, r),
-                        translationParams: translationParams);
+                        translationParams: translationParams,
+                        existing: _BodyDataOverlay);
                     return (int)Race_FieldIndex.BodyData;
                 }
                 case RecordTypeInts.ENAM:

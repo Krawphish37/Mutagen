@@ -1169,7 +1169,8 @@ namespace Mutagen.Bethesda.Oblivion
                         maleMarker: RecordTypes.MNAM,
                         femaleMarker: RecordTypes.FNAM,
                         transl: StringBinaryTranslation.Instance.Parse,
-                        skipMarker: false);
+                        skipMarker: false,
+                        existing: item.Name);
                     return (int)Rank_FieldIndex.Name;
                 }
                 case RecordTypeInts.INAM:
@@ -1340,7 +1341,8 @@ namespace Mutagen.Bethesda.Oblivion
                         male: RecordTypes.MNAM,
                         female: RecordTypes.FNAM,
                         stream: stream,
-                        creator: static (m, p) => BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(m, p.MetaData.Constants), encoding: p.MetaData.Encodings.NonTranslated));
+                        creator: static (m, p) => BinaryStringUtility.ProcessWholeToZString(HeaderTranslation.ExtractSubrecordMemory(m, p.MetaData.Constants), encoding: p.MetaData.Encodings.NonTranslated),
+                        existing: _NameOverlay);
                     return (int)Rank_FieldIndex.Name;
                 }
                 case RecordTypeInts.INAM:
