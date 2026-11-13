@@ -23,6 +23,12 @@
   <ItemGroup>
     <ProjectReference Include="..\Mutagen.Bethesda.Core\Mutagen.Bethesda.Core.csproj" />
   </ItemGroup>
+  <!-- The record definitions (Loqui XML) ship in the package under loqui\Mutagen.Bethesda.Starfield\Records, the same
+       layout as the source, so a tool can describe the exact build it runs on. Not copied into consuming projects (not
+       contentFiles). Added in the outer build only, which is the one pack collects files from. -->
+  <ItemGroup Condition="'$(TargetFramework)' == ''">
+    <None Include="Records\**\*.xml" Pack="true" PackagePath="loqui\Mutagen.Bethesda.Starfield\Records\%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
   <ItemGroup>
     <None Update="Records\StarfieldGroup.xml">
       <DefaultPackFolder>none</DefaultPackFolder>
