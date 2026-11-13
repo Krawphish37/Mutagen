@@ -265,16 +265,14 @@ partial class PerkBinaryCreateTranslation
                             break;
                         case APerkEntryPointEffect.FunctionType.AddActivateChoice:
                             if (!payload.EPFT.HasValue) throw new MalformedDataException($"{nameof(PerkEntryPointAddActivateChoice)} did not have expected EPFT record");
-                            if (!payload.EPF3.HasValue) throw new MalformedDataException($"{nameof(PerkEntryPointAddActivateChoice)} did not have expected EPF3 record");
                             if (payload.EPFT.Value.Content[0] != (byte)APerkEntryPointEffect.ParameterType.SpellWithStrings)
                             {
                                 throw new MalformedDataException($"{nameof(PerkEntryPointAddActivateChoice)} did not have expected parameter type flag: {(APerkEntryPointEffect.ParameterType)payload.EPFT.Value.Content[0]}");
                             }
                             entryPointEffect = new PerkEntryPointAddActivateChoice()
                             {
+                                // ButtonLabel (EPF2) and Flags (EPF3) are read below for every effect
                                 Spell = FormLinkBinaryTranslation.Instance.FactoryNullable<ISpellGetter>(stream.MetaData, payload.EPFD?.Content),
-                                ButtonLabel = payload.EPF2.HasValue ? StringBinaryTranslation.Instance.Parse(payload.EPF2.Value.Content, StringsSource.Normal, stream.MetaData, eager: true) : null,
-                                Flags = (PerkEntryPointAddActivateChoice.Flag)BinaryPrimitives.ReadUInt16LittleEndian(payload.EPF3.Value.Content),
                             };
                             break;
                         case APerkEntryPointEffect.FunctionType.SelectSpell:
@@ -447,7 +445,7 @@ partial class PerkBinaryWriteTranslation
                 writer,
                 effect.Conditions,
                 (w, i) => i.WriteToBinary(w));
-            if (effect is APerkEntryPointEffect ptEffect)
+            if (effect is APerkEntryPointEffect)
             {
                 var paramType = effect switch
                 {
@@ -473,31 +471,7 @@ partial class PerkBinaryWriteTranslation
                     }
                 }
 
-                if (ptEffect.PerkEntryID is { } id)
-                {
-                    using (HeaderExport.Subrecord(writer, RecordTypes.EPFB))
-                    {
-                        writer.Write(id);
-                    }
-                }
-
-                if (effect is PerkEntryPointAddActivateChoice choice)
-                {
-                    if (choice.ButtonLabel != null)
-                    {
-                        using (HeaderExport.Subrecord(writer, RecordTypes.EPF2))
-                        {
-                            StringBinaryTranslation.Instance.Write(writer, choice.ButtonLabel, StringBinaryType.NullTerminate, StringsSource.Normal);
-                        }
-                    }
-                    using (HeaderExport.Subrecord(writer, RecordTypes.EPF3))
-                    {
-                        EnumBinaryTranslation<PerkEntryPointAddActivateChoice.Flag, MutagenFrame, MutagenWriter>.Instance.Write(
-                            writer,
-                            choice.Flags,
-                            2);
-                    }
-                }
+                WriteFunctionParameters(writer, effect);
                 switch (effect)
                 {
                     case PerkEntryPointModifyValue modVal:
@@ -564,7 +538,41 @@ partial class PerkBinaryWriteTranslation
                         throw new NotImplementedException();
                 }
             }
+            else
+            {
+                WriteFunctionParameters(writer, effect);
+            }
             using (HeaderExport.Subrecord(writer, RecordTypes.PRKF)) { }
+        }
+    }
+
+    // EPFB, EPF2 and EPF3 are read on every kind of effect, so they are written on every kind,
+    // each only when it is set (an activate choice without EPF3 stays without it)
+    private static void WriteFunctionParameters(MutagenWriter writer, IAPerkEffectGetter effect)
+    {
+        if (effect.PerkEntryID is { } id)
+        {
+            using (HeaderExport.Subrecord(writer, RecordTypes.EPFB))
+            {
+                writer.Write(id);
+            }
+        }
+        if (effect.ButtonLabel != null)
+        {
+            using (HeaderExport.Subrecord(writer, RecordTypes.EPF2))
+            {
+                StringBinaryTranslation.Instance.Write(writer, effect.ButtonLabel, StringBinaryType.NullTerminate, StringsSource.Normal);
+            }
+        }
+        if (effect.Flags is { } flags)
+        {
+            using (HeaderExport.Subrecord(writer, RecordTypes.EPF3))
+            {
+                EnumBinaryTranslation<APerkEffect.Flag, MutagenFrame, MutagenWriter>.Instance.Write(
+                    writer,
+                    flags,
+                    2);
+            }
         }
     }
 }

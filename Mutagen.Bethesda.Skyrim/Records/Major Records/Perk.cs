@@ -446,17 +446,7 @@ partial class PerkBinaryWriteTranslation
                     }
                 }
                         
-                if (effect is PerkEntryPointAddActivateChoice choice)
-                {
-                    if (choice.ButtonLabel != null)
-                    {
-                        using (HeaderExport.Subrecord(writer, RecordTypes.EPF2))
-                        {
-                            StringBinaryTranslation.Instance.Write(writer, choice.ButtonLabel, StringBinaryType.NullTerminate, StringsSource.Normal);
-                        }
-                    }
-                    choice.Flags.WriteToBinary(writer);
-                }
+                WriteFunctionParameters(writer, effect);
                 switch (effect)
                 {
                     case PerkEntryPointModifyValue modVal:
@@ -523,8 +513,26 @@ partial class PerkBinaryWriteTranslation
                         throw new NotImplementedException();
                 }
             }
+            else
+            {
+                WriteFunctionParameters(writer, effect);
+            }
             using (HeaderExport.Subrecord(writer, RecordTypes.PRKF)) { }
         }
+    }
+
+    // EPF2 and EPF3 are read on every kind of effect, so they are written on every kind,
+    // each only when it is set (an activate choice without EPF3 stays without it)
+    private static void WriteFunctionParameters(MutagenWriter writer, IAPerkEffectGetter effect)
+    {
+        if (effect.ButtonLabel != null)
+        {
+            using (HeaderExport.Subrecord(writer, RecordTypes.EPF2))
+            {
+                StringBinaryTranslation.Instance.Write(writer, effect.ButtonLabel, StringBinaryType.NullTerminate, StringsSource.Normal);
+            }
+        }
+        effect.Flags?.WriteToBinary(writer);
     }
 }
 
