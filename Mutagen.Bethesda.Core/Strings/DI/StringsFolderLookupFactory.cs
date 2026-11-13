@@ -76,13 +76,13 @@ public class StringsFolderLookupFactory : IStringsFolderLookupFactory
                                 continue;
                             }
                             var dict = bundle.Get(type);
-                            dict[lang] = new Lazy<StringsFolderLookupOverlay.LookupItem>(() =>
-                                {
-                                    return new StringsFolderLookupOverlay.LookupItem(
-                                        new StringsLookupOverlay(file.Path, type, encodings.GetEncoding(_gameRelease.Release, lang), fileSystem: _fileSystem),
-                                        file.Path);
-                                },
-                                LazyThreadSafetyMode.ExecutionAndPublication);
+                            dict[lang] = new StringsFolderLookupOverlay.LookupItem(
+                                new StringsTableSource(type, lang, file.Path, ArchivePath: null, ArchiveEntryPath: null),
+                                new Lazy<IStringsLookup>(() =>
+                                    {
+                                        return new StringsLookupOverlay(file.Path, type, encodings.GetEncoding(_gameRelease.Release, lang), fileSystem: _fileSystem);
+                                    },
+                                    LazyThreadSafetyMode.ExecutionAndPublication));
                         }
                     }
                     foreach (var bsaFile in _getApplicableArchivePaths.Get(modKey))
@@ -108,20 +108,20 @@ public class StringsFolderLookupFactory : IStringsFolderLookupFactory
                                     if (!MemoryExtensions.Equals(modKey.Name, modName, StringComparison.OrdinalIgnoreCase)) continue;
                                     var dict = bundle.Get(type);
                                     if (dict.ContainsKey(lang)) continue;
-                                    dict[lang] = new Lazy<StringsFolderLookupOverlay.LookupItem>(() =>
-                                    {
-                                        try
+                                    dict[lang] = new StringsFolderLookupOverlay.LookupItem(
+                                        new StringsTableSource(type, lang, Path.Combine(bsaFile, item.Path), ArchivePath: bsaFile.Path, ArchiveEntryPath: item.Path),
+                                        new Lazy<IStringsLookup>(() =>
                                         {
-                                            return new StringsFolderLookupOverlay.LookupItem(
-                                                new StringsLookupOverlay(item.GetMemorySlice(), type, encodings.GetEncoding(_gameRelease.Release, lang)),
-                                                Path.Combine(bsaFile, item.Path));
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            ArchiveException.EnrichWithFileAccessedAndThrow("String file from BSA failed to parse", ex, item.Path);
-                                            throw;
-                                        }
-                                    }, LazyThreadSafetyMode.ExecutionAndPublication);
+                                            try
+                                            {
+                                                return new StringsLookupOverlay(item.GetMemorySlice(), type, encodings.GetEncoding(_gameRelease.Release, lang));
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                ArchiveException.EnrichWithFileAccessedAndThrow("String file from BSA failed to parse", ex, item.Path);
+                                                throw;
+                                            }
+                                        }, LazyThreadSafetyMode.ExecutionAndPublication));
                                 }
                             }
                             catch (Exception ex)
