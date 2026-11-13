@@ -1,5 +1,6 @@
 using Mutagen.Bethesda.Plugins.Binary.Headers;
 using Mutagen.Bethesda.Plugins.Binary.Translations;
+using Mutagen.Bethesda.Plugins.Exceptions;
 using Mutagen.Bethesda.Plugins.Internals;
 using Noggog;
 using System.Buffers.Binary;
@@ -8,6 +9,7 @@ using System.IO.Compression;
 using Loqui;
 using Mutagen.Bethesda.Plugins.Meta;
 using Mutagen.Bethesda.Plugins.Records;
+using Mutagen.Bethesda.Plugins.Records.Internals;
 using Mutagen.Bethesda.Plugins.Assets;
 
 namespace Mutagen.Bethesda.Plugins.Binary.Overlay;
@@ -81,6 +83,14 @@ internal sealed class GroupListOverlay<T> : IReadOnlyList<T>
         while (stream.Position < finalPos)
         {
             VariableHeader meta = package.MetaData.Constants.VariableHeader(stream.RemainingMemory, objectType);
+            if (meta.IsGroup && meta.RecordType != RecordTypes.GRUP)
+            {
+                // A list group holds only groups (blocks, sub-blocks); a record here was read as a group's header
+                var majorMeta = package.MetaData.Constants.MajorRecordHeader(stream.RemainingMemory);
+                var formKey = FormKey.Factory(package.MetaData.MasterReferences, majorMeta.FormID, reference: false);
+                throw new ModGroupsMalformedException(package.MetaData.ModKey, $"Unexpected type encountered when parsing group locations: {majorMeta.RecordType} {formKey}");
+            }
+            PluginBinaryOverlay.ThrowIfGroupShorterThanHeader(package.MetaData.ModKey, stream.Position, meta);
             locations.Add(checked((int)stream.Position - offset));
             stream.Position += checked((int)meta.TotalLength);
         }

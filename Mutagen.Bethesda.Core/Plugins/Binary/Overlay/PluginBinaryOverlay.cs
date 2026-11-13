@@ -404,6 +404,18 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
     [ThreadStatic]
     internal static int? LastTypelessEnd;
 
+    /// <summary>
+    /// A group's length counts its own header, so a group claiming less than its header would leave a location parse
+    /// where it is, or move it backwards, and the parse would never end. A record's length never can.
+    /// </summary>
+    internal static void ThrowIfGroupShorterThanHeader(ModKey modKey, long position, VariableHeader varMeta)
+    {
+        if (varMeta.IsGroup && varMeta.TotalLength < varMeta.HeaderLength)
+        {
+            throw new ModGroupsMalformedException(modKey, $"Group at {position} has length {varMeta.TotalLength}, shorter than its {varMeta.HeaderLength} byte header");
+        }
+    }
+
     public static IReadOnlyList<int> ParseRecordLocations(
         OverlayStream stream,
         RecordType trigger,
@@ -421,6 +433,7 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
             var varMeta = stream.MetaData.Constants.GetVariableHeader(stream, constants);
             var recType = translationParams.ConvertToStandard(varMeta.RecordType);
             if (recType != trigger) break;
+            ThrowIfGroupShorterThanHeader(stream.MetaData.ModKey, stream.Position, varMeta);
             if (skipHeader)
             {
                 stream.Position += varMeta.HeaderLength;
@@ -451,6 +464,7 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
             var varMeta = stream.MetaData.Constants.GetVariableHeader(stream, constants);
             var recType = translationParams.ConvertToStandard(varMeta.RecordType);
             if (!triggers.TriggeringRecordTypes.Contains(recType)) break;
+            ThrowIfGroupShorterThanHeader(stream.MetaData.ModKey, stream.Position, varMeta);
             if (skipHeader)
             {
                 stream.Position += varMeta.HeaderLength;
@@ -483,6 +497,7 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
             var isTrigger = trigger == recType;
             var includeTrigger = includeTriggers.TriggeringRecordTypes.Contains(recType);
             if (!isTrigger && !includeTrigger) break;
+            ThrowIfGroupShorterThanHeader(stream.MetaData.ModKey, stream.Position, varMeta);
             if (isTrigger)
             {
                 if (skipHeader)
@@ -517,6 +532,7 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
         for (uint i = 0; i < count;)
         {
             var varMeta = stream.MetaData.Constants.GetVariableHeader(stream, constants);
+            ThrowIfGroupShorterThanHeader(stream.MetaData.ModKey, stream.Position, varMeta);
             var recType = varMeta.RecordType;
             if (trigger == recType)
             {
@@ -790,6 +806,7 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
             var isTrigger = trigger == recType;
             var isIncludeTrigger = includeTrigger == recType;
             if (!isTrigger && !isIncludeTrigger) break;
+            ThrowIfGroupShorterThanHeader(stream.MetaData.ModKey, stream.Position, varMeta);
             if (isTrigger)
             {
                 if (skipHeader)
