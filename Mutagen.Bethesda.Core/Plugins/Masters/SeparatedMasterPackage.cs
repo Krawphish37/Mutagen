@@ -332,6 +332,11 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
         CheckMasterCount(currentModKey, MasterStyle.Medium, medium);
         CheckMasterCount(currentModKey, MasterStyle.Small, small);
 
+        // The mod's own FormIDs. A Small or Medium mod: the form of its size (FE + small index, FD + medium index), as
+        // SF1Edit writes new records and every official Creation stores them (decision A3), for new records and links;
+        // FormIDs read in another form keep it (RawHeaderFormIds, OwnFormIdForms: C147, C163). The style read from the file
+        // (OwnFormIdStyle) is reported only; RoundTripMixIn.SetOwnFormIdStyle overrides the form when set explicitly. A
+        // Full mod: its full index. (No list of official plugins decides it: C181 removed it.)
         if (style != MasterStyle.Full && (ownFormIdsForm ?? true))
         {
             AddToListViaStyle(style, currentModKey);
