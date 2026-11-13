@@ -105,12 +105,23 @@ public abstract class AGroup<TMajor> : IEnumerable<TMajor>, IGroup<TMajor>
     }
 
     /// <inheritdoc />
-    public void Add(TMajor record) => InternalCache.Add(record);
+    public void Add(TMajor record)
+    {
+        InternalCache.Add(record);
+        NoteOwn(record);
+    }
+
+    // Tells the mod's FormKey allocator about an own record, so it never hands out an ID one already uses
+    private void NoteOwn(TMajor record)
+    {
+        if (SourceMod is AMod mod && record.FormKey.ModKey == mod.ModKey) mod.NoteOwnId(record.FormKey.ID);
+    }
 
     /// <inheritdoc />
     public TMajor AddReturn(TMajor record)
     {
         InternalCache.Add(record);
+        NoteOwn(record);
         return record;
     }
 
@@ -133,13 +144,23 @@ public abstract class AGroup<TMajor> : IEnumerable<TMajor>, IGroup<TMajor>
     }
 
     /// <inheritdoc />
-    public void Set(TMajor record) => InternalCache.Set(record);
+    public void Set(TMajor record)
+    {
+        InternalCache.Set(record);
+        NoteOwn(record);
+    }
 
     /// <inheritdoc />
     public void SetUntyped(IMajorRecord record) => Set(ConfirmCorrectType(record, nameof(record)));
 
     /// <inheritdoc />
-    public void Set(IEnumerable<TMajor> records) => InternalCache.Set(records);
+    public void Set(IEnumerable<TMajor> records)
+    {
+        foreach (var record in records)
+        {
+            Set(record);
+        }
+    }
 
     /// <inheritdoc />
     public void SetUntyped(IEnumerable<IMajorRecord> records) => SetUntyped(records.Select(r => ConfirmCorrectType(r, nameof(records))));

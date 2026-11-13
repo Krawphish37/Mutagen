@@ -107,6 +107,14 @@ public abstract class AMod : IMod
         return _allocator.GetNextFormKey();
     }
 
+    /// <summary>
+    /// An own record was added to a top-level group: the default allocator won't hand out its ID
+    /// </summary>
+    internal void NoteOwnId(uint id)
+    {
+        if (_allocator is SimpleFormKeyAllocator simple) simple.NoteOwnId(id);
+    }
+
     /// <inheritdoc />
     public FormKey GetNextFormKey(string? editorID)
     {
