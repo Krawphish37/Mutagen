@@ -81,6 +81,11 @@ public sealed class ParsingMeta
     public IFileSystem FileSystem { get; set; } = IFileSystemExt.DefaultFilesystem;
 
     /// <summary>
+    /// How plugin files opened for this read are shared (BinaryReadParameters.FileShare)
+    /// </summary>
+    public FileShare FileShare { get; set; } = PluginFileAccess.DefaultShare;
+
+    /// <summary>
     /// Records a later record with the same FormKey replaced in their group (shared by the parallel copies)
     /// </summary>
     internal Mutagen.Bethesda.Plugins.Records.DuplicateRecords.Set? Duplicates { get; set; }
@@ -166,6 +171,7 @@ public sealed class ParsingMeta
         KeepCompressedRecords = readParameters.KeepCompressedRecords;
         Parallel = readParameters.Parallel;
         FileSystem = readParameters.FileSystem.GetOrDefault();
+        FileShare = readParameters.FileShare;
         LinkCache = readParameters.LinkCache;
     }
 
@@ -186,12 +192,12 @@ public sealed class ParsingMeta
         GameRelease release,
         ModPath modPath)
     {
-        var header = ModHeaderFrame.FromPath(modPath, release, fileSystem: param.FileSystem);
+        var header = ModHeaderFrame.FromPath(modPath, release, fileSystem: param.FileSystem, share: param.FileShare);
         var rawMasters = param.MasterOverrides
             ?? MasterReferenceCollection.FromModHeader(modPath.ModKey, header);
         // Decided from the file: how the mod stores its own FormIDs (OwnFormIdStyle)
         var masters = SeparatedMasterPackage.FactoryDetecting(release, modPath.ModKey, header.MasterStyle, rawMasters,
-            param.MasterFlagsLookup, () => param.FileSystem.GetOrDefault().File.OpenRead(modPath.Path));
+            param.MasterFlagsLookup, () => PluginFileAccess.OpenRead(param.FileSystem, modPath.Path, param.FileShare));
         var meta = new ParsingMeta(GameConstants.Get(release), modPath.ModKey, masters);
         meta.ReadModHeaderVersion(header);
         meta.Absorb(param);

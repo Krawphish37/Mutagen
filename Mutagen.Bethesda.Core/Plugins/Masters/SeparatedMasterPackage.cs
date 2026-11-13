@@ -1,4 +1,5 @@
 using System.IO.Abstractions;
+using Mutagen.Bethesda.Plugins.Binary.Streams;
 using Mutagen.Bethesda.Plugins.Binary.Headers;
 using Mutagen.Bethesda.Plugins.Exceptions;
 using Mutagen.Bethesda.Plugins.Meta;
@@ -98,7 +99,7 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
         var header = ModHeaderFrame.FromPath(modPath, release, fileSystem: fileSystem);
         var masters = MasterReferenceCollection.FromModHeader(modPath.ModKey, header);
         return FactoryDetecting(release, modPath.ModKey, header.MasterStyle, masters, masterFlagLookup,
-            () => fileSystem.GetOrDefault().File.OpenRead(modPath.Path));
+            () => PluginFileAccess.OpenRead(fileSystem, modPath.Path));
     }
 
     /// <summary>

@@ -1,4 +1,5 @@
 ﻿using System.IO.Abstractions;
+using Mutagen.Bethesda.Plugins.Binary.Streams;
 using Mutagen.Bethesda.Plugins.Cache;
 using Mutagen.Bethesda.Plugins.Masters;
 using Mutagen.Bethesda.Plugins.Order;
@@ -47,6 +48,15 @@ public record BinaryReadParameters
     /// FileSystem to read from
     /// </summary>
     public IFileSystem? FileSystem { get; init; }
+
+    /// <summary>
+    /// How a plugin file is shared while Mutagen holds it open (an overlay holds it until disposed). The default lets
+    /// other programs read it and delete, rename or replace it (a mod manager installing a new version): an overlay
+    /// that holds the old file keeps reading the old file's bytes. Adding <see cref="System.IO.FileShare.Write"/> also
+    /// lets them write into the file in place; an overlay reading it then reads whatever the bytes have become, so
+    /// only allow that when nothing will rewrite the file while it is open.
+    /// </summary>
+    public FileShare FileShare { get; init; } = PluginFileAccess.DefaultShare;
 
     /// <summary>
     /// Optional LinkCache for cross-mod record type resolution.
