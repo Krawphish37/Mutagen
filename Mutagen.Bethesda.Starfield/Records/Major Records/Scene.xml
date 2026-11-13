@@ -87,7 +87,7 @@
       <Marker name="StartMarker" recordType="HNAM" nullable="False" />
       <String name="Name" recordType="NAM0" />
       <RefList name="StartConditions" refName="Condition" binary="Custom" />
-      <RefList name="CompletionConditions" refName="Condition" binary="Custom" markerType="NEXT" />
+      <RefList name="CompletionConditions" refName="Condition" binary="Custom" markerType="NEXT" endMarkerType="NEXT" />
       <UInt32 name="EditorWidth" recordType="WNAM" />
       <Enum name="Flags" enumName="ScenePhase.Flag" byteLength="2" recordType="FNAM" />
       <RefDirect name="PhaseSetParentQuestStage" refName="SceneSetParentQuestStage" />

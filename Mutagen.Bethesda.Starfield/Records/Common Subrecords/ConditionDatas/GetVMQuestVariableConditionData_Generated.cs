@@ -771,6 +771,17 @@ namespace Mutagen.Bethesda.Starfield
 
         public static readonly Type? GenericRegistrationType = null;
 
+        public static RecordTriggerSpecs TriggerSpecs => _recordSpecs.Value;
+        private static readonly Lazy<RecordTriggerSpecs> _recordSpecs = new Lazy<RecordTriggerSpecs>(() =>
+        {
+            var triggers = RecordCollection.Factory();
+            var all = RecordCollection.Factory(
+                RecordTypes.CIS1,
+                RecordTypes.CIS2);
+            return new RecordTriggerSpecs(
+                allRecordTypes: all,
+                triggeringRecordTypes: triggers);
+        });
         public static readonly Type BinaryWriteTranslation = typeof(GetVMQuestVariableConditionDataBinaryWriteTranslation);
         #region Interface
         ProtocolKey ILoquiRegistration.ProtocolKey => ProtocolKey;
@@ -842,7 +853,8 @@ namespace Mutagen.Bethesda.Starfield
                 record: item,
                 frame: frame,
                 translationParams: translationParams,
-                fillStructs: GetVMQuestVariableConditionDataBinaryCreateTranslation.FillBinaryStructs);
+                fillStructs: GetVMQuestVariableConditionDataBinaryCreateTranslation.FillBinaryStructs,
+                fillTyped: GetVMQuestVariableConditionDataBinaryCreateTranslation.FillBinaryRecordTypes);
         }
         
         public override void CopyInFromBinary(
@@ -1225,6 +1237,13 @@ namespace Mutagen.Bethesda.Starfield
             writer.Write(item.SecondUnusedIntParameter);
         }
 
+        public static void WriteRecordTypes(
+            IGetVMQuestVariableConditionDataGetter item,
+            MutagenWriter writer,
+            TypedWriteParams translationParams)
+        {
+        }
+
         public void Write(
             MutagenWriter writer,
             IGetVMQuestVariableConditionDataGetter item,
@@ -1233,6 +1252,10 @@ namespace Mutagen.Bethesda.Starfield
             WriteEmbedded(
                 item: item,
                 writer: writer);
+            WriteRecordTypes(
+                item: item,
+                writer: writer,
+                translationParams: translationParams);
         }
 
         public override void Write(
@@ -1274,6 +1297,23 @@ namespace Mutagen.Bethesda.Starfield
                 reader: frame,
                 item: item.FirstParameter);
             item.SecondUnusedIntParameter = frame.ReadInt32();
+        }
+
+        public static ParseResult FillBinaryRecordTypes(
+            IGetVMQuestVariableConditionData item,
+            MutagenFrame frame,
+            PreviousParse lastParsed,
+            Dictionary<RecordType, int>? recordParseCount,
+            RecordType nextRecordType,
+            int contentLength,
+            TypedParseParams translationParams = default)
+        {
+            nextRecordType = translationParams.ConvertToStandard(nextRecordType);
+            switch (nextRecordType.TypeInt)
+            {
+                default:
+                    return ParseResult.Stop;
+            }
         }
 
     }
