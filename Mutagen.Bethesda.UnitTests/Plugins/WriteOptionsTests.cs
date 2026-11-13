@@ -458,6 +458,8 @@ public class WriteOptionsTests
                 .WithNoLoadOrder()
                 .NoModKeySync()
                 .WithFormIDCompactnessCheck(FormIDCompactionOption.Iterate)
+                // the size as set (Auto would raise it to fit)
+                .WithHeaderSizeFlags(HeaderSizeFlagsOption.NoCheck)
                 .WithFileSystem(fileSystem)
                 .WriteAsync();
         });
@@ -498,6 +500,8 @@ public class WriteOptionsTests
                 .WithNoLoadOrder()
                 .NoModKeySync()
                 .WithFormIDCompactnessCheck(FormIDCompactionOption.Iterate)
+                // the size as set (Auto would raise it to fit)
+                .WithHeaderSizeFlags(HeaderSizeFlagsOption.NoCheck)
                 .WithFileSystem(fileSystem)
                 .WriteAsync();
         });

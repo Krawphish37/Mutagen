@@ -34,6 +34,10 @@ internal sealed class ModHeaderWriteLogic
     private readonly IModGetter _mod;
     private readonly HashSet<FormKey> _overriddenForms = new();
     private RangeUInt32? _recordRange;
+    // The size the mod is written with (HeaderSizeFlags); its own FormIDs are encoded for it
+    private MasterStyle _masterStyle;
+    // Whether HeaderSizeFlags picks the size, so the FormID compaction check waits until the size is known
+    private bool _sizeFromParams;
 
     private ModHeaderWriteLogic(
         BinaryWriteParameters param,
@@ -45,6 +49,8 @@ internal sealed class ModHeaderWriteLogic
         _category = mod.GameRelease.ToCategory();
         _constants = GameConstants.Get(mod.GameRelease);
         _higherFormIDRange = _constants.DefaultHighRangeFormID;
+        _masterStyle = mod.GetMasterStyle();
+        _sizeFromParams = HeaderSizeFlagsLogic.Decides(param.HeaderSizeFlags, mod);
     }
 
     public static void WriteHeader(
@@ -185,6 +191,7 @@ internal sealed class ModHeaderWriteLogic
         IReadOnlyCache<IModMasterStyledGetter, ModKey>? masterFlagLookup)
     {
         HandleDisallowedLowerFormIDs(); 
+        SetSizeFlags(mod, modHeader);
         SetOutgoingMasters(writer, mod, modHeader, masterFlagLookup);
         SetNumRecords(mod, modHeader);
         SetInteriorCellCount(mod, modHeader);
@@ -199,7 +206,7 @@ internal sealed class ModHeaderWriteLogic
         writer.MetaData.SeparatedMasterPackage = SeparatedMasterPackage.Factory(
             mod.GameRelease,
             mod.ModKey,
-            mod.GetMasterStyle(),
+            _masterStyle,
             writer.MetaData.MasterReferences,
             masterFlagLookup,
             // A mod read from a file stores its own FormIDs as it did there
@@ -359,6 +366,8 @@ internal sealed class ModHeaderWriteLogic
                 break;
             case FormIDCompactionOption.Iterate:
             {
+                // The size is picked after the records are walked (SetSizeFlags), which checks them then
+                if (_sizeFromParams) break;
                 var formIdRange = _recordCompactionDetector.GetAllowedRange(_mod, potential: true);
                 if (formIdRange != null)
                 {
@@ -371,6 +380,34 @@ internal sealed class ModHeaderWriteLogic
             }
             default:
                 throw new NotImplementedException();
+        }
+    }
+    #endregion
+
+    #region Size flags
+    /// <summary>
+    /// HeaderSizeFlags: picks the size the mod is written with from its own records' object IDs (walked by
+    /// AddCompactionTracking), sets the header's size and Master flags, and then runs the FormID compaction check for
+    /// that size
+    /// </summary>
+    private void SetSizeFlags(IModGetter mod, IModHeaderCommon modHeader)
+    {
+        if (!_sizeFromParams) return;
+        var maxOwnId = _recordRange?.Max;
+        _masterStyle = HeaderSizeFlagsLogic.Pick(_params.HeaderSizeFlags, mod, maxOwnId, out var setMaster);
+        modHeader.RawFlags = HeaderSizeFlagsLogic.Apply(modHeader.RawFlags, _constants, _masterStyle, setMaster);
+
+        if (_params.FormIDCompaction != FormIDCompactionOption.Iterate || _recordRange == null) return;
+        var range = HeaderSizeFlagsLogic.AllowedRange(mod, _masterStyle);
+        if (range.IsInRange(_recordRange.Value.Min) && range.IsInRange(_recordRange.Value.Max)) return;
+        foreach (var maj in mod.EnumerateMajorRecords())
+        {
+            if (maj.FormKey.ModKey != _modKey || range.IsInRange(maj.FormKey.ID)) continue;
+            throw new FormIDCompactionOutOfBoundsException(
+                small: _masterStyle == MasterStyle.Small,
+                medium: _masterStyle == MasterStyle.Medium,
+                range: range,
+                outOfBounds: maj);
         }
     }
     #endregion

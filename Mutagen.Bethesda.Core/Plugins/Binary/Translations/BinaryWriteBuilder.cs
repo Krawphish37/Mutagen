@@ -1126,6 +1126,13 @@ public interface IBinaryModdedWriteBuilder
     IBinaryModdedWriteBuilder WithFormIDCompactnessCheck(FormIDCompactionOption option);
 
     /// <summary>
+    /// Adjusts logic to set the mod's size flags (Small/Light, Medium, Full) and Master flag in its header.
+    /// </summary>
+    /// <param name="option">Logic to use for the header size flags</param>
+    /// <returns>Builder object to continue customization</returns>
+    IBinaryModdedWriteBuilder WithHeaderSizeFlags(HeaderSizeFlagsOption option);
+
+    /// <summary>
     /// StringsWriter override, for mods that are able to localize.
     /// </summary>
     /// <param name="stringsWriter">StringsWriter to use when localizing</param>
@@ -1631,6 +1638,26 @@ public record BinaryModdedWriteBuilder<TModGetter> : IBinaryModdedWriteBuilder
         };
     }
     IBinaryModdedWriteBuilder IBinaryModdedWriteBuilder.WithFormIDCompactnessCheck(FormIDCompactionOption option) => WithFormIDCompactnessCheck(option);
+
+    /// <summary>
+    /// Adjusts logic to set the mod's size flags (Small/Light, Medium, Full) and Master flag in its header.
+    /// </summary>
+    /// <param name="option">Logic to use for the header size flags</param>
+    /// <returns>Builder object to continue customization</returns>
+    public BinaryModdedWriteBuilder<TModGetter> WithHeaderSizeFlags(HeaderSizeFlagsOption option)
+    {
+        return this with
+        {
+            _params = _params with
+            {
+                _param = _params._param with
+                {
+                    HeaderSizeFlags = option
+                }
+            }
+        };
+    }
+    IBinaryModdedWriteBuilder IBinaryModdedWriteBuilder.WithHeaderSizeFlags(HeaderSizeFlagsOption option) => WithHeaderSizeFlags(option);
 
     /// <summary>
     /// StringsWriter override, for mods that are able to localize.
@@ -2405,6 +2432,25 @@ public record BinaryWriteBuilder<TModGetter>
                 _param = _params._param with
                 {
                     FormIDCompaction = option
+                }
+            }
+        };
+    }
+
+    /// <summary>
+    /// Adjusts logic to set the mod's size flags (Small/Light, Medium, Full) and Master flag in its header.
+    /// </summary>
+    /// <param name="option">Logic to use for the header size flags</param>
+    /// <returns>Builder object to continue customization</returns>
+    public BinaryWriteBuilder<TModGetter> WithHeaderSizeFlags(HeaderSizeFlagsOption option)
+    {
+        return this with
+        {
+            _params = _params with
+            {
+                _param = _params._param with
+                {
+                    HeaderSizeFlags = option
                 }
             }
         };
