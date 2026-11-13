@@ -14,7 +14,8 @@ namespace Mutagen.Bethesda.UnitTests.Plugins.Records.Starfield;
 // change (#700) made the overlay throw on them (issue #743): with both halves already read, a later FLLD read nothing
 // and the gendered factory threw "Expected things to be read". Each record is read from a plugin made of its patch's
 // real header and the record, with both readers: the models come out the same from both, and the record is
-// written back with every subrecord unchanged (byte for byte where its models are in the usual order).
+// written back byte for byte, in the file's own subrecord order (FE00085D keeps its light layers after STOP AFSG,
+// though the gendered model writes each next to its model).
 // - darkstarpatch_bountyhunteroutfitz.esm FE00085D: MOD2 MOD4 ... STOP AFSG FLLD FLLD (both models first, their
 //   light layers at the end)
 // - darkstarpatch_terranarmada.esm FE0008FC: MOD2 FLLD FLLD (a male model, then a female half holding only FLLD)
@@ -68,29 +69,16 @@ public class DarkStarPatchArmorModelTests
         throw new InvalidOperationException($"{formId:X8} not written");
     }
 
-    private static List<string> Subrecords(byte[] record)
-    {
-        var ret = new List<string>();
-        int p = 24;
-        while (p + 6 <= record.Length)
-        {
-            var len = BitConverter.ToUInt16(record, p + 4);
-            ret.Add(Encoding.ASCII.GetString(record, p, 4) + ":" + Convert.ToHexString(record, p + 6, len));
-            p += 6 + len;
-        }
-        return ret;
-    }
-
     public static IEnumerable<object[]> Records() => new[]
     {
-        new object[] { "darkstarpatch_bountyhunteroutfitz.esm", BountyTes4, BountyArmo, 0xFE00085Du, false },
-        new object[] { "darkstarpatch_terranarmada.esm", TerranTes4, TerranArmoFc, 0xFE0008FCu, true },
-        new object[] { "darkstarpatch_terranarmada.esm", TerranTes4, TerranArmoFd, 0xFE0008FDu, true },
+        new object[] { "darkstarpatch_bountyhunteroutfitz.esm", BountyTes4, BountyArmo, 0xFE00085Du },
+        new object[] { "darkstarpatch_terranarmada.esm", TerranTes4, TerranArmoFc, 0xFE0008FCu },
+        new object[] { "darkstarpatch_terranarmada.esm", TerranTes4, TerranArmoFd, 0xFE0008FDu },
     };
 
     [Theory]
     [MemberData(nameof(Records))]
-    public void SplitWorldModels_ReadByBothReaders_WriteBack(string fileName, string tes4, string armo, uint formId, bool sameOrder)
+    public void SplitWorldModels_ReadByBothReaders_WriteBackByteForByte(string fileName, string tes4, string armo, uint formId)
     {
         var fs = new MockFileSystem();
         var path = Path.Combine("C:", "Data", fileName);
@@ -116,18 +104,38 @@ public class DarkStarPatchArmorModelTests
                 MastersListContent = MastersListContentOption.NoCheck,
                 MastersListOrdering = new MastersListOrderingByLoadOrder(mod.MasterReferences.Select(m => m.Master)),
             });
-            var written = RecordBytes(fs.File.ReadAllBytes(outPath), formId);
-            if (sameOrder)
-            {
-                written.ShouldBe(Hex(armo));
-            }
-            else
-            {
-                // Every subrecord comes back unchanged; the light layers are written next to their models (MOD2 FLLD
-                // MOD4 FLLD), as before this change: the kept subrecord order can't move subrecords within one field
-                Subrecords(written).ShouldBe(Subrecords(Hex(armo)), ignoreOrder: true);
-            }
+            RecordBytes(fs.File.ReadAllBytes(outPath), formId).ShouldBe(Hex(armo));
         }
         mods[0].Armors.Single().Equals(mods[1].Armors.Single()).ShouldBeTrue();
+    }
+
+    // A changed record is written in Mutagen's order: each light layer next to its model
+    [Fact]
+    public void ChangedSplitWorldModel_WritesInNormalOrder()
+    {
+        var fs = new MockFileSystem();
+        var path = Path.Combine("C:", "Data", "darkstarpatch_bountyhunteroutfitz.esm");
+        fs.Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        fs.File.WriteAllBytes(path, Hex(BountyTes4).Concat(Group("ARMO", Hex(BountyArmo))).ToArray());
+        var mod = StarfieldMod.CreateFromBinary(path, StarfieldRelease.Starfield,
+            new BinaryReadParameters { FileSystem = fs, MasterFlagsLookup = Lo });
+        mod.Armors.Single().WorldModel!.Female!.LightLayer = (Light.LightLayer)2;
+        var outPath = Path.Combine("C:", "Out", "darkstarpatch_bountyhunteroutfitz.esm");
+        fs.Directory.CreateDirectory(Path.GetDirectoryName(outPath)!);
+        mod.WriteToBinary(outPath, new BinaryWriteParameters
+        {
+            FileSystem = fs,
+            MasterFlagsLookup = Lo,
+            MastersListContent = MastersListContentOption.NoCheck,
+            MastersListOrdering = new MastersListOrderingByLoadOrder(mod.ModHeader.MasterReferences.Select(m => m.Master)),
+        });
+        var written = RecordBytes(fs.File.ReadAllBytes(outPath), 0xFE00085D);
+        var types = new List<string>();
+        for (int p = 24; p + 6 <= written.Length; p += 6 + BitConverter.ToUInt16(written, p + 4))
+        {
+            var type = Encoding.ASCII.GetString(written, p, 4);
+            if (type is "MOD2" or "MOD4" or "FLLD") types.Add(type);
+        }
+        types.ShouldBe(new[] { "MOD2", "FLLD", "MOD4", "FLLD" });
     }
 }
