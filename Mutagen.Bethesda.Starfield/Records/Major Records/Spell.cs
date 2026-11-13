@@ -13,7 +13,9 @@ public partial class Spell
         NoAbsorbOrReflect = 0x0020_0000,
     }
     
-    [Flags]
+    /// <summary>
+    /// One type per spell (not flags), named as xEdit names them
+    /// </summary>
     public enum SpellType
     {
         Spell = 0,
@@ -22,8 +24,12 @@ public partial class Spell
         LesserPower = 3,
         Ability = 4,
         Poison = 5,
+        Enchantment = 6,
+        Potion = 7,
+        WortCraft = 8,
+        LeveledSpell = 9,
         Addiction = 10,
-        Voice = 11,
+        VoicePower = 11,
     }
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
