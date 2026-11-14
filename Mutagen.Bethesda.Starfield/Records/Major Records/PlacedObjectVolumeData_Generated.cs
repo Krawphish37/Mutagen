@@ -56,7 +56,14 @@ namespace Mutagen.Bethesda.Starfield
         public PlacedObjectVolumeData.VersioningBreaks Versioning { get; set; } = default(PlacedObjectVolumeData.VersioningBreaks);
         #endregion
         #region Unknown1
-        public Int32 Unknown1 { get; set; } = default(Int32);
+        private readonly IFormLink<IImageSpaceAdapterGetter> _Unknown1 = new FormLink<IImageSpaceAdapterGetter>();
+        public IFormLink<IImageSpaceAdapterGetter> Unknown1
+        {
+            get => _Unknown1;
+            set => _Unknown1.SetTo(value);
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IFormLinkGetter<IImageSpaceAdapterGetter> IPlacedObjectVolumeDataGetter.Unknown1 => this.Unknown1;
         #endregion
         #region Unknown2
         public Int32 Unknown2 { get; set; } = default(Int32);
@@ -1167,7 +1174,7 @@ namespace Mutagen.Bethesda.Starfield
         IPlacedObjectVolumeDataGetter
     {
         new PlacedObjectVolumeData.VersioningBreaks Versioning { get; set; }
-        new Int32 Unknown1 { get; set; }
+        new IFormLink<IImageSpaceAdapterGetter> Unknown1 { get; set; }
         new Int32 Unknown2 { get; set; }
         new IFormLink<IImageSpaceGetter> ImageSpace { get; set; }
         new IFormLink<IFogVolumeGetter> FogVolume { get; set; }
@@ -1205,7 +1212,7 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => PlacedObjectVolumeData_Registration.Instance;
         PlacedObjectVolumeData.VersioningBreaks Versioning { get; }
-        Int32 Unknown1 { get; }
+        IFormLinkGetter<IImageSpaceAdapterGetter> Unknown1 { get; }
         Int32 Unknown2 { get; }
         IFormLinkGetter<IImageSpaceGetter> ImageSpace { get; }
         IFormLinkGetter<IFogVolumeGetter> FogVolume { get; }
@@ -1505,7 +1512,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.Versioning = default(PlacedObjectVolumeData.VersioningBreaks);
-            item.Unknown1 = default(Int32);
+            item.Unknown1.Clear();
             item.Unknown2 = default(Int32);
             item.ImageSpace.Clear();
             item.FogVolume.Clear();
@@ -1532,6 +1539,7 @@ namespace Mutagen.Bethesda.Starfield
         #region Mutagen
         public void RemapLinks(IPlacedObjectVolumeData obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
+            obj.Unknown1.Relink(mapping);
             obj.ImageSpace.Relink(mapping);
             obj.FogVolume.Relink(mapping);
         }
@@ -1583,7 +1591,7 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.Versioning = item.Versioning == rhs.Versioning;
-            ret.Unknown1 = item.Unknown1 == rhs.Unknown1;
+            ret.Unknown1 = item.Unknown1.Equals(rhs.Unknown1);
             ret.Unknown2 = item.Unknown2 == rhs.Unknown2;
             ret.ImageSpace = item.ImageSpace.Equals(rhs.ImageSpace);
             ret.FogVolume = item.FogVolume.Equals(rhs.FogVolume);
@@ -1655,7 +1663,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if (printMask?.Unknown1 ?? true)
             {
-                sb.AppendItem(item.Unknown1, "Unknown1");
+                sb.AppendItem(item.Unknown1.FormKey, "Unknown1");
             }
             if (printMask?.Unknown2 ?? true)
             {
@@ -1756,7 +1764,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)PlacedObjectVolumeData_FieldIndex.Unknown1) ?? true))
             {
-                if (lhs.Unknown1 != rhs.Unknown1) return false;
+                if (!lhs.Unknown1.Equals(rhs.Unknown1)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlacedObjectVolumeData_FieldIndex.Unknown2) ?? true))
             {
@@ -1885,6 +1893,7 @@ namespace Mutagen.Bethesda.Starfield
         #region Mutagen
         public IEnumerable<IFormLinkGetter> EnumerateFormLinks(IPlacedObjectVolumeDataGetter obj, bool iterateNestedRecords = true)
         {
+            yield return FormLinkInformation.Factory(obj.Unknown1);
             yield return FormLinkInformation.Factory(obj.ImageSpace);
             yield return FormLinkInformation.Factory(obj.FogVolume);
             yield break;
@@ -1911,7 +1920,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((copyMask?.GetShouldTranslate((int)PlacedObjectVolumeData_FieldIndex.Unknown1) ?? true))
             {
-                item.Unknown1 = rhs.Unknown1;
+                item.Unknown1.SetTo(rhs.Unknown1.FormKey);
             }
             if ((copyMask?.GetShouldTranslate((int)PlacedObjectVolumeData_FieldIndex.Unknown2) ?? true))
             {
@@ -2106,7 +2115,9 @@ namespace Mutagen.Bethesda.Starfield
             IPlacedObjectVolumeDataGetter item,
             MutagenWriter writer)
         {
-            writer.Write(item.Unknown1);
+            FormLinkBinaryTranslation.Instance.Write(
+                writer: writer,
+                item: item.Unknown1);
             writer.Write(item.Unknown2);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
@@ -2203,7 +2214,7 @@ namespace Mutagen.Bethesda.Starfield
             IPlacedObjectVolumeData item,
             MutagenFrame frame)
         {
-            item.Unknown1 = frame.ReadInt32();
+            item.Unknown1.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             item.Unknown2 = frame.ReadInt32();
             item.ImageSpace.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             item.FogVolume.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
@@ -2297,7 +2308,7 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public PlacedObjectVolumeData.VersioningBreaks Versioning { get; private set; }
-        public Int32 Unknown1 => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x0, 0x4));
+        public IFormLinkGetter<IImageSpaceAdapterGetter> Unknown1 => FormLinkBinaryTranslation.Instance.OverlayFactory<IImageSpaceAdapterGetter>(_package, _structData.Span.Slice(0x0, 0x4));
         public Int32 Unknown2 => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x4, 0x4));
         public IFormLinkGetter<IImageSpaceGetter> ImageSpace => FormLinkBinaryTranslation.Instance.OverlayFactory<IImageSpaceGetter>(_package, _structData.Span.Slice(0x8, 0x4));
         public IFormLinkGetter<IFogVolumeGetter> FogVolume => FormLinkBinaryTranslation.Instance.OverlayFactory<IFogVolumeGetter>(_package, _structData.Span.Slice(0xC, 0x4));

@@ -127,7 +127,10 @@
   </Object>
   <Object name="PlacedObjectVolumeData" objType="Subrecord" recordType="XVL2" >
     <Fields>
-      <Int32 name="Unknown1" />
+      <!-- C221: a link to an image space adapter: all 26 non-zero values in the 370 plugins in Data are IMAD records
+           (e.g. FX_MiningDust_PostProcessing 0A8D03:SFBGS050.esm -> SFBGS050_MiningDust_IMOD 0A8D04), 0 elsewhere.
+           Name kept until its meaning is known. -->
+      <FormLink name="Unknown1" refName="ImageSpaceAdapter" />
       <Int32 name="Unknown2" />
       <FormLink name="ImageSpace" refName="ImageSpace" />
       <FormLink name="FogVolume" refName="FogVolume" />

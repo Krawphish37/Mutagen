@@ -116,6 +116,7 @@ public class PluginTranslationModule : BinaryTranslationModule
         _typeGenerations[typeof(BreakType)] = new BreakBinaryTranslationGeneration();
         _typeGenerations[typeof(MarkerType)] = new MarkerBinaryTranslationGeneration();
         _typeGenerations[typeof(GuidType)] = new GuidBinaryTranslationGeneration();
+        _typeGenerations[typeof(HalfType)] = new HalfBinaryTranslationGeneration(); // C221
         APILine[] modAPILines = new APILine[]
         {
             

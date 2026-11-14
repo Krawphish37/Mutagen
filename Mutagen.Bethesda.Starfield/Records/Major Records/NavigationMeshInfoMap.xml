@@ -39,9 +39,11 @@
       <FormLink name="Traversal" refName="StarfieldMajorRecord" />
       <P3Float name="FromPosition" />
       <P3Float name="ToPosition" />
-      <Float name="Unknown1" />
-      <Float name="Unknown2" />
-      <Float name="Unknown3" />
+      <!-- C221: the same vector as the traversal's own TraversalReference.UnknownVector (were the floats Unknown1-3):
+           of the 1,415,647 traversal references in the 370 plugins in Data whose from and to positions match a NAVI
+           entry bit for bit, 1,415,614 have the same three floats bit for bit (33 cell traversals differ slightly: their two
+           copies don't agree). Named as the reference's field until its meaning is known. -->
+      <P3Float name="UnknownVector" />
       <UInt32 name="Flags" />
       <FormLink name="FromNavmesh" refName="NavigationMesh" />
       <FormLink name="ToNavmesh" refName="NavigationMesh" />

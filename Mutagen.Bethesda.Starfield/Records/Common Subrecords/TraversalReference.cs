@@ -68,7 +68,11 @@ partial class TraversalReferenceBinaryCreateTranslation
         }
 
         item.Flags = GetFlags(flags);
-        item.Unknown = frame.ReadBytes(8);
+        // C221: four half-precision floats
+        item.Unknown2 = HalfBinaryTranslation.Instance.Parse(frame);
+        item.Unknown3 = HalfBinaryTranslation.Instance.Parse(frame);
+        item.Unknown4 = HalfBinaryTranslation.Instance.Parse(frame);
+        item.Unknown5 = HalfBinaryTranslation.Instance.Parse(frame);
     }
  
     public static ExtendedList<TraversalReference> Parse( 
@@ -118,7 +122,10 @@ partial class TraversalReferenceBinaryWriteTranslation
         {
             FormKeyBinaryTranslation.Instance.Write(writer, trav);
         }
-        writer.Write(item.Unknown);
+        HalfBinaryTranslation.Instance.Write(writer, item.Unknown2);
+        HalfBinaryTranslation.Instance.Write(writer, item.Unknown3);
+        HalfBinaryTranslation.Instance.Write(writer, item.Unknown4);
+        HalfBinaryTranslation.Instance.Write(writer, item.Unknown5);
     }
 
     public static void TraversalsListWriterHelper(
@@ -181,7 +188,12 @@ partial class TraversalReferenceBinaryOverlay
         }
     }
 
-    public ReadOnlyMemorySlice<byte> Unknown => _structData.Slice(HasFormKey ? 0x30 : 0x2C, 8);
+    // C221: the four halves after the traversal FormID (or after the flags when there is none)
+    private int HalvesOffset => HasFormKey ? 0x30 : 0x2C;
+    public Half Unknown2 => HalfBinaryTranslation.Read(_structData.Slice(HalvesOffset));
+    public Half Unknown3 => HalfBinaryTranslation.Read(_structData.Slice(HalvesOffset + 2));
+    public Half Unknown4 => HalfBinaryTranslation.Read(_structData.Slice(HalvesOffset + 4));
+    public Half Unknown5 => HalfBinaryTranslation.Read(_structData.Slice(HalvesOffset + 6));
 
     public static IReadOnlyList<ITraversalReferenceGetter> Factory(
         OverlayStream stream, BinaryOverlayFactoryPackage package,

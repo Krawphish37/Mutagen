@@ -81,14 +81,8 @@ namespace Mutagen.Bethesda.Starfield
         #region ToPosition
         public P3Float ToPosition { get; set; } = default(P3Float);
         #endregion
-        #region Unknown1
-        public Single Unknown1 { get; set; } = default(Single);
-        #endregion
-        #region Unknown2
-        public Single Unknown2 { get; set; } = default(Single);
-        #endregion
-        #region Unknown3
-        public Single Unknown3 { get; set; } = default(Single);
+        #region UnknownVector
+        public P3Float UnknownVector { get; set; } = default(P3Float);
         #endregion
         #region Flags
         public UInt32 Flags { get; set; } = default(UInt32);
@@ -157,9 +151,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Traversal = initialValue;
                 this.FromPosition = initialValue;
                 this.ToPosition = initialValue;
-                this.Unknown1 = initialValue;
-                this.Unknown2 = initialValue;
-                this.Unknown3 = initialValue;
+                this.UnknownVector = initialValue;
                 this.Flags = initialValue;
                 this.FromNavmesh = initialValue;
                 this.ToNavmesh = initialValue;
@@ -171,9 +163,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Traversal,
                 TItem FromPosition,
                 TItem ToPosition,
-                TItem Unknown1,
-                TItem Unknown2,
-                TItem Unknown3,
+                TItem UnknownVector,
                 TItem Flags,
                 TItem FromNavmesh,
                 TItem ToNavmesh)
@@ -183,9 +173,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Traversal = Traversal;
                 this.FromPosition = FromPosition;
                 this.ToPosition = ToPosition;
-                this.Unknown1 = Unknown1;
-                this.Unknown2 = Unknown2;
-                this.Unknown3 = Unknown3;
+                this.UnknownVector = UnknownVector;
                 this.Flags = Flags;
                 this.FromNavmesh = FromNavmesh;
                 this.ToNavmesh = ToNavmesh;
@@ -205,9 +193,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Traversal;
             public TItem FromPosition;
             public TItem ToPosition;
-            public TItem Unknown1;
-            public TItem Unknown2;
-            public TItem Unknown3;
+            public TItem UnknownVector;
             public TItem Flags;
             public TItem FromNavmesh;
             public TItem ToNavmesh;
@@ -228,9 +214,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Traversal, rhs.Traversal)) return false;
                 if (!object.Equals(this.FromPosition, rhs.FromPosition)) return false;
                 if (!object.Equals(this.ToPosition, rhs.ToPosition)) return false;
-                if (!object.Equals(this.Unknown1, rhs.Unknown1)) return false;
-                if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
-                if (!object.Equals(this.Unknown3, rhs.Unknown3)) return false;
+                if (!object.Equals(this.UnknownVector, rhs.UnknownVector)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
                 if (!object.Equals(this.FromNavmesh, rhs.FromNavmesh)) return false;
                 if (!object.Equals(this.ToNavmesh, rhs.ToNavmesh)) return false;
@@ -244,9 +228,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Traversal);
                 hash.Add(this.FromPosition);
                 hash.Add(this.ToPosition);
-                hash.Add(this.Unknown1);
-                hash.Add(this.Unknown2);
-                hash.Add(this.Unknown3);
+                hash.Add(this.UnknownVector);
                 hash.Add(this.Flags);
                 hash.Add(this.FromNavmesh);
                 hash.Add(this.ToNavmesh);
@@ -263,9 +245,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Traversal)) return false;
                 if (!eval(this.FromPosition)) return false;
                 if (!eval(this.ToPosition)) return false;
-                if (!eval(this.Unknown1)) return false;
-                if (!eval(this.Unknown2)) return false;
-                if (!eval(this.Unknown3)) return false;
+                if (!eval(this.UnknownVector)) return false;
                 if (!eval(this.Flags)) return false;
                 if (!eval(this.FromNavmesh)) return false;
                 if (!eval(this.ToNavmesh)) return false;
@@ -281,9 +261,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Traversal)) return true;
                 if (eval(this.FromPosition)) return true;
                 if (eval(this.ToPosition)) return true;
-                if (eval(this.Unknown1)) return true;
-                if (eval(this.Unknown2)) return true;
-                if (eval(this.Unknown3)) return true;
+                if (eval(this.UnknownVector)) return true;
                 if (eval(this.Flags)) return true;
                 if (eval(this.FromNavmesh)) return true;
                 if (eval(this.ToNavmesh)) return true;
@@ -306,9 +284,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Traversal = eval(this.Traversal);
                 obj.FromPosition = eval(this.FromPosition);
                 obj.ToPosition = eval(this.ToPosition);
-                obj.Unknown1 = eval(this.Unknown1);
-                obj.Unknown2 = eval(this.Unknown2);
-                obj.Unknown3 = eval(this.Unknown3);
+                obj.UnknownVector = eval(this.UnknownVector);
                 obj.Flags = eval(this.Flags);
                 obj.FromNavmesh = eval(this.FromNavmesh);
                 obj.ToNavmesh = eval(this.ToNavmesh);
@@ -350,17 +326,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(ToPosition, "ToPosition");
                     }
-                    if (printMask?.Unknown1 ?? true)
+                    if (printMask?.UnknownVector ?? true)
                     {
-                        sb.AppendItem(Unknown1, "Unknown1");
-                    }
-                    if (printMask?.Unknown2 ?? true)
-                    {
-                        sb.AppendItem(Unknown2, "Unknown2");
-                    }
-                    if (printMask?.Unknown3 ?? true)
-                    {
-                        sb.AppendItem(Unknown3, "Unknown3");
+                        sb.AppendItem(UnknownVector, "UnknownVector");
                     }
                     if (printMask?.Flags ?? true)
                     {
@@ -403,9 +371,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Traversal;
             public Exception? FromPosition;
             public Exception? ToPosition;
-            public Exception? Unknown1;
-            public Exception? Unknown2;
-            public Exception? Unknown3;
+            public Exception? UnknownVector;
             public Exception? Flags;
             public Exception? FromNavmesh;
             public Exception? ToNavmesh;
@@ -427,12 +393,8 @@ namespace Mutagen.Bethesda.Starfield
                         return FromPosition;
                     case NavmeshTraversal_FieldIndex.ToPosition:
                         return ToPosition;
-                    case NavmeshTraversal_FieldIndex.Unknown1:
-                        return Unknown1;
-                    case NavmeshTraversal_FieldIndex.Unknown2:
-                        return Unknown2;
-                    case NavmeshTraversal_FieldIndex.Unknown3:
-                        return Unknown3;
+                    case NavmeshTraversal_FieldIndex.UnknownVector:
+                        return UnknownVector;
                     case NavmeshTraversal_FieldIndex.Flags:
                         return Flags;
                     case NavmeshTraversal_FieldIndex.FromNavmesh:
@@ -464,14 +426,8 @@ namespace Mutagen.Bethesda.Starfield
                     case NavmeshTraversal_FieldIndex.ToPosition:
                         this.ToPosition = ex;
                         break;
-                    case NavmeshTraversal_FieldIndex.Unknown1:
-                        this.Unknown1 = ex;
-                        break;
-                    case NavmeshTraversal_FieldIndex.Unknown2:
-                        this.Unknown2 = ex;
-                        break;
-                    case NavmeshTraversal_FieldIndex.Unknown3:
-                        this.Unknown3 = ex;
+                    case NavmeshTraversal_FieldIndex.UnknownVector:
+                        this.UnknownVector = ex;
                         break;
                     case NavmeshTraversal_FieldIndex.Flags:
                         this.Flags = ex;
@@ -507,14 +463,8 @@ namespace Mutagen.Bethesda.Starfield
                     case NavmeshTraversal_FieldIndex.ToPosition:
                         this.ToPosition = (Exception?)obj;
                         break;
-                    case NavmeshTraversal_FieldIndex.Unknown1:
-                        this.Unknown1 = (Exception?)obj;
-                        break;
-                    case NavmeshTraversal_FieldIndex.Unknown2:
-                        this.Unknown2 = (Exception?)obj;
-                        break;
-                    case NavmeshTraversal_FieldIndex.Unknown3:
-                        this.Unknown3 = (Exception?)obj;
+                    case NavmeshTraversal_FieldIndex.UnknownVector:
+                        this.UnknownVector = (Exception?)obj;
                         break;
                     case NavmeshTraversal_FieldIndex.Flags:
                         this.Flags = (Exception?)obj;
@@ -538,9 +488,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Traversal != null) return true;
                 if (FromPosition != null) return true;
                 if (ToPosition != null) return true;
-                if (Unknown1 != null) return true;
-                if (Unknown2 != null) return true;
-                if (Unknown3 != null) return true;
+                if (UnknownVector != null) return true;
                 if (Flags != null) return true;
                 if (FromNavmesh != null) return true;
                 if (ToNavmesh != null) return true;
@@ -585,13 +533,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(ToPosition, "ToPosition");
                 }
                 {
-                    sb.AppendItem(Unknown1, "Unknown1");
-                }
-                {
-                    sb.AppendItem(Unknown2, "Unknown2");
-                }
-                {
-                    sb.AppendItem(Unknown3, "Unknown3");
+                    sb.AppendItem(UnknownVector, "UnknownVector");
                 }
                 {
                     sb.AppendItem(Flags, "Flags");
@@ -615,9 +557,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Traversal = this.Traversal.Combine(rhs.Traversal);
                 ret.FromPosition = this.FromPosition.Combine(rhs.FromPosition);
                 ret.ToPosition = this.ToPosition.Combine(rhs.ToPosition);
-                ret.Unknown1 = this.Unknown1.Combine(rhs.Unknown1);
-                ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
-                ret.Unknown3 = this.Unknown3.Combine(rhs.Unknown3);
+                ret.UnknownVector = this.UnknownVector.Combine(rhs.UnknownVector);
                 ret.Flags = this.Flags.Combine(rhs.Flags);
                 ret.FromNavmesh = this.FromNavmesh.Combine(rhs.FromNavmesh);
                 ret.ToNavmesh = this.ToNavmesh.Combine(rhs.ToNavmesh);
@@ -649,9 +589,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Traversal;
             public bool FromPosition;
             public bool ToPosition;
-            public bool Unknown1;
-            public bool Unknown2;
-            public bool Unknown3;
+            public bool UnknownVector;
             public bool Flags;
             public bool FromNavmesh;
             public bool ToNavmesh;
@@ -669,9 +607,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Traversal = defaultOn;
                 this.FromPosition = defaultOn;
                 this.ToPosition = defaultOn;
-                this.Unknown1 = defaultOn;
-                this.Unknown2 = defaultOn;
-                this.Unknown3 = defaultOn;
+                this.UnknownVector = defaultOn;
                 this.Flags = defaultOn;
                 this.FromNavmesh = defaultOn;
                 this.ToNavmesh = defaultOn;
@@ -695,9 +631,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Traversal, null));
                 ret.Add((FromPosition, null));
                 ret.Add((ToPosition, null));
-                ret.Add((Unknown1, null));
-                ret.Add((Unknown2, null));
-                ret.Add((Unknown3, null));
+                ret.Add((UnknownVector, null));
                 ret.Add((Flags, null));
                 ret.Add((FromNavmesh, null));
                 ret.Add((ToNavmesh, null));
@@ -784,9 +718,7 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLink<IStarfieldMajorRecordGetter> Traversal { get; set; }
         new P3Float FromPosition { get; set; }
         new P3Float ToPosition { get; set; }
-        new Single Unknown1 { get; set; }
-        new Single Unknown2 { get; set; }
-        new Single Unknown3 { get; set; }
+        new P3Float UnknownVector { get; set; }
         new UInt32 Flags { get; set; }
         new IFormLink<INavigationMeshGetter> FromNavmesh { get; set; }
         new IFormLink<INavigationMeshGetter> ToNavmesh { get; set; }
@@ -810,9 +742,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkGetter<IStarfieldMajorRecordGetter> Traversal { get; }
         P3Float FromPosition { get; }
         P3Float ToPosition { get; }
-        Single Unknown1 { get; }
-        Single Unknown2 { get; }
-        Single Unknown3 { get; }
+        P3Float UnknownVector { get; }
         UInt32 Flags { get; }
         IFormLinkGetter<INavigationMeshGetter> FromNavmesh { get; }
         IFormLinkGetter<INavigationMeshGetter> ToNavmesh { get; }
@@ -990,12 +920,10 @@ namespace Mutagen.Bethesda.Starfield
         Traversal = 2,
         FromPosition = 3,
         ToPosition = 4,
-        Unknown1 = 5,
-        Unknown2 = 6,
-        Unknown3 = 7,
-        Flags = 8,
-        FromNavmesh = 9,
-        ToNavmesh = 10,
+        UnknownVector = 5,
+        Flags = 6,
+        FromNavmesh = 7,
+        ToNavmesh = 8,
     }
     #endregion
 
@@ -1006,9 +934,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 11;
+        public const ushort AdditionalFieldCount = 9;
 
-        public const ushort FieldCount = 11;
+        public const ushort FieldCount = 9;
 
         public static readonly Type MaskType = typeof(NavmeshTraversal.Mask<>);
 
@@ -1079,9 +1007,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Traversal.Clear();
             item.FromPosition = default(P3Float);
             item.ToPosition = default(P3Float);
-            item.Unknown1 = default(Single);
-            item.Unknown2 = default(Single);
-            item.Unknown3 = default(Single);
+            item.UnknownVector = default(P3Float);
             item.Flags = default(UInt32);
             item.FromNavmesh.Clear();
             item.ToNavmesh.Clear();
@@ -1143,9 +1069,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.Traversal = item.Traversal.Equals(rhs.Traversal);
             ret.FromPosition = item.FromPosition.Equals(rhs.FromPosition);
             ret.ToPosition = item.ToPosition.Equals(rhs.ToPosition);
-            ret.Unknown1 = item.Unknown1.EqualsWithin(rhs.Unknown1);
-            ret.Unknown2 = item.Unknown2.EqualsWithin(rhs.Unknown2);
-            ret.Unknown3 = item.Unknown3.EqualsWithin(rhs.Unknown3);
+            ret.UnknownVector = item.UnknownVector.Equals(rhs.UnknownVector);
             ret.Flags = item.Flags == rhs.Flags;
             ret.FromNavmesh = item.FromNavmesh.Equals(rhs.FromNavmesh);
             ret.ToNavmesh = item.ToNavmesh.Equals(rhs.ToNavmesh);
@@ -1213,17 +1137,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.ToPosition, "ToPosition");
             }
-            if (printMask?.Unknown1 ?? true)
+            if (printMask?.UnknownVector ?? true)
             {
-                sb.AppendItem(item.Unknown1, "Unknown1");
-            }
-            if (printMask?.Unknown2 ?? true)
-            {
-                sb.AppendItem(item.Unknown2, "Unknown2");
-            }
-            if (printMask?.Unknown3 ?? true)
-            {
-                sb.AppendItem(item.Unknown3, "Unknown3");
+                sb.AppendItem(item.UnknownVector, "UnknownVector");
             }
             if (printMask?.Flags ?? true)
             {
@@ -1266,17 +1182,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.ToPosition.Equals(rhs.ToPosition)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)NavmeshTraversal_FieldIndex.Unknown1) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)NavmeshTraversal_FieldIndex.UnknownVector) ?? true))
             {
-                if (!lhs.Unknown1.EqualsWithin(rhs.Unknown1)) return false;
-            }
-            if ((equalsMask?.GetShouldTranslate((int)NavmeshTraversal_FieldIndex.Unknown2) ?? true))
-            {
-                if (!lhs.Unknown2.EqualsWithin(rhs.Unknown2)) return false;
-            }
-            if ((equalsMask?.GetShouldTranslate((int)NavmeshTraversal_FieldIndex.Unknown3) ?? true))
-            {
-                if (!lhs.Unknown3.EqualsWithin(rhs.Unknown3)) return false;
+                if (!lhs.UnknownVector.Equals(rhs.UnknownVector)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)NavmeshTraversal_FieldIndex.Flags) ?? true))
             {
@@ -1301,9 +1209,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Traversal);
             hash.Add(item.FromPosition);
             hash.Add(item.ToPosition);
-            hash.Add(item.Unknown1);
-            hash.Add(item.Unknown2);
-            hash.Add(item.Unknown3);
+            hash.Add(item.UnknownVector);
             hash.Add(item.Flags);
             hash.Add(item.FromNavmesh);
             hash.Add(item.ToNavmesh);
@@ -1363,17 +1269,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ToPosition = rhs.ToPosition;
             }
-            if ((copyMask?.GetShouldTranslate((int)NavmeshTraversal_FieldIndex.Unknown1) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)NavmeshTraversal_FieldIndex.UnknownVector) ?? true))
             {
-                item.Unknown1 = rhs.Unknown1;
-            }
-            if ((copyMask?.GetShouldTranslate((int)NavmeshTraversal_FieldIndex.Unknown2) ?? true))
-            {
-                item.Unknown2 = rhs.Unknown2;
-            }
-            if ((copyMask?.GetShouldTranslate((int)NavmeshTraversal_FieldIndex.Unknown3) ?? true))
-            {
-                item.Unknown3 = rhs.Unknown3;
+                item.UnknownVector = rhs.UnknownVector;
             }
             if ((copyMask?.GetShouldTranslate((int)NavmeshTraversal_FieldIndex.Flags) ?? true))
             {
@@ -1508,15 +1406,9 @@ namespace Mutagen.Bethesda.Starfield
             P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.ToPosition);
-            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
+            P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Unknown1);
-            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.Unknown2);
-            FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
-                writer: writer,
-                item: item.Unknown3);
+                item: item.UnknownVector);
             writer.Write(item.Flags);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
@@ -1562,9 +1454,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Traversal.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             item.FromPosition = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.ToPosition = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Unknown1 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Unknown2 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Unknown3 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.UnknownVector = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.Flags = frame.ReadUInt32();
             item.FromNavmesh.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             item.ToNavmesh.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
@@ -1639,9 +1529,7 @@ namespace Mutagen.Bethesda.Starfield
         public IFormLinkGetter<IStarfieldMajorRecordGetter> Traversal => FormLinkBinaryTranslation.Instance.OverlayFactory<IStarfieldMajorRecordGetter>(_package, _structData.Span.Slice(0x8, 0x4));
         public P3Float FromPosition => P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_structData.Slice(0xC, 0xC));
         public P3Float ToPosition => P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_structData.Slice(0x18, 0xC));
-        public Single Unknown1 => _structData.Slice(0x24, 0x4).Float();
-        public Single Unknown2 => _structData.Slice(0x28, 0x4).Float();
-        public Single Unknown3 => _structData.Slice(0x2C, 0x4).Float();
+        public P3Float UnknownVector => P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_structData.Slice(0x24, 0xC));
         public UInt32 Flags => BinaryPrimitives.ReadUInt32LittleEndian(_structData.Slice(0x30, 0x4));
         public IFormLinkGetter<INavigationMeshGetter> FromNavmesh => FormLinkBinaryTranslation.Instance.OverlayFactory<INavigationMeshGetter>(_package, _structData.Span.Slice(0x34, 0x4));
         public IFormLinkGetter<INavigationMeshGetter> ToNavmesh => FormLinkBinaryTranslation.Instance.OverlayFactory<INavigationMeshGetter>(_package, _structData.Span.Slice(0x38, 0x4));

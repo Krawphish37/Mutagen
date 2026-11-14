@@ -67,7 +67,7 @@ namespace Mutagen.Bethesda.Starfield
         public Boolean IsDiffuse { get; set; } = default(Boolean);
         #endregion
         #region Unused
-        public UInt16 Unused { get; set; } = default(UInt16);
+        public Half Unused { get; set; } = default(Half);
         #endregion
 
         #region To String
@@ -584,7 +584,7 @@ namespace Mutagen.Bethesda.Starfield
         new Single Radius { get; set; }
         new AreaLight.TypeOption Type { get; set; }
         new Boolean IsDiffuse { get; set; }
-        new UInt16 Unused { get; set; }
+        new Half Unused { get; set; }
     }
 
     public partial interface IAreaLightGetter :
@@ -604,7 +604,7 @@ namespace Mutagen.Bethesda.Starfield
         Single Radius { get; }
         AreaLight.TypeOption Type { get; }
         Boolean IsDiffuse { get; }
-        UInt16 Unused { get; }
+        Half Unused { get; }
 
     }
 
@@ -863,7 +863,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Radius = default(Single);
             item.Type = default(AreaLight.TypeOption);
             item.IsDiffuse = default(Boolean);
-            item.Unused = default(UInt16);
+            item.Unused = default(Half);
         }
         
         #region Mutagen
@@ -918,7 +918,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.Radius = item.Radius.EqualsWithin(rhs.Radius);
             ret.Type = item.Type == rhs.Type;
             ret.IsDiffuse = item.IsDiffuse == rhs.IsDiffuse;
-            ret.Unused = item.Unused == rhs.Unused;
+            ret.Unused = HalfBinaryTranslation.BitEquals(item.Unused, rhs.Unused);
         }
         
         public string Print(
@@ -1018,7 +1018,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             if ((equalsMask?.GetShouldTranslate((int)AreaLight_FieldIndex.Unused) ?? true))
             {
-                if (lhs.Unused != rhs.Unused) return false;
+                if (!HalfBinaryTranslation.BitEquals(lhs.Unused, rhs.Unused)) return false;
             }
             return true;
         }
@@ -1031,7 +1031,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Radius);
             hash.Add(item.Type);
             hash.Add(item.IsDiffuse);
-            hash.Add(item.Unused);
+            hash.Add(HalfBinaryTranslation.BitHash(item.Unused));
             return hash.ToHashCode();
         }
         
@@ -1210,7 +1210,9 @@ namespace Mutagen.Bethesda.Starfield
                 item.Type,
                 length: 1);
             writer.Write(item.IsDiffuse);
-            writer.Write(item.Unused);
+            HalfBinaryTranslation.Instance.Write(
+                writer: writer,
+                item: item.Unused);
         }
 
         public void Write(
@@ -1251,7 +1253,7 @@ namespace Mutagen.Bethesda.Starfield
                 reader: frame,
                 length: 1);
             item.IsDiffuse = frame.ReadBoolean();
-            item.Unused = frame.ReadUInt16();
+            item.Unused = HalfBinaryTranslation.Instance.Parse(reader: frame);
         }
 
     }
@@ -1322,7 +1324,7 @@ namespace Mutagen.Bethesda.Starfield
         public Single Radius => _structData.Slice(0x8, 0x4).Float();
         public AreaLight.TypeOption Type => (AreaLight.TypeOption)_structData.Span.Slice(0xC, 0x1)[0];
         public Boolean IsDiffuse => _structData.Slice(0xD, 0x1)[0] >= 1;
-        public UInt16 Unused => BinaryPrimitives.ReadUInt16LittleEndian(_structData.Slice(0xE, 0x2));
+        public Half Unused => HalfBinaryTranslation.Read(_structData.Slice(0xE, 0x2));
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,
