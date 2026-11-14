@@ -85,6 +85,34 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
         return GetFormID(new FormKey(CurrentMod, id)).Raw != raw;
     }
 
+    /// <summary>
+    /// How a FormID is stored (StoredFormIdMixIn, C203): its form by its top byte (FE Small, FD Medium, else Full), or
+    /// past the list when its index is past both the masters of that size and the mod's own place in that form
+    /// </summary>
+    internal Mutagen.Bethesda.Plugins.Records.StoredFormIdForm Classify(uint raw, out bool own)
+    {
+        ExtractFormIdInfo(new FormID(raw), out var style, out var index, out _, out _);
+        uint mastersOfStyle = style switch
+        {
+            MasterStyle.Small => _ownSmallIndex,
+            MasterStyle.Medium => _ownMediumIndex,
+            _ => _ownFullIndex,
+        };
+        own = index >= mastersOfStyle && raw != 0;
+        // The mod's own place exists in the full form and in the form of its own size only
+        var ownPlace = style == MasterStyle.Full || style == OwnHeaderStyle;
+        if (index > mastersOfStyle || (index == mastersOfStyle && !ownPlace))
+        {
+            return Mutagen.Bethesda.Plugins.Records.StoredFormIdForm.PastTheList;
+        }
+        return style switch
+        {
+            MasterStyle.Small => Mutagen.Bethesda.Plugins.Records.StoredFormIdForm.Small,
+            MasterStyle.Medium => Mutagen.Bethesda.Plugins.Records.StoredFormIdForm.Medium,
+            _ => Mutagen.Bethesda.Plugins.Records.StoredFormIdForm.Full,
+        };
+    }
+
     // The indices the mod's own FormIDs take in each form: the number of masters of that size
     private uint _ownFullIndex;
     private uint _ownMediumIndex;

@@ -85,6 +85,8 @@ public sealed class FormKeyBinaryTranslation
 
         var formID = writer.MetaData.SeparatedMasterPackage!.GetFormID(item.FormKey);
 
+        // StoredFormIdMixIn.GetStoredFormIds: where this FormID goes (C203; nothing unless a record is being looked at)
+        FormIdPositionRecorder.Note(writer, item.FormKey);
         UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
             writer: writer,
             item: formID.Raw);

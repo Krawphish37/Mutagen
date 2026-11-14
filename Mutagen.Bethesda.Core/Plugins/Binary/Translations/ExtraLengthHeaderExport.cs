@@ -31,6 +31,8 @@ public sealed class ExtraLengthHeaderExport : IDisposable
         {
             using (HeaderExport.Subrecord(_writer, _mainRecord))
             {
+                var contentStart = _writer.Position;
+                FormIdPositionRecorder.Relocate(_tributary, _writer.BaseStream, contentStart);
                 _tributary.CopyTo(_writer.BaseStream);
             }
         }
@@ -42,6 +44,8 @@ public sealed class ExtraLengthHeaderExport : IDisposable
             }
             _writer.Write(_mainRecord.TypeInt);
             _writer.WriteZeros(2);
+            var overflowContentStart = _writer.Position;
+            FormIdPositionRecorder.Relocate(_tributary, _writer.BaseStream, overflowContentStart);
             _tributary.CopyTo(_writer.BaseStream);
         }
     }
