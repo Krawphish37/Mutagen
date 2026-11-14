@@ -21,8 +21,8 @@
   <Object name="RegionData" abstract="true" objType="Subrecord">
     <Fields>
       <CustomLogic name="HeaderLogic" byteLength="8" recordType="RDAT" />
-      <Enum name="Flags" enumName="RegionData.RegionDataFlag" binary="NoGeneration" />
-      <UInt8 name="Priority" binary="NoGeneration" />
+      <Enum name="Flags" enumName="RegionData.RegionDataFlag" binary="NoGeneration" layoutSubrecord="RDAT" layoutOffset="4" />
+      <UInt8 name="Priority" binary="NoGeneration" layoutSubrecord="RDAT" layoutOffset="5" />
     </Fields>
   </Object>
   <Object name="RegionSounds" objType="Subrecord" baseClass="RegionData">

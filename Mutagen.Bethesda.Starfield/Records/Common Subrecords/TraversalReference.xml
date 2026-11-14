@@ -6,9 +6,9 @@
       <P3Float name="From" />
       <P3Float name="To" />
       <P3Float name="UnknownVector" />
-      <Enum name="Flags" enumName="TraversalReference.Flag" byteLength="4" binary="NoGeneration" />
-      <FormLink name="Traversal" refName="Traversal" binary="Custom" nullable="true" />
-      <ByteArray name="Unknown" byteLength="8" nullable="false" binary="NoGeneration" />
+      <Enum name="Flags" enumName="TraversalReference.Flag" byteLength="4" binary="NoGeneration" layoutOffset="40" layoutDroppedBits="2" />
+      <FormLink name="Traversal" refName="Traversal" binary="Custom" nullable="true" layoutOffset="44" layoutPresentWhen="field:Flags:bit=2:clear" />
+      <ByteArray name="Unknown" byteLength="8" nullable="false" binary="NoGeneration" layoutOffset="after:Traversal" />
     </Fields>
   </Object>
 </Loqui>

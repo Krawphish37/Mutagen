@@ -4,18 +4,18 @@
     <Fields>
       <String name="Name" recordType="NNAM" translated="Normal" />
       <CustomLogic name="Groups" recordType="BNAM" />
-      <RefDirect name="Options" refName="AGameplayOptionsNode" binary="NoGeneration" nullable="False" />
+      <RefDirect name="Options" refName="AGameplayOptionsNode" binary="NoGeneration" nullable="False" selectedBy="subrecord:BNAM:Int8" />
     </Fields>
   </Object>
   <Object name="AGameplayOptionsNode" objType="Subrecord" abstract="true" />
-  <Object name="GameplayOptionsGroupLeaf" objType="Subrecord" baseClass="AGameplayOptionsNode" >
+  <Object name="GameplayOptionsGroupLeaf" objType="Subrecord" baseClass="AGameplayOptionsNode" selectorValue="le0">
     <Fields>
       <List name="GameplayOptions" recordType="GOGL" nullable="False" >
         <FormLink refName="GameplayOption" />
       </List>
     </Fields>
   </Object>
-  <Object name="GameplayOptionsGroupRoot" objType="Subrecord" baseClass="AGameplayOptionsNode" >
+  <Object name="GameplayOptionsGroupRoot" objType="Subrecord" baseClass="AGameplayOptionsNode" selectorValue="gt0">
     <Fields>
       <List name="GameplayOptionGroups" recordType="GOGL" nullable="False" >
         <FormLink refName="GameplayOptionsGroup" />

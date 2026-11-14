@@ -49,18 +49,18 @@
       <Bool name="IsLinkedRefTransient" boolAsMarker="XLKT" />
       <RefList name="Traversals" refName="TraversalReference" recordType="XTV2" overflowRecordType="XXXX" binary="Custom" />
       <String name="EnvironmentMap" recordType="XEMP" />
-      <UInt32 name="NumTraversalFluffBytes" binary="NoGeneration" />
-      <RefList name="NavigationMeshes" binary="NoGeneration" refName="NavigationMesh" />
-      <Int32 name="Timestamp" binary="NoGeneration" />
-      <Int32 name="UnknownGroupData" binary="NoGeneration" />
-      <Int32 name="PersistentTimestamp" binary="NoGeneration" />
-      <Int32 name="PersistentUnknownGroupData" binary="NoGeneration" />
-      <RefList name="Persistent" binary="NoGeneration" objType="Record">
+      <UInt32 name="NumTraversalFluffBytes" binary="NoGeneration" layoutSubrecord="XTV2" layoutOffset="after:Traversals" layoutEncoding="trailingZeroCount" />
+      <RefList name="NavigationMeshes" binary="NoGeneration" refName="NavigationMesh" layoutGroup="CellChildren/CellTemporaryChildren" />
+      <Int32 name="Timestamp" binary="NoGeneration" layoutGroup="CellChildren" layoutOffset="16" />
+      <Int32 name="UnknownGroupData" binary="NoGeneration" layoutGroup="CellChildren" layoutOffset="20" />
+      <Int32 name="PersistentTimestamp" binary="NoGeneration" layoutGroup="CellChildren/CellPersistentChildren" layoutOffset="16" />
+      <Int32 name="PersistentUnknownGroupData" binary="NoGeneration" layoutGroup="CellChildren/CellPersistentChildren" layoutOffset="20" />
+      <RefList name="Persistent" binary="NoGeneration" objType="Record" layoutGroup="CellChildren/CellPersistentChildren">
         <Interface>IPlaced</Interface>
       </RefList>
-      <Int32 name="TemporaryTimestamp" binary="NoGeneration" />
-      <Int32 name="TemporaryUnknownGroupData" binary="NoGeneration" />
-      <RefList name="Temporary" binary="NoGeneration" objType="Record">
+      <Int32 name="TemporaryTimestamp" binary="NoGeneration" layoutGroup="CellChildren/CellTemporaryChildren" layoutOffset="16" />
+      <Int32 name="TemporaryUnknownGroupData" binary="NoGeneration" layoutGroup="CellChildren/CellTemporaryChildren" layoutOffset="20" />
+      <RefList name="Temporary" binary="NoGeneration" objType="Record" layoutGroup="CellChildren/CellTemporaryChildren">
         <Interface>IPlaced</Interface>
       </RefList>
     </Fields>

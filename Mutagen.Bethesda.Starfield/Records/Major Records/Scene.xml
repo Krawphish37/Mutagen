@@ -6,7 +6,7 @@
       <Enum name="Flags" enumName="Scene.Flag" byteLength="4" recordType="FNAM" />
       <RefList name="Phases" refName="ScenePhase" />
       <RefList name="Actors" refName="SceneActor" />
-      <RefList name="Actions" refName="ASceneAction" recordType="ANAM" binary="Custom" />
+      <RefList name="Actions" refName="ASceneAction" recordType="ANAM" binary="Custom" selectedBy="subrecord:ANAM:UInt16" />
       <FormLink name="Quest" refName="Quest" recordType="PNAM" />
       <UInt32 name="LastActionIndex" recordType="INAM" />
       <!-- CK 1.16.244.0, Scene > Edit Actor Behavior: the five scene-wide "Set all" overrides (Fallout 4 has the first four).
@@ -113,7 +113,7 @@
       <UInt32 name="EndPhase" recordType="ENAM" nullable="false" />
     </Fields>
   </Object>
-  <Object name="DialogueSceneAction" objType="Subrecord" baseClass="ASceneAction">
+  <Object name="DialogueSceneAction" objType="Subrecord" baseClass="ASceneAction" selectorValue="Dialogue">
     <Fields>
       <FormLink name="Topic" refName="DialogTopic" recordType="DATA" />
       <Float name="LoopingMax" recordType="DMAX" />
@@ -123,14 +123,14 @@
       <RefDirect name="VoiceOverride" recordType="WED0" refName="SoundReference" />
     </Fields>
   </Object>
-  <Object name="PackageSceneAction" objType="Subrecord" baseClass="ASceneAction">
+  <Object name="PackageSceneAction" objType="Subrecord" baseClass="ASceneAction" selectorValue="Package">
     <Fields>
       <List name="Packages">
         <FormLink refName="Package" recordType="PNAM" />
       </List>
     </Fields>
   </Object>
-  <Object name="TimerSceneAction" objType="Subrecord" baseClass="ASceneAction">
+  <Object name="TimerSceneAction" objType="Subrecord" baseClass="ASceneAction" selectorValue="Timer">
     <Fields>
       <Float name="MaxSeconds" recordType="SNAM" />
       <Float name="MinSeconds" recordType="TNAM" />
@@ -139,7 +139,7 @@
       <Int16 name="INTV" recordType="INTV" />
     </Fields>
   </Object>
-  <Object name="PlayerDialogueSceneAction" objType="Subrecord" baseClass="ASceneAction">
+  <Object name="PlayerDialogueSceneAction" objType="Subrecord" baseClass="ASceneAction" selectorValue="PlayerDialogue">
     <Fields>
       <RefDirect name="WED0" recordType="WED0" unknown="true" refName="SoundReference" />
       <RefDirect name="Headtracking" refName="HeadTracking" nullable="false" />
@@ -161,7 +161,7 @@
       <FormLink name="NpcResponse" refName="DialogTopic" recordType="ESCS" nullable="False" />
     </Fields>
   </Object>
-  <Object name="StartSceneAction" objType="Subrecord" baseClass="ASceneAction">
+  <Object name="StartSceneAction" objType="Subrecord" baseClass="ASceneAction" selectorValue="StartScene">
     <Fields>
       <RefList name="StartScenes" refName="StartScene" />
       <Bool name="EndScene" recordType="HTID" boolAsMarker="True" />
@@ -177,7 +177,7 @@
       <RefList name="Conditions" refName="Condition" counterRecType="CITC" />
     </Fields>
   </Object>
-  <Object name="RadioSceneAction" objType="Subrecord" baseClass="ASceneAction">
+  <Object name="RadioSceneAction" objType="Subrecord" baseClass="ASceneAction" selectorValue="Radio">
     <Fields>
       <FormLink name="Topic" recordType="DATA" refName="DialogTopic" nullable="false" />
       <RefDirect name="VoiceOverride" recordType="WED0" refName="SoundReference" />
@@ -185,7 +185,7 @@
       <FormLink name="DialogueSubtype" recordType="VENC" refName="Keyword" />
     </Fields>
   </Object>
-  <Object name="MoveSceneAction" objType="Subrecord" baseClass="ASceneAction">
+  <Object name="MoveSceneAction" objType="Subrecord" baseClass="ASceneAction" selectorValue="Move">
     <Fields>
       <Bool name="DisableCharacterController" recordType="DNAM" boolAsMarker="True" />
       <Bool name="OffNavmesh" recordType="NVCI" boolAsMarker="True" />
@@ -199,7 +199,7 @@
       <Enum name="MoveFlags" enumName="MoveSceneAction.Flag" recordType="FLMV" byteLength="4" nullable="false" />
     </Fields>
   </Object>
-  <Object name="CameraSceneAction" objType="Subrecord" baseClass="ASceneAction">
+  <Object name="CameraSceneAction" objType="Subrecord" baseClass="ASceneAction" selectorValue="Camera">
     <Fields>
       <RefList name="CameraShots" refName="CameraSceneShot" />
     </Fields>
@@ -225,7 +225,7 @@
       <RefList name="Conditions" refName="Condition" />
     </Fields>
   </Object>
-  <Object name="FxSceneAction" objType="Subrecord" baseClass="ASceneAction">
+  <Object name="FxSceneAction" objType="Subrecord" baseClass="ASceneAction" selectorValue="FX">
     <Fields>
       <FormLink name="ImageSpaceModifier" refName="ImageSpaceAdapter" recordType="REPL" nullable="false" />
       <Float name="FadeOutTime" recordType="HNAM" nullable="false" />
@@ -238,12 +238,12 @@
       <Int32 name="Alias" recordType="LVLO" />
     </Fields>
   </Object>
-  <Object name="AnimationSceneAction" objType="Subrecord" baseClass="ASceneAction">
+  <Object name="AnimationSceneAction" objType="Subrecord" baseClass="ASceneAction" selectorValue="Animation">
     <Fields>
       <RefList name="Animations" refName="Animation" />
     </Fields>
   </Object>
-  <Object name="TimelineSceneAction" objType="Subrecord" baseClass="ASceneAction">
+  <Object name="TimelineSceneAction" objType="Subrecord" baseClass="ASceneAction" selectorValue="Timeline">
     <Fields>
       <Enum name="Type" enumName="TimelineSceneAction.TimelineType" recordType="TNAM" byteLength="4" />
       <Float name="StartTime" recordType="SNAM" />

@@ -22,12 +22,12 @@
       <Enum name="Flags2" enumName="Worldspace.Flag2" byteLength="1" recordType="FNAM" />
       <Data recordType="NAM0">
         <Fields>
-          <P2Float name="ObjectBoundsMin" binary="Custom" />
+          <P2Float name="ObjectBoundsMin" binary="Custom" layoutEncoding="float/100" />
         </Fields>
       </Data>
       <Data recordType="NAM9">
         <Fields>
-          <P2Float name="ObjectBoundsMax" binary="Custom" />
+          <P2Float name="ObjectBoundsMax" binary="Custom" layoutEncoding="float/100" />
         </Fields>
       </Data>
       <FormLink name="Music" refName="MusicType" recordType="ZNAM" />
@@ -54,10 +54,10 @@
       <List name="CellSizeData" recordType="CLSZ" overflowRecordType="XXXX">
         <UInt32 />
       </List>
-      <RefDirect name="TopCell" refName="Cell" binary="NoGeneration" />
-      <Int32 name="SubCellsTimestamp" binary="NoGeneration" />
-      <Int32 name="SubCellsUnknown" binary="NoGeneration" />
-      <RefList name="SubCells" refName="WorldspaceBlock" binary="NoGeneration" thread="true" />
+      <RefDirect name="TopCell" refName="Cell" binary="NoGeneration" layoutGroup="WorldChildren" />
+      <Int32 name="SubCellsTimestamp" binary="NoGeneration" layoutGroup="WorldChildren" layoutOffset="16" />
+      <Int32 name="SubCellsUnknown" binary="NoGeneration" layoutGroup="WorldChildren" layoutOffset="20" />
+      <RefList name="SubCells" refName="WorldspaceBlock" binary="NoGeneration" thread="true" layoutGroup="WorldChildren/ExteriorCellBlock" />
     </Fields>
     <LinkInterface>IComplexLocation</LinkInterface>
     <LinkInterface>IPlanetContentTarget</LinkInterface>

@@ -188,7 +188,7 @@
       <Float name="Unknown1" />
       <Float name="Unknown2" />
       <Float name="Unknown3" />
-      <RefDirect name="Ender" refName="AVolumesUnknownEnder" binary="Custom" />
+      <RefDirect name="Ender" refName="AVolumesUnknownEnder" binary="Custom" selectedBy="field:TypeParse:Int32" />
     </Fields>
   </Object>
   <Object name="VolumesMatrix" objType="Subrecord" >
@@ -203,29 +203,29 @@
     <Fields>
     </Fields>
   </Object>
-  <Object name="VolumesUnknownEnderSingle" objType="Subrecord" baseClass="AVolumesUnknownEnder" >
+  <Object name="VolumesUnknownEnderSingle" objType="Subrecord" baseClass="AVolumesUnknownEnder" selectorValue="1">
     <Fields>
       <Float name="Unknown1" />
     </Fields>
   </Object>
-  <Object name="VolumesUnknownEnderDouble" objType="Subrecord" baseClass="AVolumesUnknownEnder" >
+  <Object name="VolumesUnknownEnderDouble" objType="Subrecord" baseClass="AVolumesUnknownEnder" selectorValue="3">
     <Fields>
       <Float name="Unknown1" />
       <Float name="Unknown2" />
     </Fields>
   </Object>
-  <Object name="VolumesUnknownEnderTrio" objType="Subrecord" baseClass="AVolumesUnknownEnder" >
+  <Object name="VolumesUnknownEnderTrio" objType="Subrecord" baseClass="AVolumesUnknownEnder" selectorValue="5">
     <Fields>
       <Float name="Unknown1" />
       <Float name="Unknown2" />
       <Float name="Unknown3" />
     </Fields>
   </Object>
-  <Object name="VolumesUnknownEnderEmpty" objType="Subrecord" baseClass="AVolumesUnknownEnder" >
+  <Object name="VolumesUnknownEnderEmpty" objType="Subrecord" baseClass="AVolumesUnknownEnder" selectorValue="11">
     <Fields>
     </Fields>
   </Object>
-  <Object name="VolumesUnknownEnderEmptyPadded" objType="Subrecord" baseClass="AVolumesUnknownEnder" >
+  <Object name="VolumesUnknownEnderEmptyPadded" objType="Subrecord" baseClass="AVolumesUnknownEnder" selectorValue="11">
     <Fields>
       <UInt32 name="Unknown1" />
     </Fields>

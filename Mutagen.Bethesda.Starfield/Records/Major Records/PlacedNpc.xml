@@ -45,10 +45,10 @@
       <Bool name="IsActivationPoint" boolAsMarker="XATP" />
       <Float name="Scale" recordType="XSCL" />
       <CustomLogic name="PlacementParse" recordType="DATA" />
-      <P3Float name="Position" binary="NoGeneration" />
-      <P3Float name="Rotation" binary="NoGeneration" />
+      <P3Float name="Position" binary="NoGeneration" layoutSubrecord="DATA" layoutOffset="0" />
+      <P3Float name="Rotation" binary="NoGeneration" layoutSubrecord="DATA" layoutOffset="12" />
       <!-- False on a reference read with no DATA. A deleted one then stays without it. -->
-      <Bool name="HasPlacementData" binary="NoGeneration" />
+      <Bool name="HasPlacementData" binary="NoGeneration" layoutPresentWhen="subrecord:DATA" />
       <String name="Comments" recordType="MNAM" />
     </Fields>
     <LinkInterface>IPlaced</LinkInterface>

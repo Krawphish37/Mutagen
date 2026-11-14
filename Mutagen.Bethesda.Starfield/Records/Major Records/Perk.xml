@@ -45,7 +45,7 @@
   </Object>
   <Object name="PerkRank" objType="Subrecord" >
     <Fields>
-      <RefList name="Effects" refName="APerkEffect" binary="Custom" />
+      <RefList name="Effects" refName="APerkEffect" binary="Custom" selectedBy="subrecord:PRKE:UInt8" />
       <RefList name="Conditions" refName="Condition" />
       <RefList name="Activities" refName="Activity" counterRecType="ATCP" />
       <String name="Description" recordType="DESC" translated="DL" nullable="False" />
@@ -67,18 +67,18 @@
       <Enum name="Flags" enumName="APerkEffect.Flag" recordType="EPF3" byteLength="2" />
     </Fields>
   </Object>
-  <Object name="PerkQuestEffect" objType="Subrecord" baseClass="APerkEffect">
+  <Object name="PerkQuestEffect" objType="Subrecord" baseClass="APerkEffect" selectorValue="Quest">
     <Fields>
       <FormLink name="Quest" refName="Quest" />
       <UInt16 name="Stage" />
     </Fields>
   </Object>
-  <Object name="PerkAbilityEffect" objType="Subrecord" baseClass="APerkEffect">
+  <Object name="PerkAbilityEffect" objType="Subrecord" baseClass="APerkEffect" selectorValue="Ability">
     <Fields>
       <FormLink name="Ability" refName="Spell" />
     </Fields>
   </Object>
-  <Object name="APerkEntryPointEffect" objType="Subrecord" abstract="true" baseClass="APerkEffect">
+  <Object name="APerkEntryPointEffect" objType="Subrecord" abstract="true" baseClass="APerkEffect" selectorValue="EntryPoint">
     <Fields>
       <Enum name="EntryPoint" enumName="APerkEntryPointEffect.EntryType" byteLength="1" />
       <UInt8 name="PerkConditionTabCount" />

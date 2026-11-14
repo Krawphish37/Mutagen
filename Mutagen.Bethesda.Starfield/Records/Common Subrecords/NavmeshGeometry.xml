@@ -4,7 +4,7 @@
     <Fields>
       <UInt32 name="NavmeshVersion" default="17" />
       <UInt32 name="CrcHash" default="0xA5E9A03C" />
-      <RefDirect name="Parent" refName="ANavmeshParent" binary="Custom" byteLength="8" />
+      <RefDirect name="Parent" refName="ANavmeshParent" binary="Custom" byteLength="8" selectedBy="here:FormID" />
       <RefList name="Vertices" counterLength="4" refName="NavmeshVertex" />
       <RefList name="Triangles" refName="NavmeshTriangle" counterLength="4" binaryOverlay="Custom" />
       <RefList name="EdgeLinks" refName="EdgeLink" counterLength="4" />
@@ -23,13 +23,13 @@
   </Object>
   <Object name="ANavmeshParent" abstract="true" objType="Subrecord">
   </Object>
-  <Object name="WorldspaceNavmeshParent" objType="Subrecord" baseClass="ANavmeshParent">
+  <Object name="WorldspaceNavmeshParent" objType="Subrecord" baseClass="ANavmeshParent" selectorValue="notnull">
     <Fields>
       <FormLink name="Parent" refName="Worldspace" />
       <P2Int16 name="Coordinates" swapCoords="true" />
     </Fields>
   </Object>
-  <Object name="CellNavmeshParent" objType="Subrecord" baseClass="ANavmeshParent">
+  <Object name="CellNavmeshParent" objType="Subrecord" baseClass="ANavmeshParent" selectorValue="null">
     <Fields>
       <FormLink name="UnusedWorldspaceParent" refName="Worldspace" />
       <FormLink name="Parent" refName="Cell" />
