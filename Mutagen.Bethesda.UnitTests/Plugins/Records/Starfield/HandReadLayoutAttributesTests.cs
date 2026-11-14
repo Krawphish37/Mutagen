@@ -79,7 +79,7 @@ public class HandReadLayoutAttributesTests
 
     private static Dictionary<ushort, string> AnnotatedFunctions() =>
         Objects(Path.Combine("Common Subrecords", "ConditionDatas", "ConditionDatas.xml"))
-            .Where(o => o.Attribute("conditionFunction") != null)
+            .Where(o => o.Attribute("conditionFunction") is { } f && f.Value != "*")
             .ToDictionary(o => ushort.Parse((string)o.Attribute("conditionFunction")!), o => (string)o.Attribute("name")!);
 
     [Fact]
@@ -205,6 +205,36 @@ public class HandReadLayoutAttributesTests
             ((ushort)c.Data.Function).ShouldBe((ushort)72);
             c.Unknown2.ShouldBe((ushort)0xBEEF);
             Write(c).ShouldBe(globalBytes);
+        }
+    }
+
+    // C200: UnknownConditionData is the catch-all (conditionFunction="*") for every index no other ConditionData claims,
+    // and its Function is the index itself at CTDA offset 8 (uint16)
+    [Fact]
+    public void UnknownConditionData_IsTheCatchAll_AndKeepsTheIndexAtOffsetEight()
+    {
+        var datas = Path.Combine("Common Subrecords", "ConditionDatas", "ConditionDatas.xml");
+        Objects(datas).Where(o => (string?)o.Attribute("conditionFunction") == "*")
+            .Select(o => (string)o.Attribute("name")!).ShouldBe(["UnknownConditionData"]);
+        var function = Field(datas, "UnknownConditionData", "Function");
+        var offset = int.Parse((string)function.Attribute("layoutOffset")!);
+        offset.ShouldBe(8);
+        ((string)function.Attribute("layoutEncoding")!).ShouldBe("uint16");
+
+        var annotated = AnnotatedFunctions();
+        // indexes no object claims: the lowest few, one in a gap, and the highest
+        var unclaimed = Enumerable.Range(0, ushort.MaxValue + 1).Select(i => (ushort)i).Where(i => !annotated.ContainsKey(i)).ToList();
+        unclaimed.Count.ShouldBe(65536 - annotated.Count);
+        foreach (var index in unclaimed.Take(3).Append(unclaimed[unclaimed.Count / 2]).Append(unclaimed[^1]))
+        {
+            var bytes = Ctda(packed: 0b101_00001, index);
+            BitConverter.ToUInt16(bytes, 6 + offset).ShouldBe(index);
+            foreach (var condition in ReadBoth(bytes))
+            {
+                var data = condition.Data.ShouldBeAssignableTo<IUnknownConditionDataGetter>()!;
+                ((ushort)data.Function).ShouldBe(index);
+                Write(condition).ShouldBe(bytes, $"function {index}");
+            }
         }
     }
 }
