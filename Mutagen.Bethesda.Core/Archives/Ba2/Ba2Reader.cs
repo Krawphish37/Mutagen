@@ -394,31 +394,28 @@ class BA2DX10Entry : IArchiveFile
                 ddsHeader.dwPitchOrLinearSize = (uint)(_width * _height); // 8bpp
                 break;
             default:
-                throw new Exception("Unsupported DDS header format. File: " + Path);
+                // Any other format (Starfield: R8G8B8A8_SNORM, R16G16B16A16_FLOAT and _UNORM, 78 textures): the DX10
+                // extended header names it, as texconv writes it (C202)
+                ddsHeader.PixelFormat.dwFlags = DDS.DDS_FOURCC;
+                ddsHeader.PixelFormat.dwFourCC = DDS.MAKEFOURCC('D', 'X', '1', '0');
+                ddsHeader.dwPitchOrLinearSize = DDS.LinearSize(_format, _width, _height);
+                break;
         }
 
         bw.Write((uint)DDS.DDS_MAGIC);
         ddsHeader.Write(bw);
 
-        switch ((DXGI_FORMAT)_format)
+        if (DDS.UsesDxt10Header((DXGI_FORMAT)_format))
         {
-            case DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM_SRGB:
-            case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM_SRGB:
-            case DXGI_FORMAT.DXGI_FORMAT_BC4_UNORM:
-            case DXGI_FORMAT.DXGI_FORMAT_BC5_SNORM:
-            case DXGI_FORMAT.DXGI_FORMAT_BC6H_UF16:
-            case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM:
-            case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM_SRGB:
-                var dxt10 = new DDS_HEADER_DXT10()
-                {
-                    dxgiFormat = _format,
-                    resourceDimension = (uint)DXT10_RESOURCE_DIMENSION.DIMENSION_TEXTURE2D,
-                    miscFlag = 0,
-                    arraySize = 1,
-                    miscFlags2 = DDS.DDS_ALPHA_MODE_UNKNOWN
-                };
-                dxt10.Write(bw);
-                break;
+            var dxt10 = new DDS_HEADER_DXT10()
+            {
+                dxgiFormat = _format,
+                resourceDimension = (uint)DXT10_RESOURCE_DIMENSION.DIMENSION_TEXTURE2D,
+                miscFlag = 0,
+                arraySize = 1,
+                miscFlags2 = DDS.DDS_ALPHA_MODE_UNKNOWN
+            };
+            dxt10.Write(bw);
         }
     }
 }
