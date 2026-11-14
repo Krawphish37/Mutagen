@@ -140,6 +140,18 @@ partial class MagicEffectBinaryCreateTranslation
                     Association = associatedItemKey.ToLink<IDamageTypeGetter>()
                 };
                 break;
+            case MagicEffectArchetype.TypeEnum.SummonDuplicate:
+                archetype = new MagicEffectSummonDuplicateArchetype()
+                {
+                    Association = associatedItemKey.ToLink<ISpellGetter>()
+                };
+                break;
+            case MagicEffectArchetype.TypeEnum.GravityWielder:
+                archetype = new MagicEffectGravityWielderArchetype()
+                {
+                    Association = associatedItemKey.ToLink<IGravityWielderEffectDataGetter>()
+                };
+                break;
             case MagicEffectArchetype.TypeEnum.Calm:
             case MagicEffectArchetype.TypeEnum.Frenzy:
                 archetype = new MagicEffectArchetype(archetypeEnum)
