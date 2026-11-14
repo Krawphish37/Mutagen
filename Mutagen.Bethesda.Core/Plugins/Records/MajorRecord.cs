@@ -247,5 +247,7 @@ internal partial class MajorRecordSetterTranslationCommon
         RawHeaderFormIds.Copy(rhs, item);
         // And the forms its links' own FormIDs were stored in (OwnFormIdForms), written only where a link is unchanged
         Mutagen.Bethesda.Plugins.Masters.OwnFormIdForms.Copy(rhs, item);
+        // And its child-group labels stored in a form of their own (GroupLabelForms)
+        GroupLabelForms.Copy(rhs, item);
     }
 }

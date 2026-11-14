@@ -425,6 +425,8 @@ partial class DialogTopicBinaryCreateTranslation
             if (!frame.TryGetGroupHeader(out var groupMeta)) return;
             if (groupMeta.GroupType == (int)GroupTypeEnum.TopicChildren)
             {
+                // A label stored in another form than its parent's header is written back as stored (GroupLabelForms, C188)
+                Mutagen.Bethesda.Plugins.Records.GroupLabelForms.Remember(obj, groupMeta.GroupType, BinaryPrimitives.ReadUInt32LittleEndian(groupMeta.ContainedRecordTypeData), frame.MetaData.MasterReferences);
                 obj.Timestamp = BinaryPrimitives.ReadInt32LittleEndian(groupMeta.LastModifiedData);
                 obj.Unknown = frame.GetInt32(offset: 20);
                 if (FormKey.Factory(
@@ -478,7 +480,7 @@ partial class DialogTopicBinaryWriteTranslation
             }
             using (HeaderExport.Header(writer, RecordTypes.GRUP, ObjectType.Group))
             {
-                Mutagen.Bethesda.Plugins.Records.RawHeaderFormIds.WriteGroupLabel(writer, obj);
+                Mutagen.Bethesda.Plugins.Records.RawHeaderFormIds.WriteGroupLabel(writer, obj, (int)GroupTypeEnum.TopicChildren);
                 writer.Write((int)GroupTypeEnum.TopicChildren);
                 writer.Write(obj.Timestamp);
                 writer.Write(obj.Unknown);
@@ -527,6 +529,8 @@ partial class DialogTopicBinaryOverlay
             if (!stream.TryGetGroupHeader(out var groupMeta)) return;
             if (groupMeta.GroupType != (int)GroupTypeEnum.TopicChildren) return;
             this._grupData = stream.ReadMemory(checked((int)groupMeta.TotalLength));
+            // A label stored in another form than its parent's header is written back as stored (GroupLabelForms, C188)
+            Mutagen.Bethesda.Plugins.Records.GroupLabelForms.Remember(this, groupMeta.GroupType, BinaryPrimitives.ReadUInt32LittleEndian(groupMeta.ContainedRecordTypeData), _package.MetaData.MasterReferences);
             var formKey = FormKey.Factory(
                 _package.MetaData.MasterReferences, 
                 new FormID(BinaryPrimitives.ReadUInt32LittleEndian(groupMeta.ContainedRecordTypeData)),
