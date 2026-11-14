@@ -246,6 +246,7 @@ public partial class RecordTypes
     public static readonly RecordType STND = new(0x444E5453);
     public static readonly RecordType SUNP = new(0x504E5553);
     public static readonly RecordType TACT = new(0x54434154);
+    public static readonly RecordType TDED = new(0x44454454);
     public static readonly RecordType TERM = new(0x4D524554);
     public static readonly RecordType TMLM = new(0x4D4C4D54);
     public static readonly RecordType TODD = new(0x44444F54);

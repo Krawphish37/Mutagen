@@ -244,6 +244,7 @@ public partial class RecordTypeInts
     public const int STND = 0x444E5453;
     public const int SUNP = 0x504E5553;
     public const int TACT = 0x54434154;
+    public const int TDED = 0x44454454;
     public const int TERM = 0x4D524554;
     public const int TMLM = 0x4D4C4D54;
     public const int TODD = 0x44444F54;
