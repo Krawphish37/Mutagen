@@ -178,7 +178,6 @@ public class HandReadGroupLayoutTests
         Unknown1 = 1,
         From = new P3Float(1, 2, 3),
         To = new P3Float(4, 5, 6),
-        Unknown = new byte[8],
     };
 
     // ---- the checks ----

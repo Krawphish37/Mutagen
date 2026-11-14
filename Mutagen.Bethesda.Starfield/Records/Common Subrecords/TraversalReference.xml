@@ -8,7 +8,13 @@
       <P3Float name="UnknownVector" />
       <Enum name="Flags" enumName="TraversalReference.Flag" byteLength="4" binary="NoGeneration" layoutOffset="40" layoutDroppedBits="2" />
       <FormLink name="Traversal" refName="Traversal" binary="Custom" nullable="true" layoutOffset="44" layoutPresentWhen="field:Flags:bit=2:clear" />
-      <ByteArray name="Unknown" byteLength="8" nullable="false" binary="NoGeneration" layoutOffset="after:Traversal" />
+      <!-- C221: four half-precision floats (were one 8-byte array "Unknown"). Values such as 0x4248 = 3.14, 0x3E48 = 1.57,
+           0x44B6 = 4.71, 0x7C00 = +inf, 0x4500 = 5.0. Often in pairs (a, a, b, b), but not always (e.g. 0, 0, 0.35, 5.0),
+           so four fields. Names numbered on from Unknown1 until their meaning is known. -->
+      <Half name="Unknown2" binary="NoGeneration" layoutOffset="after:Traversal" />
+      <Half name="Unknown3" binary="NoGeneration" layoutOffset="after:Unknown2" />
+      <Half name="Unknown4" binary="NoGeneration" layoutOffset="after:Unknown3" />
+      <Half name="Unknown5" binary="NoGeneration" layoutOffset="after:Unknown4" />
     </Fields>
   </Object>
 </Loqui>

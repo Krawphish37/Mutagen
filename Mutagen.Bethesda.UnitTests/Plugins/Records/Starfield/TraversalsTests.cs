@@ -184,7 +184,9 @@ public class TraversalsTests
         traversals.Select(x => x.Traversal.FormKeyNullable).ShouldBe(new FormKey?[] { traversal, null, traversal });
         traversals.Select(x => x.From.X).ShouldBe(new[] { 1f, 1f, 1f });
         traversals.Select(x => x.UnknownVector.Z).ShouldBe(new[] { 9f, 9f, 9f });
-        traversals.Select(x => x.Unknown.ToArray()).ShouldAllBe(x => x.SequenceEqual(new byte[] { 8, 7, 6, 5, 4, 3, 2, 1 }));
+        // C221: the 8 bytes are four halves
+        traversals.Select(x => new[] { x.Unknown2, x.Unknown3, x.Unknown4, x.Unknown5 }.Select(BitConverter.HalfToUInt16Bits).ToArray())
+            .ShouldAllBe(x => x.SequenceEqual(new ushort[] { 0x0708, 0x0506, 0x0304, 0x0102 }));
         stream.Position.ShouldBe(bytes.Length);
     }
 }

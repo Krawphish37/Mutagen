@@ -22,7 +22,6 @@ public class TraversalShortTailTests
         Unknown1 = 1,
         From = new P3Float(x, 2, 3),
         To = new P3Float(4, 5, 6),
-        Unknown = new byte[8],
     };
 
     [Theory]

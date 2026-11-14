@@ -266,6 +266,7 @@
         <Compile Include="Plugins\Binary\Translations\CompressionExport.cs" />
         <Compile Include="Plugins\Binary\Translations\FormLinkOrIndexBinaryTranslation.cs" />
         <Compile Include="Plugins\Binary\Translations\GuidBinaryTranslation.cs" />
+        <Compile Include="Plugins\Binary\Translations\HalfBinaryTranslation.cs" />
         <Compile Include="Plugins\Binary\Translations\PreviousParse.cs" />
         <Compile Include="Plugins\Binary\Translations\RecordSpanExtensions.cs" />
         <Compile Include="Plugins\Binary\Translations\SubgroupsBinaryTranslation.cs" />

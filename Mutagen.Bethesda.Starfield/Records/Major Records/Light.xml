@@ -115,7 +115,10 @@
       <Float name="Radius" />
       <Enum name="Type" enumName="AreaLight.TypeOption" byteLength="1" />
       <Bool name="IsDiffuse" byteLength="1" />
-      <UInt16 name="Unused" />
+      <!-- C221: a half-precision float. All 7,031 non-zero values in the 370 plugins in Data (7,006 in Starfield.esm) are
+           short halves: 0x3E00 = 1.5 (3,574), 0x3F00 = 1.75, 0x3D00 = 1.25, 0x3C00 = 1.0, 0xBE00 = -1.5, 0xBF00 = -1.75, ...
+           Name kept (upstream's) until its meaning is known. -->
+      <Half name="Unused" />
     </Fields>
   </Object>
 </Loqui>

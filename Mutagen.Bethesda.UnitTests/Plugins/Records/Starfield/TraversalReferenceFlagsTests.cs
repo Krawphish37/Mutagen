@@ -152,7 +152,9 @@ public class TraversalReferenceFlagsTests
             null,
             new FormKey(TestModKey, 0x802),
         });
-        placed.Traversals[0].Unknown.ToArray().ShouldBe(new byte[] { 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17 });
+        var t0 = placed.Traversals[0]; // C221: the 8 bytes are four halves
+        new[] { t0.Unknown2, t0.Unknown3, t0.Unknown4, t0.Unknown5 }.Select(BitConverter.HalfToUInt16Bits)
+            .ShouldBe(new ushort[] { 0x1110, 0x1312, 0x1514, 0x1716 });
         Subrecord(Write(placed), "XTV2").ShouldBe(xtv2);
     }
 
@@ -189,14 +191,20 @@ public class TraversalReferenceFlagsTests
                     Unknown1 = 1,
                     From = new P3Float(10, 11, 12),
                     Flags = (TraversalReference.Flag)2 | TraversalReference.Flag.NoTraversalFormID,
-                    Unknown = new byte[] { 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17 },
+                    Unknown2 = BitConverter.UInt16BitsToHalf(0x1110),
+                    Unknown3 = BitConverter.UInt16BitsToHalf(0x1312),
+                    Unknown4 = BitConverter.UInt16BitsToHalf(0x1514),
+                    Unknown5 = BitConverter.UInt16BitsToHalf(0x1716),
                 },
                 new()
                 {
                     Unknown1 = 2,
                     From = new P3Float(20, 21, 22),
                     Flags = (TraversalReference.Flag)1,
-                    Unknown = new byte[] { 0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27 },
+                    Unknown2 = BitConverter.UInt16BitsToHalf(0x2120),
+                    Unknown3 = BitConverter.UInt16BitsToHalf(0x2322),
+                    Unknown4 = BitConverter.UInt16BitsToHalf(0x2524),
+                    Unknown5 = BitConverter.UInt16BitsToHalf(0x2726),
                 },
             }
         };

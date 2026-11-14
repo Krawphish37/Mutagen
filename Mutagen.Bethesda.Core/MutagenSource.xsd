@@ -583,6 +583,7 @@
         <xs:element name="Break" />
         <xs:element name="Zero" type="ZeroType"/>
         <xs:element name="Guid" type="NGuid" />
+        <xs:element name="Half" type="NHalf" />
       </xs:choice>
     </xs:group>
 
@@ -601,6 +602,7 @@
         <xs:element name="Gendered" type="GenderedItem" />
         <xs:element name="Break" />
         <xs:element name="Guid" type="Guid" />
+        <xs:element name="Half" type="Half" />
       </xs:choice>
     </xs:group>
   </xs:redefine>
@@ -851,6 +853,21 @@
   <xs:complexType name="NGuid" >
     <xs:complexContent>
       <xs:extension base="Guid">
+        <xs:attribute name="name" type="xs:string" use="required" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- C221: a 16-bit half-precision float -->
+  <xs:complexType name="Half" >
+    <xs:complexContent>
+      <xs:extension base="Field" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="NHalf" >
+    <xs:complexContent>
+      <xs:extension base="Half">
         <xs:attribute name="name" type="xs:string" use="required" />
       </xs:extension>
     </xs:complexContent>

@@ -82,7 +82,8 @@ public class HandReadLayoutEncodingTests
         "FindMatchingRefNearAlias.AliasID", "Subgraph.Role", "Subgraph.Perspective",
         "Package.PackageTemplate", "Package.DataInputVersion", "ColorRecord.Flags",
         "Npc.Flags", "Npc.Level", "PcLevelMult.LevelMult",
-        "TraversalReference.Flags", "TraversalReference.Traversal", "TraversalReference.Unknown",
+        "TraversalReference.Flags", "TraversalReference.Traversal",
+        "TraversalReference.Unknown2", "TraversalReference.Unknown3", "TraversalReference.Unknown4", "TraversalReference.Unknown5",
         "NavmeshPathingCell.ParentCell", "NavmeshPathingCell.Grid",
         "PerkEntryPointModifyValue.Modification", "PerkEntryPointModifyValues.Modification",
         "PerkEntryPointModifyActorValue.Modification",
@@ -567,7 +568,8 @@ public class HandReadLayoutEncodingTests
         Attr("TraversalReference.Flags", "layoutDroppedBits").ShouldBe("2");
         Offset("TraversalReference.Traversal").ShouldBe(44);
         Attr("TraversalReference.Traversal", "layoutPresentWhen").ShouldBe("field:Flags:bit=2:clear");
-        Attr("TraversalReference.Unknown", "layoutOffset").ShouldBe("after:Traversal");
+        Attr("TraversalReference.Unknown2", "layoutOffset").ShouldBe("after:Traversal"); // C221: the 8 bytes are 4 halves
+        Attr("TraversalReference.Unknown5", "layoutOffset").ShouldBe("after:Unknown4");
 
         var target = new FormKey(TestModKey, 0x900);
         byte[] unknown = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -577,7 +579,10 @@ public class HandReadLayoutEncodingTests
             {
                 Unknown1 = 1,
                 Flags = TraversalReference.Flag.Unknown0,
-                Unknown = unknown,
+                Unknown2 = BitConverter.UInt16BitsToHalf(0x0201),
+                Unknown3 = BitConverter.UInt16BitsToHalf(0x0403),
+                Unknown4 = BitConverter.UInt16BitsToHalf(0x0605),
+                Unknown5 = BitConverter.UInt16BitsToHalf(0x0807),
             };
             if (hasTraversal) item.Traversal.SetTo(target);
             else item.Traversal.SetToNull();
@@ -589,7 +594,8 @@ public class HandReadLayoutEncodingTests
             var read = TraversalReference.CreateFromBinary(Frame(bytes));
             read.Flags.ShouldBe(TraversalReference.Flag.Unknown0);
             read.Traversal.FormKeyNullable.ShouldBe(hasTraversal ? target : null);
-            read.Unknown.ToArray().ShouldBe(unknown);
+            new[] { read.Unknown2, read.Unknown3, read.Unknown4, read.Unknown5 }.Select(BitConverter.HalfToUInt16Bits)
+                .ShouldBe(new ushort[] { 0x0201, 0x0403, 0x0605, 0x0807 });
         }
     }
 
