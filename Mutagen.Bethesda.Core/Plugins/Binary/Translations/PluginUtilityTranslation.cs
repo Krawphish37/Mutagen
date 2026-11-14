@@ -752,14 +752,20 @@ internal static class PluginUtilityTranslation
                 var ownForms = writer.MetaData.Constants.KeepSubrecordOrder
                     ? Mutagen.Bethesda.Plugins.Masters.OwnFormIdForms.Get(item)
                     : null;
+                // An overlay reads its links while it is written; one read in a form Mutagen writes differently (a master
+                // index past the list, decision 6.1 revised, C189) marks the record to look for such FormIDs afterwards
+                var overlayKeepsForms = writer.MetaData.Constants.KeepSubrecordOrder
+                    && item is Mutagen.Bethesda.Plugins.Binary.Overlay.PluginBinaryOverlay;
                 using (CompressionExport.Compression(item.IsCompressed, writer, compressedOriginal, out var writerToUse))
                 {
                     SubrecordOrder.Entry[]? order = null;
                     if (writer.MetaData.Constants.KeepSubrecordOrder
-                        && (SubrecordOrder.TryGet(item, out order) || ownForms != null))
+                        && (SubrecordOrder.TryGet(item, out order) || ownForms != null || overlayKeepsForms))
                     {
                         // Written as usual into a buffer, then in the order the record was read in, if it is unchanged
-                        using var buffer = new MemoryStream();
+                        using var rented = RecordBuffer.Rent();
+                        var buffer = rented.Stream;
+                        if (overlayKeepsForms) SubrecordOrder.NonCanonicalFormIdRead = false;
                         using (var bufferWriter = new MutagenWriter(buffer, writerToUse.MetaData, dispose: false))
                         {
                             writeRecordTypes(item, bufferWriter, translationParams);
@@ -771,6 +777,10 @@ internal static class PluginUtilityTranslation
                             }
                         }
                         var written = buffer.GetBuffer().AsSpan(0, checked((int)buffer.Length));
+                        if (overlayKeepsForms && SubrecordOrder.NonCanonicalFormIdRead)
+                        {
+                            ownForms = Mutagen.Bethesda.Plugins.Masters.OwnFormIdForms.GetIncludingPastList(item) ?? ownForms;
+                        }
                         if (ownForms != null)
                         {
                             Mutagen.Bethesda.Plugins.Masters.OwnFormIdForms.Restore(written, ownForms, writerToUse);
@@ -794,6 +804,29 @@ internal static class PluginUtilityTranslation
                 }
                 writer.MetaData.FormVersion = null;
             }
+        }
+    }
+
+    /// <summary>
+    /// A buffer to write one record's subrecords into, reused on the thread (a nested use gets its own)
+    /// </summary>
+    private sealed class RecordBuffer : IDisposable
+    {
+        [ThreadStatic] private static RecordBuffer? _free;
+        public readonly MemoryStream Stream = new();
+
+        public static RecordBuffer Rent()
+        {
+            var ret = _free ?? new RecordBuffer();
+            _free = null;
+            ret.Stream.SetLength(0);
+            return ret;
+        }
+
+        public void Dispose()
+        {
+            // Large buffers aren't kept
+            if (Stream.Capacity <= 1 << 20) _free = this;
         }
     }
 

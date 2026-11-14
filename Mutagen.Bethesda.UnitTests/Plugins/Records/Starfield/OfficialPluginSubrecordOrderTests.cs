@@ -109,8 +109,9 @@ public class OfficialPluginSubrecordOrderTests
             StarfieldMod.CreateFromBinary(path, StarfieldRelease.Starfield, param),
             StarfieldMod.CreateFromBinaryOverlay(path, StarfieldRelease.Starfield, param),
         };
-        // The expected bytes: the file's, with the out-of-range master index written as the plugin's own (02 -> 01)
-        var expected = Hex(Refr.Replace("58504C4B0800D980090202000000", "58504C4B0800D980090102000000"));
+        // The expected bytes: the file's, the out-of-range master index (02) included, kept as stored (decision 6.1
+        // revised, C189)
+        var expected = Hex(Refr);
         foreach (var mod in mods)
         {
             var refr = mod.EnumerateMajorRecords<IPlacedObjectGetter>().ShouldHaveSingleItem();

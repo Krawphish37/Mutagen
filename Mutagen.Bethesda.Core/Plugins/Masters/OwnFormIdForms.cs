@@ -52,8 +52,10 @@ internal static class OwnFormIdForms
         List<(int From, int To)> ranges,
         int firstRange)
     {
-        if (package is not SeparatedMasterPackage separated || !separated.HasOwnFormVariants) return;
-        var found = Scan(content, constants, separated, ranges, firstRange);
+        if (package is not SeparatedMasterPackage separated) return;
+        // Only subrecords whose read met a FormID Mutagen writes differently: own forms (Small/Medium) and master
+        // indices past the list (any size, C189)
+        var found = Scan(content, constants, separated, ranges, firstRange, includePastList: true);
         if (found == null) Records.Remove(record);
         else Records.AddOrUpdate(record, found);
     }
@@ -69,9 +71,23 @@ internal static class OwnFormIdForms
             {
                 return null;
             }
-            return Scan(overlay._recordData, overlay._package.MetaData.Constants, separated, ranges: null, firstRange: 0);
+            return Scan(overlay._recordData, overlay._package.MetaData.Constants, separated, ranges: null, firstRange: 0, includePastList: false);
         }
         return Records.TryGetValue(record, out var entries) ? entries : null;
+    }
+
+    /// <summary>
+    /// An overlay record whose write read a FormID Mutagen writes differently: its own FormIDs in another form and its
+    /// master indices past the list (C189), found in its bytes
+    /// </summary>
+    public static Entry[]? GetIncludingPastList(IMajorRecordGetter record)
+    {
+        if (record is not PluginBinaryOverlay overlay
+            || overlay._package.MetaData.MasterReferences is not SeparatedMasterPackage separated)
+        {
+            return null;
+        }
+        return Scan(overlay._recordData, overlay._package.MetaData.Constants, separated, ranges: null, firstRange: 0, includePastList: true);
     }
 
     private static Entry[]? Scan(
@@ -79,7 +95,8 @@ internal static class OwnFormIdForms
         GameConstants constants,
         SeparatedMasterPackage package,
         List<(int From, int To)>? ranges,
-        int firstRange)
+        int firstRange,
+        bool includePastList)
     {
         List<Entry>? ret = null;
         var turns = new Dictionary<uint, int>();
@@ -106,7 +123,7 @@ internal static class OwnFormIdForms
                 for (int i = 0; i + 4 <= sub.Length; i++)
                 {
                     var raw = BinaryPrimitives.ReadUInt32LittleEndian(sub.Slice(i));
-                    if (package.IsOwnFormVariant(raw))
+                    if (package.IsOwnFormVariant(raw, includePastList))
                     {
                         (ret ??= new()).Add(new Entry(type, turn, i, raw));
                     }
@@ -158,7 +175,7 @@ internal static class OwnFormIdForms
                 if (at + 4 > end) continue;
                 // Still a form of the plugin's own FormID with the masters written, and the record still writes Mutagen's
                 // form of that same FormID there
-                if (!package.IsOwnFormVariant(entry.Raw)) continue;
+                if (!package.IsOwnFormVariant(entry.Raw, includePastList: true)) continue;
                 var formKey = package.GetFormKey(new FormID(entry.Raw), reference: true);
                 if (BinaryPrimitives.ReadUInt32LittleEndian(written.Slice(at)) != package.GetFormID(formKey).Raw) continue;
                 BinaryPrimitives.WriteUInt32LittleEndian(written.Slice(at), entry.Raw);

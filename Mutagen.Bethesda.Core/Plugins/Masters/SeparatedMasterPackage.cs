@@ -49,10 +49,19 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
     /// (the number of full masters), or for a Small mod FE + its small index, for a Medium mod FD + its medium index.
     /// A master index past the list is not one of these (it reads as the mod too, decision 6.1, and is written as before).
     /// </summary>
-    internal bool IsOwnFormVariant(uint raw)
+    /// <param name="includePastList">Also a master index past the list (it reads as the mod too; decision 6.1 revised, C189)</param>
+    internal bool IsOwnFormVariant(uint raw, bool includePastList = false)
     {
         uint id;
         var top = raw >> 24;
+        if (includePastList && raw != 0)
+        {
+            ExtractFormIdInfo(new FormID(raw), out _, out var pastIndex, out var pastId, out var list);
+            if (pastIndex >= list.Count && pastId != 0)
+            {
+                return GetFormID(new FormKey(CurrentMod, pastId)).Raw != raw;
+            }
+        }
         if (top == _ownFullIndex)
         {
             id = raw & FormID.FullIdMask;
