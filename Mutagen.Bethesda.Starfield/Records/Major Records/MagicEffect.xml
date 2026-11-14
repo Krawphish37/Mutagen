@@ -129,14 +129,14 @@
       <FormLink name="Association" binary="NoGeneration" refName="DamageType" layoutSubrecord="DATA" layoutOffset="0" />
     </Fields>
   </Object>
-  <Object name="MagicEffectSummonDuplicateArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration">
+  <Object name="MagicEffectSummonDuplicateArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration" selectorValue="SummonDuplicate">
     <Fields>
-      <FormLink name="Association" binary="NoGeneration" refName="Spell" />
+      <FormLink name="Association" binary="NoGeneration" refName="Spell" layoutSubrecord="DATA" layoutOffset="0" />
     </Fields>
   </Object>
-  <Object name="MagicEffectGravityWielderArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration">
+  <Object name="MagicEffectGravityWielderArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration" selectorValue="GravityWielder">
     <Fields>
-      <FormLink name="Association" binary="NoGeneration" refName="GravityWielderEffectData" />
+      <FormLink name="Association" binary="NoGeneration" refName="GravityWielderEffectData" layoutSubrecord="DATA" layoutOffset="0" />
     </Fields>
   </Object>
 </Loqui>
