@@ -2,6 +2,7 @@ using ICSharpCode.SharpZipLib.Zip.Compression;
 using K4os.Compression.LZ4;
 using Noggog;
 using Noggog.Streams;
+using System.Buffers.Binary;
 using System.Diagnostics.CodeAnalysis;
 using System.IO.Abstractions;
 using System.IO.Compression;
@@ -98,6 +99,9 @@ class Ba2Reader : IArchiveReader
         _files = new Lazy<List<IArchiveFile>>(
             isThreadSafe: true,
             valueFactory: LoadFiles);
+        _nameTable = new Lazy<NameTable?>(
+            isThreadSafe: true,
+            valueFactory: ReadNameTable);
     }
 
     private List<IArchiveFile> LoadFiles()
@@ -145,6 +149,145 @@ class Ba2Reader : IArchiveReader
     }
 
     public IEnumerable<IArchiveFile> Files => _files.Value;
+
+    /// <summary>
+    /// The name table: every file's path, as UTF-8 bytes, in file record order (C201)
+    /// </summary>
+    private sealed record NameTable(byte[] Bytes, int[] Starts, int[] Lengths);
+
+    private readonly Lazy<NameTable?> _nameTable;
+    private long _gnrlRecordLength = -1;
+
+    /// <summary>
+    /// Reads the name table in one read from its offset to the end of the file. Null when the archive has none, its
+    /// files aren't the ones the name table lists one by one (GNMF), or the table doesn't add up: then
+    /// <see cref="Files"/> decides.
+    /// </summary>
+    private NameTable? ReadNameTable()
+    {
+        if (!HasNameTable || _entryType == Ba2EntryType.GNMF) return null;
+        using var stream = _streamFactory();
+        long length = stream.Length - (long)_nameTableOffset;
+        if (length < 2L * _numFiles || length > int.MaxValue) return null;
+        var bytes = new byte[length];
+        stream.Position = (long)_nameTableOffset;
+        stream.ReadExactly(bytes);
+        var starts = new int[_numFiles];
+        var lengths = new int[_numFiles];
+        int pos = 0;
+        for (int i = 0; i < _numFiles; i++)
+        {
+            if (pos + 2 > bytes.Length) return null;
+            int count = BinaryPrimitives.ReadInt16LittleEndian(bytes.AsSpan(pos));
+            if (count < 0 || pos + 2 + count > bytes.Length) return null;
+            starts[i] = pos + 2;
+            lengths[i] = count;
+            pos += 2 + count;
+        }
+        return new NameTable(bytes, starts, lengths);
+    }
+
+    /// <summary>
+    /// Every file's path from the name table alone (no file record is read), in the order and spelling of
+    /// <see cref="Files"/>
+    /// </summary>
+    public IEnumerable<string> EnumerateFilePaths()
+    {
+        if (_files.IsValueCreated || _nameTable.Value is not { } table)
+        {
+            return Files.Select(f => f.Path);
+        }
+        return Enumerate(table);
+
+        static IEnumerable<string> Enumerate(NameTable table)
+        {
+            for (int i = 0; i < table.Starts.Length; i++)
+            {
+                yield return Encoding.UTF8.GetString(table.Bytes, table.Starts[i], table.Lengths[i]);
+            }
+        }
+    }
+
+    private int IndexOf(NameTable table, string path)
+    {
+        var query = Encoding.UTF8.GetBytes(path);
+        for (int i = 0; i < table.Starts.Length; i++)
+        {
+            if (table.Lengths[i] != query.Length) continue;
+            if (ArchivePaths.AreSame(table.Bytes.AsSpan(table.Starts[i], table.Lengths[i]), query)) return i;
+        }
+        // A path with more than ASCII: compare as Files spells it, decoded. A name that isn't valid UTF-8 (e.g. a
+        // Windows-1252 "xi bo\xF6tis.dds", ProjectRework-Akila - Textures.ba2) decodes to U+FFFD, so bytes never match.
+        if (path.Any(c => c >= 128))
+        {
+            for (int i = 0; i < table.Starts.Length; i++)
+            {
+                var name = table.Bytes.AsSpan(table.Starts[i], table.Lengths[i]);
+                if (!name.ContainsAnyExceptInRange((byte)0, (byte)127)) continue;
+                if (ArchivePaths.AreSame(Encoding.UTF8.GetString(name), path)) return i;
+            }
+        }
+        return -1;
+    }
+
+    /// <summary>
+    /// Whether the archive holds a file with this path, from the name table alone
+    /// </summary>
+    public bool ContainsFile(string path)
+    {
+        if (_nameTable.Value is not { } table)
+        {
+            return Files.Any(f => ArchivePaths.AreSame(f.Path, path));
+        }
+        return IndexOf(table, path) >= 0;
+    }
+
+    /// <summary>
+    /// One file by its path: the name table finds it, and only its file record is read
+    /// </summary>
+    public bool TryGetFile(string path, [MaybeNullWhen(false)] out IArchiveFile file)
+    {
+        if (_files.IsValueCreated || _nameTable.Value is not { } table)
+        {
+            file = Files.FirstOrDefault(f => ArchivePaths.AreSame(f.Path, path));
+            return file != null;
+        }
+        var index = IndexOf(table, path);
+        if (index < 0)
+        {
+            file = default;
+            return false;
+        }
+        file = ReadFile(index, Encoding.UTF8.GetString(table.Bytes, table.Starts[index], table.Lengths[index]));
+        return true;
+    }
+
+    /// <summary>
+    /// Builds the file of one file record, as <see cref="LoadFiles"/> builds it
+    /// </summary>
+    private IArchiveFile ReadFile(int index, string path)
+    {
+        using var reader = new BinaryReader(_streamFactory(), Encoding.UTF8);
+        if (_entryType == Ba2EntryType.GNRL)
+        {
+            // Every general file record has the same length: measure it on the first
+            if (Interlocked.Read(ref _gnrlRecordLength) < 0)
+            {
+                reader.BaseStream.Seek(_entriesOffset, SeekOrigin.Begin);
+                _ = new BA2FileEntry(this, Version, 0, reader);
+                Interlocked.Exchange(ref _gnrlRecordLength, reader.BaseStream.Position - _entriesOffset);
+            }
+            reader.BaseStream.Seek(_entriesOffset + index * Interlocked.Read(ref _gnrlRecordLength), SeekOrigin.Begin);
+            return new BA2FileEntry(this, Version, index, reader) { Path = path };
+        }
+        // Texture records have their chunks inline, so the ones before it are read to find it
+        reader.BaseStream.Seek(_entriesOffset, SeekOrigin.Begin);
+        for (int i = 0; i < index; i++)
+        {
+            _ = new BA2DX10Entry(this, Version, i, reader);
+        }
+        return new BA2DX10Entry(this, Version, index, reader) { Path = path };
+    }
 
     public bool TryGetFolder(string path, [MaybeNullWhen(false)] out IArchiveFolder folder)
     {
