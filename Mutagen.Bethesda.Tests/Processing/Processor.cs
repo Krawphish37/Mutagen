@@ -1112,7 +1112,7 @@ public abstract class Processor
                 overlayDict.Remove(entry.OrigIndex);
                 if (entry.Fill)
                 {
-                    if (!overlay.Value.StringsLookup.TryLookup(entry.OrigIndex, out var str))
+                    if (!overlay.StringsLookup.Value.TryLookup(entry.OrigIndex, out var str))
                     {
                         throw new ArgumentException();
                     }
