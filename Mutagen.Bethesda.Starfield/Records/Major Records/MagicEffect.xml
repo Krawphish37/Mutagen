@@ -111,7 +111,7 @@
       <FormLink name="Association" binary="NoGeneration" refName="Spell" layoutSubrecord="DATA" layoutOffset="0" />
     </Fields>
   </Object>
-  <Object name="MagicEffectImmunityModArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration">
+  <Object name="MagicEffectImmunityModArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration" selectorValue="Immunity">
     <Fields>
       <FormLink name="Association" binary="NoGeneration" refName="DamageType" layoutSubrecord="DATA" layoutOffset="0" />
     </Fields>
@@ -128,7 +128,7 @@
       </FormLink>
     </Fields>
   </Object>
-  <Object name="MagicEffectDamageTypeModArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration">
+  <Object name="MagicEffectDamageTypeModArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration" selectorValue="Damage">
     <Fields>
       <FormLink name="Association" binary="NoGeneration" refName="DamageType" layoutSubrecord="DATA" layoutOffset="0" />
     </Fields>
