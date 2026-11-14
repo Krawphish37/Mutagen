@@ -13,7 +13,8 @@
       <Int32 name="Health" />
       <UInt8 name="DESTCount" />
       <Enum name="Flags" enumName="Destructible.DestructibleFlag" byteLength="1" />
-      <!-- xEdit: unused (2 bytes); 0 in every DEST of Starfield.esm -->
+      <!-- xEdit: unused (2 bytes); 0 in every DEST of Starfield.esm. Not xEdit's "Flags": that is the byte before
+           (Flags above) (C207) -->
       <Int16 name="Unknown" />
     </Fields>
   </Object>

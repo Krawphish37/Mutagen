@@ -35,7 +35,8 @@
       <String name="EnvironmentMap" recordType="XEMP" />
       <String name="WaterEnvironmentMap" recordType="XWEM" />
       <RefList name="XCLAs" refName="CellXCLAItem" />
-      <Float name="GNAM" recordType="GNAM" unknown="true" />
+      <!-- xEdit "Gravity Scale" (float, default 1, required): 1.0 on 719 worldspaces, 0.5 on RL012World, absent on 20 (C207) -->
+      <Float name="GravityScale" recordType="GNAM" />
       <List name="LandscapeTextures" >
         <FormLink refName="LandscapeTexture" recordType="LNAM" />
       </List>
