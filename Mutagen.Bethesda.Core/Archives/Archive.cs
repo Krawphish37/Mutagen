@@ -96,6 +96,21 @@ public static class Archive
     }
 
     /// <summary>
+    /// Creates an Archive reader that keeps the archive file open until it is disposed, for the given Game Release.
+    /// Its entries are read through that one open file (positional reads, so several threads can read at once), where
+    /// <see cref="CreateReader"/>'s reader opens the archive again for each entry and holds nothing open. While it is
+    /// open others can read or delete the archive but not overwrite it, so dispose it when done.
+    /// </summary>
+    /// <param name="release">GameRelease the archive is for</param>
+    /// <param name="path">Path to create archive reader from</param>
+    /// <param name="fileSystem">FileSystem to use, or null to use the default</param>
+    /// <returns>Archive reader object, to dispose</returns>
+    public static IDisposableArchiveReader CreateDisposableReader(GameRelease release, FilePath path, IFileSystem? fileSystem = null)
+    {
+        return KeptOpenArchiveReader.Create(release, path, fileSystem);
+    }
+
+    /// <summary>
     /// Enumerates all Archives for a given release that are within a given dataFolderPath.
     /// </summary>
     /// <param name="release">GameRelease to query for</param>
