@@ -21,9 +21,9 @@
         <FormLink refName="DialogResponses" />
       </List>
       <CustomLogic name="InfoListCount" recordType="TIFC" />
-      <Int32 name="Timestamp" binary="NoGeneration" />
-      <Int32 name="Unknown" binary="NoGeneration" />
-      <RefList name="Responses" binary="NoGeneration" refName="DialogResponses" />
+      <Int32 name="Timestamp" binary="NoGeneration" layoutGroup="TopicChildren" layoutOffset="16" />
+      <Int32 name="Unknown" binary="NoGeneration" layoutGroup="TopicChildren" layoutOffset="20" />
+      <RefList name="Responses" binary="NoGeneration" refName="DialogResponses" layoutGroup="TopicChildren" />
     </Fields>
     <AdditionalContainedRecordType>ACAC</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>ACYI</AdditionalContainedRecordType>

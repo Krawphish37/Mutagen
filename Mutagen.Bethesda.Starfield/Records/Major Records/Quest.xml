@@ -43,11 +43,11 @@
         <FormLink refName="Keyword" />
       </List>
       <String name="ScriptComment" recordType="SCCM" />
-      <Int32 name="Timestamp" binary="NoGeneration" />
-      <Int32 name="Unknown" binary="NoGeneration" />
-      <RefList name="DialogBranches" binary="NoGeneration" refName="DialogBranch" />
-      <RefList name="DialogTopics" binary="NoGeneration" refName="DialogTopic" />
-      <RefList name="Scenes" binary="NoGeneration" refName="Scene" />
+      <Int32 name="Timestamp" binary="NoGeneration" layoutGroup="QuestChildren" layoutOffset="16" />
+      <Int32 name="Unknown" binary="NoGeneration" layoutGroup="QuestChildren" layoutOffset="20" />
+      <RefList name="DialogBranches" binary="NoGeneration" refName="DialogBranch" layoutGroup="QuestChildren" />
+      <RefList name="DialogTopics" binary="NoGeneration" refName="DialogTopic" layoutGroup="QuestChildren" />
+      <RefList name="Scenes" binary="NoGeneration" refName="Scene" layoutGroup="QuestChildren" />
     </Fields>
     <SubgroupType>10</SubgroupType>
     <AdditionalContainedRecordType>ALED</AdditionalContainedRecordType>

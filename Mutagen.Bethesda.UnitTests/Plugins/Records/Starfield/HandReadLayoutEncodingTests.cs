@@ -55,6 +55,9 @@ public class HandReadLayoutEncodingTests
                 {
                     if (field.Attribute("name") is not { } fieldName) continue;
                     if (!GroupFiveAttributes.Any(a => field.Attribute(a) != null)) continue;
+                    // group 4 (HandReadGroupLayoutTests): group structure and the traversal fluff bytes
+                    if (field.Attribute("layoutGroup") != null
+                        || (string?)field.Attribute("layoutEncoding") == "trailingZeroCount") continue;
                     ret.Add($"{obj.Attribute("name")!.Value}.{fieldName.Value}", field);
                 }
             }

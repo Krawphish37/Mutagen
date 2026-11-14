@@ -97,7 +97,7 @@
       <RefDirect name="LightFlicker" refName="PlacedObjectLightFlicker" />
       <RefDirect name="Ownership" refName="Ownership"/>
       <RefList name="Traversals" refName="TraversalReference" recordType="XTV2" binary="Custom" />
-      <UInt32 name="NumTraversalFluffBytes" binary="NoGeneration" />
+      <UInt32 name="NumTraversalFluffBytes" binary="NoGeneration" layoutSubrecord="XTV2" layoutOffset="after:Traversals" layoutEncoding="trailingZeroCount" />
       <RefDirect name="NavigationDoorLink" refName="NavigationDoorLink" />
       <Bool name="IsActivationPoint" boolAsMarker="XATP" />
       <Float name="Scale" recordType="XSCL" />
