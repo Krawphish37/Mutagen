@@ -64,8 +64,8 @@
       <UInt32 name="Crc" />
       <FormLink name="ParentWorld" refName="StarfieldMajorRecord" />
       <!-- One of these follows: the parent cell when ParentWorld is null, else the grid (stored Y then X). Read and written by NavigationMapInfo. -->
-      <FormLink name="ParentCell" refName="Cell" binary="NoGeneration" />
-      <P2Int16 name="Grid" binary="NoGeneration" />
+      <FormLink name="ParentCell" refName="Cell" binary="NoGeneration" layoutOffset="8" layoutPresentWhen="field:ParentWorld:null" />
+      <P2Int16 name="Grid" binary="NoGeneration" layoutOffset="8" layoutPresentWhen="field:ParentWorld:notnull" layoutEncoding="int16:Y,X" />
     </Fields>
   </Object>
   <Object name="LinkedDoor" objType="Subrecord">

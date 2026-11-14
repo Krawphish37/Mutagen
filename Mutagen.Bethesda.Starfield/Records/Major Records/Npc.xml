@@ -12,9 +12,9 @@
       <RefList name="Components" refName="AComponent" />
       <Data recordType="ACBS">
         <Fields>
-          <Enum name="Flags" enumName="Npc.Flag" byteLength="4" binary="Custom" />
+          <Enum name="Flags" enumName="Npc.Flag" byteLength="4" binary="Custom" layoutDroppedBits="7" />
           <Int16 name="XpValueOffset" />
-          <RefDirect name="Level" refName="ANpcLevel" binary="Custom" generateClassMembers="false" byteLength="2" selectedBy="field:Flags:bit=7" />
+          <RefDirect name="Level" refName="ANpcLevel" binary="Custom" generateClassMembers="false" byteLength="2" selectedBy="field:Flags:bit=7" layoutOffset="6" />
           <Int16 name="CalcMinLevel" />
           <Int16 name="CalcMaxLevel" />
           <Int16 name="DispositionBase" />
@@ -208,7 +208,7 @@
   </Object>
   <Object name="PcLevelMult" baseClass="ANpcLevel" objType="Subrecord" selectorValue="1">
     <Fields>
-      <Float name="LevelMult" binary="NoGeneration" />
+      <Float name="LevelMult" binary="NoGeneration" layoutEncoding="uint16/1000" />
     </Fields>
   </Object>
   <Object name="NpcFLEE" objType="Subrecord" recordType="FLEE" >

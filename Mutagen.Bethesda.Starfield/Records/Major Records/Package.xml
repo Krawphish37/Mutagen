@@ -31,8 +31,8 @@
       <FormLink name="CombatStyle" recordType="CNAM" refName="CombatStyle" />
       <FormLink name="OwnerQuest" recordType="QNAM" refName="Quest" />
       <FormLink name="AnimationFlavor" recordType="FLAV" refName="Keyword" />
-      <FormLink name="PackageTemplate" recordType="PKCU" refName="Package" nullable="False" binary="Custom" byteLength="8" />
-      <Int32 name="DataInputVersion" binary="NoGeneration" byteLength="4" />
+      <FormLink name="PackageTemplate" recordType="PKCU" refName="Package" nullable="False" binary="Custom" byteLength="8" layoutOffset="4" />
+      <Int32 name="DataInputVersion" binary="NoGeneration" byteLength="4" layoutSubrecord="PKCU" layoutOffset="8" />
       <Dict name="Data" binary="NoGeneration">
         <Key>
           <Int8 />

@@ -197,8 +197,8 @@
       <List name="AnimationPaths">
         <String recordType="SAPT" />
       </List>
-      <Enum name="Role" enumName="Subgraph.SubgraphRole" binary="Custom" recordType="SRAF" nullable="False" />
-      <Enum name="Perspective" enumName="Perspective" binary="NoGeneration" />
+      <Enum name="Role" enumName="Subgraph.SubgraphRole" binary="Custom" recordType="SRAF" nullable="False" layoutOffset="0" layoutEncoding="uint16" />
+      <Enum name="Perspective" enumName="Perspective" binary="NoGeneration" layoutSubrecord="SRAF" layoutOffset="2" layoutEncoding="uint16" />
     </Fields>
   </Object>
   <Object name="HeadPartsAndBoneModifiers" objType="Subrecord">

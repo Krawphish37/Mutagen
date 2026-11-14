@@ -289,7 +289,7 @@
   </Object>
   <Object name="FindMatchingRefNearAlias" objType="Subrecord">
     <Fields>
-      <Int16 name="AliasID" recordType="ALNA" binary="Custom" />
+      <Int16 name="AliasID" recordType="ALNA" binary="Custom" layoutEncoding="int32" />
       <Enum name="Type" enumName="FindMatchingRefNearAlias.TypeEnum" byteLength="4" recordType="ALNT" />
       <FormLink name="RefType" recordType="ALNR" refName="LocationReferenceType" />
     </Fields>

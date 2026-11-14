@@ -22,7 +22,7 @@
   </Object>
   <Object name="GameSettingBool" recordType="GMST" baseClass="GameSetting" objType="Record">
     <Fields>
-      <Bool name="Data" recordType="DATA" binary="Custom" />
+      <Bool name="Data" recordType="DATA" binary="Custom" layoutEncoding="uint32!=0" />
     </Fields>
   </Object>
   <Object name="GameSettingUInt" recordType="GMST" baseClass="GameSetting" objType="Record">

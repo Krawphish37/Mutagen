@@ -103,10 +103,10 @@
       <Float name="Scale" recordType="XSCL" />
       <Bool name="OpenByDefault" boolAsMarker="ONAM" />
       <CustomLogic name="PlacementParse" recordType="DATA" />
-      <P3Float name="Position" binary="NoGeneration" />
-      <P3Float name="Rotation" binary="NoGeneration" />
+      <P3Float name="Position" binary="NoGeneration" layoutSubrecord="DATA" layoutOffset="0" />
+      <P3Float name="Rotation" binary="NoGeneration" layoutSubrecord="DATA" layoutOffset="12" />
       <!-- False on a reference read with no DATA. A deleted one then stays without it. -->
-      <Bool name="HasPlacementData" binary="NoGeneration" />
+      <Bool name="HasPlacementData" binary="NoGeneration" layoutPresentWhen="subrecord:DATA" />
       <String name="Comments" recordType="MNAM" />
     </Fields>
     <LinkInterface>IPlaced</LinkInterface>
@@ -119,7 +119,7 @@
   </Object>
   <Object name="PlacedPrimitive" objType="Subrecord" recordType="XPRM">
     <Fields>
-      <P3Float name="Bounds" binary="Custom" byteLength="12" />
+      <P3Float name="Bounds" binary="Custom" byteLength="12" layoutEncoding="float*2" />
       <P3Float name="Color" />
       <Float name="Alpha" />
       <Enum name="Type" enumName="PlacedPrimitive.TypeEnum" byteLength="4" />

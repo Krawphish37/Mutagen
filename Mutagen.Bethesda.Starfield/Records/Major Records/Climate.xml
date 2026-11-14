@@ -7,10 +7,10 @@
       <RefList name="WeatherSettings" refName="ClimateWeatherSettings" recordType="WSLT" />
       <Data recordType="TNAM">
         <Fields>
-          <TimeOnly name="SunriseBegin" binary="Custom" byteLength="1" />
-          <TimeOnly name="SunriseEnd" binary="Custom" byteLength="1" />
-          <TimeOnly name="SunsetBegin" binary="Custom" byteLength="1" />
-          <TimeOnly name="SunsetEnd" binary="Custom" byteLength="1" />
+          <TimeOnly name="SunriseBegin" binary="Custom" byteLength="1" layoutOffset="0" layoutEncoding="uint8*10min" />
+          <TimeOnly name="SunriseEnd" binary="Custom" byteLength="1" layoutOffset="1" layoutEncoding="uint8*10min" />
+          <TimeOnly name="SunsetBegin" binary="Custom" byteLength="1" layoutOffset="2" layoutEncoding="uint8*10min" />
+          <TimeOnly name="SunsetEnd" binary="Custom" byteLength="1" layoutOffset="3" layoutEncoding="uint8*10min" />
           <UInt8 name="Volatility" />
         </Fields>
       </Data>

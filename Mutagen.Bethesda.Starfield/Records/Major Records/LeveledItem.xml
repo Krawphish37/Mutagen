@@ -8,7 +8,7 @@
       <RefDirect name="ObjectPaletteDefaults" refName="ObjectPaletteDefaults" />
       <RefList name="Components" refName="AComponent" />
       <Enum name="XalgFlags" enumName="XalgFlag" recordType="XALG" byteLength="8" />
-      <Float name="ChanceNone" recordType="LVLD" nullable="False" binary="Custom" />
+      <Float name="ChanceNone" recordType="LVLD" nullable="False" binary="Custom" layoutEncoding="formVersion&lt;510:uint8/255;float" />
       <UInt8 name="MaxCount" recordType="LVLM" />
       <Enum name="Flags" recordType="LVLF" nullable="False" enumName="LeveledItem.Flag" byteLength="2" />
       <RefList name="Conditions" refName="Condition" />
