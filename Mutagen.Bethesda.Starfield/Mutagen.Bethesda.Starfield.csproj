@@ -28,6 +28,8 @@
        contentFiles). Added in the outer build only, which is the one pack collects files from. -->
   <ItemGroup Condition="'$(TargetFramework)' == ''">
     <None Include="Records\**\*.xml" Pack="true" PackagePath="loqui\Mutagen.Bethesda.Starfield\Records\%(RecursiveDir)%(Filename)%(Extension)" />
+    <!-- The layouts the record xml can't describe (C186 step 2), next to it -->
+    <None Include="Layouts\*.xml" Pack="true" PackagePath="loqui\Mutagen.Bethesda.Starfield\Layouts\%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Records\StarfieldGroup.xml">
