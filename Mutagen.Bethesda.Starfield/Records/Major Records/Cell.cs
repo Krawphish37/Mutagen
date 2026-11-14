@@ -97,6 +97,8 @@ partial class CellBinaryCreateTranslation
                 reference: true);
             if (groupMeta.GroupType == (int)GroupTypeEnum.CellChildren)
             {
+                // A label stored in another form than its parent's header is written back as stored (GroupLabelForms, C188)
+                Mutagen.Bethesda.Plugins.Records.GroupLabelForms.Remember(obj, groupMeta.GroupType, BinaryPrimitives.ReadUInt32LittleEndian(groupMeta.ContainedRecordTypeData), frame.MetaData.MasterReferences);
                 obj.Timestamp = BinaryPrimitives.ReadInt32LittleEndian(groupMeta.LastModifiedData);
                 obj.UnknownGroupData = BinaryPrimitives.ReadInt32LittleEndian(groupMeta.HeaderData.Slice(groupMeta.HeaderData.Length - 4));
                 frame.Position += groupMeta.HeaderLength;
@@ -156,6 +158,8 @@ partial class CellBinaryCreateTranslation
         ICellInternal obj)
     {
         var groupMeta = frame.ReadGroupHeader();
+        // A label stored in another form than its parent's header is written back as stored (GroupLabelForms, C188)
+        Mutagen.Bethesda.Plugins.Records.GroupLabelForms.Remember(obj, groupMeta.GroupType, BinaryPrimitives.ReadUInt32LittleEndian(groupMeta.ContainedRecordTypeData), frame.MetaData.MasterReferences);
         var formKey = FormKey.Factory(
             frame.MetaData.MasterReferences, 
             new FormID(BinaryPrimitives.ReadUInt32LittleEndian(groupMeta.ContainedRecordTypeData)),
@@ -212,6 +216,8 @@ partial class CellBinaryCreateTranslation
     static void ParseTemporary(MutagenFrame frame, ICellInternal obj, List<bool> pattern)
     {
         var groupMeta = frame.ReadGroupHeader();
+        // A label stored in another form than its parent's header is written back as stored (GroupLabelForms, C188)
+        Mutagen.Bethesda.Plugins.Records.GroupLabelForms.Remember(obj, groupMeta.GroupType, BinaryPrimitives.ReadUInt32LittleEndian(groupMeta.ContainedRecordTypeData), frame.MetaData.MasterReferences);
         var formKey = FormKey.Factory(
             frame.MetaData.MasterReferences, 
             new FormID(BinaryPrimitives.ReadUInt32LittleEndian(groupMeta.ContainedRecordTypeData)),
@@ -312,7 +318,7 @@ partial class CellBinaryWriteTranslation
                 ) return;
             using (HeaderExport.Header(writer, RecordTypes.GRUP, ObjectType.Group))
             {
-                Mutagen.Bethesda.Plugins.Records.RawHeaderFormIds.WriteGroupLabel(writer, obj);
+                Mutagen.Bethesda.Plugins.Records.RawHeaderFormIds.WriteGroupLabel(writer, obj, (int)GroupTypeEnum.CellChildren);
                 writer.Write((int)GroupTypeEnum.CellChildren);
                 writer.Write(obj.Timestamp);
                 writer.Write(obj.UnknownGroupData);
@@ -324,7 +330,7 @@ partial class CellBinaryWriteTranslation
                 {
                     using (HeaderExport.Header(writer, RecordTypes.GRUP, ObjectType.Group))
                     {
-                        Mutagen.Bethesda.Plugins.Records.RawHeaderFormIds.WriteGroupLabel(writer, obj);
+                        Mutagen.Bethesda.Plugins.Records.RawHeaderFormIds.WriteGroupLabel(writer, obj, (int)GroupTypeEnum.CellPersistentChildren);
                         writer.Write((int)GroupTypeEnum.CellPersistentChildren);
                         writer.Write(obj.PersistentTimestamp);
                         writer.Write(obj.PersistentUnknownGroupData);
@@ -339,7 +345,7 @@ partial class CellBinaryWriteTranslation
                 {
                     using (HeaderExport.Header(writer, RecordTypes.GRUP, ObjectType.Group))
                     {
-                        Mutagen.Bethesda.Plugins.Records.RawHeaderFormIds.WriteGroupLabel(writer, obj);
+                        Mutagen.Bethesda.Plugins.Records.RawHeaderFormIds.WriteGroupLabel(writer, obj, (int)GroupTypeEnum.CellTemporaryChildren);
                         writer.Write((int)GroupTypeEnum.CellTemporaryChildren);
                         writer.Write(obj.TemporaryTimestamp);
                         writer.Write(obj.TemporaryUnknownGroupData);
@@ -524,6 +530,8 @@ partial class CellBinaryOverlay
             return;
         }
         this._grupData = stream.ReadMemory(checked((int)groupMeta.TotalLength));
+        // A label stored in another form than its parent's header is written back as stored (GroupLabelForms, C188)
+        Mutagen.Bethesda.Plugins.Records.GroupLabelForms.Remember(this, groupMeta.GroupType, BinaryPrimitives.ReadUInt32LittleEndian(groupMeta.ContainedRecordTypeData), _package.MetaData.MasterReferences);
         stream = new OverlayStream(this._grupData.Value, stream.MetaData);
         finalPos = stream.Length;
         var emptyGroup = groupMeta.ContentLength == 0;
@@ -538,6 +546,8 @@ partial class CellBinaryOverlay
             {
                 throw new ArgumentException();
             }
+            // A label stored in another form than its parent's header is written back as stored (GroupLabelForms, C188)
+            Mutagen.Bethesda.Plugins.Records.GroupLabelForms.Remember(this, subGroupMeta.GroupType, BinaryPrimitives.ReadUInt32LittleEndian(subGroupMeta.ContainedRecordTypeData), _package.MetaData.MasterReferences);
 
             IPlacedGetter TypicalGetter(
                 ReadOnlyMemorySlice<byte> span,

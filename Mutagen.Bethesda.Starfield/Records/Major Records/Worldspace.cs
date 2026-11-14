@@ -73,6 +73,8 @@ partial class WorldspaceBinaryCreateTranslation
             if (!frame.Reader.TryReadGroupHeader(out var groupHeader)) return;
             if (groupHeader.GroupType == (int)GroupTypeEnum.WorldChildren)
             {
+                // A label stored in another form than its parent's header is written back as stored (GroupLabelForms, C188)
+                Mutagen.Bethesda.Plugins.Records.GroupLabelForms.Remember(obj, groupHeader.GroupType, BinaryPrimitives.ReadUInt32LittleEndian(groupHeader.ContainedRecordTypeData), frame.MetaData.MasterReferences);
                 obj.SubCellsTimestamp = BinaryPrimitives.ReadInt32LittleEndian(groupHeader.LastModifiedData);
                 obj.SubCellsUnknown = BinaryPrimitives.ReadInt32LittleEndian(groupHeader.HeaderData.Slice(groupHeader.HeaderLength - 4));
                 var formKey = FormKeyBinaryTranslation.Instance.Parse(groupHeader.ContainedRecordTypeData, frame.MetaData.MasterReferences);
@@ -157,7 +159,7 @@ partial class WorldspaceBinaryWriteTranslation
                 && topCell == null) return;
             using (HeaderExport.Header(writer, RecordTypes.GRUP, ObjectType.Group))
             {
-                Mutagen.Bethesda.Plugins.Records.RawHeaderFormIds.WriteGroupLabel(writer, obj);
+                Mutagen.Bethesda.Plugins.Records.RawHeaderFormIds.WriteGroupLabel(writer, obj, (int)GroupTypeEnum.WorldChildren);
                 writer.Write((int)GroupTypeEnum.WorldChildren);
                 writer.Write(obj.SubCellsTimestamp);
                 writer.Write(obj.SubCellsUnknown);
@@ -221,6 +223,8 @@ partial class WorldspaceBinaryOverlay
             }
 
             this._grupData = stream.ReadMemory(checked((int)groupMeta.TotalLength));
+            // A label stored in another form than its parent's header is written back as stored (GroupLabelForms, C188)
+            Mutagen.Bethesda.Plugins.Records.GroupLabelForms.Remember(this, groupMeta.GroupType, BinaryPrimitives.ReadUInt32LittleEndian(groupMeta.ContainedRecordTypeData), _package.MetaData.MasterReferences);
             stream = new OverlayStream(this._grupData.Value, stream.MetaData);
             stream.Position += groupMeta.HeaderLength;
 

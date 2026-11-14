@@ -225,4 +225,54 @@ public class OwnFormIdFormsTests
         added.FormKey.ID.ShouldBe(0x80Au);
         Headers(Write(s, mod)).ShouldBe(new uint[] { 0x03000809, 0xFE00280A });
     }
+
+    // C189 (decision 6.1 revised, A2): a link whose master index points past the master list reads as the plugin itself
+    // (XPLK in SFBGS00D, SFBGS050, ShatteredSpace; MissionsGalore's 03xxxxxx links). Unchanged, it is written back as
+    // stored; changed, it gets the plugin's own index. A Full plugin with one master: own index 01, the link stores 02.
+    private static readonly byte[] PastListFile = Record("TES4", 0x1, 0,
+            Sub("HEDR", Convert.FromHexString("8FC2753F0300000002080000"))
+                .Concat(Sub("MAST", Encoding.ASCII.GetBytes("Starfield.esm "))).ToArray())
+        .Concat(Group("KYWD",
+            Record("KYWD", 0, 0x01000801, Sub("EDID", Encoding.ASCII.GetBytes("OwnKeyword ")))))
+        .Concat(Group("FLST",
+            Record("FLST", 0, 0x01000802, Sub("EDID", Encoding.ASCII.GetBytes("PastList "))
+                .Concat(Sub("LNAM", BitConverter.GetBytes(0x02000801u))).ToArray())))
+        .ToArray();
+
+    private static Setup MakePastList()
+    {
+        var plugin = ModKey.FromFileName("PastList.esm");
+        var fs = new MockFileSystem();
+        var path = System.IO.Path.Combine("C:", "Data", plugin.FileName);
+        fs.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(path)!);
+        fs.File.WriteAllBytes(path, PastListFile);
+        var lo = new LoadOrder<IModMasterStyledGetter>(new IModMasterStyledGetter[]
+        {
+            new KeyedMasterStyle(StarfieldEsm, MasterStyle.Full),
+            new KeyedMasterStyle(plugin, MasterStyle.Full),
+        });
+        return new Setup(fs, path, plugin, lo);
+    }
+
+    [Fact]
+    public void MasterIndexPastTheList_RoundTripsByteForByte_BothReaders()
+    {
+        var s = MakePastList();
+        var full = StarfieldMod.CreateFromBinary(s.Path, StarfieldRelease.Starfield, ReadParams(s));
+        full.FormLists.Single().Items.Single().FormKey.ShouldBe(new FormKey(s.Plugin, 0x801));
+        Write(s, full).ShouldBe(PastListFile);
+        using var overlay = StarfieldMod.CreateFromBinaryOverlay(s.Path, StarfieldRelease.Starfield, ReadParams(s));
+        Write(s, overlay).ShouldBe(PastListFile);
+    }
+
+    [Fact]
+    public void MasterIndexPastTheList_ChangedLink_GetsTheOwnIndex()
+    {
+        var s = MakePastList();
+        var mod = StarfieldMod.CreateFromBinary(s.Path, StarfieldRelease.Starfield, ReadParams(s));
+        var list = mod.FormLists.Single();
+        list.Items[0] = new FormKey(s.Plugin, 0x802).ToLink<IStarfieldMajorRecordGetter>();
+        list.Items.Add(new FormKey(s.Plugin, 0x801).ToLink<IStarfieldMajorRecordGetter>());
+        Lnams(Write(s, mod)).ShouldBe(new uint[] { 0x01000802, 0x01000801 });
+    }
 }

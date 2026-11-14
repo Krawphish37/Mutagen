@@ -440,7 +440,7 @@ partial class StarfieldModCommon
             var worldGroupWriter = new MutagenWriter(worldGroupTrib, bundle with {}, dispose: false);
             worldGroupWriter.Write(RecordTypes.GRUP.TypeInt);
             worldGroupWriter.Write(UtilityTranslation.Zeros.Slice(0, bundle.Constants.GroupConstants.LengthLength));
-            Mutagen.Bethesda.Plugins.Records.RawHeaderFormIds.WriteGroupLabel(worldGroupWriter, worldspace);
+            Mutagen.Bethesda.Plugins.Records.RawHeaderFormIds.WriteGroupLabel(worldGroupWriter, worldspace, (int)GroupTypeEnum.WorldChildren);
             worldGroupWriter.Write((int)GroupTypeEnum.WorldChildren);
             worldGroupWriter.Write(worldspace.SubCellsTimestamp);
             worldGroupWriter.Write(worldspace.SubCellsUnknown);
