@@ -18,19 +18,61 @@ class DDS
 {
     public static uint HeaderSizeForFormat(DXGI_FORMAT fmt)
     {
+        return UsesDxt10Header(fmt) ? DDS_HEADER_DXT10.Size + DDS_HEADER.Size : DDS_HEADER.Size;
+    }
+
+    /// <summary>
+    /// The formats a legacy DDS header (a FourCC or bit masks) describes; every other format is written with the DX10
+    /// extended header, which names the DXGI format itself
+    /// </summary>
+    public static bool UsesDxt10Header(DXGI_FORMAT fmt)
+    {
         switch (fmt)
         {
-            case DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM_SRGB:
-            case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM_SRGB:
-            case DXGI_FORMAT.DXGI_FORMAT_BC4_UNORM:
-            case DXGI_FORMAT.DXGI_FORMAT_BC5_SNORM:
-            case DXGI_FORMAT.DXGI_FORMAT_BC6H_UF16:
-            case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM:
-            case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM_SRGB:
-                return DDS_HEADER_DXT10.Size + DDS_HEADER.Size;
+            case DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM:
+            case DXGI_FORMAT.DXGI_FORMAT_BC2_UNORM:
+            case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM:
+            case DXGI_FORMAT.DXGI_FORMAT_BC5_UNORM:
+            case DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM:
+            case DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM_SRGB:
+            case DXGI_FORMAT.DXGI_FORMAT_B8G8R8A8_UNORM:
+            case DXGI_FORMAT.DXGI_FORMAT_B8G8R8X8_UNORM:
+            case DXGI_FORMAT.DXGI_FORMAT_R8_UNORM:
+                return false;
             default:
-                return DDS_HEADER.Size;
+                return true;
         }
+    }
+
+    /// <summary>
+    /// The size of the top mip of a texture of a DXGI format, for a DDS header's linear size: blocks of 4x4 pixels for
+    /// the block-compressed formats, bits per pixel for the others (width x height for a format not listed)
+    /// </summary>
+    public static uint LinearSize(int format, uint width, uint height)
+    {
+        uint blockBytes = format switch
+        {
+            >= 70 and <= 72 or >= 79 and <= 81 => 8, // BC1, BC4
+            >= 73 and <= 78 or >= 82 and <= 84 or >= 94 and <= 99 => 16, // BC2, BC3, BC5, BC6H, BC7
+            _ => 0,
+        };
+        if (blockBytes != 0)
+        {
+            return Math.Max(1, (width + 3) / 4) * Math.Max(1, (height + 3) / 4) * blockBytes;
+        }
+        uint bits = format switch
+        {
+            >= 1 and <= 4 => 128, // R32G32B32A32
+            >= 5 and <= 8 => 96, // R32G32B32
+            >= 9 and <= 22 => 64, // R16G16B16A16, R32G32, R32G8X24
+            >= 23 and <= 47 => 32, // R10G10B10A2, R11G11B10, R8G8B8A8, R16G16, R32, R24G8
+            >= 48 and <= 59 => 16, // R8G8, R16
+            >= 60 and <= 65 => 8, // R8, A8
+            >= 67 and <= 69 or >= 87 and <= 93 => 32, // R9G9B9E5, R8G8_B8G8, B8G8R8A8, B8G8R8X8, R10G10B10_XR
+            85 or 86 or 115 => 16, // B5G6R5, B5G5R5A1, B4G4R4A4
+            _ => 8,
+        };
+        return width * height * bits / 8;
     }
 
     public const int DDS_MAGIC = 0x20534444; // "DDS "
