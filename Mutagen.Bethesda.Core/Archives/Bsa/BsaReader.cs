@@ -146,6 +146,31 @@ class BsaReader : IArchiveReader
         return ret;
     }
 
+    /// <summary>
+    /// One file by its path, through its folder: only that folder's files are looked at (C201)
+    /// </summary>
+    public bool TryGetFile(string path, [MaybeNullWhen(false)] out IArchiveFile file)
+    {
+        var split = path.LastIndexOfAny(new[] { '\\', '/' });
+        if (!HasFolderNames || split <= 0)
+        {
+            file = Files.FirstOrDefault(f => ArchivePaths.AreSame(f.Path, path));
+            return file != null;
+        }
+        if (!TryGetFolder(path[..split].Replace('/', '\\'), out var folder))
+        {
+            file = default;
+            return false;
+        }
+        file = folder.Files.FirstOrDefault(f => ArchivePaths.AreSame(f.Path, path));
+        return file != null;
+    }
+
+    /// <summary>
+    /// Whether the archive holds a file with this path, looking only at its folder's files (C201)
+    /// </summary>
+    public bool ContainsFile(string path) => TryGetFile(path, out _);
+
     public bool TryGetFolder(string path, [MaybeNullWhen(false)] out IArchiveFolder folder)
     {
         if (!HasFolderNames
