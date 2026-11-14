@@ -493,6 +493,36 @@ public class ExactFileLayoutTests
         overlay.Keywords.Single().GetOriginalCompressedData().ShouldBe(otherContent);
     }
 
+    // C213: only compressed bytes Mutagen wouldn't write again are kept for another form (JSON)
+    [Theory, MutagenModAutoData(GameRelease.Starfield)]
+    public void CompressedRecord_IfNotReproduced(IFileSystem fileSystem, ModPath filePath, StarfieldMod mod)
+    {
+        var mutagenLayout = WriteMod(ModWithCompressedKeyword(mod), filePath, fileSystem);
+
+        // Compressed as Mutagen compresses: kept, but needs nothing to come back as read
+        var same = ReadMutable(mutagenLayout, filePath, fileSystem).Keywords.Single();
+        same.GetOriginalCompressedData().ShouldNotBeNull();
+        same.GetOriginalCompressedDataIfNotReproduced().ShouldBeNull();
+
+        // Another encoder: the kept bytes, and a record rebuilt with them writes the file as read
+        var input = OtherCompression(mutagenLayout, out _, out var otherContent);
+        var read = ReadMutable(input, filePath, fileSystem);
+        var keyword = read.Keywords.Single();
+        var data = keyword.GetOriginalCompressedDataIfNotReproduced().ShouldNotBeNull();
+        data.ShouldBe(otherContent);
+        var fresh = new StarfieldMod(read.ModKey, StarfieldRelease.Starfield);
+        var freshKeyword = fresh.Keywords.AddNew(keyword.FormKey);
+        freshKeyword.DeepCopyIn(keyword);
+        freshKeyword.SetOriginalCompressedData(data);
+        WriteMod(fresh, OutPath(fileSystem, filePath), fileSystem).ShouldBe(input);
+
+        // Not compressed: nothing
+        var plain = new StarfieldMod(read.ModKey, StarfieldRelease.Starfield);
+        plain.Keywords.AddNew("Plain");
+        var plainRead = ReadMutable(WriteMod(plain, filePath, fileSystem), filePath, fileSystem);
+        plainRead.Keywords.Single().GetOriginalCompressedDataIfNotReproduced().ShouldBeNull();
+    }
+
     // C134: OverlayBlockkgcDoomDR023World (00BA67:kgcdoom.esm), form version 582. Its BGSBlockEditorMetaData_Component
     // is an empty BFCB..BFCE block; Mutagen added a 49-byte DAT2 of zeros
     private const string KgcDoomBlock = "454449441E004F7665726C6179426C6F636B6B6763446F6F6D4452303233576F726C6400424643422100424753426C6F636B456469746F724D657461446174615F436F6D706F6E656E7400424643450000414E414D2300446174615C5445525241494E5C6B6763446F6F6D4452303233576F726C642E62746400444E414D08000400000004000000454E414D08000000FAC300007A44464E414D20009C558E55D2559C55DF5519564056BE55B655E9553858E155AE55D9565D56ED55474E414D010000484E414D02000000494E414D0100004A4E414D0100004B4E414D010000574847540400FFFF7FFF4E414D310D004F7665726C6179426C6F636B004E414D32080000000000000000004E414D33080000000000000000004E414D34080000000000000000004E414D35040000000000";

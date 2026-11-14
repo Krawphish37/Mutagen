@@ -96,6 +96,44 @@ internal static class CompressedOriginals
     }
 
     /// <summary>
+    /// Whether Mutagen, compressing the bytes a kept compressed content holds, writes exactly that content again (the
+    /// same uncompressed length and zlib stream; CompressionExport compresses at zlib's best level). Then a rebuilt
+    /// record needs nothing kept to come back as read (C213).
+    /// </summary>
+    internal static bool Reproduces(ReadOnlyMemorySlice<byte> original)
+    {
+        if (original.Length < 4) return false;
+        var length = BinaryPrimitives.ReadUInt32LittleEndian(original.Span);
+        byte[] uncompressed;
+        try
+        {
+            uncompressed = new byte[checked((int)length)];
+            int read = 0;
+            using (var stream = new ZLibStream(new ByteMemorySliceStream(original.Slice(4)), CompressionMode.Decompress))
+            {
+                while (read < uncompressed.Length)
+                {
+                    var n = stream.Read(uncompressed, read, uncompressed.Length - read);
+                    if (n <= 0) break;
+                    read += n;
+                }
+                if (read != uncompressed.Length || stream.Read(new byte[1], 0, 1) != 0) return false;
+            }
+        }
+        catch (Exception e) when (e is InvalidDataException or OverflowException)
+        {
+            return false;
+        }
+        using var again = new MemoryStream(original.Length);
+        using (var stream = new ZLibStream(again, CompressionLevel.SmallestSize, leaveOpen: true))
+        {
+            stream.Write(uncompressed);
+        }
+        return again.Length == original.Length - 4
+            && again.GetBuffer().AsSpan(0, checked((int)again.Length)).SequenceEqual(original.Span.Slice(4));
+    }
+
+    /// <summary>
     /// Checks that a value can be a record's compressed content: an uncompressed length, then a zlib stream
     /// </summary>
     internal static void Validate(ReadOnlySpan<byte> content)

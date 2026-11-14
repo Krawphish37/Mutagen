@@ -34,6 +34,20 @@ public static class FileLayoutMixIn
         CompressedOriginals.TryGet(record, out var content) ? content.ToArray() : null;
 
     /// <summary>
+    /// <see cref="GetOriginalCompressedData"/>, but only when Mutagen wouldn't write those bytes itself: when compressing
+    /// the content it holds, as Mutagen compresses (zlib's best level), gives another stream (C213). A record the
+    /// Creation Kit compressed usually comes back as read without it (Starfield.esm: all but 13 navmeshes); one made with
+    /// another encoder or level needs it (N12_Watchtower.esm's NPC_, zlib's default level, header 78 9C). Give it back
+    /// with <see cref="SetOriginalCompressedData"/>. For a record kept in another form (JSON, a database), this keeps
+    /// only the compressed bytes that can't be made again.
+    /// </summary>
+    public static byte[]? GetOriginalCompressedDataIfNotReproduced(this IMajorRecordGetter record)
+    {
+        if (!CompressedOriginals.TryGet(record, out var content)) return null;
+        return CompressedOriginals.Reproduces(content) ? null : content.ToArray();
+    }
+
+    /// <summary>
     /// Sets the compressed content to write for this record (a value from <see cref="GetOriginalCompressedData"/>);
     /// null removes it. It is written only while the record is compressed and its content, written anew, is exactly
     /// what the value decompresses to; otherwise the record is compressed anew.
