@@ -45,6 +45,8 @@ public partial class Npc
         XPOverride = RecordTypeInts.NXPO,
         // Object templates (OBTS) on the record itself store these small ids, not the 4-letter OMOD codes above (xEdit wbObjectModPropertiesNPCEnum).
         TemplateLayeredMaterialSwap = 6,
+        // A slot the game keeps with no value, by the game's name (pwDEPRECATED) (C216)
+        Deprecated = RecordTypeInts.NMSW,
     }
 
     [Flags]

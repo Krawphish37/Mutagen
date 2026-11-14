@@ -116,6 +116,22 @@ public partial class Weapon
         AimModelRecoilDiminishSightsMult = RecordTypeInts.WRC2,
         AimModelRecoilMaxDegreePerShot = RecordTypeInts.WRC3,
         AimModelRecoilMultiplierHipFire = RecordTypeInts.WRC5,
+        // No member for WRC4, WRC6 and PUSE: the game's table has each twice (WRC4 fAimModelRecoilMinDegPerShot /
+        // fAimModelRecoilArcDeg, WRC6 fAimModelConeSneakMultiplier / uAimModelRecoilShotsForRunaway, PUSE bUsePower /
+        // bConsumeAmmo) and which one the game uses is unproven; the raw value still reads and writes (C216)
+        // Slots the game keeps with no value, by the game's names (iDEPRECATED2 .. bDEPRECATED10, pwDEPRECATED) (C216)
+        Deprecated2 = RecordTypeInts.W002,
+        Deprecated3 = RecordTypeInts.W003,
+        Deprecated4 = RecordTypeInts.W004,
+        Deprecated5 = RecordTypeInts.W005,
+        Deprecated6 = RecordTypeInts.W006,
+        Deprecated7 = RecordTypeInts.W007,
+        Deprecated8 = RecordTypeInts.W008,
+        Deprecated9 = RecordTypeInts.W009,
+        Deprecated10 = RecordTypeInts.W010,
+        Deprecated = RecordTypeInts.WSWP,
+        // The game names it fDEPRECATED9 too (W009 is bDEPRECATED9), so the ID tells them apart
+        DeprecatedZFPF = RecordTypeInts.ZFPF,
         AimModelRecoilArcRotateDegrees = RecordTypeInts.WRC8,
         AimOpticalSightMarker = RecordTypeInts.WAOS,
         ActorValue = RecordTypeInts.WACV,

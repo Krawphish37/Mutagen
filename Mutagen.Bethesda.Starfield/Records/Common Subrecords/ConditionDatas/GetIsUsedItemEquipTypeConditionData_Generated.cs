@@ -14,6 +14,7 @@ using Mutagen.Bethesda.Plugins.Binary.Headers;
 using Mutagen.Bethesda.Plugins.Binary.Overlay;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
 using Mutagen.Bethesda.Plugins.Binary.Translations;
+using Mutagen.Bethesda.Plugins.Cache;
 using Mutagen.Bethesda.Plugins.Exceptions;
 using Mutagen.Bethesda.Plugins.Internals;
 using Mutagen.Bethesda.Plugins.Meta;
@@ -48,13 +49,21 @@ namespace Mutagen.Bethesda.Starfield
         #region Ctor
         public GetIsUsedItemEquipTypeConditionData()
         {
+            _FirstParameter = new FormLinkOrIndex<IEquipTypeGetter>(this);
             CustomCtor();
         }
         partial void CustomCtor();
         #endregion
 
         #region FirstParameter
-        public EquipTypeFlag FirstParameter { get; set; } = default(EquipTypeFlag);
+        private readonly IFormLinkOrIndex<IEquipTypeGetter> _FirstParameter = default!;
+        public IFormLinkOrIndex<IEquipTypeGetter> FirstParameter
+        {
+            get => _FirstParameter;
+            set => _FirstParameter.SetTo(value);
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IFormLinkOrIndexGetter<IEquipTypeGetter> IGetIsUsedItemEquipTypeConditionDataGetter.FirstParameter => this.FirstParameter;
         #endregion
         #region FirstUnusedStringParameter
         public String? FirstUnusedStringParameter { get; set; }
@@ -458,10 +467,12 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #region Mutagen
+        public override IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => GetIsUsedItemEquipTypeConditionDataCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
+        public override void RemapLinks(IReadOnlyDictionary<FormKey, FormKey> mapping) => GetIsUsedItemEquipTypeConditionDataSetterCommon.Instance.RemapLinks(this, mapping);
         object? IConditionParameters.Parameter1
         {
             get => FirstParameter;
-            set => FirstParameter = (value is EquipTypeFlag v ? v : throw new ArgumentException());
+            set => FirstParameter = (value is IFormLinkOrIndex<IEquipTypeGetter> v ? v : throw new ArgumentException());
         }
         object? IConditionParametersGetter.Parameter1
         {
@@ -469,7 +480,7 @@ namespace Mutagen.Bethesda.Starfield
         }
         Type? IConditionParametersGetter.Parameter1Type
         {
-            get => typeof(EquipTypeFlag);
+            get => typeof(IFormLinkOrIndexGetter<IEquipTypeGetter>);
         }
         object? IConditionParameters.Parameter2
         {
@@ -544,10 +555,11 @@ namespace Mutagen.Bethesda.Starfield
     #region Interface
     public partial interface IGetIsUsedItemEquipTypeConditionData :
         IConditionData,
+        IFormLinkContainer,
         IGetIsUsedItemEquipTypeConditionDataGetter,
         ILoquiObjectSetter<IGetIsUsedItemEquipTypeConditionData>
     {
-        new EquipTypeFlag FirstParameter { get; set; }
+        new IFormLinkOrIndex<IEquipTypeGetter> FirstParameter { get; set; }
         new String? FirstUnusedStringParameter { get; set; }
         new Int32 SecondParameter { get; set; }
         new String? SecondUnusedStringParameter { get; set; }
@@ -556,10 +568,11 @@ namespace Mutagen.Bethesda.Starfield
     public partial interface IGetIsUsedItemEquipTypeConditionDataGetter :
         IConditionDataGetter,
         IBinaryItem,
+        IFormLinkContainerGetter,
         ILoquiObject<IGetIsUsedItemEquipTypeConditionDataGetter>
     {
         static new ILoquiRegistration StaticRegistration => GetIsUsedItemEquipTypeConditionData_Registration.Instance;
-        EquipTypeFlag FirstParameter { get; }
+        IFormLinkOrIndexGetter<IEquipTypeGetter> FirstParameter { get; }
         String? FirstUnusedStringParameter { get; }
         Int32 SecondParameter { get; }
         String? SecondUnusedStringParameter { get; }
@@ -806,7 +819,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IGetIsUsedItemEquipTypeConditionData item)
         {
             ClearPartial();
-            item.FirstParameter = default(EquipTypeFlag);
+            item.FirstParameter.Clear();
             item.FirstUnusedStringParameter = default;
             item.SecondParameter = default(Int32);
             item.SecondUnusedStringParameter = default;
@@ -822,6 +835,7 @@ namespace Mutagen.Bethesda.Starfield
         public void RemapLinks(IGetIsUsedItemEquipTypeConditionData obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             base.RemapLinks(obj, mapping);
+            obj.FirstParameter.Relink(mapping);
         }
         
         #endregion
@@ -878,7 +892,7 @@ namespace Mutagen.Bethesda.Starfield
             GetIsUsedItemEquipTypeConditionData.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.FirstParameter = item.FirstParameter == rhs.FirstParameter;
+            ret.FirstParameter = item.FirstParameter.Equals(rhs.FirstParameter);
             ret.FirstUnusedStringParameter = string.Equals(item.FirstUnusedStringParameter, rhs.FirstUnusedStringParameter);
             ret.SecondParameter = item.SecondParameter == rhs.SecondParameter;
             ret.SecondUnusedStringParameter = string.Equals(item.SecondUnusedStringParameter, rhs.SecondUnusedStringParameter);
@@ -982,7 +996,7 @@ namespace Mutagen.Bethesda.Starfield
             if (!base.Equals((IConditionDataGetter)lhs, (IConditionDataGetter)rhs, equalsMask)) return false;
             if ((equalsMask?.GetShouldTranslate((int)GetIsUsedItemEquipTypeConditionData_FieldIndex.FirstParameter) ?? true))
             {
-                if (lhs.FirstParameter != rhs.FirstParameter) return false;
+                if (!lhs.FirstParameter.Equals(rhs.FirstParameter)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)GetIsUsedItemEquipTypeConditionData_FieldIndex.FirstUnusedStringParameter) ?? true))
             {
@@ -1047,6 +1061,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return item;
             }
+            foreach (var l in obj.FirstParameter.EnumerateFormLinks(iterateNestedRecords))
+            {
+                yield return l;
+            }
             yield break;
         }
         
@@ -1073,7 +1091,7 @@ namespace Mutagen.Bethesda.Starfield
                 deepCopy: deepCopy);
             if ((copyMask?.GetShouldTranslate((int)GetIsUsedItemEquipTypeConditionData_FieldIndex.FirstParameter) ?? true))
             {
-                item.FirstParameter = rhs.FirstParameter;
+                item.FirstParameter.SetTo(rhs.FirstParameter);
             }
             if ((copyMask?.GetShouldTranslate((int)GetIsUsedItemEquipTypeConditionData_FieldIndex.FirstUnusedStringParameter) ?? true))
             {
@@ -1210,10 +1228,9 @@ namespace Mutagen.Bethesda.Starfield
             ConditionDataBinaryWriteTranslation.WriteEmbedded(
                 item: item,
                 writer: writer);
-            EnumBinaryTranslation<EquipTypeFlag, MutagenFrame, MutagenWriter>.Instance.Write(
-                writer,
-                item.FirstParameter,
-                length: 4);
+            FormLinkOrIndexBinaryTranslation.Instance.Write(
+                writer: writer,
+                item: item.FirstParameter);
             writer.Write(item.SecondParameter);
         }
 
@@ -1273,9 +1290,9 @@ namespace Mutagen.Bethesda.Starfield
             ConditionDataBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
-            item.FirstParameter = EnumBinaryTranslation<EquipTypeFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
+            FormLinkOrIndexBinaryTranslation.Instance.ParseInto(
                 reader: frame,
-                length: 4);
+                item: item.FirstParameter);
             item.SecondParameter = frame.ReadInt32();
         }
 

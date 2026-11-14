@@ -90,6 +90,8 @@ partial class SpaceshipModification
         Keyword = RecordTypeInts.SKEY,
         LayeredMaterialSwap = RecordTypeInts.SMLS,
         ColorRemappingIndex = RecordTypeInts.SCRI,
+        // A slot the game keeps with no value, by the game's name (spelled pwDEPECRATED there) (C216)
+        Deprecated = RecordTypeInts.SMSW,
     }
 }
 
