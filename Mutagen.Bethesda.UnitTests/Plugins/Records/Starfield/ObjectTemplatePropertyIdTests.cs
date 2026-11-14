@@ -64,7 +64,7 @@ public class ObjectTemplatePropertyIdTests
     [Fact]
     public void OmodCodes_Unchanged()
     {
-        ((uint)Weapon.Property.DamagePhysical).ShouldBe((uint)new RecordType("WDMG").TypeInt);
+        ((uint)Weapon.Property.AttackDamage).ShouldBe((uint)new RecordType("WDMG").TypeInt);
         ((uint)Armor.Property.LayeredMaterialSwap).ShouldBe((uint)new RecordType("AMLS").TypeInt);
         ((uint)Npc.Property.LayeredMaterialSwap).ShouldBe((uint)new RecordType("NMSL").TypeInt);
     }

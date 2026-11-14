@@ -55,12 +55,12 @@ public class SpaceshipModificationTests
             ship.AttachPoint.FormKey.ID.ShouldBe(0x249FEAu);
             ship.Properties.Count.ShouldBe(2);
             var damage = ship.Properties[0].ShouldBeAssignableTo<IObjectModFormLinkIntPropertyGetter<SpaceshipModification.Property>>()!;
-            damage.Property.ShouldBe(SpaceshipModification.Property.SystemDamage);
+            damage.Property.ShouldBe(SpaceshipModification.Property.DamageChanceActorValue);
             damage.FunctionType.ShouldBe(ObjectModProperty.FormLinkFunctionType.Add);
             damage.Record.FormKey.ID.ShouldBe(0x011586u);
             damage.Value.ShouldBe(0u);
             var actorValue = ship.Properties[1].ShouldBeAssignableTo<IObjectModFormLinkFloatPropertyGetter<SpaceshipModification.Property>>()!;
-            actorValue.Property.ShouldBe(SpaceshipModification.Property.ActorValue);
+            actorValue.Property.ShouldBe(SpaceshipModification.Property.PowerActorValue);
             actorValue.FunctionType.ShouldBe(ObjectModProperty.FloatFunctionType.Add);
             actorValue.Record.IsNull.ShouldBeTrue();
             actorValue.Value.ShouldBe(2f);
@@ -78,8 +78,8 @@ public class SpaceshipModificationTests
             ship.AttachPoint.FormKey.ID.ShouldBe(0x008226u);
             ship.Properties.Select(p => p.Property).ShouldBe(new[]
             {
-                SpaceshipModification.Property.SystemDamage,
-                SpaceshipModification.Property.ActorValue,
+                SpaceshipModification.Property.DamageChanceActorValue,
+                SpaceshipModification.Property.PowerActorValue,
             });
             var actorValue = ship.Properties[1].ShouldBeAssignableTo<IObjectModFormLinkFloatPropertyGetter<SpaceshipModification.Property>>()!;
             actorValue.Record.FormKey.ID.ShouldBe(0x008223u);
@@ -122,7 +122,7 @@ public class SpaceshipModificationTests
         };
         omod.Properties.Add(new ObjectModFormLinkFloatProperty<SpaceshipModification.Property>()
         {
-            Property = SpaceshipModification.Property.ActorValue,
+            Property = SpaceshipModification.Property.PowerActorValue,
             FunctionType = ObjectModProperty.FloatFunctionType.Add,
             Value = 2f,
         });
@@ -130,7 +130,7 @@ public class SpaceshipModificationTests
         foreach (var reread in Read(written))
         {
             var ship = reread.ShouldBeAssignableTo<ISpaceshipModificationGetter>()!;
-            ship.Properties.ShouldHaveSingleItem().Property.ShouldBe(SpaceshipModification.Property.ActorValue);
+            ship.Properties.ShouldHaveSingleItem().Property.ShouldBe(SpaceshipModification.Property.PowerActorValue);
         }
     }
 }

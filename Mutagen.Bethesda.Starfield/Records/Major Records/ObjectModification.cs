@@ -83,8 +83,10 @@ partial class SpaceshipModification
     // xEdit wbObjectModPropertiesEnum, the Spaceship entries
     public enum Property
     {
-        ActorValue = RecordTypeInts.SPAV,
-        SystemDamage = RecordTypeInts.SDMG,
+        // The game's name: vaPowerActorValues (was ActorValue) (C217)
+        PowerActorValue = RecordTypeInts.SPAV,
+        // The game's name: paDamageChanceActorValue (was SystemDamage) (C217)
+        DamageChanceActorValue = RecordTypeInts.SDMG,
         Enchantment = RecordTypeInts.SENC,
         Inventory = RecordTypeInts.SINV,
         Keyword = RecordTypeInts.SKEY,

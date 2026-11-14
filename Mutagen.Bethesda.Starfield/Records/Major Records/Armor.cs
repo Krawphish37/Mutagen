@@ -16,7 +16,8 @@ public partial class Armor
     public enum Property
     {
         ActorValue = RecordTypeInts.AACT,
-        DamageResistance = RecordTypeInts.ADMG,
+        // The game's name: vdDamageTypeValues: a damage type and its value (was DamageResistance) (C217)
+        DamageTypeValues = RecordTypeInts.ADMG,
         Enchantment = RecordTypeInts.AENC,
         Keyword = RecordTypeInts.AKEY,
         LayeredMaterialSwap = RecordTypeInts.AMLS,
