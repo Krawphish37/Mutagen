@@ -59,7 +59,7 @@ class BsaReader : IArchiveReader
     {
     }
 
-    private BsaReader(Func<Stream> streamGetter, FilePath? pathHint)
+    internal BsaReader(Func<Stream> streamGetter, FilePath? pathHint)
     {
         FilePath = pathHint;
         _streamGetter = streamGetter;
