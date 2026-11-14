@@ -15,6 +15,8 @@ public partial class BodyPart
         ShowCrippleGeometry = 0x80,
     }
 
+    // The engine's BGSBodyPartDefs::LIMB_ENUM, same values. The Creation Kit's display names are the same words
+    // (Torso, Head1, Eye, LookAt, Fly Grab, ..., Offset Root, Left Foot, Right Foot, Face Target Source); its None = -1 has no member here.
     public enum PartType
     {
         Torso = 0,

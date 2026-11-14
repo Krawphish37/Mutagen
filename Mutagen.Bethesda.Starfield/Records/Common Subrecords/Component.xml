@@ -108,7 +108,7 @@
       <FormLink name="BodyPartData" recordType="GNAM" refName="BodyPartData" />
     </Fields>
   </Object>
-  <Object name="EffectSequenceComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="EffectSequenceComponent" ckName="Effect Sequence Component" objType="Subrecord" baseClass="AComponent">
     <Fields>
       <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
@@ -136,7 +136,7 @@
       </RefDirect>
     </Fields>
   </Object>
-  <Object name="LodOwnerComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="LodOwnerComponent" ckName="LOD Component" objType="Subrecord" baseClass="AComponent">
     <Fields>
       <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
@@ -466,7 +466,7 @@
       <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
   </Object>
-  <Object name="MaterialPropertyComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="MaterialPropertyComponent" ckName="Material Properties" objType="Subrecord" baseClass="AComponent">
     <Fields>
       <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>

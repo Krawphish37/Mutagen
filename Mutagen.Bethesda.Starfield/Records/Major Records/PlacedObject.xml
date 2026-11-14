@@ -282,7 +282,7 @@
   <Object name="PlacedObjectSpline" objType="Subrecord" recordType="XBSD">
     <Fields>
       <Float name="Slack" />
-      <Float name="Thickness" />
+      <Float name="SplineRadius" ckName="Spline Radius" />
       <P3Float name="HalfExtents" />
       <Bool name="IsWindDetachedEnd" byteLength="1" />
       <ByteArray name="IsWindDetachedEndUnknown" byteLength="3" nullable="false" />
