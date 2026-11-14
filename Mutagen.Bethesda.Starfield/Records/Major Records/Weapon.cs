@@ -99,8 +99,10 @@ public partial class Weapon
         Value = RecordTypeInts.GVAL,
         Weight = RecordTypeInts.GWEI,
         AttackOxygenCost = RecordTypeInts.WAOC,
-        Power = RecordTypeInts.PAVI,
-        PowerBonus = RecordTypeInts.PBAV,
+        // The game's name: paPowerAVIF (was Power) (C217)
+        PowerActorValue = RecordTypeInts.PAVI,
+        // The game's name: paPowerBonusAVIF (was PowerBonus) (C217)
+        PowerBonusActorValue = RecordTypeInts.PBAV,
         FullRechargeTime = RecordTypeInts.PFCT,
         RechargeDelay = RecordTypeInts.PRCD,
         AccuracyBonus = RecordTypeInts.WACB,
@@ -110,14 +112,32 @@ public partial class Weapon
         AimModelConeMaxDegrees = RecordTypeInts.WCO2,
         AimModelConeIncreasePerShot = RecordTypeInts.WCO3,
         AimModelConeDecreasePerSec = RecordTypeInts.WCO4,
-        AimModelConeDecreaseDelayPerSec = RecordTypeInts.WCO5,
+        // The game's name: fAimModelConeDecreaseDelaySec, a float the game casts to int (was AimModelConeDecreaseDelayPerSec) (C217)
+        AimModelConeDecreaseDelaySec = RecordTypeInts.WCO5,
         AimModelConeIronSightsMultiplier = RecordTypeInts.WCO6,
         AimModelRecoilDiminishSpringForce = RecordTypeInts.WRC1,
         AimModelRecoilDiminishSightsMult = RecordTypeInts.WRC2,
         AimModelRecoilMaxDegreePerShot = RecordTypeInts.WRC3,
         AimModelRecoilMultiplierHipFire = RecordTypeInts.WRC5,
+        // No member for WRC4, WRC6 and PUSE: the game's table has each twice (WRC4 fAimModelRecoilMinDegPerShot /
+        // fAimModelRecoilArcDeg, WRC6 fAimModelConeSneakMultiplier / uAimModelRecoilShotsForRunaway, PUSE bUsePower /
+        // bConsumeAmmo) and which one the game uses is unproven; the raw value still reads and writes (C216)
+        // Slots the game keeps with no value, by the game's names (iDEPRECATED2 .. bDEPRECATED10, pwDEPRECATED) (C216)
+        Deprecated2 = RecordTypeInts.W002,
+        Deprecated3 = RecordTypeInts.W003,
+        Deprecated4 = RecordTypeInts.W004,
+        Deprecated5 = RecordTypeInts.W005,
+        Deprecated6 = RecordTypeInts.W006,
+        Deprecated7 = RecordTypeInts.W007,
+        Deprecated8 = RecordTypeInts.W008,
+        Deprecated9 = RecordTypeInts.W009,
+        Deprecated10 = RecordTypeInts.W010,
+        Deprecated = RecordTypeInts.WSWP,
+        // The game names it fDEPRECATED9 too (W009 is bDEPRECATED9), so the ID tells them apart
+        DeprecatedZFPF = RecordTypeInts.ZFPF,
         AimModelRecoilArcRotateDegrees = RecordTypeInts.WRC8,
-        AimOpticalSightMarker = RecordTypeInts.WAOS,
+        // The game's name: pcAimOpticalSightModel (was AimOpticalSightMarker) (C217)
+        AimOpticalSightModel = RecordTypeInts.WAOS,
         ActorValue = RecordTypeInts.WACV,
         AttackDelaySeconds = RecordTypeInts.WADL,
         BashDamage = RecordTypeInts.WSDM,
@@ -134,11 +154,14 @@ public partial class Weapon
         BurstShots = RecordTypeInts.FBUR,
         CriticalDamageMultiplier = RecordTypeInts.WCDM,
         CriticalChanceIncMultiplier = RecordTypeInts.WCIM,
-        DamagePhysical = RecordTypeInts.WDMG,
+        // The game's name: fattackdamage (was DamagePhysical) (C217)
+        AttackDamage = RecordTypeInts.WDMG,
         DamageTypeValue = RecordTypeInts.WDTV,
-        EnableMarkingTargetsRecon = RecordTypeInts.WEMT,
+        // The game's name: bEnableMarkingTargets (was EnableMarkingTargetsRecon) (C217)
+        EnableMarkingTargets = RecordTypeInts.WEMT,
         Enchantment = RecordTypeInts.WENC,
-        FullAuto = RecordTypeInts.FREP,
+        // The game's name: bRepeatableFire (was FullAuto) (C217)
+        RepeatableFire = RecordTypeInts.FREP,
         FiringType = RecordTypeInts.FTYP,
         HasDualTrigger = RecordTypeInts.FHDT,
         ImpactDataset = RecordTypeInts.WIMP,
@@ -150,7 +173,8 @@ public partial class Weapon
         ProjectileCount = RecordTypeInts.WNPR,
         ProjectileOverride = RecordTypeInts.WOPR,
         ReloadSpeed = RecordTypeInts.WRSP,
-        Scope = RecordTypeInts.WSCP,
+        // The game's name: bHasScope (was Scope) (C217)
+        HasScope = RecordTypeInts.WSCP,
         ShotsperSecond = RecordTypeInts.WSPS,
         SightedTransitionSeconds = RecordTypeInts.WSTS,
         SoundLevel = RecordTypeInts.WSLV,
@@ -166,7 +190,8 @@ public partial class Weapon
         HoldInput = RecordTypeInts.WHIP,
         MinorCrime = RecordTypeInts.WMCR,
         MinPowerperShot = RecordTypeInts.WMPS,
-        Can = RecordTypeInts.WNDP,
+        // The game's name: bcantdrop (was Can) (C217)
+        CantDrop = RecordTypeInts.WNDP,
         NonHostile = RecordTypeInts.WNHO,
         NonPlayable = RecordTypeInts.WNPL,
         OutofRangeDamageMult = RecordTypeInts.WOOR,
@@ -196,7 +221,8 @@ public partial class Weapon
         ADSOffsetZ = RecordTypeInts.ZOFZ,
         Overlay = RecordTypeInts.ZOVL,
         FOVMult = RecordTypeInts.ZFOV,
-        Template = RecordTypeInts.ZDTA,
+        // The game's name: pzAimDownSightTemplate (was Template) (C217)
+        AimDownSightTemplate = RecordTypeInts.ZDTA,
         // Object templates (OBTS) on the record itself store these small ids, not the 4-letter OMOD codes above (xEdit wbObjectModPropertiesWEAPEnum).
         TemplatePhysicalWeaponDamage = 28,
         TemplateUnknown29 = 29,

@@ -695,6 +695,7 @@ public partial class RecordTypes
     public static readonly RecordType NLDT = new(0x54444C4E);
     public static readonly RecordType NMMX = new(0x584D4D4E);
     public static readonly RecordType NMSL = new(0x4C534D4E);
+    public static readonly RecordType NMSW = new(0x57534D4E);
     public static readonly RecordType NNAM = new(0x4D414E4E);
     public static readonly RecordType NOCM = new(0x4D434F4E);
     public static readonly RecordType NONE = new(0x454E4F4E);
@@ -972,6 +973,7 @@ public partial class RecordTypes
     public static readonly RecordType SMEN = new(0x4E454D53);
     public static readonly RecordType SMLS = new(0x534C4D53);
     public static readonly RecordType SMQN = new(0x4E514D53);
+    public static readonly RecordType SMSW = new(0x57534D53);
     public static readonly RecordType SMUG = new(0x47554D53);
     public static readonly RecordType SNAM = new(0x4D414E53);
     public static readonly RecordType SNBH = new(0x48424E53);
@@ -1149,6 +1151,15 @@ public partial class RecordTypes
     public static readonly RecordType VUSE = new(0x45535556);
     public static readonly RecordType VWWD = new(0x44575756);
     public static readonly RecordType VX00 = new(0x30305856);
+    public static readonly RecordType W002 = new(0x32303057);
+    public static readonly RecordType W003 = new(0x33303057);
+    public static readonly RecordType W004 = new(0x34303057);
+    public static readonly RecordType W005 = new(0x35303057);
+    public static readonly RecordType W006 = new(0x36303057);
+    public static readonly RecordType W007 = new(0x37303057);
+    public static readonly RecordType W008 = new(0x38303057);
+    public static readonly RecordType W009 = new(0x39303057);
+    public static readonly RecordType W010 = new(0x30313057);
     public static readonly RecordType WABB = new(0x42424157);
     public static readonly RecordType WABS = new(0x53424157);
     public static readonly RecordType WACB = new(0x42434157);
@@ -1253,6 +1264,7 @@ public partial class RecordTypes
     public static readonly RecordType WSTG = new(0x47545357);
     public static readonly RecordType WSTS = new(0x53545357);
     public static readonly RecordType WSWL = new(0x4C575357);
+    public static readonly RecordType WSWP = new(0x50575357);
     public static readonly RecordType WTCR = new(0x52435457);
     public static readonly RecordType WTED = new(0x44455457);
     public static readonly RecordType WTFM = new(0x4D465457);
@@ -1374,6 +1386,7 @@ public partial class RecordTypes
     public static readonly RecordType YX00 = new(0x30305859);
     public static readonly RecordType ZDTA = new(0x4154445A);
     public static readonly RecordType ZFOV = new(0x564F465A);
+    public static readonly RecordType ZFPF = new(0x4650465A);
     public static readonly RecordType ZIMG = new(0x474D495A);
     public static readonly RecordType ZKEY = new(0x59454B5A);
     public static readonly RecordType ZNAM = new(0x4D414E5A);

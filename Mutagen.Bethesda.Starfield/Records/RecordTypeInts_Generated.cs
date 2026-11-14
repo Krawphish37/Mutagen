@@ -693,6 +693,7 @@ public partial class RecordTypeInts
     public const int NLDT = 0x54444C4E;
     public const int NMMX = 0x584D4D4E;
     public const int NMSL = 0x4C534D4E;
+    public const int NMSW = 0x57534D4E;
     public const int NNAM = 0x4D414E4E;
     public const int NOCM = 0x4D434F4E;
     public const int NONE = 0x454E4F4E;
@@ -970,6 +971,7 @@ public partial class RecordTypeInts
     public const int SMEN = 0x4E454D53;
     public const int SMLS = 0x534C4D53;
     public const int SMQN = 0x4E514D53;
+    public const int SMSW = 0x57534D53;
     public const int SMUG = 0x47554D53;
     public const int SNAM = 0x4D414E53;
     public const int SNBH = 0x48424E53;
@@ -1147,6 +1149,15 @@ public partial class RecordTypeInts
     public const int VUSE = 0x45535556;
     public const int VWWD = 0x44575756;
     public const int VX00 = 0x30305856;
+    public const int W002 = 0x32303057;
+    public const int W003 = 0x33303057;
+    public const int W004 = 0x34303057;
+    public const int W005 = 0x35303057;
+    public const int W006 = 0x36303057;
+    public const int W007 = 0x37303057;
+    public const int W008 = 0x38303057;
+    public const int W009 = 0x39303057;
+    public const int W010 = 0x30313057;
     public const int WABB = 0x42424157;
     public const int WABS = 0x53424157;
     public const int WACB = 0x42434157;
@@ -1251,6 +1262,7 @@ public partial class RecordTypeInts
     public const int WSTG = 0x47545357;
     public const int WSTS = 0x53545357;
     public const int WSWL = 0x4C575357;
+    public const int WSWP = 0x50575357;
     public const int WTCR = 0x52435457;
     public const int WTED = 0x44455457;
     public const int WTFM = 0x4D465457;
@@ -1372,6 +1384,7 @@ public partial class RecordTypeInts
     public const int YX00 = 0x30305859;
     public const int ZDTA = 0x4154445A;
     public const int ZFOV = 0x564F465A;
+    public const int ZFPF = 0x4650465A;
     public const int ZIMG = 0x474D495A;
     public const int ZKEY = 0x59454B5A;
     public const int ZNAM = 0x4D414E5A;

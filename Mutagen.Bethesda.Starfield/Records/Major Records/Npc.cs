@@ -36,15 +36,19 @@ public partial class Npc
         ColorRemappingIndex = RecordTypeInts.NCOL,
         Keyword = RecordTypeInts.NKEY,
         LayeredMaterialSwap = RecordTypeInts.NMSL,
-        MinMaxSize = RecordTypeInts.NMMX,
+        // The game's name: fHeightMinMax (was MinMaxSize) (C217)
+        HeightMinMax = RecordTypeInts.NMMX,
         Perk = RecordTypeInts.NPRK,
         RaceChange = RecordTypeInts.NRCE,
         ReactionRadius = RecordTypeInts.NREA,
         Skin = RecordTypeInts.NSKN,
         Spell = RecordTypeInts.NSPL,
-        XPOverride = RecordTypeInts.NXPO,
+        // The game's name: iXPOffset (was XPOverride) (C217)
+        XPOffset = RecordTypeInts.NXPO,
         // Object templates (OBTS) on the record itself store these small ids, not the 4-letter OMOD codes above (xEdit wbObjectModPropertiesNPCEnum).
         TemplateLayeredMaterialSwap = 6,
+        // A slot the game keeps with no value, by the game's name (pwDEPRECATED) (C216)
+        Deprecated = RecordTypeInts.NMSW,
     }
 
     [Flags]

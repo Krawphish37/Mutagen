@@ -1976,7 +1976,8 @@
   </Object>
   <Object name="GetIsUsedItemEquipTypeConditionData" conditionFunction="479" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
     <Fields>
-      <Enum enumName="EquipTypeFlag" name="FirstParameter" />
+      <!-- The game's parameter type is ptEquipSlot (xEdit: ptEquipType, an EQUP record); was the EquipTypeFlag enum (C216) -->
+      <FormLinkOrIndex refName="EquipType" name="FirstParameter" />
       <String name="FirstUnusedStringParameter" recordType="CIS1" nullable="true" binary="NoGeneration" />
       <Int32 name="SecondParameter" />
       <String name="SecondUnusedStringParameter" recordType="CIS2" nullable="true" binary="NoGeneration" />

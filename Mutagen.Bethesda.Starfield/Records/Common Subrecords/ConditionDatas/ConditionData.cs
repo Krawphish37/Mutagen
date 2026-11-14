@@ -44,6 +44,19 @@ public static class ConditionDataExtension
     }
 
     /// <summary>
+    /// CountAquiredPerkRanksByType's third parameter (the game's ptPerkSkillGroup), kept in Parameter #3; null when it is
+    /// -1, as in every such condition of Starfield.esm (C216).
+    /// </summary>
+    public static PerkSkillGroup? GetSkillGroup(this ICountAquiredPerkRanksByTypeConditionDataGetter conditionData)
+        => conditionData.ParameterThree == -1 ? null : (PerkSkillGroup)conditionData.ParameterThree;
+
+    /// <summary>
+    /// Sets CountAquiredPerkRanksByType's third parameter (Parameter #3); null writes -1.
+    /// </summary>
+    public static void SetSkillGroup(this ICountAquiredPerkRanksByTypeConditionData conditionData, PerkSkillGroup? skillGroup)
+        => conditionData.ParameterThree = skillGroup is { } value ? (int)value : -1;
+
+    /// <summary>
     /// Sets Run On to Quest Alias and Parameter #3 to the alias.
     /// </summary>
     public static void SetQuestAlias(this IConditionData conditionData, int alias)

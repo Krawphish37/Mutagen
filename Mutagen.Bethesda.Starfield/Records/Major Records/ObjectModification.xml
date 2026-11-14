@@ -102,6 +102,7 @@
     <AdditionalContainedRecordType>NKEY</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>NMMX</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>NMSL</AdditionalContainedRecordType>
+    <AdditionalContainedRecordType>NMSW</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>NNAM</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>NPAC</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>NPRK</AdditionalContainedRecordType>
@@ -116,6 +117,7 @@
     <AdditionalContainedRecordType>PBAV</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>PFCT</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>PRCD</AdditionalContainedRecordType>
+    <!-- the game's weapon property table has PUSE twice: bUsePower, then bConsumeAmmo; which one the game uses for the ID is unproven, so Weapon.Property has no member for it (C216) -->
     <AdditionalContainedRecordType>PUSE</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>SCRI</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>SDMG</AdditionalContainedRecordType>
@@ -123,6 +125,7 @@
     <AdditionalContainedRecordType>SINV</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>SKEY</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>SMLS</AdditionalContainedRecordType>
+    <AdditionalContainedRecordType>SMSW</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>SPAV</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>VAAC</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>VADC</AdditionalContainedRecordType>
@@ -137,6 +140,15 @@
     <AdditionalContainedRecordType>VDVM</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>VDVN</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>VUSE</AdditionalContainedRecordType>
+    <AdditionalContainedRecordType>W002</AdditionalContainedRecordType>
+    <AdditionalContainedRecordType>W003</AdditionalContainedRecordType>
+    <AdditionalContainedRecordType>W004</AdditionalContainedRecordType>
+    <AdditionalContainedRecordType>W005</AdditionalContainedRecordType>
+    <AdditionalContainedRecordType>W006</AdditionalContainedRecordType>
+    <AdditionalContainedRecordType>W007</AdditionalContainedRecordType>
+    <AdditionalContainedRecordType>W008</AdditionalContainedRecordType>
+    <AdditionalContainedRecordType>W009</AdditionalContainedRecordType>
+    <AdditionalContainedRecordType>W010</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>WABS</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>WACB</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>WACV</AdditionalContainedRecordType>
@@ -189,8 +201,10 @@
     <AdditionalContainedRecordType>WRC1</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>WRC2</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>WRC3</AdditionalContainedRecordType>
+    <!-- the game's weapon property table has WRC4 twice: fAimModelRecoilMinDegPerShot, then fAimModelRecoilArcDeg; which one the game uses for the ID is unproven, so Weapon.Property has no member for it (C216) -->
     <AdditionalContainedRecordType>WRC4</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>WRC5</AdditionalContainedRecordType>
+    <!-- the game's weapon property table has WRC6 twice: fAimModelConeSneakMultiplier, then uAimModelRecoilShotsForRunaway; which one the game uses for the ID is unproven, so Weapon.Property has no member for it (C216) -->
     <AdditionalContainedRecordType>WRC6</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>WRC8</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>WREA</AdditionalContainedRecordType>
@@ -207,9 +221,11 @@
     <AdditionalContainedRecordType>WSTG</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>WSTS</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>WSWL</AdditionalContainedRecordType>
+    <AdditionalContainedRecordType>WSWP</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>WTMC</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>ZDTA</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>ZFOV</AdditionalContainedRecordType>
+    <AdditionalContainedRecordType>ZFPF</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>ZIMG</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>ZOFX</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>ZOFY</AdditionalContainedRecordType>
