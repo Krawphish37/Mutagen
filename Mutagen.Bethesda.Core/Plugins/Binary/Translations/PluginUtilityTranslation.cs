@@ -759,13 +759,17 @@ internal static class PluginUtilityTranslation
                 using (CompressionExport.Compression(item.IsCompressed, writer, compressedOriginal, out var writerToUse))
                 {
                     SubrecordOrder.Entry[]? order = null;
-                    if (writer.MetaData.Constants.KeepSubrecordOrder
-                        && (SubrecordOrder.TryGet(item, out order) || ownForms != null || overlayKeepsForms))
+                    // StoredFormIdMixIn.GetStoredFormIds: this record is written to find where its FormIDs sit (C203)
+                    var recording = FormIdPositionRecorder.IsTarget(item);
+                    if (recording
+                        || (writer.MetaData.Constants.KeepSubrecordOrder
+                            && (SubrecordOrder.TryGet(item, out order) || ownForms != null || overlayKeepsForms)))
                     {
                         // Written as usual into a buffer, then in the order the record was read in, if it is unchanged
                         using var rented = RecordBuffer.Rent();
                         var buffer = rented.Stream;
                         if (overlayKeepsForms) SubrecordOrder.NonCanonicalFormIdRead = false;
+                        if (recording) FormIdPositionRecorder.StartContent(item);
                         using (var bufferWriter = new MutagenWriter(buffer, writerToUse.MetaData, dispose: false))
                         {
                             writeRecordTypes(item, bufferWriter, translationParams);
@@ -784,6 +788,11 @@ internal static class PluginUtilityTranslation
                         if (ownForms != null)
                         {
                             Mutagen.Bethesda.Plugins.Masters.OwnFormIdForms.Restore(written, ownForms, writerToUse);
+                        }
+                        if (recording)
+                        {
+                            // The subrecords as they are written back (stored forms put back), and where each FormID sits
+                            FormIdPositionRecorder.Capture(item, buffer, written);
                         }
                         if (order == null
                             || !SubrecordOrder.TryWriteInOrder(written, order, writerToUse,
