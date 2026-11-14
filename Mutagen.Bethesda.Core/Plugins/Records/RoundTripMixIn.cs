@@ -1,4 +1,5 @@
 using System.Buffers.Binary;
+using Mutagen.Bethesda.Plugins.Binary.Overlay;
 using Mutagen.Bethesda.Plugins.Binary.Translations;
 using Mutagen.Bethesda.Plugins.Masters;
 
@@ -179,5 +180,39 @@ public static class RoundTripMixIn
                 span[12] != 0);
         }
         SubrecordOrder.Set(record, entries);
+    }
+    /// <summary>
+    /// The record's header FormID as stored in its file, when it isn't the FormID Mutagen writes for its FormKey (e.g.
+    /// 03000867, a Small plugin's own record stored with its full index, where Mutagen writes FE000867); null otherwise
+    /// (C206).<br/>
+    /// Store it with the record's other data, and give it back with <see cref="SetHeaderFormIdAsStored"/> on a record
+    /// rebuilt from that data (JSON, a database), so the header is written back as stored. It is only written while it
+    /// still reads as the record's FormKey with the master list written.
+    /// </summary>
+    public static uint? GetHeaderFormIdAsStored(this IMajorRecordGetter record)
+    {
+        if (RawHeaderFormIds.Get(record) is not { } raw) return null;
+        // An overlay record always knows its header as read: only a value Mutagen wouldn't write is reported
+        if (record is PluginBinaryOverlay overlay)
+        {
+            try
+            {
+                if (overlay._package.MetaData.MasterReferences.GetFormID(record.FormKey).Raw == raw) return null;
+            }
+            catch (Exception)
+            {
+                // The FormKey has no FormID with this master list: report the header as read
+            }
+        }
+        return raw;
+    }
+
+    /// <summary>
+    /// Gives a record the header FormID of <see cref="GetHeaderFormIdAsStored"/> (null removes it, so the header is
+    /// written in Mutagen's form) (C206)
+    /// </summary>
+    public static void SetHeaderFormIdAsStored(this IMajorRecord record, uint? raw)
+    {
+        RawHeaderFormIds.Set(record, raw);
     }
 }

@@ -79,14 +79,17 @@ public class RoundTripApiTests
             new KeyedMasterStyle(Kgcdoom, MasterStyle.Medium),
         });
 
-        public Kgc()
+        public Kgc(string mesg = KgcdoomMesg)
         {
             Directory.CreateDirectory(System.IO.Path.Combine(Root, "Data", "Strings"));
-            File.WriteAllBytes(PluginPath, Hex(KgcdoomTes4).Concat(Group("MESG", Hex(KgcdoomMesg))).ToArray());
+            File.WriteAllBytes(PluginPath, Hex(KgcdoomTes4).Concat(Group("MESG", Hex(mesg))).ToArray());
             File.WriteAllBytes(System.IO.Path.Combine(Root, "Data", "Strings", "kgcdoom_en.strings"), StringsFile(0x395, "Athena"));
         }
 
         public StarfieldMod Read() => StarfieldMod.CreateFromBinary(PluginPath, StarfieldRelease.Starfield,
+            new BinaryReadParameters { MasterFlagsLookup = Lo });
+
+        public IStarfieldModDisposableGetter ReadOverlay() => StarfieldMod.CreateFromBinaryOverlay(PluginPath, StarfieldRelease.Starfield,
             new BinaryReadParameters { MasterFlagsLookup = Lo });
 
         public void Dispose()
@@ -244,5 +247,47 @@ public class RoundTripApiTests
             rebuilt.Equals(pack).ShouldBeTrue();
             rebuilt.GetHashCode().ShouldBe(pack.DeepCopy().GetHashCode());
         }
+    }
+    // The same message with its header FormID stored with kgcdoom's full index (01: after its one Full master), as the
+    // Creation Kit writes a Medium .esm's own records; Mutagen writes FD00B9B6 (decision A3)
+    private static readonly string KgcdoomMesgFullIndex = KgcdoomMesg.Replace("B6B900FD", "B6B90001");
+
+    [Fact]
+    public void HeaderFormIdAsStored_RebuiltRecordKeepsItsHeaderForm()
+    {
+        using var k = new Kgc(KgcdoomMesgFullIndex);
+        var read = k.Read();
+        read.Messages.Single().GetHeaderFormIdAsStored().ShouldBe(0x0100B9B6u);
+        using (var overlay = k.ReadOverlay())
+        {
+            overlay.Messages.Single().GetHeaderFormIdAsStored().ShouldBe(0x0100B9B6u);
+        }
+        WriteMesg(k, read).ShouldBe(Hex(KgcdoomMesgFullIndex));
+
+        // Rebuilt as from JSON (nothing kept): Mutagen's form
+        var rebuilt = Rebuild(read);
+        rebuilt.Messages.Single().SetHeaderFormIdAsStored(null);
+        rebuilt.Messages.Single().GetHeaderFormIdAsStored().ShouldBeNull();
+        GiveBackStringIds(read, rebuilt);
+        BitConverter.ToUInt32(WriteMesg(k, rebuilt), 12).ShouldBe(0xFD00B9B6u);
+
+        // Given back: as stored
+        rebuilt.Messages.Single().SetHeaderFormIdAsStored(0x0100B9B6u);
+        WriteMesg(k, rebuilt).ShouldBe(Hex(KgcdoomMesgFullIndex));
+    }
+
+    [Fact]
+    public void HeaderFormIdAsStored_NullWhenMutagenWritesTheSame()
+    {
+        using var k = new Kgc();
+        k.Read().Messages.Single().GetHeaderFormIdAsStored().ShouldBeNull();
+        using var overlay = k.ReadOverlay();
+        overlay.Messages.Single().GetHeaderFormIdAsStored().ShouldBeNull();
+
+        // A value that no longer reads as the record's FormKey isn't written
+        var rebuilt = Rebuild(k.Read());
+        GiveBackStringIds(k.Read(), rebuilt);
+        rebuilt.Messages.Single().SetHeaderFormIdAsStored(0x0100B9B7u);
+        WriteMesg(k, rebuilt).ShouldBe(Hex(KgcdoomMesg));
     }
 }
