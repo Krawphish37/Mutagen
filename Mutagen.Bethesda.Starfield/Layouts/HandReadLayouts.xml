@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Starfield layouts that Mutagen reads with hand-written code and that the record xml (Records/**/*.xml) can't describe.
+  Ships in the package next to the record xml (loqui/Mutagen.Bethesda.Starfield/Layouts/). Not read by the generator or
+  at run time: it is a description, held against Mutagen's own parse by the unit test HandReadLayoutFileTests, which
+  reads Starfield.esm and the official plugins with it and compares every value that names a field.
+
+  Record sig="XXXX" object="MutagenClass": the subrecords of one record type, in file order.
+  AnyRecord sig="XXXX": checked on every record (of any type) that has that subrecord.
+  Define name="N" / Use name="N": a block written once and used in several places (either level).
+
+  Subrecord level (inside Record, Segments, Object, Switch cases):
+    Sub sig="SIG" [optional="true"] [field="Prop"]   the next subrecord with that signature; its content is described by
+                                                      the children. field: the Mutagen object its values belong to.
+                                                      optional and absent: the field must be null or empty.
+    SubRepeat sig="SIG" [count="N|$var"] [field="List"] [index="i"]
+                                                      consecutive subrecords, one list element each
+    AnyOrder                                          the child Subs (and Generated sigs) follow in any order
+    Segments start="SIG" [end="SIG"] [field="List"] [index="i"] [skipStart="true"] [others="generated"]
+                                                      a run of subrecords from each start marker to the end marker (or the
+                                                      next start); one list element each. All subrecords in a segment must
+                                                      be described (or listed in Generated), unless others="generated".
+                                                      skipStart: the start marker itself isn't described.
+    Generated sigs="A,B"                              subrecords here that the generated code reads; passed over
+    Object field="Prop" [optional="true"]             the children belong to that Mutagen object (optional: when
+                                                      Mutagen's is null, none of the children's subrecords may follow)
+    Switch on="var" [mask="0x.."] / Case value="1,2" [type="MutagenClass"] / Default
+                                                      chooses by a value read earlier; type: the class Mutagen must have
+                                                      made for the current object in that case
+
+  Content level (inside Sub, SubRepeat, Repeat, Object, Switch cases); every byte must be described:
+    U8 I8 U16 I16 U32 I32 F32                         little-endian numbers
+    I32String [name="var"]                            int32 length, then the text (zero-terminated when not empty);
+                                                      name keeps it for a Switch on text
+    FormID                                            4 bytes, through the plugin's masters
+    Color                                             4 bytes R G B A
+    ZString [length="N"]                              text up to a zero byte (length: a fixed field, cut at the zero)
+    LString                                           a translated string: uint32 strings ID in a localized plugin
+                                                      (compared with TranslatedString.StringsKey), else a ZString
+    Const field="Prop" value="v|$var"                 no bytes: a field Mutagen derives from a value read earlier
+    WString                                           uint16 length, then the text
+    Bytes [length="N|$var"]                           raw bytes (to the end of the subrecord without length)
+    Repeat count="N|$var|end" [field="List"] [index="i"] [prefix="true"]
+                                                      the children N times (end: until the subrecord ends); prefix: the
+                                                      file holds the first N elements of a longer Mutagen list
+    Object field="Prop", Switch                       as above
+    Bit of="var" index="N|$i" [invert="true"]         one bit of a value read earlier
+    IfMore                                            the children only when bytes are left
+    Peek offset="N" type="U8|U16|U32" name="var"      a value further on, read without moving
+    TypeSwitch / Case type="A,B" / Default            chooses by the class Mutagen made for the current object
+    WString lengthName="var"                          also keeps the text length
+  Value attributes:
+    field="Prop[.Prop]"                               the Mutagen property it is compared with ("." the list element itself)
+    name="var"                                        keep the value for count, Switch or Bit
+    expect="value"                                    the value the file must hold (bytes: hex)
+    why="..."                                         a value Mutagen doesn't keep, and why
+    encoding="bool|speed|div:N"                       how the stored number maps to the field: bool (not zero),
+                                                      speed ((b - 127) / 1270), div:N (stored / N)
+-->
+<HandReadLayouts game="Starfield" version="1">
+
+  <!-- FSTS: XCNT holds five counts (walk, run, sprint, sneak, swim); DATA the FormIDs in the reverse order (xEdit) -->
+  <Record sig="FSTS" object="FootstepSet">
+    <Sub sig="XCNT">
+      <U32 name="walk" />
+      <U32 name="run" />
+      <U32 name="sprint" />
+      <U32 name="sneak" />
+      <U32 name="swim" />
+    </Sub>
+    <Sub sig="DATA">
+      <Repeat count="$swim" field="SwimFootsteps"><FormID field="FormKey" /></Repeat>
+      <Repeat count="$sneak" field="SneakFootsteps"><FormID field="FormKey" /></Repeat>
+      <Repeat count="$sprint" field="SprintFootsteps"><FormID field="FormKey" /></Repeat>
+      <Repeat count="$run" field="RunFootsteps"><FormID field="FormKey" /></Repeat>
+      <Repeat count="$walk" field="WalkFootsteps"><FormID field="FormKey" /></Repeat>
+    </Sub>
+  </Record>
+
+  <!-- REGN: each RDAT starts a region data block; its first uint32 picks the block (3 weather, 7 sound) -->
+  <Record sig="REGN" object="Region">
+    <Segments start="RDAT">
+      <Sub sig="RDAT">
+        <U32 name="type" />
+        <Switch on="type">
+          <Case value="3">
+            <Object field="Weather">
+              <U8 field="Flags" />
+              <U8 field="Priority" />
+              <Bytes length="2" why="padding, written as zeros" />
+            </Object>
+          </Case>
+          <Case value="7">
+            <Object field="Sounds">
+              <U8 field="Flags" />
+              <U8 field="Priority" />
+              <Bytes length="2" why="padding, written as zeros" />
+            </Object>
+          </Case>
+        </Switch>
+      </Sub>
+      <Generated sigs="RDWT" />
+    </Segments>
+  </Record>
+
+  <!-- Placed traps: NAME is the base object, a projectile (a hazard for PHZD) -->
+  <Record sig="PARW" object="PlacedArrow"><Sub sig="NAME"><FormID field="Projectile" /></Sub></Record>
+  <Record sig="PBEA" object="PlacedBeam"><Sub sig="NAME"><FormID field="Projectile" /></Sub></Record>
+  <Record sig="PFLA" object="PlacedFlame"><Sub sig="NAME"><FormID field="Projectile" /></Sub></Record>
+  <Record sig="PCON" object="PlacedCone"><Sub sig="NAME"><FormID field="Projectile" /></Sub></Record>
+  <Record sig="PBAR" object="PlacedBarrier"><Sub sig="NAME"><FormID field="Projectile" /></Sub></Record>
+  <Record sig="PGRE" object="PlacedTrap"><Sub sig="NAME"><FormID field="Projectile" /></Sub></Record>
+  <Record sig="PHZD" object="PlacedHazard"><Sub sig="NAME"><FormID field="Hazard" /></Sub></Record>
+  <Record sig="PMIS" object="PlacedMissile"><Sub sig="NAME"><FormID field="Projectile" /></Sub></Record>
+
+  <!-- RACE: 64 NAME subrecords name the biped slots in order, then RBPC holds one condition actor value per slot -->
+  <Record sig="RACE" object="Race">
+    <SubRepeat sig="NAME" count="64" field="BipedObjects">
+      <ZString field="Name" />
+    </SubRepeat>
+    <Sub sig="RBPC">
+      <Repeat count="64" field="BipedObjects"><FormID field="Conditions" /></Repeat>
+    </Sub>
+  </Record>
+
+  <!-- PACK idles: IDLF, then IDLC (count), IDLT (timer) and IDLA (the idles) in any order; an IDLF alone is common -->
+  <Record sig="PACK" object="Package">
+    <Object field="IdleAnimations" optional="true">
+      <Sub sig="IDLF"><U8 field="Type" /></Sub>
+      <AnyOrder>
+        <Sub sig="IDLC" optional="true"><U32 name="idleCount" /></Sub>
+        <Sub sig="IDLT" optional="true"><F32 field="TimerSetting" /></Sub>
+        <Sub sig="IDLA" optional="true"><Repeat count="end" field="Animations"><FormID field="FormKey" /></Repeat></Sub>
+      </AnyOrder>
+    </Object>
+  </Record>
+
+  <!-- WTHR clouds: 32 layers spread over RNAM (Y speeds), QNAM (X speeds), PNAM (colors), JNAM (alphas) and NAM1
+       (disabled-layer bits); DALC holds the ambient colors, eight times (sunrise .. late sunset) -->
+  <Record sig="WTHR" object="Weather">
+    <Sub sig="RNAM"><Repeat count="32" field="Clouds"><U8 field="YSpeed" encoding="speed" /></Repeat></Sub>
+    <Sub sig="QNAM"><Repeat count="32" field="Clouds"><U8 field="XSpeed" encoding="speed" /></Repeat></Sub>
+    <Sub sig="PNAM">
+      <Repeat count="end" field="Clouds" prefix="true">
+        <Object field="Colors">
+          <Color field="Sunrise" /><Color field="Day" /><Color field="Sunset" /><Color field="Night" />
+          <Color field="EarlySunrise" /><Color field="LateSunrise" /><Color field="EarlySunset" /><Color field="LateSunset" />
+        </Object>
+      </Repeat>
+    </Sub>
+    <Sub sig="JNAM">
+      <Repeat count="end" field="Clouds" prefix="true">
+        <Object field="Alphas">
+          <F32 field="Sunrise" /><F32 field="Day" /><F32 field="Sunset" /><F32 field="Night" />
+          <F32 field="EarlySunrise" /><F32 field="LateSunrise" /><F32 field="EarlySunset" /><F32 field="LateSunset" />
+        </Object>
+      </Repeat>
+    </Sub>
+    <Sub sig="NAM1">
+      <U32 name="disabled" />
+      <Repeat count="32" field="Clouds" index="i"><Bit of="disabled" index="$i" invert="true" field="Enabled" /></Repeat>
+    </Sub>
+    <Object field="DirectionalAmbientLightingColors">
+      <Sub sig="DALC" field="Sunrise"><Color field="DirectionalXPlus" /><Color field="DirectionalXMinus" /><Color field="DirectionalYPlus" /><Color field="DirectionalYMinus" /><Color field="DirectionalZPlus" /><Color field="DirectionalZMinus" /></Sub>
+      <Sub sig="DALC" field="Day"><Color field="DirectionalXPlus" /><Color field="DirectionalXMinus" /><Color field="DirectionalYPlus" /><Color field="DirectionalYMinus" /><Color field="DirectionalZPlus" /><Color field="DirectionalZMinus" /></Sub>
+      <Sub sig="DALC" field="Sunset"><Color field="DirectionalXPlus" /><Color field="DirectionalXMinus" /><Color field="DirectionalYPlus" /><Color field="DirectionalYMinus" /><Color field="DirectionalZPlus" /><Color field="DirectionalZMinus" /></Sub>
+      <Sub sig="DALC" field="Night"><Color field="DirectionalXPlus" /><Color field="DirectionalXMinus" /><Color field="DirectionalYPlus" /><Color field="DirectionalYMinus" /><Color field="DirectionalZPlus" /><Color field="DirectionalZMinus" /></Sub>
+      <Sub sig="DALC" field="EarlySunrise"><Color field="DirectionalXPlus" /><Color field="DirectionalXMinus" /><Color field="DirectionalYPlus" /><Color field="DirectionalYMinus" /><Color field="DirectionalZPlus" /><Color field="DirectionalZMinus" /></Sub>
+      <Sub sig="DALC" field="LateSunrise"><Color field="DirectionalXPlus" /><Color field="DirectionalXMinus" /><Color field="DirectionalYPlus" /><Color field="DirectionalYMinus" /><Color field="DirectionalZPlus" /><Color field="DirectionalZMinus" /></Sub>
+      <Sub sig="DALC" field="EarlySunset"><Color field="DirectionalXPlus" /><Color field="DirectionalXMinus" /><Color field="DirectionalYPlus" /><Color field="DirectionalYMinus" /><Color field="DirectionalZPlus" /><Color field="DirectionalZMinus" /></Sub>
+      <Sub sig="DALC" field="LateSunset"><Color field="DirectionalXPlus" /><Color field="DirectionalXMinus" /><Color field="DirectionalYPlus" /><Color field="DirectionalYMinus" /><Color field="DirectionalZPlus" /><Color field="DirectionalZMinus" /></Sub>
+    </Object>
+  </Record>
+
+  <!-- PERK effects: ranks run PRRK .. PRRF; in a rank each effect runs PRKE .. PRKF. PRKE: type (0 quest, 1 ability,
+       2 entry point), rank, priority. The rest of an effect follows in any order: DATA (by type), EPFT (the parameter
+       type), EPFD (the parameters, by entry point function and parameter type), EPF2 button label, EPF3 flags, EPFB
+       entry ID, and the conditions (PRKC + CTDA, generated). -->
+  <Record sig="PERK" object="Perk">
+    <Segments start="PRRK" end="PRRF" field="Ranks" skipStart="true" others="generated">
+      <Segments start="PRKE" end="PRKF" field="Effects">
+        <Sub sig="PRKE">
+          <U8 name="effectType" />
+          <U8 field="Rank" />
+          <U8 field="Priority" />
+        </Sub>
+        <AnyOrder>
+          <Generated sigs="PRKC,CTDA,CIS1,CIS2" />
+          <Sub sig="DATA">
+            <Switch on="effectType">
+              <Case value="0" type="PerkQuestEffect">
+                <FormID field="Quest" />
+                <U16 field="Stage" />
+              </Case>
+              <Case value="1" type="PerkAbilityEffect">
+                <FormID field="Ability" />
+              </Case>
+              <Case value="2">
+                <U8 field="EntryPoint" />
+                <U8 name="function" />
+                <U8 field="PerkConditionTabCount" />
+                <Switch on="function">
+                  <Case value="1,2,3" />
+                  <Case value="4" type="PerkEntryPointAddRangeToValue" />
+                  <Case value="5" type="PerkEntryPointModifyActorValue"><Const field="Modification" value="AddAVMult" /></Case>
+                  <Case value="12" type="PerkEntryPointModifyActorValue"><Const field="Modification" value="SetToAVMult" /></Case>
+                  <Case value="13" type="PerkEntryPointModifyActorValue"><Const field="Modification" value="MultiplyAVMult" /></Case>
+                  <Case value="14" type="PerkEntryPointModifyActorValue"><Const field="Modification" value="MultiplyOnePlusAVMult" /></Case>
+                  <Case value="6" type="PerkEntryPointAbsoluteValue"><Const field="Negative" value="False" /></Case>
+                  <Case value="7" type="PerkEntryPointAbsoluteValue"><Const field="Negative" value="True" /></Case>
+                  <Case value="8" type="PerkEntryPointAddLeveledItem" />
+                  <Case value="9" type="PerkEntryPointAddActivateChoice" />
+                  <Case value="10" type="PerkEntryPointSelectSpell" />
+                  <Case value="11" type="PerkEntryPointSelectText" />
+                  <Case value="15" type="PerkEntryPointSetText" />
+                  <Case value="16" type="PerkEntryPointLegendaryMagicEffectEvent" />
+                  <Case value="17" type="PerkEntryPointLegendaryGravitational" />
+                </Switch>
+              </Case>
+            </Switch>
+          </Sub>
+          <Sub sig="EPFT" optional="true"><U8 name="parameterType" /></Sub>
+          <Sub sig="EPFD" optional="true">
+            <Switch on="function">
+              <Case value="1,2,3">
+                <Switch on="parameterType">
+                  <Case value="1" type="PerkEntryPointModifyValue"><F32 field="Value" /></Case>
+                  <Case value="2" type="PerkEntryPointModifyValues"><F32 field="Value" /><F32 field="Value2" /></Case>
+                </Switch>
+              </Case>
+              <Case value="4"><F32 field="From" /><F32 field="To" /></Case>
+              <Case value="5,12,13,14"><FormID field="ActorValue" /><F32 field="Value" /></Case>
+              <Case value="8"><FormID field="Item" /></Case>
+              <Case value="9,10,17"><FormID field="Spell" /></Case>
+              <Case value="11"><ZString field="Text" /></Case>
+              <Case value="15"><LString field="Text" /></Case>
+              <Case value="16"><FormID field="Projectile" /></Case>
+            </Switch>
+          </Sub>
+          <Sub sig="EPF2" optional="true"><LString field="ButtonLabel" /></Sub>
+          <Sub sig="EPF3" optional="true"><U16 field="Flags" /></Sub>
+          <Sub sig="EPFB" optional="true"><U16 field="PerkEntryID" /></Sub>
+        </AnyOrder>
+      </Segments>
+    </Segments>
+  </Record>
+
+  <!-- An object mod property, in OMOD DATA and in OBTS: 24 bytes. Value type: 0 int, 1 float, 2 bool, 3 string (4
+       bytes), 4 FormID + int, 5 enum, 6 FormID + float. -->
+  <Define name="ObjectModProperty">
+    <U8 name="valueType" />
+    <Bytes length="3" expect="000000" />
+    <U8 field="FunctionType" />
+    <Bytes length="3" expect="000000" />
+    <U32 field="Property" />
+    <Switch on="valueType">
+      <Case value="0" type="ObjectModIntProperty`1"><U32 field="Value" /><U32 field="Value2" /></Case>
+      <Case value="1" type="ObjectModFloatProperty`1"><F32 field="Value" /><F32 field="Value2" /></Case>
+      <Case value="2" type="ObjectModBoolProperty`1">
+        <U8 field="Value" encoding="bool" /><Bytes length="3" expect="000000" />
+        <U8 field="Value2" encoding="bool" /><Bytes length="3" expect="000000" />
+      </Case>
+      <Case value="3" type="ObjectModStringProperty`1"><ZString length="4" field="Value" /><U32 field="Unused" /></Case>
+      <Case value="4" type="ObjectModFormLinkIntProperty`1"><FormID field="Record" /><U32 field="Value" /></Case>
+      <Case value="5" type="ObjectModEnumProperty`1"><U32 field="EnumIntValue" /><U32 field="Unused" /></Case>
+      <Case value="6" type="ObjectModFormLinkFloatProperty`1"><FormID field="Record" /><F32 field="Value" /></Case>
+    </Switch>
+    <F32 field="Step" />
+  </Define>
+
+  <!-- OBTS: one object template (WEAP, ARMO, NPC_, FLOR, GBFM keep a list of them, each OBTF? FULL? OBTS) -->
+  <Define name="ObjectTemplate">
+    <U32 name="includeCount" />
+    <U32 name="propertyCount" />
+    <U16 field="LevelMin" />
+    <U16 field="LevelMax" />
+    <I16 field="AddonIndex" />
+    <U8 field="Default" encoding="bool" />
+    <U8 name="keywordCount" />
+    <Repeat count="$keywordCount" field="Keywords"><FormID field="FormKey" /></Repeat>
+    <U8 field="MinLevelForRanks" />
+    <U8 field="AltLevelsPerTier" />
+    <Repeat count="$includeCount" field="Includes">
+      <FormID field="Mod" /><U8 field="AttachPointIndex" /><U8 field="Optional" encoding="bool" /><U8 field="DontUseAll" encoding="bool" />
+    </Repeat>
+    <Repeat count="$propertyCount" field="Properties"><Use name="ObjectModProperty" /></Repeat>
+  </Define>
+  <Define name="ObjectTemplates">
+    <Segments start="OBTS" field="ObjectTemplates" others="generated" stopAt="STOP">
+      <Sub sig="OBTS"><Use name="ObjectTemplate" /></Sub>
+    </Segments>
+  </Define>
+  <Record sig="WEAP" object="Weapon"><Use name="ObjectTemplates" /></Record>
+  <Record sig="ARMO" object="Armor"><Use name="ObjectTemplates" /></Record>
+  <Record sig="NPC_" object="Npc"><Use name="ObjectTemplates" /></Record>
+  <Record sig="FLOR" object="Flora"><Use name="ObjectTemplates" /></Record>
+  <Record sig="GBFM" object="GenericBaseForm"><Use name="ObjectTemplates" /></Record>
+
+  <!-- OMOD DATA: counts, the target type's name (it picks the Mutagen class), then the header, attach slots, includes
+       and properties. No DATA: an UnknownObjectModification. -->
+  <Record sig="OMOD" object="AObjectModification">
+    <Sub sig="DATA" optional="true">
+      <U32 name="includeCount" />
+      <U32 name="propertyCount" />
+      <U16 field="Unknown" />
+      <I32String name="target" />
+      <Switch on="target">
+        <Case value="TESObjectWEAP_InstanceData" type="WeaponModification" />
+        <Case value="TESObjectARMOR_InstanceData" type="ArmorModification" />
+        <Case value="TESNPC_InstanceData" type="NpcModification" />
+        <Case value="TESFlora_InstanceData" type="FloraModification" />
+        <Case value="Container_InstanceData" type="ContainerModification" />
+        <Case value="Spaceship_InstanceData" type="SpaceshipModification" />
+        <Case value=" NONE" type="ObjectModification" />
+        <Default type="UnknownObjectModification"><Const field="ObjectModificationTargetName" value="$target" /></Default>
+      </Switch>
+      <U8 field="MaxRank" />
+      <U8 field="LevelTierScaledOffset" />
+      <FormID field="AttachPoint" />
+      <U32 name="slotCount" />
+      <Repeat count="$slotCount" field="AttachParentSlots"><FormID field="FormKey" /></Repeat>
+      <U32 field="Unknown3" />
+      <Repeat count="$includeCount" field="Includes">
+        <FormID field="Mod" /><U8 field="MinimumLevel" /><U8 field="Optional" encoding="bool" /><U8 field="DoNotUseAll" encoding="bool" />
+      </Repeat>
+      <Repeat count="$propertyCount" field="Properties"><Use name="ObjectModProperty" /></Repeat>
+    </Sub>
+  </Record>
+
+  <!-- VMAD: the script adapter, on any record that has one. Version, object format, the scripts, then (by adapter
+       type, only when bytes are left) the fragments. A script with an empty name has nothing after it. Object values
+       are FormID + alias + unused in object format 1, unused + alias + FormID in format 2. -->
+  <Define name="ScriptObject">
+    <Switch on="objectFormat">
+      <Case value="2"><U16 field="Unused" /><I16 field="Alias" /><FormID field="Object" /></Case>
+      <Case value="1"><FormID field="Object" /><I16 field="Alias" /><U16 field="Unused" /></Case>
+    </Switch>
+  </Define>
+  <Define name="ScriptProperty">
+    <WString field="Name" />
+    <U8 name="propertyType" />
+    <U8 field="Flags" />
+    <Switch on="propertyType">
+      <Case value="0" type="ScriptProperty" />
+      <Case value="1" type="ScriptObjectProperty"><Use name="ScriptObject" /></Case>
+      <Case value="2" type="ScriptStringProperty"><WString field="Data" /></Case>
+      <Case value="3" type="ScriptIntProperty"><I32 field="Data" /></Case>
+      <Case value="4" type="ScriptFloatProperty"><F32 field="Data" /></Case>
+      <Case value="5" type="ScriptBoolProperty"><U8 field="Data" encoding="bool" /></Case>
+      <Case value="7" type="ScriptStructProperty">
+        <Repeat count="1" field="Members">
+          <U32 name="memberCount" />
+          <Repeat count="$memberCount" field="Properties"><Use name="ScriptProperty" /></Repeat>
+        </Repeat>
+      </Case>
+      <Case value="11" type="ScriptObjectListProperty">
+        <U32 name="itemCount" /><Repeat count="$itemCount" field="Objects"><Use name="ScriptObject" /></Repeat>
+      </Case>
+      <Case value="12" type="ScriptStringListProperty">
+        <U32 name="itemCount" /><Repeat count="$itemCount" field="Data"><WString field="." /></Repeat>
+      </Case>
+      <Case value="13" type="ScriptIntListProperty">
+        <U32 name="itemCount" /><Repeat count="$itemCount" field="Data"><I32 field="." /></Repeat>
+      </Case>
+      <Case value="14" type="ScriptFloatListProperty">
+        <U32 name="itemCount" /><Repeat count="$itemCount" field="Data"><F32 field="." /></Repeat>
+      </Case>
+      <Case value="15" type="ScriptBoolListProperty">
+        <U32 name="itemCount" /><Repeat count="$itemCount" field="Data"><U8 field="." encoding="bool" /></Repeat>
+      </Case>
+      <Case value="17" type="ScriptStructListProperty">
+        <U32 name="itemCount" />
+        <Repeat count="$itemCount" field="Structs">
+          <I32 name="memberCount" />
+          <Repeat count="$memberCount" field="Members"><Use name="ScriptProperty" /></Repeat>
+        </Repeat>
+      </Case>
+    </Switch>
+  </Define>
+  <Define name="ScriptEntry">
+    <WString field="Name" lengthName="nameLength" />
+    <Switch on="nameLength">
+      <Case value="0" />
+      <Default>
+        <U8 field="Flags" />
+        <U16 name="propertyCount" />
+        <Repeat count="$propertyCount" field="Properties"><Use name="ScriptProperty" /></Repeat>
+      </Default>
+    </Switch>
+  </Define>
+  <Define name="ScriptFragment">
+    <U8 field="ExtraBindDataVersion" /><WString field="ScriptName" /><WString field="FragmentName" />
+  </Define>
+  <Define name="ScriptFragments">
+    <U8 field="ExtraBindDataVersion" />
+    <U8 name="fragmentFlags" />
+    <Object field="Script"><Use name="ScriptEntry" /></Object>
+    <Switch on="fragmentFlags" mask="0x1"><Case value="1"><Object field="OnBegin"><Use name="ScriptFragment" /></Object></Case><Default /></Switch>
+    <Switch on="fragmentFlags" mask="0x2"><Case value="2"><Object field="OnEnd"><Use name="ScriptFragment" /></Object></Case><Default /></Switch>
+  </Define>
+  <AnyRecord sig="VMAD">
+    <Sub sig="VMAD" field="VirtualMachineAdapter">
+      <I16 field="Version" />
+      <U16 field="ObjectFormat" name="objectFormat" />
+      <U16 name="scriptCount" />
+      <Repeat count="$scriptCount" field="Scripts"><Use name="ScriptEntry" /></Repeat>
+      <TypeSwitch>
+        <Case type="VirtualMachineAdapter" />
+        <Case type="QuestAdapter">
+          <IfMore>
+            <U8 field="ExtraBindDataVersion" />
+            <U16 name="fragmentCount" />
+            <Object field="Script"><Use name="ScriptEntry" /></Object>
+            <Repeat count="$fragmentCount" field="Fragments">
+              <U32 field="Stage" /><U32 field="StageIndex" /><I8 field="Unknown2" />
+              <WString field="ScriptName" /><WString field="FragmentName" />
+            </Repeat>
+            <U16 name="aliasCount" />
+            <Repeat count="$aliasCount" field="Aliases">
+              <Note>the object is read in the alias's own object format, which follows it (offset 10)</Note>
+              <Peek offset="10" type="U16" name="objectFormat" />
+              <Object field="Property"><Use name="ScriptObject" /></Object>
+              <I16 field="Version" />
+              <U16 field="ObjectFormat" name="objectFormat" />
+              <U16 name="scriptCount" />
+              <Repeat count="$scriptCount" field="Scripts"><Use name="ScriptEntry" /></Repeat>
+            </Repeat>
+          </IfMore>
+        </Case>
+        <Case type="DialogResponsesAdapter">
+          <IfMore><Object field="ScriptFragments"><Use name="ScriptFragments" /></Object></IfMore>
+        </Case>
+        <Case type="SceneAdapter">
+          <IfMore>
+            <Object field="ScriptFragments">
+              <Use name="ScriptFragments" />
+              <U16 name="phaseCount" />
+              <Repeat count="$phaseCount" field="PhaseFragments">
+                <U8 field="Flags" /><U32 field="Index" /><U8 field="Unknown" />
+                <WString field="ScriptName" /><WString field="FragmentName" />
+              </Repeat>
+            </Object>
+          </IfMore>
+        </Case>
+        <Case type="PackageAdapter">
+          <IfMore>
+            <Object field="ScriptFragments">
+              <Use name="ScriptFragments" />
+              <Switch on="fragmentFlags" mask="0x4"><Case value="4"><Object field="OnChange"><Use name="ScriptFragment" /></Object></Case><Default /></Switch>
+            </Object>
+          </IfMore>
+        </Case>
+        <Case type="PerkAdapter">
+          <IfMore>
+            <Object field="ScriptFragments">
+              <U8 field="ExtraBindDataVersion" />
+              <Object field="Script"><Use name="ScriptEntry" /></Object>
+              <U16 name="fragmentCount" />
+              <Repeat count="$fragmentCount" field="Fragments">
+                <U32 field="Index" /><I8 field="Unknown2" /><WString field="ScriptName" /><WString field="FragmentName" />
+              </Repeat>
+            </Object>
+          </IfMore>
+        </Case>
+        <Case type="VirtualMachineAdapterIndexed">
+          <IfMore>
+            <Object field="ScriptFragments">
+              <U8 field="ExtraBindDataVersion" />
+              <Object field="Script"><Use name="ScriptEntry" /></Object>
+              <U16 name="fragmentCount" />
+              <Repeat count="$fragmentCount" field="Fragments">
+                <U32 field="FragmentIndex" /><I8 field="Unknown2" /><WString field="ScriptName" /><WString field="FragmentName" />
+              </Repeat>
+            </Object>
+          </IfMore>
+        </Case>
+      </TypeSwitch>
+    </Sub>
+  </AnyRecord>
+</HandReadLayouts>
