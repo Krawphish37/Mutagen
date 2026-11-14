@@ -314,16 +314,16 @@ namespace Mutagen.Bethesda.Starfield
         #region UseAdaptiveLighting
         public Boolean UseAdaptiveLighting { get; set; } = default(Boolean);
         #endregion
-        #region UseAdaptiveLightingUnused
+        #region UseAdaptiveLightingUnknown
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _UseAdaptiveLightingUnused = new byte[1];
-        public MemorySlice<Byte> UseAdaptiveLightingUnused
+        private MemorySlice<Byte> _UseAdaptiveLightingUnknown = new byte[1];
+        public MemorySlice<Byte> UseAdaptiveLightingUnknown
         {
-            get => _UseAdaptiveLightingUnused;
-            set => this._UseAdaptiveLightingUnused = value;
+            get => _UseAdaptiveLightingUnknown;
+            set => this._UseAdaptiveLightingUnknown = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> ILightGetter.UseAdaptiveLightingUnused => this.UseAdaptiveLightingUnused;
+        ReadOnlyMemorySlice<Byte> ILightGetter.UseAdaptiveLightingUnknown => this.UseAdaptiveLightingUnknown;
         #endregion
         #region AdaptiveLightEc
         public Single AdaptiveLightEc { get; set; } = default(Single);
@@ -446,7 +446,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Type = initialValue;
                 this.FlickerEffect = initialValue;
                 this.UseAdaptiveLighting = initialValue;
-                this.UseAdaptiveLightingUnused = initialValue;
+                this.UseAdaptiveLightingUnknown = initialValue;
                 this.AdaptiveLightEc = initialValue;
                 this.AdaptiveLightEv100Min = initialValue;
                 this.AdaptiveLightEv100Max = initialValue;
@@ -502,7 +502,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Type,
                 TItem FlickerEffect,
                 TItem UseAdaptiveLighting,
-                TItem UseAdaptiveLightingUnused,
+                TItem UseAdaptiveLightingUnknown,
                 TItem AdaptiveLightEc,
                 TItem AdaptiveLightEv100Min,
                 TItem AdaptiveLightEv100Max,
@@ -557,7 +557,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Type = Type;
                 this.FlickerEffect = FlickerEffect;
                 this.UseAdaptiveLighting = UseAdaptiveLighting;
-                this.UseAdaptiveLightingUnused = UseAdaptiveLightingUnused;
+                this.UseAdaptiveLightingUnknown = UseAdaptiveLightingUnknown;
                 this.AdaptiveLightEc = AdaptiveLightEc;
                 this.AdaptiveLightEv100Min = AdaptiveLightEv100Min;
                 this.AdaptiveLightEv100Max = AdaptiveLightEv100Max;
@@ -612,7 +612,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Type;
             public TItem FlickerEffect;
             public TItem UseAdaptiveLighting;
-            public TItem UseAdaptiveLightingUnused;
+            public TItem UseAdaptiveLightingUnknown;
             public TItem AdaptiveLightEc;
             public TItem AdaptiveLightEv100Min;
             public TItem AdaptiveLightEv100Max;
@@ -669,7 +669,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Type, rhs.Type)) return false;
                 if (!object.Equals(this.FlickerEffect, rhs.FlickerEffect)) return false;
                 if (!object.Equals(this.UseAdaptiveLighting, rhs.UseAdaptiveLighting)) return false;
-                if (!object.Equals(this.UseAdaptiveLightingUnused, rhs.UseAdaptiveLightingUnused)) return false;
+                if (!object.Equals(this.UseAdaptiveLightingUnknown, rhs.UseAdaptiveLightingUnknown)) return false;
                 if (!object.Equals(this.AdaptiveLightEc, rhs.AdaptiveLightEc)) return false;
                 if (!object.Equals(this.AdaptiveLightEv100Min, rhs.AdaptiveLightEv100Min)) return false;
                 if (!object.Equals(this.AdaptiveLightEv100Max, rhs.AdaptiveLightEv100Max)) return false;
@@ -718,7 +718,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Type);
                 hash.Add(this.FlickerEffect);
                 hash.Add(this.UseAdaptiveLighting);
-                hash.Add(this.UseAdaptiveLightingUnused);
+                hash.Add(this.UseAdaptiveLightingUnknown);
                 hash.Add(this.AdaptiveLightEc);
                 hash.Add(this.AdaptiveLightEv100Min);
                 hash.Add(this.AdaptiveLightEv100Max);
@@ -828,7 +828,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Type)) return false;
                 if (!eval(this.FlickerEffect)) return false;
                 if (!eval(this.UseAdaptiveLighting)) return false;
-                if (!eval(this.UseAdaptiveLightingUnused)) return false;
+                if (!eval(this.UseAdaptiveLightingUnknown)) return false;
                 if (!eval(this.AdaptiveLightEc)) return false;
                 if (!eval(this.AdaptiveLightEv100Min)) return false;
                 if (!eval(this.AdaptiveLightEv100Max)) return false;
@@ -956,7 +956,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Type)) return true;
                 if (eval(this.FlickerEffect)) return true;
                 if (eval(this.UseAdaptiveLighting)) return true;
-                if (eval(this.UseAdaptiveLightingUnused)) return true;
+                if (eval(this.UseAdaptiveLightingUnknown)) return true;
                 if (eval(this.AdaptiveLightEc)) return true;
                 if (eval(this.AdaptiveLightEv100Min)) return true;
                 if (eval(this.AdaptiveLightEv100Max)) return true;
@@ -1076,7 +1076,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Type = eval(this.Type);
                 obj.FlickerEffect = eval(this.FlickerEffect);
                 obj.UseAdaptiveLighting = eval(this.UseAdaptiveLighting);
-                obj.UseAdaptiveLightingUnused = eval(this.UseAdaptiveLightingUnused);
+                obj.UseAdaptiveLightingUnknown = eval(this.UseAdaptiveLightingUnknown);
                 obj.AdaptiveLightEc = eval(this.AdaptiveLightEc);
                 obj.AdaptiveLightEv100Min = eval(this.AdaptiveLightEv100Min);
                 obj.AdaptiveLightEv100Max = eval(this.AdaptiveLightEv100Max);
@@ -1275,9 +1275,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(UseAdaptiveLighting, "UseAdaptiveLighting");
                     }
-                    if (printMask?.UseAdaptiveLightingUnused ?? true)
+                    if (printMask?.UseAdaptiveLightingUnknown ?? true)
                     {
-                        sb.AppendItem(UseAdaptiveLightingUnused, "UseAdaptiveLightingUnused");
+                        sb.AppendItem(UseAdaptiveLightingUnknown, "UseAdaptiveLightingUnknown");
                     }
                     if (printMask?.AdaptiveLightEc ?? true)
                     {
@@ -1372,7 +1372,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Type;
             public Exception? FlickerEffect;
             public Exception? UseAdaptiveLighting;
-            public Exception? UseAdaptiveLightingUnused;
+            public Exception? UseAdaptiveLightingUnknown;
             public Exception? AdaptiveLightEc;
             public Exception? AdaptiveLightEv100Min;
             public Exception? AdaptiveLightEv100Max;
@@ -1454,8 +1454,8 @@ namespace Mutagen.Bethesda.Starfield
                         return FlickerEffect;
                     case Light_FieldIndex.UseAdaptiveLighting:
                         return UseAdaptiveLighting;
-                    case Light_FieldIndex.UseAdaptiveLightingUnused:
-                        return UseAdaptiveLightingUnused;
+                    case Light_FieldIndex.UseAdaptiveLightingUnknown:
+                        return UseAdaptiveLightingUnknown;
                     case Light_FieldIndex.AdaptiveLightEc:
                         return AdaptiveLightEc;
                     case Light_FieldIndex.AdaptiveLightEv100Min:
@@ -1582,8 +1582,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Light_FieldIndex.UseAdaptiveLighting:
                         this.UseAdaptiveLighting = ex;
                         break;
-                    case Light_FieldIndex.UseAdaptiveLightingUnused:
-                        this.UseAdaptiveLightingUnused = ex;
+                    case Light_FieldIndex.UseAdaptiveLightingUnknown:
+                        this.UseAdaptiveLightingUnknown = ex;
                         break;
                     case Light_FieldIndex.AdaptiveLightEc:
                         this.AdaptiveLightEc = ex;
@@ -1725,8 +1725,8 @@ namespace Mutagen.Bethesda.Starfield
                     case Light_FieldIndex.UseAdaptiveLighting:
                         this.UseAdaptiveLighting = (Exception?)obj;
                         break;
-                    case Light_FieldIndex.UseAdaptiveLightingUnused:
-                        this.UseAdaptiveLightingUnused = (Exception?)obj;
+                    case Light_FieldIndex.UseAdaptiveLightingUnknown:
+                        this.UseAdaptiveLightingUnknown = (Exception?)obj;
                         break;
                     case Light_FieldIndex.AdaptiveLightEc:
                         this.AdaptiveLightEc = (Exception?)obj;
@@ -1806,7 +1806,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Type != null) return true;
                 if (FlickerEffect != null) return true;
                 if (UseAdaptiveLighting != null) return true;
-                if (UseAdaptiveLightingUnused != null) return true;
+                if (UseAdaptiveLightingUnknown != null) return true;
                 if (AdaptiveLightEc != null) return true;
                 if (AdaptiveLightEv100Min != null) return true;
                 if (AdaptiveLightEv100Max != null) return true;
@@ -1972,7 +1972,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(UseAdaptiveLighting, "UseAdaptiveLighting");
                 }
                 {
-                    sb.AppendItem(UseAdaptiveLightingUnused, "UseAdaptiveLightingUnused");
+                    sb.AppendItem(UseAdaptiveLightingUnknown, "UseAdaptiveLightingUnknown");
                 }
                 {
                     sb.AppendItem(AdaptiveLightEc, "AdaptiveLightEc");
@@ -2041,7 +2041,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Type = this.Type.Combine(rhs.Type);
                 ret.FlickerEffect = this.FlickerEffect.Combine(rhs.FlickerEffect);
                 ret.UseAdaptiveLighting = this.UseAdaptiveLighting.Combine(rhs.UseAdaptiveLighting);
-                ret.UseAdaptiveLightingUnused = this.UseAdaptiveLightingUnused.Combine(rhs.UseAdaptiveLightingUnused);
+                ret.UseAdaptiveLightingUnknown = this.UseAdaptiveLightingUnknown.Combine(rhs.UseAdaptiveLightingUnknown);
                 ret.AdaptiveLightEc = this.AdaptiveLightEc.Combine(rhs.AdaptiveLightEc);
                 ret.AdaptiveLightEv100Min = this.AdaptiveLightEv100Min.Combine(rhs.AdaptiveLightEv100Min);
                 ret.AdaptiveLightEv100Max = this.AdaptiveLightEv100Max.Combine(rhs.AdaptiveLightEv100Max);
@@ -2107,7 +2107,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Type;
             public bool FlickerEffect;
             public bool UseAdaptiveLighting;
-            public bool UseAdaptiveLightingUnused;
+            public bool UseAdaptiveLightingUnknown;
             public bool AdaptiveLightEc;
             public bool AdaptiveLightEv100Min;
             public bool AdaptiveLightEv100Max;
@@ -2151,7 +2151,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Type = defaultOn;
                 this.FlickerEffect = defaultOn;
                 this.UseAdaptiveLighting = defaultOn;
-                this.UseAdaptiveLightingUnused = defaultOn;
+                this.UseAdaptiveLightingUnknown = defaultOn;
                 this.AdaptiveLightEc = defaultOn;
                 this.AdaptiveLightEv100Min = defaultOn;
                 this.AdaptiveLightEv100Max = defaultOn;
@@ -2197,7 +2197,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Type, null));
                 ret.Add((FlickerEffect, null));
                 ret.Add((UseAdaptiveLighting, null));
-                ret.Add((UseAdaptiveLightingUnused, null));
+                ret.Add((UseAdaptiveLightingUnknown, null));
                 ret.Add((AdaptiveLightEc, null));
                 ret.Add((AdaptiveLightEv100Min, null));
                 ret.Add((AdaptiveLightEv100Max, null));
@@ -2431,7 +2431,7 @@ namespace Mutagen.Bethesda.Starfield
         new Light.LightType Type { get; set; }
         new Light.FlickerEffectOption FlickerEffect { get; set; }
         new Boolean UseAdaptiveLighting { get; set; }
-        new MemorySlice<Byte> UseAdaptiveLightingUnused { get; set; }
+        new MemorySlice<Byte> UseAdaptiveLightingUnknown { get; set; }
         new Single AdaptiveLightEc { get; set; }
         new Single AdaptiveLightEv100Min { get; set; }
         new Single AdaptiveLightEv100Max { get; set; }
@@ -2543,7 +2543,7 @@ namespace Mutagen.Bethesda.Starfield
         Light.LightType Type { get; }
         Light.FlickerEffectOption FlickerEffect { get; }
         Boolean UseAdaptiveLighting { get; }
-        ReadOnlyMemorySlice<Byte> UseAdaptiveLightingUnused { get; }
+        ReadOnlyMemorySlice<Byte> UseAdaptiveLightingUnknown { get; }
         Single AdaptiveLightEc { get; }
         Single AdaptiveLightEv100Min { get; }
         Single AdaptiveLightEv100Max { get; }
@@ -2769,7 +2769,7 @@ namespace Mutagen.Bethesda.Starfield
         Type = 36,
         FlickerEffect = 37,
         UseAdaptiveLighting = 38,
-        UseAdaptiveLightingUnused = 39,
+        UseAdaptiveLightingUnknown = 39,
         AdaptiveLightEc = 40,
         AdaptiveLightEv100Min = 41,
         AdaptiveLightEv100Max = 42,
@@ -2937,7 +2937,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Type = default(Light.LightType);
             item.FlickerEffect = default(Light.FlickerEffectOption);
             item.UseAdaptiveLighting = default(Boolean);
-            item.UseAdaptiveLightingUnused = new byte[1];
+            item.UseAdaptiveLightingUnknown = new byte[1];
             item.AdaptiveLightEc = default(Single);
             item.AdaptiveLightEv100Min = default(Single);
             item.AdaptiveLightEv100Max = default(Single);
@@ -3144,7 +3144,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.Type = item.Type == rhs.Type;
             ret.FlickerEffect = item.FlickerEffect == rhs.FlickerEffect;
             ret.UseAdaptiveLighting = item.UseAdaptiveLighting == rhs.UseAdaptiveLighting;
-            ret.UseAdaptiveLightingUnused = MemoryExtensions.SequenceEqual(item.UseAdaptiveLightingUnused.Span, rhs.UseAdaptiveLightingUnused.Span);
+            ret.UseAdaptiveLightingUnknown = MemoryExtensions.SequenceEqual(item.UseAdaptiveLightingUnknown.Span, rhs.UseAdaptiveLightingUnknown.Span);
             ret.AdaptiveLightEc = item.AdaptiveLightEc.EqualsWithin(rhs.AdaptiveLightEc);
             ret.AdaptiveLightEv100Min = item.AdaptiveLightEv100Min.EqualsWithin(rhs.AdaptiveLightEv100Min);
             ret.AdaptiveLightEv100Max = item.AdaptiveLightEv100Max.EqualsWithin(rhs.AdaptiveLightEv100Max);
@@ -3370,9 +3370,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.UseAdaptiveLighting, "UseAdaptiveLighting");
             }
-            if (printMask?.UseAdaptiveLightingUnused ?? true)
+            if (printMask?.UseAdaptiveLightingUnknown ?? true)
             {
-                sb.AppendLine($"UseAdaptiveLightingUnused => {SpanExt.ToHexString(item.UseAdaptiveLightingUnused)}");
+                sb.AppendLine($"UseAdaptiveLightingUnknown => {SpanExt.ToHexString(item.UseAdaptiveLightingUnknown)}");
             }
             if (printMask?.AdaptiveLightEc ?? true)
             {
@@ -3631,9 +3631,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.UseAdaptiveLighting != rhs.UseAdaptiveLighting) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)Light_FieldIndex.UseAdaptiveLightingUnused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)Light_FieldIndex.UseAdaptiveLightingUnknown) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.UseAdaptiveLightingUnused.Span, rhs.UseAdaptiveLightingUnused.Span)) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.UseAdaptiveLightingUnknown.Span, rhs.UseAdaptiveLightingUnknown.Span)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)Light_FieldIndex.AdaptiveLightEc) ?? true))
             {
@@ -3801,7 +3801,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Type);
             hash.Add(item.FlickerEffect);
             hash.Add(item.UseAdaptiveLighting);
-            hash.AddBytes(item.UseAdaptiveLightingUnused);
+            hash.AddBytes(item.UseAdaptiveLightingUnknown);
             hash.Add(item.AdaptiveLightEc);
             hash.Add(item.AdaptiveLightEv100Min);
             hash.Add(item.AdaptiveLightEv100Max);
@@ -4358,9 +4358,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.UseAdaptiveLighting = rhs.UseAdaptiveLighting;
             }
-            if ((copyMask?.GetShouldTranslate((int)Light_FieldIndex.UseAdaptiveLightingUnused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)Light_FieldIndex.UseAdaptiveLightingUnknown) ?? true))
             {
-                item.UseAdaptiveLightingUnused = rhs.UseAdaptiveLightingUnused.ToArray();
+                item.UseAdaptiveLightingUnknown = rhs.UseAdaptiveLightingUnknown.ToArray();
             }
             if ((copyMask?.GetShouldTranslate((int)Light_FieldIndex.AdaptiveLightEc) ?? true))
             {
@@ -4821,7 +4821,7 @@ namespace Mutagen.Bethesda.Starfield
                 writer.Write(item.UseAdaptiveLighting);
                 ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.UseAdaptiveLightingUnused);
+                    item: item.UseAdaptiveLightingUnknown);
                 FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
                     item: item.AdaptiveLightEc);
@@ -5113,7 +5113,7 @@ namespace Mutagen.Bethesda.Starfield
                         length: 1);
                     if (dataFrame.Remaining < 1) return null;
                     item.UseAdaptiveLighting = dataFrame.ReadBoolean();
-                    item.UseAdaptiveLightingUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(1));
+                    item.UseAdaptiveLightingUnknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(1));
                     if (dataFrame.Remaining < 4) return null;
                     item.AdaptiveLightEc = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (dataFrame.Remaining < 4) return null;
@@ -5385,10 +5385,10 @@ namespace Mutagen.Bethesda.Starfield
         private bool _UseAdaptiveLighting_IsSet => _DAT2Location.HasValue && _DAT2Location!.Value.Max - _UseAdaptiveLightingLocation + 1 >= 1;
         public Boolean UseAdaptiveLighting => _UseAdaptiveLighting_IsSet ? _recordData.Slice(_UseAdaptiveLightingLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
-        #region UseAdaptiveLightingUnused
-        private int _UseAdaptiveLightingUnusedLocation => _DAT2Location!.Value.Min + 0x3B;
-        private bool _UseAdaptiveLightingUnused_IsSet => _DAT2Location.HasValue;
-        public ReadOnlyMemorySlice<Byte> UseAdaptiveLightingUnused => _UseAdaptiveLightingUnused_IsSet ? _recordData.Span.Slice(_UseAdaptiveLightingUnusedLocation, 1).ToArray() : UtilityTranslation.Zeros.Slice(0, 1);
+        #region UseAdaptiveLightingUnknown
+        private int _UseAdaptiveLightingUnknownLocation => _DAT2Location!.Value.Min + 0x3B;
+        private bool _UseAdaptiveLightingUnknown_IsSet => _DAT2Location.HasValue;
+        public ReadOnlyMemorySlice<Byte> UseAdaptiveLightingUnknown => _UseAdaptiveLightingUnknown_IsSet ? _recordData.Span.Slice(_UseAdaptiveLightingUnknownLocation, 1).ToArray() : UtilityTranslation.Zeros.Slice(0, 1);
         #endregion
         #region AdaptiveLightEc
         private int _AdaptiveLightEcLocation => _DAT2Location!.Value.Min + 0x3C;

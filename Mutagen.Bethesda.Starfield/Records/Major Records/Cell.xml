@@ -72,7 +72,7 @@
     <Fields>
       <P2Int32 name="Point" />
       <Enum name="Flags" enumName="CellGrid.Flag" byteLength="1" />
-      <ByteArray name="Unused" byteLength="3" nullable="False" />
+      <ByteArray name="Unknown" byteLength="3" nullable="False" />
     </Fields>
   </Object>
   <Object name="CellLighting" objType="Subrecord" recordType="XCLL">
@@ -104,7 +104,7 @@
       <Float name="FarHeightMid" />
       <Float name="FarHeightRange" />
       <Enum name="InteriorType" enumName="Cell.InteriorType" byteLength="1" />
-      <ByteArray name="InteriorTypeUnused" byteLength="3" nullable="False" />
+      <ByteArray name="InteriorTypeUnknown" byteLength="3" nullable="False" />
     </Fields>
   </Object>
   <Object name="WaterCurrentVelocity" objType="Subrecord">

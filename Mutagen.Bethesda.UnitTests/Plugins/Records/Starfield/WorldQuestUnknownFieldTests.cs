@@ -68,7 +68,7 @@ public class WorldQuestUnknownFieldTests
             datas.ShouldAllBe(d => d.RewardCount == (uint)d.RewardDatas.Count);
             datas.Count(d => d.RewardCount == 1).ShouldBe(2);
             datas.Where(d => !d.AffinityChange.IsNull).Select(d => d.AffinityChange.FormKey.ID).ShouldBe(new[] { 0x07D829u, 0x07D828u }, ignoreOrder: true);
-            q.Stages.ShouldAllBe(s => s.FlagsUnused.ToArray().SequenceEqual(new byte[] { 0xAB }));
+            q.Stages.ShouldAllBe(s => s.FlagsUnknown.ToArray().SequenceEqual(new byte[] { 0xAB }));
             GameConstants.Starfield.MajorRecord(WriteBack(q)).Content.ToArray().ShouldBe(Hex(Neon));
         }
     }
@@ -105,24 +105,24 @@ public class WorldQuestUnknownFieldTests
     {
         foreach (var p in ReadPackage(JiNashida))
         {
-            p.PreferredSpeedUnused.ToArray().ShouldBe(new byte[] { 0xFF });
-            p.InterruptFlagsUnused.ToArray().ShouldBe(new byte[] { 0, 0 });
+            p.PreferredSpeedUnknown.ToArray().ShouldBe(new byte[] { 0xFF });
+            p.InterruptFlagsUnknown.ToArray().ShouldBe(new byte[] { 0, 0 });
             GameConstants.Starfield.MajorRecord(WriteBack(p)).Content.ToArray().ShouldBe(Hex(JiNashida));
         }
         foreach (var p in ReadPackage(Gassy))
         {
-            p.InterruptFlagsUnused.ToArray().ShouldBe(new byte[] { 4, 0 });
+            p.InterruptFlagsUnknown.ToArray().ShouldBe(new byte[] { 4, 0 });
             GameConstants.Starfield.MajorRecord(WriteBack(p)).Content.ToArray().ShouldBe(Hex(Gassy));
         }
         foreach (var p in ReadPackage(Balmor))
         {
-            p.ScheduleMinuteUnused.ToArray().ShouldBe(new byte[] { 2, 0, 0 });
+            p.ScheduleMinuteUnknown.ToArray().ShouldBe(new byte[] { 2, 0, 0 });
             GameConstants.Starfield.MajorRecord(WriteBack(p)).Content.ToArray().ShouldBe(Hex(Balmor));
         }
         foreach (var p in ReadPackage(Activate))
         {
             var o = p.ProcedureTree.Select(b => b.FlagsOverride).First(x => x != null)!;
-            o.PreferredSpeedUnused.ToArray().ShouldBe(new byte[] { 0, 0, 0 });
+            o.PreferredSpeedUnknown.ToArray().ShouldBe(new byte[] { 0, 0, 0 });
             GameConstants.Starfield.MajorRecord(WriteBack(p)).Content.ToArray().ShouldBe(Hex(Activate));
         }
     }
@@ -144,7 +144,7 @@ public class WorldQuestUnknownFieldTests
             d.WidthScale.ShouldBe(1f);
             d.UnknownFloat.ShouldBe(0.6f);
             d.UnknownByte.ShouldBe((byte)1);
-            d.UnknownByteUnused.ToArray().ShouldBe(Hex("AB-AB-AB"));
+            d.Unknown.ToArray().ShouldBe(Hex("AB-AB-AB"));
             SubrecordWritesBack(refr, "XPDD", on);
         }
         // REFR 0B6601 (Starfield.esm), base proj_DecalSubtleScratches01b (1F5685:Starfield.esm): byte 0
@@ -166,10 +166,10 @@ public class WorldQuestUnknownFieldTests
         foreach (var refr in ReadRefr(Subrecord("XOWN", xown), Subrecord("XESP", xesp)))
         {
             refr.Ownership!.Owner.FormKey.ID.ShouldBe(0x01961Du);
-            refr.Ownership.OwnerUnused.ToArray().ShouldBe(new byte[4]);
-            refr.Ownership.NoCrimeUnused.ToArray().ShouldBe(Hex("A5-0C-00"));
+            refr.Ownership.OwnerUnknown.ToArray().ShouldBe(new byte[4]);
+            refr.Ownership.NoCrimeUnknown.ToArray().ShouldBe(Hex("A5-0C-00"));
             refr.EnableParent!.Reference.FormKey.ID.ShouldBe(0x0F654Cu);
-            refr.EnableParent.FlagsUnused.ToArray().ShouldBe(new byte[3]);
+            refr.EnableParent.FlagsUnknown.ToArray().ShouldBe(new byte[3]);
             SubrecordWritesBack(refr, "XOWN", xown);
             SubrecordWritesBack(refr, "XESP", xesp);
         }

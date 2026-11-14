@@ -25,7 +25,7 @@ public class CellInteriorTypeTests
         foreach (var cell in ReadBoth<ICellGetter>(bytes, f => Cell.CreateFromBinary(f), (s, p) => CellBinaryOverlay.CellFactory(s, p)))
         {
             cell.Lighting!.InteriorType.ShouldBe(Cell.InteriorType.PackIn);
-            cell.Lighting!.InteriorTypeUnused.ToArray().ShouldBe(new byte[] { 0xAB, 0xAB, 0xAB });
+            cell.Lighting!.InteriorTypeUnknown.ToArray().ShouldBe(new byte[] { 0xAB, 0xAB, 0xAB });
         }
     }
 

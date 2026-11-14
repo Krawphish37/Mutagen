@@ -25,7 +25,7 @@ public class LockDataTests
         foreach (var placed in ReadBoth<IPlacedObjectGetter>(bytes, f => PlacedObject.CreateFromBinary(f), (s, p) => PlacedObjectBinaryOverlay.PlacedObjectFactory(s, p)))
         {
             placed.Lock!.Level.ShouldBe(LockLevel.Inaccessible);
-            placed.Lock!.LevelUnused.ToArray().ShouldBe(new byte[] { 0xFD, 0x5E, 0x00 });
+            placed.Lock!.LevelUnknown.ToArray().ShouldBe(new byte[] { 0xFD, 0x5E, 0x00 });
             ((int)placed.Lock!.Flags).ShouldBe(1);
             placed.Lock!.Unknown.ShouldBe(0);
         }

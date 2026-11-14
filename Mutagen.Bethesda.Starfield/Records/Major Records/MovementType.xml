@@ -9,7 +9,7 @@
       <Data recordType="INTV">
         <Fields>
           <Bool name="ClampMaxAnimationSpeeds" byteLength="1" />
-          <ByteArray name="FlagsUnused" byteLength="3" nullable="False" />
+          <ByteArray name="FlagsUnknown" byteLength="3" nullable="False" />
         </Fields>
       </Data>
       <Bool name="DisplayForNonCharacters" boolAsMarker="BOLV" />
@@ -47,7 +47,7 @@
       <Float name="Run" />
       <Float name="Sprint" />
       <Float name="Acceleration" />
-      <Float name="Unused" />
+      <Float name="Unknown" />
     </Fields>
   </Object>
 </Loqui>

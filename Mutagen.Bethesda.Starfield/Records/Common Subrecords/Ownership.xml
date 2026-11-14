@@ -7,9 +7,9 @@
           <FormLink name="Owner">
             <Interface>IOwner</Interface>
           </FormLink>
-          <ByteArray name="OwnerUnused" byteLength="4" nullable="False" />
+          <ByteArray name="OwnerUnknown" byteLength="4" nullable="False" />
           <Bool name="NoCrime" byteLength="1" />
-          <ByteArray name="NoCrimeUnused" byteLength="3" nullable="false" />
+          <ByteArray name="NoCrimeUnknown" byteLength="3" nullable="false" />
         </Fields>
       </Data>
     </Fields>

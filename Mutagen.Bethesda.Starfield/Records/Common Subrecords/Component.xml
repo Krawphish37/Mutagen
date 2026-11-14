@@ -656,7 +656,7 @@
   </Object>
   <Object name="AdaptiveTriggerEffect" objType="Subrecord">
     <Fields>
-      <UInt8 name="Unused" />
+      <UInt8 name="Unknown" />
       <UInt8 name="StartPosition" />
       <UInt8 name="EndPosition" />
       <UInt8 name="Strength" />

@@ -103,15 +103,15 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(
                 TItem CompareOperator,
                 TItem Flags,
-                TItem Unused1,
-                TItem Unused2,
+                TItem Unknown1,
+                TItem Unknown2,
                 TItem Data,
                 TItem ComparisonValue)
             : base(
                 CompareOperator: CompareOperator,
                 Flags: Flags,
-                Unused1: Unused1,
-                Unused2: Unused2,
+                Unknown1: Unknown1,
+                Unknown2: Unknown2,
                 Data: Data)
             {
                 this.ComparisonValue = ComparisonValue;
@@ -569,8 +569,8 @@ namespace Mutagen.Bethesda.Starfield
     {
         CompareOperator = 0,
         Flags = 1,
-        Unused1 = 2,
-        Unused2 = 3,
+        Unknown1 = 2,
+        Unknown2 = 3,
         Data = 4,
         ComparisonValue = 5,
     }
@@ -797,9 +797,9 @@ namespace Mutagen.Bethesda.Starfield
                     return (ConditionFloat_FieldIndex)((int)index);
                 case Condition_FieldIndex.Flags:
                     return (ConditionFloat_FieldIndex)((int)index);
-                case Condition_FieldIndex.Unused1:
+                case Condition_FieldIndex.Unknown1:
                     return (ConditionFloat_FieldIndex)((int)index);
-                case Condition_FieldIndex.Unused2:
+                case Condition_FieldIndex.Unknown2:
                     return (ConditionFloat_FieldIndex)((int)index);
                 case Condition_FieldIndex.Data:
                     return (ConditionFloat_FieldIndex)((int)index);

@@ -63,16 +63,16 @@ namespace Mutagen.Bethesda.Starfield
         #region FlickerEffect
         public Light.FlickerEffectOption FlickerEffect { get; set; } = default(Light.FlickerEffectOption);
         #endregion
-        #region FlickerEffectUnused
+        #region FlickerEffectUnknown
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _FlickerEffectUnused = new byte[3];
-        public MemorySlice<Byte> FlickerEffectUnused
+        private MemorySlice<Byte> _FlickerEffectUnknown = new byte[3];
+        public MemorySlice<Byte> FlickerEffectUnknown
         {
-            get => _FlickerEffectUnused;
-            set => this._FlickerEffectUnused = value;
+            get => _FlickerEffectUnknown;
+            set => this._FlickerEffectUnknown = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IPlacedObjectLightFlickerGetter.FlickerEffectUnused => this.FlickerEffectUnused;
+        ReadOnlyMemorySlice<Byte> IPlacedObjectLightFlickerGetter.FlickerEffectUnknown => this.FlickerEffectUnknown;
         #endregion
 
         #region To String
@@ -117,7 +117,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.IntensityAmplitude = initialValue;
                 this.MovementAmplitude = initialValue;
                 this.FlickerEffect = initialValue;
-                this.FlickerEffectUnused = initialValue;
+                this.FlickerEffectUnknown = initialValue;
             }
 
             public Mask(
@@ -125,13 +125,13 @@ namespace Mutagen.Bethesda.Starfield
                 TItem IntensityAmplitude,
                 TItem MovementAmplitude,
                 TItem FlickerEffect,
-                TItem FlickerEffectUnused)
+                TItem FlickerEffectUnknown)
             {
                 this.Period = Period;
                 this.IntensityAmplitude = IntensityAmplitude;
                 this.MovementAmplitude = MovementAmplitude;
                 this.FlickerEffect = FlickerEffect;
-                this.FlickerEffectUnused = FlickerEffectUnused;
+                this.FlickerEffectUnknown = FlickerEffectUnknown;
             }
 
             #pragma warning disable CS8618
@@ -147,7 +147,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem IntensityAmplitude;
             public TItem MovementAmplitude;
             public TItem FlickerEffect;
-            public TItem FlickerEffectUnused;
+            public TItem FlickerEffectUnknown;
             #endregion
 
             #region Equals
@@ -164,7 +164,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.IntensityAmplitude, rhs.IntensityAmplitude)) return false;
                 if (!object.Equals(this.MovementAmplitude, rhs.MovementAmplitude)) return false;
                 if (!object.Equals(this.FlickerEffect, rhs.FlickerEffect)) return false;
-                if (!object.Equals(this.FlickerEffectUnused, rhs.FlickerEffectUnused)) return false;
+                if (!object.Equals(this.FlickerEffectUnknown, rhs.FlickerEffectUnknown)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -174,7 +174,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.IntensityAmplitude);
                 hash.Add(this.MovementAmplitude);
                 hash.Add(this.FlickerEffect);
-                hash.Add(this.FlickerEffectUnused);
+                hash.Add(this.FlickerEffectUnknown);
                 return hash.ToHashCode();
             }
 
@@ -187,7 +187,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.IntensityAmplitude)) return false;
                 if (!eval(this.MovementAmplitude)) return false;
                 if (!eval(this.FlickerEffect)) return false;
-                if (!eval(this.FlickerEffectUnused)) return false;
+                if (!eval(this.FlickerEffectUnknown)) return false;
                 return true;
             }
             #endregion
@@ -199,7 +199,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.IntensityAmplitude)) return true;
                 if (eval(this.MovementAmplitude)) return true;
                 if (eval(this.FlickerEffect)) return true;
-                if (eval(this.FlickerEffectUnused)) return true;
+                if (eval(this.FlickerEffectUnknown)) return true;
                 return false;
             }
             #endregion
@@ -218,7 +218,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.IntensityAmplitude = eval(this.IntensityAmplitude);
                 obj.MovementAmplitude = eval(this.MovementAmplitude);
                 obj.FlickerEffect = eval(this.FlickerEffect);
-                obj.FlickerEffectUnused = eval(this.FlickerEffectUnused);
+                obj.FlickerEffectUnknown = eval(this.FlickerEffectUnknown);
             }
             #endregion
 
@@ -253,9 +253,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(FlickerEffect, "FlickerEffect");
                     }
-                    if (printMask?.FlickerEffectUnused ?? true)
+                    if (printMask?.FlickerEffectUnknown ?? true)
                     {
-                        sb.AppendItem(FlickerEffectUnused, "FlickerEffectUnused");
+                        sb.AppendItem(FlickerEffectUnknown, "FlickerEffectUnknown");
                     }
                 }
             }
@@ -285,7 +285,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? IntensityAmplitude;
             public Exception? MovementAmplitude;
             public Exception? FlickerEffect;
-            public Exception? FlickerEffectUnused;
+            public Exception? FlickerEffectUnknown;
             #endregion
 
             #region IErrorMask
@@ -302,8 +302,8 @@ namespace Mutagen.Bethesda.Starfield
                         return MovementAmplitude;
                     case PlacedObjectLightFlicker_FieldIndex.FlickerEffect:
                         return FlickerEffect;
-                    case PlacedObjectLightFlicker_FieldIndex.FlickerEffectUnused:
-                        return FlickerEffectUnused;
+                    case PlacedObjectLightFlicker_FieldIndex.FlickerEffectUnknown:
+                        return FlickerEffectUnknown;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -326,8 +326,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObjectLightFlicker_FieldIndex.FlickerEffect:
                         this.FlickerEffect = ex;
                         break;
-                    case PlacedObjectLightFlicker_FieldIndex.FlickerEffectUnused:
-                        this.FlickerEffectUnused = ex;
+                    case PlacedObjectLightFlicker_FieldIndex.FlickerEffectUnknown:
+                        this.FlickerEffectUnknown = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -351,8 +351,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObjectLightFlicker_FieldIndex.FlickerEffect:
                         this.FlickerEffect = (Exception?)obj;
                         break;
-                    case PlacedObjectLightFlicker_FieldIndex.FlickerEffectUnused:
-                        this.FlickerEffectUnused = (Exception?)obj;
+                    case PlacedObjectLightFlicker_FieldIndex.FlickerEffectUnknown:
+                        this.FlickerEffectUnknown = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -366,7 +366,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (IntensityAmplitude != null) return true;
                 if (MovementAmplitude != null) return true;
                 if (FlickerEffect != null) return true;
-                if (FlickerEffectUnused != null) return true;
+                if (FlickerEffectUnknown != null) return true;
                 return false;
             }
             #endregion
@@ -405,7 +405,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(FlickerEffect, "FlickerEffect");
                 }
                 {
-                    sb.AppendItem(FlickerEffectUnused, "FlickerEffectUnused");
+                    sb.AppendItem(FlickerEffectUnknown, "FlickerEffectUnknown");
                 }
             }
             #endregion
@@ -419,7 +419,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.IntensityAmplitude = this.IntensityAmplitude.Combine(rhs.IntensityAmplitude);
                 ret.MovementAmplitude = this.MovementAmplitude.Combine(rhs.MovementAmplitude);
                 ret.FlickerEffect = this.FlickerEffect.Combine(rhs.FlickerEffect);
-                ret.FlickerEffectUnused = this.FlickerEffectUnused.Combine(rhs.FlickerEffectUnused);
+                ret.FlickerEffectUnknown = this.FlickerEffectUnknown.Combine(rhs.FlickerEffectUnknown);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -447,7 +447,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool IntensityAmplitude;
             public bool MovementAmplitude;
             public bool FlickerEffect;
-            public bool FlickerEffectUnused;
+            public bool FlickerEffectUnknown;
             #endregion
 
             #region Ctors
@@ -461,7 +461,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.IntensityAmplitude = defaultOn;
                 this.MovementAmplitude = defaultOn;
                 this.FlickerEffect = defaultOn;
-                this.FlickerEffectUnused = defaultOn;
+                this.FlickerEffectUnknown = defaultOn;
             }
 
             #endregion
@@ -481,7 +481,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((IntensityAmplitude, null));
                 ret.Add((MovementAmplitude, null));
                 ret.Add((FlickerEffect, null));
-                ret.Add((FlickerEffectUnused, null));
+                ret.Add((FlickerEffectUnknown, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -558,7 +558,7 @@ namespace Mutagen.Bethesda.Starfield
         new Single IntensityAmplitude { get; set; }
         new Single MovementAmplitude { get; set; }
         new Light.FlickerEffectOption FlickerEffect { get; set; }
-        new MemorySlice<Byte> FlickerEffectUnused { get; set; }
+        new MemorySlice<Byte> FlickerEffectUnknown { get; set; }
     }
 
     public partial interface IPlacedObjectLightFlickerGetter :
@@ -577,7 +577,7 @@ namespace Mutagen.Bethesda.Starfield
         Single IntensityAmplitude { get; }
         Single MovementAmplitude { get; }
         Light.FlickerEffectOption FlickerEffect { get; }
-        ReadOnlyMemorySlice<Byte> FlickerEffectUnused { get; }
+        ReadOnlyMemorySlice<Byte> FlickerEffectUnknown { get; }
 
     }
 
@@ -751,7 +751,7 @@ namespace Mutagen.Bethesda.Starfield
         IntensityAmplitude = 1,
         MovementAmplitude = 2,
         FlickerEffect = 3,
-        FlickerEffectUnused = 4,
+        FlickerEffectUnknown = 4,
     }
     #endregion
 
@@ -841,7 +841,7 @@ namespace Mutagen.Bethesda.Starfield
             item.IntensityAmplitude = default(Single);
             item.MovementAmplitude = default(Single);
             item.FlickerEffect = default(Light.FlickerEffectOption);
-            item.FlickerEffectUnused = new byte[3];
+            item.FlickerEffectUnknown = new byte[3];
         }
         
         #region Mutagen
@@ -899,7 +899,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.IntensityAmplitude = item.IntensityAmplitude.EqualsWithin(rhs.IntensityAmplitude);
             ret.MovementAmplitude = item.MovementAmplitude.EqualsWithin(rhs.MovementAmplitude);
             ret.FlickerEffect = item.FlickerEffect == rhs.FlickerEffect;
-            ret.FlickerEffectUnused = MemoryExtensions.SequenceEqual(item.FlickerEffectUnused.Span, rhs.FlickerEffectUnused.Span);
+            ret.FlickerEffectUnknown = MemoryExtensions.SequenceEqual(item.FlickerEffectUnknown.Span, rhs.FlickerEffectUnknown.Span);
         }
         
         public string Print(
@@ -960,9 +960,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.FlickerEffect, "FlickerEffect");
             }
-            if (printMask?.FlickerEffectUnused ?? true)
+            if (printMask?.FlickerEffectUnknown ?? true)
             {
-                sb.AppendLine($"FlickerEffectUnused => {SpanExt.ToHexString(item.FlickerEffectUnused)}");
+                sb.AppendLine($"FlickerEffectUnknown => {SpanExt.ToHexString(item.FlickerEffectUnknown)}");
             }
         }
         
@@ -989,9 +989,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.FlickerEffect != rhs.FlickerEffect) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectLightFlicker_FieldIndex.FlickerEffectUnused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectLightFlicker_FieldIndex.FlickerEffectUnknown) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.FlickerEffectUnused.Span, rhs.FlickerEffectUnused.Span)) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.FlickerEffectUnknown.Span, rhs.FlickerEffectUnknown.Span)) return false;
             }
             return true;
         }
@@ -1003,7 +1003,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.IntensityAmplitude);
             hash.Add(item.MovementAmplitude);
             hash.Add(item.FlickerEffect);
-            hash.AddBytes(item.FlickerEffectUnused);
+            hash.AddBytes(item.FlickerEffectUnknown);
             return hash.ToHashCode();
         }
         
@@ -1052,9 +1052,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.FlickerEffect = rhs.FlickerEffect;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlacedObjectLightFlicker_FieldIndex.FlickerEffectUnused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlacedObjectLightFlicker_FieldIndex.FlickerEffectUnknown) ?? true))
             {
-                item.FlickerEffectUnused = rhs.FlickerEffectUnused.ToArray();
+                item.FlickerEffectUnknown = rhs.FlickerEffectUnknown.ToArray();
             }
             DeepCopyInCustom(
                 item: item,
@@ -1179,7 +1179,7 @@ namespace Mutagen.Bethesda.Starfield
                 length: 1);
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.FlickerEffectUnused);
+                item: item.FlickerEffectUnknown);
         }
 
         public void Write(
@@ -1226,7 +1226,7 @@ namespace Mutagen.Bethesda.Starfield
             item.FlickerEffect = EnumBinaryTranslation<Light.FlickerEffectOption, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 1);
-            item.FlickerEffectUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
+            item.FlickerEffectUnknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
         }
 
     }
@@ -1296,7 +1296,7 @@ namespace Mutagen.Bethesda.Starfield
         public Single IntensityAmplitude => _structData.Slice(0x4, 0x4).Float();
         public Single MovementAmplitude => _structData.Slice(0x8, 0x4).Float();
         public Light.FlickerEffectOption FlickerEffect => (Light.FlickerEffectOption)_structData.Span.Slice(0xC, 0x1)[0];
-        public ReadOnlyMemorySlice<Byte> FlickerEffectUnused => _structData.Span.Slice(0xD, 0x3).ToArray();
+        public ReadOnlyMemorySlice<Byte> FlickerEffectUnknown => _structData.Span.Slice(0xD, 0x3).ToArray();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

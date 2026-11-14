@@ -72,30 +72,30 @@ namespace Mutagen.Bethesda.Starfield
         #region ShadowOffset
         public Single ShadowOffset { get; set; } = default(Single);
         #endregion
-        #region ShadowOffsetUnused
+        #region ShadowOffsetUnknown
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _ShadowOffsetUnused = new byte[4];
-        public MemorySlice<Byte> ShadowOffsetUnused
+        private MemorySlice<Byte> _ShadowOffsetUnknown = new byte[4];
+        public MemorySlice<Byte> ShadowOffsetUnknown
         {
-            get => _ShadowOffsetUnused;
-            set => this._ShadowOffsetUnused = value;
+            get => _ShadowOffsetUnknown;
+            set => this._ShadowOffsetUnknown = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IPlacedObjectLightingGetter.ShadowOffsetUnused => this.ShadowOffsetUnused;
+        ReadOnlyMemorySlice<Byte> IPlacedObjectLightingGetter.ShadowOffsetUnknown => this.ShadowOffsetUnknown;
         #endregion
         #region Unknown2
         public Byte Unknown2 { get; set; } = default(Byte);
         #endregion
-        #region Unknown2Unused
+        #region Unknown3
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _Unknown2Unused = new byte[3];
-        public MemorySlice<Byte> Unknown2Unused
+        private MemorySlice<Byte> _Unknown3 = new byte[3];
+        public MemorySlice<Byte> Unknown3
         {
-            get => _Unknown2Unused;
-            set => this._Unknown2Unused = value;
+            get => _Unknown3;
+            set => this._Unknown3 = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IPlacedObjectLightingGetter.Unknown2Unused => this.Unknown2Unused;
+        ReadOnlyMemorySlice<Byte> IPlacedObjectLightingGetter.Unknown3 => this.Unknown3;
         #endregion
 
         #region To String
@@ -143,9 +143,9 @@ namespace Mutagen.Bethesda.Starfield
                 this.NearClipCutOn = initialValue;
                 this.InnerFov = initialValue;
                 this.ShadowOffset = initialValue;
-                this.ShadowOffsetUnused = initialValue;
+                this.ShadowOffsetUnknown = initialValue;
                 this.Unknown2 = initialValue;
-                this.Unknown2Unused = initialValue;
+                this.Unknown3 = initialValue;
             }
 
             public Mask(
@@ -156,9 +156,9 @@ namespace Mutagen.Bethesda.Starfield
                 TItem NearClipCutOn,
                 TItem InnerFov,
                 TItem ShadowOffset,
-                TItem ShadowOffsetUnused,
+                TItem ShadowOffsetUnknown,
                 TItem Unknown2,
-                TItem Unknown2Unused)
+                TItem Unknown3)
             {
                 this.Versioning = Versioning;
                 this.Fov90PlusMinus = Fov90PlusMinus;
@@ -167,9 +167,9 @@ namespace Mutagen.Bethesda.Starfield
                 this.NearClipCutOn = NearClipCutOn;
                 this.InnerFov = InnerFov;
                 this.ShadowOffset = ShadowOffset;
-                this.ShadowOffsetUnused = ShadowOffsetUnused;
+                this.ShadowOffsetUnknown = ShadowOffsetUnknown;
                 this.Unknown2 = Unknown2;
-                this.Unknown2Unused = Unknown2Unused;
+                this.Unknown3 = Unknown3;
             }
 
             #pragma warning disable CS8618
@@ -188,9 +188,9 @@ namespace Mutagen.Bethesda.Starfield
             public TItem NearClipCutOn;
             public TItem InnerFov;
             public TItem ShadowOffset;
-            public TItem ShadowOffsetUnused;
+            public TItem ShadowOffsetUnknown;
             public TItem Unknown2;
-            public TItem Unknown2Unused;
+            public TItem Unknown3;
             #endregion
 
             #region Equals
@@ -210,9 +210,9 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.NearClipCutOn, rhs.NearClipCutOn)) return false;
                 if (!object.Equals(this.InnerFov, rhs.InnerFov)) return false;
                 if (!object.Equals(this.ShadowOffset, rhs.ShadowOffset)) return false;
-                if (!object.Equals(this.ShadowOffsetUnused, rhs.ShadowOffsetUnused)) return false;
+                if (!object.Equals(this.ShadowOffsetUnknown, rhs.ShadowOffsetUnknown)) return false;
                 if (!object.Equals(this.Unknown2, rhs.Unknown2)) return false;
-                if (!object.Equals(this.Unknown2Unused, rhs.Unknown2Unused)) return false;
+                if (!object.Equals(this.Unknown3, rhs.Unknown3)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -225,9 +225,9 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.NearClipCutOn);
                 hash.Add(this.InnerFov);
                 hash.Add(this.ShadowOffset);
-                hash.Add(this.ShadowOffsetUnused);
+                hash.Add(this.ShadowOffsetUnknown);
                 hash.Add(this.Unknown2);
-                hash.Add(this.Unknown2Unused);
+                hash.Add(this.Unknown3);
                 return hash.ToHashCode();
             }
 
@@ -243,9 +243,9 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.NearClipCutOn)) return false;
                 if (!eval(this.InnerFov)) return false;
                 if (!eval(this.ShadowOffset)) return false;
-                if (!eval(this.ShadowOffsetUnused)) return false;
+                if (!eval(this.ShadowOffsetUnknown)) return false;
                 if (!eval(this.Unknown2)) return false;
-                if (!eval(this.Unknown2Unused)) return false;
+                if (!eval(this.Unknown3)) return false;
                 return true;
             }
             #endregion
@@ -260,9 +260,9 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.NearClipCutOn)) return true;
                 if (eval(this.InnerFov)) return true;
                 if (eval(this.ShadowOffset)) return true;
-                if (eval(this.ShadowOffsetUnused)) return true;
+                if (eval(this.ShadowOffsetUnknown)) return true;
                 if (eval(this.Unknown2)) return true;
-                if (eval(this.Unknown2Unused)) return true;
+                if (eval(this.Unknown3)) return true;
                 return false;
             }
             #endregion
@@ -284,9 +284,9 @@ namespace Mutagen.Bethesda.Starfield
                 obj.NearClipCutOn = eval(this.NearClipCutOn);
                 obj.InnerFov = eval(this.InnerFov);
                 obj.ShadowOffset = eval(this.ShadowOffset);
-                obj.ShadowOffsetUnused = eval(this.ShadowOffsetUnused);
+                obj.ShadowOffsetUnknown = eval(this.ShadowOffsetUnknown);
                 obj.Unknown2 = eval(this.Unknown2);
-                obj.Unknown2Unused = eval(this.Unknown2Unused);
+                obj.Unknown3 = eval(this.Unknown3);
             }
             #endregion
 
@@ -333,17 +333,17 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(ShadowOffset, "ShadowOffset");
                     }
-                    if (printMask?.ShadowOffsetUnused ?? true)
+                    if (printMask?.ShadowOffsetUnknown ?? true)
                     {
-                        sb.AppendItem(ShadowOffsetUnused, "ShadowOffsetUnused");
+                        sb.AppendItem(ShadowOffsetUnknown, "ShadowOffsetUnknown");
                     }
                     if (printMask?.Unknown2 ?? true)
                     {
                         sb.AppendItem(Unknown2, "Unknown2");
                     }
-                    if (printMask?.Unknown2Unused ?? true)
+                    if (printMask?.Unknown3 ?? true)
                     {
-                        sb.AppendItem(Unknown2Unused, "Unknown2Unused");
+                        sb.AppendItem(Unknown3, "Unknown3");
                     }
                 }
             }
@@ -376,9 +376,9 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? NearClipCutOn;
             public Exception? InnerFov;
             public Exception? ShadowOffset;
-            public Exception? ShadowOffsetUnused;
+            public Exception? ShadowOffsetUnknown;
             public Exception? Unknown2;
-            public Exception? Unknown2Unused;
+            public Exception? Unknown3;
             #endregion
 
             #region IErrorMask
@@ -401,12 +401,12 @@ namespace Mutagen.Bethesda.Starfield
                         return InnerFov;
                     case PlacedObjectLighting_FieldIndex.ShadowOffset:
                         return ShadowOffset;
-                    case PlacedObjectLighting_FieldIndex.ShadowOffsetUnused:
-                        return ShadowOffsetUnused;
+                    case PlacedObjectLighting_FieldIndex.ShadowOffsetUnknown:
+                        return ShadowOffsetUnknown;
                     case PlacedObjectLighting_FieldIndex.Unknown2:
                         return Unknown2;
-                    case PlacedObjectLighting_FieldIndex.Unknown2Unused:
-                        return Unknown2Unused;
+                    case PlacedObjectLighting_FieldIndex.Unknown3:
+                        return Unknown3;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -438,14 +438,14 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObjectLighting_FieldIndex.ShadowOffset:
                         this.ShadowOffset = ex;
                         break;
-                    case PlacedObjectLighting_FieldIndex.ShadowOffsetUnused:
-                        this.ShadowOffsetUnused = ex;
+                    case PlacedObjectLighting_FieldIndex.ShadowOffsetUnknown:
+                        this.ShadowOffsetUnknown = ex;
                         break;
                     case PlacedObjectLighting_FieldIndex.Unknown2:
                         this.Unknown2 = ex;
                         break;
-                    case PlacedObjectLighting_FieldIndex.Unknown2Unused:
-                        this.Unknown2Unused = ex;
+                    case PlacedObjectLighting_FieldIndex.Unknown3:
+                        this.Unknown3 = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -478,14 +478,14 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObjectLighting_FieldIndex.ShadowOffset:
                         this.ShadowOffset = (Exception?)obj;
                         break;
-                    case PlacedObjectLighting_FieldIndex.ShadowOffsetUnused:
-                        this.ShadowOffsetUnused = (Exception?)obj;
+                    case PlacedObjectLighting_FieldIndex.ShadowOffsetUnknown:
+                        this.ShadowOffsetUnknown = (Exception?)obj;
                         break;
                     case PlacedObjectLighting_FieldIndex.Unknown2:
                         this.Unknown2 = (Exception?)obj;
                         break;
-                    case PlacedObjectLighting_FieldIndex.Unknown2Unused:
-                        this.Unknown2Unused = (Exception?)obj;
+                    case PlacedObjectLighting_FieldIndex.Unknown3:
+                        this.Unknown3 = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -502,9 +502,9 @@ namespace Mutagen.Bethesda.Starfield
                 if (NearClipCutOn != null) return true;
                 if (InnerFov != null) return true;
                 if (ShadowOffset != null) return true;
-                if (ShadowOffsetUnused != null) return true;
+                if (ShadowOffsetUnknown != null) return true;
                 if (Unknown2 != null) return true;
-                if (Unknown2Unused != null) return true;
+                if (Unknown3 != null) return true;
                 return false;
             }
             #endregion
@@ -552,13 +552,13 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(ShadowOffset, "ShadowOffset");
                 }
                 {
-                    sb.AppendItem(ShadowOffsetUnused, "ShadowOffsetUnused");
+                    sb.AppendItem(ShadowOffsetUnknown, "ShadowOffsetUnknown");
                 }
                 {
                     sb.AppendItem(Unknown2, "Unknown2");
                 }
                 {
-                    sb.AppendItem(Unknown2Unused, "Unknown2Unused");
+                    sb.AppendItem(Unknown3, "Unknown3");
                 }
             }
             #endregion
@@ -575,9 +575,9 @@ namespace Mutagen.Bethesda.Starfield
                 ret.NearClipCutOn = this.NearClipCutOn.Combine(rhs.NearClipCutOn);
                 ret.InnerFov = this.InnerFov.Combine(rhs.InnerFov);
                 ret.ShadowOffset = this.ShadowOffset.Combine(rhs.ShadowOffset);
-                ret.ShadowOffsetUnused = this.ShadowOffsetUnused.Combine(rhs.ShadowOffsetUnused);
+                ret.ShadowOffsetUnknown = this.ShadowOffsetUnknown.Combine(rhs.ShadowOffsetUnknown);
                 ret.Unknown2 = this.Unknown2.Combine(rhs.Unknown2);
-                ret.Unknown2Unused = this.Unknown2Unused.Combine(rhs.Unknown2Unused);
+                ret.Unknown3 = this.Unknown3.Combine(rhs.Unknown3);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -608,9 +608,9 @@ namespace Mutagen.Bethesda.Starfield
             public bool NearClipCutOn;
             public bool InnerFov;
             public bool ShadowOffset;
-            public bool ShadowOffsetUnused;
+            public bool ShadowOffsetUnknown;
             public bool Unknown2;
-            public bool Unknown2Unused;
+            public bool Unknown3;
             #endregion
 
             #region Ctors
@@ -627,9 +627,9 @@ namespace Mutagen.Bethesda.Starfield
                 this.NearClipCutOn = defaultOn;
                 this.InnerFov = defaultOn;
                 this.ShadowOffset = defaultOn;
-                this.ShadowOffsetUnused = defaultOn;
+                this.ShadowOffsetUnknown = defaultOn;
                 this.Unknown2 = defaultOn;
-                this.Unknown2Unused = defaultOn;
+                this.Unknown3 = defaultOn;
             }
 
             #endregion
@@ -652,9 +652,9 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((NearClipCutOn, null));
                 ret.Add((InnerFov, null));
                 ret.Add((ShadowOffset, null));
-                ret.Add((ShadowOffsetUnused, null));
+                ret.Add((ShadowOffsetUnknown, null));
                 ret.Add((Unknown2, null));
-                ret.Add((Unknown2Unused, null));
+                ret.Add((Unknown3, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -742,9 +742,9 @@ namespace Mutagen.Bethesda.Starfield
         new Single NearClipCutOn { get; set; }
         new Single InnerFov { get; set; }
         new Single ShadowOffset { get; set; }
-        new MemorySlice<Byte> ShadowOffsetUnused { get; set; }
+        new MemorySlice<Byte> ShadowOffsetUnknown { get; set; }
         new Byte Unknown2 { get; set; }
-        new MemorySlice<Byte> Unknown2Unused { get; set; }
+        new MemorySlice<Byte> Unknown3 { get; set; }
     }
 
     public partial interface IPlacedObjectLightingGetter :
@@ -766,9 +766,9 @@ namespace Mutagen.Bethesda.Starfield
         Single NearClipCutOn { get; }
         Single InnerFov { get; }
         Single ShadowOffset { get; }
-        ReadOnlyMemorySlice<Byte> ShadowOffsetUnused { get; }
+        ReadOnlyMemorySlice<Byte> ShadowOffsetUnknown { get; }
         Byte Unknown2 { get; }
-        ReadOnlyMemorySlice<Byte> Unknown2Unused { get; }
+        ReadOnlyMemorySlice<Byte> Unknown3 { get; }
 
     }
 
@@ -945,9 +945,9 @@ namespace Mutagen.Bethesda.Starfield
         NearClipCutOn = 4,
         InnerFov = 5,
         ShadowOffset = 6,
-        ShadowOffsetUnused = 7,
+        ShadowOffsetUnknown = 7,
         Unknown2 = 8,
-        Unknown2Unused = 9,
+        Unknown3 = 9,
     }
     #endregion
 
@@ -1040,9 +1040,9 @@ namespace Mutagen.Bethesda.Starfield
             item.NearClipCutOn = default(Single);
             item.InnerFov = default(Single);
             item.ShadowOffset = default(Single);
-            item.ShadowOffsetUnused = new byte[4];
+            item.ShadowOffsetUnknown = new byte[4];
             item.Unknown2 = default(Byte);
-            item.Unknown2Unused = new byte[3];
+            item.Unknown3 = new byte[3];
         }
         
         #region Mutagen
@@ -1103,9 +1103,9 @@ namespace Mutagen.Bethesda.Starfield
             ret.NearClipCutOn = item.NearClipCutOn.EqualsWithin(rhs.NearClipCutOn);
             ret.InnerFov = item.InnerFov.EqualsWithin(rhs.InnerFov);
             ret.ShadowOffset = item.ShadowOffset.EqualsWithin(rhs.ShadowOffset);
-            ret.ShadowOffsetUnused = MemoryExtensions.SequenceEqual(item.ShadowOffsetUnused.Span, rhs.ShadowOffsetUnused.Span);
+            ret.ShadowOffsetUnknown = MemoryExtensions.SequenceEqual(item.ShadowOffsetUnknown.Span, rhs.ShadowOffsetUnknown.Span);
             ret.Unknown2 = item.Unknown2 == rhs.Unknown2;
-            ret.Unknown2Unused = MemoryExtensions.SequenceEqual(item.Unknown2Unused.Span, rhs.Unknown2Unused.Span);
+            ret.Unknown3 = MemoryExtensions.SequenceEqual(item.Unknown3.Span, rhs.Unknown3.Span);
         }
         
         public string Print(
@@ -1178,17 +1178,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.ShadowOffset, "ShadowOffset");
             }
-            if (printMask?.ShadowOffsetUnused ?? true)
+            if (printMask?.ShadowOffsetUnknown ?? true)
             {
-                sb.AppendLine($"ShadowOffsetUnused => {SpanExt.ToHexString(item.ShadowOffsetUnused)}");
+                sb.AppendLine($"ShadowOffsetUnknown => {SpanExt.ToHexString(item.ShadowOffsetUnknown)}");
             }
             if (printMask?.Unknown2 ?? true)
             {
                 sb.AppendItem(item.Unknown2, "Unknown2");
             }
-            if (printMask?.Unknown2Unused ?? true)
+            if (printMask?.Unknown3 ?? true)
             {
-                sb.AppendLine($"Unknown2Unused => {SpanExt.ToHexString(item.Unknown2Unused)}");
+                sb.AppendLine($"Unknown3 => {SpanExt.ToHexString(item.Unknown3)}");
             }
         }
         
@@ -1227,17 +1227,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.ShadowOffset.EqualsWithin(rhs.ShadowOffset)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectLighting_FieldIndex.ShadowOffsetUnused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectLighting_FieldIndex.ShadowOffsetUnknown) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.ShadowOffsetUnused.Span, rhs.ShadowOffsetUnused.Span)) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.ShadowOffsetUnknown.Span, rhs.ShadowOffsetUnknown.Span)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlacedObjectLighting_FieldIndex.Unknown2) ?? true))
             {
                 if (lhs.Unknown2 != rhs.Unknown2) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectLighting_FieldIndex.Unknown2Unused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectLighting_FieldIndex.Unknown3) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.Unknown2Unused.Span, rhs.Unknown2Unused.Span)) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.Unknown3.Span, rhs.Unknown3.Span)) return false;
             }
             return true;
         }
@@ -1252,9 +1252,9 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.NearClipCutOn);
             hash.Add(item.InnerFov);
             hash.Add(item.ShadowOffset);
-            hash.AddBytes(item.ShadowOffsetUnused);
+            hash.AddBytes(item.ShadowOffsetUnknown);
             hash.Add(item.Unknown2);
-            hash.AddBytes(item.Unknown2Unused);
+            hash.AddBytes(item.Unknown3);
             return hash.ToHashCode();
         }
         
@@ -1315,18 +1315,18 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ShadowOffset = rhs.ShadowOffset;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlacedObjectLighting_FieldIndex.ShadowOffsetUnused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlacedObjectLighting_FieldIndex.ShadowOffsetUnknown) ?? true))
             {
-                item.ShadowOffsetUnused = rhs.ShadowOffsetUnused.ToArray();
+                item.ShadowOffsetUnknown = rhs.ShadowOffsetUnknown.ToArray();
             }
             if (rhs.Versioning.HasFlag(PlacedObjectLighting.VersioningBreaks.Break0)) return;
             if ((copyMask?.GetShouldTranslate((int)PlacedObjectLighting_FieldIndex.Unknown2) ?? true))
             {
                 item.Unknown2 = rhs.Unknown2;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlacedObjectLighting_FieldIndex.Unknown2Unused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlacedObjectLighting_FieldIndex.Unknown3) ?? true))
             {
-                item.Unknown2Unused = rhs.Unknown2Unused.ToArray();
+                item.Unknown3 = rhs.Unknown3.ToArray();
             }
             DeepCopyInCustom(
                 item: item,
@@ -1456,13 +1456,13 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.ShadowOffset);
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.ShadowOffsetUnused);
+                item: item.ShadowOffsetUnknown);
             if (!item.Versioning.HasFlag(PlacedObjectLighting.VersioningBreaks.Break0))
             {
                 writer.Write(item.Unknown2);
                 ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.Unknown2Unused);
+                    item: item.Unknown3);
             }
         }
 
@@ -1510,14 +1510,14 @@ namespace Mutagen.Bethesda.Starfield
             item.NearClipCutOn = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.InnerFov = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.ShadowOffset = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.ShadowOffsetUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(4));
+            item.ShadowOffsetUnknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(4));
             if (frame.Complete)
             {
                 item.Versioning |= PlacedObjectLighting.VersioningBreaks.Break0;
                 return;
             }
             item.Unknown2 = frame.ReadUInt8();
-            item.Unknown2Unused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
+            item.Unknown3 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
         }
 
     }
@@ -1590,9 +1590,9 @@ namespace Mutagen.Bethesda.Starfield
         public Single NearClipCutOn => _structData.Slice(0xC, 0x4).Float();
         public Single InnerFov => _structData.Slice(0x10, 0x4).Float();
         public Single ShadowOffset => _structData.Slice(0x14, 0x4).Float();
-        public ReadOnlyMemorySlice<Byte> ShadowOffsetUnused => _structData.Span.Slice(0x18, 0x4).ToArray();
+        public ReadOnlyMemorySlice<Byte> ShadowOffsetUnknown => _structData.Span.Slice(0x18, 0x4).ToArray();
         public Byte Unknown2 => _structData.Length <= 0x1C ? default(Byte) : _structData.Span[0x1C];
-        public ReadOnlyMemorySlice<Byte> Unknown2Unused => _structData.Span.Length <= 0x1D ? UtilityTranslation.Zeros.Slice(0, 3) : _structData.Span.Slice(0x1D, 0x3).ToArray();
+        public ReadOnlyMemorySlice<Byte> Unknown3 => _structData.Span.Length <= 0x1D ? UtilityTranslation.Zeros.Slice(0, 3) : _structData.Span.Slice(0x1D, 0x3).ToArray();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

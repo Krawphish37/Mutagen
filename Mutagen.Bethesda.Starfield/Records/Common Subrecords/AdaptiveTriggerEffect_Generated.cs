@@ -51,8 +51,8 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region Unused
-        public Byte Unused { get; set; } = default(Byte);
+        #region Unknown
+        public Byte Unknown { get; set; } = default(Byte);
         #endregion
         #region StartPosition
         public Byte StartPosition { get; set; } = default(Byte);
@@ -102,19 +102,19 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.Unused = initialValue;
+                this.Unknown = initialValue;
                 this.StartPosition = initialValue;
                 this.EndPosition = initialValue;
                 this.Strength = initialValue;
             }
 
             public Mask(
-                TItem Unused,
+                TItem Unknown,
                 TItem StartPosition,
                 TItem EndPosition,
                 TItem Strength)
             {
-                this.Unused = Unused;
+                this.Unknown = Unknown;
                 this.StartPosition = StartPosition;
                 this.EndPosition = EndPosition;
                 this.Strength = Strength;
@@ -129,7 +129,7 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem Unused;
+            public TItem Unknown;
             public TItem StartPosition;
             public TItem EndPosition;
             public TItem Strength;
@@ -145,7 +145,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.Unused, rhs.Unused)) return false;
+                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
                 if (!object.Equals(this.StartPosition, rhs.StartPosition)) return false;
                 if (!object.Equals(this.EndPosition, rhs.EndPosition)) return false;
                 if (!object.Equals(this.Strength, rhs.Strength)) return false;
@@ -154,7 +154,7 @@ namespace Mutagen.Bethesda.Starfield
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.Unused);
+                hash.Add(this.Unknown);
                 hash.Add(this.StartPosition);
                 hash.Add(this.EndPosition);
                 hash.Add(this.Strength);
@@ -166,7 +166,7 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.Unused)) return false;
+                if (!eval(this.Unknown)) return false;
                 if (!eval(this.StartPosition)) return false;
                 if (!eval(this.EndPosition)) return false;
                 if (!eval(this.Strength)) return false;
@@ -177,7 +177,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.Unused)) return true;
+                if (eval(this.Unknown)) return true;
                 if (eval(this.StartPosition)) return true;
                 if (eval(this.EndPosition)) return true;
                 if (eval(this.Strength)) return true;
@@ -195,7 +195,7 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.Unused = eval(this.Unused);
+                obj.Unknown = eval(this.Unknown);
                 obj.StartPosition = eval(this.StartPosition);
                 obj.EndPosition = eval(this.EndPosition);
                 obj.Strength = eval(this.Strength);
@@ -217,9 +217,9 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(AdaptiveTriggerEffect.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.Unused ?? true)
+                    if (printMask?.Unknown ?? true)
                     {
-                        sb.AppendItem(Unused, "Unused");
+                        sb.AppendItem(Unknown, "Unknown");
                     }
                     if (printMask?.StartPosition ?? true)
                     {
@@ -257,7 +257,7 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? Unused;
+            public Exception? Unknown;
             public Exception? StartPosition;
             public Exception? EndPosition;
             public Exception? Strength;
@@ -269,8 +269,8 @@ namespace Mutagen.Bethesda.Starfield
                 AdaptiveTriggerEffect_FieldIndex enu = (AdaptiveTriggerEffect_FieldIndex)index;
                 switch (enu)
                 {
-                    case AdaptiveTriggerEffect_FieldIndex.Unused:
-                        return Unused;
+                    case AdaptiveTriggerEffect_FieldIndex.Unknown:
+                        return Unknown;
                     case AdaptiveTriggerEffect_FieldIndex.StartPosition:
                         return StartPosition;
                     case AdaptiveTriggerEffect_FieldIndex.EndPosition:
@@ -287,8 +287,8 @@ namespace Mutagen.Bethesda.Starfield
                 AdaptiveTriggerEffect_FieldIndex enu = (AdaptiveTriggerEffect_FieldIndex)index;
                 switch (enu)
                 {
-                    case AdaptiveTriggerEffect_FieldIndex.Unused:
-                        this.Unused = ex;
+                    case AdaptiveTriggerEffect_FieldIndex.Unknown:
+                        this.Unknown = ex;
                         break;
                     case AdaptiveTriggerEffect_FieldIndex.StartPosition:
                         this.StartPosition = ex;
@@ -309,8 +309,8 @@ namespace Mutagen.Bethesda.Starfield
                 AdaptiveTriggerEffect_FieldIndex enu = (AdaptiveTriggerEffect_FieldIndex)index;
                 switch (enu)
                 {
-                    case AdaptiveTriggerEffect_FieldIndex.Unused:
-                        this.Unused = (Exception?)obj;
+                    case AdaptiveTriggerEffect_FieldIndex.Unknown:
+                        this.Unknown = (Exception?)obj;
                         break;
                     case AdaptiveTriggerEffect_FieldIndex.StartPosition:
                         this.StartPosition = (Exception?)obj;
@@ -329,7 +329,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (Unused != null) return true;
+                if (Unknown != null) return true;
                 if (StartPosition != null) return true;
                 if (EndPosition != null) return true;
                 if (Strength != null) return true;
@@ -359,7 +359,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(Unused, "Unused");
+                    sb.AppendItem(Unknown, "Unknown");
                 }
                 {
                     sb.AppendItem(StartPosition, "StartPosition");
@@ -378,7 +378,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.Unused = this.Unused.Combine(rhs.Unused);
+                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
                 ret.StartPosition = this.StartPosition.Combine(rhs.StartPosition);
                 ret.EndPosition = this.EndPosition.Combine(rhs.EndPosition);
                 ret.Strength = this.Strength.Combine(rhs.Strength);
@@ -405,7 +405,7 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool Unused;
+            public bool Unknown;
             public bool StartPosition;
             public bool EndPosition;
             public bool Strength;
@@ -418,7 +418,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.Unused = defaultOn;
+                this.Unknown = defaultOn;
                 this.StartPosition = defaultOn;
                 this.EndPosition = defaultOn;
                 this.Strength = defaultOn;
@@ -437,7 +437,7 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((Unused, null));
+                ret.Add((Unknown, null));
                 ret.Add((StartPosition, null));
                 ret.Add((EndPosition, null));
                 ret.Add((Strength, null));
@@ -513,7 +513,7 @@ namespace Mutagen.Bethesda.Starfield
         IAdaptiveTriggerEffectGetter,
         ILoquiObjectSetter<IAdaptiveTriggerEffect>
     {
-        new Byte Unused { get; set; }
+        new Byte Unknown { get; set; }
         new Byte StartPosition { get; set; }
         new Byte EndPosition { get; set; }
         new Byte Strength { get; set; }
@@ -531,7 +531,7 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => AdaptiveTriggerEffect_Registration.Instance;
-        Byte Unused { get; }
+        Byte Unknown { get; }
         Byte StartPosition { get; }
         Byte EndPosition { get; }
         Byte Strength { get; }
@@ -704,7 +704,7 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum AdaptiveTriggerEffect_FieldIndex
     {
-        Unused = 0,
+        Unknown = 0,
         StartPosition = 1,
         EndPosition = 2,
         Strength = 3,
@@ -786,7 +786,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IAdaptiveTriggerEffect item)
         {
             ClearPartial();
-            item.Unused = default(Byte);
+            item.Unknown = default(Byte);
             item.StartPosition = default(Byte);
             item.EndPosition = default(Byte);
             item.Strength = default(Byte);
@@ -839,7 +839,7 @@ namespace Mutagen.Bethesda.Starfield
             AdaptiveTriggerEffect.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Unused = item.Unused == rhs.Unused;
+            ret.Unknown = item.Unknown == rhs.Unknown;
             ret.StartPosition = item.StartPosition == rhs.StartPosition;
             ret.EndPosition = item.EndPosition == rhs.EndPosition;
             ret.Strength = item.Strength == rhs.Strength;
@@ -887,9 +887,9 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             AdaptiveTriggerEffect.Mask<bool>? printMask = null)
         {
-            if (printMask?.Unused ?? true)
+            if (printMask?.Unknown ?? true)
             {
-                sb.AppendItem(item.Unused, "Unused");
+                sb.AppendItem(item.Unknown, "Unknown");
             }
             if (printMask?.StartPosition ?? true)
             {
@@ -912,9 +912,9 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)AdaptiveTriggerEffect_FieldIndex.Unused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)AdaptiveTriggerEffect_FieldIndex.Unknown) ?? true))
             {
-                if (lhs.Unused != rhs.Unused) return false;
+                if (lhs.Unknown != rhs.Unknown) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)AdaptiveTriggerEffect_FieldIndex.StartPosition) ?? true))
             {
@@ -934,7 +934,7 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IAdaptiveTriggerEffectGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Unused);
+            hash.Add(item.Unknown);
             hash.Add(item.StartPosition);
             hash.Add(item.EndPosition);
             hash.Add(item.Strength);
@@ -970,9 +970,9 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)AdaptiveTriggerEffect_FieldIndex.Unused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)AdaptiveTriggerEffect_FieldIndex.Unknown) ?? true))
             {
-                item.Unused = rhs.Unused;
+                item.Unknown = rhs.Unknown;
             }
             if ((copyMask?.GetShouldTranslate((int)AdaptiveTriggerEffect_FieldIndex.StartPosition) ?? true))
             {
@@ -1094,7 +1094,7 @@ namespace Mutagen.Bethesda.Starfield
             IAdaptiveTriggerEffectGetter item,
             MutagenWriter writer)
         {
-            writer.Write(item.Unused);
+            writer.Write(item.Unknown);
             writer.Write(item.StartPosition);
             writer.Write(item.EndPosition);
             writer.Write(item.Strength);
@@ -1131,7 +1131,7 @@ namespace Mutagen.Bethesda.Starfield
             IAdaptiveTriggerEffect item,
             MutagenFrame frame)
         {
-            item.Unused = frame.ReadUInt8();
+            item.Unknown = frame.ReadUInt8();
             item.StartPosition = frame.ReadUInt8();
             item.EndPosition = frame.ReadUInt8();
             item.Strength = frame.ReadUInt8();
@@ -1200,7 +1200,7 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public Byte Unused => _structData.Span[0x0];
+        public Byte Unknown => _structData.Span[0x0];
         public Byte StartPosition => _structData.Span[0x1];
         public Byte EndPosition => _structData.Span[0x2];
         public Byte Strength => _structData.Span[0x3];

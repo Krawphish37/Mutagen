@@ -66,16 +66,16 @@ namespace Mutagen.Bethesda.Starfield
         #region UsesRoundness
         public Boolean UsesRoundness { get; set; } = default(Boolean);
         #endregion
-        #region UsesRoundnessUnused
+        #region UsesRoundnessUnknown
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _UsesRoundnessUnused = new byte[3];
-        public MemorySlice<Byte> UsesRoundnessUnused
+        private MemorySlice<Byte> _UsesRoundnessUnknown = new byte[3];
+        public MemorySlice<Byte> UsesRoundnessUnknown
         {
-            get => _UsesRoundnessUnused;
-            set => this._UsesRoundnessUnused = value;
+            get => _UsesRoundnessUnknown;
+            set => this._UsesRoundnessUnknown = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> ILightRoundnessGetter.UsesRoundnessUnused => this.UsesRoundnessUnused;
+        ReadOnlyMemorySlice<Byte> ILightRoundnessGetter.UsesRoundnessUnknown => this.UsesRoundnessUnknown;
         #endregion
 
         #region To String
@@ -121,7 +121,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Roundness = initialValue;
                 this.Falloff = initialValue;
                 this.UsesRoundness = initialValue;
-                this.UsesRoundnessUnused = initialValue;
+                this.UsesRoundnessUnknown = initialValue;
             }
 
             public Mask(
@@ -130,14 +130,14 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Roundness,
                 TItem Falloff,
                 TItem UsesRoundness,
-                TItem UsesRoundnessUnused)
+                TItem UsesRoundnessUnknown)
             {
                 this.Width = Width;
                 this.Height = Height;
                 this.Roundness = Roundness;
                 this.Falloff = Falloff;
                 this.UsesRoundness = UsesRoundness;
-                this.UsesRoundnessUnused = UsesRoundnessUnused;
+                this.UsesRoundnessUnknown = UsesRoundnessUnknown;
             }
 
             #pragma warning disable CS8618
@@ -154,7 +154,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Roundness;
             public TItem Falloff;
             public TItem UsesRoundness;
-            public TItem UsesRoundnessUnused;
+            public TItem UsesRoundnessUnknown;
             #endregion
 
             #region Equals
@@ -172,7 +172,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Roundness, rhs.Roundness)) return false;
                 if (!object.Equals(this.Falloff, rhs.Falloff)) return false;
                 if (!object.Equals(this.UsesRoundness, rhs.UsesRoundness)) return false;
-                if (!object.Equals(this.UsesRoundnessUnused, rhs.UsesRoundnessUnused)) return false;
+                if (!object.Equals(this.UsesRoundnessUnknown, rhs.UsesRoundnessUnknown)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -183,7 +183,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Roundness);
                 hash.Add(this.Falloff);
                 hash.Add(this.UsesRoundness);
-                hash.Add(this.UsesRoundnessUnused);
+                hash.Add(this.UsesRoundnessUnknown);
                 return hash.ToHashCode();
             }
 
@@ -197,7 +197,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Roundness)) return false;
                 if (!eval(this.Falloff)) return false;
                 if (!eval(this.UsesRoundness)) return false;
-                if (!eval(this.UsesRoundnessUnused)) return false;
+                if (!eval(this.UsesRoundnessUnknown)) return false;
                 return true;
             }
             #endregion
@@ -210,7 +210,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Roundness)) return true;
                 if (eval(this.Falloff)) return true;
                 if (eval(this.UsesRoundness)) return true;
-                if (eval(this.UsesRoundnessUnused)) return true;
+                if (eval(this.UsesRoundnessUnknown)) return true;
                 return false;
             }
             #endregion
@@ -230,7 +230,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Roundness = eval(this.Roundness);
                 obj.Falloff = eval(this.Falloff);
                 obj.UsesRoundness = eval(this.UsesRoundness);
-                obj.UsesRoundnessUnused = eval(this.UsesRoundnessUnused);
+                obj.UsesRoundnessUnknown = eval(this.UsesRoundnessUnknown);
             }
             #endregion
 
@@ -269,9 +269,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(UsesRoundness, "UsesRoundness");
                     }
-                    if (printMask?.UsesRoundnessUnused ?? true)
+                    if (printMask?.UsesRoundnessUnknown ?? true)
                     {
-                        sb.AppendItem(UsesRoundnessUnused, "UsesRoundnessUnused");
+                        sb.AppendItem(UsesRoundnessUnknown, "UsesRoundnessUnknown");
                     }
                 }
             }
@@ -302,7 +302,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Roundness;
             public Exception? Falloff;
             public Exception? UsesRoundness;
-            public Exception? UsesRoundnessUnused;
+            public Exception? UsesRoundnessUnknown;
             #endregion
 
             #region IErrorMask
@@ -321,8 +321,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Falloff;
                     case LightRoundness_FieldIndex.UsesRoundness:
                         return UsesRoundness;
-                    case LightRoundness_FieldIndex.UsesRoundnessUnused:
-                        return UsesRoundnessUnused;
+                    case LightRoundness_FieldIndex.UsesRoundnessUnknown:
+                        return UsesRoundnessUnknown;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -348,8 +348,8 @@ namespace Mutagen.Bethesda.Starfield
                     case LightRoundness_FieldIndex.UsesRoundness:
                         this.UsesRoundness = ex;
                         break;
-                    case LightRoundness_FieldIndex.UsesRoundnessUnused:
-                        this.UsesRoundnessUnused = ex;
+                    case LightRoundness_FieldIndex.UsesRoundnessUnknown:
+                        this.UsesRoundnessUnknown = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -376,8 +376,8 @@ namespace Mutagen.Bethesda.Starfield
                     case LightRoundness_FieldIndex.UsesRoundness:
                         this.UsesRoundness = (Exception?)obj;
                         break;
-                    case LightRoundness_FieldIndex.UsesRoundnessUnused:
-                        this.UsesRoundnessUnused = (Exception?)obj;
+                    case LightRoundness_FieldIndex.UsesRoundnessUnknown:
+                        this.UsesRoundnessUnknown = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -392,7 +392,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Roundness != null) return true;
                 if (Falloff != null) return true;
                 if (UsesRoundness != null) return true;
-                if (UsesRoundnessUnused != null) return true;
+                if (UsesRoundnessUnknown != null) return true;
                 return false;
             }
             #endregion
@@ -434,7 +434,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(UsesRoundness, "UsesRoundness");
                 }
                 {
-                    sb.AppendItem(UsesRoundnessUnused, "UsesRoundnessUnused");
+                    sb.AppendItem(UsesRoundnessUnknown, "UsesRoundnessUnknown");
                 }
             }
             #endregion
@@ -449,7 +449,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Roundness = this.Roundness.Combine(rhs.Roundness);
                 ret.Falloff = this.Falloff.Combine(rhs.Falloff);
                 ret.UsesRoundness = this.UsesRoundness.Combine(rhs.UsesRoundness);
-                ret.UsesRoundnessUnused = this.UsesRoundnessUnused.Combine(rhs.UsesRoundnessUnused);
+                ret.UsesRoundnessUnknown = this.UsesRoundnessUnknown.Combine(rhs.UsesRoundnessUnknown);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -478,7 +478,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Roundness;
             public bool Falloff;
             public bool UsesRoundness;
-            public bool UsesRoundnessUnused;
+            public bool UsesRoundnessUnknown;
             #endregion
 
             #region Ctors
@@ -493,7 +493,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Roundness = defaultOn;
                 this.Falloff = defaultOn;
                 this.UsesRoundness = defaultOn;
-                this.UsesRoundnessUnused = defaultOn;
+                this.UsesRoundnessUnknown = defaultOn;
             }
 
             #endregion
@@ -514,7 +514,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Roundness, null));
                 ret.Add((Falloff, null));
                 ret.Add((UsesRoundness, null));
-                ret.Add((UsesRoundnessUnused, null));
+                ret.Add((UsesRoundnessUnknown, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -592,7 +592,7 @@ namespace Mutagen.Bethesda.Starfield
         new Single Roundness { get; set; }
         new Single Falloff { get; set; }
         new Boolean UsesRoundness { get; set; }
-        new MemorySlice<Byte> UsesRoundnessUnused { get; set; }
+        new MemorySlice<Byte> UsesRoundnessUnknown { get; set; }
     }
 
     public partial interface ILightRoundnessGetter :
@@ -612,7 +612,7 @@ namespace Mutagen.Bethesda.Starfield
         Single Roundness { get; }
         Single Falloff { get; }
         Boolean UsesRoundness { get; }
-        ReadOnlyMemorySlice<Byte> UsesRoundnessUnused { get; }
+        ReadOnlyMemorySlice<Byte> UsesRoundnessUnknown { get; }
 
     }
 
@@ -787,7 +787,7 @@ namespace Mutagen.Bethesda.Starfield
         Roundness = 2,
         Falloff = 3,
         UsesRoundness = 4,
-        UsesRoundnessUnused = 5,
+        UsesRoundnessUnknown = 5,
     }
     #endregion
 
@@ -871,7 +871,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Roundness = default(Single);
             item.Falloff = default(Single);
             item.UsesRoundness = default(Boolean);
-            item.UsesRoundnessUnused = new byte[3];
+            item.UsesRoundnessUnknown = new byte[3];
         }
         
         #region Mutagen
@@ -926,7 +926,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.Roundness = item.Roundness.EqualsWithin(rhs.Roundness);
             ret.Falloff = item.Falloff.EqualsWithin(rhs.Falloff);
             ret.UsesRoundness = item.UsesRoundness == rhs.UsesRoundness;
-            ret.UsesRoundnessUnused = MemoryExtensions.SequenceEqual(item.UsesRoundnessUnused.Span, rhs.UsesRoundnessUnused.Span);
+            ret.UsesRoundnessUnknown = MemoryExtensions.SequenceEqual(item.UsesRoundnessUnknown.Span, rhs.UsesRoundnessUnknown.Span);
         }
         
         public string Print(
@@ -991,9 +991,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.UsesRoundness, "UsesRoundness");
             }
-            if (printMask?.UsesRoundnessUnused ?? true)
+            if (printMask?.UsesRoundnessUnknown ?? true)
             {
-                sb.AppendLine($"UsesRoundnessUnused => {SpanExt.ToHexString(item.UsesRoundnessUnused)}");
+                sb.AppendLine($"UsesRoundnessUnknown => {SpanExt.ToHexString(item.UsesRoundnessUnknown)}");
             }
         }
         
@@ -1024,9 +1024,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.UsesRoundness != rhs.UsesRoundness) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)LightRoundness_FieldIndex.UsesRoundnessUnused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)LightRoundness_FieldIndex.UsesRoundnessUnknown) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.UsesRoundnessUnused.Span, rhs.UsesRoundnessUnused.Span)) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.UsesRoundnessUnknown.Span, rhs.UsesRoundnessUnknown.Span)) return false;
             }
             return true;
         }
@@ -1039,7 +1039,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Roundness);
             hash.Add(item.Falloff);
             hash.Add(item.UsesRoundness);
-            hash.AddBytes(item.UsesRoundnessUnused);
+            hash.AddBytes(item.UsesRoundnessUnknown);
             return hash.ToHashCode();
         }
         
@@ -1092,9 +1092,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.UsesRoundness = rhs.UsesRoundness;
             }
-            if ((copyMask?.GetShouldTranslate((int)LightRoundness_FieldIndex.UsesRoundnessUnused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)LightRoundness_FieldIndex.UsesRoundnessUnknown) ?? true))
             {
-                item.UsesRoundnessUnused = rhs.UsesRoundnessUnused.ToArray();
+                item.UsesRoundnessUnknown = rhs.UsesRoundnessUnknown.ToArray();
             }
             DeepCopyInCustom(
                 item: item,
@@ -1219,7 +1219,7 @@ namespace Mutagen.Bethesda.Starfield
             writer.Write(item.UsesRoundness);
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.UsesRoundnessUnused);
+                item: item.UsesRoundnessUnknown);
         }
 
         public void Write(
@@ -1258,7 +1258,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Roundness = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.Falloff = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.UsesRoundness = frame.ReadBoolean();
-            item.UsesRoundnessUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
+            item.UsesRoundnessUnknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
         }
 
     }
@@ -1329,7 +1329,7 @@ namespace Mutagen.Bethesda.Starfield
         public Single Roundness => _structData.Slice(0x8, 0x4).Float();
         public Single Falloff => _structData.Slice(0xC, 0x4).Float();
         public Boolean UsesRoundness => _structData.Slice(0x10, 0x1)[0] >= 1;
-        public ReadOnlyMemorySlice<Byte> UsesRoundnessUnused => _structData.Span.Slice(0x11, 0x3).ToArray();
+        public ReadOnlyMemorySlice<Byte> UsesRoundnessUnknown => _structData.Span.Slice(0x11, 0x3).ToArray();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

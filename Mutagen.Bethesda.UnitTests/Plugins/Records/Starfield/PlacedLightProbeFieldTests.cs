@@ -36,9 +36,9 @@ public class PlacedLightProbeFieldTests
             l.NearClipCutOn.ShouldBe(BitConverter.ToSingle(Hex("6A-3D-6A-3F")));
             l.InnerFov.ShouldBe(BitConverter.ToSingle(Hex("FA-A4-D2-41")));
             l.ShadowOffset.ShouldBe(0f);
-            l.ShadowOffsetUnused.ToArray().ShouldBe(Hex("AB-AB-AB-AB"));
+            l.ShadowOffsetUnknown.ToArray().ShouldBe(Hex("AB-AB-AB-AB"));
             l.Unknown2.ShouldBe((byte)1);
-            l.Unknown2Unused.ToArray().ShouldBe(Hex("AB-AB-AB"));
+            l.Unknown3.ToArray().ShouldBe(Hex("AB-AB-AB"));
             var written = GameConstants.Starfield.MajorRecord(Write(w => refr.WriteToBinary(w)));
             written.FindSubrecord(new RecordType("XLIG")).Content.ToArray().ShouldBe(Hex(Light));
         }
@@ -54,7 +54,7 @@ public class PlacedLightProbeFieldTests
             var e = refr.ExternalEmittance!;
             e.LuminanceScale.ShouldBe(1.7f);
             e.OverrideEnabled.ShouldBeTrue();
-            e.OverrideEnabledUnused.ToArray().ShouldBe(Hex("AB-AB-AB"));
+            e.OverrideEnabledUnknown.ToArray().ShouldBe(Hex("AB-AB-AB"));
             var written = GameConstants.Starfield.MajorRecord(Write(w => refr.WriteToBinary(w)));
             written.FindSubrecord(new RecordType("XEED")).Content.ToArray().ShouldBe(Hex(xeed));
         }

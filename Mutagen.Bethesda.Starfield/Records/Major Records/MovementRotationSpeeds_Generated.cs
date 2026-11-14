@@ -69,8 +69,8 @@ namespace Mutagen.Bethesda.Starfield
         #region Acceleration
         public Single Acceleration { get; set; } = default(Single);
         #endregion
-        #region Unused
-        public Single Unused { get; set; } = default(Single);
+        #region Unknown
+        public Single Unknown { get; set; } = default(Single);
         #endregion
 
         #region To String
@@ -117,7 +117,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Run = initialValue;
                 this.Sprint = initialValue;
                 this.Acceleration = initialValue;
-                this.Unused = initialValue;
+                this.Unknown = initialValue;
             }
 
             public Mask(
@@ -127,7 +127,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Run,
                 TItem Sprint,
                 TItem Acceleration,
-                TItem Unused)
+                TItem Unknown)
             {
                 this.Stand = Stand;
                 this.Walk = Walk;
@@ -135,7 +135,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Run = Run;
                 this.Sprint = Sprint;
                 this.Acceleration = Acceleration;
-                this.Unused = Unused;
+                this.Unknown = Unknown;
             }
 
             #pragma warning disable CS8618
@@ -153,7 +153,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Run;
             public TItem Sprint;
             public TItem Acceleration;
-            public TItem Unused;
+            public TItem Unknown;
             #endregion
 
             #region Equals
@@ -172,7 +172,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Run, rhs.Run)) return false;
                 if (!object.Equals(this.Sprint, rhs.Sprint)) return false;
                 if (!object.Equals(this.Acceleration, rhs.Acceleration)) return false;
-                if (!object.Equals(this.Unused, rhs.Unused)) return false;
+                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -184,7 +184,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Run);
                 hash.Add(this.Sprint);
                 hash.Add(this.Acceleration);
-                hash.Add(this.Unused);
+                hash.Add(this.Unknown);
                 return hash.ToHashCode();
             }
 
@@ -199,7 +199,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Run)) return false;
                 if (!eval(this.Sprint)) return false;
                 if (!eval(this.Acceleration)) return false;
-                if (!eval(this.Unused)) return false;
+                if (!eval(this.Unknown)) return false;
                 return true;
             }
             #endregion
@@ -213,7 +213,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Run)) return true;
                 if (eval(this.Sprint)) return true;
                 if (eval(this.Acceleration)) return true;
-                if (eval(this.Unused)) return true;
+                if (eval(this.Unknown)) return true;
                 return false;
             }
             #endregion
@@ -234,7 +234,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Run = eval(this.Run);
                 obj.Sprint = eval(this.Sprint);
                 obj.Acceleration = eval(this.Acceleration);
-                obj.Unused = eval(this.Unused);
+                obj.Unknown = eval(this.Unknown);
             }
             #endregion
 
@@ -277,9 +277,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Acceleration, "Acceleration");
                     }
-                    if (printMask?.Unused ?? true)
+                    if (printMask?.Unknown ?? true)
                     {
-                        sb.AppendItem(Unused, "Unused");
+                        sb.AppendItem(Unknown, "Unknown");
                     }
                 }
             }
@@ -311,7 +311,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Run;
             public Exception? Sprint;
             public Exception? Acceleration;
-            public Exception? Unused;
+            public Exception? Unknown;
             #endregion
 
             #region IErrorMask
@@ -332,8 +332,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Sprint;
                     case MovementRotationSpeeds_FieldIndex.Acceleration:
                         return Acceleration;
-                    case MovementRotationSpeeds_FieldIndex.Unused:
-                        return Unused;
+                    case MovementRotationSpeeds_FieldIndex.Unknown:
+                        return Unknown;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -362,8 +362,8 @@ namespace Mutagen.Bethesda.Starfield
                     case MovementRotationSpeeds_FieldIndex.Acceleration:
                         this.Acceleration = ex;
                         break;
-                    case MovementRotationSpeeds_FieldIndex.Unused:
-                        this.Unused = ex;
+                    case MovementRotationSpeeds_FieldIndex.Unknown:
+                        this.Unknown = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -393,8 +393,8 @@ namespace Mutagen.Bethesda.Starfield
                     case MovementRotationSpeeds_FieldIndex.Acceleration:
                         this.Acceleration = (Exception?)obj;
                         break;
-                    case MovementRotationSpeeds_FieldIndex.Unused:
-                        this.Unused = (Exception?)obj;
+                    case MovementRotationSpeeds_FieldIndex.Unknown:
+                        this.Unknown = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -410,7 +410,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Run != null) return true;
                 if (Sprint != null) return true;
                 if (Acceleration != null) return true;
-                if (Unused != null) return true;
+                if (Unknown != null) return true;
                 return false;
             }
             #endregion
@@ -455,7 +455,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Acceleration, "Acceleration");
                 }
                 {
-                    sb.AppendItem(Unused, "Unused");
+                    sb.AppendItem(Unknown, "Unknown");
                 }
             }
             #endregion
@@ -471,7 +471,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Run = this.Run.Combine(rhs.Run);
                 ret.Sprint = this.Sprint.Combine(rhs.Sprint);
                 ret.Acceleration = this.Acceleration.Combine(rhs.Acceleration);
-                ret.Unused = this.Unused.Combine(rhs.Unused);
+                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -501,7 +501,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Run;
             public bool Sprint;
             public bool Acceleration;
-            public bool Unused;
+            public bool Unknown;
             #endregion
 
             #region Ctors
@@ -517,7 +517,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Run = defaultOn;
                 this.Sprint = defaultOn;
                 this.Acceleration = defaultOn;
-                this.Unused = defaultOn;
+                this.Unknown = defaultOn;
             }
 
             #endregion
@@ -539,7 +539,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Run, null));
                 ret.Add((Sprint, null));
                 ret.Add((Acceleration, null));
-                ret.Add((Unused, null));
+                ret.Add((Unknown, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -618,7 +618,7 @@ namespace Mutagen.Bethesda.Starfield
         new Single Run { get; set; }
         new Single Sprint { get; set; }
         new Single Acceleration { get; set; }
-        new Single Unused { get; set; }
+        new Single Unknown { get; set; }
     }
 
     public partial interface IMovementRotationSpeedsGetter :
@@ -639,7 +639,7 @@ namespace Mutagen.Bethesda.Starfield
         Single Run { get; }
         Single Sprint { get; }
         Single Acceleration { get; }
-        Single Unused { get; }
+        Single Unknown { get; }
 
     }
 
@@ -815,7 +815,7 @@ namespace Mutagen.Bethesda.Starfield
         Run = 3,
         Sprint = 4,
         Acceleration = 5,
-        Unused = 6,
+        Unknown = 6,
     }
     #endregion
 
@@ -900,7 +900,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Run = default(Single);
             item.Sprint = default(Single);
             item.Acceleration = default(Single);
-            item.Unused = default(Single);
+            item.Unknown = default(Single);
         }
         
         #region Mutagen
@@ -956,7 +956,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.Run = item.Run.EqualsWithin(rhs.Run);
             ret.Sprint = item.Sprint.EqualsWithin(rhs.Sprint);
             ret.Acceleration = item.Acceleration.EqualsWithin(rhs.Acceleration);
-            ret.Unused = item.Unused.EqualsWithin(rhs.Unused);
+            ret.Unknown = item.Unknown.EqualsWithin(rhs.Unknown);
         }
         
         public string Print(
@@ -1025,9 +1025,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Acceleration, "Acceleration");
             }
-            if (printMask?.Unused ?? true)
+            if (printMask?.Unknown ?? true)
             {
-                sb.AppendItem(item.Unused, "Unused");
+                sb.AppendItem(item.Unknown, "Unknown");
             }
         }
         
@@ -1062,9 +1062,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Acceleration.EqualsWithin(rhs.Acceleration)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MovementRotationSpeeds_FieldIndex.Unused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MovementRotationSpeeds_FieldIndex.Unknown) ?? true))
             {
-                if (!lhs.Unused.EqualsWithin(rhs.Unused)) return false;
+                if (!lhs.Unknown.EqualsWithin(rhs.Unknown)) return false;
             }
             return true;
         }
@@ -1078,7 +1078,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Run);
             hash.Add(item.Sprint);
             hash.Add(item.Acceleration);
-            hash.Add(item.Unused);
+            hash.Add(item.Unknown);
             return hash.ToHashCode();
         }
         
@@ -1135,9 +1135,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Acceleration = rhs.Acceleration;
             }
-            if ((copyMask?.GetShouldTranslate((int)MovementRotationSpeeds_FieldIndex.Unused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MovementRotationSpeeds_FieldIndex.Unknown) ?? true))
             {
-                item.Unused = rhs.Unused;
+                item.Unknown = rhs.Unknown;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1267,7 +1267,7 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.Acceleration);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Unused);
+                item: item.Unknown);
         }
 
         public void Write(
@@ -1307,7 +1307,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Run = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.Sprint = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.Acceleration = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Unused = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.Unknown = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
         }
 
     }
@@ -1379,7 +1379,7 @@ namespace Mutagen.Bethesda.Starfield
         public Single Run => _structData.Slice(0xC, 0x4).Float();
         public Single Sprint => _structData.Slice(0x10, 0x4).Float();
         public Single Acceleration => _structData.Slice(0x14, 0x4).Float();
-        public Single Unused => _structData.Slice(0x18, 0x4).Float();
+        public Single Unknown => _structData.Slice(0x18, 0x4).Float();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

@@ -97,16 +97,16 @@ namespace Mutagen.Bethesda.Starfield
         #region ClampMaxAnimationSpeeds
         public Boolean ClampMaxAnimationSpeeds { get; set; } = default(Boolean);
         #endregion
-        #region FlagsUnused
+        #region FlagsUnknown
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _FlagsUnused = new byte[3];
-        public MemorySlice<Byte> FlagsUnused
+        private MemorySlice<Byte> _FlagsUnknown = new byte[3];
+        public MemorySlice<Byte> FlagsUnknown
         {
-            get => _FlagsUnused;
-            set => this._FlagsUnused = value;
+            get => _FlagsUnknown;
+            set => this._FlagsUnknown = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IMovementTypeGetter.FlagsUnused => this.FlagsUnused;
+        ReadOnlyMemorySlice<Byte> IMovementTypeGetter.FlagsUnknown => this.FlagsUnknown;
         #endregion
         #region DisplayForNonCharacters
         public Boolean DisplayForNonCharacters { get; set; } = default(Boolean);
@@ -141,7 +141,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.FlightAngleGain = initialValue;
                 this.FastWalk = initialValue;
                 this.ClampMaxAnimationSpeeds = initialValue;
-                this.FlagsUnused = initialValue;
+                this.FlagsUnknown = initialValue;
                 this.DisplayForNonCharacters = initialValue;
             }
 
@@ -160,7 +160,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FlightAngleGain,
                 TItem FastWalk,
                 TItem ClampMaxAnimationSpeeds,
-                TItem FlagsUnused,
+                TItem FlagsUnknown,
                 TItem DisplayForNonCharacters)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
@@ -178,7 +178,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.FlightAngleGain = FlightAngleGain;
                 this.FastWalk = FastWalk;
                 this.ClampMaxAnimationSpeeds = ClampMaxAnimationSpeeds;
-                this.FlagsUnused = FlagsUnused;
+                this.FlagsUnknown = FlagsUnknown;
                 this.DisplayForNonCharacters = DisplayForNonCharacters;
             }
 
@@ -196,7 +196,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem FlightAngleGain;
             public TItem FastWalk;
             public TItem ClampMaxAnimationSpeeds;
-            public TItem FlagsUnused;
+            public TItem FlagsUnknown;
             public TItem DisplayForNonCharacters;
             #endregion
 
@@ -216,7 +216,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.FlightAngleGain, rhs.FlightAngleGain)) return false;
                 if (!object.Equals(this.FastWalk, rhs.FastWalk)) return false;
                 if (!object.Equals(this.ClampMaxAnimationSpeeds, rhs.ClampMaxAnimationSpeeds)) return false;
-                if (!object.Equals(this.FlagsUnused, rhs.FlagsUnused)) return false;
+                if (!object.Equals(this.FlagsUnknown, rhs.FlagsUnknown)) return false;
                 if (!object.Equals(this.DisplayForNonCharacters, rhs.DisplayForNonCharacters)) return false;
                 return true;
             }
@@ -228,7 +228,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.FlightAngleGain);
                 hash.Add(this.FastWalk);
                 hash.Add(this.ClampMaxAnimationSpeeds);
-                hash.Add(this.FlagsUnused);
+                hash.Add(this.FlagsUnknown);
                 hash.Add(this.DisplayForNonCharacters);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
@@ -249,7 +249,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.FlightAngleGain)) return false;
                 if (!eval(this.FastWalk)) return false;
                 if (!eval(this.ClampMaxAnimationSpeeds)) return false;
-                if (!eval(this.FlagsUnused)) return false;
+                if (!eval(this.FlagsUnknown)) return false;
                 if (!eval(this.DisplayForNonCharacters)) return false;
                 return true;
             }
@@ -268,7 +268,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.FlightAngleGain)) return true;
                 if (eval(this.FastWalk)) return true;
                 if (eval(this.ClampMaxAnimationSpeeds)) return true;
-                if (eval(this.FlagsUnused)) return true;
+                if (eval(this.FlagsUnknown)) return true;
                 if (eval(this.DisplayForNonCharacters)) return true;
                 return false;
             }
@@ -290,7 +290,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.FlightAngleGain = eval(this.FlightAngleGain);
                 obj.FastWalk = eval(this.FastWalk);
                 obj.ClampMaxAnimationSpeeds = eval(this.ClampMaxAnimationSpeeds);
-                obj.FlagsUnused = eval(this.FlagsUnused);
+                obj.FlagsUnknown = eval(this.FlagsUnknown);
                 obj.DisplayForNonCharacters = eval(this.DisplayForNonCharacters);
             }
             #endregion
@@ -330,9 +330,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(ClampMaxAnimationSpeeds, "ClampMaxAnimationSpeeds");
                     }
-                    if (printMask?.FlagsUnused ?? true)
+                    if (printMask?.FlagsUnknown ?? true)
                     {
-                        sb.AppendItem(FlagsUnused, "FlagsUnused");
+                        sb.AppendItem(FlagsUnknown, "FlagsUnknown");
                     }
                     if (printMask?.DisplayForNonCharacters ?? true)
                     {
@@ -354,7 +354,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? FlightAngleGain;
             public Exception? FastWalk;
             public Exception? ClampMaxAnimationSpeeds;
-            public Exception? FlagsUnused;
+            public Exception? FlagsUnknown;
             public Exception? DisplayForNonCharacters;
             #endregion
 
@@ -374,8 +374,8 @@ namespace Mutagen.Bethesda.Starfield
                         return FastWalk;
                     case MovementType_FieldIndex.ClampMaxAnimationSpeeds:
                         return ClampMaxAnimationSpeeds;
-                    case MovementType_FieldIndex.FlagsUnused:
-                        return FlagsUnused;
+                    case MovementType_FieldIndex.FlagsUnknown:
+                        return FlagsUnknown;
                     case MovementType_FieldIndex.DisplayForNonCharacters:
                         return DisplayForNonCharacters;
                     default:
@@ -403,8 +403,8 @@ namespace Mutagen.Bethesda.Starfield
                     case MovementType_FieldIndex.ClampMaxAnimationSpeeds:
                         this.ClampMaxAnimationSpeeds = ex;
                         break;
-                    case MovementType_FieldIndex.FlagsUnused:
-                        this.FlagsUnused = ex;
+                    case MovementType_FieldIndex.FlagsUnknown:
+                        this.FlagsUnknown = ex;
                         break;
                     case MovementType_FieldIndex.DisplayForNonCharacters:
                         this.DisplayForNonCharacters = ex;
@@ -435,8 +435,8 @@ namespace Mutagen.Bethesda.Starfield
                     case MovementType_FieldIndex.ClampMaxAnimationSpeeds:
                         this.ClampMaxAnimationSpeeds = (Exception?)obj;
                         break;
-                    case MovementType_FieldIndex.FlagsUnused:
-                        this.FlagsUnused = (Exception?)obj;
+                    case MovementType_FieldIndex.FlagsUnknown:
+                        this.FlagsUnknown = (Exception?)obj;
                         break;
                     case MovementType_FieldIndex.DisplayForNonCharacters:
                         this.DisplayForNonCharacters = (Exception?)obj;
@@ -455,7 +455,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (FlightAngleGain != null) return true;
                 if (FastWalk != null) return true;
                 if (ClampMaxAnimationSpeeds != null) return true;
-                if (FlagsUnused != null) return true;
+                if (FlagsUnknown != null) return true;
                 if (DisplayForNonCharacters != null) return true;
                 return false;
             }
@@ -497,7 +497,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(ClampMaxAnimationSpeeds, "ClampMaxAnimationSpeeds");
                 }
                 {
-                    sb.AppendItem(FlagsUnused, "FlagsUnused");
+                    sb.AppendItem(FlagsUnknown, "FlagsUnknown");
                 }
                 {
                     sb.AppendItem(DisplayForNonCharacters, "DisplayForNonCharacters");
@@ -515,7 +515,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.FlightAngleGain = this.FlightAngleGain.Combine(rhs.FlightAngleGain);
                 ret.FastWalk = this.FastWalk.Combine(rhs.FastWalk);
                 ret.ClampMaxAnimationSpeeds = this.ClampMaxAnimationSpeeds.Combine(rhs.ClampMaxAnimationSpeeds);
-                ret.FlagsUnused = this.FlagsUnused.Combine(rhs.FlagsUnused);
+                ret.FlagsUnknown = this.FlagsUnknown.Combine(rhs.FlagsUnknown);
                 ret.DisplayForNonCharacters = this.DisplayForNonCharacters.Combine(rhs.DisplayForNonCharacters);
                 return ret;
             }
@@ -544,7 +544,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool FlightAngleGain;
             public bool FastWalk;
             public bool ClampMaxAnimationSpeeds;
-            public bool FlagsUnused;
+            public bool FlagsUnknown;
             public bool DisplayForNonCharacters;
             #endregion
 
@@ -558,7 +558,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.FlightAngleGain = defaultOn;
                 this.FastWalk = defaultOn;
                 this.ClampMaxAnimationSpeeds = defaultOn;
-                this.FlagsUnused = defaultOn;
+                this.FlagsUnknown = defaultOn;
                 this.DisplayForNonCharacters = defaultOn;
             }
 
@@ -572,7 +572,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((FlightAngleGain, null));
                 ret.Add((FastWalk, null));
                 ret.Add((ClampMaxAnimationSpeeds, null));
-                ret.Add((FlagsUnused, null));
+                ret.Add((FlagsUnknown, null));
                 ret.Add((DisplayForNonCharacters, null));
             }
 
@@ -728,7 +728,7 @@ namespace Mutagen.Bethesda.Starfield
         new Single? FlightAngleGain { get; set; }
         new Single? FastWalk { get; set; }
         new Boolean ClampMaxAnimationSpeeds { get; set; }
-        new MemorySlice<Byte> FlagsUnused { get; set; }
+        new MemorySlice<Byte> FlagsUnknown { get; set; }
         new Boolean DisplayForNonCharacters { get; set; }
     }
 
@@ -759,7 +759,7 @@ namespace Mutagen.Bethesda.Starfield
         Single? FlightAngleGain { get; }
         Single? FastWalk { get; }
         Boolean ClampMaxAnimationSpeeds { get; }
-        ReadOnlyMemorySlice<Byte> FlagsUnused { get; }
+        ReadOnlyMemorySlice<Byte> FlagsUnknown { get; }
         Boolean DisplayForNonCharacters { get; }
 
     }
@@ -944,7 +944,7 @@ namespace Mutagen.Bethesda.Starfield
         FlightAngleGain = 11,
         FastWalk = 12,
         ClampMaxAnimationSpeeds = 13,
-        FlagsUnused = 14,
+        FlagsUnknown = 14,
         DisplayForNonCharacters = 15,
     }
     #endregion
@@ -1046,7 +1046,7 @@ namespace Mutagen.Bethesda.Starfield
             item.FlightAngleGain = default;
             item.FastWalk = default;
             item.ClampMaxAnimationSpeeds = default(Boolean);
-            item.FlagsUnused = new byte[3];
+            item.FlagsUnknown = new byte[3];
             item.DisplayForNonCharacters = default(Boolean);
             base.Clear(item);
         }
@@ -1141,7 +1141,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.FlightAngleGain = item.FlightAngleGain.EqualsWithin(rhs.FlightAngleGain);
             ret.FastWalk = item.FastWalk.EqualsWithin(rhs.FastWalk);
             ret.ClampMaxAnimationSpeeds = item.ClampMaxAnimationSpeeds == rhs.ClampMaxAnimationSpeeds;
-            ret.FlagsUnused = MemoryExtensions.SequenceEqual(item.FlagsUnused.Span, rhs.FlagsUnused.Span);
+            ret.FlagsUnknown = MemoryExtensions.SequenceEqual(item.FlagsUnknown.Span, rhs.FlagsUnknown.Span);
             ret.DisplayForNonCharacters = item.DisplayForNonCharacters == rhs.DisplayForNonCharacters;
             base.FillEqualsMask(item, rhs, ret, include);
         }
@@ -1216,9 +1216,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.ClampMaxAnimationSpeeds, "ClampMaxAnimationSpeeds");
             }
-            if (printMask?.FlagsUnused ?? true)
+            if (printMask?.FlagsUnknown ?? true)
             {
-                sb.AppendLine($"FlagsUnused => {SpanExt.ToHexString(item.FlagsUnused)}");
+                sb.AppendLine($"FlagsUnknown => {SpanExt.ToHexString(item.FlagsUnknown)}");
             }
             if (printMask?.DisplayForNonCharacters ?? true)
             {
@@ -1306,9 +1306,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.ClampMaxAnimationSpeeds != rhs.ClampMaxAnimationSpeeds) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MovementType_FieldIndex.FlagsUnused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MovementType_FieldIndex.FlagsUnknown) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.FlagsUnused.Span, rhs.FlagsUnused.Span)) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.FlagsUnknown.Span, rhs.FlagsUnknown.Span)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)MovementType_FieldIndex.DisplayForNonCharacters) ?? true))
             {
@@ -1359,7 +1359,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(FastWalkitem);
             }
             hash.Add(item.ClampMaxAnimationSpeeds);
-            hash.AddBytes(item.FlagsUnused);
+            hash.AddBytes(item.FlagsUnknown);
             hash.Add(item.DisplayForNonCharacters);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
@@ -1528,9 +1528,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.ClampMaxAnimationSpeeds = rhs.ClampMaxAnimationSpeeds;
             }
-            if ((copyMask?.GetShouldTranslate((int)MovementType_FieldIndex.FlagsUnused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MovementType_FieldIndex.FlagsUnknown) ?? true))
             {
-                item.FlagsUnused = rhs.FlagsUnused.ToArray();
+                item.FlagsUnknown = rhs.FlagsUnknown.ToArray();
             }
             if ((copyMask?.GetShouldTranslate((int)MovementType_FieldIndex.DisplayForNonCharacters) ?? true))
             {
@@ -1730,7 +1730,7 @@ namespace Mutagen.Bethesda.Starfield
                 writer.Write(item.ClampMaxAnimationSpeeds);
                 ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.FlagsUnused);
+                    item: item.FlagsUnknown);
             }
             BooleanBinaryTranslation<MutagenFrame>.Instance.WriteAsMarker(
                 writer: writer,
@@ -1836,8 +1836,8 @@ namespace Mutagen.Bethesda.Starfield
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 1) return null;
                     item.ClampMaxAnimationSpeeds = dataFrame.ReadBoolean();
-                    item.FlagsUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(3));
-                    return (int)MovementType_FieldIndex.FlagsUnused;
+                    item.FlagsUnknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(3));
+                    return (int)MovementType_FieldIndex.FlagsUnknown;
                 }
                 case RecordTypeInts.BOLV:
                 {
@@ -1928,10 +1928,10 @@ namespace Mutagen.Bethesda.Starfield
         private bool _ClampMaxAnimationSpeeds_IsSet => _INTVLocation.HasValue && _INTVLocation!.Value.Max - _ClampMaxAnimationSpeedsLocation + 1 >= 1;
         public Boolean ClampMaxAnimationSpeeds => _ClampMaxAnimationSpeeds_IsSet ? _recordData.Slice(_ClampMaxAnimationSpeedsLocation, 1)[0] >= 1 : default(Boolean);
         #endregion
-        #region FlagsUnused
-        private int _FlagsUnusedLocation => _INTVLocation!.Value.Min + 0x1;
-        private bool _FlagsUnused_IsSet => _INTVLocation.HasValue;
-        public ReadOnlyMemorySlice<Byte> FlagsUnused => _FlagsUnused_IsSet ? _recordData.Span.Slice(_FlagsUnusedLocation, 3).ToArray() : UtilityTranslation.Zeros.Slice(0, 3);
+        #region FlagsUnknown
+        private int _FlagsUnknownLocation => _INTVLocation!.Value.Min + 0x1;
+        private bool _FlagsUnknown_IsSet => _INTVLocation.HasValue;
+        public ReadOnlyMemorySlice<Byte> FlagsUnknown => _FlagsUnknown_IsSet ? _recordData.Span.Slice(_FlagsUnknownLocation, 3).ToArray() : UtilityTranslation.Zeros.Slice(0, 3);
         #endregion
         #region DisplayForNonCharacters
         private int? _DisplayForNonCharactersLocation;
@@ -2029,7 +2029,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.INTV:
                 {
                     _INTVLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)MovementType_FieldIndex.FlagsUnused;
+                    return (int)MovementType_FieldIndex.FlagsUnknown;
                 }
                 case RecordTypeInts.BOLV:
                 {

@@ -57,16 +57,16 @@ namespace Mutagen.Bethesda.Starfield
         #region Flags
         public CellGrid.Flag Flags { get; set; } = default(CellGrid.Flag);
         #endregion
-        #region Unused
+        #region Unknown
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _Unused = new byte[3];
-        public MemorySlice<Byte> Unused
+        private MemorySlice<Byte> _Unknown = new byte[3];
+        public MemorySlice<Byte> Unknown
         {
-            get => _Unused;
-            set => this._Unused = value;
+            get => _Unknown;
+            set => this._Unknown = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> ICellGridGetter.Unused => this.Unused;
+        ReadOnlyMemorySlice<Byte> ICellGridGetter.Unknown => this.Unknown;
         #endregion
 
         #region To String
@@ -109,17 +109,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.Point = initialValue;
                 this.Flags = initialValue;
-                this.Unused = initialValue;
+                this.Unknown = initialValue;
             }
 
             public Mask(
                 TItem Point,
                 TItem Flags,
-                TItem Unused)
+                TItem Unknown)
             {
                 this.Point = Point;
                 this.Flags = Flags;
-                this.Unused = Unused;
+                this.Unknown = Unknown;
             }
 
             #pragma warning disable CS8618
@@ -133,7 +133,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public TItem Point;
             public TItem Flags;
-            public TItem Unused;
+            public TItem Unknown;
             #endregion
 
             #region Equals
@@ -148,7 +148,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!object.Equals(this.Point, rhs.Point)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
-                if (!object.Equals(this.Unused, rhs.Unused)) return false;
+                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -156,7 +156,7 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.Point);
                 hash.Add(this.Flags);
-                hash.Add(this.Unused);
+                hash.Add(this.Unknown);
                 return hash.ToHashCode();
             }
 
@@ -167,7 +167,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!eval(this.Point)) return false;
                 if (!eval(this.Flags)) return false;
-                if (!eval(this.Unused)) return false;
+                if (!eval(this.Unknown)) return false;
                 return true;
             }
             #endregion
@@ -177,7 +177,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (eval(this.Point)) return true;
                 if (eval(this.Flags)) return true;
-                if (eval(this.Unused)) return true;
+                if (eval(this.Unknown)) return true;
                 return false;
             }
             #endregion
@@ -194,7 +194,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 obj.Point = eval(this.Point);
                 obj.Flags = eval(this.Flags);
-                obj.Unused = eval(this.Unused);
+                obj.Unknown = eval(this.Unknown);
             }
             #endregion
 
@@ -221,9 +221,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Flags, "Flags");
                     }
-                    if (printMask?.Unused ?? true)
+                    if (printMask?.Unknown ?? true)
                     {
-                        sb.AppendItem(Unused, "Unused");
+                        sb.AppendItem(Unknown, "Unknown");
                     }
                 }
             }
@@ -251,7 +251,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             public Exception? Point;
             public Exception? Flags;
-            public Exception? Unused;
+            public Exception? Unknown;
             #endregion
 
             #region IErrorMask
@@ -264,8 +264,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Point;
                     case CellGrid_FieldIndex.Flags:
                         return Flags;
-                    case CellGrid_FieldIndex.Unused:
-                        return Unused;
+                    case CellGrid_FieldIndex.Unknown:
+                        return Unknown;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -282,8 +282,8 @@ namespace Mutagen.Bethesda.Starfield
                     case CellGrid_FieldIndex.Flags:
                         this.Flags = ex;
                         break;
-                    case CellGrid_FieldIndex.Unused:
-                        this.Unused = ex;
+                    case CellGrid_FieldIndex.Unknown:
+                        this.Unknown = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -301,8 +301,8 @@ namespace Mutagen.Bethesda.Starfield
                     case CellGrid_FieldIndex.Flags:
                         this.Flags = (Exception?)obj;
                         break;
-                    case CellGrid_FieldIndex.Unused:
-                        this.Unused = (Exception?)obj;
+                    case CellGrid_FieldIndex.Unknown:
+                        this.Unknown = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -314,7 +314,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (Point != null) return true;
                 if (Flags != null) return true;
-                if (Unused != null) return true;
+                if (Unknown != null) return true;
                 return false;
             }
             #endregion
@@ -347,7 +347,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Flags, "Flags");
                 }
                 {
-                    sb.AppendItem(Unused, "Unused");
+                    sb.AppendItem(Unknown, "Unknown");
                 }
             }
             #endregion
@@ -359,7 +359,7 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.Point = this.Point.Combine(rhs.Point);
                 ret.Flags = this.Flags.Combine(rhs.Flags);
-                ret.Unused = this.Unused.Combine(rhs.Unused);
+                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -385,7 +385,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool OnOverall;
             public bool Point;
             public bool Flags;
-            public bool Unused;
+            public bool Unknown;
             #endregion
 
             #region Ctors
@@ -397,7 +397,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.OnOverall = onOverall;
                 this.Point = defaultOn;
                 this.Flags = defaultOn;
-                this.Unused = defaultOn;
+                this.Unknown = defaultOn;
             }
 
             #endregion
@@ -415,7 +415,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 ret.Add((Point, null));
                 ret.Add((Flags, null));
-                ret.Add((Unused, null));
+                ret.Add((Unknown, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -490,7 +490,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         new P2Int Point { get; set; }
         new CellGrid.Flag Flags { get; set; }
-        new MemorySlice<Byte> Unused { get; set; }
+        new MemorySlice<Byte> Unknown { get; set; }
     }
 
     public partial interface ICellGridGetter :
@@ -507,7 +507,7 @@ namespace Mutagen.Bethesda.Starfield
         static ILoquiRegistration StaticRegistration => CellGrid_Registration.Instance;
         P2Int Point { get; }
         CellGrid.Flag Flags { get; }
-        ReadOnlyMemorySlice<Byte> Unused { get; }
+        ReadOnlyMemorySlice<Byte> Unknown { get; }
 
     }
 
@@ -679,7 +679,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         Point = 0,
         Flags = 1,
-        Unused = 2,
+        Unknown = 2,
     }
     #endregion
 
@@ -767,7 +767,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.Point = default(P2Int);
             item.Flags = default(CellGrid.Flag);
-            item.Unused = new byte[3];
+            item.Unknown = new byte[3];
         }
         
         #region Mutagen
@@ -823,7 +823,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ret.Point = item.Point.Equals(rhs.Point);
             ret.Flags = item.Flags == rhs.Flags;
-            ret.Unused = MemoryExtensions.SequenceEqual(item.Unused.Span, rhs.Unused.Span);
+            ret.Unknown = MemoryExtensions.SequenceEqual(item.Unknown.Span, rhs.Unknown.Span);
         }
         
         public string Print(
@@ -876,9 +876,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Flags, "Flags");
             }
-            if (printMask?.Unused ?? true)
+            if (printMask?.Unknown ?? true)
             {
-                sb.AppendLine($"Unused => {SpanExt.ToHexString(item.Unused)}");
+                sb.AppendLine($"Unknown => {SpanExt.ToHexString(item.Unknown)}");
             }
         }
         
@@ -897,9 +897,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Flags != rhs.Flags) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CellGrid_FieldIndex.Unused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CellGrid_FieldIndex.Unknown) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.Unused.Span, rhs.Unused.Span)) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.Unknown.Span, rhs.Unknown.Span)) return false;
             }
             return true;
         }
@@ -909,7 +909,7 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             hash.Add(item.Point);
             hash.Add(item.Flags);
-            hash.AddBytes(item.Unused);
+            hash.AddBytes(item.Unknown);
             return hash.ToHashCode();
         }
         
@@ -950,9 +950,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Flags = rhs.Flags;
             }
-            if ((copyMask?.GetShouldTranslate((int)CellGrid_FieldIndex.Unused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CellGrid_FieldIndex.Unknown) ?? true))
             {
-                item.Unused = rhs.Unused.ToArray();
+                item.Unknown = rhs.Unknown.ToArray();
             }
             DeepCopyInCustom(
                 item: item,
@@ -1071,7 +1071,7 @@ namespace Mutagen.Bethesda.Starfield
                 length: 1);
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Unused);
+                item: item.Unknown);
         }
 
         public void Write(
@@ -1116,7 +1116,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Flags = EnumBinaryTranslation<CellGrid.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 1);
-            item.Unused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
+            item.Unknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
         }
 
     }
@@ -1184,7 +1184,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public P2Int Point => P2IntBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_structData.Slice(0x0, 0x8));
         public CellGrid.Flag Flags => (CellGrid.Flag)_structData.Span.Slice(0x8, 0x1)[0];
-        public ReadOnlyMemorySlice<Byte> Unused => _structData.Span.Slice(0x9, 0x3).ToArray();
+        public ReadOnlyMemorySlice<Byte> Unknown => _structData.Span.Slice(0x9, 0x3).ToArray();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

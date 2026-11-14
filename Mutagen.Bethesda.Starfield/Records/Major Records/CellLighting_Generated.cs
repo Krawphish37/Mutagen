@@ -133,16 +133,16 @@ namespace Mutagen.Bethesda.Starfield
         #region InteriorType
         public Cell.InteriorType InteriorType { get; set; } = default(Cell.InteriorType);
         #endregion
-        #region InteriorTypeUnused
+        #region InteriorTypeUnknown
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _InteriorTypeUnused = new byte[3];
-        public MemorySlice<Byte> InteriorTypeUnused
+        private MemorySlice<Byte> _InteriorTypeUnknown = new byte[3];
+        public MemorySlice<Byte> InteriorTypeUnknown
         {
-            get => _InteriorTypeUnused;
-            set => this._InteriorTypeUnused = value;
+            get => _InteriorTypeUnknown;
+            set => this._InteriorTypeUnknown = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> ICellLightingGetter.InteriorTypeUnused => this.InteriorTypeUnused;
+        ReadOnlyMemorySlice<Byte> ICellLightingGetter.InteriorTypeUnknown => this.InteriorTypeUnknown;
         #endregion
 
         #region To String
@@ -210,7 +210,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.FarHeightMid = initialValue;
                 this.FarHeightRange = initialValue;
                 this.InteriorType = initialValue;
-                this.InteriorTypeUnused = initialValue;
+                this.InteriorTypeUnknown = initialValue;
             }
 
             public Mask(
@@ -241,7 +241,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FarHeightMid,
                 TItem FarHeightRange,
                 TItem InteriorType,
-                TItem InteriorTypeUnused)
+                TItem InteriorTypeUnknown)
             {
                 this.AmbientColor = AmbientColor;
                 this.DirectionalColor = DirectionalColor;
@@ -270,7 +270,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.FarHeightMid = FarHeightMid;
                 this.FarHeightRange = FarHeightRange;
                 this.InteriorType = InteriorType;
-                this.InteriorTypeUnused = InteriorTypeUnused;
+                this.InteriorTypeUnknown = InteriorTypeUnknown;
             }
 
             #pragma warning disable CS8618
@@ -309,7 +309,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem FarHeightMid;
             public TItem FarHeightRange;
             public TItem InteriorType;
-            public TItem InteriorTypeUnused;
+            public TItem InteriorTypeUnknown;
             #endregion
 
             #region Equals
@@ -349,7 +349,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.FarHeightMid, rhs.FarHeightMid)) return false;
                 if (!object.Equals(this.FarHeightRange, rhs.FarHeightRange)) return false;
                 if (!object.Equals(this.InteriorType, rhs.InteriorType)) return false;
-                if (!object.Equals(this.InteriorTypeUnused, rhs.InteriorTypeUnused)) return false;
+                if (!object.Equals(this.InteriorTypeUnknown, rhs.InteriorTypeUnknown)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -382,7 +382,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.FarHeightMid);
                 hash.Add(this.FarHeightRange);
                 hash.Add(this.InteriorType);
-                hash.Add(this.InteriorTypeUnused);
+                hash.Add(this.InteriorTypeUnknown);
                 return hash.ToHashCode();
             }
 
@@ -418,7 +418,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.FarHeightMid)) return false;
                 if (!eval(this.FarHeightRange)) return false;
                 if (!eval(this.InteriorType)) return false;
-                if (!eval(this.InteriorTypeUnused)) return false;
+                if (!eval(this.InteriorTypeUnknown)) return false;
                 return true;
             }
             #endregion
@@ -453,7 +453,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.FarHeightMid)) return true;
                 if (eval(this.FarHeightRange)) return true;
                 if (eval(this.InteriorType)) return true;
-                if (eval(this.InteriorTypeUnused)) return true;
+                if (eval(this.InteriorTypeUnknown)) return true;
                 return false;
             }
             #endregion
@@ -495,7 +495,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.FarHeightMid = eval(this.FarHeightMid);
                 obj.FarHeightRange = eval(this.FarHeightRange);
                 obj.InteriorType = eval(this.InteriorType);
-                obj.InteriorTypeUnused = eval(this.InteriorTypeUnused);
+                obj.InteriorTypeUnknown = eval(this.InteriorTypeUnknown);
             }
             #endregion
 
@@ -622,9 +622,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(InteriorType, "InteriorType");
                     }
-                    if (printMask?.InteriorTypeUnused ?? true)
+                    if (printMask?.InteriorTypeUnknown ?? true)
                     {
-                        sb.AppendItem(InteriorTypeUnused, "InteriorTypeUnused");
+                        sb.AppendItem(InteriorTypeUnknown, "InteriorTypeUnknown");
                     }
                 }
             }
@@ -677,7 +677,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? FarHeightMid;
             public Exception? FarHeightRange;
             public Exception? InteriorType;
-            public Exception? InteriorTypeUnused;
+            public Exception? InteriorTypeUnknown;
             #endregion
 
             #region IErrorMask
@@ -740,8 +740,8 @@ namespace Mutagen.Bethesda.Starfield
                         return FarHeightRange;
                     case CellLighting_FieldIndex.InteriorType:
                         return InteriorType;
-                    case CellLighting_FieldIndex.InteriorTypeUnused:
-                        return InteriorTypeUnused;
+                    case CellLighting_FieldIndex.InteriorTypeUnknown:
+                        return InteriorTypeUnknown;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -833,8 +833,8 @@ namespace Mutagen.Bethesda.Starfield
                     case CellLighting_FieldIndex.InteriorType:
                         this.InteriorType = ex;
                         break;
-                    case CellLighting_FieldIndex.InteriorTypeUnused:
-                        this.InteriorTypeUnused = ex;
+                    case CellLighting_FieldIndex.InteriorTypeUnknown:
+                        this.InteriorTypeUnknown = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -927,8 +927,8 @@ namespace Mutagen.Bethesda.Starfield
                     case CellLighting_FieldIndex.InteriorType:
                         this.InteriorType = (Exception?)obj;
                         break;
-                    case CellLighting_FieldIndex.InteriorTypeUnused:
-                        this.InteriorTypeUnused = (Exception?)obj;
+                    case CellLighting_FieldIndex.InteriorTypeUnknown:
+                        this.InteriorTypeUnknown = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -965,7 +965,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (FarHeightMid != null) return true;
                 if (FarHeightRange != null) return true;
                 if (InteriorType != null) return true;
-                if (InteriorTypeUnused != null) return true;
+                if (InteriorTypeUnknown != null) return true;
                 return false;
             }
             #endregion
@@ -1073,7 +1073,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(InteriorType, "InteriorType");
                 }
                 {
-                    sb.AppendItem(InteriorTypeUnused, "InteriorTypeUnused");
+                    sb.AppendItem(InteriorTypeUnknown, "InteriorTypeUnknown");
                 }
             }
             #endregion
@@ -1110,7 +1110,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.FarHeightMid = this.FarHeightMid.Combine(rhs.FarHeightMid);
                 ret.FarHeightRange = this.FarHeightRange.Combine(rhs.FarHeightRange);
                 ret.InteriorType = this.InteriorType.Combine(rhs.InteriorType);
-                ret.InteriorTypeUnused = this.InteriorTypeUnused.Combine(rhs.InteriorTypeUnused);
+                ret.InteriorTypeUnknown = this.InteriorTypeUnknown.Combine(rhs.InteriorTypeUnknown);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -1161,7 +1161,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool FarHeightMid;
             public bool FarHeightRange;
             public bool InteriorType;
-            public bool InteriorTypeUnused;
+            public bool InteriorTypeUnknown;
             #endregion
 
             #region Ctors
@@ -1198,7 +1198,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.FarHeightMid = defaultOn;
                 this.FarHeightRange = defaultOn;
                 this.InteriorType = defaultOn;
-                this.InteriorTypeUnused = defaultOn;
+                this.InteriorTypeUnknown = defaultOn;
             }
 
             #endregion
@@ -1241,7 +1241,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((FarHeightMid, null));
                 ret.Add((FarHeightRange, null));
                 ret.Add((InteriorType, null));
-                ret.Add((InteriorTypeUnused, null));
+                ret.Add((InteriorTypeUnknown, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -1341,7 +1341,7 @@ namespace Mutagen.Bethesda.Starfield
         new Single FarHeightMid { get; set; }
         new Single FarHeightRange { get; set; }
         new Cell.InteriorType InteriorType { get; set; }
-        new MemorySlice<Byte> InteriorTypeUnused { get; set; }
+        new MemorySlice<Byte> InteriorTypeUnknown { get; set; }
     }
 
     public partial interface ICellLightingGetter :
@@ -1383,7 +1383,7 @@ namespace Mutagen.Bethesda.Starfield
         Single FarHeightMid { get; }
         Single FarHeightRange { get; }
         Cell.InteriorType InteriorType { get; }
-        ReadOnlyMemorySlice<Byte> InteriorTypeUnused { get; }
+        ReadOnlyMemorySlice<Byte> InteriorTypeUnknown { get; }
 
     }
 
@@ -1580,7 +1580,7 @@ namespace Mutagen.Bethesda.Starfield
         FarHeightMid = 24,
         FarHeightRange = 25,
         InteriorType = 26,
-        InteriorTypeUnused = 27,
+        InteriorTypeUnknown = 27,
     }
     #endregion
 
@@ -1693,7 +1693,7 @@ namespace Mutagen.Bethesda.Starfield
             item.FarHeightMid = default(Single);
             item.FarHeightRange = default(Single);
             item.InteriorType = default(Cell.InteriorType);
-            item.InteriorTypeUnused = new byte[3];
+            item.InteriorTypeUnknown = new byte[3];
         }
         
         #region Mutagen
@@ -1774,7 +1774,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.FarHeightMid = item.FarHeightMid.EqualsWithin(rhs.FarHeightMid);
             ret.FarHeightRange = item.FarHeightRange.EqualsWithin(rhs.FarHeightRange);
             ret.InteriorType = item.InteriorType == rhs.InteriorType;
-            ret.InteriorTypeUnused = MemoryExtensions.SequenceEqual(item.InteriorTypeUnused.Span, rhs.InteriorTypeUnused.Span);
+            ret.InteriorTypeUnknown = MemoryExtensions.SequenceEqual(item.InteriorTypeUnknown.Span, rhs.InteriorTypeUnknown.Span);
         }
         
         public string Print(
@@ -1927,9 +1927,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.InteriorType, "InteriorType");
             }
-            if (printMask?.InteriorTypeUnused ?? true)
+            if (printMask?.InteriorTypeUnknown ?? true)
             {
-                sb.AppendLine($"InteriorTypeUnused => {SpanExt.ToHexString(item.InteriorTypeUnused)}");
+                sb.AppendLine($"InteriorTypeUnknown => {SpanExt.ToHexString(item.InteriorTypeUnknown)}");
             }
         }
         
@@ -2048,9 +2048,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.InteriorType != rhs.InteriorType) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)CellLighting_FieldIndex.InteriorTypeUnused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)CellLighting_FieldIndex.InteriorTypeUnknown) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.InteriorTypeUnused.Span, rhs.InteriorTypeUnused.Span)) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.InteriorTypeUnknown.Span, rhs.InteriorTypeUnknown.Span)) return false;
             }
             return true;
         }
@@ -2085,7 +2085,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.FarHeightMid);
             hash.Add(item.FarHeightRange);
             hash.Add(item.InteriorType);
-            hash.AddBytes(item.InteriorTypeUnused);
+            hash.AddBytes(item.InteriorTypeUnknown);
             return hash.ToHashCode();
         }
         
@@ -2226,9 +2226,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.InteriorType = rhs.InteriorType;
             }
-            if ((copyMask?.GetShouldTranslate((int)CellLighting_FieldIndex.InteriorTypeUnused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)CellLighting_FieldIndex.InteriorTypeUnknown) ?? true))
             {
-                item.InteriorTypeUnused = rhs.InteriorTypeUnused.ToArray();
+                item.InteriorTypeUnknown = rhs.InteriorTypeUnknown.ToArray();
             }
             DeepCopyInCustom(
                 item: item,
@@ -2418,7 +2418,7 @@ namespace Mutagen.Bethesda.Starfield
                 length: 1);
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.InteriorTypeUnused);
+                item: item.InteriorTypeUnknown);
         }
 
         public void Write(
@@ -2488,7 +2488,7 @@ namespace Mutagen.Bethesda.Starfield
             item.InteriorType = EnumBinaryTranslation<Cell.InteriorType, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 1);
-            item.InteriorTypeUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
+            item.InteriorTypeUnknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
         }
 
     }
@@ -2581,7 +2581,7 @@ namespace Mutagen.Bethesda.Starfield
         public Single FarHeightMid => _structData.Slice(0x60, 0x4).Float();
         public Single FarHeightRange => _structData.Slice(0x64, 0x4).Float();
         public Cell.InteriorType InteriorType => (Cell.InteriorType)_structData.Span.Slice(0x68, 0x1)[0];
-        public ReadOnlyMemorySlice<Byte> InteriorTypeUnused => _structData.Span.Slice(0x69, 0x3).ToArray();
+        public ReadOnlyMemorySlice<Byte> InteriorTypeUnknown => _structData.Span.Slice(0x69, 0x3).ToArray();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

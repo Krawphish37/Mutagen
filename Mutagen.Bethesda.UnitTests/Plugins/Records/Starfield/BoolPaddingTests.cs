@@ -29,7 +29,7 @@ public class BoolPaddingTests
         foreach (var refr in ReadBoth<IPlacedObjectGetter>(Record("REFR", Subrecord("XOWN", xown)), f => PlacedObject.CreateFromBinary(f), (s, p) => PlacedObjectBinaryOverlay.PlacedObjectFactory(s, p)))
         {
             refr.Ownership!.NoCrime.ShouldBeTrue();
-            refr.Ownership.NoCrimeUnused.ToArray().ShouldBe(Hex("A5-0C-00"));
+            refr.Ownership.NoCrimeUnknown.ToArray().ShouldBe(Hex("A5-0C-00"));
             Written(refr, (r, w) => r.WriteToBinary(w), "XOWN").ShouldBe(Hex(xown));
         }
     }
@@ -42,7 +42,7 @@ public class BoolPaddingTests
         foreach (var refr in ReadBoth<IPlacedObjectGetter>(Record("REFR", Subrecord("XLRD", xlrd)), f => PlacedObject.CreateFromBinary(f), (s, p) => PlacedObjectBinaryOverlay.PlacedObjectFactory(s, p)))
         {
             refr.LightRoundedness!.UsesRoundness.ShouldBeTrue();
-            refr.LightRoundedness.UsesRoundnessUnused.ToArray().ShouldBe(Hex("AB-AB-AB"));
+            refr.LightRoundedness.UsesRoundnessUnknown.ToArray().ShouldBe(Hex("AB-AB-AB"));
             Written(refr, (r, w) => r.WriteToBinary(w), "XLRD").ShouldBe(Hex(xlrd));
         }
     }
@@ -58,9 +58,9 @@ public class BoolPaddingTests
         foreach (var ligh in ReadBoth<ILightGetter>(bytes, f => Light.CreateFromBinary(f), (s, p) => LightBinaryOverlay.LightFactory(s, p)))
         {
             ligh.UseAdaptiveLighting.ShouldBeTrue();
-            ligh.UseAdaptiveLightingUnused.ToArray().ShouldBe(Hex("AB"));
+            ligh.UseAdaptiveLightingUnknown.ToArray().ShouldBe(Hex("AB"));
             ligh.GoboData.IsAnimated.ShouldBeFalse();
-            ligh.GoboData.IsAnimatedUnused.ToArray().ShouldBe(Hex("02-00-00"));
+            ligh.GoboData.IsAnimatedUnknown.ToArray().ShouldBe(Hex("02-00-00"));
             Written(ligh, (r, w) => r.WriteToBinary(w), "DAT2").ShouldBe(Hex(dat2));
             Written(ligh, (r, w) => r.WriteToBinary(w), "FLGD").ShouldBe(Hex(flgd));
         }
@@ -76,7 +76,7 @@ public class BoolPaddingTests
             var points = lctn.MasterEnablePointReferences!;
             points.Count.ShouldBe(2);
             points[0].SetEnableStateToOppositeOfParent.ShouldBeTrue();
-            points[0].SetEnableStateToOppositeOfParentUnused.ToArray().ShouldBe(Hex("31-FC-44"));
+            points[0].SetEnableStateToOppositeOfParentUnknown.ToArray().ShouldBe(Hex("31-FC-44"));
             Written(lctn, (r, w) => r.WriteToBinary(w), "LCEP").ShouldBe(Hex(lcep));
         }
     }
