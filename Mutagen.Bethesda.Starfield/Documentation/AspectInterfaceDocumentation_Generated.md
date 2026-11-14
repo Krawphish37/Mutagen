@@ -252,6 +252,7 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - Activator
 - Activity
 - ActorValueInformation
+- ActorValueModulation
 - ActorValueModulationEntry
 - Ammunition
 - AnimationSceneAction
@@ -575,6 +576,8 @@ Functions can then be written that take in `INamed`, allowing any record that ha
 - IHaveVirtualMachineAdapter
 - INamed
 - IScripted
+### ActorValueModulation
+- INamed
 ### ActorValueModulationEntry
 - INamed
 ### AddonNode

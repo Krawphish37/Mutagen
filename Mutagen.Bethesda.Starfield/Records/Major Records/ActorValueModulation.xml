@@ -4,8 +4,12 @@
     <Fields>
       <RefList name="Components" refName="AComponent" />
       <Enum name="Type" enumName="ActorValueModulation.GroupType" byteLength="4" recordType="MNAM" nullable="False" />
+      <!-- xEdit calls YNAM "Name" too. In all 6,154 AVMDs of Starfield.esm the EditorID is the group type's prefix
+           (SimpleGroup_, ComplexGroup_, Modulation_) + YNAM; it can't take the same property name as TNAM (C207) -->
       <String name="YNAM" recordType="YNAM" nullable="False" />
-      <String name="TNAM" recordType="TNAM" nullable="False" />
+      <!-- xEdit "Name": the name the record is known by (xEdit's AVMD index is keyed on it and entries resolve to records
+           through it); YNAM differs in about 3% (e.g. an _AK suffix) -->
+      <String name="Name" recordType="TNAM" nullable="False" />
       <RefList name="Entries" refName="ActorValueModulationEntry" counterRecType="ITMC" />
       <Enum name="TextureType" enumName="ActorValueModulation.TextureTypeEnum" recordType="MODT" byteLength="4" />
       <FormLink name="Parent" refName="ActorValueModulation" recordType="AVMP" />

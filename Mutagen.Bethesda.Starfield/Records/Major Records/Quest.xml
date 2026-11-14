@@ -162,6 +162,8 @@
       <UInt32 name="ID" recordType="ALST" nullable="false" />
       <String name="Name" recordType="ALID" nullable="false" />
       <Enum name="Flags" enumName="AQuestAlias.Flag" byteLength="4" recordType="FNAM" />
+      <!-- xEdit: "Orbit Altitude Mult" (float), but 0 in every reference alias of all 114 plugins with quests, and xEdit
+           gives location aliases' ALFG the same name where the CK shows flags (ExtraFlags); kept unknown (C207) -->
       <UInt32 name="ALFG" recordType="ALFG" unknown="true" />
       <UInt8 name="LegendaryRank" recordType="ALLR" />
       <Int32 name="AliasIDToForceIntoWhenFilled" recordType="ALFI" />

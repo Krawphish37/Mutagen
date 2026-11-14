@@ -1634,7 +1634,7 @@ internal class MergedWorldspace : IWorldspaceGetter
     public String? EnvironmentMap => _primary.EnvironmentMap;
     public String? WaterEnvironmentMap => _primary.WaterEnvironmentMap;
     public IReadOnlyList<ICellXCLAItemGetter> XCLAs => _primary.XCLAs;
-    public Single? GNAM => _primary.GNAM;
+    public Single? GravityScale => _primary.GravityScale;
     public IReadOnlyList<IFormLinkGetter<ILandscapeTextureGetter>> LandscapeTextures => _primary.LandscapeTextures;
     public IReadOnlyList<P2Int16>? CellWaterHeightLocations => _primary.CellWaterHeightLocations;
     public IReadOnlyList<Single>? WaterHeights => _primary.WaterHeights;
