@@ -528,13 +528,12 @@ class BA2FileEntry : IArchiveFile
         }
         else
         {
-            return new FramedStream(
+            return new DecompressedEntryStream(
                 new InflaterInputStream(fs)
                 {
                     IsStreamOwner = true
-                }, 
-                _realSize,
-                doubleCheckLength: false);
+                },
+                _realSize);
         }
     }
 
