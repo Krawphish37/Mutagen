@@ -14,9 +14,11 @@
       <Bool name="UsePackageData" binary="NoGeneration" layoutOffset="0" layoutBits="3"/>
     </Fields>
   </Object>
-  <Object name="UnknownConditionData" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
+  <!-- conditionFunction="*": the catch-all, for every function index no other ConditionData claims; Function keeps the
+       index itself (CTDA offset 8, a UInt16, the same bytes Condition's FunctionParse reads) -->
+  <Object name="UnknownConditionData" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration" conditionFunction="*">
     <Fields>
-      <Enum name="Function" enumName="Condition.Function" byteLength="2" binary="NoGeneration"/>
+      <Enum name="Function" enumName="Condition.Function" byteLength="2" binary="NoGeneration" layoutOffset="8" layoutEncoding="uint16"/>
       <Int32 name="ParameterOne"/>
       <Int32 name="ParameterTwo"/>
       <String nullable="true" name="FirstUnusedStringParameter" recordType="CIS1" binary="NoGeneration"/>
