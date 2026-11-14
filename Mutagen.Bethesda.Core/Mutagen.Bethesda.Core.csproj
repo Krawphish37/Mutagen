@@ -34,6 +34,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Archives\Archive.cs" />
+        <Compile Include="Archives\DecompressedEntryStream.cs" />
         <Compile Include="Archives\Ba2\Ba2EntryType.cs" />
         <Compile Include="Archives\Ba2\Ba2FolderWrapper.cs" />
         <Compile Include="Archives\Ba2\Ba2Reader.cs" />

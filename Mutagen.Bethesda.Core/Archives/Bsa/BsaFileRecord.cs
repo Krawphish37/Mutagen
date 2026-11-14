@@ -102,11 +102,11 @@ class BsaFileRecord : IArchiveFile
             {
                 if (Compressed)
                 {
-                    return new FramedStream(
+                    return new DecompressedEntryStream(
                         new InflaterInputStream(rdr.BaseStream)
                         {
                             IsStreamOwner = true
-                        }, 
+                        },
                         size.Original);
                 }
                 else
