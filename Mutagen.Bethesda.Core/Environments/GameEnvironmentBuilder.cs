@@ -384,10 +384,13 @@ public sealed record GameEnvironmentBuilder<TMod, TModGetter>
             StringsParam = StringsReadParameters,
             LinkCache = lightweightLinkCache
         });
+        // Plugins the import dropped (C204) stay listed on the filtered load order
+        var loadErrors = lo.GetLoadErrors();
         foreach (var filter in ModListingProcessors)
         {
             lo = filter(param, lo.ListedOrder).ToLoadOrder();
         }
+        LoadOrderErrors.Set(lo, loadErrors);
 
         var linkCache = lo.ToMutableLinkCache(MutableMods.ToArray());
 
@@ -777,10 +780,13 @@ public sealed record GameEnvironmentBuilder
             StringsParam = StringsReadParameters,
             LinkCache = lightweightLinkCache
         });
+        // Plugins the import dropped (C204) stay listed on the filtered load order
+        var loadErrors = lo.GetLoadErrors();
         foreach (var filter in ModListingProcessors)
         {
             lo = filter(param, lo.ListedOrder).ToLoadOrder();
         }
+        LoadOrderErrors.Set(lo, loadErrors);
 
         var linkCache = lo.ToUntypedMutableLinkCache(Release.Release.ToCategory(), MutableMods.ToArray());
 

@@ -77,7 +77,8 @@ public sealed class MajorRecordReader : IDisposable
     public static MajorRecordReader FromPath(ModPath path, GameRelease release, BinaryReadParameters? param, IStringsFolderLookup? stringsLookup)
     {
         param ??= BinaryReadParameters.Default;
-        var meta = ParsingMeta.Factory(param, release, path);
+        // One record at a known position: the plugin isn't opened as a whole, so the whole-file duplicate check (C204) isn't run
+        var meta = ParsingMeta.Factory(param with { DuplicateFormKeys = DuplicateFormKeyOption.KeepLater }, release, path);
         meta.Parallel = false;
         meta.RecordInfoCache = new RecordTypeInfoCacheReader(
             () => new MutagenBinaryReadStream(path, meta), path.ModKey, meta.LinkCache);

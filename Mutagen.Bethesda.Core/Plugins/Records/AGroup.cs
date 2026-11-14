@@ -359,6 +359,21 @@ internal sealed class GroupMajorRecordCacheWrapper<T> : IReadOnlyCache<T, FormKe
                 var pos = checked((int)(stream.Position - offset));
                 if (locationDict.TryGetValue(formKey, out var earlierPos))
                 {
+                    if (package.MetaData.DuplicateFormKeys == Mutagen.Bethesda.Plugins.Binary.Parameters.DuplicateFormKeyOption.Refuse)
+                    {
+                        // Refused (C204); Starfield refuses such a plugin when it is opened, other games here
+                        var first = LoquiBinaryOverlayTranslation<T>.Create(
+                            stream: new OverlayStream(data.Slice(earlierPos), package), package: package, recordTypeConverter: null);
+                        var second = LoquiBinaryOverlayTranslation<T>.Create(
+                            stream: new OverlayStream(data.Slice(pos), package), package: package, recordTypeConverter: null);
+                        var firstMeta = package.MetaData.Constants.MajorRecordHeader(data.Slice(earlierPos));
+                        throw new DuplicateFormKeyException(package.MetaData.ModKey, new[]
+                        {
+                            new DuplicateFormKeyPair(formKey,
+                                firstMeta.RecordType, first.EditorID, firstMeta.FormID.Raw,
+                                majorMeta.RecordType, second.EditorID, majorMeta.FormID.Raw),
+                        });
+                    }
                     // The group keeps the later record, in its own place, as the game does; the earlier one is kept
                     // aside, to be written back where it was
                     order ??= locationDict.Keys.ToList();

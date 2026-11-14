@@ -69,10 +69,31 @@ public class LoadOrderImporterTests
                     new LoadOrderListingsInjection(TestConstants.Dawnguard),
                     importer,
                     Substitute.For<IMasterFlagsLookupProvider>())
-                .Import();
+                .Import(new BinaryReadParameters { LoadOrderReadFailures = PluginReadFailureOption.Throw });
         };
         a.ShouldThrow<AggregateException>()
             .InnerException.ShouldBeOfType<RecordException>();
+    }
+
+    [Fact]
+    public void ImportFails_DropsThePlugin_WithItsError()
+    {
+        // C204: by default a plugin that can't be read is left unloaded, with its error listed
+        var fs = Substitute.For<IFileSystem>();
+        fs.File.Exists(Arg.Any<string>()).Returns(true);
+        var importer = Substitute.For<IModImporter<TestMod>>();
+        importer.Import(Arg.Any<ModPath>(), Arg.Any<BinaryReadParameters>()).Throws(new NotImplementedException());
+        using var lo = new LoadOrderImporter<TestMod>(
+                fs,
+                new DataDirectoryInjection($"{PathingUtil.DrivePrefix}DataFolder"),
+                new LoadOrderListingsInjection(TestConstants.Dawnguard),
+                importer,
+                Substitute.For<IMasterFlagsLookupProvider>())
+            .Import();
+        lo.ListedOrder.ShouldHaveSingleItem().Mod.ShouldBeNull();
+        var error = lo.GetLoadErrors().ShouldHaveSingleItem();
+        error.ModKey.ShouldBe(TestConstants.Dawnguard);
+        error.Exception.ShouldBeOfType<NotImplementedException>();
     }
 
     [Fact]
@@ -100,7 +121,7 @@ public class LoadOrderImporterTests
                     new LoadOrderListingsInjection(modPaths.Select(x => x.ModKey).ToArray()),
                     importer,
                     Substitute.For<IMasterFlagsLookupProvider>())
-                .Import();
+                .Import(new BinaryReadParameters { LoadOrderReadFailures = PluginReadFailureOption.Throw });
         });
         mod.Received().Dispose();
     }

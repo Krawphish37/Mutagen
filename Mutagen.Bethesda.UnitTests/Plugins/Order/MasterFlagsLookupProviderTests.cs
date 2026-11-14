@@ -147,18 +147,20 @@ public class MasterFlagsLookupProviderTests
     }
 
     [Fact]
-    public void ImportWithMissingMasterThrowsMissingMod()
+    public void ImportWithMissingMasterDropsThePlugin_WithMissingModError()
     {
+        // C204: a plugin that can't be read is dropped with its error (LoadOrderReadFailures = DropPlugin, the default)
         var setup = WriteMods(includeMissingAsMaster: true);
-        var ex = Assert.ThrowsAny<Exception>(() =>
-        {
-            using var lo = LoadOrder.Import<IStarfieldModGetter>(
-                DataFolder,
-                new[] { MasterKey, MissingKey, SmallMasterKey, ChildKey },
-                GameRelease.Starfield,
-                setup.FileSystem);
-        });
-        while (ex.InnerException != null)
+        using var lo = LoadOrder.Import<IStarfieldModGetter>(
+            DataFolder,
+            new[] { MasterKey, MissingKey, SmallMasterKey, ChildKey },
+            GameRelease.Starfield,
+            setup.FileSystem);
+        lo.ListedOrder.Single(l => l.ModKey == ChildKey).Mod.ShouldBeNull();
+        var error = lo.GetLoadErrors().ShouldHaveSingleItem();
+        error.ModKey.ShouldBe(ChildKey);
+        Exception? ex = error.Exception;
+        while (ex?.InnerException != null)
         {
             ex = ex.InnerException;
         }
