@@ -58,6 +58,24 @@ public sealed class MajorRecordReader : IDisposable
     /// <param name="param">The reading parameters (file system, masters, strings, encodings), as for a full import</param>
     public static MajorRecordReader FromPath(ModPath path, GameRelease release, BinaryReadParameters? param = null)
     {
+        return FromPath(path, release, param, stringsLookup: null);
+    }
+
+    /// <summary>
+    /// Opens a plugin to read records from it by position, with the caller's strings lookup for a localized plugin
+    /// </summary>
+    /// <param name="path">The plugin's ModKey and path</param>
+    /// <param name="release">The game release to read it as</param>
+    /// <param name="param">The reading parameters (file system, masters, encodings), as for a full import</param>
+    /// <param name="stringsLookup">Where a localized plugin's translated fields get their texts (C197):<br/>
+    /// null: the plugin's strings files, found as <see cref="BinaryReadParameters.StringsParam"/> says (as
+    /// <see cref="FromPath(ModPath, GameRelease, BinaryReadParameters?)"/>);<br/>
+    /// a <see cref="StringsKeysOnlyLookup"/>: no texts, each translated field keeps its string ID only, and no strings
+    /// file is opened;<br/>
+    /// any other lookup: the caller's own.<br/>
+    /// A plugin that isn't localized stores its texts in its records, so the lookup isn't used.</param>
+    public static MajorRecordReader FromPath(ModPath path, GameRelease release, BinaryReadParameters? param, IStringsFolderLookup? stringsLookup)
+    {
         param ??= BinaryReadParameters.Default;
         var meta = ParsingMeta.Factory(param, release, path);
         meta.Parallel = false;
@@ -70,7 +88,7 @@ public sealed class MajorRecordReader : IDisposable
             var header = new ModHeader(meta.Constants, ReadExactly(stream, 0, meta.Constants.MajorConstants.HeaderLength));
             if (meta.Constants.UsesStrings && Enums.HasFlag(header.Flags, Constants.Localized))
             {
-                meta.StringsLookup = StringsFolderLookupOverlay.TypicalFactory(release, path.ModKey,
+                meta.StringsLookup = stringsLookup ?? StringsFolderLookupOverlay.TypicalFactory(release, path.ModKey,
                     Path.GetDirectoryName(path.Path)!, param.StringsParam, fileSystem: param.FileSystem);
             }
             return new MajorRecordReader(stream, meta, path.ModKey, release);
