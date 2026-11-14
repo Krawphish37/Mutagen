@@ -4,8 +4,8 @@
     <Fields>
       <Guid name="StartEvent" />
       <Guid name="StopEvent" />
-      <FormLink name="Condition" refName="ConditionRecord" />
-      <FormLink name="EventMapping" refName="WWiseEventData" />
+      <FormLink name="ConditionForm" refName="ConditionRecord" />
+      <FormLink name="EventForm" refName="WWiseEventData" />
     </Fields>
   </Object>
 </Loqui>

@@ -58,25 +58,25 @@ namespace Mutagen.Bethesda.Starfield
         #region StopEvent
         public Guid StopEvent { get; set; } = default(Guid);
         #endregion
-        #region Condition
-        private readonly IFormLink<IConditionRecordGetter> _Condition = new FormLink<IConditionRecordGetter>();
-        public IFormLink<IConditionRecordGetter> Condition
+        #region ConditionForm
+        private readonly IFormLink<IConditionRecordGetter> _ConditionForm = new FormLink<IConditionRecordGetter>();
+        public IFormLink<IConditionRecordGetter> ConditionForm
         {
-            get => _Condition;
-            set => _Condition.SetTo(value);
+            get => _ConditionForm;
+            set => _ConditionForm.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IConditionRecordGetter> ISoundReferenceGetter.Condition => this.Condition;
+        IFormLinkGetter<IConditionRecordGetter> ISoundReferenceGetter.ConditionForm => this.ConditionForm;
         #endregion
-        #region EventMapping
-        private readonly IFormLink<IWWiseEventDataGetter> _EventMapping = new FormLink<IWWiseEventDataGetter>();
-        public IFormLink<IWWiseEventDataGetter> EventMapping
+        #region EventForm
+        private readonly IFormLink<IWWiseEventDataGetter> _EventForm = new FormLink<IWWiseEventDataGetter>();
+        public IFormLink<IWWiseEventDataGetter> EventForm
         {
-            get => _EventMapping;
-            set => _EventMapping.SetTo(value);
+            get => _EventForm;
+            set => _EventForm.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkGetter<IWWiseEventDataGetter> ISoundReferenceGetter.EventMapping => this.EventMapping;
+        IFormLinkGetter<IWWiseEventDataGetter> ISoundReferenceGetter.EventForm => this.EventForm;
         #endregion
 
         #region To String
@@ -119,20 +119,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.StartEvent = initialValue;
                 this.StopEvent = initialValue;
-                this.Condition = initialValue;
-                this.EventMapping = initialValue;
+                this.ConditionForm = initialValue;
+                this.EventForm = initialValue;
             }
 
             public Mask(
                 TItem StartEvent,
                 TItem StopEvent,
-                TItem Condition,
-                TItem EventMapping)
+                TItem ConditionForm,
+                TItem EventForm)
             {
                 this.StartEvent = StartEvent;
                 this.StopEvent = StopEvent;
-                this.Condition = Condition;
-                this.EventMapping = EventMapping;
+                this.ConditionForm = ConditionForm;
+                this.EventForm = EventForm;
             }
 
             #pragma warning disable CS8618
@@ -146,8 +146,8 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public TItem StartEvent;
             public TItem StopEvent;
-            public TItem Condition;
-            public TItem EventMapping;
+            public TItem ConditionForm;
+            public TItem EventForm;
             #endregion
 
             #region Equals
@@ -162,8 +162,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!object.Equals(this.StartEvent, rhs.StartEvent)) return false;
                 if (!object.Equals(this.StopEvent, rhs.StopEvent)) return false;
-                if (!object.Equals(this.Condition, rhs.Condition)) return false;
-                if (!object.Equals(this.EventMapping, rhs.EventMapping)) return false;
+                if (!object.Equals(this.ConditionForm, rhs.ConditionForm)) return false;
+                if (!object.Equals(this.EventForm, rhs.EventForm)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -171,8 +171,8 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.StartEvent);
                 hash.Add(this.StopEvent);
-                hash.Add(this.Condition);
-                hash.Add(this.EventMapping);
+                hash.Add(this.ConditionForm);
+                hash.Add(this.EventForm);
                 return hash.ToHashCode();
             }
 
@@ -183,8 +183,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!eval(this.StartEvent)) return false;
                 if (!eval(this.StopEvent)) return false;
-                if (!eval(this.Condition)) return false;
-                if (!eval(this.EventMapping)) return false;
+                if (!eval(this.ConditionForm)) return false;
+                if (!eval(this.EventForm)) return false;
                 return true;
             }
             #endregion
@@ -194,8 +194,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (eval(this.StartEvent)) return true;
                 if (eval(this.StopEvent)) return true;
-                if (eval(this.Condition)) return true;
-                if (eval(this.EventMapping)) return true;
+                if (eval(this.ConditionForm)) return true;
+                if (eval(this.EventForm)) return true;
                 return false;
             }
             #endregion
@@ -212,8 +212,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 obj.StartEvent = eval(this.StartEvent);
                 obj.StopEvent = eval(this.StopEvent);
-                obj.Condition = eval(this.Condition);
-                obj.EventMapping = eval(this.EventMapping);
+                obj.ConditionForm = eval(this.ConditionForm);
+                obj.EventForm = eval(this.EventForm);
             }
             #endregion
 
@@ -240,13 +240,13 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(StopEvent, "StopEvent");
                     }
-                    if (printMask?.Condition ?? true)
+                    if (printMask?.ConditionForm ?? true)
                     {
-                        sb.AppendItem(Condition, "Condition");
+                        sb.AppendItem(ConditionForm, "ConditionForm");
                     }
-                    if (printMask?.EventMapping ?? true)
+                    if (printMask?.EventForm ?? true)
                     {
-                        sb.AppendItem(EventMapping, "EventMapping");
+                        sb.AppendItem(EventForm, "EventForm");
                     }
                 }
             }
@@ -274,8 +274,8 @@ namespace Mutagen.Bethesda.Starfield
             }
             public Exception? StartEvent;
             public Exception? StopEvent;
-            public Exception? Condition;
-            public Exception? EventMapping;
+            public Exception? ConditionForm;
+            public Exception? EventForm;
             #endregion
 
             #region IErrorMask
@@ -288,10 +288,10 @@ namespace Mutagen.Bethesda.Starfield
                         return StartEvent;
                     case SoundReference_FieldIndex.StopEvent:
                         return StopEvent;
-                    case SoundReference_FieldIndex.Condition:
-                        return Condition;
-                    case SoundReference_FieldIndex.EventMapping:
-                        return EventMapping;
+                    case SoundReference_FieldIndex.ConditionForm:
+                        return ConditionForm;
+                    case SoundReference_FieldIndex.EventForm:
+                        return EventForm;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -308,11 +308,11 @@ namespace Mutagen.Bethesda.Starfield
                     case SoundReference_FieldIndex.StopEvent:
                         this.StopEvent = ex;
                         break;
-                    case SoundReference_FieldIndex.Condition:
-                        this.Condition = ex;
+                    case SoundReference_FieldIndex.ConditionForm:
+                        this.ConditionForm = ex;
                         break;
-                    case SoundReference_FieldIndex.EventMapping:
-                        this.EventMapping = ex;
+                    case SoundReference_FieldIndex.EventForm:
+                        this.EventForm = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -330,11 +330,11 @@ namespace Mutagen.Bethesda.Starfield
                     case SoundReference_FieldIndex.StopEvent:
                         this.StopEvent = (Exception?)obj;
                         break;
-                    case SoundReference_FieldIndex.Condition:
-                        this.Condition = (Exception?)obj;
+                    case SoundReference_FieldIndex.ConditionForm:
+                        this.ConditionForm = (Exception?)obj;
                         break;
-                    case SoundReference_FieldIndex.EventMapping:
-                        this.EventMapping = (Exception?)obj;
+                    case SoundReference_FieldIndex.EventForm:
+                        this.EventForm = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -346,8 +346,8 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (StartEvent != null) return true;
                 if (StopEvent != null) return true;
-                if (Condition != null) return true;
-                if (EventMapping != null) return true;
+                if (ConditionForm != null) return true;
+                if (EventForm != null) return true;
                 return false;
             }
             #endregion
@@ -380,10 +380,10 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(StopEvent, "StopEvent");
                 }
                 {
-                    sb.AppendItem(Condition, "Condition");
+                    sb.AppendItem(ConditionForm, "ConditionForm");
                 }
                 {
-                    sb.AppendItem(EventMapping, "EventMapping");
+                    sb.AppendItem(EventForm, "EventForm");
                 }
             }
             #endregion
@@ -395,8 +395,8 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.StartEvent = this.StartEvent.Combine(rhs.StartEvent);
                 ret.StopEvent = this.StopEvent.Combine(rhs.StopEvent);
-                ret.Condition = this.Condition.Combine(rhs.Condition);
-                ret.EventMapping = this.EventMapping.Combine(rhs.EventMapping);
+                ret.ConditionForm = this.ConditionForm.Combine(rhs.ConditionForm);
+                ret.EventForm = this.EventForm.Combine(rhs.EventForm);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -422,8 +422,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool OnOverall;
             public bool StartEvent;
             public bool StopEvent;
-            public bool Condition;
-            public bool EventMapping;
+            public bool ConditionForm;
+            public bool EventForm;
             #endregion
 
             #region Ctors
@@ -435,8 +435,8 @@ namespace Mutagen.Bethesda.Starfield
                 this.OnOverall = onOverall;
                 this.StartEvent = defaultOn;
                 this.StopEvent = defaultOn;
-                this.Condition = defaultOn;
-                this.EventMapping = defaultOn;
+                this.ConditionForm = defaultOn;
+                this.EventForm = defaultOn;
             }
 
             #endregion
@@ -454,8 +454,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 ret.Add((StartEvent, null));
                 ret.Add((StopEvent, null));
-                ret.Add((Condition, null));
-                ret.Add((EventMapping, null));
+                ret.Add((ConditionForm, null));
+                ret.Add((EventForm, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -536,8 +536,8 @@ namespace Mutagen.Bethesda.Starfield
     {
         new Guid StartEvent { get; set; }
         new Guid StopEvent { get; set; }
-        new IFormLink<IConditionRecordGetter> Condition { get; set; }
-        new IFormLink<IWWiseEventDataGetter> EventMapping { get; set; }
+        new IFormLink<IConditionRecordGetter> ConditionForm { get; set; }
+        new IFormLink<IWWiseEventDataGetter> EventForm { get; set; }
     }
 
     public partial interface ISoundReferenceGetter :
@@ -555,8 +555,8 @@ namespace Mutagen.Bethesda.Starfield
         static ILoquiRegistration StaticRegistration => SoundReference_Registration.Instance;
         Guid StartEvent { get; }
         Guid StopEvent { get; }
-        IFormLinkGetter<IConditionRecordGetter> Condition { get; }
-        IFormLinkGetter<IWWiseEventDataGetter> EventMapping { get; }
+        IFormLinkGetter<IConditionRecordGetter> ConditionForm { get; }
+        IFormLinkGetter<IWWiseEventDataGetter> EventForm { get; }
 
     }
 
@@ -728,8 +728,8 @@ namespace Mutagen.Bethesda.Starfield
     {
         StartEvent = 0,
         StopEvent = 1,
-        Condition = 2,
-        EventMapping = 3,
+        ConditionForm = 2,
+        EventForm = 3,
     }
     #endregion
 
@@ -810,15 +810,15 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.StartEvent = default(Guid);
             item.StopEvent = default(Guid);
-            item.Condition.Clear();
-            item.EventMapping.Clear();
+            item.ConditionForm.Clear();
+            item.EventForm.Clear();
         }
         
         #region Mutagen
         public void RemapLinks(ISoundReference obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
-            obj.Condition.Relink(mapping);
-            obj.EventMapping.Relink(mapping);
+            obj.ConditionForm.Relink(mapping);
+            obj.EventForm.Relink(mapping);
         }
         
         #endregion
@@ -865,8 +865,8 @@ namespace Mutagen.Bethesda.Starfield
         {
             ret.StartEvent = item.StartEvent == rhs.StartEvent;
             ret.StopEvent = item.StopEvent == rhs.StopEvent;
-            ret.Condition = item.Condition.Equals(rhs.Condition);
-            ret.EventMapping = item.EventMapping.Equals(rhs.EventMapping);
+            ret.ConditionForm = item.ConditionForm.Equals(rhs.ConditionForm);
+            ret.EventForm = item.EventForm.Equals(rhs.EventForm);
         }
         
         public string Print(
@@ -919,13 +919,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.StopEvent, "StopEvent");
             }
-            if (printMask?.Condition ?? true)
+            if (printMask?.ConditionForm ?? true)
             {
-                sb.AppendItem(item.Condition.FormKey, "Condition");
+                sb.AppendItem(item.ConditionForm.FormKey, "ConditionForm");
             }
-            if (printMask?.EventMapping ?? true)
+            if (printMask?.EventForm ?? true)
             {
-                sb.AppendItem(item.EventMapping.FormKey, "EventMapping");
+                sb.AppendItem(item.EventForm.FormKey, "EventForm");
             }
         }
         
@@ -944,13 +944,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.StopEvent != rhs.StopEvent) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SoundReference_FieldIndex.Condition) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SoundReference_FieldIndex.ConditionForm) ?? true))
             {
-                if (!lhs.Condition.Equals(rhs.Condition)) return false;
+                if (!lhs.ConditionForm.Equals(rhs.ConditionForm)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SoundReference_FieldIndex.EventMapping) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SoundReference_FieldIndex.EventForm) ?? true))
             {
-                if (!lhs.EventMapping.Equals(rhs.EventMapping)) return false;
+                if (!lhs.EventForm.Equals(rhs.EventForm)) return false;
             }
             return true;
         }
@@ -960,8 +960,8 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             hash.Add(item.StartEvent);
             hash.Add(item.StopEvent);
-            hash.Add(item.Condition);
-            hash.Add(item.EventMapping);
+            hash.Add(item.ConditionForm);
+            hash.Add(item.EventForm);
             return hash.ToHashCode();
         }
         
@@ -976,8 +976,8 @@ namespace Mutagen.Bethesda.Starfield
         #region Mutagen
         public IEnumerable<IFormLinkGetter> EnumerateFormLinks(ISoundReferenceGetter obj, bool iterateNestedRecords = true)
         {
-            yield return FormLinkInformation.Factory(obj.Condition);
-            yield return FormLinkInformation.Factory(obj.EventMapping);
+            yield return FormLinkInformation.Factory(obj.ConditionForm);
+            yield return FormLinkInformation.Factory(obj.EventForm);
             yield break;
         }
         
@@ -1004,13 +1004,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.StopEvent = rhs.StopEvent;
             }
-            if ((copyMask?.GetShouldTranslate((int)SoundReference_FieldIndex.Condition) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SoundReference_FieldIndex.ConditionForm) ?? true))
             {
-                item.Condition.SetTo(rhs.Condition.FormKey);
+                item.ConditionForm.SetTo(rhs.ConditionForm.FormKey);
             }
-            if ((copyMask?.GetShouldTranslate((int)SoundReference_FieldIndex.EventMapping) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SoundReference_FieldIndex.EventForm) ?? true))
             {
-                item.EventMapping.SetTo(rhs.EventMapping.FormKey);
+                item.EventForm.SetTo(rhs.EventForm.FormKey);
             }
             DeepCopyInCustom(
                 item: item,
@@ -1128,10 +1128,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.StopEvent);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.Condition);
+                item: item.ConditionForm);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.EventMapping);
+                item: item.EventForm);
         }
 
         public void Write(
@@ -1167,8 +1167,8 @@ namespace Mutagen.Bethesda.Starfield
         {
             item.StartEvent = GuidBinaryTranslation.Instance.Parse(reader: frame);
             item.StopEvent = GuidBinaryTranslation.Instance.Parse(reader: frame);
-            item.Condition.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
-            item.EventMapping.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.ConditionForm.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            item.EventForm.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
         }
 
     }
@@ -1237,8 +1237,8 @@ namespace Mutagen.Bethesda.Starfield
 
         public Guid StartEvent => new Guid(_structData.Slice(0x0, 0x10).Slice(0, 16));
         public Guid StopEvent => new Guid(_structData.Slice(0x10, 0x10).Slice(0, 16));
-        public IFormLinkGetter<IConditionRecordGetter> Condition => FormLinkBinaryTranslation.Instance.OverlayFactory<IConditionRecordGetter>(_package, _structData.Span.Slice(0x20, 0x4));
-        public IFormLinkGetter<IWWiseEventDataGetter> EventMapping => FormLinkBinaryTranslation.Instance.OverlayFactory<IWWiseEventDataGetter>(_package, _structData.Span.Slice(0x24, 0x4));
+        public IFormLinkGetter<IConditionRecordGetter> ConditionForm => FormLinkBinaryTranslation.Instance.OverlayFactory<IConditionRecordGetter>(_package, _structData.Span.Slice(0x20, 0x4));
+        public IFormLinkGetter<IWWiseEventDataGetter> EventForm => FormLinkBinaryTranslation.Instance.OverlayFactory<IWWiseEventDataGetter>(_package, _structData.Span.Slice(0x24, 0x4));
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

@@ -51,6 +51,9 @@ public class EngineNameTests
         typeof(ISoundReferenceGetter).GetProperty("StartEvent")!.PropertyType.ShouldBe(typeof(Guid));
         typeof(ISoundReferenceGetter).GetProperty("StopEvent")!.PropertyType.ShouldBe(typeof(Guid));
         typeof(ISoundReferenceGetter).GetProperty("Start").ShouldBeNull();
+        // pConditionForm and pEventForm, without the pointer prefix
+        typeof(ISoundReferenceGetter).GetProperty("ConditionForm").ShouldNotBeNull();
+        typeof(ISoundReferenceGetter).GetProperty("EventForm").ShouldNotBeNull();
         typeof(IPlayerDialogueSceneActionGetter).GetProperty("Sound")!.PropertyType.ShouldBe(typeof(ISoundReferenceGetter));
         typeof(IPlayerDialogueSceneActionGetter).GetProperty("WED0").ShouldBeNull();
         ParticleSystemDefineCollection_Registration.TriggeringRecordType.ShouldBe(new RecordType("PSDC"));

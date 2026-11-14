@@ -31,8 +31,8 @@ public class SoundEchoMarkerLoopingSoundTests
             sech.LoopingSound.ShouldNotBeNull();
             sech.LoopingSound.StartEvent.ShouldBe(new Guid(echl.AsSpan(0, 16)));
             sech.LoopingSound.StopEvent.ShouldBe(new Guid(echl.AsSpan(16, 16)));
-            sech.LoopingSound.Condition.IsNull.ShouldBeTrue();
-            sech.LoopingSound.EventMapping.IsNull.ShouldBeTrue();
+            sech.LoopingSound.ConditionForm.IsNull.ShouldBeTrue();
+            sech.LoopingSound.EventForm.IsNull.ShouldBeTrue();
             var written = GameConstants.Starfield.MajorRecord(Write(w => sech.WriteToBinary(w)));
             written.Content.ToArray().ShouldBe(Hex(Content));
         }
