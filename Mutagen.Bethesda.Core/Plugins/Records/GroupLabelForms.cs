@@ -1,3 +1,4 @@
+using System.Buffers.Binary;
 using System.Runtime.CompilerServices;
 using Mutagen.Bethesda.Plugins.Masters;
 
@@ -46,6 +47,59 @@ internal static class GroupLabelForms
         {
             return labels.TryGetValue(groupType, out var raw) ? raw : null;
         }
+    }
+
+    private const string Prefix = "GL1:";
+
+    /// <summary>
+    /// The kept labels as an opaque value (RoundTripMixIn.GetGroupLabelFormsAsStored, C223): "GL1:" and base64 of
+    /// (group type, stored label) pairs, 4 bytes each, by group type; null when there are none
+    /// </summary>
+    public static string? Export(IMajorRecordGetter parent)
+    {
+        if (!Parents.TryGetValue(parent, out var labels)) return null;
+        KeyValuePair<int, uint>[] pairs;
+        lock (labels)
+        {
+            pairs = labels.OrderBy(x => x.Key).ToArray();
+        }
+        if (pairs.Length == 0) return null;
+        var bytes = new byte[pairs.Length * 8];
+        for (int i = 0; i < pairs.Length; i++)
+        {
+            BinaryPrimitives.WriteInt32LittleEndian(bytes.AsSpan(8 * i), pairs[i].Key);
+            BinaryPrimitives.WriteUInt32LittleEndian(bytes.AsSpan(8 * i + 4), pairs[i].Value);
+        }
+        return Prefix + Convert.ToBase64String(bytes);
+    }
+
+    /// <summary>
+    /// Gives a record the labels of <see cref="Export"/> (null removes them)
+    /// </summary>
+    /// <exception cref="FormatException">The value isn't one Export gave</exception>
+    public static void Import(IMajorRecordGetter parent, string? value)
+    {
+        if (value == null)
+        {
+            Parents.Remove(parent);
+            return;
+        }
+        if (!value.StartsWith(Prefix, StringComparison.Ordinal))
+        {
+            throw new FormatException($"Not stored group labels from GetGroupLabelFormsAsStored: {value}");
+        }
+        var bytes = Convert.FromBase64String(value.Substring(Prefix.Length));
+        if (bytes.Length == 0 || bytes.Length % 8 != 0)
+        {
+            throw new FormatException($"Not stored group labels from GetGroupLabelFormsAsStored: {value}");
+        }
+        var labels = new Dictionary<int, uint>();
+        for (int i = 0; i < bytes.Length / 8; i++)
+        {
+            labels[BinaryPrimitives.ReadInt32LittleEndian(bytes.AsSpan(8 * i))] =
+                BinaryPrimitives.ReadUInt32LittleEndian(bytes.AsSpan(8 * i + 4));
+        }
+        Parents.AddOrUpdate(parent, labels);
     }
 
     /// <summary>

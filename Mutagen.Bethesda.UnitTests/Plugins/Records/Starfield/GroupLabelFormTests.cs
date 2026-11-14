@@ -167,6 +167,31 @@ public class GroupLabelFormTests
         throw new Xunit.Sdk.XunitException($"first difference at {i} (lengths {written.Length} / {File.Length}): written {Convert.ToHexString(written.AsSpan(Math.Max(0, i - 8), Math.Min(32, written.Length - Math.Max(0, i - 8))))} file {Convert.ToHexString(File.AsSpan(Math.Max(0, i - 8), Math.Min(32, File.Length - Math.Max(0, i - 8))))}");
     }
 
+    // C223: the kept labels have a public get/set, so a cell rebuilt from another form (JSON) writes them back too
+    [Fact]
+    public void RoundTripApi_GivesTheLabelsBack()
+    {
+        var s = Make();
+        var mod = StarfieldMod.CreateFromBinary(s.Path, StarfieldRelease.Starfield, ReadParams(s));
+        var cell = mod.Cells.Records[0].SubBlocks[0].Cells[0];
+        var value = cell.GetGroupLabelFormsAsStored().ShouldNotBeNull();
+        using (var overlay = StarfieldMod.CreateFromBinaryOverlay(s.Path, StarfieldRelease.Starfield, ReadParams(s)))
+        {
+            overlay.Cells.Records[0].SubBlocks[0].Cells[0].GetGroupLabelFormsAsStored().ShouldBe(value);
+        }
+        cell.Temporary[0].GetGroupLabelFormsAsStored().ShouldBeNull();
+
+        // Without them the header's form is written; given back, the file as read
+        cell.SetGroupLabelFormsAsStored(null);
+        cell.GetGroupLabelFormsAsStored().ShouldBeNull();
+        ChildLabels(Write(s, mod)).ShouldBe(new uint[] { 0xFD000801, 0xFD000801 });
+        cell.SetGroupLabelFormsAsStored(value);
+        Same(Write(s, mod));
+
+        Should.Throw<FormatException>(() => cell.SetGroupLabelFormsAsStored("GL1:AAEC"));
+        Should.Throw<FormatException>(() => cell.SetGroupLabelFormsAsStored("nope"));
+    }
+
     [Fact]
     public void NewCell_GetsItsHeadersForm()
     {

@@ -274,4 +274,21 @@ public static class RoundTripMixIn
         }
         OwnFormIdForms.Set(record, entries);
     }
+
+    /// <summary>
+    /// The labels of this record's child groups (cell, worldspace, quest, topic children) that were stored in another form
+    /// than its header (e.g. a Medium plugin's full-index 02001DC3 for its record FD001DC3), per group type; null when
+    /// there are none (C223, kept since C188).<br/>
+    /// The value is opaque: store it as it is, and give it back with <see cref="SetGroupLabelFormsAsStored"/> on a record
+    /// rebuilt from the same data. A label is written as stored only while it still names the record; otherwise, and
+    /// for a group type without one, the header's form is written.
+    /// </summary>
+    public static string? GetGroupLabelFormsAsStored(this IMajorRecordGetter record) => GroupLabelForms.Export(record);
+
+    /// <summary>
+    /// Gives a record the stored child-group labels of <see cref="GetGroupLabelFormsAsStored"/> (null removes them) (C223)
+    /// </summary>
+    /// <exception cref="FormatException">The value isn't one GetGroupLabelFormsAsStored gave</exception>
+    public static void SetGroupLabelFormsAsStored(this IMajorRecord record, string? labels) =>
+        GroupLabelForms.Import(record, labels);
 }
