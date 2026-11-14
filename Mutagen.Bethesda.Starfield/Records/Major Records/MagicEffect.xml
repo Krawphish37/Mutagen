@@ -139,4 +139,9 @@
       <FormLink name="Association" binary="NoGeneration" refName="GravityWielderEffectData" layoutSubrecord="DATA" layoutOffset="0" />
     </Fields>
   </Object>
+  <Object name="MagicEffectTrackDamageArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration">
+    <Fields>
+      <FormLink name="Association" binary="NoGeneration" refName="TrackDamageEffectData" />
+    </Fields>
+  </Object>
 </Loqui>

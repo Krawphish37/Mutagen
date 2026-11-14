@@ -187,6 +187,8 @@
       <Group name="GameplayOptions" refName="GameplayOption" />
       <Group name="GameplayOptionsGroups" refName="GameplayOptionsGroup" />
       <Group name="GravityWielderEffectDatas" refName="GravityWielderEffectData" />
+      <!-- TDED after GWED: xEdit's group order (AddGroupOrder GWED, TDED); no plugin holds one -->
+      <Group name="TrackDamageEffectDatas" refName="TrackDamageEffectData" />
     </Fields>
     <GameReleaseOptions>Starfield</GameReleaseOptions>
   </Object>

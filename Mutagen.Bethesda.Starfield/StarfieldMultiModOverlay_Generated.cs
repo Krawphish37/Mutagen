@@ -210,6 +210,7 @@ internal class StarfieldMultiModOverlay : IStarfieldModDisposableGetter
     private MergedGroup<IGameplayOptionGetter>? _gameplayOptions;
     private MergedGroup<IGameplayOptionsGroupGetter>? _gameplayOptionsGroups;
     private MergedGroup<IGravityWielderEffectDataGetter>? _gravityWielderEffectDatas;
+    private MergedGroup<ITrackDamageEffectDataGetter>? _trackDamageEffectDatas;
 
     /// <summary>
     /// Creates a new StarfieldMultiModOverlay from multiple source mod files.
@@ -784,6 +785,9 @@ internal class StarfieldMultiModOverlay : IStarfieldModDisposableGetter
     public IStarfieldGroupGetter<IGravityWielderEffectDataGetter> GravityWielderEffectDatas =>
         _gravityWielderEffectDatas ??= new MergedGroup<IGravityWielderEffectDataGetter>(
             _sourceMods.Select(m => m.GravityWielderEffectDatas));
+    public IStarfieldGroupGetter<ITrackDamageEffectDataGetter> TrackDamageEffectDatas =>
+        _trackDamageEffectDatas ??= new MergedGroup<ITrackDamageEffectDataGetter>(
+            _sourceMods.Select(m => m.TrackDamageEffectDatas));
 
     BinaryModdedWriteBuilderTargetChoice<IStarfieldModGetter> IStarfieldModGetter.BeginWrite =>
         new BinaryModdedWriteBuilderTargetChoice<IStarfieldModGetter>(this, StarfieldMod.StarfieldWriteBuilderInstantiator.Instance);

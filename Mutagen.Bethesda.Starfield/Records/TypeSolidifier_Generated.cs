@@ -4161,6 +4161,30 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         /// <summary>
+        /// Scope a load order query to TrackDamageEffectData
+        /// </summary>
+        /// <param name="listings">ModListings to query</param>
+        /// <returns>A typed object to do further queries on TrackDamageEffectData</returns>
+        public static TopLevelTypedLoadOrderAccess<IStarfieldMod, IStarfieldModGetter, ITrackDamageEffectData, ITrackDamageEffectDataGetter> TrackDamageEffectData(this IEnumerable<IModListingGetter<IStarfieldModGetter>> listings)
+        {
+            return new TopLevelTypedLoadOrderAccess<IStarfieldMod, IStarfieldModGetter, ITrackDamageEffectData, ITrackDamageEffectDataGetter>(
+                (bool includeDeletedRecords) => listings.WinningOverrides<ITrackDamageEffectDataGetter>(includeDeletedRecords: includeDeletedRecords),
+                (ILinkCache linkCache, bool includeDeletedRecords) => listings.WinningContextOverrides<IStarfieldMod, IStarfieldModGetter, ITrackDamageEffectData, ITrackDamageEffectDataGetter>(linkCache, includeDeletedRecords: includeDeletedRecords));
+        }
+
+        /// <summary>
+        /// Scope a load order query to TrackDamageEffectData
+        /// </summary>
+        /// <param name="mods">Mods to query</param>
+        /// <returns>A typed object to do further queries on TrackDamageEffectData</returns>
+        public static TopLevelTypedLoadOrderAccess<IStarfieldMod, IStarfieldModGetter, ITrackDamageEffectData, ITrackDamageEffectDataGetter> TrackDamageEffectData(this IEnumerable<IStarfieldModGetter> mods)
+        {
+            return new TopLevelTypedLoadOrderAccess<IStarfieldMod, IStarfieldModGetter, ITrackDamageEffectData, ITrackDamageEffectDataGetter>(
+                (bool includeDeletedRecords) => mods.WinningOverrides<ITrackDamageEffectDataGetter>(includeDeletedRecords: includeDeletedRecords),
+                (ILinkCache linkCache, bool includeDeletedRecords) => mods.WinningContextOverrides<IStarfieldMod, IStarfieldModGetter, ITrackDamageEffectData, ITrackDamageEffectDataGetter>(linkCache, includeDeletedRecords: includeDeletedRecords));
+        }
+
+        /// <summary>
         /// Scope a load order query to Transform
         /// </summary>
         /// <param name="listings">ModListings to query</param>
