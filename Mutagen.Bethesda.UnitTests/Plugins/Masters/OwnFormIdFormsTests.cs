@@ -183,7 +183,9 @@ public class OwnFormIdFormsTests
 
     // test_ck.esm (Creation Kit export of a small .esm, its TES4 and keyword group): the CK writes the plugin's own
     // keyword in the full form, 03000809 (three full masters). SF1Edit added a keyword to it as FE002800 (two small
-    // masters) and left 03000809 as it was (test_xedit.esm); Mutagen does the same.
+    // masters) and left 03000809 as it was (test_xedit.esm); Mutagen does the same, except for the object ID: SF1Edit
+    // took the stored next ID (0x800), while Mutagen's allocator (C164) starts above the highest own ID (0x809), so the
+    // new keyword is FE00280A.
     private const string CkTes4 = "54455334c700000001010000000000000000000046020000484544520c008fc2753f0400000000080003434e414d080044454641554c54004d4153540e00537461726669656c642e65736d004d4153540d0053464247533030442e65736d004d4153540d006461726b737461722e65736d004d4153540c006275626c756d692e65736d004d4153541a006461726b7374617270617463685f6275626c756d692e65736d004d4153540d0053464247533030332e65736d004d4153540d0053464247533030362e65736d00424e414d05004d61696e00494e4343040000000000";
     private const string CkKeywords = "47525550640000004b595744000000006d350000000000004b595744340000000000000009080003000000004602000045444944100078525f486f6c737465725f5465737400434e414d0400ffffff00544e414d040015000000464e414d040000000000";
 
@@ -216,10 +218,11 @@ public class OwnFormIdFormsTests
             Write(s, overlay).ShouldBe(file);
         }
 
-        // A new keyword: FE002800, as SF1Edit wrote it; the CK's 03000809 stays
+        // A new keyword in the FE form, as SF1Edit wrote it (its ID from C164: above the highest own ID, 0x809); the
+        // CK's 03000809 stays
         var mod = StarfieldMod.CreateFromBinary(path, StarfieldRelease.Starfield, ReadParams(s));
         var added = mod.Keywords.AddNew("xR_Holster_Test2");
-        added.FormKey.ID.ShouldBe(0x800u);
-        Headers(Write(s, mod)).ShouldBe(new uint[] { 0x03000809, 0xFE002800 });
+        added.FormKey.ID.ShouldBe(0x80Au);
+        Headers(Write(s, mod)).ShouldBe(new uint[] { 0x03000809, 0xFE00280A });
     }
 }
