@@ -55,16 +55,16 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region WED0
+        #region Sound
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private SoundReference? _WED0;
-        public SoundReference? WED0
+        private SoundReference? _Sound;
+        public SoundReference? Sound
         {
-            get => _WED0;
-            set => _WED0 = value;
+            get => _Sound;
+            set => _Sound = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ISoundReferenceGetter? IPlayerDialogueSceneActionGetter.WED0 => this.WED0;
+        ISoundReferenceGetter? IPlayerDialogueSceneActionGetter.Sound => this.Sound;
         #endregion
         #region Headtracking
         public HeadTracking Headtracking { get; set; } = new HeadTracking();
@@ -142,7 +142,7 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             : base(initialValue)
             {
-                this.WED0 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
+                this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(initialValue, new SoundReference.Mask<TItem>(initialValue));
                 this.Headtracking = new MaskItem<TItem, HeadTracking.Mask<TItem>?>(initialValue, new HeadTracking.Mask<TItem>(initialValue));
                 this.DialogueTargetActor = initialValue;
                 this.DialogueList = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, PlayerDialogueSceneActionItem.Mask<TItem>?>>?>(initialValue, []);
@@ -159,7 +159,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Flags,
                 TItem StartPhase,
                 TItem EndPhase,
-                TItem WED0,
+                TItem Sound,
                 TItem Headtracking,
                 TItem DialogueTargetActor,
                 TItem DialogueList,
@@ -175,7 +175,7 @@ namespace Mutagen.Bethesda.Starfield
                 StartPhase: StartPhase,
                 EndPhase: EndPhase)
             {
-                this.WED0 = new MaskItem<TItem, SoundReference.Mask<TItem>?>(WED0, new SoundReference.Mask<TItem>(WED0));
+                this.Sound = new MaskItem<TItem, SoundReference.Mask<TItem>?>(Sound, new SoundReference.Mask<TItem>(Sound));
                 this.Headtracking = new MaskItem<TItem, HeadTracking.Mask<TItem>?>(Headtracking, new HeadTracking.Mask<TItem>(Headtracking));
                 this.DialogueTargetActor = DialogueTargetActor;
                 this.DialogueList = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, PlayerDialogueSceneActionItem.Mask<TItem>?>>?>(DialogueList, []);
@@ -193,7 +193,7 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public MaskItem<TItem, SoundReference.Mask<TItem>?>? WED0 { get; set; }
+            public MaskItem<TItem, SoundReference.Mask<TItem>?>? Sound { get; set; }
             public MaskItem<TItem, HeadTracking.Mask<TItem>?>? Headtracking { get; set; }
             public TItem DialogueTargetActor;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, PlayerDialogueSceneActionItem.Mask<TItem>?>>?>? DialogueList;
@@ -213,7 +213,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.WED0, rhs.WED0)) return false;
+                if (!object.Equals(this.Sound, rhs.Sound)) return false;
                 if (!object.Equals(this.Headtracking, rhs.Headtracking)) return false;
                 if (!object.Equals(this.DialogueTargetActor, rhs.DialogueTargetActor)) return false;
                 if (!object.Equals(this.DialogueList, rhs.DialogueList)) return false;
@@ -225,7 +225,7 @@ namespace Mutagen.Bethesda.Starfield
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.WED0);
+                hash.Add(this.Sound);
                 hash.Add(this.Headtracking);
                 hash.Add(this.DialogueTargetActor);
                 hash.Add(this.DialogueList);
@@ -242,10 +242,10 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (WED0 != null)
+                if (Sound != null)
                 {
-                    if (!eval(this.WED0.Overall)) return false;
-                    if (this.WED0.Specific != null && !this.WED0.Specific.All(eval)) return false;
+                    if (!eval(this.Sound.Overall)) return false;
+                    if (this.Sound.Specific != null && !this.Sound.Specific.All(eval)) return false;
                 }
                 if (Headtracking != null)
                 {
@@ -276,10 +276,10 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (WED0 != null)
+                if (Sound != null)
                 {
-                    if (eval(this.WED0.Overall)) return true;
-                    if (this.WED0.Specific != null && this.WED0.Specific.Any(eval)) return true;
+                    if (eval(this.Sound.Overall)) return true;
+                    if (this.Sound.Specific != null && this.Sound.Specific.Any(eval)) return true;
                 }
                 if (Headtracking != null)
                 {
@@ -317,7 +317,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                obj.WED0 = this.WED0 == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.WED0.Overall), this.WED0.Specific?.Translate(eval));
+                obj.Sound = this.Sound == null ? null : new MaskItem<R, SoundReference.Mask<R>?>(eval(this.Sound.Overall), this.Sound.Specific?.Translate(eval));
                 obj.Headtracking = this.Headtracking == null ? null : new MaskItem<R, HeadTracking.Mask<R>?>(eval(this.Headtracking.Overall), this.Headtracking.Specific?.Translate(eval));
                 obj.DialogueTargetActor = eval(this.DialogueTargetActor);
                 if (DialogueList != null)
@@ -356,9 +356,9 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(PlayerDialogueSceneAction.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.WED0?.Overall ?? true)
+                    if (printMask?.Sound?.Overall ?? true)
                     {
-                        WED0?.Print(sb);
+                        Sound?.Print(sb);
                     }
                     if (printMask?.Headtracking?.Overall ?? true)
                     {
@@ -410,7 +410,7 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
-            public MaskItem<Exception?, SoundReference.ErrorMask?>? WED0;
+            public MaskItem<Exception?, SoundReference.ErrorMask?>? Sound;
             public MaskItem<Exception?, HeadTracking.ErrorMask?>? Headtracking;
             public Exception? DialogueTargetActor;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, PlayerDialogueSceneActionItem.ErrorMask?>>?>? DialogueList;
@@ -425,8 +425,8 @@ namespace Mutagen.Bethesda.Starfield
                 PlayerDialogueSceneAction_FieldIndex enu = (PlayerDialogueSceneAction_FieldIndex)index;
                 switch (enu)
                 {
-                    case PlayerDialogueSceneAction_FieldIndex.WED0:
-                        return WED0;
+                    case PlayerDialogueSceneAction_FieldIndex.Sound:
+                        return Sound;
                     case PlayerDialogueSceneAction_FieldIndex.Headtracking:
                         return Headtracking;
                     case PlayerDialogueSceneAction_FieldIndex.DialogueTargetActor:
@@ -449,8 +449,8 @@ namespace Mutagen.Bethesda.Starfield
                 PlayerDialogueSceneAction_FieldIndex enu = (PlayerDialogueSceneAction_FieldIndex)index;
                 switch (enu)
                 {
-                    case PlayerDialogueSceneAction_FieldIndex.WED0:
-                        this.WED0 = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
+                    case PlayerDialogueSceneAction_FieldIndex.Sound:
+                        this.Sound = new MaskItem<Exception?, SoundReference.ErrorMask?>(ex, null);
                         break;
                     case PlayerDialogueSceneAction_FieldIndex.Headtracking:
                         this.Headtracking = new MaskItem<Exception?, HeadTracking.ErrorMask?>(ex, null);
@@ -481,8 +481,8 @@ namespace Mutagen.Bethesda.Starfield
                 PlayerDialogueSceneAction_FieldIndex enu = (PlayerDialogueSceneAction_FieldIndex)index;
                 switch (enu)
                 {
-                    case PlayerDialogueSceneAction_FieldIndex.WED0:
-                        this.WED0 = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
+                    case PlayerDialogueSceneAction_FieldIndex.Sound:
+                        this.Sound = (MaskItem<Exception?, SoundReference.ErrorMask?>?)obj;
                         break;
                     case PlayerDialogueSceneAction_FieldIndex.Headtracking:
                         this.Headtracking = (MaskItem<Exception?, HeadTracking.ErrorMask?>?)obj;
@@ -511,7 +511,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (WED0 != null) return true;
+                if (Sound != null) return true;
                 if (Headtracking != null) return true;
                 if (DialogueTargetActor != null) return true;
                 if (DialogueList != null) return true;
@@ -544,7 +544,7 @@ namespace Mutagen.Bethesda.Starfield
             protected override void PrintFillInternal(StructuredStringBuilder sb)
             {
                 base.PrintFillInternal(sb);
-                WED0?.Print(sb);
+                Sound?.Print(sb);
                 Headtracking?.Print(sb);
                 {
                     sb.AppendItem(DialogueTargetActor, "DialogueTargetActor");
@@ -584,7 +584,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.WED0 = this.WED0.Combine(rhs.WED0, (l, r) => l.Combine(r));
+                ret.Sound = this.Sound.Combine(rhs.Sound, (l, r) => l.Combine(r));
                 ret.Headtracking = this.Headtracking.Combine(rhs.Headtracking, (l, r) => l.Combine(r));
                 ret.DialogueTargetActor = this.DialogueTargetActor.Combine(rhs.DialogueTargetActor);
                 ret.DialogueList = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, PlayerDialogueSceneActionItem.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.DialogueList?.Overall, rhs.DialogueList?.Overall), Noggog.ExceptionExt.Combine(this.DialogueList?.Specific, rhs.DialogueList?.Specific));
@@ -613,7 +613,7 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
-            public SoundReference.TranslationMask? WED0;
+            public SoundReference.TranslationMask? Sound;
             public HeadTracking.TranslationMask? Headtracking;
             public bool DialogueTargetActor;
             public PlayerDialogueSceneActionItem.TranslationMask? DialogueList;
@@ -639,7 +639,7 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((WED0 != null ? WED0.OnOverall : DefaultOn, WED0?.GetCrystal()));
+                ret.Add((Sound != null ? Sound.OnOverall : DefaultOn, Sound?.GetCrystal()));
                 ret.Add((Headtracking != null ? Headtracking.OnOverall : DefaultOn, Headtracking?.GetCrystal()));
                 ret.Add((DialogueTargetActor, null));
                 ret.Add((DialogueList == null ? DefaultOn : !DialogueList.GetCrystal().CopyNothing, DialogueList?.GetCrystal()));
@@ -724,7 +724,7 @@ namespace Mutagen.Bethesda.Starfield
         INamedRequired,
         IPlayerDialogueSceneActionGetter
     {
-        new SoundReference? WED0 { get; set; }
+        new SoundReference? Sound { get; set; }
         new HeadTracking Headtracking { get; set; }
         new Int32? DialogueTargetActor { get; set; }
         new ExtendedList<PlayerDialogueSceneActionItem> DialogueList { get; }
@@ -741,7 +741,7 @@ namespace Mutagen.Bethesda.Starfield
         INamedRequiredGetter
     {
         static new ILoquiRegistration StaticRegistration => PlayerDialogueSceneAction_Registration.Instance;
-        ISoundReferenceGetter? WED0 { get; }
+        ISoundReferenceGetter? Sound { get; }
         IHeadTrackingGetter Headtracking { get; }
         Int32? DialogueTargetActor { get; }
         IReadOnlyList<IPlayerDialogueSceneActionItemGetter> DialogueList { get; }
@@ -899,7 +899,7 @@ namespace Mutagen.Bethesda.Starfield
         Flags = 4,
         StartPhase = 5,
         EndPhase = 6,
-        WED0 = 7,
+        Sound = 7,
         Headtracking = 8,
         DialogueTargetActor = 9,
         DialogueList = 10,
@@ -1008,7 +1008,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(IPlayerDialogueSceneAction item)
         {
             ClearPartial();
-            item.WED0 = null;
+            item.Sound = null;
             item.Headtracking.Clear();
             item.DialogueTargetActor = default;
             item.DialogueList.Clear();
@@ -1027,7 +1027,7 @@ namespace Mutagen.Bethesda.Starfield
         public void RemapLinks(IPlayerDialogueSceneAction obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             base.RemapLinks(obj, mapping);
-            obj.WED0?.RemapLinks(mapping);
+            obj.Sound?.RemapLinks(mapping);
             obj.DialogueList.RemapLinks(mapping);
         }
         
@@ -1084,9 +1084,9 @@ namespace Mutagen.Bethesda.Starfield
             PlayerDialogueSceneAction.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.WED0 = EqualsMaskHelper.EqualsHelper(
-                item.WED0,
-                rhs.WED0,
+            ret.Sound = EqualsMaskHelper.EqualsHelper(
+                item.Sound,
+                rhs.Sound,
                 (loqLhs, loqRhs, incl) => loqLhs.GetEqualsMask(loqRhs, incl),
                 include);
             ret.Headtracking = MaskItemExt.Factory(item.Headtracking.GetEqualsMask(rhs.Headtracking, include), include);
@@ -1147,10 +1147,10 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if ((printMask?.WED0?.Overall ?? true)
-                && item.WED0 is {} WED0Item)
+            if ((printMask?.Sound?.Overall ?? true)
+                && item.Sound is {} SoundItem)
             {
-                WED0Item?.Print(sb, "WED0");
+                SoundItem?.Print(sb, "Sound");
             }
             if (printMask?.Headtracking?.Overall ?? true)
             {
@@ -1221,13 +1221,13 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IASceneActionGetter)lhs, (IASceneActionGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.WED0) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.Sound) ?? true))
             {
-                if (EqualsMaskHelper.RefEquality(lhs.WED0, rhs.WED0, out var lhsWED0, out var rhsWED0, out var isWED0Equal))
+                if (EqualsMaskHelper.RefEquality(lhs.Sound, rhs.Sound, out var lhsSound, out var rhsSound, out var isSoundEqual))
                 {
-                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsWED0).CommonInstance()!).Equals(lhsWED0, rhsWED0, equalsMask?.GetSubCrystal((int)PlayerDialogueSceneAction_FieldIndex.WED0))) return false;
+                    if (!((SoundReferenceCommon)((ISoundReferenceGetter)lhsSound).CommonInstance()!).Equals(lhsSound, rhsSound, equalsMask?.GetSubCrystal((int)PlayerDialogueSceneAction_FieldIndex.Sound))) return false;
                 }
-                else if (!isWED0Equal) return false;
+                else if (!isSoundEqual) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.Headtracking) ?? true))
             {
@@ -1274,9 +1274,9 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(IPlayerDialogueSceneActionGetter item)
         {
             var hash = new HashCode();
-            if (item.WED0 is {} WED0item)
+            if (item.Sound is {} Sounditem)
             {
-                hash.Add(WED0item);
+                hash.Add(Sounditem);
             }
             hash.Add(item.Headtracking);
             if (item.DialogueTargetActor is {} DialogueTargetActoritem)
@@ -1317,9 +1317,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return item;
             }
-            if (obj.WED0 is {} WED0Items)
+            if (obj.Sound is {} SoundItems)
             {
-                foreach (var item in WED0Items.EnumerateFormLinks(iterateNestedRecords))
+                foreach (var item in SoundItems.EnumerateFormLinks(iterateNestedRecords))
                 {
                     yield return item;
                 }
@@ -1352,20 +1352,20 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.WED0) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlayerDialogueSceneAction_FieldIndex.Sound) ?? true))
             {
-                errorMask?.PushIndex((int)PlayerDialogueSceneAction_FieldIndex.WED0);
+                errorMask?.PushIndex((int)PlayerDialogueSceneAction_FieldIndex.Sound);
                 try
                 {
-                    if(rhs.WED0 is {} rhsWED0)
+                    if(rhs.Sound is {} rhsSound)
                     {
-                        item.WED0 = rhsWED0.DeepCopy(
+                        item.Sound = rhsSound.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)PlayerDialogueSceneAction_FieldIndex.WED0));
+                            copyMask?.GetSubCrystal((int)PlayerDialogueSceneAction_FieldIndex.Sound));
                     }
                     else
                     {
-                        item.WED0 = default;
+                        item.Sound = default;
                     }
                 }
                 catch (Exception ex)
@@ -1565,12 +1565,12 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
-            if (item.WED0 is {} WED0Item)
+            if (item.Sound is {} SoundItem)
             {
                 using (HeaderExport.Subrecord(writer, RecordTypes.WED0))
                 {
-                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)WED0Item).BinaryWriteTranslator).Write(
-                        item: WED0Item,
+                    ((SoundReferenceBinaryWriteTranslation)((IBinaryItem)SoundItem).BinaryWriteTranslator).Write(
+                        item: SoundItem,
                         writer: writer,
                         translationParams: translationParams);
                 }
@@ -1663,8 +1663,8 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.WED0:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
-                    item.WED0 = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
-                    return (int)PlayerDialogueSceneAction_FieldIndex.WED0;
+                    item.Sound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    return (int)PlayerDialogueSceneAction_FieldIndex.Sound;
                 }
                 case RecordTypeInts.HNAM:
                 {
@@ -1768,7 +1768,7 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public ISoundReferenceGetter? WED0 { get; private set; }
+        public ISoundReferenceGetter? Sound { get; private set; }
         #region Headtracking
         private IHeadTrackingGetter? _Headtracking;
         public IHeadTrackingGetter Headtracking => _Headtracking ?? new HeadTracking();
@@ -1856,11 +1856,11 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.WED0:
                 {
                     stream.Position += _package.MetaData.Constants.SubConstants.HeaderLength;
-                    this.WED0 = SoundReferenceBinaryOverlay.SoundReferenceFactory(
+                    this.Sound = SoundReferenceBinaryOverlay.SoundReferenceFactory(
                         stream: stream,
                         package: _package,
                         translationParams: translationParams.DoNotShortCircuit());
-                    return (int)PlayerDialogueSceneAction_FieldIndex.WED0;
+                    return (int)PlayerDialogueSceneAction_FieldIndex.Sound;
                 }
                 case RecordTypeInts.HNAM:
                 {

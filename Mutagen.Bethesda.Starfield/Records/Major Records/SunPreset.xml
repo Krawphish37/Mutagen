@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
-  <Object name="SunPreset" recordType="SUNP" objType="Record" baseClass="StarfieldMajorRecord">
+  <Object name="SunPreset" ckName="Sun Preset" recordType="SUNP" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
       <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
       <FormLink name="ReflectionParent" refName="SunPreset" recordType="RFDP" />

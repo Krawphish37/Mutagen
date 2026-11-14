@@ -175,10 +175,10 @@
       <Group name="FogVolumes" refName="FogVolume" />
       <Group name="WWiseKeywordMappings" refName="WWiseKeywordMapping" />
       <Group name="LegendaryItems" refName="LegendaryItem" />
-      <Group name="ParticleSystemDefineCollisions" refName="ParticleSystemDefineCollision" />
+      <Group name="ParticleSystemDefineCollections" refName="ParticleSystemDefineCollection" />
       <Group name="SunPresets" refName="SunPreset" />
       <Group name="PhotoModeFeatures" refName="PhotoModeFeature" />
-      <Group name="TimeOfDays" refName="TimeOfDayRecord" />
+      <Group name="TimeOfDays" refName="TimeOfDayData" />
       <Group name="ActorValueModulations" refName="ActorValueModulation" />
       <Group name="Challenges" refName="Challenge" />
       <Group name="FacialExpressions" refName="FacialExpression" />

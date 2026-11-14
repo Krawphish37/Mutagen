@@ -740,14 +740,14 @@ namespace Mutagen.Bethesda.Starfield
         UInt32? IPlacedObjectGetter.HealthPercent => this.HealthPercent;
         #endregion
         #region TimeOfDay
-        private readonly IFormLinkNullable<ITimeOfDayRecordGetter> _TimeOfDay = new FormLinkNullable<ITimeOfDayRecordGetter>();
-        public IFormLinkNullable<ITimeOfDayRecordGetter> TimeOfDay
+        private readonly IFormLinkNullable<ITimeOfDayDataGetter> _TimeOfDay = new FormLinkNullable<ITimeOfDayDataGetter>();
+        public IFormLinkNullable<ITimeOfDayDataGetter> TimeOfDay
         {
             get => _TimeOfDay;
             set => _TimeOfDay.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkNullableGetter<ITimeOfDayRecordGetter> IPlacedObjectGetter.TimeOfDay => this.TimeOfDay;
+        IFormLinkNullableGetter<ITimeOfDayDataGetter> IPlacedObjectGetter.TimeOfDay => this.TimeOfDay;
         #endregion
         #region EnableParent
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -4855,7 +4855,7 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLinkNullable<IPlacedGetter> AttachRef { get; set; }
         new P3Float? RagdollBipedRotation { get; set; }
         new UInt32? HealthPercent { get; set; }
-        new IFormLinkNullable<ITimeOfDayRecordGetter> TimeOfDay { get; set; }
+        new IFormLinkNullable<ITimeOfDayDataGetter> TimeOfDay { get; set; }
         new EnableParent? EnableParent { get; set; }
         new PlacedObjectLightFlicker? LightFlicker { get; set; }
         new Ownership? Ownership { get; set; }
@@ -4974,7 +4974,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<IPlacedGetter> AttachRef { get; }
         P3Float? RagdollBipedRotation { get; }
         UInt32? HealthPercent { get; }
-        IFormLinkNullableGetter<ITimeOfDayRecordGetter> TimeOfDay { get; }
+        IFormLinkNullableGetter<ITimeOfDayDataGetter> TimeOfDay { get; }
         IEnableParentGetter? EnableParent { get; }
         IPlacedObjectLightFlickerGetter? LightFlicker { get; }
         IOwnershipGetter? Ownership { get; }
@@ -10551,7 +10551,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region TimeOfDay
         private int? _TimeOfDayLocation;
-        public IFormLinkNullableGetter<ITimeOfDayRecordGetter> TimeOfDay => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ITimeOfDayRecordGetter>(_package, _recordData, _TimeOfDayLocation);
+        public IFormLinkNullableGetter<ITimeOfDayDataGetter> TimeOfDay => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ITimeOfDayDataGetter>(_package, _recordData, _TimeOfDayLocation);
         #endregion
         #region EnableParent
         private RangeInt32? _EnableParentLocation;

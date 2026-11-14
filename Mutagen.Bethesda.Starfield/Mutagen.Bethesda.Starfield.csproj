@@ -5346,9 +5346,6 @@
     <Compile Include="Records\Major Records\PackIn_Generated.cs">
       <DependentUpon>PackIn.xml</DependentUpon>
     </Compile>
-    <Compile Include="Records\Major Records\ParticleSystemDefineCollision_Generated.cs">
-      <DependentUpon>ParticleSystemDefineCollision.xml</DependentUpon>
-    </Compile>
     <Compile Include="Records\Major Records\Perk_Generated.cs">
       <DependentUpon>Perk.xml</DependentUpon>
     </Compile>
@@ -6625,9 +6622,6 @@
     <Compile Include="Records\Major Records\BoneModifierSpringBoneData_Generated.cs">
       <DependentUpon>BoneModifier.xml</DependentUpon>
     </Compile>
-    <Compile Include="Records\Major Records\TimeOfDayRecord_Generated.cs">
-      <DependentUpon>TimeOfDayRecord.xml</DependentUpon>
-    </Compile>
     <Compile Include="Records\Major Records\ChargenAndSkintones_Generated.cs">
       <DependentUpon>Race.xml</DependentUpon>
     </Compile>
@@ -7090,6 +7084,12 @@
     </Compile>
     <Compile Include="Records\Major Records\TrackDamageEffectData_Generated.cs">
       <DependentUpon>TrackDamageEffectData.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\ParticleSystemDefineCollection_Generated.cs">
+      <DependentUpon>ParticleSystemDefineCollection.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\TimeOfDayData_Generated.cs">
+      <DependentUpon>TimeOfDayData.xml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

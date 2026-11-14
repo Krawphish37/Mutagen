@@ -251,14 +251,14 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<IMusicTypeGetter> IBiomeGetter.MusicType => this.MusicType;
         #endregion
         #region TimeOfDay
-        private readonly IFormLinkNullable<ITimeOfDayRecordGetter> _TimeOfDay = new FormLinkNullable<ITimeOfDayRecordGetter>();
-        public IFormLinkNullable<ITimeOfDayRecordGetter> TimeOfDay
+        private readonly IFormLinkNullable<ITimeOfDayDataGetter> _TimeOfDay = new FormLinkNullable<ITimeOfDayDataGetter>();
+        public IFormLinkNullable<ITimeOfDayDataGetter> TimeOfDay
         {
             get => _TimeOfDay;
             set => _TimeOfDay.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkNullableGetter<ITimeOfDayRecordGetter> IBiomeGetter.TimeOfDay => this.TimeOfDay;
+        IFormLinkNullableGetter<ITimeOfDayDataGetter> IBiomeGetter.TimeOfDay => this.TimeOfDay;
         #endregion
         #region PatternStyle
         private readonly IFormLinkNullable<ISurfacePatternStyleGetter> _PatternStyle = new FormLinkNullable<ISurfacePatternStyleGetter>();
@@ -2290,7 +2290,7 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLinkNullable<IBiomeGetter> Child { get; set; }
         new IFormLinkNullable<IAmbienceSetGetter> AmbienceSet { get; set; }
         new IFormLinkNullable<IMusicTypeGetter> MusicType { get; set; }
-        new IFormLinkNullable<ITimeOfDayRecordGetter> TimeOfDay { get; set; }
+        new IFormLinkNullable<ITimeOfDayDataGetter> TimeOfDay { get; set; }
         new IFormLinkNullable<ISurfacePatternStyleGetter> PatternStyle { get; set; }
         new Color Color { get; set; }
         new Color SurfaceColor1 { get; set; }
@@ -2355,7 +2355,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkNullableGetter<IBiomeGetter> Child { get; }
         IFormLinkNullableGetter<IAmbienceSetGetter> AmbienceSet { get; }
         IFormLinkNullableGetter<IMusicTypeGetter> MusicType { get; }
-        IFormLinkNullableGetter<ITimeOfDayRecordGetter> TimeOfDay { get; }
+        IFormLinkNullableGetter<ITimeOfDayDataGetter> TimeOfDay { get; }
         IFormLinkNullableGetter<ISurfacePatternStyleGetter> PatternStyle { get; }
         Color Color { get; }
         Color SurfaceColor1 { get; }
@@ -4860,7 +4860,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region TimeOfDay
         private int? _TimeOfDayLocation;
-        public IFormLinkNullableGetter<ITimeOfDayRecordGetter> TimeOfDay => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ITimeOfDayRecordGetter>(_package, _recordData, _TimeOfDayLocation);
+        public IFormLinkNullableGetter<ITimeOfDayDataGetter> TimeOfDay => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ITimeOfDayDataGetter>(_package, _recordData, _TimeOfDayLocation);
         #endregion
         #region PatternStyle
         private int? _PatternStyleLocation;

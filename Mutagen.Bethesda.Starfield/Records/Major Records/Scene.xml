@@ -141,7 +141,7 @@
   </Object>
   <Object name="PlayerDialogueSceneAction" objType="Subrecord" baseClass="ASceneAction" selectorValue="PlayerDialogue">
     <Fields>
-      <RefDirect name="WED0" recordType="WED0" unknown="true" refName="SoundReference" />
+      <RefDirect name="Sound" recordType="WED0" refName="SoundReference" />
       <RefDirect name="Headtracking" refName="HeadTracking" nullable="false" />
       <Int32 name="DialogueTargetActor" recordType="DTGT" />
       <RefList name="DialogueList" refName="PlayerDialogueSceneActionItem" />

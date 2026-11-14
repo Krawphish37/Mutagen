@@ -199,10 +199,10 @@ internal class StarfieldMultiModOverlay : IStarfieldModDisposableGetter
     private MergedGroup<IFogVolumeGetter>? _fogVolumes;
     private MergedGroup<IWWiseKeywordMappingGetter>? _wWiseKeywordMappings;
     private MergedGroup<ILegendaryItemGetter>? _legendaryItems;
-    private MergedGroup<IParticleSystemDefineCollisionGetter>? _particleSystemDefineCollisions;
+    private MergedGroup<IParticleSystemDefineCollectionGetter>? _particleSystemDefineCollections;
     private MergedGroup<ISunPresetGetter>? _sunPresets;
     private MergedGroup<IPhotoModeFeatureGetter>? _photoModeFeatures;
-    private MergedGroup<ITimeOfDayRecordGetter>? _timeOfDays;
+    private MergedGroup<ITimeOfDayDataGetter>? _timeOfDays;
     private MergedGroup<IActorValueModulationGetter>? _actorValueModulations;
     private MergedGroup<IChallengeGetter>? _challenges;
     private MergedGroup<IFacialExpressionGetter>? _facialExpressions;
@@ -752,17 +752,17 @@ internal class StarfieldMultiModOverlay : IStarfieldModDisposableGetter
     public IStarfieldGroupGetter<ILegendaryItemGetter> LegendaryItems =>
         _legendaryItems ??= new MergedGroup<ILegendaryItemGetter>(
             _sourceMods.Select(m => m.LegendaryItems));
-    public IStarfieldGroupGetter<IParticleSystemDefineCollisionGetter> ParticleSystemDefineCollisions =>
-        _particleSystemDefineCollisions ??= new MergedGroup<IParticleSystemDefineCollisionGetter>(
-            _sourceMods.Select(m => m.ParticleSystemDefineCollisions));
+    public IStarfieldGroupGetter<IParticleSystemDefineCollectionGetter> ParticleSystemDefineCollections =>
+        _particleSystemDefineCollections ??= new MergedGroup<IParticleSystemDefineCollectionGetter>(
+            _sourceMods.Select(m => m.ParticleSystemDefineCollections));
     public IStarfieldGroupGetter<ISunPresetGetter> SunPresets =>
         _sunPresets ??= new MergedGroup<ISunPresetGetter>(
             _sourceMods.Select(m => m.SunPresets));
     public IStarfieldGroupGetter<IPhotoModeFeatureGetter> PhotoModeFeatures =>
         _photoModeFeatures ??= new MergedGroup<IPhotoModeFeatureGetter>(
             _sourceMods.Select(m => m.PhotoModeFeatures));
-    public IStarfieldGroupGetter<ITimeOfDayRecordGetter> TimeOfDays =>
-        _timeOfDays ??= new MergedGroup<ITimeOfDayRecordGetter>(
+    public IStarfieldGroupGetter<ITimeOfDayDataGetter> TimeOfDays =>
+        _timeOfDays ??= new MergedGroup<ITimeOfDayDataGetter>(
             _sourceMods.Select(m => m.TimeOfDays));
     public IStarfieldGroupGetter<IActorValueModulationGetter> ActorValueModulations =>
         _actorValueModulations ??= new MergedGroup<IActorValueModulationGetter>(
@@ -1867,7 +1867,7 @@ internal class MergedWorldspaceCell : ICellGetter
     public IOwnershipGetter? Ownership => _primary.Ownership;
     public String? GlobalDirtLayerMaterial => _primary.GlobalDirtLayerMaterial;
     public Boolean? GlobalDirtLayerInheritBiomeLayer => _primary.GlobalDirtLayerInheritBiomeLayer;
-    public IFormLinkNullableGetter<ITimeOfDayRecordGetter> TimeOfDay => _primary.TimeOfDay;
+    public IFormLinkNullableGetter<ITimeOfDayDataGetter> TimeOfDay => _primary.TimeOfDay;
     public IReadOnlyList<ILinkedReferencesGetter> LinkedReferences => _primary.LinkedReferences;
     public Boolean IsLinkedRefTransient => _primary.IsLinkedRefTransient;
     public IReadOnlyList<ITraversalReferenceGetter>? Traversals => _primary.Traversals;

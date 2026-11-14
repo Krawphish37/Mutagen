@@ -8,10 +8,8 @@
 using Loqui;
 using Loqui.Interfaces;
 using Loqui.Internal;
-using Mutagen.Bethesda.Assets;
 using Mutagen.Bethesda.Binary;
 using Mutagen.Bethesda.Plugins;
-using Mutagen.Bethesda.Plugins.Assets;
 using Mutagen.Bethesda.Plugins.Binary.Headers;
 using Mutagen.Bethesda.Plugins.Binary.Overlay;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
@@ -43,34 +41,20 @@ using System.Reactive.Linq;
 namespace Mutagen.Bethesda.Starfield
 {
     #region Class
-    public partial class TimeOfDayRecord :
+    public partial class ParticleSystemDefineCollection :
         StarfieldMajorRecord,
-        IEquatable<ITimeOfDayRecordGetter>,
-        ILoquiObjectSetter<TimeOfDayRecord>,
-        ITimeOfDayRecordInternal
+        IEquatable<IParticleSystemDefineCollectionGetter>,
+        ILoquiObjectSetter<ParticleSystemDefineCollection>,
+        IParticleSystemDefineCollectionInternal
     {
         #region Ctor
-        protected TimeOfDayRecord()
+        protected ParticleSystemDefineCollection()
         {
             CustomCtor();
         }
         partial void CustomCtor();
         #endregion
 
-        #region Components
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private ExtendedList<AComponent> _Components = new ExtendedList<AComponent>();
-        public ExtendedList<AComponent> Components
-        {
-            get => this._Components;
-            init => this._Components = value;
-        }
-        #region Interface Members
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReadOnlyList<IAComponentGetter> ITimeOfDayRecordGetter.Components => _Components;
-        #endregion
-
-        #endregion
         #region Reflection
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Reflection? _Reflection;
@@ -80,7 +64,7 @@ namespace Mutagen.Bethesda.Starfield
             set => _Reflection = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IReflectionGetter? ITimeOfDayRecordGetter.Reflection => this.Reflection;
+        IReflectionGetter? IParticleSystemDefineCollectionGetter.Reflection => this.Reflection;
         #endregion
 
         #region To String
@@ -89,7 +73,7 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             string? name = null)
         {
-            TimeOfDayRecordMixIn.Print(
+            ParticleSystemDefineCollectionMixIn.Print(
                 item: this,
                 sb: sb,
                 name: name);
@@ -107,7 +91,6 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             : base(initialValue)
             {
-                this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(initialValue, []);
                 this.Reflection = new MaskItem<TItem, Reflection.Mask<TItem>?>(initialValue, new Reflection.Mask<TItem>(initialValue));
             }
 
@@ -121,7 +104,6 @@ namespace Mutagen.Bethesda.Starfield
                 TItem FormVersion,
                 TItem Version2,
                 TItem StarfieldMajorRecordFlags,
-                TItem Components,
                 TItem Reflection)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
@@ -134,7 +116,6 @@ namespace Mutagen.Bethesda.Starfield
                 Version2: Version2,
                 StarfieldMajorRecordFlags: StarfieldMajorRecordFlags)
             {
-                this.Components = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>(Components, []);
                 this.Reflection = new MaskItem<TItem, Reflection.Mask<TItem>?>(Reflection, new Reflection.Mask<TItem>(Reflection));
             }
 
@@ -147,7 +128,6 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, AComponent.Mask<TItem>?>>?>? Components;
             public MaskItem<TItem, Reflection.Mask<TItem>?>? Reflection { get; set; }
             #endregion
 
@@ -162,14 +142,12 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
-                if (!object.Equals(this.Components, rhs.Components)) return false;
                 if (!object.Equals(this.Reflection, rhs.Reflection)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.Components);
                 hash.Add(this.Reflection);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
@@ -181,18 +159,6 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
-                if (this.Components != null)
-                {
-                    if (!eval(this.Components.Overall)) return false;
-                    if (this.Components.Specific != null)
-                    {
-                        foreach (var item in this.Components.Specific)
-                        {
-                            if (!eval(item.Overall)) return false;
-                            if (item.Specific != null && !item.Specific.All(eval)) return false;
-                        }
-                    }
-                }
                 if (Reflection != null)
                 {
                     if (!eval(this.Reflection.Overall)) return false;
@@ -206,18 +172,6 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
-                if (this.Components != null)
-                {
-                    if (eval(this.Components.Overall)) return true;
-                    if (this.Components.Specific != null)
-                    {
-                        foreach (var item in this.Components.Specific)
-                        {
-                            if (!eval(item.Overall)) return false;
-                            if (item.Specific != null && !item.Specific.All(eval)) return false;
-                        }
-                    }
-                }
                 if (Reflection != null)
                 {
                     if (eval(this.Reflection.Overall)) return true;
@@ -230,7 +184,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Translate
             public new Mask<R> Translate<R>(Func<TItem, R> eval)
             {
-                var ret = new TimeOfDayRecord.Mask<R>();
+                var ret = new ParticleSystemDefineCollection.Mask<R>();
                 this.Translate_InternalFill(ret, eval);
                 return ret;
             }
@@ -238,21 +192,6 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
-                if (Components != null)
-                {
-                    obj.Components = new MaskItem<R, IEnumerable<MaskItemIndexed<R, AComponent.Mask<R>?>>?>(eval(this.Components.Overall), []);
-                    if (Components.Specific != null)
-                    {
-                        var l = new List<MaskItemIndexed<R, AComponent.Mask<R>?>>();
-                        obj.Components.Specific = l;
-                        foreach (var item in Components.Specific)
-                        {
-                            MaskItemIndexed<R, AComponent.Mask<R>?>? mask = item == null ? null : new MaskItemIndexed<R, AComponent.Mask<R>?>(item.Index, eval(item.Overall), item.Specific?.Translate(eval));
-                            if (mask == null) continue;
-                            l.Add(mask);
-                        }
-                    }
-                }
                 obj.Reflection = this.Reflection == null ? null : new MaskItem<R, Reflection.Mask<R>?>(eval(this.Reflection.Overall), this.Reflection.Specific?.Translate(eval));
             }
             #endregion
@@ -260,37 +199,18 @@ namespace Mutagen.Bethesda.Starfield
             #region To String
             public override string ToString() => this.Print();
 
-            public string Print(TimeOfDayRecord.Mask<bool>? printMask = null)
+            public string Print(ParticleSystemDefineCollection.Mask<bool>? printMask = null)
             {
                 var sb = new StructuredStringBuilder();
                 Print(sb, printMask);
                 return sb.ToString();
             }
 
-            public void Print(StructuredStringBuilder sb, TimeOfDayRecord.Mask<bool>? printMask = null)
+            public void Print(StructuredStringBuilder sb, ParticleSystemDefineCollection.Mask<bool>? printMask = null)
             {
-                sb.AppendLine($"{nameof(TimeOfDayRecord.Mask<TItem>)} =>");
+                sb.AppendLine($"{nameof(ParticleSystemDefineCollection.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if ((printMask?.Components?.Overall ?? true)
-                        && Components is {} ComponentsItem)
-                    {
-                        sb.AppendLine("Components =>");
-                        using (sb.Brace())
-                        {
-                            sb.AppendItem(ComponentsItem.Overall);
-                            if (ComponentsItem.Specific != null)
-                            {
-                                foreach (var subItem in ComponentsItem.Specific)
-                                {
-                                    using (sb.Brace())
-                                    {
-                                        subItem?.Print(sb);
-                                    }
-                                }
-                            }
-                        }
-                    }
                     if (printMask?.Reflection?.Overall ?? true)
                     {
                         Reflection?.Print(sb);
@@ -306,19 +226,16 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
-            public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>? Components;
             public MaskItem<Exception?, Reflection.ErrorMask?>? Reflection;
             #endregion
 
             #region IErrorMask
             public override object? GetNthMask(int index)
             {
-                TimeOfDayRecord_FieldIndex enu = (TimeOfDayRecord_FieldIndex)index;
+                ParticleSystemDefineCollection_FieldIndex enu = (ParticleSystemDefineCollection_FieldIndex)index;
                 switch (enu)
                 {
-                    case TimeOfDayRecord_FieldIndex.Components:
-                        return Components;
-                    case TimeOfDayRecord_FieldIndex.Reflection:
+                    case ParticleSystemDefineCollection_FieldIndex.Reflection:
                         return Reflection;
                     default:
                         return base.GetNthMask(index);
@@ -327,13 +244,10 @@ namespace Mutagen.Bethesda.Starfield
 
             public override void SetNthException(int index, Exception ex)
             {
-                TimeOfDayRecord_FieldIndex enu = (TimeOfDayRecord_FieldIndex)index;
+                ParticleSystemDefineCollection_FieldIndex enu = (ParticleSystemDefineCollection_FieldIndex)index;
                 switch (enu)
                 {
-                    case TimeOfDayRecord_FieldIndex.Components:
-                        this.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(ex, null);
-                        break;
-                    case TimeOfDayRecord_FieldIndex.Reflection:
+                    case ParticleSystemDefineCollection_FieldIndex.Reflection:
                         this.Reflection = new MaskItem<Exception?, Reflection.ErrorMask?>(ex, null);
                         break;
                     default:
@@ -344,13 +258,10 @@ namespace Mutagen.Bethesda.Starfield
 
             public override void SetNthMask(int index, object obj)
             {
-                TimeOfDayRecord_FieldIndex enu = (TimeOfDayRecord_FieldIndex)index;
+                ParticleSystemDefineCollection_FieldIndex enu = (ParticleSystemDefineCollection_FieldIndex)index;
                 switch (enu)
                 {
-                    case TimeOfDayRecord_FieldIndex.Components:
-                        this.Components = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>)obj;
-                        break;
-                    case TimeOfDayRecord_FieldIndex.Reflection:
+                    case ParticleSystemDefineCollection_FieldIndex.Reflection:
                         this.Reflection = (MaskItem<Exception?, Reflection.ErrorMask?>?)obj;
                         break;
                     default:
@@ -362,7 +273,6 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
-                if (Components != null) return true;
                 if (Reflection != null) return true;
                 return false;
             }
@@ -390,24 +300,6 @@ namespace Mutagen.Bethesda.Starfield
             protected override void PrintFillInternal(StructuredStringBuilder sb)
             {
                 base.PrintFillInternal(sb);
-                if (Components is {} ComponentsItem)
-                {
-                    sb.AppendLine("Components =>");
-                    using (sb.Brace())
-                    {
-                        sb.AppendItem(ComponentsItem.Overall);
-                        if (ComponentsItem.Specific != null)
-                        {
-                            foreach (var subItem in ComponentsItem.Specific)
-                            {
-                                using (sb.Brace())
-                                {
-                                    subItem?.Print(sb);
-                                }
-                            }
-                        }
-                    }
-                }
                 Reflection?.Print(sb);
             }
             #endregion
@@ -417,7 +309,6 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.Components = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, AComponent.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.Components?.Overall, rhs.Components?.Overall), Noggog.ExceptionExt.Combine(this.Components?.Specific, rhs.Components?.Specific));
                 ret.Reflection = this.Reflection.Combine(rhs.Reflection, (l, r) => l.Combine(r));
                 return ret;
             }
@@ -441,7 +332,6 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
-            public AComponent.TranslationMask? Components;
             public Reflection.TranslationMask? Reflection;
             #endregion
 
@@ -458,7 +348,6 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
-                ret.Add((Components == null ? DefaultOn : !Components.GetCrystal().CopyNothing, Components?.GetCrystal()));
                 ret.Add((Reflection != null ? Reflection.OnOverall : DefaultOn, Reflection?.GetCrystal()));
             }
 
@@ -471,10 +360,10 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
 
         #region Mutagen
-        public static readonly RecordType GrupRecordType = TimeOfDayRecord_Registration.TriggeringRecordType;
-        public override IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => TimeOfDayRecordCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
-        public override void RemapLinks(IReadOnlyDictionary<FormKey, FormKey> mapping) => TimeOfDayRecordSetterCommon.Instance.RemapLinks(this, mapping);
-        public TimeOfDayRecord(
+        public static readonly RecordType GrupRecordType = ParticleSystemDefineCollection_Registration.TriggeringRecordType;
+        public override IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => ParticleSystemDefineCollectionCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
+        public override void RemapLinks(IReadOnlyDictionary<FormKey, FormKey> mapping) => ParticleSystemDefineCollectionSetterCommon.Instance.RemapLinks(this, mapping);
+        public ParticleSystemDefineCollection(
             FormKey formKey,
             StarfieldRelease gameRelease)
         {
@@ -483,7 +372,7 @@ namespace Mutagen.Bethesda.Starfield
             CustomCtor();
         }
 
-        private TimeOfDayRecord(
+        private ParticleSystemDefineCollection(
             FormKey formKey,
             GameRelease gameRelease)
         {
@@ -492,7 +381,7 @@ namespace Mutagen.Bethesda.Starfield
             CustomCtor();
         }
 
-        internal TimeOfDayRecord(
+        internal ParticleSystemDefineCollection(
             FormKey formKey,
             ushort formVersion)
         {
@@ -501,14 +390,14 @@ namespace Mutagen.Bethesda.Starfield
             CustomCtor();
         }
 
-        public TimeOfDayRecord(IStarfieldMod mod)
+        public ParticleSystemDefineCollection(IStarfieldMod mod)
             : this(
                 mod.GetNextFormKey(),
                 mod.StarfieldRelease)
         {
         }
 
-        public TimeOfDayRecord(IStarfieldMod mod, string editorID)
+        public ParticleSystemDefineCollection(IStarfieldMod mod, string editorID)
             : this(
                 mod.GetNextFormKey(editorID),
                 mod.StarfieldRelease)
@@ -518,15 +407,11 @@ namespace Mutagen.Bethesda.Starfield
 
         public override string ToString()
         {
-            return MajorRecordPrinter<TimeOfDayRecord>.ToString(this);
+            return MajorRecordPrinter<ParticleSystemDefineCollection>.ToString(this);
         }
 
-        protected override Type LinkType => typeof(ITimeOfDayRecord);
+        protected override Type LinkType => typeof(IParticleSystemDefineCollection);
 
-        public override IEnumerable<IAssetLinkGetter> EnumerateAssetLinks(AssetLinkQuery queryCategories, IAssetLinkCache? linkCache = null, Type? assetType = null, bool iterateNestedRecords = true) => TimeOfDayRecordCommon.Instance.EnumerateAssetLinks(this, queryCategories, linkCache, assetType, iterateNestedRecords);
-        public override IEnumerable<IAssetLink> EnumerateListedAssetLinks(bool iterateNestedRecords = true) => TimeOfDayRecordSetterCommon.Instance.EnumerateListedAssetLinks(this, iterateNestedRecords);
-        public override void RemapAssetLinks(IReadOnlyDictionary<IAssetLinkGetter, string> mapping, AssetLinkQuery queryCategories, IAssetLinkCache? linkCache) => TimeOfDayRecordSetterCommon.Instance.RemapAssetLinks(this, mapping, linkCache, queryCategories);
-        public override void RemapListedAssetLinks(IReadOnlyDictionary<IAssetLinkGetter, string> mapping) => TimeOfDayRecordSetterCommon.Instance.RemapAssetLinks(this, mapping, null, AssetLinkQuery.Listed);
         #region Equals and Hash
         public override bool Equals(object? obj)
         {
@@ -534,16 +419,16 @@ namespace Mutagen.Bethesda.Starfield
             {
                 return formLink.Equals(this);
             }
-            if (obj is not ITimeOfDayRecordGetter rhs) return false;
-            return ((TimeOfDayRecordCommon)((ITimeOfDayRecordGetter)this).CommonInstance()!).Equals(this, rhs, equalsMask: null);
+            if (obj is not IParticleSystemDefineCollectionGetter rhs) return false;
+            return ((ParticleSystemDefineCollectionCommon)((IParticleSystemDefineCollectionGetter)this).CommonInstance()!).Equals(this, rhs, equalsMask: null);
         }
 
-        public bool Equals(ITimeOfDayRecordGetter? obj)
+        public bool Equals(IParticleSystemDefineCollectionGetter? obj)
         {
-            return ((TimeOfDayRecordCommon)((ITimeOfDayRecordGetter)this).CommonInstance()!).Equals(this, obj, equalsMask: null);
+            return ((ParticleSystemDefineCollectionCommon)((IParticleSystemDefineCollectionGetter)this).CommonInstance()!).Equals(this, obj, equalsMask: null);
         }
 
-        public override int GetHashCode() => ((TimeOfDayRecordCommon)((ITimeOfDayRecordGetter)this).CommonInstance()!).GetHashCode(this);
+        public override int GetHashCode() => ((ParticleSystemDefineCollectionCommon)((IParticleSystemDefineCollectionGetter)this).CommonInstance()!).GetHashCode(this);
 
         #endregion
 
@@ -551,23 +436,23 @@ namespace Mutagen.Bethesda.Starfield
 
         #region Binary Translation
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected override object BinaryWriteTranslator => TimeOfDayRecordBinaryWriteTranslation.Instance;
+        protected override object BinaryWriteTranslator => ParticleSystemDefineCollectionBinaryWriteTranslation.Instance;
         void IBinaryItem.WriteToBinary(
             MutagenWriter writer,
             TypedWriteParams translationParams = default)
         {
-            ((TimeOfDayRecordBinaryWriteTranslation)this.BinaryWriteTranslator).Write(
+            ((ParticleSystemDefineCollectionBinaryWriteTranslation)this.BinaryWriteTranslator).Write(
                 item: this,
                 writer: writer,
                 translationParams: translationParams);
         }
         #region Binary Create
-        public new static TimeOfDayRecord CreateFromBinary(
+        public new static ParticleSystemDefineCollection CreateFromBinary(
             MutagenFrame frame,
             TypedParseParams translationParams = default)
         {
-            var ret = new TimeOfDayRecord();
-            ((TimeOfDayRecordSetterCommon)((ITimeOfDayRecordGetter)ret).CommonSetterInstance()!).CopyInFromBinary(
+            var ret = new ParticleSystemDefineCollection();
+            ((ParticleSystemDefineCollectionSetterCommon)((IParticleSystemDefineCollectionGetter)ret).CommonSetterInstance()!).CopyInFromBinary(
                 item: ret,
                 frame: frame,
                 translationParams: translationParams);
@@ -578,7 +463,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public static bool TryCreateFromBinary(
             MutagenFrame frame,
-            out TimeOfDayRecord item,
+            out ParticleSystemDefineCollection item,
             TypedParseParams translationParams = default)
         {
             var startPos = frame.Position;
@@ -593,47 +478,43 @@ namespace Mutagen.Bethesda.Starfield
 
         void IClearable.Clear()
         {
-            ((TimeOfDayRecordSetterCommon)((ITimeOfDayRecordGetter)this).CommonSetterInstance()!).Clear(this);
+            ((ParticleSystemDefineCollectionSetterCommon)((IParticleSystemDefineCollectionGetter)this).CommonSetterInstance()!).Clear(this);
         }
 
-        internal static new TimeOfDayRecord GetNew()
+        internal static new ParticleSystemDefineCollection GetNew()
         {
-            return new TimeOfDayRecord();
+            return new ParticleSystemDefineCollection();
         }
 
     }
     #endregion
 
     #region Interface
-    public partial interface ITimeOfDayRecord :
-        IAssetLinkContainer,
+    public partial interface IParticleSystemDefineCollection :
         IFormLinkContainer,
-        ILoquiObjectSetter<ITimeOfDayRecordInternal>,
-        IStarfieldMajorRecordInternal,
-        ITimeOfDayRecordGetter
+        ILoquiObjectSetter<IParticleSystemDefineCollectionInternal>,
+        IParticleSystemDefineCollectionGetter,
+        IStarfieldMajorRecordInternal
     {
-        new ExtendedList<AComponent> Components { get; }
         new Reflection? Reflection { get; set; }
     }
 
-    public partial interface ITimeOfDayRecordInternal :
+    public partial interface IParticleSystemDefineCollectionInternal :
         IStarfieldMajorRecordInternal,
-        ITimeOfDayRecord,
-        ITimeOfDayRecordGetter
+        IParticleSystemDefineCollection,
+        IParticleSystemDefineCollectionGetter
     {
     }
 
-    [AssociatedRecordTypesAttribute(Mutagen.Bethesda.Starfield.Internals.RecordTypeInts.TODD)]
-    public partial interface ITimeOfDayRecordGetter :
+    [AssociatedRecordTypesAttribute(Mutagen.Bethesda.Starfield.Internals.RecordTypeInts.PSDC)]
+    public partial interface IParticleSystemDefineCollectionGetter :
         IStarfieldMajorRecordGetter,
-        IAssetLinkContainerGetter,
         IBinaryItem,
         IFormLinkContainerGetter,
-        ILoquiObject<ITimeOfDayRecordGetter>,
-        IMapsToGetter<ITimeOfDayRecordGetter>
+        ILoquiObject<IParticleSystemDefineCollectionGetter>,
+        IMapsToGetter<IParticleSystemDefineCollectionGetter>
     {
-        static new ILoquiRegistration StaticRegistration => TimeOfDayRecord_Registration.Instance;
-        IReadOnlyList<IAComponentGetter> Components { get; }
+        static new ILoquiRegistration StaticRegistration => ParticleSystemDefineCollection_Registration.Instance;
         IReflectionGetter? Reflection { get; }
 
     }
@@ -641,42 +522,42 @@ namespace Mutagen.Bethesda.Starfield
     #endregion
 
     #region Common MixIn
-    public static partial class TimeOfDayRecordMixIn
+    public static partial class ParticleSystemDefineCollectionMixIn
     {
-        public static void Clear(this ITimeOfDayRecordInternal item)
+        public static void Clear(this IParticleSystemDefineCollectionInternal item)
         {
-            ((TimeOfDayRecordSetterCommon)((ITimeOfDayRecordGetter)item).CommonSetterInstance()!).Clear(item: item);
+            ((ParticleSystemDefineCollectionSetterCommon)((IParticleSystemDefineCollectionGetter)item).CommonSetterInstance()!).Clear(item: item);
         }
 
-        public static TimeOfDayRecord.Mask<bool> GetEqualsMask(
-            this ITimeOfDayRecordGetter item,
-            ITimeOfDayRecordGetter rhs,
+        public static ParticleSystemDefineCollection.Mask<bool> GetEqualsMask(
+            this IParticleSystemDefineCollectionGetter item,
+            IParticleSystemDefineCollectionGetter rhs,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            return ((TimeOfDayRecordCommon)((ITimeOfDayRecordGetter)item).CommonInstance()!).GetEqualsMask(
+            return ((ParticleSystemDefineCollectionCommon)((IParticleSystemDefineCollectionGetter)item).CommonInstance()!).GetEqualsMask(
                 item: item,
                 rhs: rhs,
                 include: include);
         }
 
         public static string Print(
-            this ITimeOfDayRecordGetter item,
+            this IParticleSystemDefineCollectionGetter item,
             string? name = null,
-            TimeOfDayRecord.Mask<bool>? printMask = null)
+            ParticleSystemDefineCollection.Mask<bool>? printMask = null)
         {
-            return ((TimeOfDayRecordCommon)((ITimeOfDayRecordGetter)item).CommonInstance()!).Print(
+            return ((ParticleSystemDefineCollectionCommon)((IParticleSystemDefineCollectionGetter)item).CommonInstance()!).Print(
                 item: item,
                 name: name,
                 printMask: printMask);
         }
 
         public static void Print(
-            this ITimeOfDayRecordGetter item,
+            this IParticleSystemDefineCollectionGetter item,
             StructuredStringBuilder sb,
             string? name = null,
-            TimeOfDayRecord.Mask<bool>? printMask = null)
+            ParticleSystemDefineCollection.Mask<bool>? printMask = null)
         {
-            ((TimeOfDayRecordCommon)((ITimeOfDayRecordGetter)item).CommonInstance()!).Print(
+            ((ParticleSystemDefineCollectionCommon)((IParticleSystemDefineCollectionGetter)item).CommonInstance()!).Print(
                 item: item,
                 sb: sb,
                 name: name,
@@ -684,39 +565,39 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public static bool Equals(
-            this ITimeOfDayRecordGetter item,
-            ITimeOfDayRecordGetter rhs,
-            TimeOfDayRecord.TranslationMask? equalsMask = null)
+            this IParticleSystemDefineCollectionGetter item,
+            IParticleSystemDefineCollectionGetter rhs,
+            ParticleSystemDefineCollection.TranslationMask? equalsMask = null)
         {
-            return ((TimeOfDayRecordCommon)((ITimeOfDayRecordGetter)item).CommonInstance()!).Equals(
+            return ((ParticleSystemDefineCollectionCommon)((IParticleSystemDefineCollectionGetter)item).CommonInstance()!).Equals(
                 lhs: item,
                 rhs: rhs,
                 equalsMask: equalsMask?.GetCrystal());
         }
 
         public static void DeepCopyIn(
-            this ITimeOfDayRecordInternal lhs,
-            ITimeOfDayRecordGetter rhs,
-            out TimeOfDayRecord.ErrorMask errorMask,
-            TimeOfDayRecord.TranslationMask? copyMask = null)
+            this IParticleSystemDefineCollectionInternal lhs,
+            IParticleSystemDefineCollectionGetter rhs,
+            out ParticleSystemDefineCollection.ErrorMask errorMask,
+            ParticleSystemDefineCollection.TranslationMask? copyMask = null)
         {
             var errorMaskBuilder = new ErrorMaskBuilder();
-            ((TimeOfDayRecordSetterTranslationCommon)((ITimeOfDayRecordGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
+            ((ParticleSystemDefineCollectionSetterTranslationCommon)((IParticleSystemDefineCollectionGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: lhs,
                 rhs: rhs,
                 errorMask: errorMaskBuilder,
                 copyMask: copyMask?.GetCrystal(),
                 deepCopy: false);
-            errorMask = TimeOfDayRecord.ErrorMask.Factory(errorMaskBuilder);
+            errorMask = ParticleSystemDefineCollection.ErrorMask.Factory(errorMaskBuilder);
         }
 
         public static void DeepCopyIn(
-            this ITimeOfDayRecordInternal lhs,
-            ITimeOfDayRecordGetter rhs,
+            this IParticleSystemDefineCollectionInternal lhs,
+            IParticleSystemDefineCollectionGetter rhs,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask)
         {
-            ((TimeOfDayRecordSetterTranslationCommon)((ITimeOfDayRecordGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
+            ((ParticleSystemDefineCollectionSetterTranslationCommon)((IParticleSystemDefineCollectionGetter)lhs).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: lhs,
                 rhs: rhs,
                 errorMask: errorMask,
@@ -724,55 +605,55 @@ namespace Mutagen.Bethesda.Starfield
                 deepCopy: false);
         }
 
-        public static TimeOfDayRecord DeepCopy(
-            this ITimeOfDayRecordGetter item,
-            TimeOfDayRecord.TranslationMask? copyMask = null)
+        public static ParticleSystemDefineCollection DeepCopy(
+            this IParticleSystemDefineCollectionGetter item,
+            ParticleSystemDefineCollection.TranslationMask? copyMask = null)
         {
-            return ((TimeOfDayRecordSetterTranslationCommon)((ITimeOfDayRecordGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
+            return ((ParticleSystemDefineCollectionSetterTranslationCommon)((IParticleSystemDefineCollectionGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
                 item: item,
                 copyMask: copyMask);
         }
 
-        public static TimeOfDayRecord DeepCopy(
-            this ITimeOfDayRecordGetter item,
-            out TimeOfDayRecord.ErrorMask errorMask,
-            TimeOfDayRecord.TranslationMask? copyMask = null)
+        public static ParticleSystemDefineCollection DeepCopy(
+            this IParticleSystemDefineCollectionGetter item,
+            out ParticleSystemDefineCollection.ErrorMask errorMask,
+            ParticleSystemDefineCollection.TranslationMask? copyMask = null)
         {
-            return ((TimeOfDayRecordSetterTranslationCommon)((ITimeOfDayRecordGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
+            return ((ParticleSystemDefineCollectionSetterTranslationCommon)((IParticleSystemDefineCollectionGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
                 item: item,
                 copyMask: copyMask,
                 errorMask: out errorMask);
         }
 
-        public static TimeOfDayRecord DeepCopy(
-            this ITimeOfDayRecordGetter item,
+        public static ParticleSystemDefineCollection DeepCopy(
+            this IParticleSystemDefineCollectionGetter item,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask = null)
         {
-            return ((TimeOfDayRecordSetterTranslationCommon)((ITimeOfDayRecordGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
+            return ((ParticleSystemDefineCollectionSetterTranslationCommon)((IParticleSystemDefineCollectionGetter)item).CommonSetterTranslationInstance()!).DeepCopy(
                 item: item,
                 copyMask: copyMask,
                 errorMask: errorMask);
         }
 
         #region Mutagen
-        public static TimeOfDayRecord Duplicate(
-            this ITimeOfDayRecordGetter item,
+        public static ParticleSystemDefineCollection Duplicate(
+            this IParticleSystemDefineCollectionGetter item,
             FormKey formKey,
-            TimeOfDayRecord.TranslationMask? copyMask = null)
+            ParticleSystemDefineCollection.TranslationMask? copyMask = null)
         {
-            return ((TimeOfDayRecordCommon)((ITimeOfDayRecordGetter)item).CommonInstance()!).Duplicate(
+            return ((ParticleSystemDefineCollectionCommon)((IParticleSystemDefineCollectionGetter)item).CommonInstance()!).Duplicate(
                 item: item,
                 formKey: formKey,
                 copyMask: copyMask?.GetCrystal());
         }
 
-        public static TimeOfDayRecord Duplicate(
-            this ITimeOfDayRecordGetter item,
+        public static ParticleSystemDefineCollection Duplicate(
+            this IParticleSystemDefineCollectionGetter item,
             FormKey formKey,
             TranslationCrystal? copyMask)
         {
-            return ((TimeOfDayRecordCommon)((ITimeOfDayRecordGetter)item).CommonInstance()!).Duplicate(
+            return ((ParticleSystemDefineCollectionCommon)((IParticleSystemDefineCollectionGetter)item).CommonInstance()!).Duplicate(
                 item: item,
                 formKey: formKey,
                 copyMask: copyMask);
@@ -782,11 +663,11 @@ namespace Mutagen.Bethesda.Starfield
 
         #region Binary Translation
         public static void CopyInFromBinary(
-            this ITimeOfDayRecordInternal item,
+            this IParticleSystemDefineCollectionInternal item,
             MutagenFrame frame,
             TypedParseParams translationParams = default)
         {
-            ((TimeOfDayRecordSetterCommon)((ITimeOfDayRecordGetter)item).CommonSetterInstance()!).CopyInFromBinary(
+            ((ParticleSystemDefineCollectionSetterCommon)((IParticleSystemDefineCollectionGetter)item).CommonSetterInstance()!).CopyInFromBinary(
                 item: item,
                 frame: frame,
                 translationParams: translationParams);
@@ -802,7 +683,7 @@ namespace Mutagen.Bethesda.Starfield
 namespace Mutagen.Bethesda.Starfield
 {
     #region Field Index
-    internal enum TimeOfDayRecord_FieldIndex
+    internal enum ParticleSystemDefineCollection_FieldIndex
     {
         MajorRecordFlagsRaw = 0,
         FormKey = 1,
@@ -813,39 +694,38 @@ namespace Mutagen.Bethesda.Starfield
         FormVersion = 6,
         Version2 = 7,
         StarfieldMajorRecordFlags = 8,
-        Components = 9,
-        Reflection = 10,
+        Reflection = 9,
     }
     #endregion
 
     #region Registration
-    internal partial class TimeOfDayRecord_Registration : ILoquiRegistration
+    internal partial class ParticleSystemDefineCollection_Registration : ILoquiRegistration
     {
-        public static readonly TimeOfDayRecord_Registration Instance = new TimeOfDayRecord_Registration();
+        public static readonly ParticleSystemDefineCollection_Registration Instance = new ParticleSystemDefineCollection_Registration();
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 2;
+        public const ushort AdditionalFieldCount = 1;
 
-        public const ushort FieldCount = 11;
+        public const ushort FieldCount = 10;
 
-        public static readonly Type MaskType = typeof(TimeOfDayRecord.Mask<>);
+        public static readonly Type MaskType = typeof(ParticleSystemDefineCollection.Mask<>);
 
-        public static readonly Type ErrorMaskType = typeof(TimeOfDayRecord.ErrorMask);
+        public static readonly Type ErrorMaskType = typeof(ParticleSystemDefineCollection.ErrorMask);
 
-        public static readonly Type ClassType = typeof(TimeOfDayRecord);
+        public static readonly Type ClassType = typeof(ParticleSystemDefineCollection);
 
-        public static readonly Type GetterType = typeof(ITimeOfDayRecordGetter);
+        public static readonly Type GetterType = typeof(IParticleSystemDefineCollectionGetter);
 
         public static readonly Type? InternalGetterType = null;
 
-        public static readonly Type SetterType = typeof(ITimeOfDayRecord);
+        public static readonly Type SetterType = typeof(IParticleSystemDefineCollection);
 
-        public static readonly Type? InternalSetterType = typeof(ITimeOfDayRecordInternal);
+        public static readonly Type? InternalSetterType = typeof(IParticleSystemDefineCollectionInternal);
 
-        public const string FullName = "Mutagen.Bethesda.Starfield.TimeOfDayRecord";
+        public const string FullName = "Mutagen.Bethesda.Starfield.ParticleSystemDefineCollection";
 
-        public const string Name = "TimeOfDayRecord";
+        public const string Name = "ParticleSystemDefineCollection";
 
         public const string Namespace = "Mutagen.Bethesda.Starfield";
 
@@ -853,22 +733,20 @@ namespace Mutagen.Bethesda.Starfield
 
         public static readonly Type? GenericRegistrationType = null;
 
-        public static readonly RecordType TriggeringRecordType = RecordTypes.TODD;
+        public static readonly RecordType TriggeringRecordType = RecordTypes.PSDC;
         public static RecordTriggerSpecs TriggerSpecs => _recordSpecs.Value;
         private static readonly Lazy<RecordTriggerSpecs> _recordSpecs = new Lazy<RecordTriggerSpecs>(() =>
         {
-            var triggers = RecordCollection.Factory(RecordTypes.TODD);
+            var triggers = RecordCollection.Factory(RecordTypes.PSDC);
             var all = RecordCollection.Factory(
-                RecordTypes.TODD,
-                RecordTypes.BFCB,
-                RecordTypes.BFCE,
+                RecordTypes.PSDC,
                 RecordTypes.REFL,
                 RecordTypes.XXXX);
             return new RecordTriggerSpecs(
                 allRecordTypes: all,
                 triggeringRecordTypes: triggers);
         });
-        public static readonly Type BinaryWriteTranslation = typeof(TimeOfDayRecordBinaryWriteTranslation);
+        public static readonly Type BinaryWriteTranslation = typeof(ParticleSystemDefineCollectionBinaryWriteTranslation);
         #region Interface
         ProtocolKey ILoquiRegistration.ProtocolKey => ProtocolKey;
         ushort ILoquiRegistration.FieldCount => FieldCount;
@@ -899,76 +777,50 @@ namespace Mutagen.Bethesda.Starfield
     #endregion
 
     #region Common
-    internal partial class TimeOfDayRecordSetterCommon : StarfieldMajorRecordSetterCommon
+    internal partial class ParticleSystemDefineCollectionSetterCommon : StarfieldMajorRecordSetterCommon
     {
-        public new static readonly TimeOfDayRecordSetterCommon Instance = new TimeOfDayRecordSetterCommon();
+        public new static readonly ParticleSystemDefineCollectionSetterCommon Instance = new ParticleSystemDefineCollectionSetterCommon();
 
         partial void ClearPartial();
         
-        public void Clear(ITimeOfDayRecordInternal item)
+        public void Clear(IParticleSystemDefineCollectionInternal item)
         {
             ClearPartial();
-            item.Components.Clear();
             item.Reflection = null;
             base.Clear(item);
         }
         
         public override void Clear(IStarfieldMajorRecordInternal item)
         {
-            Clear(item: (ITimeOfDayRecordInternal)item);
+            Clear(item: (IParticleSystemDefineCollectionInternal)item);
         }
         
         public override void Clear(IMajorRecordInternal item)
         {
-            Clear(item: (ITimeOfDayRecordInternal)item);
+            Clear(item: (IParticleSystemDefineCollectionInternal)item);
         }
         
         #region Mutagen
-        public void RemapLinks(ITimeOfDayRecord obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
+        public void RemapLinks(IParticleSystemDefineCollection obj, IReadOnlyDictionary<FormKey, FormKey> mapping)
         {
             base.RemapLinks(obj, mapping);
-            obj.Components.RemapLinks(mapping);
             obj.Reflection?.RemapLinks(mapping);
-        }
-        
-        public IEnumerable<IAssetLink> EnumerateListedAssetLinks(ITimeOfDayRecord obj, bool iterateNestedRecords = true)
-        {
-            foreach (var item in base.EnumerateListedAssetLinks(obj, iterateNestedRecords))
-            {
-                yield return item;
-            }
-            foreach (var item in obj.Components.WhereCastable<IAComponentGetter, IAssetLinkContainer>()
-                .SelectMany((f) => f.EnumerateListedAssetLinks(iterateNestedRecords)))
-            {
-                yield return item;
-            }
-            yield break;
-        }
-        
-        public void RemapAssetLinks(
-            ITimeOfDayRecord obj,
-            IReadOnlyDictionary<IAssetLinkGetter, string> mapping,
-            IAssetLinkCache? linkCache,
-            AssetLinkQuery queryCategories)
-        {
-            base.RemapAssetLinks(obj, mapping, linkCache, queryCategories);
-            obj.Components.ForEach(x => x.RemapAssetLinks(mapping, queryCategories, linkCache));
         }
         
         #endregion
         
         #region Binary Translation
         public virtual void CopyInFromBinary(
-            ITimeOfDayRecordInternal item,
+            IParticleSystemDefineCollectionInternal item,
             MutagenFrame frame,
             TypedParseParams translationParams)
         {
-            PluginUtilityTranslation.MajorRecordParse<ITimeOfDayRecordInternal>(
+            PluginUtilityTranslation.MajorRecordParse<IParticleSystemDefineCollectionInternal>(
                 record: item,
                 frame: frame,
                 translationParams: translationParams,
-                fillStructs: TimeOfDayRecordBinaryCreateTranslation.FillBinaryStructs,
-                fillTyped: TimeOfDayRecordBinaryCreateTranslation.FillBinaryRecordTypes);
+                fillStructs: ParticleSystemDefineCollectionBinaryCreateTranslation.FillBinaryStructs,
+                fillTyped: ParticleSystemDefineCollectionBinaryCreateTranslation.FillBinaryRecordTypes);
         }
         
         public override void CopyInFromBinary(
@@ -977,7 +829,7 @@ namespace Mutagen.Bethesda.Starfield
             TypedParseParams translationParams)
         {
             CopyInFromBinary(
-                item: (TimeOfDayRecord)item,
+                item: (ParticleSystemDefineCollection)item,
                 frame: frame,
                 translationParams: translationParams);
         }
@@ -988,7 +840,7 @@ namespace Mutagen.Bethesda.Starfield
             TypedParseParams translationParams)
         {
             CopyInFromBinary(
-                item: (TimeOfDayRecord)item,
+                item: (ParticleSystemDefineCollection)item,
                 frame: frame,
                 translationParams: translationParams);
         }
@@ -996,17 +848,17 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         
     }
-    internal partial class TimeOfDayRecordCommon : StarfieldMajorRecordCommon
+    internal partial class ParticleSystemDefineCollectionCommon : StarfieldMajorRecordCommon
     {
-        public new static readonly TimeOfDayRecordCommon Instance = new TimeOfDayRecordCommon();
+        public new static readonly ParticleSystemDefineCollectionCommon Instance = new ParticleSystemDefineCollectionCommon();
 
-        public TimeOfDayRecord.Mask<bool> GetEqualsMask(
-            ITimeOfDayRecordGetter item,
-            ITimeOfDayRecordGetter rhs,
+        public ParticleSystemDefineCollection.Mask<bool> GetEqualsMask(
+            IParticleSystemDefineCollectionGetter item,
+            IParticleSystemDefineCollectionGetter rhs,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            var ret = new TimeOfDayRecord.Mask<bool>(false);
-            ((TimeOfDayRecordCommon)((ITimeOfDayRecordGetter)item).CommonInstance()!).FillEqualsMask(
+            var ret = new ParticleSystemDefineCollection.Mask<bool>(false);
+            ((ParticleSystemDefineCollectionCommon)((IParticleSystemDefineCollectionGetter)item).CommonInstance()!).FillEqualsMask(
                 item: item,
                 rhs: rhs,
                 ret: ret,
@@ -1015,15 +867,11 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         public void FillEqualsMask(
-            ITimeOfDayRecordGetter item,
-            ITimeOfDayRecordGetter rhs,
-            TimeOfDayRecord.Mask<bool> ret,
+            IParticleSystemDefineCollectionGetter item,
+            IParticleSystemDefineCollectionGetter rhs,
+            ParticleSystemDefineCollection.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Components = item.Components.CollectionEqualsHelper(
-                rhs.Components,
-                (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
-                include);
             ret.Reflection = EqualsMaskHelper.EqualsHelper(
                 item.Reflection,
                 rhs.Reflection,
@@ -1033,9 +881,9 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         public string Print(
-            ITimeOfDayRecordGetter item,
+            IParticleSystemDefineCollectionGetter item,
             string? name = null,
-            TimeOfDayRecord.Mask<bool>? printMask = null)
+            ParticleSystemDefineCollection.Mask<bool>? printMask = null)
         {
             var sb = new StructuredStringBuilder();
             Print(
@@ -1047,18 +895,18 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         public void Print(
-            ITimeOfDayRecordGetter item,
+            IParticleSystemDefineCollectionGetter item,
             StructuredStringBuilder sb,
             string? name = null,
-            TimeOfDayRecord.Mask<bool>? printMask = null)
+            ParticleSystemDefineCollection.Mask<bool>? printMask = null)
         {
             if (name == null)
             {
-                sb.AppendLine($"TimeOfDayRecord =>");
+                sb.AppendLine($"ParticleSystemDefineCollection =>");
             }
             else
             {
-                sb.AppendLine($"{name} (TimeOfDayRecord) =>");
+                sb.AppendLine($"{name} (ParticleSystemDefineCollection) =>");
             }
             using (sb.Brace())
             {
@@ -1070,28 +918,14 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         protected static void ToStringFields(
-            ITimeOfDayRecordGetter item,
+            IParticleSystemDefineCollectionGetter item,
             StructuredStringBuilder sb,
-            TimeOfDayRecord.Mask<bool>? printMask = null)
+            ParticleSystemDefineCollection.Mask<bool>? printMask = null)
         {
             StarfieldMajorRecordCommon.ToStringFields(
                 item: item,
                 sb: sb,
                 printMask: printMask);
-            if (printMask?.Components?.Overall ?? true)
-            {
-                sb.AppendLine("Components =>");
-                using (sb.Brace())
-                {
-                    foreach (var subItem in item.Components)
-                    {
-                        using (sb.Brace())
-                        {
-                            subItem?.Print(sb, "Item");
-                        }
-                    }
-                }
-            }
             if ((printMask?.Reflection?.Overall ?? true)
                 && item.Reflection is {} ReflectionItem)
             {
@@ -1099,49 +933,49 @@ namespace Mutagen.Bethesda.Starfield
             }
         }
         
-        public static TimeOfDayRecord_FieldIndex ConvertFieldIndex(StarfieldMajorRecord_FieldIndex index)
+        public static ParticleSystemDefineCollection_FieldIndex ConvertFieldIndex(StarfieldMajorRecord_FieldIndex index)
         {
             switch (index)
             {
                 case StarfieldMajorRecord_FieldIndex.MajorRecordFlagsRaw:
-                    return (TimeOfDayRecord_FieldIndex)((int)index);
+                    return (ParticleSystemDefineCollection_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormKey:
-                    return (TimeOfDayRecord_FieldIndex)((int)index);
+                    return (ParticleSystemDefineCollection_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.VersionControl:
-                    return (TimeOfDayRecord_FieldIndex)((int)index);
+                    return (ParticleSystemDefineCollection_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.EditorID:
-                    return (TimeOfDayRecord_FieldIndex)((int)index);
+                    return (ParticleSystemDefineCollection_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.UnknownSubrecords:
-                    return (TimeOfDayRecord_FieldIndex)((int)index);
+                    return (ParticleSystemDefineCollection_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (TimeOfDayRecord_FieldIndex)((int)index);
+                    return (ParticleSystemDefineCollection_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.FormVersion:
-                    return (TimeOfDayRecord_FieldIndex)((int)index);
+                    return (ParticleSystemDefineCollection_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.Version2:
-                    return (TimeOfDayRecord_FieldIndex)((int)index);
+                    return (ParticleSystemDefineCollection_FieldIndex)((int)index);
                 case StarfieldMajorRecord_FieldIndex.StarfieldMajorRecordFlags:
-                    return (TimeOfDayRecord_FieldIndex)((int)index);
+                    return (ParticleSystemDefineCollection_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");
             }
         }
         
-        public static new TimeOfDayRecord_FieldIndex ConvertFieldIndex(MajorRecord_FieldIndex index)
+        public static new ParticleSystemDefineCollection_FieldIndex ConvertFieldIndex(MajorRecord_FieldIndex index)
         {
             switch (index)
             {
                 case MajorRecord_FieldIndex.MajorRecordFlagsRaw:
-                    return (TimeOfDayRecord_FieldIndex)((int)index);
+                    return (ParticleSystemDefineCollection_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.FormKey:
-                    return (TimeOfDayRecord_FieldIndex)((int)index);
+                    return (ParticleSystemDefineCollection_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.VersionControl:
-                    return (TimeOfDayRecord_FieldIndex)((int)index);
+                    return (ParticleSystemDefineCollection_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.EditorID:
-                    return (TimeOfDayRecord_FieldIndex)((int)index);
+                    return (ParticleSystemDefineCollection_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.UnknownSubrecords:
-                    return (TimeOfDayRecord_FieldIndex)((int)index);
+                    return (ParticleSystemDefineCollection_FieldIndex)((int)index);
                 case MajorRecord_FieldIndex.UnknownSubrecordsSource:
-                    return (TimeOfDayRecord_FieldIndex)((int)index);
+                    return (ParticleSystemDefineCollection_FieldIndex)((int)index);
                 default:
                     throw new ArgumentException($"Index is out of range: {index.ToStringFast()}");
             }
@@ -1149,21 +983,17 @@ namespace Mutagen.Bethesda.Starfield
         
         #region Equals and Hash
         public virtual bool Equals(
-            ITimeOfDayRecordGetter? lhs,
-            ITimeOfDayRecordGetter? rhs,
+            IParticleSystemDefineCollectionGetter? lhs,
+            IParticleSystemDefineCollectionGetter? rhs,
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IStarfieldMajorRecordGetter)lhs, (IStarfieldMajorRecordGetter)rhs, equalsMask)) return false;
-            if ((equalsMask?.GetShouldTranslate((int)TimeOfDayRecord_FieldIndex.Components) ?? true))
-            {
-                if (!lhs.Components.SequenceEqual(rhs.Components, (l, r) => ((AComponentCommon)((IAComponentGetter)l).CommonInstance()!).Equals(l, r, equalsMask?.GetSubCrystal((int)TimeOfDayRecord_FieldIndex.Components)))) return false;
-            }
-            if ((equalsMask?.GetShouldTranslate((int)TimeOfDayRecord_FieldIndex.Reflection) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ParticleSystemDefineCollection_FieldIndex.Reflection) ?? true))
             {
                 if (EqualsMaskHelper.RefEquality(lhs.Reflection, rhs.Reflection, out var lhsReflection, out var rhsReflection, out var isReflectionEqual))
                 {
-                    if (!((ReflectionCommon)((IReflectionGetter)lhsReflection).CommonInstance()!).Equals(lhsReflection, rhsReflection, equalsMask?.GetSubCrystal((int)TimeOfDayRecord_FieldIndex.Reflection))) return false;
+                    if (!((ReflectionCommon)((IReflectionGetter)lhsReflection).CommonInstance()!).Equals(lhsReflection, rhsReflection, equalsMask?.GetSubCrystal((int)ParticleSystemDefineCollection_FieldIndex.Reflection))) return false;
                 }
                 else if (!isReflectionEqual) return false;
             }
@@ -1176,8 +1006,8 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             return Equals(
-                lhs: (ITimeOfDayRecordGetter?)lhs,
-                rhs: rhs as ITimeOfDayRecordGetter,
+                lhs: (IParticleSystemDefineCollectionGetter?)lhs,
+                rhs: rhs as IParticleSystemDefineCollectionGetter,
                 equalsMask: equalsMask);
         }
         
@@ -1187,18 +1017,14 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             return Equals(
-                lhs: (ITimeOfDayRecordGetter?)lhs,
-                rhs: rhs as ITimeOfDayRecordGetter,
+                lhs: (IParticleSystemDefineCollectionGetter?)lhs,
+                rhs: rhs as IParticleSystemDefineCollectionGetter,
                 equalsMask: equalsMask);
         }
         
-        public virtual int GetHashCode(ITimeOfDayRecordGetter item)
+        public virtual int GetHashCode(IParticleSystemDefineCollectionGetter item)
         {
             var hash = new HashCode();
-            foreach (var subItem in item.Components)
-            {
-                hash.Add(subItem);
-            }
             if (item.Reflection is {} Reflectionitem)
             {
                 hash.Add(Reflectionitem);
@@ -1209,12 +1035,12 @@ namespace Mutagen.Bethesda.Starfield
         
         public override int GetHashCode(IStarfieldMajorRecordGetter item)
         {
-            return GetHashCode(item: (ITimeOfDayRecordGetter)item);
+            return GetHashCode(item: (IParticleSystemDefineCollectionGetter)item);
         }
         
         public override int GetHashCode(IMajorRecordGetter item)
         {
-            return GetHashCode(item: (ITimeOfDayRecordGetter)item);
+            return GetHashCode(item: (IParticleSystemDefineCollectionGetter)item);
         }
         
         #endregion
@@ -1222,20 +1048,15 @@ namespace Mutagen.Bethesda.Starfield
         
         public override object GetNew()
         {
-            return TimeOfDayRecord.GetNew();
+            return ParticleSystemDefineCollection.GetNew();
         }
         
         #region Mutagen
-        public IEnumerable<IFormLinkGetter> EnumerateFormLinks(ITimeOfDayRecordGetter obj, bool iterateNestedRecords = true)
+        public IEnumerable<IFormLinkGetter> EnumerateFormLinks(IParticleSystemDefineCollectionGetter obj, bool iterateNestedRecords = true)
         {
             foreach (var item in base.EnumerateFormLinks(obj, iterateNestedRecords))
             {
                 yield return item;
-            }
-            foreach (var item in obj.Components.WhereCastable<IAComponentGetter, IFormLinkContainerGetter>()
-                .SelectMany((f) => f.EnumerateFormLinks(iterateNestedRecords)))
-            {
-                yield return FormLinkInformation.Factory(item);
             }
             if (obj.Reflection is {} ReflectionItems)
             {
@@ -1247,27 +1068,13 @@ namespace Mutagen.Bethesda.Starfield
             yield break;
         }
         
-        public IEnumerable<IAssetLinkGetter> EnumerateAssetLinks(ITimeOfDayRecordGetter obj, AssetLinkQuery queryCategories, IAssetLinkCache? linkCache, Type? assetType, bool iterateNestedRecords = true)
-        {
-            foreach (var item in base.EnumerateAssetLinks(obj, queryCategories, linkCache, assetType, iterateNestedRecords))
-            {
-                yield return item;
-            }
-            foreach (var item in obj.Components.WhereCastable<IAComponentGetter, IAssetLinkContainerGetter>()
-                .SelectMany((f) => f.EnumerateAssetLinks(queryCategories: queryCategories, linkCache: linkCache, assetType: assetType, iterateNestedRecords: iterateNestedRecords)))
-            {
-                yield return item;
-            }
-            yield break;
-        }
-        
         #region Duplicate
-        public TimeOfDayRecord Duplicate(
-            ITimeOfDayRecordGetter item,
+        public ParticleSystemDefineCollection Duplicate(
+            IParticleSystemDefineCollectionGetter item,
             FormKey formKey,
             TranslationCrystal? copyMask)
         {
-            var newRec = new TimeOfDayRecord(formKey, item.FormVersion);
+            var newRec = new ParticleSystemDefineCollection(formKey, item.FormVersion);
             newRec.DeepCopyIn(item, default(ErrorMaskBuilder?), copyMask);
             return newRec;
         }
@@ -1278,7 +1085,7 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask)
         {
             return this.Duplicate(
-                item: (ITimeOfDayRecordGetter)item,
+                item: (IParticleSystemDefineCollectionGetter)item,
                 formKey: formKey,
                 copyMask: copyMask);
         }
@@ -1289,7 +1096,7 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask)
         {
             return this.Duplicate(
-                item: (ITimeOfDayRecordGetter)item,
+                item: (IParticleSystemDefineCollectionGetter)item,
                 formKey: formKey,
                 copyMask: copyMask);
         }
@@ -1299,14 +1106,14 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         
     }
-    internal partial class TimeOfDayRecordSetterTranslationCommon : StarfieldMajorRecordSetterTranslationCommon
+    internal partial class ParticleSystemDefineCollectionSetterTranslationCommon : StarfieldMajorRecordSetterTranslationCommon
     {
-        public new static readonly TimeOfDayRecordSetterTranslationCommon Instance = new TimeOfDayRecordSetterTranslationCommon();
+        public new static readonly ParticleSystemDefineCollectionSetterTranslationCommon Instance = new ParticleSystemDefineCollectionSetterTranslationCommon();
 
         #region DeepCopyIn
         public void DeepCopyIn(
-            ITimeOfDayRecordInternal item,
-            ITimeOfDayRecordGetter rhs,
+            IParticleSystemDefineCollectionInternal item,
+            IParticleSystemDefineCollectionGetter rhs,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask,
             bool deepCopy)
@@ -1320,8 +1127,8 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         public void DeepCopyIn(
-            ITimeOfDayRecord item,
-            ITimeOfDayRecordGetter rhs,
+            IParticleSystemDefineCollection item,
+            IParticleSystemDefineCollectionGetter rhs,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask,
             bool deepCopy)
@@ -1342,8 +1149,8 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         private void DeepCopyInInternal(
-            ITimeOfDayRecord item,
-            ITimeOfDayRecordGetter rhs,
+            IParticleSystemDefineCollection item,
+            IParticleSystemDefineCollectionGetter rhs,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask,
             bool deepCopy)
@@ -1354,40 +1161,16 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
-            if ((copyMask?.GetShouldTranslate((int)TimeOfDayRecord_FieldIndex.Components) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ParticleSystemDefineCollection_FieldIndex.Reflection) ?? true))
             {
-                errorMask?.PushIndex((int)TimeOfDayRecord_FieldIndex.Components);
-                try
-                {
-                    item.Components.SetTo(
-                        rhs.Components
-                        .Select(r =>
-                        {
-                            return r.DeepCopy(
-                                errorMask: errorMask,
-                                default(TranslationCrystal));
-                        }));
-                }
-                catch (Exception ex)
-                when (errorMask != null)
-                {
-                    errorMask.ReportException(ex);
-                }
-                finally
-                {
-                    errorMask?.PopIndex();
-                }
-            }
-            if ((copyMask?.GetShouldTranslate((int)TimeOfDayRecord_FieldIndex.Reflection) ?? true))
-            {
-                errorMask?.PushIndex((int)TimeOfDayRecord_FieldIndex.Reflection);
+                errorMask?.PushIndex((int)ParticleSystemDefineCollection_FieldIndex.Reflection);
                 try
                 {
                     if(rhs.Reflection is {} rhsReflection)
                     {
                         item.Reflection = rhsReflection.DeepCopy(
                             errorMask: errorMask,
-                            copyMask?.GetSubCrystal((int)TimeOfDayRecord_FieldIndex.Reflection));
+                            copyMask?.GetSubCrystal((int)ParticleSystemDefineCollection_FieldIndex.Reflection));
                     }
                     else
                     {
@@ -1413,8 +1196,8 @@ namespace Mutagen.Bethesda.Starfield
         }
         
         partial void DeepCopyInCustom(
-            ITimeOfDayRecord item,
-            ITimeOfDayRecordGetter rhs,
+            IParticleSystemDefineCollection item,
+            IParticleSystemDefineCollectionGetter rhs,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask,
             bool deepCopy);
@@ -1426,8 +1209,8 @@ namespace Mutagen.Bethesda.Starfield
             bool deepCopy)
         {
             this.DeepCopyIn(
-                item: (ITimeOfDayRecordInternal)item,
-                rhs: (ITimeOfDayRecordGetter)rhs,
+                item: (IParticleSystemDefineCollectionInternal)item,
+                rhs: (IParticleSystemDefineCollectionGetter)rhs,
                 errorMask: errorMask,
                 copyMask: copyMask,
                 deepCopy: deepCopy);
@@ -1441,8 +1224,8 @@ namespace Mutagen.Bethesda.Starfield
             bool deepCopy)
         {
             this.DeepCopyIn(
-                item: (ITimeOfDayRecord)item,
-                rhs: (ITimeOfDayRecordGetter)rhs,
+                item: (IParticleSystemDefineCollection)item,
+                rhs: (IParticleSystemDefineCollectionGetter)rhs,
                 errorMask: errorMask,
                 copyMask: copyMask,
                 deepCopy: deepCopy);
@@ -1456,8 +1239,8 @@ namespace Mutagen.Bethesda.Starfield
             bool deepCopy)
         {
             this.DeepCopyIn(
-                item: (ITimeOfDayRecordInternal)item,
-                rhs: (ITimeOfDayRecordGetter)rhs,
+                item: (IParticleSystemDefineCollectionInternal)item,
+                rhs: (IParticleSystemDefineCollectionGetter)rhs,
                 errorMask: errorMask,
                 copyMask: copyMask,
                 deepCopy: deepCopy);
@@ -1471,8 +1254,8 @@ namespace Mutagen.Bethesda.Starfield
             bool deepCopy)
         {
             this.DeepCopyIn(
-                item: (ITimeOfDayRecord)item,
-                rhs: (ITimeOfDayRecordGetter)rhs,
+                item: (IParticleSystemDefineCollection)item,
+                rhs: (IParticleSystemDefineCollectionGetter)rhs,
                 errorMask: errorMask,
                 copyMask: copyMask,
                 deepCopy: deepCopy);
@@ -1480,12 +1263,12 @@ namespace Mutagen.Bethesda.Starfield
         
         #endregion
         
-        public TimeOfDayRecord DeepCopy(
-            ITimeOfDayRecordGetter item,
-            TimeOfDayRecord.TranslationMask? copyMask = null)
+        public ParticleSystemDefineCollection DeepCopy(
+            IParticleSystemDefineCollectionGetter item,
+            ParticleSystemDefineCollection.TranslationMask? copyMask = null)
         {
-            TimeOfDayRecord ret = (TimeOfDayRecord)((TimeOfDayRecordCommon)((ITimeOfDayRecordGetter)item).CommonInstance()!).GetNew();
-            ((TimeOfDayRecordSetterTranslationCommon)((ITimeOfDayRecordGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
+            ParticleSystemDefineCollection ret = (ParticleSystemDefineCollection)((ParticleSystemDefineCollectionCommon)((IParticleSystemDefineCollectionGetter)item).CommonInstance()!).GetNew();
+            ((ParticleSystemDefineCollectionSetterTranslationCommon)((IParticleSystemDefineCollectionGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: ret,
                 rhs: item,
                 errorMask: null,
@@ -1494,30 +1277,30 @@ namespace Mutagen.Bethesda.Starfield
             return ret;
         }
         
-        public TimeOfDayRecord DeepCopy(
-            ITimeOfDayRecordGetter item,
-            out TimeOfDayRecord.ErrorMask errorMask,
-            TimeOfDayRecord.TranslationMask? copyMask = null)
+        public ParticleSystemDefineCollection DeepCopy(
+            IParticleSystemDefineCollectionGetter item,
+            out ParticleSystemDefineCollection.ErrorMask errorMask,
+            ParticleSystemDefineCollection.TranslationMask? copyMask = null)
         {
             var errorMaskBuilder = new ErrorMaskBuilder();
-            TimeOfDayRecord ret = (TimeOfDayRecord)((TimeOfDayRecordCommon)((ITimeOfDayRecordGetter)item).CommonInstance()!).GetNew();
-            ((TimeOfDayRecordSetterTranslationCommon)((ITimeOfDayRecordGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
+            ParticleSystemDefineCollection ret = (ParticleSystemDefineCollection)((ParticleSystemDefineCollectionCommon)((IParticleSystemDefineCollectionGetter)item).CommonInstance()!).GetNew();
+            ((ParticleSystemDefineCollectionSetterTranslationCommon)((IParticleSystemDefineCollectionGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
                 ret,
                 item,
                 errorMask: errorMaskBuilder,
                 copyMask: copyMask?.GetCrystal(),
                 deepCopy: true);
-            errorMask = TimeOfDayRecord.ErrorMask.Factory(errorMaskBuilder);
+            errorMask = ParticleSystemDefineCollection.ErrorMask.Factory(errorMaskBuilder);
             return ret;
         }
         
-        public TimeOfDayRecord DeepCopy(
-            ITimeOfDayRecordGetter item,
+        public ParticleSystemDefineCollection DeepCopy(
+            IParticleSystemDefineCollectionGetter item,
             ErrorMaskBuilder? errorMask,
             TranslationCrystal? copyMask = null)
         {
-            TimeOfDayRecord ret = (TimeOfDayRecord)((TimeOfDayRecordCommon)((ITimeOfDayRecordGetter)item).CommonInstance()!).GetNew();
-            ((TimeOfDayRecordSetterTranslationCommon)((ITimeOfDayRecordGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
+            ParticleSystemDefineCollection ret = (ParticleSystemDefineCollection)((ParticleSystemDefineCollectionCommon)((IParticleSystemDefineCollectionGetter)item).CommonInstance()!).GetNew();
+            ((ParticleSystemDefineCollectionSetterTranslationCommon)((IParticleSystemDefineCollectionGetter)ret).CommonSetterTranslationInstance()!).DeepCopyIn(
                 item: ret,
                 rhs: item,
                 errorMask: errorMask,
@@ -1533,21 +1316,21 @@ namespace Mutagen.Bethesda.Starfield
 
 namespace Mutagen.Bethesda.Starfield
 {
-    public partial class TimeOfDayRecord
+    public partial class ParticleSystemDefineCollection
     {
         #region Common Routing
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ILoquiRegistration ILoquiObject.Registration => TimeOfDayRecord_Registration.Instance;
-        public new static ILoquiRegistration StaticRegistration => TimeOfDayRecord_Registration.Instance;
+        ILoquiRegistration ILoquiObject.Registration => ParticleSystemDefineCollection_Registration.Instance;
+        public new static ILoquiRegistration StaticRegistration => ParticleSystemDefineCollection_Registration.Instance;
         [DebuggerStepThrough]
-        protected override object CommonInstance() => TimeOfDayRecordCommon.Instance;
+        protected override object CommonInstance() => ParticleSystemDefineCollectionCommon.Instance;
         [DebuggerStepThrough]
         protected override object CommonSetterInstance()
         {
-            return TimeOfDayRecordSetterCommon.Instance;
+            return ParticleSystemDefineCollectionSetterCommon.Instance;
         }
         [DebuggerStepThrough]
-        protected override object CommonSetterTranslationInstance() => TimeOfDayRecordSetterTranslationCommon.Instance;
+        protected override object CommonSetterTranslationInstance() => ParticleSystemDefineCollectionSetterTranslationCommon.Instance;
 
         #endregion
 
@@ -1558,14 +1341,14 @@ namespace Mutagen.Bethesda.Starfield
 #region Binary Translation
 namespace Mutagen.Bethesda.Starfield
 {
-    public partial class TimeOfDayRecordBinaryWriteTranslation :
+    public partial class ParticleSystemDefineCollectionBinaryWriteTranslation :
         StarfieldMajorRecordBinaryWriteTranslation,
         IBinaryWriteTranslator
     {
-        public new static readonly TimeOfDayRecordBinaryWriteTranslation Instance = new();
+        public new static readonly ParticleSystemDefineCollectionBinaryWriteTranslation Instance = new();
 
         public static void WriteRecordTypes(
-            ITimeOfDayRecordGetter item,
+            IParticleSystemDefineCollectionGetter item,
             MutagenWriter writer,
             TypedWriteParams translationParams)
         {
@@ -1573,17 +1356,6 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 writer: writer,
                 translationParams: translationParams);
-            Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IAComponentGetter>.Instance.Write(
-                writer: writer,
-                items: item.Components,
-                transl: (MutagenWriter subWriter, IAComponentGetter subItem, TypedWriteParams conv) =>
-                {
-                    var Item = subItem;
-                    ((AComponentBinaryWriteTranslation)((IBinaryItem)Item).BinaryWriteTranslator).Write(
-                        item: Item,
-                        writer: subWriter,
-                        translationParams: conv);
-                });
             if (item.Reflection is {} ReflectionItem)
             {
                 ((ReflectionBinaryWriteTranslation)((IBinaryItem)ReflectionItem).BinaryWriteTranslator).Write(
@@ -1595,14 +1367,14 @@ namespace Mutagen.Bethesda.Starfield
 
         public void Write(
             MutagenWriter writer,
-            ITimeOfDayRecordGetter item,
+            IParticleSystemDefineCollectionGetter item,
             TypedWriteParams translationParams)
         {
             PluginUtilityTranslation.WriteMajorRecord(
                 writer: writer,
                 item: item,
                 translationParams: translationParams,
-                type: RecordTypes.TODD,
+                type: RecordTypes.PSDC,
                 writeEmbedded: StarfieldMajorRecordBinaryWriteTranslation.WriteEmbedded,
                 writeRecordTypes: WriteRecordTypes);
         }
@@ -1613,7 +1385,7 @@ namespace Mutagen.Bethesda.Starfield
             TypedWriteParams translationParams = default)
         {
             Write(
-                item: (ITimeOfDayRecordGetter)item,
+                item: (IParticleSystemDefineCollectionGetter)item,
                 writer: writer,
                 translationParams: translationParams);
         }
@@ -1624,7 +1396,7 @@ namespace Mutagen.Bethesda.Starfield
             TypedWriteParams translationParams)
         {
             Write(
-                item: (ITimeOfDayRecordGetter)item,
+                item: (IParticleSystemDefineCollectionGetter)item,
                 writer: writer,
                 translationParams: translationParams);
         }
@@ -1635,20 +1407,20 @@ namespace Mutagen.Bethesda.Starfield
             TypedWriteParams translationParams)
         {
             Write(
-                item: (ITimeOfDayRecordGetter)item,
+                item: (IParticleSystemDefineCollectionGetter)item,
                 writer: writer,
                 translationParams: translationParams);
         }
 
     }
 
-    internal partial class TimeOfDayRecordBinaryCreateTranslation : StarfieldMajorRecordBinaryCreateTranslation
+    internal partial class ParticleSystemDefineCollectionBinaryCreateTranslation : StarfieldMajorRecordBinaryCreateTranslation
     {
-        public new static readonly TimeOfDayRecordBinaryCreateTranslation Instance = new TimeOfDayRecordBinaryCreateTranslation();
+        public new static readonly ParticleSystemDefineCollectionBinaryCreateTranslation Instance = new ParticleSystemDefineCollectionBinaryCreateTranslation();
 
-        public override RecordType RecordType => RecordTypes.TODD;
+        public override RecordType RecordType => RecordTypes.PSDC;
         public static ParseResult FillBinaryRecordTypes(
-            ITimeOfDayRecordInternal item,
+            IParticleSystemDefineCollectionInternal item,
             MutagenFrame frame,
             PreviousParse lastParsed,
             Dictionary<RecordType, int>? recordParseCount,
@@ -1659,22 +1431,12 @@ namespace Mutagen.Bethesda.Starfield
             nextRecordType = translationParams.ConvertToStandard(nextRecordType);
             switch (nextRecordType.TypeInt)
             {
-                case RecordTypeInts.BFCB:
-                {
-                    item.Components.SetTo(
-                        Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AComponent>.Instance.Parse(
-                            reader: frame,
-                            triggeringRecord: AComponent_Registration.TriggerSpecs,
-                            translationParams: translationParams,
-                            transl: AComponent.TryCreateFromBinary));
-                    return (int)TimeOfDayRecord_FieldIndex.Components;
-                }
                 case RecordTypeInts.REFL:
                 {
                     item.Reflection = Mutagen.Bethesda.Starfield.Reflection.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
-                    return (int)TimeOfDayRecord_FieldIndex.Reflection;
+                    return (int)ParticleSystemDefineCollection_FieldIndex.Reflection;
                 }
                 case RecordTypeInts.XXXX:
                 {
@@ -1699,7 +1461,7 @@ namespace Mutagen.Bethesda.Starfield
 namespace Mutagen.Bethesda.Starfield
 {
     #region Binary Write Mixins
-    public static class TimeOfDayRecordBinaryTranslationMixIn
+    public static class ParticleSystemDefineCollectionBinaryTranslationMixIn
     {
     }
     #endregion
@@ -1708,40 +1470,38 @@ namespace Mutagen.Bethesda.Starfield
 }
 namespace Mutagen.Bethesda.Starfield
 {
-    internal partial class TimeOfDayRecordBinaryOverlay :
+    internal partial class ParticleSystemDefineCollectionBinaryOverlay :
         StarfieldMajorRecordBinaryOverlay,
-        ITimeOfDayRecordGetter
+        IParticleSystemDefineCollectionGetter
     {
         #region Common Routing
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ILoquiRegistration ILoquiObject.Registration => TimeOfDayRecord_Registration.Instance;
-        public new static ILoquiRegistration StaticRegistration => TimeOfDayRecord_Registration.Instance;
+        ILoquiRegistration ILoquiObject.Registration => ParticleSystemDefineCollection_Registration.Instance;
+        public new static ILoquiRegistration StaticRegistration => ParticleSystemDefineCollection_Registration.Instance;
         [DebuggerStepThrough]
-        protected override object CommonInstance() => TimeOfDayRecordCommon.Instance;
+        protected override object CommonInstance() => ParticleSystemDefineCollectionCommon.Instance;
         [DebuggerStepThrough]
-        protected override object CommonSetterTranslationInstance() => TimeOfDayRecordSetterTranslationCommon.Instance;
+        protected override object CommonSetterTranslationInstance() => ParticleSystemDefineCollectionSetterTranslationCommon.Instance;
 
         #endregion
 
         void IPrintable.Print(StructuredStringBuilder sb, string? name) => this.Print(sb, name);
 
-        public override IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => TimeOfDayRecordCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
-        public override IEnumerable<IAssetLinkGetter> EnumerateAssetLinks(AssetLinkQuery queryCategories, IAssetLinkCache? linkCache = null, Type? assetType = null, bool iterateNestedRecords = true) => TimeOfDayRecordCommon.Instance.EnumerateAssetLinks(this, queryCategories, linkCache, assetType, iterateNestedRecords);
+        public override IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => ParticleSystemDefineCollectionCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        protected override object BinaryWriteTranslator => TimeOfDayRecordBinaryWriteTranslation.Instance;
+        protected override object BinaryWriteTranslator => ParticleSystemDefineCollectionBinaryWriteTranslation.Instance;
         void IBinaryItem.WriteToBinary(
             MutagenWriter writer,
             TypedWriteParams translationParams = default)
         {
-            ((TimeOfDayRecordBinaryWriteTranslation)this.BinaryWriteTranslator).Write(
+            ((ParticleSystemDefineCollectionBinaryWriteTranslation)this.BinaryWriteTranslator).Write(
                 item: this,
                 writer: writer,
                 translationParams: translationParams);
         }
-        protected override Type LinkType => typeof(ITimeOfDayRecordGetter);
+        protected override Type LinkType => typeof(IParticleSystemDefineCollectionGetter);
 
 
-        public IReadOnlyList<IAComponentGetter> Components { get; private set; } = [];
         #region Reflection
         private int? _ReflectionLengthOverride;
         private RangeInt32? _ReflectionLocation;
@@ -1753,7 +1513,7 @@ namespace Mutagen.Bethesda.Starfield
             int offset);
 
         partial void CustomCtor();
-        protected TimeOfDayRecordBinaryOverlay(
+        protected ParticleSystemDefineCollectionBinaryOverlay(
             MemoryPair memoryPair,
             BinaryOverlayFactoryPackage package)
             : base(
@@ -1763,7 +1523,7 @@ namespace Mutagen.Bethesda.Starfield
             this.CustomCtor();
         }
 
-        public static ITimeOfDayRecordGetter TimeOfDayRecordFactory(
+        public static IParticleSystemDefineCollectionGetter ParticleSystemDefineCollectionFactory(
             OverlayStream stream,
             BinaryOverlayFactoryPackage package,
             TypedParseParams translationParams = default)
@@ -1775,7 +1535,7 @@ namespace Mutagen.Bethesda.Starfield
                 memoryPair: out var memoryPair,
                 offset: out var offset,
                 finalPos: out var finalPos);
-            var ret = new TimeOfDayRecordBinaryOverlay(
+            var ret = new ParticleSystemDefineCollectionBinaryOverlay(
                 memoryPair: memoryPair,
                 package: package);
             ret._package.FormVersion = ret;
@@ -1793,12 +1553,12 @@ namespace Mutagen.Bethesda.Starfield
             return ret;
         }
 
-        public static ITimeOfDayRecordGetter TimeOfDayRecordFactory(
+        public static IParticleSystemDefineCollectionGetter ParticleSystemDefineCollectionFactory(
             ReadOnlyMemorySlice<byte> slice,
             BinaryOverlayFactoryPackage package,
             TypedParseParams translationParams = default)
         {
-            return TimeOfDayRecordFactory(
+            return ParticleSystemDefineCollectionFactory(
                 stream: new OverlayStream(slice, package),
                 package: package,
                 translationParams: translationParams);
@@ -1816,15 +1576,6 @@ namespace Mutagen.Bethesda.Starfield
             type = translationParams.ConvertToStandard(type);
             switch (type.TypeInt)
             {
-                case RecordTypeInts.BFCB:
-                {
-                    this.Components = this.ParseRepeatedTypelessSubrecord<IAComponentGetter>(
-                        stream: stream,
-                        translationParams: translationParams,
-                        trigger: AComponent_Registration.TriggerSpecs,
-                        factory: AComponentBinaryOverlay.AComponentFactory);
-                    return (int)TimeOfDayRecord_FieldIndex.Components;
-                }
                 case RecordTypeInts.REFL:
                 {
                     _ReflectionLocation = new RangeInt32((stream.Position - offset), finalPos - offset);
@@ -1833,7 +1584,7 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         stream.Position += lastParsed.LengthOverride.Value;
                     }
-                    return (int)TimeOfDayRecord_FieldIndex.Reflection;
+                    return (int)ParticleSystemDefineCollection_FieldIndex.Reflection;
                 }
                 case RecordTypeInts.XXXX:
                 {
@@ -1857,7 +1608,7 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             string? name = null)
         {
-            TimeOfDayRecordMixIn.Print(
+            ParticleSystemDefineCollectionMixIn.Print(
                 item: this,
                 sb: sb,
                 name: name);
@@ -1867,7 +1618,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public override string ToString()
         {
-            return MajorRecordPrinter<TimeOfDayRecord>.ToString(this);
+            return MajorRecordPrinter<ParticleSystemDefineCollection>.ToString(this);
         }
 
         #region Equals and Hash
@@ -1877,16 +1628,16 @@ namespace Mutagen.Bethesda.Starfield
             {
                 return formLink.Equals(this);
             }
-            if (obj is not ITimeOfDayRecordGetter rhs) return false;
-            return ((TimeOfDayRecordCommon)((ITimeOfDayRecordGetter)this).CommonInstance()!).Equals(this, rhs, equalsMask: null);
+            if (obj is not IParticleSystemDefineCollectionGetter rhs) return false;
+            return ((ParticleSystemDefineCollectionCommon)((IParticleSystemDefineCollectionGetter)this).CommonInstance()!).Equals(this, rhs, equalsMask: null);
         }
 
-        public bool Equals(ITimeOfDayRecordGetter? obj)
+        public bool Equals(IParticleSystemDefineCollectionGetter? obj)
         {
-            return ((TimeOfDayRecordCommon)((ITimeOfDayRecordGetter)this).CommonInstance()!).Equals(this, obj, equalsMask: null);
+            return ((ParticleSystemDefineCollectionCommon)((IParticleSystemDefineCollectionGetter)this).CommonInstance()!).Equals(this, obj, equalsMask: null);
         }
 
-        public override int GetHashCode() => ((TimeOfDayRecordCommon)((ITimeOfDayRecordGetter)this).CommonInstance()!).GetHashCode(this);
+        public override int GetHashCode() => ((ParticleSystemDefineCollectionCommon)((IParticleSystemDefineCollectionGetter)this).CommonInstance()!).GetHashCode(this);
 
         #endregion
 

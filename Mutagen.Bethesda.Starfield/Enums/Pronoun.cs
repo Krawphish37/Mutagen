@@ -2,7 +2,7 @@
 
 public enum Pronoun
 {
-    Unspecified,
+    Unselected,
     HeHim,
     SheHer,
     TheyThem,

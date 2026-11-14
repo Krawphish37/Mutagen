@@ -20,8 +20,8 @@ public static class WwiseGuidMixIn
     }
 
     /// <summary>The start event's GUID in Wwise / xEdit form.</summary>
-    public static string StartWwiseForm(this ISoundReferenceGetter sound) => sound.Start.ToWwiseString();
+    public static string StartWwiseForm(this ISoundReferenceGetter sound) => sound.StartEvent.ToWwiseString();
 
     /// <summary>The stop event's GUID in Wwise / xEdit form.</summary>
-    public static string StopWwiseForm(this ISoundReferenceGetter sound) => sound.Stop.ToWwiseString();
+    public static string StopWwiseForm(this ISoundReferenceGetter sound) => sound.StopEvent.ToWwiseString();
 }

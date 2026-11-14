@@ -54,8 +54,8 @@ namespace Mutagen.Bethesda.Starfield
         #region Slack
         public Single Slack { get; set; } = default(Single);
         #endregion
-        #region Thickness
-        public Single Thickness { get; set; } = default(Single);
+        #region SplineRadius
+        public Single SplineRadius { get; set; } = default(Single);
         #endregion
         #region HalfExtents
         public P3Float HalfExtents { get; set; } = default(P3Float);
@@ -114,7 +114,7 @@ namespace Mutagen.Bethesda.Starfield
             public Mask(TItem initialValue)
             {
                 this.Slack = initialValue;
-                this.Thickness = initialValue;
+                this.SplineRadius = initialValue;
                 this.HalfExtents = initialValue;
                 this.IsWindDetachedEnd = initialValue;
                 this.IsWindDetachedEndUnknown = initialValue;
@@ -122,13 +122,13 @@ namespace Mutagen.Bethesda.Starfield
 
             public Mask(
                 TItem Slack,
-                TItem Thickness,
+                TItem SplineRadius,
                 TItem HalfExtents,
                 TItem IsWindDetachedEnd,
                 TItem IsWindDetachedEndUnknown)
             {
                 this.Slack = Slack;
-                this.Thickness = Thickness;
+                this.SplineRadius = SplineRadius;
                 this.HalfExtents = HalfExtents;
                 this.IsWindDetachedEnd = IsWindDetachedEnd;
                 this.IsWindDetachedEndUnknown = IsWindDetachedEndUnknown;
@@ -144,7 +144,7 @@ namespace Mutagen.Bethesda.Starfield
 
             #region Members
             public TItem Slack;
-            public TItem Thickness;
+            public TItem SplineRadius;
             public TItem HalfExtents;
             public TItem IsWindDetachedEnd;
             public TItem IsWindDetachedEndUnknown;
@@ -161,7 +161,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!object.Equals(this.Slack, rhs.Slack)) return false;
-                if (!object.Equals(this.Thickness, rhs.Thickness)) return false;
+                if (!object.Equals(this.SplineRadius, rhs.SplineRadius)) return false;
                 if (!object.Equals(this.HalfExtents, rhs.HalfExtents)) return false;
                 if (!object.Equals(this.IsWindDetachedEnd, rhs.IsWindDetachedEnd)) return false;
                 if (!object.Equals(this.IsWindDetachedEndUnknown, rhs.IsWindDetachedEndUnknown)) return false;
@@ -171,7 +171,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 var hash = new HashCode();
                 hash.Add(this.Slack);
-                hash.Add(this.Thickness);
+                hash.Add(this.SplineRadius);
                 hash.Add(this.HalfExtents);
                 hash.Add(this.IsWindDetachedEnd);
                 hash.Add(this.IsWindDetachedEndUnknown);
@@ -184,7 +184,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool All(Func<TItem, bool> eval)
             {
                 if (!eval(this.Slack)) return false;
-                if (!eval(this.Thickness)) return false;
+                if (!eval(this.SplineRadius)) return false;
                 if (!eval(this.HalfExtents)) return false;
                 if (!eval(this.IsWindDetachedEnd)) return false;
                 if (!eval(this.IsWindDetachedEndUnknown)) return false;
@@ -196,7 +196,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Any(Func<TItem, bool> eval)
             {
                 if (eval(this.Slack)) return true;
-                if (eval(this.Thickness)) return true;
+                if (eval(this.SplineRadius)) return true;
                 if (eval(this.HalfExtents)) return true;
                 if (eval(this.IsWindDetachedEnd)) return true;
                 if (eval(this.IsWindDetachedEndUnknown)) return true;
@@ -215,7 +215,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 obj.Slack = eval(this.Slack);
-                obj.Thickness = eval(this.Thickness);
+                obj.SplineRadius = eval(this.SplineRadius);
                 obj.HalfExtents = eval(this.HalfExtents);
                 obj.IsWindDetachedEnd = eval(this.IsWindDetachedEnd);
                 obj.IsWindDetachedEndUnknown = eval(this.IsWindDetachedEndUnknown);
@@ -241,9 +241,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Slack, "Slack");
                     }
-                    if (printMask?.Thickness ?? true)
+                    if (printMask?.SplineRadius ?? true)
                     {
-                        sb.AppendItem(Thickness, "Thickness");
+                        sb.AppendItem(SplineRadius, "SplineRadius");
                     }
                     if (printMask?.HalfExtents ?? true)
                     {
@@ -282,7 +282,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
             }
             public Exception? Slack;
-            public Exception? Thickness;
+            public Exception? SplineRadius;
             public Exception? HalfExtents;
             public Exception? IsWindDetachedEnd;
             public Exception? IsWindDetachedEndUnknown;
@@ -296,8 +296,8 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     case PlacedObjectSpline_FieldIndex.Slack:
                         return Slack;
-                    case PlacedObjectSpline_FieldIndex.Thickness:
-                        return Thickness;
+                    case PlacedObjectSpline_FieldIndex.SplineRadius:
+                        return SplineRadius;
                     case PlacedObjectSpline_FieldIndex.HalfExtents:
                         return HalfExtents;
                     case PlacedObjectSpline_FieldIndex.IsWindDetachedEnd:
@@ -317,8 +317,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObjectSpline_FieldIndex.Slack:
                         this.Slack = ex;
                         break;
-                    case PlacedObjectSpline_FieldIndex.Thickness:
-                        this.Thickness = ex;
+                    case PlacedObjectSpline_FieldIndex.SplineRadius:
+                        this.SplineRadius = ex;
                         break;
                     case PlacedObjectSpline_FieldIndex.HalfExtents:
                         this.HalfExtents = ex;
@@ -342,8 +342,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObjectSpline_FieldIndex.Slack:
                         this.Slack = (Exception?)obj;
                         break;
-                    case PlacedObjectSpline_FieldIndex.Thickness:
-                        this.Thickness = (Exception?)obj;
+                    case PlacedObjectSpline_FieldIndex.SplineRadius:
+                        this.SplineRadius = (Exception?)obj;
                         break;
                     case PlacedObjectSpline_FieldIndex.HalfExtents:
                         this.HalfExtents = (Exception?)obj;
@@ -363,7 +363,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (Overall != null) return true;
                 if (Slack != null) return true;
-                if (Thickness != null) return true;
+                if (SplineRadius != null) return true;
                 if (HalfExtents != null) return true;
                 if (IsWindDetachedEnd != null) return true;
                 if (IsWindDetachedEndUnknown != null) return true;
@@ -396,7 +396,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Slack, "Slack");
                 }
                 {
-                    sb.AppendItem(Thickness, "Thickness");
+                    sb.AppendItem(SplineRadius, "SplineRadius");
                 }
                 {
                     sb.AppendItem(HalfExtents, "HalfExtents");
@@ -416,7 +416,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
                 ret.Slack = this.Slack.Combine(rhs.Slack);
-                ret.Thickness = this.Thickness.Combine(rhs.Thickness);
+                ret.SplineRadius = this.SplineRadius.Combine(rhs.SplineRadius);
                 ret.HalfExtents = this.HalfExtents.Combine(rhs.HalfExtents);
                 ret.IsWindDetachedEnd = this.IsWindDetachedEnd.Combine(rhs.IsWindDetachedEnd);
                 ret.IsWindDetachedEndUnknown = this.IsWindDetachedEndUnknown.Combine(rhs.IsWindDetachedEndUnknown);
@@ -444,7 +444,7 @@ namespace Mutagen.Bethesda.Starfield
             public readonly bool DefaultOn;
             public bool OnOverall;
             public bool Slack;
-            public bool Thickness;
+            public bool SplineRadius;
             public bool HalfExtents;
             public bool IsWindDetachedEnd;
             public bool IsWindDetachedEndUnknown;
@@ -458,7 +458,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
                 this.Slack = defaultOn;
-                this.Thickness = defaultOn;
+                this.SplineRadius = defaultOn;
                 this.HalfExtents = defaultOn;
                 this.IsWindDetachedEnd = defaultOn;
                 this.IsWindDetachedEndUnknown = defaultOn;
@@ -478,7 +478,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 ret.Add((Slack, null));
-                ret.Add((Thickness, null));
+                ret.Add((SplineRadius, null));
                 ret.Add((HalfExtents, null));
                 ret.Add((IsWindDetachedEnd, null));
                 ret.Add((IsWindDetachedEndUnknown, null));
@@ -555,7 +555,7 @@ namespace Mutagen.Bethesda.Starfield
         IPlacedObjectSplineGetter
     {
         new Single Slack { get; set; }
-        new Single Thickness { get; set; }
+        new Single SplineRadius { get; set; }
         new P3Float HalfExtents { get; set; }
         new Boolean IsWindDetachedEnd { get; set; }
         new MemorySlice<Byte> IsWindDetachedEndUnknown { get; set; }
@@ -574,7 +574,7 @@ namespace Mutagen.Bethesda.Starfield
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => PlacedObjectSpline_Registration.Instance;
         Single Slack { get; }
-        Single Thickness { get; }
+        Single SplineRadius { get; }
         P3Float HalfExtents { get; }
         Boolean IsWindDetachedEnd { get; }
         ReadOnlyMemorySlice<Byte> IsWindDetachedEndUnknown { get; }
@@ -748,7 +748,7 @@ namespace Mutagen.Bethesda.Starfield
     internal enum PlacedObjectSpline_FieldIndex
     {
         Slack = 0,
-        Thickness = 1,
+        SplineRadius = 1,
         HalfExtents = 2,
         IsWindDetachedEnd = 3,
         IsWindDetachedEndUnknown = 4,
@@ -838,7 +838,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ClearPartial();
             item.Slack = default(Single);
-            item.Thickness = default(Single);
+            item.SplineRadius = default(Single);
             item.HalfExtents = default(P3Float);
             item.IsWindDetachedEnd = default(Boolean);
             item.IsWindDetachedEndUnknown = new byte[3];
@@ -896,7 +896,7 @@ namespace Mutagen.Bethesda.Starfield
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
             ret.Slack = item.Slack.EqualsWithin(rhs.Slack);
-            ret.Thickness = item.Thickness.EqualsWithin(rhs.Thickness);
+            ret.SplineRadius = item.SplineRadius.EqualsWithin(rhs.SplineRadius);
             ret.HalfExtents = item.HalfExtents.Equals(rhs.HalfExtents);
             ret.IsWindDetachedEnd = item.IsWindDetachedEnd == rhs.IsWindDetachedEnd;
             ret.IsWindDetachedEndUnknown = MemoryExtensions.SequenceEqual(item.IsWindDetachedEndUnknown.Span, rhs.IsWindDetachedEndUnknown.Span);
@@ -948,9 +948,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Slack, "Slack");
             }
-            if (printMask?.Thickness ?? true)
+            if (printMask?.SplineRadius ?? true)
             {
-                sb.AppendItem(item.Thickness, "Thickness");
+                sb.AppendItem(item.SplineRadius, "SplineRadius");
             }
             if (printMask?.HalfExtents ?? true)
             {
@@ -977,9 +977,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!lhs.Slack.EqualsWithin(rhs.Slack)) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectSpline_FieldIndex.Thickness) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectSpline_FieldIndex.SplineRadius) ?? true))
             {
-                if (!lhs.Thickness.EqualsWithin(rhs.Thickness)) return false;
+                if (!lhs.SplineRadius.EqualsWithin(rhs.SplineRadius)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)PlacedObjectSpline_FieldIndex.HalfExtents) ?? true))
             {
@@ -1000,7 +1000,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             var hash = new HashCode();
             hash.Add(item.Slack);
-            hash.Add(item.Thickness);
+            hash.Add(item.SplineRadius);
             hash.Add(item.HalfExtents);
             hash.Add(item.IsWindDetachedEnd);
             hash.AddBytes(item.IsWindDetachedEndUnknown);
@@ -1040,9 +1040,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Slack = rhs.Slack;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlacedObjectSpline_FieldIndex.Thickness) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlacedObjectSpline_FieldIndex.SplineRadius) ?? true))
             {
-                item.Thickness = rhs.Thickness;
+                item.SplineRadius = rhs.SplineRadius;
             }
             if ((copyMask?.GetShouldTranslate((int)PlacedObjectSpline_FieldIndex.HalfExtents) ?? true))
             {
@@ -1169,7 +1169,7 @@ namespace Mutagen.Bethesda.Starfield
                 item: item.Slack);
             FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.Thickness);
+                item: item.SplineRadius);
             P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
                 item: item.HalfExtents);
@@ -1218,7 +1218,7 @@ namespace Mutagen.Bethesda.Starfield
             MutagenFrame frame)
         {
             item.Slack = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
-            item.Thickness = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            item.SplineRadius = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.HalfExtents = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.IsWindDetachedEnd = frame.ReadBoolean();
             item.IsWindDetachedEndUnknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
@@ -1288,7 +1288,7 @@ namespace Mutagen.Bethesda.Starfield
         }
 
         public Single Slack => _structData.Slice(0x0, 0x4).Float();
-        public Single Thickness => _structData.Slice(0x4, 0x4).Float();
+        public Single SplineRadius => _structData.Slice(0x4, 0x4).Float();
         public P3Float HalfExtents => P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_structData.Slice(0x8, 0xC));
         public Boolean IsWindDetachedEnd => _structData.Slice(0x14, 0x1)[0] >= 1;
         public ReadOnlyMemorySlice<Byte> IsWindDetachedEndUnknown => _structData.Span.Slice(0x15, 0x3).ToArray();

@@ -22,11 +22,11 @@ public class DecisionNameTests
         guid.ToString().ToUpperInvariant().ShouldBe("A97E454F-4307-41EE-45D0-7BD23FC3DE8D");
         guid.ToWwiseString().ShouldBe("{41EE4307-A97E-454F-8DDE-C33FD27BD045}");
 
-        var sound = new SoundReference { Start = guid, Stop = Guid.Empty };
+        var sound = new SoundReference { StartEvent = guid, StopEvent = Guid.Empty };
         sound.StartWwiseForm().ShouldBe("{41EE4307-A97E-454F-8DDE-C33FD27BD045}");
         sound.StopWwiseForm().ShouldBe("{00000000-0000-0000-0000-000000000000}");
         // A view only: the Guid itself is unchanged
-        sound.Start.ShouldBe(guid);
+        sound.StartEvent.ShouldBe(guid);
     }
 
     // LC107_Crew_Liang_Corpse (001E3D:Starfield.esm) DNAM: the last byte (0x2B, as on most HumanRace NPCs) is data.
