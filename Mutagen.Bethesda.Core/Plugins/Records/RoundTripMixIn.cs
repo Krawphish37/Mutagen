@@ -1,4 +1,5 @@
 using System.Buffers.Binary;
+using Mutagen.Bethesda.Plugins.Binary.Overlay;
 using Mutagen.Bethesda.Plugins.Binary.Translations;
 using Mutagen.Bethesda.Plugins.Masters;
 
@@ -180,4 +181,114 @@ public static class RoundTripMixIn
         }
         SubrecordOrder.Set(record, entries);
     }
+    /// <summary>
+    /// The record's header FormID as stored in its file, when it isn't the FormID Mutagen writes for its FormKey (e.g.
+    /// 03000867, a Small plugin's own record stored with its full index, where Mutagen writes FE000867); null otherwise
+    /// (C206).<br/>
+    /// Store it with the record's other data, and give it back with <see cref="SetHeaderFormIdAsStored"/> on a record
+    /// rebuilt from that data (JSON, a database), so the header is written back as stored. It is only written while it
+    /// still reads as the record's FormKey with the master list written.
+    /// </summary>
+    public static uint? GetHeaderFormIdAsStored(this IMajorRecordGetter record)
+    {
+        if (RawHeaderFormIds.Get(record) is not { } raw) return null;
+        // An overlay record always knows its header as read: only a value Mutagen wouldn't write is reported
+        if (record is PluginBinaryOverlay overlay)
+        {
+            try
+            {
+                if (overlay._package.MetaData.MasterReferences.GetFormID(record.FormKey).Raw == raw) return null;
+            }
+            catch (Exception)
+            {
+                // The FormKey has no FormID with this master list: report the header as read
+            }
+        }
+        return raw;
+    }
+
+    /// <summary>
+    /// Gives a record the header FormID of <see cref="GetHeaderFormIdAsStored"/> (null removes it, so the header is
+    /// written in Mutagen's form) (C206)
+    /// </summary>
+    public static void SetHeaderFormIdAsStored(this IMajorRecord record, uint? raw)
+    {
+        RawHeaderFormIds.Set(record, raw);
+    }
+    private const string OwnLinkFormsPrefix = "OF1:";
+    private const int OwnLinkFormsEntryLength = 16;
+
+    /// <summary>
+    /// The FormIDs in this record's subrecords that were stored in another form than the one Mutagen writes for the same
+    /// FormKey (a Small or Medium plugin's own FormIDs stored with its full index, or in the other own form; a master
+    /// index past the master list), with where each sits; null when there are none (C210, kept since C163/C189).<br/>
+    /// The value is opaque: store it as it is, and give it back with <see cref="SetOwnLinkFormsAsStored"/> on a record
+    /// rebuilt from the same data. Each FormID is written back as stored only where the record still writes Mutagen's
+    /// form of that same FormID; a changed or new link gets Mutagen's form.
+    /// </summary>
+    public static string? GetOwnLinkFormsAsStored(this IMajorRecordGetter record)
+    {
+        var entries = OwnFormIdForms.GetForRoundTrip(record);
+        if (entries == null || entries.Length == 0) return null;
+        var bytes = new byte[entries.Length * OwnLinkFormsEntryLength];
+        for (int i = 0; i < entries.Length; i++)
+        {
+            var span = bytes.AsSpan(i * OwnLinkFormsEntryLength, OwnLinkFormsEntryLength);
+            BinaryPrimitives.WriteUInt32LittleEndian(span, entries[i].SubrecordType);
+            BinaryPrimitives.WriteInt32LittleEndian(span.Slice(4), entries[i].Turn);
+            BinaryPrimitives.WriteInt32LittleEndian(span.Slice(8), entries[i].Offset);
+            BinaryPrimitives.WriteUInt32LittleEndian(span.Slice(12), entries[i].Raw);
+        }
+        return OwnLinkFormsPrefix + Convert.ToBase64String(bytes);
+    }
+
+    /// <summary>
+    /// Gives a record the stored FormID forms of <see cref="GetOwnLinkFormsAsStored"/> (null removes them) (C210)
+    /// </summary>
+    /// <exception cref="FormatException">The value isn't one GetOwnLinkFormsAsStored gave</exception>
+    public static void SetOwnLinkFormsAsStored(this IMajorRecord record, string? forms)
+    {
+        if (forms == null)
+        {
+            OwnFormIdForms.Set(record, null);
+            return;
+        }
+        if (!forms.StartsWith(OwnLinkFormsPrefix, StringComparison.Ordinal))
+        {
+            throw new FormatException("Not stored FormID forms from GetOwnLinkFormsAsStored.");
+        }
+        var bytes = Convert.FromBase64String(forms.Substring(OwnLinkFormsPrefix.Length));
+        if (bytes.Length % OwnLinkFormsEntryLength != 0)
+        {
+            throw new FormatException("Not stored FormID forms from GetOwnLinkFormsAsStored.");
+        }
+        var entries = new OwnFormIdForms.Entry[bytes.Length / OwnLinkFormsEntryLength];
+        for (int i = 0; i < entries.Length; i++)
+        {
+            var span = bytes.AsSpan(i * OwnLinkFormsEntryLength, OwnLinkFormsEntryLength);
+            entries[i] = new OwnFormIdForms.Entry(
+                BinaryPrimitives.ReadUInt32LittleEndian(span),
+                BinaryPrimitives.ReadInt32LittleEndian(span.Slice(4)),
+                BinaryPrimitives.ReadInt32LittleEndian(span.Slice(8)),
+                BinaryPrimitives.ReadUInt32LittleEndian(span.Slice(12)));
+        }
+        OwnFormIdForms.Set(record, entries);
+    }
+
+    /// <summary>
+    /// The labels of this record's child groups (cell, worldspace, quest, topic children) that were stored in another form
+    /// than its header (e.g. a Medium plugin's full-index 02001DC3 for its record FD001DC3), per group type; null when
+    /// there are none (C223, kept since C188).<br/>
+    /// The value is opaque: store it as it is, and give it back with <see cref="SetGroupLabelFormsAsStored"/> on a record
+    /// rebuilt from the same data. A label is written as stored only while it still names the record; otherwise, and
+    /// for a group type without one, the header's form is written.
+    /// </summary>
+    public static string? GetGroupLabelFormsAsStored(this IMajorRecordGetter record) => GroupLabelForms.Export(record);
+
+    /// <summary>
+    /// Gives a record the stored child-group labels of <see cref="GetGroupLabelFormsAsStored"/> (null removes them) (C223)
+    /// </summary>
+    /// <exception cref="FormatException">The value isn't one GetGroupLabelFormsAsStored gave</exception>
+    public static void SetGroupLabelFormsAsStored(this IMajorRecord record, string? labels) =>
+        GroupLabelForms.Import(record, labels);
 }

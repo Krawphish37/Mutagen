@@ -170,6 +170,15 @@ internal static class RawHeaderFormIds
         Records.AddOrUpdate(record, new StrongBox<uint>(raw));
     }
 
+    /// <summary>
+    /// Sets (null: removes) a record's header FormID as stored (RoundTripMixIn.SetHeaderFormIdAsStored, C206)
+    /// </summary>
+    public static void Set(IMajorRecordGetter record, uint? raw)
+    {
+        if (raw is { } value) Records.AddOrUpdate(record, new StrongBox<uint>(value));
+        else Records.Remove(record);
+    }
+
     public static void Copy(IMajorRecordGetter from, IMajorRecordGetter to)
     {
         if (ReferenceEquals(from, to)) return;
