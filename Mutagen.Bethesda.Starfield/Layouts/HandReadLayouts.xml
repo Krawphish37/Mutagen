@@ -200,7 +200,9 @@
                 <U8 name="function" />
                 <U8 field="PerkConditionTabCount" />
                 <Switch on="function">
-                  <Case value="1,2,3" />
+                  <Case value="1"><Const field="Modification" value="Set" /></Case>
+                  <Case value="2"><Const field="Modification" value="Add" /></Case>
+                  <Case value="3"><Const field="Modification" value="Multiply" /></Case>
                   <Case value="4" type="PerkEntryPointAddRangeToValue" />
                   <Case value="5" type="PerkEntryPointModifyActorValue"><Const field="Modification" value="AddAVMult" /></Case>
                   <Case value="12" type="PerkEntryPointModifyActorValue"><Const field="Modification" value="SetToAVMult" /></Case>

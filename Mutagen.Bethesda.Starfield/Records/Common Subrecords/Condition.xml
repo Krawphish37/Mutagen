@@ -2,7 +2,8 @@
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
   <!-- Layout attributes (read by tools describing the bytes, ignored by the generator): layoutOffset = byte offset in the
        subrecord's content; layoutBits = the bits of that byte ("5-7", or one bit); conditionFunction = the CTDA function
-       index (UInt16 at offset 8) that selects a ConditionData object, whose own fields start at the Data offset (12).
+       index (UInt16 at offset 8, on FunctionParse) that selects a ConditionData object, whose own fields start at the
+       Data offset (12); layoutEncoding="uint16" = the hand-read value's width.
        CTDA: 0 operator/flags, 1-3 Unknown1, 4-7 comparison value, 8-9 function index, 10-11 Unknown2, 12-19 parameters
        1 and 2, 20-23 run on, 24-27 reference, 28-31 parameter 3. -->
   <Object name="Condition" objType="Subrecord" abstract="true" recordType="CTDA" selectedBy="field:Flags:bit=2">
@@ -10,8 +11,8 @@
       <Enum name="CompareOperator" enumName="CompareOperator" binary="NoGeneration" layoutOffset="0" layoutBits="5-7" />
       <Enum name="Flags" enumName="Condition.Flag" binary="Custom" byteLength="1" layoutOffset="0" layoutBits="0-4" />
       <ByteArray name="Unknown1" byteLength="3" nullable="False" />
-      <CustomLogic name="FunctionParse" />
-      <UInt16 name="Unknown2" binary="NoGeneration" />
+      <CustomLogic name="FunctionParse" layoutOffset="8" layoutEncoding="uint16" />
+      <UInt16 name="Unknown2" binary="NoGeneration" layoutOffset="10" />
       <RefDirect name="Data" binary="NoGeneration" refName="ConditionData" generateClassMembers="false" layoutOffset="12" />
     </Fields>
     <AdditionalContainedRecordType>CITC</AdditionalContainedRecordType>
@@ -20,12 +21,12 @@
   </Object>
   <Object name="ConditionGlobal" objType="Subrecord" baseClass="Condition" recordType="CTDA" customBinaryEnd="Normal" selectorValue="1">
     <Fields>
-      <FormLink name="ComparisonValue" refName="Global" binary="NoGeneration" />
+      <FormLink name="ComparisonValue" refName="Global" binary="NoGeneration" layoutOffset="4" />
     </Fields>
   </Object>
   <Object name="ConditionFloat" objType="Subrecord" baseClass="Condition" recordType="CTDA" customBinaryEnd="Normal" selectorValue="0">
     <Fields>
-      <Float name="ComparisonValue" binary="NoGeneration" />
+      <Float name="ComparisonValue" binary="NoGeneration" layoutOffset="4" />
     </Fields>
   </Object>
 </Loqui>

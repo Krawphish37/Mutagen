@@ -84,6 +84,8 @@ public class HandReadLayoutEncodingTests
         "Npc.Flags", "Npc.Level", "PcLevelMult.LevelMult",
         "TraversalReference.Flags", "TraversalReference.Traversal", "TraversalReference.Unknown",
         "NavmeshPathingCell.ParentCell", "NavmeshPathingCell.Grid",
+        "PerkEntryPointModifyValue.Modification", "PerkEntryPointModifyValues.Modification",
+        "PerkEntryPointModifyActorValue.Modification",
     ];
 
     private static IEnumerable<string> AssociationKeys() =>
@@ -640,6 +642,59 @@ public class HandReadLayoutEncodingTests
             {
                 read.ParentWorld.IsNull.ShouldBeTrue();
                 read.ParentCell.FormKey.ShouldBe(parentCell);
+            }
+        }
+    }
+
+    // C196: Modification isn't stored as such; the entry point function in the effect's DATA (byte 1) gives it
+    [Fact]
+    public void PerkModificationIsTheEntryPointFunctionByTheXmlMap()
+    {
+        var mod = NewMod();
+        var effects = new List<APerkEntryPointEffect>();
+        foreach (var m in Enum.GetValues<PerkEntryPointModifyValue.ModificationType>())
+        {
+            effects.Add(new PerkEntryPointModifyValue { Modification = m, Value = 2 });
+            effects.Add(new PerkEntryPointModifyValues { Modification = m, Value = 2, Value2 = 3 });
+        }
+        foreach (var m in Enum.GetValues<PerkEntryPointModifyActorValue.ModificationType>())
+        {
+            effects.Add(new PerkEntryPointModifyActorValue { Modification = m, Value = 2 });
+        }
+        var rank = new PerkRank();
+        rank.Effects.AddRange(effects);
+        var perk = new Perk(mod) { EditorID = "LayoutModificationPerk" };
+        perk.Ranks.Add(rank);
+        mod.Perks.Add(perk);
+        using var written = new Written(mod);
+
+        // each effect's DATA follows its PRKE
+        var subs = Subrecords(RecordContent(written.Bytes, perk.FormKey));
+        var datas = new List<byte[]>();
+        for (int i = 0; i < subs.Count; i++)
+        {
+            if (subs[i].Sig != "PRKE") continue;
+            datas.Add(subs.Skip(i + 1).First(x => x.Sig == "DATA").Data);
+        }
+        datas.Count.ShouldBe(effects.Count);
+        for (int i = 0; i < effects.Count; i++)
+        {
+            var key = $"{effects[i].GetType().Name}.Modification";
+            Attr(key, "layoutSubrecord").ShouldBe("DATA");
+            var stored = datas[i][Offset(key)];
+            var map = Attr(key, "layoutMap")!.Split(',').Select(x => x.Split(':')).ToDictionary(x => byte.Parse(x[0]), x => x[1]);
+            var modification = effects[i].GetType().GetProperty("Modification")!.GetValue(effects[i])!.ToString();
+            map[stored].ShouldBe(modification, key);
+        }
+        foreach (var read in written.Both<IPerkGetter>(perk.FormKey))
+        {
+            var readEffects = read.Ranks.Single().Effects;
+            readEffects.Count.ShouldBe(effects.Count);
+            for (int i = 0; i < effects.Count; i++)
+            {
+                readEffects[i].GetType().Name.Replace("BinaryOverlay", "").ShouldBe(effects[i].GetType().Name);
+                readEffects[i].GetType().GetProperty("Modification")!.GetValue(readEffects[i])!.ToString()
+                    .ShouldBe(effects[i].GetType().GetProperty("Modification")!.GetValue(effects[i])!.ToString());
             }
         }
     }
