@@ -69,4 +69,19 @@ public record BinaryReadParameters
     /// Used for split mod imports where split file ModKeys are remapped to the base ModKey.
     /// </summary>
     public IReadOnlyMasterReferenceCollection? MasterOverrides { get; init; }
+
+    /// <summary>
+    /// What reading does with a plugin whose records share a FormKey (C204). Refuse (default): it is refused when opened
+    /// with a DuplicateFormKeyException naming every clashing pair (Starfield: checked from the record headers, groups
+    /// and records alike; other games: within a group, as it is read). KeepLater: read as the game reads it, for tools that
+    /// look inside a broken plugin.
+    /// </summary>
+    public DuplicateFormKeyOption DuplicateFormKeys { get; init; } = DuplicateFormKeyOption.Refuse;
+
+    /// <summary>
+    /// Importing a load order (LoadOrder.Import, GameEnvironment): what happens to a plugin that can't be read (C204).
+    /// DropPlugin (default): it is left unloaded, with its error listed (LoadOrderErrors.GetLoadErrors), as are the plugins
+    /// that have it as a master; the rest loads. Throw: the import throws, as before.
+    /// </summary>
+    public PluginReadFailureOption LoadOrderReadFailures { get; init; } = PluginReadFailureOption.DropPlugin;
 }

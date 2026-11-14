@@ -65,7 +65,7 @@ public class DuplicateFormKeyTests
         DuplicateRecords.Found = found.Add;
         try
         {
-            var param = new BinaryReadParameters { FileSystem = s.Fs, MasterFlagsLookup = s.Lo };
+            var param = new BinaryReadParameters { FileSystem = s.Fs, MasterFlagsLookup = s.Lo, DuplicateFormKeys = DuplicateFormKeyOption.KeepLater };
             var full = StarfieldMod.CreateFromBinary(s.Path, StarfieldRelease.Starfield, param);
             using var overlay = StarfieldMod.CreateFromBinaryOverlay(s.Path, StarfieldRelease.Starfield, param);
             foreach (var mod in new IStarfieldModGetter[] { full, overlay, (IStarfieldModGetter)full.DeepCopy() })
@@ -110,7 +110,7 @@ public class DuplicateFormKeyTests
     public void HeaderIndexPastTheMasters_IsWrittenAsRead()
     {
         var s = Make();
-        var param = new BinaryReadParameters { FileSystem = s.Fs, MasterFlagsLookup = s.Lo };
+        var param = new BinaryReadParameters { FileSystem = s.Fs, MasterFlagsLookup = s.Lo, DuplicateFormKeys = DuplicateFormKeyOption.KeepLater };
         var full = StarfieldMod.CreateFromBinary(s.Path, StarfieldRelease.Starfield, param);
         var record = full.Globals[new FormKey(Plugin, 0x801)];
         var outPath = Path.Combine("C:", "Out2", Plugin.FileName);

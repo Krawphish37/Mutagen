@@ -8,6 +8,7 @@ using Mutagen.Bethesda.Translations.Binary;
 using Mutagen.Bethesda.Plugins.Exceptions; 
 using Mutagen.Bethesda.Plugins.Internals;
 using Mutagen.Bethesda.Plugins.Records;
+using Mutagen.Bethesda.Plugins.Binary.Parameters;
 
 namespace Mutagen.Bethesda.Plugins.Binary.Translations; 
  
@@ -1544,6 +1545,19 @@ internal static class ListBinaryTranslationExt
                         reader.MetaData.ModKey,
                         entry.FormKey,
                         typeof(T));
+                }
+                if (reader.MetaData.DuplicateFormKeys == DuplicateFormKeyOption.Refuse)
+                {
+                    // Refused (C204); Starfield refuses such a plugin when it is opened, other games here
+                    var masters = reader.MetaData.MasterReferences;
+                    throw new DuplicateFormKeyException(reader.MetaData.ModKey, new[]
+                    {
+                        new DuplicateFormKeyPair(entry.FormKey,
+                            triggeringRecord, earlier.EditorID,
+                            RawHeaderFormIds.Get(earlier) ?? masters.GetFormID(earlier.FormKey).Raw,
+                            triggeringRecord, entry.EditorID,
+                            RawHeaderFormIds.Get(entry) ?? masters.GetFormID(entry.FormKey).Raw),
+                    });
                 }
                 KeepLater(byFormKey, earlier, entry, reader.MetaData);
             }

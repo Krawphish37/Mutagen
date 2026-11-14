@@ -38,7 +38,16 @@ public class MasterFlagsLookupProvider : IMasterFlagsLookupProvider
             {
                 if (_fileSystem.File.Exists(x))
                 {
-                    return KeyedMasterStyle.FromPath(x, _gameReleaseContext.Release, _fileSystem);
+                    try
+                    {
+                        return KeyedMasterStyle.FromPath(x, _gameReleaseContext.Release, _fileSystem);
+                    }
+                    catch (Exception)
+                    {
+                        // A header that can't be read: the plugin fails when imported, and a load order import drops it
+                        // with its error (C204) or throws it (LoadOrderReadFailures = Throw)
+                        return null;
+                    }
                 }
 
                 return null;

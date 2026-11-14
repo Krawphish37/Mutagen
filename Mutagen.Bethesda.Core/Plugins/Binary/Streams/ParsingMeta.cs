@@ -173,6 +173,35 @@ public sealed class ParsingMeta
         FileSystem = readParameters.FileSystem.GetOrDefault();
         FileShare = readParameters.FileShare;
         LinkCache = readParameters.LinkCache;
+        DuplicateFormKeys = readParameters.DuplicateFormKeys;
+    }
+
+    /// <summary>
+    /// What reading does with records that share a FormKey (BinaryReadParameters.DuplicateFormKeys, C204)
+    /// </summary>
+    internal Mutagen.Bethesda.Plugins.Binary.Parameters.DuplicateFormKeyOption DuplicateFormKeys { get; set; }
+
+    /// <summary>
+    /// Starfield, DuplicateFormKeyOption.Refuse: refuses the plugin when it is opened if its records share a FormKey
+    /// </summary>
+    private static void CheckDuplicates(BinaryReadParameters param, GameRelease release, ModKey modKey,
+        IReadOnlySeparatedMasterPackage masters, Func<Stream> openFile, bool disposeStream)
+    {
+        var constants = GameConstants.Get(release);
+        if (param.DuplicateFormKeys != Mutagen.Bethesda.Plugins.Binary.Parameters.DuplicateFormKeyOption.Refuse
+            || !constants.SeparateMasterLoadOrders)
+        {
+            return;
+        }
+        var stream = openFile();
+        try
+        {
+            Mutagen.Bethesda.Plugins.Records.DuplicateFormKeyScan.ThrowIfAny(stream, constants, masters, modKey);
+        }
+        finally
+        {
+            if (disposeStream) stream.Dispose();
+        }
     }
 
     private void ReadModHeaderVersion(ModHeaderFrame header)
@@ -198,6 +227,9 @@ public sealed class ParsingMeta
         // Decided from the file: how the mod stores its own FormIDs (OwnFormIdStyle)
         var masters = SeparatedMasterPackage.FactoryDetecting(release, modPath.ModKey, header.MasterStyle, rawMasters,
             param.MasterFlagsLookup, () => PluginFileAccess.OpenRead(param.FileSystem, modPath.Path, param.FileShare));
+        CheckDuplicates(param, release, modPath.ModKey, masters,
+            () => new BufferedStream(PluginFileAccess.OpenRead(param.FileSystem, modPath.Path, param.FileShare), 1 << 20),
+            disposeStream: true);
         var meta = new ParsingMeta(GameConstants.Get(release), modPath.ModKey, masters);
         meta.ReadModHeaderVersion(header);
         meta.Absorb(param);
@@ -217,6 +249,7 @@ public sealed class ParsingMeta
         // Decided from the file: how the mod stores its own FormIDs (OwnFormIdStyle)
         var masters = SeparatedMasterPackage.FactoryDetecting(release, modKey, header.MasterStyle, rawMasters,
             param.MasterFlagsLookup, () => stream, disposeStream: false);
+        CheckDuplicates(param, release, modKey, masters, () => stream, disposeStream: false);
         var meta = new ParsingMeta(GameConstants.Get(release), modKey, masters);
         meta.ReadModHeaderVersion(header);
         meta.Absorb(param);

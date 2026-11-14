@@ -62,6 +62,9 @@ public sealed class LoadOrderImporter<TMod> : ILoadOrderImporter<TMod>
         }
 
         var results = new (ModKey ModKey, int ModIndex, TryGet<TMod> Mod, bool Enabled)[loList.Count];
+        // A plugin that can't be read: dropped with its error (C204), or thrown (LoadOrderReadFailures = Throw)
+        var failures = new Exception?[loList.Count];
+        var drop = param.LoadOrderReadFailures == PluginReadFailureOption.DropPlugin;
         try
         {
             Parallel.ForEach(loList, (listing, _, modIndex) =>
@@ -77,25 +80,22 @@ public sealed class LoadOrderImporter<TMod> : ILoadOrderImporter<TMod>
                     var mod = Importer.Import(modPath, param: param);
                     results[modIndex] = (listing.ModKey, (int)modIndex, TryGet<TMod>.Succeed(mod), listing.Enabled);
                 }
+                catch (Exception ex) when (drop)
+                {
+                    results[modIndex] = (listing.ModKey, (int)modIndex, TryGet<TMod>.Failure, listing.Enabled);
+                    // The importer constructs mods by reflection: report what the read threw
+                    failures[modIndex] = ex is System.Reflection.TargetInvocationException { InnerException: { } inner } ? inner : ex;
+                }
                 catch (Exception ex)
                 {
                     RecordException.EnrichAndThrow(ex, listing.ModKey);
                     throw;
                 }
             });
-            return new LoadOrder<IModListing<TMod>>(results
+            return LoadOrderErrors.Build<TMod>(results
                 .OrderBy(i => i.ModIndex)
-                .Select(item =>
-                {
-                    if (item.Mod.Succeeded)
-                    {
-                        return new ModListing<TMod>(item.Mod.Value, item.Enabled);
-                    }
-                    else
-                    {
-                        return ModListing<TMod>.CreateUnloaded(item.ModKey, item.Enabled);
-                    }
-                }));
+                .Select(item => (item.ModKey, item.Mod.Succeeded ? item.Mod.Value : null, failures[item.ModIndex], item.Enabled))
+                .ToList());
         }
         catch (Exception)
         {
@@ -142,6 +142,9 @@ public sealed class LoadOrderImporter : ILoadOrderImporter
         var loList = LoadOrderListingsProvider.Get().ToList();
         var results = new (ModKey ModKey, int ModIndex, TryGet<IModGetter> Mod, bool Enabled)[loList.Count];
         param ??= BinaryReadParameters.Default;
+        // A plugin that can't be read: dropped with its error (C204), or thrown (LoadOrderReadFailures = Throw)
+        var failures = new Exception?[loList.Count];
+        var drop = param.LoadOrderReadFailures == PluginReadFailureOption.DropPlugin;
         if (param.MasterFlagsLookup == null)
         {
             param = param with
@@ -152,7 +155,15 @@ public sealed class LoadOrderImporter : ILoadOrderImporter
                         var modPath = new ModPath(listing.ModKey,
                             _dataDirectoryProvider.Path.GetFile(listing.ModKey.FileName).Path);
                         if (!_fileSystem.File.Exists(modPath)) return null;
-                        return _keyedMasterStyleReader.ReadFrom(modPath);
+                        try
+                        {
+                            return _keyedMasterStyleReader.ReadFrom(modPath);
+                        }
+                        catch (Exception) when (param.LoadOrderReadFailures == PluginReadFailureOption.DropPlugin)
+                        {
+                            // A header that can't be read: the plugin fails on import and is dropped there (C204)
+                            return null;
+                        }
                     })
                     .WhereNotNull())
             };
@@ -172,25 +183,22 @@ public sealed class LoadOrderImporter : ILoadOrderImporter
                     var mod = Importer.Import(modPath, param);
                     results[modIndex] = (listing.ModKey, (int)modIndex, TryGet<IModGetter>.Succeed(mod), listing.Enabled);
                 }
+                catch (Exception ex) when (drop)
+                {
+                    results[modIndex] = (listing.ModKey, (int)modIndex, TryGet<IModGetter>.Failure, listing.Enabled);
+                    // The importer constructs mods by reflection: report what the read threw
+                    failures[modIndex] = ex is System.Reflection.TargetInvocationException { InnerException: { } inner } ? inner : ex;
+                }
                 catch (Exception ex)
                 {
                     RecordException.EnrichAndThrow(ex, listing.ModKey);
                     throw;
                 }
             });
-            return new LoadOrder<IModListing<IModGetter>>(results
+            return LoadOrderErrors.Build<IModGetter>(results
                 .OrderBy(i => i.ModIndex)
-                .Select(item =>
-                {
-                    if (item.Mod.Succeeded)
-                    {
-                        return new ModListing<IModGetter>(item.Mod.Value, item.Enabled);
-                    }
-                    else
-                    {
-                        return ModListing<IModGetter>.CreateUnloaded(item.ModKey, item.Enabled);
-                    }
-                }));
+                .Select(item => (item.ModKey, item.Mod.Succeeded ? item.Mod.Value : null, failures[item.ModIndex], item.Enabled))
+                .ToList());
         }
         catch (Exception)
         {
