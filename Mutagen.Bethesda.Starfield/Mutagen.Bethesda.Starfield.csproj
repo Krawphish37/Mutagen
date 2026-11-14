@@ -2327,6 +2327,12 @@
     <Compile Include="Records\Major Records\MagicEffectCloakArchetype.cs">
       <DependentUpon>MagicEffect.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Major Records\MagicEffectSummonDuplicateArchetype.cs">
+      <DependentUpon>MagicEffect.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\MagicEffectGravityWielderArchetype.cs">
+      <DependentUpon>MagicEffect.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Major Records\MagicEffectDamageTypeModArchetype.cs">
       <DependentUpon>MagicEffect.xml</DependentUpon>
     </Compile>
@@ -7067,6 +7073,12 @@
     </Compile>
     <Compile Include="Records\Major Records\KeywordFormLinkTarget_Generated.cs">
       <DependentUpon>Keyword.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\MagicEffectSummonDuplicateArchetype_Generated.cs">
+      <DependentUpon>MagicEffect.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\MagicEffectGravityWielderArchetype_Generated.cs">
+      <DependentUpon>MagicEffect.xml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

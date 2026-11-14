@@ -40,7 +40,7 @@ namespace Mutagen.Bethesda.Starfield
 {
     #region Class
     /// <summary>
-    /// Implemented by: [MagicEffectArchetype, MagicEffectBoundArchetype, MagicEffectCloakArchetype, MagicEffectDamageTypeModArchetype, MagicEffectEnhanceWeaponArchetype, MagicEffectGuideArchetype, MagicEffectImmunityModArchetype, MagicEffectLightArchetype, MagicEffectPeakValueModArchetype, MagicEffectSpawnHazardArchetype, MagicEffectSummonCreatureArchetype]
+    /// Implemented by: [MagicEffectArchetype, MagicEffectBoundArchetype, MagicEffectCloakArchetype, MagicEffectDamageTypeModArchetype, MagicEffectEnhanceWeaponArchetype, MagicEffectGravityWielderArchetype, MagicEffectGuideArchetype, MagicEffectImmunityModArchetype, MagicEffectLightArchetype, MagicEffectPeakValueModArchetype, MagicEffectSpawnHazardArchetype, MagicEffectSummonCreatureArchetype, MagicEffectSummonDuplicateArchetype]
     /// </summary>
     public abstract partial class AMagicEffectArchetype :
         IAMagicEffectArchetype,
@@ -347,7 +347,7 @@ namespace Mutagen.Bethesda.Starfield
 
     #region Interface
     /// <summary>
-    /// Implemented by: [MagicEffectArchetype, MagicEffectBoundArchetype, MagicEffectCloakArchetype, MagicEffectDamageTypeModArchetype, MagicEffectEnhanceWeaponArchetype, MagicEffectGuideArchetype, MagicEffectImmunityModArchetype, MagicEffectLightArchetype, MagicEffectPeakValueModArchetype, MagicEffectSpawnHazardArchetype, MagicEffectSummonCreatureArchetype]
+    /// Implemented by: [MagicEffectArchetype, MagicEffectBoundArchetype, MagicEffectCloakArchetype, MagicEffectDamageTypeModArchetype, MagicEffectEnhanceWeaponArchetype, MagicEffectGravityWielderArchetype, MagicEffectGuideArchetype, MagicEffectImmunityModArchetype, MagicEffectLightArchetype, MagicEffectPeakValueModArchetype, MagicEffectSpawnHazardArchetype, MagicEffectSummonCreatureArchetype, MagicEffectSummonDuplicateArchetype]
     /// </summary>
     public partial interface IAMagicEffectArchetype :
         IAMagicEffectArchetypeGetter,
@@ -357,7 +357,7 @@ namespace Mutagen.Bethesda.Starfield
     }
 
     /// <summary>
-    /// Implemented by: [MagicEffectArchetype, MagicEffectBoundArchetype, MagicEffectCloakArchetype, MagicEffectDamageTypeModArchetype, MagicEffectEnhanceWeaponArchetype, MagicEffectGuideArchetype, MagicEffectImmunityModArchetype, MagicEffectLightArchetype, MagicEffectPeakValueModArchetype, MagicEffectSpawnHazardArchetype, MagicEffectSummonCreatureArchetype]
+    /// Implemented by: [MagicEffectArchetype, MagicEffectBoundArchetype, MagicEffectCloakArchetype, MagicEffectDamageTypeModArchetype, MagicEffectEnhanceWeaponArchetype, MagicEffectGravityWielderArchetype, MagicEffectGuideArchetype, MagicEffectImmunityModArchetype, MagicEffectLightArchetype, MagicEffectPeakValueModArchetype, MagicEffectSpawnHazardArchetype, MagicEffectSummonCreatureArchetype, MagicEffectSummonDuplicateArchetype]
     /// </summary>
     public partial interface IAMagicEffectArchetypeGetter :
         ILoquiObject,
