@@ -3,7 +3,7 @@
   <Object name="BoneModifier" recordType="BMOD" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
       <RefList name="Components" refName="AComponent" />
-      <RefDirect name="Data" refName="ABoneModifierData" recordType="DATA" binary="Custom" />
+      <RefDirect name="Data" refName="ABoneModifierData" recordType="DATA" binary="Custom" selectedBy="subrecord:DATA:string" />
     </Fields>
   </Object>
   <Object name="ABoneModifierData" abstract="true" objType="Subrecord" >
@@ -13,12 +13,12 @@
       <Float name="MaxAnimationDistance" />
     </Fields>
   </Object>
-  <Object name="BoneModifierLookAtChainData" objType="Subrecord" baseClass="ABoneModifierData" >
+  <Object name="BoneModifierLookAtChainData" objType="Subrecord" baseClass="ABoneModifierData" selectorValue="LookAtChain">
     <Fields>
       <String name="ChainEnd" binaryType="PrependLengthWithNullIfContent" />
     </Fields>
   </Object>
-  <Object name="BoneModifierMorphDriverData" objType="Subrecord" baseClass="ABoneModifierData" >
+  <Object name="BoneModifierMorphDriverData" objType="Subrecord" baseClass="ABoneModifierData" selectorValue="MorphDriver">
     <Fields>
       <P3Float name="Vector" />
       <Float name="InnerRadius" />
@@ -26,7 +26,7 @@
       <Enum name="Axis" enumName="Axis" byteLength="1" />
     </Fields>
   </Object>
-  <Object name="BoneModifierPoseDeformerData" objType="Subrecord" baseClass="ABoneModifierData" >
+  <Object name="BoneModifierPoseDeformerData" objType="Subrecord" baseClass="ABoneModifierData" selectorValue="PoseDeformer">
     <Fields>
       <P3Float name="Vector" />
       <P3Float name="Position" />
@@ -37,7 +37,7 @@
       <Enum name="Axis" enumName="Axis" byteLength="1" />
     </Fields>
   </Object>
-  <Object name="BoneModifierSpringBoneData" objType="Subrecord" baseClass="ABoneModifierData" >
+  <Object name="BoneModifierSpringBoneData" objType="Subrecord" baseClass="ABoneModifierData" selectorValue="SpringBone">
     <Fields>
       <P3Float name="Strength" />
       <Float name="Unknown" />

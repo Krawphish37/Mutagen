@@ -33,7 +33,7 @@
         <RecordType>ALMI</RecordType>
       </CustomLogic>
       <UInt32 name="NextAliasID" binary="NoGeneration" nullable="True" />
-      <RefList name="Aliases" refName="AQuestAlias" binary="NoGeneration" nullable="True" />
+      <RefList name="Aliases" refName="AQuestAlias" binary="NoGeneration" nullable="True" selectedBy="subrecordType" />
       <FormLink name="QuestGroup" recordType="GNAM" refName="Keyword" />
       <String name="SwfFile" recordType="SNAM" />
       <FormLink name="MissionTypeKeyword" refName="Keyword" recordType="QMTY" />
@@ -157,7 +157,7 @@
     </Fields>
   </Object>
   <Object name="AQuestAlias" objType="Subrecord" abstract="true" />
-  <Object name="QuestReferenceAlias" objType="Subrecord" baseClass="AQuestAlias" >
+  <Object name="QuestReferenceAlias" objType="Subrecord" baseClass="AQuestAlias" selectorValue="ALST">
     <Fields>
       <UInt32 name="ID" recordType="ALST" nullable="false" />
       <String name="Name" recordType="ALID" nullable="false" />
@@ -209,7 +209,7 @@
       </List>
     </Fields>
   </Object>
-  <Object name="QuestLocationAlias" objType="Subrecord" baseClass="AQuestAlias" >
+  <Object name="QuestLocationAlias" objType="Subrecord" baseClass="AQuestAlias" selectorValue="ALLS">
     <Fields>
       <UInt32 name="ID" recordType="ALLS" nullable="false" />
       <String name="Name" recordType="ALID" nullable="false" />
@@ -236,7 +236,7 @@
       <FormLink name="PcmTypeKeyword" refName="Keyword" recordType="LNAM" />
     </Fields>
   </Object>
-  <Object name="QuestCollectionAlias" objType="Subrecord" baseClass="AQuestAlias">
+  <Object name="QuestCollectionAlias" objType="Subrecord" baseClass="AQuestAlias" selectorValue="ALCS,ALMI">
     <Fields>
       <RefList name="Collection" refName="CollectionAlias" />
     </Fields>

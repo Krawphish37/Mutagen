@@ -33,7 +33,7 @@
       </Data>
       <UInt16 name="ID" recordType="ITID" nullable="False" />
       <RefDirect name="Lock" refName="LockData" />
-      <RefDirect name="Target" refName="ATerminalMenuItemTarget" nullable="False" binary="NoGeneration" />
+      <RefDirect name="Target" refName="ATerminalMenuItemTarget" nullable="False" binary="NoGeneration" selectedBy="field:TypeParse:UInt16" />
       <CustomLogic name="TargetParse" >
         <RecordType>UNAM</RecordType>
         <RecordType>TNAM</RecordType>
@@ -43,30 +43,30 @@
     </Fields>
   </Object>
   <Object name="ATerminalMenuItemTarget" objType="Subrecord" abstract="true" />
-  <Object name="TerminalMenuItemDisplayText" objType="Subrecord" baseClass="ATerminalMenuItemTarget" >
+  <Object name="TerminalMenuItemDisplayText" objType="Subrecord" baseClass="ATerminalMenuItemTarget" selectorValue="DisplayText">
     <Fields>
       <String name="DisplayText" translated="Normal" recordType="UNAM" />
     </Fields>
   </Object>
-  <Object name="TerminalMenuItemSubmenu" objType="Subrecord" baseClass="ATerminalMenuItemTarget" >
+  <Object name="TerminalMenuItemSubmenu" objType="Subrecord" baseClass="ATerminalMenuItemTarget" selectorValue="SubmenuTerminalMenu">
     <Fields>
       <FormLink name="Submenu" recordType="TNAM" refName="TerminalMenu" />
     </Fields>
   </Object>
-  <Object name="TerminalMenuItemDataslate" objType="Subrecord" baseClass="ATerminalMenuItemTarget" >
+  <Object name="TerminalMenuItemDataslate" objType="Subrecord" baseClass="ATerminalMenuItemTarget" selectorValue="DataSlateBOOK">
     <Fields>
       <FormLink name="Dataslate" recordType="BNAM" refName="Book" />
     </Fields>
   </Object>
-  <Object name="TerminalMenuItemReturnToDesktop" objType="Subrecord" baseClass="ATerminalMenuItemTarget" >
+  <Object name="TerminalMenuItemReturnToDesktop" objType="Subrecord" baseClass="ATerminalMenuItemTarget" selectorValue="ActionReturnToDesktop">
     <Fields>
     </Fields>
   </Object>
-  <Object name="TerminalMenuItemReturnToPrevious" objType="Subrecord" baseClass="ATerminalMenuItemTarget" >
+  <Object name="TerminalMenuItemReturnToPrevious" objType="Subrecord" baseClass="ATerminalMenuItemTarget" selectorValue="ActionReturnToPrevious">
     <Fields>
     </Fields>
   </Object>
-  <Object name="TerminalMenuItemForceRedraw" objType="Subrecord" baseClass="ATerminalMenuItemTarget" >
+  <Object name="TerminalMenuItemForceRedraw" objType="Subrecord" baseClass="ATerminalMenuItemTarget" selectorValue="ActionForceRedraw">
     <Fields>
     </Fields>
   </Object>

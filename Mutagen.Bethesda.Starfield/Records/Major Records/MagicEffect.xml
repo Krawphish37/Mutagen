@@ -31,7 +31,7 @@
           <FormLink name="ThirdActorValue" refName="ActorValueInformation" />
           <Float name="ScriptEffectAIDelayTime" />
           <Float name="ScriptEffectAIScore" />
-          <RefDirect name="Archetype" binary="Custom" refName="AMagicEffectArchetype" byteLength="4" defaultType="MagicEffectArchetype" />
+          <RefDirect name="Archetype" binary="Custom" refName="AMagicEffectArchetype" byteLength="4" defaultType="MagicEffectArchetype" selectedBy="here:Int32" />
           <Float name="SpellmakingArea" />
           <Float name="SpellmakingCastingTime" />
           <Float name="BaseCost" />
@@ -71,42 +71,42 @@
   </Object>
   <Object name="AMagicEffectArchetype" abstract="true" objType="Subrecord" ctorPermission="noGeneration">
   </Object>
-  <Object name="MagicEffectArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration">
+  <Object name="MagicEffectArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" selectorValue="*">
     <Fields>
       <Enum name="Type" enumName="MagicEffectArchetype.TypeEnum" binary="NoGeneration" />
       <FormLink name="Association" binary="NoGeneration" refName="StarfieldMajorRecord" />
     </Fields>
   </Object>
-  <Object name="MagicEffectLightArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration">
+  <Object name="MagicEffectLightArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration" selectorValue="Light">
     <Fields>
       <FormLink name="Association" binary="NoGeneration" refName="Light" />
     </Fields>
   </Object>
-  <Object name="MagicEffectBoundArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration">
+  <Object name="MagicEffectBoundArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration" selectorValue="Bound">
     <Fields>
       <FormLink name="Association" binary="NoGeneration">
         <Interface>IBindableEquipment</Interface>
       </FormLink>
     </Fields>
   </Object>
-  <Object name="MagicEffectSummonCreatureArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration">
+  <Object name="MagicEffectSummonCreatureArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration" selectorValue="SummonCreature">
     <Fields>
       <FormLink name="Association" binary="NoGeneration" refName="Npc" />
     </Fields>
   </Object>
-  <Object name="MagicEffectGuideArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration">
+  <Object name="MagicEffectGuideArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration" selectorValue="Guide">
     <Fields>
       <FormLink name="Association" binary="NoGeneration">
         <Interface>IHazard</Interface>
       </FormLink>
     </Fields>
   </Object>
-  <Object name="MagicEffectPeakValueModArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration">
+  <Object name="MagicEffectPeakValueModArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration" selectorValue="PeakValueModifier">
     <Fields>
       <FormLink name="Association" binary="NoGeneration" refName="Keyword" />
     </Fields>
   </Object>
-  <Object name="MagicEffectCloakArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration">
+  <Object name="MagicEffectCloakArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration" selectorValue="Cloak">
     <Fields>
       <FormLink name="Association" binary="NoGeneration" refName="Spell" />
     </Fields>
@@ -116,12 +116,12 @@
       <FormLink name="Association" binary="NoGeneration" refName="DamageType" />
     </Fields>
   </Object>
-  <Object name="MagicEffectEnhanceWeaponArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration">
+  <Object name="MagicEffectEnhanceWeaponArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration" selectorValue="EnhanceWeapon">
     <Fields>
       <FormLink name="Association" binary="NoGeneration" refName="ObjectEffect" />
     </Fields>
   </Object>
-  <Object name="MagicEffectSpawnHazardArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration">
+  <Object name="MagicEffectSpawnHazardArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" ctorPermission="noGeneration" selectorValue="SpawnHazard">
     <Fields>
       <FormLink name="Association" binary="NoGeneration">
         <Interface>IHazard</Interface>

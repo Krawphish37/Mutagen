@@ -73,52 +73,52 @@
       </List>
     </Fields>
   </Object>
-  <Object name="APackageData" objType="Subrecord">
+  <Object name="APackageData" objType="Subrecord" selectedBy="dataInputType">
     <Fields>
       <String name="Name" recordType="BNAM" binary="NoGeneration" nullable="True" />
       <Enum name="Flags" enumName="APackageData.Flag" recordType="PNAM" nullable="True" binary="NoGeneration" />
     </Fields>
   </Object>
-  <Object name="PackageDataBool" objType="Subrecord" baseClass="APackageData">
+  <Object name="PackageDataBool" objType="Subrecord" baseClass="APackageData" selectorValue="Bool">
     <Fields>
       <Bool name="Data" binary="NoGeneration" />
     </Fields>
   </Object>
-  <Object name="PackageDataInt" objType="Subrecord" baseClass="APackageData">
+  <Object name="PackageDataInt" objType="Subrecord" baseClass="APackageData" selectorValue="Int">
     <Fields>
       <UInt32 name="Data" binary="NoGeneration" />
     </Fields>
   </Object>
-  <Object name="PackageDataFloat" objType="Subrecord" baseClass="APackageData">
+  <Object name="PackageDataFloat" objType="Subrecord" baseClass="APackageData" selectorValue="Float">
     <Fields>
       <Float name="Data" binary="NoGeneration" />
     </Fields>
   </Object>
-  <Object name="PackageDataObjectList" objType="Subrecord" baseClass="APackageData">
+  <Object name="PackageDataObjectList" objType="Subrecord" baseClass="APackageData" selectorValue="ObjectList">
     <Fields>
       <Float name="Data" binary="NoGeneration" nullable="True" />
     </Fields>
   </Object>
-  <Object name="PackageDataLocation" objType="Subrecord" baseClass="APackageData">
+  <Object name="PackageDataLocation" objType="Subrecord" baseClass="APackageData" selectorValue="Location">
     <Fields>
       <RefDirect name="Location" refName="LocationTargetRadius" recordType="PLDT" nullable="False" binary="NoGeneration" />
     </Fields>
   </Object>
-  <Object name="PackageDataScene" objType="Subrecord" baseClass="APackageData">
+  <Object name="PackageDataScene" objType="Subrecord" baseClass="APackageData" selectorValue="Scene">
     <Fields>
       <FormLink name="Scene" refName="Scene" nullable="True" binary="NoGeneration" />
     </Fields>
   </Object>
-  <Object name="PackageDataTarget" objType="Subrecord" baseClass="APackageData">
+  <Object name="PackageDataTarget" objType="Subrecord" baseClass="APackageData" selectorValue="SingleRef,TargetSelector">
     <Fields>
       <Enum name="Type" enumName="PackageDataTarget.Types" binary="NoGeneration" />
-      <RefDirect name="Target" refName="APackageTarget" recordType="PTDA" binary="NoGeneration" nullable="False" generateClassMembers="false" />
+      <RefDirect name="Target" refName="APackageTarget" recordType="PTDA" binary="NoGeneration" nullable="False" generateClassMembers="false" selectedBy="here:Int32" />
       <RefList name="Conditions" refName="Condition" counterRecType="CITC" binary="NoGeneration" nullable="False" />
     </Fields>
   </Object>
-  <Object name="PackageDataTopic" objType="Subrecord" baseClass="APackageData">
+  <Object name="PackageDataTopic" objType="Subrecord" baseClass="APackageData" selectorValue="Topic">
     <Fields>
-      <RefList name="Topics" refName="ATopicReference" binary="NoGeneration" />
+      <RefList name="Topics" refName="ATopicReference" binary="NoGeneration" selectedBy="here:Int32" />
       <ByteArray name="TPIC" recordType="TPIC" binary="NoGeneration" />
     </Fields>
   </Object>
@@ -128,51 +128,51 @@
       <Int32 name="CountOrDistance" byteLength="4" />
     </Fields>
   </Object>
-  <Object name="PackageTargetSpecificReference" baseClass="APackageTarget" objType="Subrecord">
+  <Object name="PackageTargetSpecificReference" baseClass="APackageTarget" objType="Subrecord" selectorValue="SpecificReference">
     <Fields>
       <FormLink name="Reference">
         <Interface>IPlaced</Interface>
       </FormLink>
     </Fields>
   </Object>
-  <Object name="PackageTargetObjectID" baseClass="APackageTarget" objType="Subrecord">
+  <Object name="PackageTargetObjectID" baseClass="APackageTarget" objType="Subrecord" selectorValue="ObjectID">
     <Fields>
       <FormLink name="Reference">
         <Interface>IObjectId</Interface>
       </FormLink>
     </Fields>
   </Object>
-  <Object name="PackageTargetObjectType" baseClass="APackageTarget" objType="Subrecord">
+  <Object name="PackageTargetObjectType" baseClass="APackageTarget" objType="Subrecord" selectorValue="ObjectType">
     <Fields>
       <Enum name="Type" enumName="TargetObjectType" />
     </Fields>
   </Object>
-  <Object name="PackageTargetLinkedReference" baseClass="APackageTarget" objType="Subrecord">
+  <Object name="PackageTargetLinkedReference" baseClass="APackageTarget" objType="Subrecord" selectorValue="LinkedReference">
     <Fields>
       <FormLink name="Keyword" refName="Keyword" />
     </Fields>
   </Object>
-  <Object name="PackageTargetAlias" baseClass="APackageTarget" objType="Subrecord">
+  <Object name="PackageTargetAlias" baseClass="APackageTarget" objType="Subrecord" selectorValue="RefAlias">
     <Fields>
       <Int32 name="Alias" />
     </Fields>
   </Object>
-  <Object name="PackageTargetInterruptData" baseClass="APackageTarget" objType="Subrecord">
+  <Object name="PackageTargetInterruptData" baseClass="APackageTarget" objType="Subrecord" selectorValue="InterruptData">
     <Fields>
       <UInt32 name="Data" />
     </Fields>
   </Object>
-  <Object name="PackageTargetSelf" baseClass="APackageTarget" objType="Subrecord">
+  <Object name="PackageTargetSelf" baseClass="APackageTarget" objType="Subrecord" selectorValue="Self">
     <Fields>
       <Int32 name="Data" />
     </Fields>
   </Object>
-  <Object name="PackageTargetKeyword" baseClass="APackageTarget" objType="Subrecord">
+  <Object name="PackageTargetKeyword" baseClass="APackageTarget" objType="Subrecord" selectorValue="Keyword">
     <Fields>
       <FormLink name="Keyword" refName="Keyword" />
     </Fields>
   </Object>
-  <Object name="PackageTargetUnknown" baseClass="APackageTarget" objType="Subrecord">
+  <Object name="PackageTargetUnknown" baseClass="APackageTarget" objType="Subrecord" selectorValue="*">
     <Fields>
       <Int32 name="Data" />
       <Int32 name="Type" />
@@ -212,7 +212,7 @@
   <Object name="PackageEvent" objType="Subrecord">
     <Fields>
       <FormLink name="Idle" refName="IdleAnimation" recordType="INAM" nullable="False" />
-      <RefList name="Topics" refName="ATopicReference" binary="Custom" />
+      <RefList name="Topics" refName="ATopicReference" binary="Custom" selectedBy="here:Int32" />
     </Fields>
   </Object>
 </Loqui>

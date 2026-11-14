@@ -14,7 +14,7 @@
         <Fields>
           <Enum name="Flags" enumName="Npc.Flag" byteLength="4" binary="Custom" />
           <Int16 name="XpValueOffset" />
-          <RefDirect name="Level" refName="ANpcLevel" binary="Custom" generateClassMembers="false" byteLength="2" />
+          <RefDirect name="Level" refName="ANpcLevel" binary="Custom" generateClassMembers="false" byteLength="2" selectedBy="field:Flags:bit=7" />
           <Int16 name="CalcMinLevel" />
           <Int16 name="CalcMaxLevel" />
           <Int16 name="DispositionBase" />
@@ -201,12 +201,12 @@
     </Fields>
   </Object>
   <Object name="ANpcLevel" abstract="true" objType="Subrecord" />
-  <Object name="NpcLevel" baseClass="ANpcLevel" objType="Subrecord">
+  <Object name="NpcLevel" baseClass="ANpcLevel" objType="Subrecord" selectorValue="0">
     <Fields>
       <Int16 name="Level" />
     </Fields>
   </Object>
-  <Object name="PcLevelMult" baseClass="ANpcLevel" objType="Subrecord">
+  <Object name="PcLevelMult" baseClass="ANpcLevel" objType="Subrecord" selectorValue="1">
     <Fields>
       <Float name="LevelMult" binary="NoGeneration" />
     </Fields>
