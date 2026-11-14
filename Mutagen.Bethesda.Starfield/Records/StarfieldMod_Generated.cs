@@ -240,6 +240,7 @@ namespace Mutagen.Bethesda.Starfield
             _GameplayOptions_Object = new StarfieldGroup<GameplayOption>(this);
             _GameplayOptionsGroups_Object = new StarfieldGroup<GameplayOptionsGroup>(this);
             _GravityWielderEffectDatas_Object = new StarfieldGroup<GravityWielderEffectData>(this);
+            _TrackDamageEffectDatas_Object = new StarfieldGroup<TrackDamageEffectData>(this);
             CustomCtor();
         }
         partial void CustomCtor();
@@ -1505,6 +1506,13 @@ namespace Mutagen.Bethesda.Starfield
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IStarfieldGroupGetter<IGravityWielderEffectDataGetter> IStarfieldModGetter.GravityWielderEffectDatas => _GravityWielderEffectDatas_Object;
         #endregion
+        #region TrackDamageEffectDatas
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private StarfieldGroup<TrackDamageEffectData> _TrackDamageEffectDatas_Object;
+        public StarfieldGroup<TrackDamageEffectData> TrackDamageEffectDatas => _TrackDamageEffectDatas_Object;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        IStarfieldGroupGetter<ITrackDamageEffectDataGetter> IStarfieldModGetter.TrackDamageEffectDatas => _TrackDamageEffectDatas_Object;
+        #endregion
 
         #region To String
 
@@ -1724,6 +1732,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.GameplayOptions = new MaskItem<TItem, StarfieldGroup.Mask<TItem>?>(initialValue, new StarfieldGroup.Mask<TItem>(initialValue));
                 this.GameplayOptionsGroups = new MaskItem<TItem, StarfieldGroup.Mask<TItem>?>(initialValue, new StarfieldGroup.Mask<TItem>(initialValue));
                 this.GravityWielderEffectDatas = new MaskItem<TItem, StarfieldGroup.Mask<TItem>?>(initialValue, new StarfieldGroup.Mask<TItem>(initialValue));
+                this.TrackDamageEffectDatas = new MaskItem<TItem, StarfieldGroup.Mask<TItem>?>(initialValue, new StarfieldGroup.Mask<TItem>(initialValue));
             }
 
             public Mask(
@@ -1906,7 +1915,8 @@ namespace Mutagen.Bethesda.Starfield
                 TItem PERS,
                 TItem GameplayOptions,
                 TItem GameplayOptionsGroups,
-                TItem GravityWielderEffectDatas)
+                TItem GravityWielderEffectDatas,
+                TItem TrackDamageEffectDatas)
             {
                 this.ModHeader = new MaskItem<TItem, StarfieldModHeader.Mask<TItem>?>(ModHeader, new StarfieldModHeader.Mask<TItem>(ModHeader));
                 this.GameSettings = new MaskItem<TItem, StarfieldGroup.Mask<TItem>?>(GameSettings, new StarfieldGroup.Mask<TItem>(GameSettings));
@@ -2088,6 +2098,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.GameplayOptions = new MaskItem<TItem, StarfieldGroup.Mask<TItem>?>(GameplayOptions, new StarfieldGroup.Mask<TItem>(GameplayOptions));
                 this.GameplayOptionsGroups = new MaskItem<TItem, StarfieldGroup.Mask<TItem>?>(GameplayOptionsGroups, new StarfieldGroup.Mask<TItem>(GameplayOptionsGroups));
                 this.GravityWielderEffectDatas = new MaskItem<TItem, StarfieldGroup.Mask<TItem>?>(GravityWielderEffectDatas, new StarfieldGroup.Mask<TItem>(GravityWielderEffectDatas));
+                this.TrackDamageEffectDatas = new MaskItem<TItem, StarfieldGroup.Mask<TItem>?>(TrackDamageEffectDatas, new StarfieldGroup.Mask<TItem>(TrackDamageEffectDatas));
             }
 
             #pragma warning disable CS8618
@@ -2279,6 +2290,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<TItem, StarfieldGroup.Mask<TItem>?>? GameplayOptions { get; set; }
             public MaskItem<TItem, StarfieldGroup.Mask<TItem>?>? GameplayOptionsGroups { get; set; }
             public MaskItem<TItem, StarfieldGroup.Mask<TItem>?>? GravityWielderEffectDatas { get; set; }
+            public MaskItem<TItem, StarfieldGroup.Mask<TItem>?>? TrackDamageEffectDatas { get; set; }
             #endregion
 
             #region Equals
@@ -2471,6 +2483,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.GameplayOptions, rhs.GameplayOptions)) return false;
                 if (!object.Equals(this.GameplayOptionsGroups, rhs.GameplayOptionsGroups)) return false;
                 if (!object.Equals(this.GravityWielderEffectDatas, rhs.GravityWielderEffectDatas)) return false;
+                if (!object.Equals(this.TrackDamageEffectDatas, rhs.TrackDamageEffectDatas)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -2656,6 +2669,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.GameplayOptions);
                 hash.Add(this.GameplayOptionsGroups);
                 hash.Add(this.GravityWielderEffectDatas);
+                hash.Add(this.TrackDamageEffectDatas);
                 return hash.ToHashCode();
             }
 
@@ -3564,6 +3578,11 @@ namespace Mutagen.Bethesda.Starfield
                     if (!eval(this.GravityWielderEffectDatas.Overall)) return false;
                     if (this.GravityWielderEffectDatas.Specific != null && !this.GravityWielderEffectDatas.Specific.All(eval)) return false;
                 }
+                if (TrackDamageEffectDatas != null)
+                {
+                    if (!eval(this.TrackDamageEffectDatas.Overall)) return false;
+                    if (this.TrackDamageEffectDatas.Specific != null && !this.TrackDamageEffectDatas.Specific.All(eval)) return false;
+                }
                 return true;
             }
             #endregion
@@ -4471,6 +4490,11 @@ namespace Mutagen.Bethesda.Starfield
                     if (eval(this.GravityWielderEffectDatas.Overall)) return true;
                     if (this.GravityWielderEffectDatas.Specific != null && this.GravityWielderEffectDatas.Specific.Any(eval)) return true;
                 }
+                if (TrackDamageEffectDatas != null)
+                {
+                    if (eval(this.TrackDamageEffectDatas.Overall)) return true;
+                    if (this.TrackDamageEffectDatas.Specific != null && this.TrackDamageEffectDatas.Specific.Any(eval)) return true;
+                }
                 return false;
             }
             #endregion
@@ -4665,6 +4689,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.GameplayOptions = this.GameplayOptions == null ? null : new MaskItem<R, StarfieldGroup.Mask<R>?>(eval(this.GameplayOptions.Overall), this.GameplayOptions.Specific?.Translate(eval));
                 obj.GameplayOptionsGroups = this.GameplayOptionsGroups == null ? null : new MaskItem<R, StarfieldGroup.Mask<R>?>(eval(this.GameplayOptionsGroups.Overall), this.GameplayOptionsGroups.Specific?.Translate(eval));
                 obj.GravityWielderEffectDatas = this.GravityWielderEffectDatas == null ? null : new MaskItem<R, StarfieldGroup.Mask<R>?>(eval(this.GravityWielderEffectDatas.Overall), this.GravityWielderEffectDatas.Specific?.Translate(eval));
+                obj.TrackDamageEffectDatas = this.TrackDamageEffectDatas == null ? null : new MaskItem<R, StarfieldGroup.Mask<R>?>(eval(this.TrackDamageEffectDatas.Overall), this.TrackDamageEffectDatas.Specific?.Translate(eval));
             }
             #endregion
 
@@ -5403,6 +5428,10 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         GravityWielderEffectDatas?.Print(sb);
                     }
+                    if (printMask?.TrackDamageEffectDatas?.Overall ?? true)
+                    {
+                        TrackDamageEffectDatas?.Print(sb);
+                    }
                 }
             }
             #endregion
@@ -5607,6 +5636,7 @@ namespace Mutagen.Bethesda.Starfield
             public MaskItem<Exception?, StarfieldGroup.ErrorMask<GameplayOption.ErrorMask>?>? GameplayOptions;
             public MaskItem<Exception?, StarfieldGroup.ErrorMask<GameplayOptionsGroup.ErrorMask>?>? GameplayOptionsGroups;
             public MaskItem<Exception?, StarfieldGroup.ErrorMask<GravityWielderEffectData.ErrorMask>?>? GravityWielderEffectDatas;
+            public MaskItem<Exception?, StarfieldGroup.ErrorMask<TrackDamageEffectData.ErrorMask>?>? TrackDamageEffectDatas;
             #endregion
 
             #region IErrorMask
@@ -5975,6 +6005,8 @@ namespace Mutagen.Bethesda.Starfield
                         return GameplayOptionsGroups;
                     case StarfieldMod_FieldIndex.GravityWielderEffectDatas:
                         return GravityWielderEffectDatas;
+                    case StarfieldMod_FieldIndex.TrackDamageEffectDatas:
+                        return TrackDamageEffectDatas;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -6524,6 +6556,9 @@ namespace Mutagen.Bethesda.Starfield
                         break;
                     case StarfieldMod_FieldIndex.GravityWielderEffectDatas:
                         this.GravityWielderEffectDatas = new MaskItem<Exception?, StarfieldGroup.ErrorMask<GravityWielderEffectData.ErrorMask>?>(ex, null);
+                        break;
+                    case StarfieldMod_FieldIndex.TrackDamageEffectDatas:
+                        this.TrackDamageEffectDatas = new MaskItem<Exception?, StarfieldGroup.ErrorMask<TrackDamageEffectData.ErrorMask>?>(ex, null);
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -7075,6 +7110,9 @@ namespace Mutagen.Bethesda.Starfield
                     case StarfieldMod_FieldIndex.GravityWielderEffectDatas:
                         this.GravityWielderEffectDatas = (MaskItem<Exception?, StarfieldGroup.ErrorMask<GravityWielderEffectData.ErrorMask>?>?)obj;
                         break;
+                    case StarfieldMod_FieldIndex.TrackDamageEffectDatas:
+                        this.TrackDamageEffectDatas = (MaskItem<Exception?, StarfieldGroup.ErrorMask<TrackDamageEffectData.ErrorMask>?>?)obj;
+                        break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -7263,6 +7301,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (GameplayOptions != null) return true;
                 if (GameplayOptionsGroups != null) return true;
                 if (GravityWielderEffectDatas != null) return true;
+                if (TrackDamageEffectDatas != null) return true;
                 return false;
             }
             #endregion
@@ -7468,6 +7507,7 @@ namespace Mutagen.Bethesda.Starfield
                 GameplayOptions?.Print(sb);
                 GameplayOptionsGroups?.Print(sb);
                 GravityWielderEffectDatas?.Print(sb);
+                TrackDamageEffectDatas?.Print(sb);
             }
             #endregion
 
@@ -7656,6 +7696,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.GameplayOptions = this.GameplayOptions.Combine(rhs.GameplayOptions, (l, r) => l.Combine(r));
                 ret.GameplayOptionsGroups = this.GameplayOptionsGroups.Combine(rhs.GameplayOptionsGroups, (l, r) => l.Combine(r));
                 ret.GravityWielderEffectDatas = this.GravityWielderEffectDatas.Combine(rhs.GravityWielderEffectDatas, (l, r) => l.Combine(r));
+                ret.TrackDamageEffectDatas = this.TrackDamageEffectDatas.Combine(rhs.TrackDamageEffectDatas, (l, r) => l.Combine(r));
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -7859,6 +7900,7 @@ namespace Mutagen.Bethesda.Starfield
             public StarfieldGroup.TranslationMask<GameplayOption.TranslationMask>? GameplayOptions;
             public StarfieldGroup.TranslationMask<GameplayOptionsGroup.TranslationMask>? GameplayOptionsGroups;
             public StarfieldGroup.TranslationMask<GravityWielderEffectData.TranslationMask>? GravityWielderEffectDatas;
+            public StarfieldGroup.TranslationMask<TrackDamageEffectData.TranslationMask>? TrackDamageEffectDatas;
             #endregion
 
             #region Ctors
@@ -8063,6 +8105,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((GameplayOptions != null ? GameplayOptions.OnOverall : DefaultOn, GameplayOptions?.GetCrystal()));
                 ret.Add((GameplayOptionsGroups != null ? GameplayOptionsGroups.OnOverall : DefaultOn, GameplayOptionsGroups?.GetCrystal()));
                 ret.Add((GravityWielderEffectDatas != null ? GravityWielderEffectDatas.OnOverall : DefaultOn, GravityWielderEffectDatas?.GetCrystal()));
+                ret.Add((TrackDamageEffectDatas != null ? TrackDamageEffectDatas.OnOverall : DefaultOn, TrackDamageEffectDatas?.GetCrystal()));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -8301,6 +8344,7 @@ namespace Mutagen.Bethesda.Starfield
             _GameplayOptions_Object = new StarfieldGroup<GameplayOption>(this);
             _GameplayOptionsGroups_Object = new StarfieldGroup<GameplayOptionsGroup>(this);
             _GravityWielderEffectDatas_Object = new StarfieldGroup<GravityWielderEffectData>(this);
+            _TrackDamageEffectDatas_Object = new StarfieldGroup<TrackDamageEffectData>(this);
             CustomCtor();
         }
         public void AddRecords(
@@ -9026,6 +9070,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.GravityWielderEffectDatas.RecordCache.Set(rhsMod.GravityWielderEffectDatas.RecordCache.Items);
             }
+            if (mask?.TrackDamageEffectDatas ?? true)
+            {
+                this.TrackDamageEffectDatas.RecordCache.Set(rhsMod.TrackDamageEffectDatas.RecordCache.Items);
+            }
         }
 
         public override void SyncRecordCount()
@@ -9486,6 +9534,7 @@ namespace Mutagen.Bethesda.Starfield
         new StarfieldGroup<GameplayOption> GameplayOptions { get; }
         new StarfieldGroup<GameplayOptionsGroup> GameplayOptionsGroups { get; }
         new StarfieldGroup<GravityWielderEffectData> GravityWielderEffectDatas { get; }
+        new StarfieldGroup<TrackDamageEffectData> TrackDamageEffectDatas { get; }
     }
 
     public partial interface IStarfieldModGetter :
@@ -9685,6 +9734,7 @@ namespace Mutagen.Bethesda.Starfield
         IStarfieldGroupGetter<IGameplayOptionGetter> GameplayOptions { get; }
         IStarfieldGroupGetter<IGameplayOptionsGroupGetter> GameplayOptionsGroups { get; }
         IStarfieldGroupGetter<IGravityWielderEffectDataGetter> GravityWielderEffectDatas { get; }
+        IStarfieldGroupGetter<ITrackDamageEffectDataGetter> TrackDamageEffectDatas { get; }
 
         #region Mutagen
         StarfieldRelease StarfieldRelease { get; }
@@ -10424,6 +10474,7 @@ namespace Mutagen.Bethesda.Starfield
         GameplayOptions = 177,
         GameplayOptionsGroups = 178,
         GravityWielderEffectDatas = 179,
+        TrackDamageEffectDatas = 180,
     }
     #endregion
 
@@ -10434,9 +10485,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 180;
+        public const ushort AdditionalFieldCount = 181;
 
-        public const ushort FieldCount = 180;
+        public const ushort FieldCount = 181;
 
         public static readonly Type MaskType = typeof(StarfieldMod.Mask<>);
 
@@ -10681,6 +10732,7 @@ namespace Mutagen.Bethesda.Starfield
             item.GameplayOptions.Clear();
             item.GameplayOptionsGroups.Clear();
             item.GravityWielderEffectDatas.Clear();
+            item.TrackDamageEffectDatas.Clear();
         }
         
         #region Mutagen
@@ -10851,6 +10903,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.GameplayOptions.RemapLinks(mapping);
             obj.GameplayOptionsGroups.RemapLinks(mapping);
             obj.GravityWielderEffectDatas.RemapLinks(mapping);
+            obj.TrackDamageEffectDatas.RemapLinks(mapping);
         }
         
         public IEnumerable<IMajorRecord> EnumerateMajorRecords(IStarfieldMod obj)
@@ -11099,6 +11152,7 @@ namespace Mutagen.Bethesda.Starfield
             obj.GameplayOptions.Remove(keys);
             obj.GameplayOptionsGroups.Remove(keys);
             obj.GravityWielderEffectDatas.Remove(keys);
+            obj.TrackDamageEffectDatas.Remove(keys);
         }
         
         public void Remove(
@@ -13046,6 +13100,14 @@ namespace Mutagen.Bethesda.Starfield
                         type: type,
                         keys: keys);
                     break;
+                case "TrackDamageEffectData":
+                case "ITrackDamageEffectDataGetter":
+                case "ITrackDamageEffectData":
+                case "ITrackDamageEffectDataInternal":
+                    obj.TrackDamageEffectDatas.Remove(
+                        type: type,
+                        keys: keys);
+                    break;
                 case "Transform":
                 case "ITransformGetter":
                 case "ITransform":
@@ -14111,6 +14173,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.GameplayOptions = MaskItemExt.Factory(item.GameplayOptions.GetEqualsMask(rhs.GameplayOptions, include), include);
             ret.GameplayOptionsGroups = MaskItemExt.Factory(item.GameplayOptionsGroups.GetEqualsMask(rhs.GameplayOptionsGroups, include), include);
             ret.GravityWielderEffectDatas = MaskItemExt.Factory(item.GravityWielderEffectDatas.GetEqualsMask(rhs.GravityWielderEffectDatas, include), include);
+            ret.TrackDamageEffectDatas = MaskItemExt.Factory(item.TrackDamageEffectDatas.GetEqualsMask(rhs.TrackDamageEffectDatas, include), include);
         }
         
         public string Print(
@@ -14874,6 +14937,10 @@ namespace Mutagen.Bethesda.Starfield
             if (printMask?.GravityWielderEffectDatas?.Overall ?? true)
             {
                 item.GravityWielderEffectDatas?.Print(sb, "GravityWielderEffectDatas");
+            }
+            if (printMask?.TrackDamageEffectDatas?.Overall ?? true)
+            {
+                item.TrackDamageEffectDatas?.Print(sb, "TrackDamageEffectDatas");
             }
         }
         
@@ -16324,6 +16391,14 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 else if (!isGravityWielderEffectDatasEqual) return false;
             }
+            if ((equalsMask?.GetShouldTranslate((int)StarfieldMod_FieldIndex.TrackDamageEffectDatas) ?? true))
+            {
+                if (EqualsMaskHelper.RefEquality(lhs.TrackDamageEffectDatas, rhs.TrackDamageEffectDatas, out var lhsTrackDamageEffectDatas, out var rhsTrackDamageEffectDatas, out var isTrackDamageEffectDatasEqual))
+                {
+                    if (!object.Equals(lhsTrackDamageEffectDatas, rhsTrackDamageEffectDatas)) return false;
+                }
+                else if (!isTrackDamageEffectDatasEqual) return false;
+            }
             return true;
         }
         
@@ -16510,6 +16585,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.GameplayOptions);
             hash.Add(item.GameplayOptionsGroups);
             hash.Add(item.GravityWielderEffectDatas);
+            hash.Add(item.TrackDamageEffectDatas);
             return hash.ToHashCode();
         }
         
@@ -17474,6 +17550,11 @@ namespace Mutagen.Bethesda.Starfield
                 case "IGravityWielderEffectData":
                 case "IGravityWielderEffectDataInternal":
                     return obj.GravityWielderEffectDatas;
+                case "TrackDamageEffectData":
+                case "ITrackDamageEffectDataGetter":
+                case "ITrackDamageEffectData":
+                case "ITrackDamageEffectDataInternal":
+                    return obj.TrackDamageEffectDatas;
                 default:
                     return null;
             }
@@ -17492,7 +17573,7 @@ namespace Mutagen.Bethesda.Starfield
                 mod: item,
                 modHeader: item.ModHeader.DeepCopy(),
                 modKey: modKey);
-            Stream[] outputStreams = new Stream[179];
+            Stream[] outputStreams = new Stream[180];
             List<Action> toDo = new List<Action>();
             if (importMask?.GameSettings ?? true)
             toDo.Add(() => WriteGroupParallel(item.GameSettings, 0, outputStreams, writer.MetaData, param.Parallel));
@@ -17852,6 +17933,8 @@ namespace Mutagen.Bethesda.Starfield
             toDo.Add(() => WriteGroupParallel(item.GameplayOptionsGroups, 177, outputStreams, writer.MetaData, param.Parallel));
             if (importMask?.GravityWielderEffectDatas ?? true)
             toDo.Add(() => WriteGroupParallel(item.GravityWielderEffectDatas, 178, outputStreams, writer.MetaData, param.Parallel));
+            if (importMask?.TrackDamageEffectDatas ?? true)
+            toDo.Add(() => WriteGroupParallel(item.TrackDamageEffectDatas, 179, outputStreams, writer.MetaData, param.Parallel));
             Parallel.Invoke(param.Parallel.ParallelOptions, toDo.ToArray());
             PluginUtilityTranslation.CompileStreamsInto(
                 item,
@@ -18077,6 +18160,7 @@ namespace Mutagen.Bethesda.Starfield
             count += item.GameplayOptions.RecordCache.Count > 0 ? 1 : default(uint);
             count += item.GameplayOptionsGroups.RecordCache.Count > 0 ? 1 : default(uint);
             count += item.GravityWielderEffectDatas.RecordCache.Count > 0 ? 1 : default(uint);
+            count += item.TrackDamageEffectDatas.RecordCache.Count > 0 ? 1 : default(uint);
             GetCustomRecordCount(item, (customCount) => count += customCount);
             return count;
         }
@@ -18835,6 +18919,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 yield return item;
             }
+            foreach (var item in obj.TrackDamageEffectDatas.EnumerateFormLinks(iterateNestedRecords))
+            {
+                yield return item;
+            }
             yield break;
         }
         
@@ -19563,6 +19651,10 @@ namespace Mutagen.Bethesda.Starfield
                 yield return item;
             }
             foreach (var item in obj.GravityWielderEffectDatas.EnumerateMajorRecords())
+            {
+                yield return item;
+            }
+            foreach (var item in obj.TrackDamageEffectDatas.EnumerateMajorRecords())
             {
                 yield return item;
             }
@@ -21224,6 +21316,15 @@ namespace Mutagen.Bethesda.Starfield
                         yield return item;
                     }
                     yield break;
+                case "TrackDamageEffectData":
+                case "ITrackDamageEffectDataGetter":
+                case "ITrackDamageEffectData":
+                case "ITrackDamageEffectDataInternal":
+                    foreach (var item in obj.TrackDamageEffectDatas.EnumerateMajorRecords(type, throwIfUnknown: throwIfUnknown))
+                    {
+                        yield return item;
+                    }
+                    yield break;
                 case "Transform":
                 case "ITransformGetter":
                 case "ITransform":
@@ -22867,6 +22968,15 @@ namespace Mutagen.Bethesda.Starfield
                 modKey: obj.ModKey,
                 group: (m) => m.TimeOfDays,
                 groupGetter: (m) => m.TimeOfDays))
+            {
+                yield return item;
+            }
+            foreach (var item in InterfaceEnumerationHelper.EnumerateGroupContexts<IStarfieldMod, IStarfieldModGetter, TrackDamageEffectData, ITrackDamageEffectDataGetter>(
+                srcGroup: obj.TrackDamageEffectDatas,
+                type: typeof(ITrackDamageEffectDataGetter),
+                modKey: obj.ModKey,
+                group: (m) => m.TrackDamageEffectDatas,
+                groupGetter: (m) => m.TrackDamageEffectDatas))
             {
                 yield return item;
             }
@@ -25583,6 +25693,20 @@ namespace Mutagen.Bethesda.Starfield
                         modKey: obj.ModKey,
                         group: (m) => m.TimeOfDays,
                         groupGetter: (m) => m.TimeOfDays))
+                    {
+                        yield return item;
+                    }
+                    yield break;
+                case "TrackDamageEffectData":
+                case "ITrackDamageEffectDataGetter":
+                case "ITrackDamageEffectData":
+                case "ITrackDamageEffectDataInternal":
+                    foreach (var item in InterfaceEnumerationHelper.EnumerateGroupContexts<IStarfieldMod, IStarfieldModGetter, TrackDamageEffectData, ITrackDamageEffectDataGetter>(
+                        srcGroup: obj.TrackDamageEffectDatas,
+                        type: type,
+                        modKey: obj.ModKey,
+                        group: (m) => m.TrackDamageEffectDatas,
+                        groupGetter: (m) => m.TrackDamageEffectDatas))
                     {
                         yield return item;
                     }
@@ -30015,6 +30139,26 @@ namespace Mutagen.Bethesda.Starfield
                     errorMask?.PopIndex();
                 }
             }
+            if ((copyMask?.GetShouldTranslate((int)StarfieldMod_FieldIndex.TrackDamageEffectDatas) ?? true))
+            {
+                errorMask?.PushIndex((int)StarfieldMod_FieldIndex.TrackDamageEffectDatas);
+                try
+                {
+                    item.TrackDamageEffectDatas.DeepCopyIn(
+                        rhs: rhs.TrackDamageEffectDatas,
+                        errorMask: errorMask,
+                        copyMask: copyMask?.GetSubCrystal((int)StarfieldMod_FieldIndex.TrackDamageEffectDatas));
+                }
+                catch (Exception ex)
+                when (errorMask != null)
+                {
+                    errorMask.ReportException(ex);
+                }
+                finally
+                {
+                    errorMask?.PopIndex();
+                }
+            }
             DeepCopyInCustom(
                 item: item,
                 rhs: rhs,
@@ -30297,6 +30441,7 @@ namespace Mutagen.Bethesda.Starfield
         public bool GameplayOptions;
         public bool GameplayOptionsGroups;
         public bool GravityWielderEffectDatas;
+        public bool TrackDamageEffectDatas;
         public GroupMask()
         {
         }
@@ -30481,6 +30626,7 @@ namespace Mutagen.Bethesda.Starfield
             GameplayOptions = defaultValue;
             GameplayOptionsGroups = defaultValue;
             GravityWielderEffectDatas = defaultValue;
+            TrackDamageEffectDatas = defaultValue;
         }
     }
 
@@ -32505,6 +32651,17 @@ namespace Mutagen.Bethesda.Starfield
                 {
                     ((StarfieldGroupBinaryWriteTranslation)((IBinaryItem)GravityWielderEffectDatasItem).BinaryWriteTranslator).Write<IGravityWielderEffectDataGetter>(
                         item: GravityWielderEffectDatasItem,
+                        writer: writer,
+                        translationParams: translationParams);
+                }
+            }
+            if (importMask?.TrackDamageEffectDatas ?? true)
+            {
+                var TrackDamageEffectDatasItem = item.TrackDamageEffectDatas;
+                if (TrackDamageEffectDatasItem.RecordCache.Count > 0)
+                {
+                    ((StarfieldGroupBinaryWriteTranslation)((IBinaryItem)TrackDamageEffectDatasItem).BinaryWriteTranslator).Write<ITrackDamageEffectDataGetter>(
+                        item: TrackDamageEffectDatasItem,
                         writer: writer,
                         translationParams: translationParams);
                 }
@@ -35086,6 +35243,20 @@ namespace Mutagen.Bethesda.Starfield
                     }
                     return (int)StarfieldMod_FieldIndex.GravityWielderEffectDatas;
                 }
+                case RecordTypeInts.TDED:
+                {
+                    if (importMask?.TrackDamageEffectDatas ?? true)
+                    {
+                        item.TrackDamageEffectDatas.CopyInFromBinary(
+                            frame: frame,
+                            translationParams: null);
+                    }
+                    else
+                    {
+                        frame.Position += contentLength;
+                    }
+                    return (int)StarfieldMod_FieldIndex.TrackDamageEffectDatas;
+                }
                 default:
                     frame.Position += contentLength;
                     return default(int?);
@@ -36147,6 +36318,11 @@ namespace Mutagen.Bethesda.Starfield
         private List<RangeInt64>? _GravityWielderEffectDatasLocations;
         private IStarfieldGroupGetter<IGravityWielderEffectDataGetter>? _GravityWielderEffectDatas => _GravityWielderEffectDatasLocations != null ? StarfieldGroupBinaryOverlay<IGravityWielderEffectDataGetter>.StarfieldGroupFactory(_stream, _GravityWielderEffectDatasLocations, _package) : default;
         public IStarfieldGroupGetter<IGravityWielderEffectDataGetter> GravityWielderEffectDatas => _GravityWielderEffectDatas ?? new StarfieldGroup<GravityWielderEffectData>(this);
+        #endregion
+        #region TrackDamageEffectDatas
+        private List<RangeInt64>? _TrackDamageEffectDatasLocations;
+        private IStarfieldGroupGetter<ITrackDamageEffectDataGetter>? _TrackDamageEffectDatas => _TrackDamageEffectDatasLocations != null ? StarfieldGroupBinaryOverlay<ITrackDamageEffectDataGetter>.StarfieldGroupFactory(_stream, _TrackDamageEffectDatasLocations, _package) : default;
+        public IStarfieldGroupGetter<ITrackDamageEffectDataGetter> TrackDamageEffectDatas => _TrackDamageEffectDatas ?? new StarfieldGroup<TrackDamageEffectData>(this);
         #endregion
         protected StarfieldModBinaryOverlay(
             IMutagenReadStream stream,
@@ -37304,6 +37480,12 @@ namespace Mutagen.Bethesda.Starfield
                     _GravityWielderEffectDatasLocations ??= new();
                     _GravityWielderEffectDatasLocations.Add(new RangeInt64((stream.Position - offset), finalPos - offset));
                     return (int)StarfieldMod_FieldIndex.GravityWielderEffectDatas;
+                }
+                case RecordTypeInts.TDED:
+                {
+                    _TrackDamageEffectDatasLocations ??= new();
+                    _TrackDamageEffectDatasLocations.Add(new RangeInt64((stream.Position - offset), finalPos - offset));
+                    return (int)StarfieldMod_FieldIndex.TrackDamageEffectDatas;
                 }
                 default:
                     return default(int?);

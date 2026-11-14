@@ -103,7 +103,7 @@ public class StarfieldPassthroughTest : PassthroughTest
             RecordTypes.WKMF, RecordTypes.LGDI, RecordTypes.PSDC, RecordTypes.SUNP,
             RecordTypes.PMFT, RecordTypes.GPOF, RecordTypes.GPOG, RecordTypes.TODD,
             RecordTypes.AVMD, RecordTypes.CHAL, RecordTypes.FXPD, RecordTypes.PERS,
-            RecordTypes.GWED);
+            RecordTypes.GWED, RecordTypes.TDED);
 
         ret.SetGroupAlignment(
             (int)GroupTypeEnum.QuestChildren,

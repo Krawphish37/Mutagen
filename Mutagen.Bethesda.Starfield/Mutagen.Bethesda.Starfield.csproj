@@ -2333,6 +2333,9 @@
     <Compile Include="Records\Major Records\MagicEffectGravityWielderArchetype.cs">
       <DependentUpon>MagicEffect.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Major Records\MagicEffectTrackDamageArchetype.cs">
+      <DependentUpon>MagicEffect.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Major Records\MagicEffectDamageTypeModArchetype.cs">
       <DependentUpon>MagicEffect.xml</DependentUpon>
     </Compile>
@@ -7079,6 +7082,12 @@
     </Compile>
     <Compile Include="Records\Major Records\MagicEffectGravityWielderArchetype_Generated.cs">
       <DependentUpon>MagicEffect.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\MagicEffectTrackDamageArchetype_Generated.cs">
+      <DependentUpon>MagicEffect.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\TrackDamageEffectData_Generated.cs">
+      <DependentUpon>TrackDamageEffectData.xml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

@@ -152,6 +152,12 @@ partial class MagicEffectBinaryCreateTranslation
                     Association = associatedItemKey.ToLink<IGravityWielderEffectDataGetter>()
                 };
                 break;
+            case MagicEffectArchetype.TypeEnum.TrackDamage:
+                archetype = new MagicEffectTrackDamageArchetype()
+                {
+                    Association = associatedItemKey.ToLink<ITrackDamageEffectDataGetter>()
+                };
+                break;
             case MagicEffectArchetype.TypeEnum.Calm:
             case MagicEffectArchetype.TypeEnum.Frenzy:
                 archetype = new MagicEffectArchetype(archetypeEnum)

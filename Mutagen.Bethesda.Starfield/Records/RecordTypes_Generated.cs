@@ -1052,6 +1052,7 @@ public partial class RecordTypes
     public static readonly RecordType TASF = new(0x46534154);
     public static readonly RecordType TAUT = new(0x54554154);
     public static readonly RecordType TCMP = new(0x504D4354);
+    public static readonly RecordType TDED = new(0x44454454);
     public static readonly RecordType TEMP = new(0x504D4554);
     public static readonly RecordType TERM = new(0x4D524554);
     public static readonly RecordType TES4 = new(0x34534554);

@@ -1050,6 +1050,7 @@ public partial class RecordTypeInts
     public const int TASF = 0x46534154;
     public const int TAUT = 0x54554154;
     public const int TCMP = 0x504D4354;
+    public const int TDED = 0x44454454;
     public const int TEMP = 0x504D4554;
     public const int TERM = 0x4D524554;
     public const int TES4 = 0x34534554;
