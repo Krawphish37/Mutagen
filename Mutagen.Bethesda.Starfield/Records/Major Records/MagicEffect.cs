@@ -128,6 +128,18 @@ partial class MagicEffectBinaryCreateTranslation
                     Association = associatedItemKey.ToLink<IObjectEffectGetter>()
                 };
                 break;
+            case MagicEffectArchetype.TypeEnum.Immunity:
+                archetype = new MagicEffectImmunityModArchetype()
+                {
+                    Association = associatedItemKey.ToLink<IDamageTypeGetter>()
+                };
+                break;
+            case MagicEffectArchetype.TypeEnum.Damage:
+                archetype = new MagicEffectDamageTypeModArchetype()
+                {
+                    Association = associatedItemKey.ToLink<IDamageTypeGetter>()
+                };
+                break;
             case MagicEffectArchetype.TypeEnum.Calm:
             case MagicEffectArchetype.TypeEnum.Frenzy:
                 archetype = new MagicEffectArchetype(archetypeEnum)
