@@ -1091,7 +1091,7 @@ public abstract class Processor
         var overlays = Enums<StringsSource>.Values
             .Select(x => (x, stringsOverlay.Get(x)))
             .ToDictionary(x => x.x,
-                x => (x.Item2, x.Item2.ToDictionary(x => x.Key, x => x.Value.Value.StringsLookup.ToDictionary(x => x.Key, x => x.Value))));
+                x => (x.Item2, x.Item2.ToDictionary(x => x.Key, x => x.Value.StringsLookup.Value.ToDictionary(x => x.Key, x => x.Value))));
 
         var deadKeys = KnownDeadStringKeys();
 
@@ -1139,7 +1139,7 @@ public abstract class Processor
                 foreach (var (lang, langOverlayEntry) in dict.Item1)
                 {
                     if (lang == language) continue;
-                    if (langOverlayEntry.Value.StringsLookup.TryLookup(entry.OrigIndex, out var otherStr))
+                    if (langOverlayEntry.StringsLookup.Value.TryLookup(entry.OrigIndex, out var otherStr))
                     {
                         otherLangPairs.Add(new KeyValuePair<Language, string>(lang, otherStr));
                     }
@@ -1218,7 +1218,7 @@ public abstract class Processor
         stream.Position = 0;
         var locs = RecordLocator.GetLocations(stream);
 
-        IStringsLookup stringsLookup = overlay?.Value.StringsLookup ?? EmptyStringsLookup.Instance;
+        IStringsLookup stringsLookup = overlay?.StringsLookup.Value ?? EmptyStringsLookup.Instance;
 
         foreach (var rec in locs.ListedRecords)
         {
