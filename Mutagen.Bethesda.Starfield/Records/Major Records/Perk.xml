@@ -86,13 +86,14 @@
   </Object>
   <Object name="PerkEntryPointModifyValue" objType="Subrecord" baseClass="APerkEntryPointEffect">
     <Fields>
-      <Enum name="Modification" enumName="PerkEntryPointModifyValue.ModificationType" />
+      <!-- Not stored as such: the entry point function in DATA (byte 1) picks it; layoutMap = function:Modification -->
+      <Enum name="Modification" enumName="PerkEntryPointModifyValue.ModificationType" layoutSubrecord="DATA" layoutOffset="1" layoutMap="1:Set,2:Add,3:Multiply" />
       <Float name="Value" recordType="EPFD" nullable="True" />
     </Fields>
   </Object>
   <Object name="PerkEntryPointModifyValues" objType="Subrecord" baseClass="APerkEntryPointEffect">
     <Fields>
-      <Enum name="Modification" enumName="PerkEntryPointModifyValue.ModificationType" />
+      <Enum name="Modification" enumName="PerkEntryPointModifyValue.ModificationType" layoutSubrecord="DATA" layoutOffset="1" layoutMap="1:Set,2:Add,3:Multiply" />
       <Float name="Value" nullable="True" />
       <Float name="Value2" nullable="True" />
     </Fields>
@@ -107,7 +108,7 @@
     <Fields>
       <FormLink name="ActorValue" refName="ActorValueInformation" />
       <Float name="Value" />
-      <Enum name="Modification" enumName="PerkEntryPointModifyActorValue.ModificationType" />
+      <Enum name="Modification" enumName="PerkEntryPointModifyActorValue.ModificationType" layoutSubrecord="DATA" layoutOffset="1" layoutMap="5:AddAVMult,12:SetToAVMult,13:MultiplyAVMult,14:MultiplyOnePlusAVMult" />
     </Fields>
   </Object>
   <Object name="PerkEntryPointAbsoluteValue" objType="Subrecord" baseClass="APerkEntryPointEffect">

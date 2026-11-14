@@ -160,4 +160,51 @@ public class HandReadLayoutAttributesTests
             Write(c).ShouldBe(bytes);
         }
     }
+
+    // C196: the comparison value (4), the function index (8, on FunctionParse) and Unknown2 (10) are where the xml says
+    [Fact]
+    public void ComparisonValueFunctionIndexAndUnknown2_AreAtTheXmlOffsets()
+    {
+        var condition = Path.Combine("Common Subrecords", "Condition.xml");
+        int Offset(string obj, string field) => int.Parse((string)Field(condition, obj, field).Attribute("layoutOffset")!);
+        var floatValue = Offset("ConditionFloat", "ComparisonValue");
+        var globalValue = Offset("ConditionGlobal", "ComparisonValue");
+        var function = Offset("Condition", "FunctionParse");
+        var unknown2 = Offset("Condition", "Unknown2");
+        (floatValue, globalValue, function, unknown2).ShouldBe((4, 4, 8, 10));
+        ((string)Field(condition, "Condition", "FunctionParse").Attribute("layoutEncoding")!).ShouldBe("uint16");
+
+        byte[] Bytes(byte packed, uint value)
+        {
+            var content = new byte[32];
+            content[0] = packed;
+            BitConverter.GetBytes(value).CopyTo(content, floatValue);
+            BitConverter.GetBytes((ushort)72).CopyTo(content, function); // GetIsID
+            BitConverter.GetBytes((ushort)0xBEEF).CopyTo(content, unknown2);
+            BitConverter.GetBytes(-1).CopyTo(content, 28);
+            var sub = new MemoryStream();
+            sub.Write("CTDA"u8);
+            sub.Write(BitConverter.GetBytes((ushort)content.Length));
+            sub.Write(content);
+            return sub.ToArray();
+        }
+
+        var floatBytes = Bytes(0b000_00000, BitConverter.SingleToUInt32Bits(2.5f));
+        foreach (var c in ReadBoth(floatBytes))
+        {
+            c.ShouldBeAssignableTo<IConditionFloatGetter>()!.ComparisonValue.ShouldBe(2.5f);
+            ((ushort)c.Data.Function).ShouldBe((ushort)72);
+            c.Unknown2.ShouldBe((ushort)0xBEEF);
+            Write(c).ShouldBe(floatBytes);
+        }
+        // flag 0x04: the comparison value is a global (own record of the test mod, which has no masters)
+        var globalBytes = Bytes(0b000_00100, 0x000805);
+        foreach (var c in ReadBoth(globalBytes))
+        {
+            c.ShouldBeAssignableTo<IConditionGlobalGetter>()!.ComparisonValue.FormKey.ShouldBe(new FormKey(TestModKey, 0x805));
+            ((ushort)c.Data.Function).ShouldBe((ushort)72);
+            c.Unknown2.ShouldBe((ushort)0xBEEF);
+            Write(c).ShouldBe(globalBytes);
+        }
+    }
 }
