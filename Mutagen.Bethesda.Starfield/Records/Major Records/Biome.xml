@@ -28,7 +28,7 @@
       <FormLink name="Child" recordType="ZNAM" refName="Biome" />
       <FormLink name="AmbienceSet" recordType="BIAS" refName="AmbienceSet" />
       <FormLink name="MusicType" recordType="BIMT" refName="MusicType" />
-      <FormLink name="TimeOfDay" recordType="NAM0" refName="TimeOfDayRecord" />
+      <FormLink name="TimeOfDay" recordType="NAM0" refName="TimeOfDayData" />
       <FormLink name="PatternStyle" recordType="NNAM" refName="SurfacePatternStyle" />
       <Color name="Color" recordType="CNAM" binaryType="Alpha" nullable="False" />
       <Color name="SurfaceColor1" recordType="BMC1" binaryType="Alpha" nullable="False" />

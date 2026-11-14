@@ -311,14 +311,14 @@ namespace Mutagen.Bethesda.Starfield
         Boolean? ICellGetter.GlobalDirtLayerInheritBiomeLayer => this.GlobalDirtLayerInheritBiomeLayer;
         #endregion
         #region TimeOfDay
-        private readonly IFormLinkNullable<ITimeOfDayRecordGetter> _TimeOfDay = new FormLinkNullable<ITimeOfDayRecordGetter>();
-        public IFormLinkNullable<ITimeOfDayRecordGetter> TimeOfDay
+        private readonly IFormLinkNullable<ITimeOfDayDataGetter> _TimeOfDay = new FormLinkNullable<ITimeOfDayDataGetter>();
+        public IFormLinkNullable<ITimeOfDayDataGetter> TimeOfDay
         {
             get => _TimeOfDay;
             set => _TimeOfDay.SetTo(value);
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        IFormLinkNullableGetter<ITimeOfDayRecordGetter> ICellGetter.TimeOfDay => this.TimeOfDay;
+        IFormLinkNullableGetter<ITimeOfDayDataGetter> ICellGetter.TimeOfDay => this.TimeOfDay;
         #endregion
         #region LinkedReferences
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -2676,7 +2676,7 @@ namespace Mutagen.Bethesda.Starfield
         new Ownership? Ownership { get; set; }
         new String? GlobalDirtLayerMaterial { get; set; }
         new Boolean? GlobalDirtLayerInheritBiomeLayer { get; set; }
-        new IFormLinkNullable<ITimeOfDayRecordGetter> TimeOfDay { get; set; }
+        new IFormLinkNullable<ITimeOfDayDataGetter> TimeOfDay { get; set; }
         new ExtendedList<LinkedReferences> LinkedReferences { get; }
         new Boolean IsLinkedRefTransient { get; set; }
         new ExtendedList<TraversalReference>? Traversals { get; set; }
@@ -2751,7 +2751,7 @@ namespace Mutagen.Bethesda.Starfield
         IOwnershipGetter? Ownership { get; }
         String? GlobalDirtLayerMaterial { get; }
         Boolean? GlobalDirtLayerInheritBiomeLayer { get; }
-        IFormLinkNullableGetter<ITimeOfDayRecordGetter> TimeOfDay { get; }
+        IFormLinkNullableGetter<ITimeOfDayDataGetter> TimeOfDay { get; }
         IReadOnlyList<ILinkedReferencesGetter> LinkedReferences { get; }
         Boolean IsLinkedRefTransient { get; }
         IReadOnlyList<ITraversalReferenceGetter>? Traversals { get; }
@@ -6877,7 +6877,7 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         #region TimeOfDay
         private int? _TimeOfDayLocation;
-        public IFormLinkNullableGetter<ITimeOfDayRecordGetter> TimeOfDay => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ITimeOfDayRecordGetter>(_package, _recordData, _TimeOfDayLocation);
+        public IFormLinkNullableGetter<ITimeOfDayDataGetter> TimeOfDay => FormLinkBinaryTranslation.Instance.NullableRecordOverlayFactory<ITimeOfDayDataGetter>(_package, _recordData, _TimeOfDayLocation);
         #endregion
         public IReadOnlyList<ILinkedReferencesGetter> LinkedReferences { get; private set; } = [];
         #region IsLinkedRefTransient

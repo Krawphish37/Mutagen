@@ -108,7 +108,7 @@ public class ReflectionRecordTests
     [Fact]
     public void EquinoxInvertedEmit()
     {
-        foreach (var rec in ReadBoth<ITimeOfDayRecordGetter>(Record("TODD", Hex(EquinoxInvertedEmitHex)), f => TimeOfDayRecord.CreateFromBinary(f), (s, p) => TimeOfDayRecordBinaryOverlay.TimeOfDayRecordFactory(s, p)))
+        foreach (var rec in ReadBoth<ITimeOfDayDataGetter>(Record("TODD", Hex(EquinoxInvertedEmitHex)), f => TimeOfDayData.CreateFromBinary(f), (s, p) => TimeOfDayDataBinaryOverlay.TimeOfDayDataFactory(s, p)))
         {
             rec.Reflection.ShouldHaveFormIds();
             rec.Reflection.RootObject().Class.Name.ShouldBe("BGSTimeOfDayData");
@@ -122,7 +122,7 @@ public class ReflectionRecordTests
     [Fact]
     public void TracerRifle()
     {
-        foreach (var rec in ReadBoth<IParticleSystemDefineCollisionGetter>(Record("PSDC", Hex(TracerRifleHex)), f => ParticleSystemDefineCollision.CreateFromBinary(f), (s, p) => ParticleSystemDefineCollisionBinaryOverlay.ParticleSystemDefineCollisionFactory(s, p)))
+        foreach (var rec in ReadBoth<IParticleSystemDefineCollectionGetter>(Record("PSDC", Hex(TracerRifleHex)), f => ParticleSystemDefineCollection.CreateFromBinary(f), (s, p) => ParticleSystemDefineCollectionBinaryOverlay.ParticleSystemDefineCollectionFactory(s, p)))
         {
             rec.Reflection.ShouldHaveFormIds();
             rec.Reflection.RootObject().Class.Name.ShouldBe("BGSParticleSystemDefineCollection");

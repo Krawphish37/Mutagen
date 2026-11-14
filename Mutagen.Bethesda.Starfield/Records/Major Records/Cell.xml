@@ -44,7 +44,7 @@
       <RefDirect name="Ownership" refName="Ownership" />
       <String name="GlobalDirtLayerMaterial" recordType="XCGD" />
       <Bool name="GlobalDirtLayerInheritBiomeLayer" recordType="XCIB" byteLength="1" />
-      <FormLink name="TimeOfDay" refName="TimeOfDayRecord" recordType="TODD" />
+      <FormLink name="TimeOfDay" refName="TimeOfDayData" recordType="TODD" />
       <RefList name="LinkedReferences" refName="LinkedReferences" />
       <Bool name="IsLinkedRefTransient" boolAsMarker="XLKT" />
       <RefList name="Traversals" refName="TraversalReference" recordType="XTV2" overflowRecordType="XXXX" binary="Custom" />

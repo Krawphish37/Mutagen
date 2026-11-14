@@ -2,8 +2,8 @@
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
   <Object name="SoundReference" objType="Subrecord" >
     <Fields>
-      <Guid name="Start" />
-      <Guid name="Stop" />
+      <Guid name="StartEvent" />
+      <Guid name="StopEvent" />
       <FormLink name="Condition" refName="ConditionRecord" />
       <FormLink name="EventMapping" refName="WWiseEventData" />
     </Fields>

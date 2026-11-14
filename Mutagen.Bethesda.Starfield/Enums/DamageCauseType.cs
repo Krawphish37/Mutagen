@@ -1,6 +1,7 @@
 ﻿namespace Mutagen.Bethesda.Starfield;
 
-// GetCauseofDeath damage cause (xEdit wbDamageCauseTypeEnum)
+// GetCauseofDeath damage cause (xEdit wbDamageCauseTypeEnum). Values as the game's own DamageCauseType
+// (Starfield.exe 1.16.244 reflection): Vehicle_Impact = 12, Other = 13.
 public enum DamageCauseType
 {
     None = 0,
@@ -15,5 +16,6 @@ public enum DamageCauseType
     Drowning = 9,
     Trap = 10,
     ShipDestroyed = 11,
-    Other = 12,
+    VehicleImpact = 12,
+    Other = 13,
 }

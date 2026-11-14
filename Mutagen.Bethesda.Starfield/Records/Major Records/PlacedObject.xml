@@ -92,7 +92,7 @@
       <P3Float name="RagdollBipedRotation" recordType="XRGB" />
       <!-- Health %, an integer percent as in xEdit (itU32) -->
       <UInt32 name="HealthPercent" recordType="XHLT" />
-      <FormLink name="TimeOfDay" refName="TimeOfDayRecord" recordType="TODD" />
+      <FormLink name="TimeOfDay" refName="TimeOfDayData" recordType="TODD" />
       <RefDirect name="EnableParent" refName="EnableParent" />
       <RefDirect name="LightFlicker" refName="PlacedObjectLightFlicker" />
       <RefDirect name="Ownership" refName="Ownership"/>

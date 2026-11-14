@@ -52,11 +52,11 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
-        #region Start
-        public Guid Start { get; set; } = default(Guid);
+        #region StartEvent
+        public Guid StartEvent { get; set; } = default(Guid);
         #endregion
-        #region Stop
-        public Guid Stop { get; set; } = default(Guid);
+        #region StopEvent
+        public Guid StopEvent { get; set; } = default(Guid);
         #endregion
         #region Condition
         private readonly IFormLink<IConditionRecordGetter> _Condition = new FormLink<IConditionRecordGetter>();
@@ -117,20 +117,20 @@ namespace Mutagen.Bethesda.Starfield
             #region Ctors
             public Mask(TItem initialValue)
             {
-                this.Start = initialValue;
-                this.Stop = initialValue;
+                this.StartEvent = initialValue;
+                this.StopEvent = initialValue;
                 this.Condition = initialValue;
                 this.EventMapping = initialValue;
             }
 
             public Mask(
-                TItem Start,
-                TItem Stop,
+                TItem StartEvent,
+                TItem StopEvent,
                 TItem Condition,
                 TItem EventMapping)
             {
-                this.Start = Start;
-                this.Stop = Stop;
+                this.StartEvent = StartEvent;
+                this.StopEvent = StopEvent;
                 this.Condition = Condition;
                 this.EventMapping = EventMapping;
             }
@@ -144,8 +144,8 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
-            public TItem Start;
-            public TItem Stop;
+            public TItem StartEvent;
+            public TItem StopEvent;
             public TItem Condition;
             public TItem EventMapping;
             #endregion
@@ -160,8 +160,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool Equals(Mask<TItem>? rhs)
             {
                 if (rhs == null) return false;
-                if (!object.Equals(this.Start, rhs.Start)) return false;
-                if (!object.Equals(this.Stop, rhs.Stop)) return false;
+                if (!object.Equals(this.StartEvent, rhs.StartEvent)) return false;
+                if (!object.Equals(this.StopEvent, rhs.StopEvent)) return false;
                 if (!object.Equals(this.Condition, rhs.Condition)) return false;
                 if (!object.Equals(this.EventMapping, rhs.EventMapping)) return false;
                 return true;
@@ -169,8 +169,8 @@ namespace Mutagen.Bethesda.Starfield
             public override int GetHashCode()
             {
                 var hash = new HashCode();
-                hash.Add(this.Start);
-                hash.Add(this.Stop);
+                hash.Add(this.StartEvent);
+                hash.Add(this.StopEvent);
                 hash.Add(this.Condition);
                 hash.Add(this.EventMapping);
                 return hash.ToHashCode();
@@ -181,8 +181,8 @@ namespace Mutagen.Bethesda.Starfield
             #region All
             public bool All(Func<TItem, bool> eval)
             {
-                if (!eval(this.Start)) return false;
-                if (!eval(this.Stop)) return false;
+                if (!eval(this.StartEvent)) return false;
+                if (!eval(this.StopEvent)) return false;
                 if (!eval(this.Condition)) return false;
                 if (!eval(this.EventMapping)) return false;
                 return true;
@@ -192,8 +192,8 @@ namespace Mutagen.Bethesda.Starfield
             #region Any
             public bool Any(Func<TItem, bool> eval)
             {
-                if (eval(this.Start)) return true;
-                if (eval(this.Stop)) return true;
+                if (eval(this.StartEvent)) return true;
+                if (eval(this.StopEvent)) return true;
                 if (eval(this.Condition)) return true;
                 if (eval(this.EventMapping)) return true;
                 return false;
@@ -210,8 +210,8 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
-                obj.Start = eval(this.Start);
-                obj.Stop = eval(this.Stop);
+                obj.StartEvent = eval(this.StartEvent);
+                obj.StopEvent = eval(this.StopEvent);
                 obj.Condition = eval(this.Condition);
                 obj.EventMapping = eval(this.EventMapping);
             }
@@ -232,13 +232,13 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(SoundReference.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
-                    if (printMask?.Start ?? true)
+                    if (printMask?.StartEvent ?? true)
                     {
-                        sb.AppendItem(Start, "Start");
+                        sb.AppendItem(StartEvent, "StartEvent");
                     }
-                    if (printMask?.Stop ?? true)
+                    if (printMask?.StopEvent ?? true)
                     {
-                        sb.AppendItem(Stop, "Stop");
+                        sb.AppendItem(StopEvent, "StopEvent");
                     }
                     if (printMask?.Condition ?? true)
                     {
@@ -272,8 +272,8 @@ namespace Mutagen.Bethesda.Starfield
                     return _warnings;
                 }
             }
-            public Exception? Start;
-            public Exception? Stop;
+            public Exception? StartEvent;
+            public Exception? StopEvent;
             public Exception? Condition;
             public Exception? EventMapping;
             #endregion
@@ -284,10 +284,10 @@ namespace Mutagen.Bethesda.Starfield
                 SoundReference_FieldIndex enu = (SoundReference_FieldIndex)index;
                 switch (enu)
                 {
-                    case SoundReference_FieldIndex.Start:
-                        return Start;
-                    case SoundReference_FieldIndex.Stop:
-                        return Stop;
+                    case SoundReference_FieldIndex.StartEvent:
+                        return StartEvent;
+                    case SoundReference_FieldIndex.StopEvent:
+                        return StopEvent;
                     case SoundReference_FieldIndex.Condition:
                         return Condition;
                     case SoundReference_FieldIndex.EventMapping:
@@ -302,11 +302,11 @@ namespace Mutagen.Bethesda.Starfield
                 SoundReference_FieldIndex enu = (SoundReference_FieldIndex)index;
                 switch (enu)
                 {
-                    case SoundReference_FieldIndex.Start:
-                        this.Start = ex;
+                    case SoundReference_FieldIndex.StartEvent:
+                        this.StartEvent = ex;
                         break;
-                    case SoundReference_FieldIndex.Stop:
-                        this.Stop = ex;
+                    case SoundReference_FieldIndex.StopEvent:
+                        this.StopEvent = ex;
                         break;
                     case SoundReference_FieldIndex.Condition:
                         this.Condition = ex;
@@ -324,11 +324,11 @@ namespace Mutagen.Bethesda.Starfield
                 SoundReference_FieldIndex enu = (SoundReference_FieldIndex)index;
                 switch (enu)
                 {
-                    case SoundReference_FieldIndex.Start:
-                        this.Start = (Exception?)obj;
+                    case SoundReference_FieldIndex.StartEvent:
+                        this.StartEvent = (Exception?)obj;
                         break;
-                    case SoundReference_FieldIndex.Stop:
-                        this.Stop = (Exception?)obj;
+                    case SoundReference_FieldIndex.StopEvent:
+                        this.StopEvent = (Exception?)obj;
                         break;
                     case SoundReference_FieldIndex.Condition:
                         this.Condition = (Exception?)obj;
@@ -344,8 +344,8 @@ namespace Mutagen.Bethesda.Starfield
             public bool IsInError()
             {
                 if (Overall != null) return true;
-                if (Start != null) return true;
-                if (Stop != null) return true;
+                if (StartEvent != null) return true;
+                if (StopEvent != null) return true;
                 if (Condition != null) return true;
                 if (EventMapping != null) return true;
                 return false;
@@ -374,10 +374,10 @@ namespace Mutagen.Bethesda.Starfield
             protected void PrintFillInternal(StructuredStringBuilder sb)
             {
                 {
-                    sb.AppendItem(Start, "Start");
+                    sb.AppendItem(StartEvent, "StartEvent");
                 }
                 {
-                    sb.AppendItem(Stop, "Stop");
+                    sb.AppendItem(StopEvent, "StopEvent");
                 }
                 {
                     sb.AppendItem(Condition, "Condition");
@@ -393,8 +393,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
-                ret.Start = this.Start.Combine(rhs.Start);
-                ret.Stop = this.Stop.Combine(rhs.Stop);
+                ret.StartEvent = this.StartEvent.Combine(rhs.StartEvent);
+                ret.StopEvent = this.StopEvent.Combine(rhs.StopEvent);
                 ret.Condition = this.Condition.Combine(rhs.Condition);
                 ret.EventMapping = this.EventMapping.Combine(rhs.EventMapping);
                 return ret;
@@ -420,8 +420,8 @@ namespace Mutagen.Bethesda.Starfield
             private TranslationCrystal? _crystal;
             public readonly bool DefaultOn;
             public bool OnOverall;
-            public bool Start;
-            public bool Stop;
+            public bool StartEvent;
+            public bool StopEvent;
             public bool Condition;
             public bool EventMapping;
             #endregion
@@ -433,8 +433,8 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.DefaultOn = defaultOn;
                 this.OnOverall = onOverall;
-                this.Start = defaultOn;
-                this.Stop = defaultOn;
+                this.StartEvent = defaultOn;
+                this.StopEvent = defaultOn;
                 this.Condition = defaultOn;
                 this.EventMapping = defaultOn;
             }
@@ -452,8 +452,8 @@ namespace Mutagen.Bethesda.Starfield
 
             protected void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
-                ret.Add((Start, null));
-                ret.Add((Stop, null));
+                ret.Add((StartEvent, null));
+                ret.Add((StopEvent, null));
                 ret.Add((Condition, null));
                 ret.Add((EventMapping, null));
             }
@@ -534,8 +534,8 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<ISoundReference>,
         ISoundReferenceGetter
     {
-        new Guid Start { get; set; }
-        new Guid Stop { get; set; }
+        new Guid StartEvent { get; set; }
+        new Guid StopEvent { get; set; }
         new IFormLink<IConditionRecordGetter> Condition { get; set; }
         new IFormLink<IWWiseEventDataGetter> EventMapping { get; set; }
     }
@@ -553,8 +553,8 @@ namespace Mutagen.Bethesda.Starfield
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         object CommonSetterTranslationInstance();
         static ILoquiRegistration StaticRegistration => SoundReference_Registration.Instance;
-        Guid Start { get; }
-        Guid Stop { get; }
+        Guid StartEvent { get; }
+        Guid StopEvent { get; }
         IFormLinkGetter<IConditionRecordGetter> Condition { get; }
         IFormLinkGetter<IWWiseEventDataGetter> EventMapping { get; }
 
@@ -726,8 +726,8 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum SoundReference_FieldIndex
     {
-        Start = 0,
-        Stop = 1,
+        StartEvent = 0,
+        StopEvent = 1,
         Condition = 2,
         EventMapping = 3,
     }
@@ -808,8 +808,8 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(ISoundReference item)
         {
             ClearPartial();
-            item.Start = default(Guid);
-            item.Stop = default(Guid);
+            item.StartEvent = default(Guid);
+            item.StopEvent = default(Guid);
             item.Condition.Clear();
             item.EventMapping.Clear();
         }
@@ -863,8 +863,8 @@ namespace Mutagen.Bethesda.Starfield
             SoundReference.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
-            ret.Start = item.Start == rhs.Start;
-            ret.Stop = item.Stop == rhs.Stop;
+            ret.StartEvent = item.StartEvent == rhs.StartEvent;
+            ret.StopEvent = item.StopEvent == rhs.StopEvent;
             ret.Condition = item.Condition.Equals(rhs.Condition);
             ret.EventMapping = item.EventMapping.Equals(rhs.EventMapping);
         }
@@ -911,13 +911,13 @@ namespace Mutagen.Bethesda.Starfield
             StructuredStringBuilder sb,
             SoundReference.Mask<bool>? printMask = null)
         {
-            if (printMask?.Start ?? true)
+            if (printMask?.StartEvent ?? true)
             {
-                sb.AppendItem(item.Start, "Start");
+                sb.AppendItem(item.StartEvent, "StartEvent");
             }
-            if (printMask?.Stop ?? true)
+            if (printMask?.StopEvent ?? true)
             {
-                sb.AppendItem(item.Stop, "Stop");
+                sb.AppendItem(item.StopEvent, "StopEvent");
             }
             if (printMask?.Condition ?? true)
             {
@@ -936,13 +936,13 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? equalsMask)
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
-            if ((equalsMask?.GetShouldTranslate((int)SoundReference_FieldIndex.Start) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SoundReference_FieldIndex.StartEvent) ?? true))
             {
-                if (lhs.Start != rhs.Start) return false;
+                if (lhs.StartEvent != rhs.StartEvent) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)SoundReference_FieldIndex.Stop) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)SoundReference_FieldIndex.StopEvent) ?? true))
             {
-                if (lhs.Stop != rhs.Stop) return false;
+                if (lhs.StopEvent != rhs.StopEvent) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)SoundReference_FieldIndex.Condition) ?? true))
             {
@@ -958,8 +958,8 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(ISoundReferenceGetter item)
         {
             var hash = new HashCode();
-            hash.Add(item.Start);
-            hash.Add(item.Stop);
+            hash.Add(item.StartEvent);
+            hash.Add(item.StopEvent);
             hash.Add(item.Condition);
             hash.Add(item.EventMapping);
             return hash.ToHashCode();
@@ -996,13 +996,13 @@ namespace Mutagen.Bethesda.Starfield
             TranslationCrystal? copyMask,
             bool deepCopy)
         {
-            if ((copyMask?.GetShouldTranslate((int)SoundReference_FieldIndex.Start) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SoundReference_FieldIndex.StartEvent) ?? true))
             {
-                item.Start = rhs.Start;
+                item.StartEvent = rhs.StartEvent;
             }
-            if ((copyMask?.GetShouldTranslate((int)SoundReference_FieldIndex.Stop) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)SoundReference_FieldIndex.StopEvent) ?? true))
             {
-                item.Stop = rhs.Stop;
+                item.StopEvent = rhs.StopEvent;
             }
             if ((copyMask?.GetShouldTranslate((int)SoundReference_FieldIndex.Condition) ?? true))
             {
@@ -1122,10 +1122,10 @@ namespace Mutagen.Bethesda.Starfield
         {
             GuidBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.Start);
+                item: item.StartEvent);
             GuidBinaryTranslation.Instance.Write(
                 writer: writer,
-                item: item.Stop);
+                item: item.StopEvent);
             FormLinkBinaryTranslation.Instance.Write(
                 writer: writer,
                 item: item.Condition);
@@ -1165,8 +1165,8 @@ namespace Mutagen.Bethesda.Starfield
             ISoundReference item,
             MutagenFrame frame)
         {
-            item.Start = GuidBinaryTranslation.Instance.Parse(reader: frame);
-            item.Stop = GuidBinaryTranslation.Instance.Parse(reader: frame);
+            item.StartEvent = GuidBinaryTranslation.Instance.Parse(reader: frame);
+            item.StopEvent = GuidBinaryTranslation.Instance.Parse(reader: frame);
             item.Condition.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             item.EventMapping.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
         }
@@ -1235,8 +1235,8 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams);
         }
 
-        public Guid Start => new Guid(_structData.Slice(0x0, 0x10).Slice(0, 16));
-        public Guid Stop => new Guid(_structData.Slice(0x10, 0x10).Slice(0, 16));
+        public Guid StartEvent => new Guid(_structData.Slice(0x0, 0x10).Slice(0, 16));
+        public Guid StopEvent => new Guid(_structData.Slice(0x10, 0x10).Slice(0, 16));
         public IFormLinkGetter<IConditionRecordGetter> Condition => FormLinkBinaryTranslation.Instance.OverlayFactory<IConditionRecordGetter>(_package, _structData.Span.Slice(0x20, 0x4));
         public IFormLinkGetter<IWWiseEventDataGetter> EventMapping => FormLinkBinaryTranslation.Instance.OverlayFactory<IWWiseEventDataGetter>(_package, _structData.Span.Slice(0x24, 0x4));
         partial void CustomFactoryEnd(

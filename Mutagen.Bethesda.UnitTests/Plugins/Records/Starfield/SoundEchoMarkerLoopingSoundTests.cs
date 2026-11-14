@@ -29,8 +29,8 @@ public class SoundEchoMarkerLoopingSoundTests
         {
             sech.EditorID.ShouldBe("kgcDoom_OBJ_EmergencyAlarmSwitch_LP_2D_Play_ForceStop");
             sech.LoopingSound.ShouldNotBeNull();
-            sech.LoopingSound.Start.ShouldBe(new Guid(echl.AsSpan(0, 16)));
-            sech.LoopingSound.Stop.ShouldBe(new Guid(echl.AsSpan(16, 16)));
+            sech.LoopingSound.StartEvent.ShouldBe(new Guid(echl.AsSpan(0, 16)));
+            sech.LoopingSound.StopEvent.ShouldBe(new Guid(echl.AsSpan(16, 16)));
             sech.LoopingSound.Condition.IsNull.ShouldBeTrue();
             sech.LoopingSound.EventMapping.IsNull.ShouldBeTrue();
             var written = GameConstants.Starfield.MajorRecord(Write(w => sech.WriteToBinary(w)));
