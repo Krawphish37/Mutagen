@@ -227,9 +227,13 @@ public sealed class ParsingMeta
         // Decided from the file: how the mod stores its own FormIDs (OwnFormIdStyle)
         var masters = SeparatedMasterPackage.FactoryDetecting(release, modPath.ModKey, header.MasterStyle, rawMasters,
             param.MasterFlagsLookup, () => PluginFileAccess.OpenRead(param.FileSystem, modPath.Path, param.FileShare));
-        CheckDuplicates(param, release, modPath.ModKey, masters,
-            () => new BufferedStream(PluginFileAccess.OpenRead(param.FileSystem, modPath.Path, param.FileShare), 1 << 20),
-            disposeStream: true);
+        if (param.DuplicateFormKeys == Mutagen.Bethesda.Plugins.Binary.Parameters.DuplicateFormKeyOption.Refuse
+            && GameConstants.Get(release).SeparateMasterLoadOrders)
+        {
+            Mutagen.Bethesda.Plugins.Records.DuplicateFormKeyScan.ThrowIfAny(modPath.Path, param.FileSystem.GetOrDefault(),
+                () => PluginFileAccess.OpenRead(param.FileSystem, modPath.Path, param.FileShare),
+                GameConstants.Get(release), masters, modPath.ModKey);
+        }
         var meta = new ParsingMeta(GameConstants.Get(release), modPath.ModKey, masters);
         meta.ReadModHeaderVersion(header);
         meta.Absorb(param);

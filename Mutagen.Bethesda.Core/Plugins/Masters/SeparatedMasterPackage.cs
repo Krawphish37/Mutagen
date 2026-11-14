@@ -117,6 +117,9 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
     /// The FormKey a stored FormID reads as, as one number (DuplicateFormKeyScan, C204): a master's FormID as stored, and
     /// any form of the mod's own (its place in any form, or an index past the list) as 1 &lt;&lt; 32 + its ID
     /// </summary>
+    /// <summary>What DuplicateKey depends on (the counts of masters of each size), for caching a file's check</summary>
+    internal string DuplicateKeySignature => $"{_ownFullIndex}:{_ownMediumIndex}:{_ownSmallIndex}";
+
     internal ulong DuplicateKey(uint raw)
     {
         ExtractFormIdInfo(new FormID(raw), out var style, out var index, out var id, out _);
