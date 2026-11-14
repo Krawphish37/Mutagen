@@ -41,6 +41,15 @@ partial class TraversalReferenceBinaryCreateTranslation
         Unknown1 = true
     };
     
+    // An entry is 0x34 bytes, or 0x38 with a traversal FormID (flag 4 clear). What is left of XTV2 when it can't hold
+    // a whole entry is fluff: read as an entry, it ran past XTV2's end into the next subrecord (C191).
+    public static bool HoldsEntry(ReadOnlySpan<byte> rest)
+    {
+        if (rest.Length < 0x34) return false;
+        var flags = BinaryPrimitives.ReadInt32LittleEndian(rest.Slice(0x28));
+        return Enums.HasFlag(flags, HasNoTraversal) || rest.Length >= 0x38;
+    }
+
     public static TraversalReference.Flag GetFlags(int flags) =>
         ((TraversalReference.Flag)flags).SetFlag(TraversalReference.Flag.NoTraversalFormID, false);
 
@@ -73,7 +82,8 @@ partial class TraversalReferenceBinaryCreateTranslation
             var remaining = checked((uint)reader.Remaining);
             try
             {
-                if (!TraversalReference.TryCreateFromBinary(reader, out var subItem)
+                if (!HoldsEntry(reader.GetSpan(checked((int)Math.Min(remaining, 0x38))))
+                    || !TraversalReference.TryCreateFromBinary(reader, out var subItem)
                     || Zeroed.Equals(subItem, _equalsMask))
                 {
                     fluffBytes = remaining;
@@ -201,6 +211,11 @@ partial class TraversalReferenceBinaryOverlay
         while (stream.Position < finalPos)
         {
             var remaining = checked((uint)(finalPos - stream.Position));
+            if (!TraversalReferenceBinaryCreateTranslation.HoldsEntry(stream.GetSpan(checked((int)Math.Min(remaining, 0x38)))))
+            {
+                fluffBytes = remaining;
+                break;
+            }
             try
             {
                 var itemPos = stream.Position;
