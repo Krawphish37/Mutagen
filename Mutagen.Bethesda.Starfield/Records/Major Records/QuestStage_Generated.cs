@@ -59,16 +59,16 @@ namespace Mutagen.Bethesda.Starfield
         #region Flags
         public QuestStage.Flag Flags { get; set; } = default(QuestStage.Flag);
         #endregion
-        #region FlagsUnused
+        #region FlagsUnknown
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _FlagsUnused = new byte[1];
-        public MemorySlice<Byte> FlagsUnused
+        private MemorySlice<Byte> _FlagsUnknown = new byte[1];
+        public MemorySlice<Byte> FlagsUnknown
         {
-            get => _FlagsUnused;
-            set => this._FlagsUnused = value;
+            get => _FlagsUnknown;
+            set => this._FlagsUnknown = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IQuestStageGetter.FlagsUnused => this.FlagsUnused;
+        ReadOnlyMemorySlice<Byte> IQuestStageGetter.FlagsUnknown => this.FlagsUnknown;
         #endregion
         #region LogEntries
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -125,19 +125,19 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.Index = initialValue;
                 this.Flags = initialValue;
-                this.FlagsUnused = initialValue;
+                this.FlagsUnknown = initialValue;
                 this.LogEntries = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, QuestLogEntry.Mask<TItem>?>>?>(initialValue, []);
             }
 
             public Mask(
                 TItem Index,
                 TItem Flags,
-                TItem FlagsUnused,
+                TItem FlagsUnknown,
                 TItem LogEntries)
             {
                 this.Index = Index;
                 this.Flags = Flags;
-                this.FlagsUnused = FlagsUnused;
+                this.FlagsUnknown = FlagsUnknown;
                 this.LogEntries = new MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, QuestLogEntry.Mask<TItem>?>>?>(LogEntries, []);
             }
 
@@ -152,7 +152,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public TItem Index;
             public TItem Flags;
-            public TItem FlagsUnused;
+            public TItem FlagsUnknown;
             public MaskItem<TItem, IEnumerable<MaskItemIndexed<TItem, QuestLogEntry.Mask<TItem>?>>?>? LogEntries;
             #endregion
 
@@ -168,7 +168,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!object.Equals(this.Index, rhs.Index)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
-                if (!object.Equals(this.FlagsUnused, rhs.FlagsUnused)) return false;
+                if (!object.Equals(this.FlagsUnknown, rhs.FlagsUnknown)) return false;
                 if (!object.Equals(this.LogEntries, rhs.LogEntries)) return false;
                 return true;
             }
@@ -177,7 +177,7 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.Index);
                 hash.Add(this.Flags);
-                hash.Add(this.FlagsUnused);
+                hash.Add(this.FlagsUnknown);
                 hash.Add(this.LogEntries);
                 return hash.ToHashCode();
             }
@@ -189,7 +189,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!eval(this.Index)) return false;
                 if (!eval(this.Flags)) return false;
-                if (!eval(this.FlagsUnused)) return false;
+                if (!eval(this.FlagsUnknown)) return false;
                 if (this.LogEntries != null)
                 {
                     if (!eval(this.LogEntries.Overall)) return false;
@@ -211,7 +211,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (eval(this.Index)) return true;
                 if (eval(this.Flags)) return true;
-                if (eval(this.FlagsUnused)) return true;
+                if (eval(this.FlagsUnknown)) return true;
                 if (this.LogEntries != null)
                 {
                     if (eval(this.LogEntries.Overall)) return true;
@@ -240,7 +240,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 obj.Index = eval(this.Index);
                 obj.Flags = eval(this.Flags);
-                obj.FlagsUnused = eval(this.FlagsUnused);
+                obj.FlagsUnknown = eval(this.FlagsUnknown);
                 if (LogEntries != null)
                 {
                     obj.LogEntries = new MaskItem<R, IEnumerable<MaskItemIndexed<R, QuestLogEntry.Mask<R>?>>?>(eval(this.LogEntries.Overall), []);
@@ -282,9 +282,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Flags, "Flags");
                     }
-                    if (printMask?.FlagsUnused ?? true)
+                    if (printMask?.FlagsUnknown ?? true)
                     {
-                        sb.AppendItem(FlagsUnused, "FlagsUnused");
+                        sb.AppendItem(FlagsUnknown, "FlagsUnknown");
                     }
                     if ((printMask?.LogEntries?.Overall ?? true)
                         && LogEntries is {} LogEntriesItem)
@@ -331,7 +331,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             public Exception? Index;
             public Exception? Flags;
-            public Exception? FlagsUnused;
+            public Exception? FlagsUnknown;
             public MaskItem<Exception?, IEnumerable<MaskItem<Exception?, QuestLogEntry.ErrorMask?>>?>? LogEntries;
             #endregion
 
@@ -345,8 +345,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Index;
                     case QuestStage_FieldIndex.Flags:
                         return Flags;
-                    case QuestStage_FieldIndex.FlagsUnused:
-                        return FlagsUnused;
+                    case QuestStage_FieldIndex.FlagsUnknown:
+                        return FlagsUnknown;
                     case QuestStage_FieldIndex.LogEntries:
                         return LogEntries;
                     default:
@@ -365,8 +365,8 @@ namespace Mutagen.Bethesda.Starfield
                     case QuestStage_FieldIndex.Flags:
                         this.Flags = ex;
                         break;
-                    case QuestStage_FieldIndex.FlagsUnused:
-                        this.FlagsUnused = ex;
+                    case QuestStage_FieldIndex.FlagsUnknown:
+                        this.FlagsUnknown = ex;
                         break;
                     case QuestStage_FieldIndex.LogEntries:
                         this.LogEntries = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, QuestLogEntry.ErrorMask?>>?>(ex, null);
@@ -387,8 +387,8 @@ namespace Mutagen.Bethesda.Starfield
                     case QuestStage_FieldIndex.Flags:
                         this.Flags = (Exception?)obj;
                         break;
-                    case QuestStage_FieldIndex.FlagsUnused:
-                        this.FlagsUnused = (Exception?)obj;
+                    case QuestStage_FieldIndex.FlagsUnknown:
+                        this.FlagsUnknown = (Exception?)obj;
                         break;
                     case QuestStage_FieldIndex.LogEntries:
                         this.LogEntries = (MaskItem<Exception?, IEnumerable<MaskItem<Exception?, QuestLogEntry.ErrorMask?>>?>)obj;
@@ -403,7 +403,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (Index != null) return true;
                 if (Flags != null) return true;
-                if (FlagsUnused != null) return true;
+                if (FlagsUnknown != null) return true;
                 if (LogEntries != null) return true;
                 return false;
             }
@@ -437,7 +437,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Flags, "Flags");
                 }
                 {
-                    sb.AppendItem(FlagsUnused, "FlagsUnused");
+                    sb.AppendItem(FlagsUnknown, "FlagsUnknown");
                 }
                 if (LogEntries is {} LogEntriesItem)
                 {
@@ -467,7 +467,7 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.Index = this.Index.Combine(rhs.Index);
                 ret.Flags = this.Flags.Combine(rhs.Flags);
-                ret.FlagsUnused = this.FlagsUnused.Combine(rhs.FlagsUnused);
+                ret.FlagsUnknown = this.FlagsUnknown.Combine(rhs.FlagsUnknown);
                 ret.LogEntries = new MaskItem<Exception?, IEnumerable<MaskItem<Exception?, QuestLogEntry.ErrorMask?>>?>(Noggog.ExceptionExt.Combine(this.LogEntries?.Overall, rhs.LogEntries?.Overall), Noggog.ExceptionExt.Combine(this.LogEntries?.Specific, rhs.LogEntries?.Specific));
                 return ret;
             }
@@ -494,7 +494,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool OnOverall;
             public bool Index;
             public bool Flags;
-            public bool FlagsUnused;
+            public bool FlagsUnknown;
             public QuestLogEntry.TranslationMask? LogEntries;
             #endregion
 
@@ -507,7 +507,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.OnOverall = onOverall;
                 this.Index = defaultOn;
                 this.Flags = defaultOn;
-                this.FlagsUnused = defaultOn;
+                this.FlagsUnknown = defaultOn;
             }
 
             #endregion
@@ -525,7 +525,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 ret.Add((Index, null));
                 ret.Add((Flags, null));
-                ret.Add((FlagsUnused, null));
+                ret.Add((FlagsUnknown, null));
                 ret.Add((LogEntries == null ? DefaultOn : !LogEntries.GetCrystal().CopyNothing, LogEntries?.GetCrystal()));
             }
 
@@ -607,7 +607,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         new UInt16 Index { get; set; }
         new QuestStage.Flag Flags { get; set; }
-        new MemorySlice<Byte> FlagsUnused { get; set; }
+        new MemorySlice<Byte> FlagsUnknown { get; set; }
         new ExtendedList<QuestLogEntry> LogEntries { get; }
     }
 
@@ -626,7 +626,7 @@ namespace Mutagen.Bethesda.Starfield
         static ILoquiRegistration StaticRegistration => QuestStage_Registration.Instance;
         UInt16 Index { get; }
         QuestStage.Flag Flags { get; }
-        ReadOnlyMemorySlice<Byte> FlagsUnused { get; }
+        ReadOnlyMemorySlice<Byte> FlagsUnknown { get; }
         IReadOnlyList<IQuestLogEntryGetter> LogEntries { get; }
 
     }
@@ -799,7 +799,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         Index = 0,
         Flags = 1,
-        FlagsUnused = 2,
+        FlagsUnknown = 2,
         LogEntries = 3,
     }
     #endregion
@@ -905,7 +905,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.Index = default(UInt16);
             item.Flags = default(QuestStage.Flag);
-            item.FlagsUnused = new byte[1];
+            item.FlagsUnknown = new byte[1];
             item.LogEntries.Clear();
         }
         
@@ -959,7 +959,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ret.Index = item.Index == rhs.Index;
             ret.Flags = item.Flags == rhs.Flags;
-            ret.FlagsUnused = MemoryExtensions.SequenceEqual(item.FlagsUnused.Span, rhs.FlagsUnused.Span);
+            ret.FlagsUnknown = MemoryExtensions.SequenceEqual(item.FlagsUnknown.Span, rhs.FlagsUnknown.Span);
             ret.LogEntries = item.LogEntries.CollectionEqualsHelper(
                 rhs.LogEntries,
                 (loqLhs, loqRhs) => loqLhs.GetEqualsMask(loqRhs, include),
@@ -1016,9 +1016,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Flags, "Flags");
             }
-            if (printMask?.FlagsUnused ?? true)
+            if (printMask?.FlagsUnknown ?? true)
             {
-                sb.AppendLine($"FlagsUnused => {SpanExt.ToHexString(item.FlagsUnused)}");
+                sb.AppendLine($"FlagsUnknown => {SpanExt.ToHexString(item.FlagsUnknown)}");
             }
             if (printMask?.LogEntries?.Overall ?? true)
             {
@@ -1051,9 +1051,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Flags != rhs.Flags) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)QuestStage_FieldIndex.FlagsUnused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)QuestStage_FieldIndex.FlagsUnknown) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.FlagsUnused.Span, rhs.FlagsUnused.Span)) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.FlagsUnknown.Span, rhs.FlagsUnknown.Span)) return false;
             }
             if ((equalsMask?.GetShouldTranslate((int)QuestStage_FieldIndex.LogEntries) ?? true))
             {
@@ -1067,7 +1067,7 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             hash.Add(item.Index);
             hash.Add(item.Flags);
-            hash.AddBytes(item.FlagsUnused);
+            hash.AddBytes(item.FlagsUnknown);
             foreach (var subItem in item.LogEntries)
             {
                 hash.Add(subItem);
@@ -1116,9 +1116,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Flags = rhs.Flags;
             }
-            if ((copyMask?.GetShouldTranslate((int)QuestStage_FieldIndex.FlagsUnused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)QuestStage_FieldIndex.FlagsUnknown) ?? true))
             {
-                item.FlagsUnused = rhs.FlagsUnused.ToArray();
+                item.FlagsUnknown = rhs.FlagsUnknown.ToArray();
             }
             if ((copyMask?.GetShouldTranslate((int)QuestStage_FieldIndex.LogEntries) ?? true))
             {
@@ -1262,7 +1262,7 @@ namespace Mutagen.Bethesda.Starfield
                     length: 1);
                 ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.FlagsUnused);
+                    item: item.FlagsUnknown);
             }
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IQuestLogEntryGetter>.Instance.Write(
                 writer: writer,
@@ -1319,7 +1319,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.INDX:
                 {
-                    if (lastParsed.ShortCircuit((int)QuestStage_FieldIndex.FlagsUnused, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)QuestStage_FieldIndex.FlagsUnknown, translationParams)) return ParseResult.Stop;
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 2) return null;
@@ -1328,8 +1328,8 @@ namespace Mutagen.Bethesda.Starfield
                     item.Flags = EnumBinaryTranslation<QuestStage.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 1);
-                    item.FlagsUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(1));
-                    return (int)QuestStage_FieldIndex.FlagsUnused;
+                    item.FlagsUnknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(1));
+                    return (int)QuestStage_FieldIndex.FlagsUnknown;
                 }
                 case RecordTypeInts.QSDT:
                 case RecordTypeInts.CTDA:
@@ -1430,10 +1430,10 @@ namespace Mutagen.Bethesda.Starfield
         private bool _Flags_IsSet => _INDXLocation.HasValue && _INDXLocation!.Value.Max - _FlagsLocation + 1 >= 1;
         public QuestStage.Flag Flags => _Flags_IsSet ? (QuestStage.Flag)_recordData.Span.Slice(_FlagsLocation, 0x1)[0] : default(QuestStage.Flag);
         #endregion
-        #region FlagsUnused
-        private int _FlagsUnusedLocation => _INDXLocation!.Value.Min + 0x3;
-        private bool _FlagsUnused_IsSet => _INDXLocation.HasValue;
-        public ReadOnlyMemorySlice<Byte> FlagsUnused => _FlagsUnused_IsSet ? _recordData.Span.Slice(_FlagsUnusedLocation, 1).ToArray() : UtilityTranslation.Zeros.Slice(0, 1);
+        #region FlagsUnknown
+        private int _FlagsUnknownLocation => _INDXLocation!.Value.Min + 0x3;
+        private bool _FlagsUnknown_IsSet => _INDXLocation.HasValue;
+        public ReadOnlyMemorySlice<Byte> FlagsUnknown => _FlagsUnknown_IsSet ? _recordData.Span.Slice(_FlagsUnknownLocation, 1).ToArray() : UtilityTranslation.Zeros.Slice(0, 1);
         #endregion
         public IReadOnlyList<IQuestLogEntryGetter> LogEntries { get; private set; } = [];
         partial void CustomFactoryEnd(
@@ -1501,9 +1501,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.INDX:
                 {
-                    if (lastParsed.ShortCircuit((int)QuestStage_FieldIndex.FlagsUnused, translationParams)) return ParseResult.Stop;
+                    if (lastParsed.ShortCircuit((int)QuestStage_FieldIndex.FlagsUnknown, translationParams)) return ParseResult.Stop;
                     _INDXLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)QuestStage_FieldIndex.FlagsUnused;
+                    return (int)QuestStage_FieldIndex.FlagsUnknown;
                 }
                 case RecordTypeInts.QSDT:
                 case RecordTypeInts.CTDA:

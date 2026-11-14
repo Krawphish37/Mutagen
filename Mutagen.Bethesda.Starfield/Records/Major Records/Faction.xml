@@ -63,7 +63,7 @@
       <Bool name="BuySellEverythingNotInList" byteLength="1" />
       <Bool name="BuysNonStolenItems" byteLength="1" />
       <!-- xEdit: unused padding -->
-      <UInt8 name="Unused" />
+      <UInt8 name="Unknown" />
     </Fields>
   </Object>
   <Object name="Rank" objType="Subrecord">

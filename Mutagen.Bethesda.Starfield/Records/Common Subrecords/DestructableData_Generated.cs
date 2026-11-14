@@ -60,8 +60,8 @@ namespace Mutagen.Bethesda.Starfield
         #region Flags
         public Destructible.DestructibleFlag Flags { get; set; } = default(Destructible.DestructibleFlag);
         #endregion
-        #region Unused
-        public Int16 Unused { get; set; } = default(Int16);
+        #region Unknown
+        public Int16 Unknown { get; set; } = default(Int16);
         #endregion
 
         #region To String
@@ -105,19 +105,19 @@ namespace Mutagen.Bethesda.Starfield
                 this.Health = initialValue;
                 this.DESTCount = initialValue;
                 this.Flags = initialValue;
-                this.Unused = initialValue;
+                this.Unknown = initialValue;
             }
 
             public Mask(
                 TItem Health,
                 TItem DESTCount,
                 TItem Flags,
-                TItem Unused)
+                TItem Unknown)
             {
                 this.Health = Health;
                 this.DESTCount = DESTCount;
                 this.Flags = Flags;
-                this.Unused = Unused;
+                this.Unknown = Unknown;
             }
 
             #pragma warning disable CS8618
@@ -132,7 +132,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Health;
             public TItem DESTCount;
             public TItem Flags;
-            public TItem Unused;
+            public TItem Unknown;
             #endregion
 
             #region Equals
@@ -148,7 +148,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Health, rhs.Health)) return false;
                 if (!object.Equals(this.DESTCount, rhs.DESTCount)) return false;
                 if (!object.Equals(this.Flags, rhs.Flags)) return false;
-                if (!object.Equals(this.Unused, rhs.Unused)) return false;
+                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -157,7 +157,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Health);
                 hash.Add(this.DESTCount);
                 hash.Add(this.Flags);
-                hash.Add(this.Unused);
+                hash.Add(this.Unknown);
                 return hash.ToHashCode();
             }
 
@@ -169,7 +169,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Health)) return false;
                 if (!eval(this.DESTCount)) return false;
                 if (!eval(this.Flags)) return false;
-                if (!eval(this.Unused)) return false;
+                if (!eval(this.Unknown)) return false;
                 return true;
             }
             #endregion
@@ -180,7 +180,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Health)) return true;
                 if (eval(this.DESTCount)) return true;
                 if (eval(this.Flags)) return true;
-                if (eval(this.Unused)) return true;
+                if (eval(this.Unknown)) return true;
                 return false;
             }
             #endregion
@@ -198,7 +198,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Health = eval(this.Health);
                 obj.DESTCount = eval(this.DESTCount);
                 obj.Flags = eval(this.Flags);
-                obj.Unused = eval(this.Unused);
+                obj.Unknown = eval(this.Unknown);
             }
             #endregion
 
@@ -229,9 +229,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(Flags, "Flags");
                     }
-                    if (printMask?.Unused ?? true)
+                    if (printMask?.Unknown ?? true)
                     {
-                        sb.AppendItem(Unused, "Unused");
+                        sb.AppendItem(Unknown, "Unknown");
                     }
                 }
             }
@@ -260,7 +260,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Health;
             public Exception? DESTCount;
             public Exception? Flags;
-            public Exception? Unused;
+            public Exception? Unknown;
             #endregion
 
             #region IErrorMask
@@ -275,8 +275,8 @@ namespace Mutagen.Bethesda.Starfield
                         return DESTCount;
                     case DestructableData_FieldIndex.Flags:
                         return Flags;
-                    case DestructableData_FieldIndex.Unused:
-                        return Unused;
+                    case DestructableData_FieldIndex.Unknown:
+                        return Unknown;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -296,8 +296,8 @@ namespace Mutagen.Bethesda.Starfield
                     case DestructableData_FieldIndex.Flags:
                         this.Flags = ex;
                         break;
-                    case DestructableData_FieldIndex.Unused:
-                        this.Unused = ex;
+                    case DestructableData_FieldIndex.Unknown:
+                        this.Unknown = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -318,8 +318,8 @@ namespace Mutagen.Bethesda.Starfield
                     case DestructableData_FieldIndex.Flags:
                         this.Flags = (Exception?)obj;
                         break;
-                    case DestructableData_FieldIndex.Unused:
-                        this.Unused = (Exception?)obj;
+                    case DestructableData_FieldIndex.Unknown:
+                        this.Unknown = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -332,7 +332,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Health != null) return true;
                 if (DESTCount != null) return true;
                 if (Flags != null) return true;
-                if (Unused != null) return true;
+                if (Unknown != null) return true;
                 return false;
             }
             #endregion
@@ -368,7 +368,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(Flags, "Flags");
                 }
                 {
-                    sb.AppendItem(Unused, "Unused");
+                    sb.AppendItem(Unknown, "Unknown");
                 }
             }
             #endregion
@@ -381,7 +381,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Health = this.Health.Combine(rhs.Health);
                 ret.DESTCount = this.DESTCount.Combine(rhs.DESTCount);
                 ret.Flags = this.Flags.Combine(rhs.Flags);
-                ret.Unused = this.Unused.Combine(rhs.Unused);
+                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -408,7 +408,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Health;
             public bool DESTCount;
             public bool Flags;
-            public bool Unused;
+            public bool Unknown;
             #endregion
 
             #region Ctors
@@ -421,7 +421,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Health = defaultOn;
                 this.DESTCount = defaultOn;
                 this.Flags = defaultOn;
-                this.Unused = defaultOn;
+                this.Unknown = defaultOn;
             }
 
             #endregion
@@ -440,7 +440,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Health, null));
                 ret.Add((DESTCount, null));
                 ret.Add((Flags, null));
-                ret.Add((Unused, null));
+                ret.Add((Unknown, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -516,7 +516,7 @@ namespace Mutagen.Bethesda.Starfield
         new Int32 Health { get; set; }
         new Byte DESTCount { get; set; }
         new Destructible.DestructibleFlag Flags { get; set; }
-        new Int16 Unused { get; set; }
+        new Int16 Unknown { get; set; }
     }
 
     public partial interface IDestructableDataGetter :
@@ -534,7 +534,7 @@ namespace Mutagen.Bethesda.Starfield
         Int32 Health { get; }
         Byte DESTCount { get; }
         Destructible.DestructibleFlag Flags { get; }
-        Int16 Unused { get; }
+        Int16 Unknown { get; }
 
     }
 
@@ -707,7 +707,7 @@ namespace Mutagen.Bethesda.Starfield
         Health = 0,
         DESTCount = 1,
         Flags = 2,
-        Unused = 3,
+        Unknown = 3,
     }
     #endregion
 
@@ -796,7 +796,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Health = default(Int32);
             item.DESTCount = default(Byte);
             item.Flags = default(Destructible.DestructibleFlag);
-            item.Unused = default(Int16);
+            item.Unknown = default(Int16);
         }
         
         #region Mutagen
@@ -853,7 +853,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.Health = item.Health == rhs.Health;
             ret.DESTCount = item.DESTCount == rhs.DESTCount;
             ret.Flags = item.Flags == rhs.Flags;
-            ret.Unused = item.Unused == rhs.Unused;
+            ret.Unknown = item.Unknown == rhs.Unknown;
         }
         
         public string Print(
@@ -910,9 +910,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.Flags, "Flags");
             }
-            if (printMask?.Unused ?? true)
+            if (printMask?.Unknown ?? true)
             {
-                sb.AppendItem(item.Unused, "Unused");
+                sb.AppendItem(item.Unknown, "Unknown");
             }
         }
         
@@ -935,9 +935,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.Flags != rhs.Flags) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)DestructableData_FieldIndex.Unused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)DestructableData_FieldIndex.Unknown) ?? true))
             {
-                if (lhs.Unused != rhs.Unused) return false;
+                if (lhs.Unknown != rhs.Unknown) return false;
             }
             return true;
         }
@@ -948,7 +948,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Health);
             hash.Add(item.DESTCount);
             hash.Add(item.Flags);
-            hash.Add(item.Unused);
+            hash.Add(item.Unknown);
             return hash.ToHashCode();
         }
         
@@ -993,9 +993,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.Flags = rhs.Flags;
             }
-            if ((copyMask?.GetShouldTranslate((int)DestructableData_FieldIndex.Unused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)DestructableData_FieldIndex.Unknown) ?? true))
             {
-                item.Unused = rhs.Unused;
+                item.Unknown = rhs.Unknown;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1111,7 +1111,7 @@ namespace Mutagen.Bethesda.Starfield
                 writer,
                 item.Flags,
                 length: 1);
-            writer.Write(item.Unused);
+            writer.Write(item.Unknown);
         }
 
         public void Write(
@@ -1157,7 +1157,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Flags = EnumBinaryTranslation<Destructible.DestructibleFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 1);
-            item.Unused = frame.ReadInt16();
+            item.Unknown = frame.ReadInt16();
         }
 
     }
@@ -1226,7 +1226,7 @@ namespace Mutagen.Bethesda.Starfield
         public Int32 Health => BinaryPrimitives.ReadInt32LittleEndian(_structData.Slice(0x0, 0x4));
         public Byte DESTCount => _structData.Span[0x4];
         public Destructible.DestructibleFlag Flags => (Destructible.DestructibleFlag)_structData.Span.Slice(0x5, 0x1)[0];
-        public Int16 Unused => BinaryPrimitives.ReadInt16LittleEndian(_structData.Slice(0x6, 0x2));
+        public Int16 Unknown => BinaryPrimitives.ReadInt16LittleEndian(_structData.Slice(0x6, 0x2));
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

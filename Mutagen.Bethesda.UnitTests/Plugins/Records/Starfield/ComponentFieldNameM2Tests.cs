@@ -154,7 +154,7 @@ public class ComponentFieldNameM2Tests
         {
             var trigger = Component<IAdaptiveTriggerDataComponentGetter>(kywd.Components);
             var fire = trigger.FireEffect.ShouldNotBeNull();
-            fire.Unused.ShouldBe((byte)0);
+            fire.Unknown.ShouldBe((byte)0);
             fire.StartPosition.ShouldBe((byte)3);
             fire.EndPosition.ShouldBe((byte)6);
             fire.Strength.ShouldBe((byte)8);

@@ -52,7 +52,7 @@ public class MovementDataTests
             sped.MaxSpeedBack.Deceleration.ShouldBe(7f);
             sped.MaxRotationSpeedYaw.Stand.ShouldBe(1.2217305f, 0.000001f);
             sped.MaxRotationSpeedRoll.Acceleration.ShouldBe(4.1887903f, 0.000001f);
-            sped.MaxRotationSpeedRoll.Unused.ShouldBe(0f);
+            sped.MaxRotationSpeedRoll.Unknown.ShouldBe(0f);
             movt.FastWalk.ShouldBe(1.1f);
             movt.ClampMaxAnimationSpeeds.ShouldBeFalse();
             movt.DisplayForNonCharacters.ShouldBeTrue();

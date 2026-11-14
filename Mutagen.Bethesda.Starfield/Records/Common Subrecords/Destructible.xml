@@ -14,7 +14,7 @@
       <UInt8 name="DESTCount" />
       <Enum name="Flags" enumName="Destructible.DestructibleFlag" byteLength="1" />
       <!-- xEdit: unused (2 bytes); 0 in every DEST of Starfield.esm -->
-      <Int16 name="Unused" />
+      <Int16 name="Unknown" />
     </Fields>
   </Object>
   <Object name="ResistanceDestructible" objType="Subrecord">

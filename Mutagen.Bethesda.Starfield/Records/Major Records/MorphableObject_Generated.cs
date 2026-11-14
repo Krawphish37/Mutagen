@@ -109,16 +109,16 @@ namespace Mutagen.Bethesda.Starfield
         #region BaseVertexColor
         public Byte BaseVertexColor { get; set; } = default(Byte);
         #endregion
-        #region BaseVertexColorUnused
+        #region BaseVertexColorUnknown
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _BaseVertexColorUnused = new byte[3];
-        public MemorySlice<Byte> BaseVertexColorUnused
+        private MemorySlice<Byte> _BaseVertexColorUnknown = new byte[3];
+        public MemorySlice<Byte> BaseVertexColorUnknown
         {
-            get => _BaseVertexColorUnused;
-            set => this._BaseVertexColorUnused = value;
+            get => _BaseVertexColorUnknown;
+            set => this._BaseVertexColorUnknown = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IMorphableObjectGetter.BaseVertexColorUnused => this.BaseVertexColorUnused;
+        ReadOnlyMemorySlice<Byte> IMorphableObjectGetter.BaseVertexColorUnknown => this.BaseVertexColorUnknown;
         #endregion
 
         #region To String
@@ -150,7 +150,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.TargetMorphPath = initialValue;
                 this.TargetChargenMorphPath = initialValue;
                 this.BaseVertexColor = initialValue;
-                this.BaseVertexColorUnused = initialValue;
+                this.BaseVertexColorUnknown = initialValue;
             }
 
             public Mask(
@@ -168,7 +168,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem TargetMorphPath,
                 TItem TargetChargenMorphPath,
                 TItem BaseVertexColor,
-                TItem BaseVertexColorUnused)
+                TItem BaseVertexColorUnknown)
             : base(
                 MajorRecordFlagsRaw: MajorRecordFlagsRaw,
                 FormKey: FormKey,
@@ -185,7 +185,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.TargetMorphPath = TargetMorphPath;
                 this.TargetChargenMorphPath = TargetChargenMorphPath;
                 this.BaseVertexColor = BaseVertexColor;
-                this.BaseVertexColorUnused = BaseVertexColorUnused;
+                this.BaseVertexColorUnknown = BaseVertexColorUnknown;
             }
 
             #pragma warning disable CS8618
@@ -202,7 +202,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem TargetMorphPath;
             public TItem TargetChargenMorphPath;
             public TItem BaseVertexColor;
-            public TItem BaseVertexColorUnused;
+            public TItem BaseVertexColorUnknown;
             #endregion
 
             #region Equals
@@ -221,7 +221,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.TargetMorphPath, rhs.TargetMorphPath)) return false;
                 if (!object.Equals(this.TargetChargenMorphPath, rhs.TargetChargenMorphPath)) return false;
                 if (!object.Equals(this.BaseVertexColor, rhs.BaseVertexColor)) return false;
-                if (!object.Equals(this.BaseVertexColorUnused, rhs.BaseVertexColorUnused)) return false;
+                if (!object.Equals(this.BaseVertexColorUnknown, rhs.BaseVertexColorUnknown)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -232,7 +232,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.TargetMorphPath);
                 hash.Add(this.TargetChargenMorphPath);
                 hash.Add(this.BaseVertexColor);
-                hash.Add(this.BaseVertexColorUnused);
+                hash.Add(this.BaseVertexColorUnknown);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
             }
@@ -256,7 +256,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.TargetMorphPath)) return false;
                 if (!eval(this.TargetChargenMorphPath)) return false;
                 if (!eval(this.BaseVertexColor)) return false;
-                if (!eval(this.BaseVertexColorUnused)) return false;
+                if (!eval(this.BaseVertexColorUnknown)) return false;
                 return true;
             }
             #endregion
@@ -278,7 +278,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.TargetMorphPath)) return true;
                 if (eval(this.TargetChargenMorphPath)) return true;
                 if (eval(this.BaseVertexColor)) return true;
-                if (eval(this.BaseVertexColorUnused)) return true;
+                if (eval(this.BaseVertexColorUnknown)) return true;
                 return false;
             }
             #endregion
@@ -299,7 +299,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.TargetMorphPath = eval(this.TargetMorphPath);
                 obj.TargetChargenMorphPath = eval(this.TargetChargenMorphPath);
                 obj.BaseVertexColor = eval(this.BaseVertexColor);
-                obj.BaseVertexColorUnused = eval(this.BaseVertexColorUnused);
+                obj.BaseVertexColorUnknown = eval(this.BaseVertexColorUnknown);
             }
             #endregion
 
@@ -338,9 +338,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(BaseVertexColor, "BaseVertexColor");
                     }
-                    if (printMask?.BaseVertexColorUnused ?? true)
+                    if (printMask?.BaseVertexColorUnknown ?? true)
                     {
-                        sb.AppendItem(BaseVertexColorUnused, "BaseVertexColorUnused");
+                        sb.AppendItem(BaseVertexColorUnknown, "BaseVertexColorUnknown");
                     }
                 }
             }
@@ -358,7 +358,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? TargetMorphPath;
             public Exception? TargetChargenMorphPath;
             public Exception? BaseVertexColor;
-            public Exception? BaseVertexColorUnused;
+            public Exception? BaseVertexColorUnknown;
             #endregion
 
             #region IErrorMask
@@ -377,8 +377,8 @@ namespace Mutagen.Bethesda.Starfield
                         return TargetChargenMorphPath;
                     case MorphableObject_FieldIndex.BaseVertexColor:
                         return BaseVertexColor;
-                    case MorphableObject_FieldIndex.BaseVertexColorUnused:
-                        return BaseVertexColorUnused;
+                    case MorphableObject_FieldIndex.BaseVertexColorUnknown:
+                        return BaseVertexColorUnknown;
                     default:
                         return base.GetNthMask(index);
                 }
@@ -404,8 +404,8 @@ namespace Mutagen.Bethesda.Starfield
                     case MorphableObject_FieldIndex.BaseVertexColor:
                         this.BaseVertexColor = ex;
                         break;
-                    case MorphableObject_FieldIndex.BaseVertexColorUnused:
-                        this.BaseVertexColorUnused = ex;
+                    case MorphableObject_FieldIndex.BaseVertexColorUnknown:
+                        this.BaseVertexColorUnknown = ex;
                         break;
                     default:
                         base.SetNthException(index, ex);
@@ -433,8 +433,8 @@ namespace Mutagen.Bethesda.Starfield
                     case MorphableObject_FieldIndex.BaseVertexColor:
                         this.BaseVertexColor = (Exception?)obj;
                         break;
-                    case MorphableObject_FieldIndex.BaseVertexColorUnused:
-                        this.BaseVertexColorUnused = (Exception?)obj;
+                    case MorphableObject_FieldIndex.BaseVertexColorUnknown:
+                        this.BaseVertexColorUnknown = (Exception?)obj;
                         break;
                     default:
                         base.SetNthMask(index, obj);
@@ -450,7 +450,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (TargetMorphPath != null) return true;
                 if (TargetChargenMorphPath != null) return true;
                 if (BaseVertexColor != null) return true;
-                if (BaseVertexColorUnused != null) return true;
+                if (BaseVertexColorUnknown != null) return true;
                 return false;
             }
             #endregion
@@ -489,7 +489,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(BaseVertexColor, "BaseVertexColor");
                 }
                 {
-                    sb.AppendItem(BaseVertexColorUnused, "BaseVertexColorUnused");
+                    sb.AppendItem(BaseVertexColorUnknown, "BaseVertexColorUnknown");
                 }
             }
             #endregion
@@ -504,7 +504,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.TargetMorphPath = this.TargetMorphPath.Combine(rhs.TargetMorphPath);
                 ret.TargetChargenMorphPath = this.TargetChargenMorphPath.Combine(rhs.TargetChargenMorphPath);
                 ret.BaseVertexColor = this.BaseVertexColor.Combine(rhs.BaseVertexColor);
-                ret.BaseVertexColorUnused = this.BaseVertexColorUnused.Combine(rhs.BaseVertexColorUnused);
+                ret.BaseVertexColorUnknown = this.BaseVertexColorUnknown.Combine(rhs.BaseVertexColorUnknown);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -532,7 +532,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool TargetMorphPath;
             public bool TargetChargenMorphPath;
             public bool BaseVertexColor;
-            public bool BaseVertexColorUnused;
+            public bool BaseVertexColorUnknown;
             #endregion
 
             #region Ctors
@@ -544,7 +544,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.TargetMorphPath = defaultOn;
                 this.TargetChargenMorphPath = defaultOn;
                 this.BaseVertexColor = defaultOn;
-                this.BaseVertexColorUnused = defaultOn;
+                this.BaseVertexColorUnknown = defaultOn;
             }
 
             #endregion
@@ -557,7 +557,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((TargetMorphPath, null));
                 ret.Add((TargetChargenMorphPath, null));
                 ret.Add((BaseVertexColor, null));
-                ret.Add((BaseVertexColorUnused, null));
+                ret.Add((BaseVertexColorUnknown, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -724,7 +724,7 @@ namespace Mutagen.Bethesda.Starfield
         new String? TargetMorphPath { get; set; }
         new String? TargetChargenMorphPath { get; set; }
         new Byte BaseVertexColor { get; set; }
-        new MemorySlice<Byte> BaseVertexColorUnused { get; set; }
+        new MemorySlice<Byte> BaseVertexColorUnknown { get; set; }
     }
 
     public partial interface IMorphableObjectInternal :
@@ -762,7 +762,7 @@ namespace Mutagen.Bethesda.Starfield
         String? TargetMorphPath { get; }
         String? TargetChargenMorphPath { get; }
         Byte BaseVertexColor { get; }
-        ReadOnlyMemorySlice<Byte> BaseVertexColorUnused { get; }
+        ReadOnlyMemorySlice<Byte> BaseVertexColorUnknown { get; }
 
     }
 
@@ -946,7 +946,7 @@ namespace Mutagen.Bethesda.Starfield
         TargetMorphPath = 11,
         TargetChargenMorphPath = 12,
         BaseVertexColor = 13,
-        BaseVertexColorUnused = 14,
+        BaseVertexColorUnknown = 14,
     }
     #endregion
 
@@ -1053,7 +1053,7 @@ namespace Mutagen.Bethesda.Starfield
             item.TargetMorphPath = default;
             item.TargetChargenMorphPath = default;
             item.BaseVertexColor = default(Byte);
-            item.BaseVertexColorUnused = new byte[3];
+            item.BaseVertexColorUnknown = new byte[3];
             base.Clear(item);
         }
         
@@ -1179,7 +1179,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.TargetMorphPath = string.Equals(item.TargetMorphPath, rhs.TargetMorphPath);
             ret.TargetChargenMorphPath = string.Equals(item.TargetChargenMorphPath, rhs.TargetChargenMorphPath);
             ret.BaseVertexColor = item.BaseVertexColor == rhs.BaseVertexColor;
-            ret.BaseVertexColorUnused = MemoryExtensions.SequenceEqual(item.BaseVertexColorUnused.Span, rhs.BaseVertexColorUnused.Span);
+            ret.BaseVertexColorUnknown = MemoryExtensions.SequenceEqual(item.BaseVertexColorUnknown.Span, rhs.BaseVertexColorUnknown.Span);
             base.FillEqualsMask(item, rhs, ret, include);
         }
         
@@ -1253,9 +1253,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.BaseVertexColor, "BaseVertexColor");
             }
-            if (printMask?.BaseVertexColorUnused ?? true)
+            if (printMask?.BaseVertexColorUnknown ?? true)
             {
-                sb.AppendLine($"BaseVertexColorUnused => {SpanExt.ToHexString(item.BaseVertexColorUnused)}");
+                sb.AppendLine($"BaseVertexColorUnknown => {SpanExt.ToHexString(item.BaseVertexColorUnknown)}");
             }
         }
         
@@ -1343,9 +1343,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.BaseVertexColor != rhs.BaseVertexColor) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)MorphableObject_FieldIndex.BaseVertexColorUnused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)MorphableObject_FieldIndex.BaseVertexColorUnknown) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.BaseVertexColorUnused.Span, rhs.BaseVertexColorUnused.Span)) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.BaseVertexColorUnknown.Span, rhs.BaseVertexColorUnknown.Span)) return false;
             }
             return true;
         }
@@ -1392,7 +1392,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(TargetChargenMorphPathitem);
             }
             hash.Add(item.BaseVertexColor);
-            hash.AddBytes(item.BaseVertexColorUnused);
+            hash.AddBytes(item.BaseVertexColorUnknown);
             hash.Add(base.GetHashCode());
             return hash.ToHashCode();
         }
@@ -1612,9 +1612,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.BaseVertexColor = rhs.BaseVertexColor;
             }
-            if ((copyMask?.GetShouldTranslate((int)MorphableObject_FieldIndex.BaseVertexColorUnused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)MorphableObject_FieldIndex.BaseVertexColorUnknown) ?? true))
             {
-                item.BaseVertexColorUnused = rhs.BaseVertexColorUnused.ToArray();
+                item.BaseVertexColorUnknown = rhs.BaseVertexColorUnknown.ToArray();
             }
             DeepCopyInCustom(
                 item: item,
@@ -1814,7 +1814,7 @@ namespace Mutagen.Bethesda.Starfield
                 writer.Write(item.BaseVertexColor);
                 ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                     writer: writer,
-                    item: item.BaseVertexColorUnused);
+                    item: item.BaseVertexColorUnknown);
             }
         }
 
@@ -1928,8 +1928,8 @@ namespace Mutagen.Bethesda.Starfield
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 1) return null;
                     item.BaseVertexColor = dataFrame.ReadUInt8();
-                    item.BaseVertexColorUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(3));
-                    return (int)MorphableObject_FieldIndex.BaseVertexColorUnused;
+                    item.BaseVertexColorUnknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(3));
+                    return (int)MorphableObject_FieldIndex.BaseVertexColorUnknown;
                 }
                 case RecordTypeInts.XXXX:
                 {
@@ -2017,10 +2017,10 @@ namespace Mutagen.Bethesda.Starfield
         private bool _BaseVertexColor_IsSet => _MOBCLocation.HasValue && _MOBCLocation!.Value.Max - _BaseVertexColorLocation + 1 >= 1;
         public Byte BaseVertexColor => _BaseVertexColor_IsSet ? _recordData.Span[_BaseVertexColorLocation] : default(Byte);
         #endregion
-        #region BaseVertexColorUnused
-        private int _BaseVertexColorUnusedLocation => _MOBCLocation!.Value.Min + 0x1;
-        private bool _BaseVertexColorUnused_IsSet => _MOBCLocation.HasValue;
-        public ReadOnlyMemorySlice<Byte> BaseVertexColorUnused => _BaseVertexColorUnused_IsSet ? _recordData.Span.Slice(_BaseVertexColorUnusedLocation, 3).ToArray() : UtilityTranslation.Zeros.Slice(0, 3);
+        #region BaseVertexColorUnknown
+        private int _BaseVertexColorUnknownLocation => _MOBCLocation!.Value.Min + 0x1;
+        private bool _BaseVertexColorUnknown_IsSet => _MOBCLocation.HasValue;
+        public ReadOnlyMemorySlice<Byte> BaseVertexColorUnknown => _BaseVertexColorUnknown_IsSet ? _recordData.Span.Slice(_BaseVertexColorUnknownLocation, 3).ToArray() : UtilityTranslation.Zeros.Slice(0, 3);
         #endregion
         partial void CustomFactoryEnd(
             OverlayStream stream,
@@ -2128,7 +2128,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MOBC:
                 {
                     _MOBCLocation = new((stream.Position - offset) + _package.MetaData.Constants.SubConstants.TypeAndLengthLength, finalPos - offset - 1);
-                    return (int)MorphableObject_FieldIndex.BaseVertexColorUnused;
+                    return (int)MorphableObject_FieldIndex.BaseVertexColorUnknown;
                 }
                 case RecordTypeInts.XXXX:
                 {

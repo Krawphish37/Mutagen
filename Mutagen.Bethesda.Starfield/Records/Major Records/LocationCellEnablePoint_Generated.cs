@@ -75,16 +75,16 @@ namespace Mutagen.Bethesda.Starfield
         #region SetEnableStateToOppositeOfParent
         public Boolean SetEnableStateToOppositeOfParent { get; set; } = default(Boolean);
         #endregion
-        #region SetEnableStateToOppositeOfParentUnused
+        #region SetEnableStateToOppositeOfParentUnknown
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _SetEnableStateToOppositeOfParentUnused = new byte[3];
-        public MemorySlice<Byte> SetEnableStateToOppositeOfParentUnused
+        private MemorySlice<Byte> _SetEnableStateToOppositeOfParentUnknown = new byte[3];
+        public MemorySlice<Byte> SetEnableStateToOppositeOfParentUnknown
         {
-            get => _SetEnableStateToOppositeOfParentUnused;
-            set => this._SetEnableStateToOppositeOfParentUnused = value;
+            get => _SetEnableStateToOppositeOfParentUnknown;
+            set => this._SetEnableStateToOppositeOfParentUnknown = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> ILocationCellEnablePointGetter.SetEnableStateToOppositeOfParentUnused => this.SetEnableStateToOppositeOfParentUnused;
+        ReadOnlyMemorySlice<Byte> ILocationCellEnablePointGetter.SetEnableStateToOppositeOfParentUnknown => this.SetEnableStateToOppositeOfParentUnknown;
         #endregion
 
         #region To String
@@ -128,19 +128,19 @@ namespace Mutagen.Bethesda.Starfield
                 this.Actor = initialValue;
                 this.Ref = initialValue;
                 this.SetEnableStateToOppositeOfParent = initialValue;
-                this.SetEnableStateToOppositeOfParentUnused = initialValue;
+                this.SetEnableStateToOppositeOfParentUnknown = initialValue;
             }
 
             public Mask(
                 TItem Actor,
                 TItem Ref,
                 TItem SetEnableStateToOppositeOfParent,
-                TItem SetEnableStateToOppositeOfParentUnused)
+                TItem SetEnableStateToOppositeOfParentUnknown)
             {
                 this.Actor = Actor;
                 this.Ref = Ref;
                 this.SetEnableStateToOppositeOfParent = SetEnableStateToOppositeOfParent;
-                this.SetEnableStateToOppositeOfParentUnused = SetEnableStateToOppositeOfParentUnused;
+                this.SetEnableStateToOppositeOfParentUnknown = SetEnableStateToOppositeOfParentUnknown;
             }
 
             #pragma warning disable CS8618
@@ -155,7 +155,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Actor;
             public TItem Ref;
             public TItem SetEnableStateToOppositeOfParent;
-            public TItem SetEnableStateToOppositeOfParentUnused;
+            public TItem SetEnableStateToOppositeOfParentUnknown;
             #endregion
 
             #region Equals
@@ -171,7 +171,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Actor, rhs.Actor)) return false;
                 if (!object.Equals(this.Ref, rhs.Ref)) return false;
                 if (!object.Equals(this.SetEnableStateToOppositeOfParent, rhs.SetEnableStateToOppositeOfParent)) return false;
-                if (!object.Equals(this.SetEnableStateToOppositeOfParentUnused, rhs.SetEnableStateToOppositeOfParentUnused)) return false;
+                if (!object.Equals(this.SetEnableStateToOppositeOfParentUnknown, rhs.SetEnableStateToOppositeOfParentUnknown)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -180,7 +180,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Actor);
                 hash.Add(this.Ref);
                 hash.Add(this.SetEnableStateToOppositeOfParent);
-                hash.Add(this.SetEnableStateToOppositeOfParentUnused);
+                hash.Add(this.SetEnableStateToOppositeOfParentUnknown);
                 return hash.ToHashCode();
             }
 
@@ -192,7 +192,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Actor)) return false;
                 if (!eval(this.Ref)) return false;
                 if (!eval(this.SetEnableStateToOppositeOfParent)) return false;
-                if (!eval(this.SetEnableStateToOppositeOfParentUnused)) return false;
+                if (!eval(this.SetEnableStateToOppositeOfParentUnknown)) return false;
                 return true;
             }
             #endregion
@@ -203,7 +203,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Actor)) return true;
                 if (eval(this.Ref)) return true;
                 if (eval(this.SetEnableStateToOppositeOfParent)) return true;
-                if (eval(this.SetEnableStateToOppositeOfParentUnused)) return true;
+                if (eval(this.SetEnableStateToOppositeOfParentUnknown)) return true;
                 return false;
             }
             #endregion
@@ -221,7 +221,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Actor = eval(this.Actor);
                 obj.Ref = eval(this.Ref);
                 obj.SetEnableStateToOppositeOfParent = eval(this.SetEnableStateToOppositeOfParent);
-                obj.SetEnableStateToOppositeOfParentUnused = eval(this.SetEnableStateToOppositeOfParentUnused);
+                obj.SetEnableStateToOppositeOfParentUnknown = eval(this.SetEnableStateToOppositeOfParentUnknown);
             }
             #endregion
 
@@ -252,9 +252,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(SetEnableStateToOppositeOfParent, "SetEnableStateToOppositeOfParent");
                     }
-                    if (printMask?.SetEnableStateToOppositeOfParentUnused ?? true)
+                    if (printMask?.SetEnableStateToOppositeOfParentUnknown ?? true)
                     {
-                        sb.AppendItem(SetEnableStateToOppositeOfParentUnused, "SetEnableStateToOppositeOfParentUnused");
+                        sb.AppendItem(SetEnableStateToOppositeOfParentUnknown, "SetEnableStateToOppositeOfParentUnknown");
                     }
                 }
             }
@@ -283,7 +283,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Actor;
             public Exception? Ref;
             public Exception? SetEnableStateToOppositeOfParent;
-            public Exception? SetEnableStateToOppositeOfParentUnused;
+            public Exception? SetEnableStateToOppositeOfParentUnknown;
             #endregion
 
             #region IErrorMask
@@ -298,8 +298,8 @@ namespace Mutagen.Bethesda.Starfield
                         return Ref;
                     case LocationCellEnablePoint_FieldIndex.SetEnableStateToOppositeOfParent:
                         return SetEnableStateToOppositeOfParent;
-                    case LocationCellEnablePoint_FieldIndex.SetEnableStateToOppositeOfParentUnused:
-                        return SetEnableStateToOppositeOfParentUnused;
+                    case LocationCellEnablePoint_FieldIndex.SetEnableStateToOppositeOfParentUnknown:
+                        return SetEnableStateToOppositeOfParentUnknown;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -319,8 +319,8 @@ namespace Mutagen.Bethesda.Starfield
                     case LocationCellEnablePoint_FieldIndex.SetEnableStateToOppositeOfParent:
                         this.SetEnableStateToOppositeOfParent = ex;
                         break;
-                    case LocationCellEnablePoint_FieldIndex.SetEnableStateToOppositeOfParentUnused:
-                        this.SetEnableStateToOppositeOfParentUnused = ex;
+                    case LocationCellEnablePoint_FieldIndex.SetEnableStateToOppositeOfParentUnknown:
+                        this.SetEnableStateToOppositeOfParentUnknown = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -341,8 +341,8 @@ namespace Mutagen.Bethesda.Starfield
                     case LocationCellEnablePoint_FieldIndex.SetEnableStateToOppositeOfParent:
                         this.SetEnableStateToOppositeOfParent = (Exception?)obj;
                         break;
-                    case LocationCellEnablePoint_FieldIndex.SetEnableStateToOppositeOfParentUnused:
-                        this.SetEnableStateToOppositeOfParentUnused = (Exception?)obj;
+                    case LocationCellEnablePoint_FieldIndex.SetEnableStateToOppositeOfParentUnknown:
+                        this.SetEnableStateToOppositeOfParentUnknown = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -355,7 +355,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Actor != null) return true;
                 if (Ref != null) return true;
                 if (SetEnableStateToOppositeOfParent != null) return true;
-                if (SetEnableStateToOppositeOfParentUnused != null) return true;
+                if (SetEnableStateToOppositeOfParentUnknown != null) return true;
                 return false;
             }
             #endregion
@@ -391,7 +391,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(SetEnableStateToOppositeOfParent, "SetEnableStateToOppositeOfParent");
                 }
                 {
-                    sb.AppendItem(SetEnableStateToOppositeOfParentUnused, "SetEnableStateToOppositeOfParentUnused");
+                    sb.AppendItem(SetEnableStateToOppositeOfParentUnknown, "SetEnableStateToOppositeOfParentUnknown");
                 }
             }
             #endregion
@@ -404,7 +404,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Actor = this.Actor.Combine(rhs.Actor);
                 ret.Ref = this.Ref.Combine(rhs.Ref);
                 ret.SetEnableStateToOppositeOfParent = this.SetEnableStateToOppositeOfParent.Combine(rhs.SetEnableStateToOppositeOfParent);
-                ret.SetEnableStateToOppositeOfParentUnused = this.SetEnableStateToOppositeOfParentUnused.Combine(rhs.SetEnableStateToOppositeOfParentUnused);
+                ret.SetEnableStateToOppositeOfParentUnknown = this.SetEnableStateToOppositeOfParentUnknown.Combine(rhs.SetEnableStateToOppositeOfParentUnknown);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -431,7 +431,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Actor;
             public bool Ref;
             public bool SetEnableStateToOppositeOfParent;
-            public bool SetEnableStateToOppositeOfParentUnused;
+            public bool SetEnableStateToOppositeOfParentUnknown;
             #endregion
 
             #region Ctors
@@ -444,7 +444,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Actor = defaultOn;
                 this.Ref = defaultOn;
                 this.SetEnableStateToOppositeOfParent = defaultOn;
-                this.SetEnableStateToOppositeOfParentUnused = defaultOn;
+                this.SetEnableStateToOppositeOfParentUnknown = defaultOn;
             }
 
             #endregion
@@ -463,7 +463,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Actor, null));
                 ret.Add((Ref, null));
                 ret.Add((SetEnableStateToOppositeOfParent, null));
-                ret.Add((SetEnableStateToOppositeOfParentUnused, null));
+                ret.Add((SetEnableStateToOppositeOfParentUnknown, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -545,7 +545,7 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLink<IPlacedGetter> Actor { get; set; }
         new IFormLink<IPlacedGetter> Ref { get; set; }
         new Boolean SetEnableStateToOppositeOfParent { get; set; }
-        new MemorySlice<Byte> SetEnableStateToOppositeOfParentUnused { get; set; }
+        new MemorySlice<Byte> SetEnableStateToOppositeOfParentUnknown { get; set; }
     }
 
     public partial interface ILocationCellEnablePointGetter :
@@ -564,7 +564,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkGetter<IPlacedGetter> Actor { get; }
         IFormLinkGetter<IPlacedGetter> Ref { get; }
         Boolean SetEnableStateToOppositeOfParent { get; }
-        ReadOnlyMemorySlice<Byte> SetEnableStateToOppositeOfParentUnused { get; }
+        ReadOnlyMemorySlice<Byte> SetEnableStateToOppositeOfParentUnknown { get; }
 
     }
 
@@ -737,7 +737,7 @@ namespace Mutagen.Bethesda.Starfield
         Actor = 0,
         Ref = 1,
         SetEnableStateToOppositeOfParent = 2,
-        SetEnableStateToOppositeOfParentUnused = 3,
+        SetEnableStateToOppositeOfParentUnknown = 3,
     }
     #endregion
 
@@ -819,7 +819,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Actor.Clear();
             item.Ref.Clear();
             item.SetEnableStateToOppositeOfParent = default(Boolean);
-            item.SetEnableStateToOppositeOfParentUnused = new byte[3];
+            item.SetEnableStateToOppositeOfParentUnknown = new byte[3];
         }
         
         #region Mutagen
@@ -874,7 +874,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.Actor = item.Actor.Equals(rhs.Actor);
             ret.Ref = item.Ref.Equals(rhs.Ref);
             ret.SetEnableStateToOppositeOfParent = item.SetEnableStateToOppositeOfParent == rhs.SetEnableStateToOppositeOfParent;
-            ret.SetEnableStateToOppositeOfParentUnused = MemoryExtensions.SequenceEqual(item.SetEnableStateToOppositeOfParentUnused.Span, rhs.SetEnableStateToOppositeOfParentUnused.Span);
+            ret.SetEnableStateToOppositeOfParentUnknown = MemoryExtensions.SequenceEqual(item.SetEnableStateToOppositeOfParentUnknown.Span, rhs.SetEnableStateToOppositeOfParentUnknown.Span);
         }
         
         public string Print(
@@ -931,9 +931,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.SetEnableStateToOppositeOfParent, "SetEnableStateToOppositeOfParent");
             }
-            if (printMask?.SetEnableStateToOppositeOfParentUnused ?? true)
+            if (printMask?.SetEnableStateToOppositeOfParentUnknown ?? true)
             {
-                sb.AppendLine($"SetEnableStateToOppositeOfParentUnused => {SpanExt.ToHexString(item.SetEnableStateToOppositeOfParentUnused)}");
+                sb.AppendLine($"SetEnableStateToOppositeOfParentUnknown => {SpanExt.ToHexString(item.SetEnableStateToOppositeOfParentUnknown)}");
             }
         }
         
@@ -956,9 +956,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.SetEnableStateToOppositeOfParent != rhs.SetEnableStateToOppositeOfParent) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)LocationCellEnablePoint_FieldIndex.SetEnableStateToOppositeOfParentUnused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)LocationCellEnablePoint_FieldIndex.SetEnableStateToOppositeOfParentUnknown) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.SetEnableStateToOppositeOfParentUnused.Span, rhs.SetEnableStateToOppositeOfParentUnused.Span)) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.SetEnableStateToOppositeOfParentUnknown.Span, rhs.SetEnableStateToOppositeOfParentUnknown.Span)) return false;
             }
             return true;
         }
@@ -969,7 +969,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Actor);
             hash.Add(item.Ref);
             hash.Add(item.SetEnableStateToOppositeOfParent);
-            hash.AddBytes(item.SetEnableStateToOppositeOfParentUnused);
+            hash.AddBytes(item.SetEnableStateToOppositeOfParentUnknown);
             return hash.ToHashCode();
         }
         
@@ -1016,9 +1016,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.SetEnableStateToOppositeOfParent = rhs.SetEnableStateToOppositeOfParent;
             }
-            if ((copyMask?.GetShouldTranslate((int)LocationCellEnablePoint_FieldIndex.SetEnableStateToOppositeOfParentUnused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)LocationCellEnablePoint_FieldIndex.SetEnableStateToOppositeOfParentUnknown) ?? true))
             {
-                item.SetEnableStateToOppositeOfParentUnused = rhs.SetEnableStateToOppositeOfParentUnused.ToArray();
+                item.SetEnableStateToOppositeOfParentUnknown = rhs.SetEnableStateToOppositeOfParentUnknown.ToArray();
             }
             DeepCopyInCustom(
                 item: item,
@@ -1137,7 +1137,7 @@ namespace Mutagen.Bethesda.Starfield
             writer.Write(item.SetEnableStateToOppositeOfParent);
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.SetEnableStateToOppositeOfParentUnused);
+                item: item.SetEnableStateToOppositeOfParentUnknown);
         }
 
         public void Write(
@@ -1174,7 +1174,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Actor.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             item.Ref.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             item.SetEnableStateToOppositeOfParent = frame.ReadBoolean();
-            item.SetEnableStateToOppositeOfParentUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
+            item.SetEnableStateToOppositeOfParentUnknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
         }
 
     }
@@ -1244,7 +1244,7 @@ namespace Mutagen.Bethesda.Starfield
         public IFormLinkGetter<IPlacedGetter> Actor => FormLinkBinaryTranslation.Instance.OverlayFactory<IPlacedGetter>(_package, _structData.Span.Slice(0x0, 0x4));
         public IFormLinkGetter<IPlacedGetter> Ref => FormLinkBinaryTranslation.Instance.OverlayFactory<IPlacedGetter>(_package, _structData.Span.Slice(0x4, 0x4));
         public Boolean SetEnableStateToOppositeOfParent => _structData.Slice(0x8, 0x1)[0] >= 1;
-        public ReadOnlyMemorySlice<Byte> SetEnableStateToOppositeOfParentUnused => _structData.Span.Slice(0x9, 0x3).ToArray();
+        public ReadOnlyMemorySlice<Byte> SetEnableStateToOppositeOfParentUnknown => _structData.Span.Slice(0x9, 0x3).ToArray();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

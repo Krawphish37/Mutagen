@@ -31,7 +31,7 @@ public class PlacedObjectBoolPaddingTests
         foreach (var refr in Read("XBSD", xbsd))
         {
             refr.Spline!.IsWindDetachedEnd.ShouldBeTrue();
-            refr.Spline.IsWindDetachedEndUnused.ToArray().ShouldBe(Hex("AB-AB-AB"));
+            refr.Spline.IsWindDetachedEndUnknown.ToArray().ShouldBe(Hex("AB-AB-AB"));
             WritesBack(refr, "XBSD", xbsd);
         }
     }
@@ -45,7 +45,7 @@ public class PlacedObjectBoolPaddingTests
         {
             refr.GoboAnimatedProperties!.StaticScaleU.ShouldBe(2f);
             refr.GoboAnimatedProperties.IsAnimated.ShouldBeTrue();
-            refr.GoboAnimatedProperties.IsAnimatedUnused.ToArray().ShouldBe(Hex("AB-AB-AB"));
+            refr.GoboAnimatedProperties.IsAnimatedUnknown.ToArray().ShouldBe(Hex("AB-AB-AB"));
             WritesBack(refr, "XLGD", xlgd);
         }
     }

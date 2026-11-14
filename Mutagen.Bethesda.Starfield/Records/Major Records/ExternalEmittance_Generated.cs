@@ -57,16 +57,16 @@ namespace Mutagen.Bethesda.Starfield
         #region OverrideEnabled
         public Boolean OverrideEnabled { get; set; } = default(Boolean);
         #endregion
-        #region OverrideEnabledUnused
+        #region OverrideEnabledUnknown
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _OverrideEnabledUnused = new byte[3];
-        public MemorySlice<Byte> OverrideEnabledUnused
+        private MemorySlice<Byte> _OverrideEnabledUnknown = new byte[3];
+        public MemorySlice<Byte> OverrideEnabledUnknown
         {
-            get => _OverrideEnabledUnused;
-            set => this._OverrideEnabledUnused = value;
+            get => _OverrideEnabledUnknown;
+            set => this._OverrideEnabledUnknown = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IExternalEmittanceGetter.OverrideEnabledUnused => this.OverrideEnabledUnused;
+        ReadOnlyMemorySlice<Byte> IExternalEmittanceGetter.OverrideEnabledUnknown => this.OverrideEnabledUnknown;
         #endregion
 
         #region To String
@@ -109,17 +109,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 this.LuminanceScale = initialValue;
                 this.OverrideEnabled = initialValue;
-                this.OverrideEnabledUnused = initialValue;
+                this.OverrideEnabledUnknown = initialValue;
             }
 
             public Mask(
                 TItem LuminanceScale,
                 TItem OverrideEnabled,
-                TItem OverrideEnabledUnused)
+                TItem OverrideEnabledUnknown)
             {
                 this.LuminanceScale = LuminanceScale;
                 this.OverrideEnabled = OverrideEnabled;
-                this.OverrideEnabledUnused = OverrideEnabledUnused;
+                this.OverrideEnabledUnknown = OverrideEnabledUnknown;
             }
 
             #pragma warning disable CS8618
@@ -133,7 +133,7 @@ namespace Mutagen.Bethesda.Starfield
             #region Members
             public TItem LuminanceScale;
             public TItem OverrideEnabled;
-            public TItem OverrideEnabledUnused;
+            public TItem OverrideEnabledUnknown;
             #endregion
 
             #region Equals
@@ -148,7 +148,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (rhs == null) return false;
                 if (!object.Equals(this.LuminanceScale, rhs.LuminanceScale)) return false;
                 if (!object.Equals(this.OverrideEnabled, rhs.OverrideEnabled)) return false;
-                if (!object.Equals(this.OverrideEnabledUnused, rhs.OverrideEnabledUnused)) return false;
+                if (!object.Equals(this.OverrideEnabledUnknown, rhs.OverrideEnabledUnknown)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -156,7 +156,7 @@ namespace Mutagen.Bethesda.Starfield
                 var hash = new HashCode();
                 hash.Add(this.LuminanceScale);
                 hash.Add(this.OverrideEnabled);
-                hash.Add(this.OverrideEnabledUnused);
+                hash.Add(this.OverrideEnabledUnknown);
                 return hash.ToHashCode();
             }
 
@@ -167,7 +167,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (!eval(this.LuminanceScale)) return false;
                 if (!eval(this.OverrideEnabled)) return false;
-                if (!eval(this.OverrideEnabledUnused)) return false;
+                if (!eval(this.OverrideEnabledUnknown)) return false;
                 return true;
             }
             #endregion
@@ -177,7 +177,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (eval(this.LuminanceScale)) return true;
                 if (eval(this.OverrideEnabled)) return true;
-                if (eval(this.OverrideEnabledUnused)) return true;
+                if (eval(this.OverrideEnabledUnknown)) return true;
                 return false;
             }
             #endregion
@@ -194,7 +194,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 obj.LuminanceScale = eval(this.LuminanceScale);
                 obj.OverrideEnabled = eval(this.OverrideEnabled);
-                obj.OverrideEnabledUnused = eval(this.OverrideEnabledUnused);
+                obj.OverrideEnabledUnknown = eval(this.OverrideEnabledUnknown);
             }
             #endregion
 
@@ -221,9 +221,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(OverrideEnabled, "OverrideEnabled");
                     }
-                    if (printMask?.OverrideEnabledUnused ?? true)
+                    if (printMask?.OverrideEnabledUnknown ?? true)
                     {
-                        sb.AppendItem(OverrideEnabledUnused, "OverrideEnabledUnused");
+                        sb.AppendItem(OverrideEnabledUnknown, "OverrideEnabledUnknown");
                     }
                 }
             }
@@ -251,7 +251,7 @@ namespace Mutagen.Bethesda.Starfield
             }
             public Exception? LuminanceScale;
             public Exception? OverrideEnabled;
-            public Exception? OverrideEnabledUnused;
+            public Exception? OverrideEnabledUnknown;
             #endregion
 
             #region IErrorMask
@@ -264,8 +264,8 @@ namespace Mutagen.Bethesda.Starfield
                         return LuminanceScale;
                     case ExternalEmittance_FieldIndex.OverrideEnabled:
                         return OverrideEnabled;
-                    case ExternalEmittance_FieldIndex.OverrideEnabledUnused:
-                        return OverrideEnabledUnused;
+                    case ExternalEmittance_FieldIndex.OverrideEnabledUnknown:
+                        return OverrideEnabledUnknown;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -282,8 +282,8 @@ namespace Mutagen.Bethesda.Starfield
                     case ExternalEmittance_FieldIndex.OverrideEnabled:
                         this.OverrideEnabled = ex;
                         break;
-                    case ExternalEmittance_FieldIndex.OverrideEnabledUnused:
-                        this.OverrideEnabledUnused = ex;
+                    case ExternalEmittance_FieldIndex.OverrideEnabledUnknown:
+                        this.OverrideEnabledUnknown = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -301,8 +301,8 @@ namespace Mutagen.Bethesda.Starfield
                     case ExternalEmittance_FieldIndex.OverrideEnabled:
                         this.OverrideEnabled = (Exception?)obj;
                         break;
-                    case ExternalEmittance_FieldIndex.OverrideEnabledUnused:
-                        this.OverrideEnabledUnused = (Exception?)obj;
+                    case ExternalEmittance_FieldIndex.OverrideEnabledUnknown:
+                        this.OverrideEnabledUnknown = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -314,7 +314,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Overall != null) return true;
                 if (LuminanceScale != null) return true;
                 if (OverrideEnabled != null) return true;
-                if (OverrideEnabledUnused != null) return true;
+                if (OverrideEnabledUnknown != null) return true;
                 return false;
             }
             #endregion
@@ -347,7 +347,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(OverrideEnabled, "OverrideEnabled");
                 }
                 {
-                    sb.AppendItem(OverrideEnabledUnused, "OverrideEnabledUnused");
+                    sb.AppendItem(OverrideEnabledUnknown, "OverrideEnabledUnknown");
                 }
             }
             #endregion
@@ -359,7 +359,7 @@ namespace Mutagen.Bethesda.Starfield
                 var ret = new ErrorMask();
                 ret.LuminanceScale = this.LuminanceScale.Combine(rhs.LuminanceScale);
                 ret.OverrideEnabled = this.OverrideEnabled.Combine(rhs.OverrideEnabled);
-                ret.OverrideEnabledUnused = this.OverrideEnabledUnused.Combine(rhs.OverrideEnabledUnused);
+                ret.OverrideEnabledUnknown = this.OverrideEnabledUnknown.Combine(rhs.OverrideEnabledUnknown);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -385,7 +385,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool OnOverall;
             public bool LuminanceScale;
             public bool OverrideEnabled;
-            public bool OverrideEnabledUnused;
+            public bool OverrideEnabledUnknown;
             #endregion
 
             #region Ctors
@@ -397,7 +397,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.OnOverall = onOverall;
                 this.LuminanceScale = defaultOn;
                 this.OverrideEnabled = defaultOn;
-                this.OverrideEnabledUnused = defaultOn;
+                this.OverrideEnabledUnknown = defaultOn;
             }
 
             #endregion
@@ -415,7 +415,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 ret.Add((LuminanceScale, null));
                 ret.Add((OverrideEnabled, null));
-                ret.Add((OverrideEnabledUnused, null));
+                ret.Add((OverrideEnabledUnknown, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -490,7 +490,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         new Single LuminanceScale { get; set; }
         new Boolean OverrideEnabled { get; set; }
-        new MemorySlice<Byte> OverrideEnabledUnused { get; set; }
+        new MemorySlice<Byte> OverrideEnabledUnknown { get; set; }
     }
 
     public partial interface IExternalEmittanceGetter :
@@ -507,7 +507,7 @@ namespace Mutagen.Bethesda.Starfield
         static ILoquiRegistration StaticRegistration => ExternalEmittance_Registration.Instance;
         Single LuminanceScale { get; }
         Boolean OverrideEnabled { get; }
-        ReadOnlyMemorySlice<Byte> OverrideEnabledUnused { get; }
+        ReadOnlyMemorySlice<Byte> OverrideEnabledUnknown { get; }
 
     }
 
@@ -679,7 +679,7 @@ namespace Mutagen.Bethesda.Starfield
     {
         LuminanceScale = 0,
         OverrideEnabled = 1,
-        OverrideEnabledUnused = 2,
+        OverrideEnabledUnknown = 2,
     }
     #endregion
 
@@ -767,7 +767,7 @@ namespace Mutagen.Bethesda.Starfield
             ClearPartial();
             item.LuminanceScale = default(Single);
             item.OverrideEnabled = default(Boolean);
-            item.OverrideEnabledUnused = new byte[3];
+            item.OverrideEnabledUnknown = new byte[3];
         }
         
         #region Mutagen
@@ -823,7 +823,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             ret.LuminanceScale = item.LuminanceScale.EqualsWithin(rhs.LuminanceScale);
             ret.OverrideEnabled = item.OverrideEnabled == rhs.OverrideEnabled;
-            ret.OverrideEnabledUnused = MemoryExtensions.SequenceEqual(item.OverrideEnabledUnused.Span, rhs.OverrideEnabledUnused.Span);
+            ret.OverrideEnabledUnknown = MemoryExtensions.SequenceEqual(item.OverrideEnabledUnknown.Span, rhs.OverrideEnabledUnknown.Span);
         }
         
         public string Print(
@@ -876,9 +876,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.OverrideEnabled, "OverrideEnabled");
             }
-            if (printMask?.OverrideEnabledUnused ?? true)
+            if (printMask?.OverrideEnabledUnknown ?? true)
             {
-                sb.AppendLine($"OverrideEnabledUnused => {SpanExt.ToHexString(item.OverrideEnabledUnused)}");
+                sb.AppendLine($"OverrideEnabledUnknown => {SpanExt.ToHexString(item.OverrideEnabledUnknown)}");
             }
         }
         
@@ -897,9 +897,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.OverrideEnabled != rhs.OverrideEnabled) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)ExternalEmittance_FieldIndex.OverrideEnabledUnused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)ExternalEmittance_FieldIndex.OverrideEnabledUnknown) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.OverrideEnabledUnused.Span, rhs.OverrideEnabledUnused.Span)) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.OverrideEnabledUnknown.Span, rhs.OverrideEnabledUnknown.Span)) return false;
             }
             return true;
         }
@@ -909,7 +909,7 @@ namespace Mutagen.Bethesda.Starfield
             var hash = new HashCode();
             hash.Add(item.LuminanceScale);
             hash.Add(item.OverrideEnabled);
-            hash.AddBytes(item.OverrideEnabledUnused);
+            hash.AddBytes(item.OverrideEnabledUnknown);
             return hash.ToHashCode();
         }
         
@@ -950,9 +950,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.OverrideEnabled = rhs.OverrideEnabled;
             }
-            if ((copyMask?.GetShouldTranslate((int)ExternalEmittance_FieldIndex.OverrideEnabledUnused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)ExternalEmittance_FieldIndex.OverrideEnabledUnknown) ?? true))
             {
-                item.OverrideEnabledUnused = rhs.OverrideEnabledUnused.ToArray();
+                item.OverrideEnabledUnknown = rhs.OverrideEnabledUnknown.ToArray();
             }
             DeepCopyInCustom(
                 item: item,
@@ -1068,7 +1068,7 @@ namespace Mutagen.Bethesda.Starfield
             writer.Write(item.OverrideEnabled);
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.OverrideEnabledUnused);
+                item: item.OverrideEnabledUnknown);
         }
 
         public void Write(
@@ -1111,7 +1111,7 @@ namespace Mutagen.Bethesda.Starfield
         {
             item.LuminanceScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.OverrideEnabled = frame.ReadBoolean();
-            item.OverrideEnabledUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
+            item.OverrideEnabledUnknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
         }
 
     }
@@ -1179,7 +1179,7 @@ namespace Mutagen.Bethesda.Starfield
 
         public Single LuminanceScale => _structData.Slice(0x0, 0x4).Float();
         public Boolean OverrideEnabled => _structData.Slice(0x4, 0x1)[0] >= 1;
-        public ReadOnlyMemorySlice<Byte> OverrideEnabledUnused => _structData.Span.Slice(0x5, 0x3).ToArray();
+        public ReadOnlyMemorySlice<Byte> OverrideEnabledUnknown => _structData.Span.Slice(0x5, 0x3).ToArray();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

@@ -9,7 +9,7 @@
       <Data recordType="MOBC">
         <Fields>
           <UInt8 name="BaseVertexColor" />
-          <ByteArray name="BaseVertexColorUnused" byteLength="3" nullable="False" />
+          <ByteArray name="BaseVertexColorUnknown" byteLength="3" nullable="False" />
         </Fields>
       </Data>
     </Fields>

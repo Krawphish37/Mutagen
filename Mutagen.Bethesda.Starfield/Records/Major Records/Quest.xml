@@ -94,7 +94,7 @@
         <Fields>
           <UInt16 name="Index" />
           <Enum name="Flags" enumName="QuestStage.Flag" byteLength="1" />
-          <ByteArray name="FlagsUnused" byteLength="1" nullable="False" />
+          <ByteArray name="FlagsUnknown" byteLength="1" nullable="False" />
         </Fields>
       </Data>
       <RefList name="LogEntries" refName="QuestLogEntry" />

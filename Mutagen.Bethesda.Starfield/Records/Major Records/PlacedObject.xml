@@ -167,7 +167,7 @@
     <Fields>
       <Float name="LuminanceScale" />
       <Bool name="OverrideEnabled" byteLength="1" />
-      <ByteArray name="OverrideEnabledUnused" byteLength="3" nullable="False" />
+      <ByteArray name="OverrideEnabledUnknown" byteLength="3" nullable="False" />
     </Fields>
   </Object>
   <Object name="VolumeReflectionProbeOffsetIntensity" objType="Subrecord" recordType="XVOI" >
@@ -208,10 +208,10 @@
       <Float name="NearClipCutOn" />
       <Float name="InnerFov" />
       <Float name="ShadowOffset" />
-      <ByteArray name="ShadowOffsetUnused" byteLength="4" nullable="False" />
+      <ByteArray name="ShadowOffsetUnknown" byteLength="4" nullable="False" />
       <Break />
       <UInt8 name="Unknown2" />
-      <ByteArray name="Unknown2Unused" byteLength="3" nullable="False" />
+      <ByteArray name="Unknown3" byteLength="3" nullable="False" />
     </Fields>
   </Object>
   <Object name="TeleportDestination" objType="Subrecord" recordType="XTEL">
@@ -241,7 +241,7 @@
       <Float name="HeightScale" />
       <Float name="UnknownFloat" />
       <UInt8 name="UnknownByte" />
-      <ByteArray name="UnknownByteUnused" byteLength="3" nullable="False" />
+      <ByteArray name="Unknown" byteLength="3" nullable="False" />
     </Fields>
   </Object>
   <Object name="PlacedObjectCollision" objType="Subrecord" recordType="XCOL" >
@@ -256,7 +256,7 @@
       <Float name="IntensityAmplitude" />
       <Float name="MovementAmplitude" />
       <Enum name="FlickerEffect" enumName="Light.FlickerEffectOption" byteLength="1" />
-      <ByteArray name="FlickerEffectUnused" byteLength="3" nullable="False" />
+      <ByteArray name="FlickerEffectUnknown" byteLength="3" nullable="False" />
     </Fields>
   </Object>
   <Object name="PlacedObjectMapMarker" objType="Subrecord">
@@ -285,7 +285,7 @@
       <Float name="Thickness" />
       <P3Float name="HalfExtents" />
       <Bool name="IsWindDetachedEnd" byteLength="1" />
-      <ByteArray name="IsWindDetachedEndUnused" byteLength="3" nullable="false" />
+      <ByteArray name="IsWindDetachedEndUnknown" byteLength="3" nullable="false" />
     </Fields>
   </Object>
   <Object name="NavigationDoorLink" objType="Subrecord" recordType="XNDP">
@@ -325,7 +325,7 @@
       <Float name="WaveScrollAmountV" />
       <Float name="RandomTimeOffsetRange" />
       <Bool name="IsAnimated" byteLength="1" />
-      <ByteArray name="IsAnimatedUnused" byteLength="3" nullable="false" />
+      <ByteArray name="IsAnimatedUnknown" byteLength="3" nullable="false" />
     </Fields>
   </Object>
   <Object name="PlacedObjectWaterCurrentReference" objType="Subrecord" >

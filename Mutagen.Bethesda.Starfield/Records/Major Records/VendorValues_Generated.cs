@@ -69,8 +69,8 @@ namespace Mutagen.Bethesda.Starfield
         #region BuysNonStolenItems
         public Boolean BuysNonStolenItems { get; set; } = default(Boolean);
         #endregion
-        #region Unused
-        public Byte Unused { get; set; } = default(Byte);
+        #region Unknown
+        public Byte Unknown { get; set; } = default(Byte);
         #endregion
 
         #region To String
@@ -117,7 +117,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.BuysStolenItems = initialValue;
                 this.BuySellEverythingNotInList = initialValue;
                 this.BuysNonStolenItems = initialValue;
-                this.Unused = initialValue;
+                this.Unknown = initialValue;
             }
 
             public Mask(
@@ -127,7 +127,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem BuysStolenItems,
                 TItem BuySellEverythingNotInList,
                 TItem BuysNonStolenItems,
-                TItem Unused)
+                TItem Unknown)
             {
                 this.StartHour = StartHour;
                 this.EndHour = EndHour;
@@ -135,7 +135,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.BuysStolenItems = BuysStolenItems;
                 this.BuySellEverythingNotInList = BuySellEverythingNotInList;
                 this.BuysNonStolenItems = BuysNonStolenItems;
-                this.Unused = Unused;
+                this.Unknown = Unknown;
             }
 
             #pragma warning disable CS8618
@@ -153,7 +153,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem BuysStolenItems;
             public TItem BuySellEverythingNotInList;
             public TItem BuysNonStolenItems;
-            public TItem Unused;
+            public TItem Unknown;
             #endregion
 
             #region Equals
@@ -172,7 +172,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.BuysStolenItems, rhs.BuysStolenItems)) return false;
                 if (!object.Equals(this.BuySellEverythingNotInList, rhs.BuySellEverythingNotInList)) return false;
                 if (!object.Equals(this.BuysNonStolenItems, rhs.BuysNonStolenItems)) return false;
-                if (!object.Equals(this.Unused, rhs.Unused)) return false;
+                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -184,7 +184,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.BuysStolenItems);
                 hash.Add(this.BuySellEverythingNotInList);
                 hash.Add(this.BuysNonStolenItems);
-                hash.Add(this.Unused);
+                hash.Add(this.Unknown);
                 return hash.ToHashCode();
             }
 
@@ -199,7 +199,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.BuysStolenItems)) return false;
                 if (!eval(this.BuySellEverythingNotInList)) return false;
                 if (!eval(this.BuysNonStolenItems)) return false;
-                if (!eval(this.Unused)) return false;
+                if (!eval(this.Unknown)) return false;
                 return true;
             }
             #endregion
@@ -213,7 +213,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.BuysStolenItems)) return true;
                 if (eval(this.BuySellEverythingNotInList)) return true;
                 if (eval(this.BuysNonStolenItems)) return true;
-                if (eval(this.Unused)) return true;
+                if (eval(this.Unknown)) return true;
                 return false;
             }
             #endregion
@@ -234,7 +234,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.BuysStolenItems = eval(this.BuysStolenItems);
                 obj.BuySellEverythingNotInList = eval(this.BuySellEverythingNotInList);
                 obj.BuysNonStolenItems = eval(this.BuysNonStolenItems);
-                obj.Unused = eval(this.Unused);
+                obj.Unknown = eval(this.Unknown);
             }
             #endregion
 
@@ -277,9 +277,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(BuysNonStolenItems, "BuysNonStolenItems");
                     }
-                    if (printMask?.Unused ?? true)
+                    if (printMask?.Unknown ?? true)
                     {
-                        sb.AppendItem(Unused, "Unused");
+                        sb.AppendItem(Unknown, "Unknown");
                     }
                 }
             }
@@ -311,7 +311,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? BuysStolenItems;
             public Exception? BuySellEverythingNotInList;
             public Exception? BuysNonStolenItems;
-            public Exception? Unused;
+            public Exception? Unknown;
             #endregion
 
             #region IErrorMask
@@ -332,8 +332,8 @@ namespace Mutagen.Bethesda.Starfield
                         return BuySellEverythingNotInList;
                     case VendorValues_FieldIndex.BuysNonStolenItems:
                         return BuysNonStolenItems;
-                    case VendorValues_FieldIndex.Unused:
-                        return Unused;
+                    case VendorValues_FieldIndex.Unknown:
+                        return Unknown;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -362,8 +362,8 @@ namespace Mutagen.Bethesda.Starfield
                     case VendorValues_FieldIndex.BuysNonStolenItems:
                         this.BuysNonStolenItems = ex;
                         break;
-                    case VendorValues_FieldIndex.Unused:
-                        this.Unused = ex;
+                    case VendorValues_FieldIndex.Unknown:
+                        this.Unknown = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -393,8 +393,8 @@ namespace Mutagen.Bethesda.Starfield
                     case VendorValues_FieldIndex.BuysNonStolenItems:
                         this.BuysNonStolenItems = (Exception?)obj;
                         break;
-                    case VendorValues_FieldIndex.Unused:
-                        this.Unused = (Exception?)obj;
+                    case VendorValues_FieldIndex.Unknown:
+                        this.Unknown = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -410,7 +410,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (BuysStolenItems != null) return true;
                 if (BuySellEverythingNotInList != null) return true;
                 if (BuysNonStolenItems != null) return true;
-                if (Unused != null) return true;
+                if (Unknown != null) return true;
                 return false;
             }
             #endregion
@@ -455,7 +455,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(BuysNonStolenItems, "BuysNonStolenItems");
                 }
                 {
-                    sb.AppendItem(Unused, "Unused");
+                    sb.AppendItem(Unknown, "Unknown");
                 }
             }
             #endregion
@@ -471,7 +471,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.BuysStolenItems = this.BuysStolenItems.Combine(rhs.BuysStolenItems);
                 ret.BuySellEverythingNotInList = this.BuySellEverythingNotInList.Combine(rhs.BuySellEverythingNotInList);
                 ret.BuysNonStolenItems = this.BuysNonStolenItems.Combine(rhs.BuysNonStolenItems);
-                ret.Unused = this.Unused.Combine(rhs.Unused);
+                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -501,7 +501,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool BuysStolenItems;
             public bool BuySellEverythingNotInList;
             public bool BuysNonStolenItems;
-            public bool Unused;
+            public bool Unknown;
             #endregion
 
             #region Ctors
@@ -517,7 +517,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.BuysStolenItems = defaultOn;
                 this.BuySellEverythingNotInList = defaultOn;
                 this.BuysNonStolenItems = defaultOn;
-                this.Unused = defaultOn;
+                this.Unknown = defaultOn;
             }
 
             #endregion
@@ -539,7 +539,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((BuysStolenItems, null));
                 ret.Add((BuySellEverythingNotInList, null));
                 ret.Add((BuysNonStolenItems, null));
-                ret.Add((Unused, null));
+                ret.Add((Unknown, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -618,7 +618,7 @@ namespace Mutagen.Bethesda.Starfield
         new Boolean BuysStolenItems { get; set; }
         new Boolean BuySellEverythingNotInList { get; set; }
         new Boolean BuysNonStolenItems { get; set; }
-        new Byte Unused { get; set; }
+        new Byte Unknown { get; set; }
     }
 
     public partial interface IVendorValuesGetter :
@@ -639,7 +639,7 @@ namespace Mutagen.Bethesda.Starfield
         Boolean BuysStolenItems { get; }
         Boolean BuySellEverythingNotInList { get; }
         Boolean BuysNonStolenItems { get; }
-        Byte Unused { get; }
+        Byte Unknown { get; }
 
     }
 
@@ -815,7 +815,7 @@ namespace Mutagen.Bethesda.Starfield
         BuysStolenItems = 3,
         BuySellEverythingNotInList = 4,
         BuysNonStolenItems = 5,
-        Unused = 6,
+        Unknown = 6,
     }
     #endregion
 
@@ -907,7 +907,7 @@ namespace Mutagen.Bethesda.Starfield
             item.BuysStolenItems = default(Boolean);
             item.BuySellEverythingNotInList = default(Boolean);
             item.BuysNonStolenItems = default(Boolean);
-            item.Unused = default(Byte);
+            item.Unknown = default(Byte);
         }
         
         #region Mutagen
@@ -967,7 +967,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.BuysStolenItems = item.BuysStolenItems == rhs.BuysStolenItems;
             ret.BuySellEverythingNotInList = item.BuySellEverythingNotInList == rhs.BuySellEverythingNotInList;
             ret.BuysNonStolenItems = item.BuysNonStolenItems == rhs.BuysNonStolenItems;
-            ret.Unused = item.Unused == rhs.Unused;
+            ret.Unknown = item.Unknown == rhs.Unknown;
         }
         
         public string Print(
@@ -1036,9 +1036,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.BuysNonStolenItems, "BuysNonStolenItems");
             }
-            if (printMask?.Unused ?? true)
+            if (printMask?.Unknown ?? true)
             {
-                sb.AppendItem(item.Unused, "Unused");
+                sb.AppendItem(item.Unknown, "Unknown");
             }
         }
         
@@ -1073,9 +1073,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.BuysNonStolenItems != rhs.BuysNonStolenItems) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)VendorValues_FieldIndex.Unused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)VendorValues_FieldIndex.Unknown) ?? true))
             {
-                if (lhs.Unused != rhs.Unused) return false;
+                if (lhs.Unknown != rhs.Unknown) return false;
             }
             return true;
         }
@@ -1089,7 +1089,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.BuysStolenItems);
             hash.Add(item.BuySellEverythingNotInList);
             hash.Add(item.BuysNonStolenItems);
-            hash.Add(item.Unused);
+            hash.Add(item.Unknown);
             return hash.ToHashCode();
         }
         
@@ -1146,9 +1146,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.BuysNonStolenItems = rhs.BuysNonStolenItems;
             }
-            if ((copyMask?.GetShouldTranslate((int)VendorValues_FieldIndex.Unused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)VendorValues_FieldIndex.Unknown) ?? true))
             {
-                item.Unused = rhs.Unused;
+                item.Unknown = rhs.Unknown;
             }
             DeepCopyInCustom(
                 item: item,
@@ -1266,7 +1266,7 @@ namespace Mutagen.Bethesda.Starfield
             writer.Write(item.BuysStolenItems);
             writer.Write(item.BuySellEverythingNotInList);
             writer.Write(item.BuysNonStolenItems);
-            writer.Write(item.Unused);
+            writer.Write(item.Unknown);
         }
 
         public void Write(
@@ -1313,7 +1313,7 @@ namespace Mutagen.Bethesda.Starfield
             item.BuysStolenItems = frame.ReadBoolean();
             item.BuySellEverythingNotInList = frame.ReadBoolean();
             item.BuysNonStolenItems = frame.ReadBoolean();
-            item.Unused = frame.ReadUInt8();
+            item.Unknown = frame.ReadUInt8();
         }
 
     }
@@ -1385,7 +1385,7 @@ namespace Mutagen.Bethesda.Starfield
         public Boolean BuysStolenItems => _structData.Slice(0x8, 0x1)[0] >= 1;
         public Boolean BuySellEverythingNotInList => _structData.Slice(0x9, 0x1)[0] >= 1;
         public Boolean BuysNonStolenItems => _structData.Slice(0xA, 0x1)[0] >= 1;
-        public Byte Unused => _structData.Span[0xB];
+        public Byte Unknown => _structData.Span[0xB];
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

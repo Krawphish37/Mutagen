@@ -63,16 +63,16 @@ namespace Mutagen.Bethesda.Starfield
         #region IsWindDetachedEnd
         public Boolean IsWindDetachedEnd { get; set; } = default(Boolean);
         #endregion
-        #region IsWindDetachedEndUnused
+        #region IsWindDetachedEndUnknown
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _IsWindDetachedEndUnused = new byte[3];
-        public MemorySlice<Byte> IsWindDetachedEndUnused
+        private MemorySlice<Byte> _IsWindDetachedEndUnknown = new byte[3];
+        public MemorySlice<Byte> IsWindDetachedEndUnknown
         {
-            get => _IsWindDetachedEndUnused;
-            set => this._IsWindDetachedEndUnused = value;
+            get => _IsWindDetachedEndUnknown;
+            set => this._IsWindDetachedEndUnknown = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IPlacedObjectSplineGetter.IsWindDetachedEndUnused => this.IsWindDetachedEndUnused;
+        ReadOnlyMemorySlice<Byte> IPlacedObjectSplineGetter.IsWindDetachedEndUnknown => this.IsWindDetachedEndUnknown;
         #endregion
 
         #region To String
@@ -117,7 +117,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Thickness = initialValue;
                 this.HalfExtents = initialValue;
                 this.IsWindDetachedEnd = initialValue;
-                this.IsWindDetachedEndUnused = initialValue;
+                this.IsWindDetachedEndUnknown = initialValue;
             }
 
             public Mask(
@@ -125,13 +125,13 @@ namespace Mutagen.Bethesda.Starfield
                 TItem Thickness,
                 TItem HalfExtents,
                 TItem IsWindDetachedEnd,
-                TItem IsWindDetachedEndUnused)
+                TItem IsWindDetachedEndUnknown)
             {
                 this.Slack = Slack;
                 this.Thickness = Thickness;
                 this.HalfExtents = HalfExtents;
                 this.IsWindDetachedEnd = IsWindDetachedEnd;
-                this.IsWindDetachedEndUnused = IsWindDetachedEndUnused;
+                this.IsWindDetachedEndUnknown = IsWindDetachedEndUnknown;
             }
 
             #pragma warning disable CS8618
@@ -147,7 +147,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem Thickness;
             public TItem HalfExtents;
             public TItem IsWindDetachedEnd;
-            public TItem IsWindDetachedEndUnused;
+            public TItem IsWindDetachedEndUnknown;
             #endregion
 
             #region Equals
@@ -164,7 +164,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.Thickness, rhs.Thickness)) return false;
                 if (!object.Equals(this.HalfExtents, rhs.HalfExtents)) return false;
                 if (!object.Equals(this.IsWindDetachedEnd, rhs.IsWindDetachedEnd)) return false;
-                if (!object.Equals(this.IsWindDetachedEndUnused, rhs.IsWindDetachedEndUnused)) return false;
+                if (!object.Equals(this.IsWindDetachedEndUnknown, rhs.IsWindDetachedEndUnknown)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -174,7 +174,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.Thickness);
                 hash.Add(this.HalfExtents);
                 hash.Add(this.IsWindDetachedEnd);
-                hash.Add(this.IsWindDetachedEndUnused);
+                hash.Add(this.IsWindDetachedEndUnknown);
                 return hash.ToHashCode();
             }
 
@@ -187,7 +187,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.Thickness)) return false;
                 if (!eval(this.HalfExtents)) return false;
                 if (!eval(this.IsWindDetachedEnd)) return false;
-                if (!eval(this.IsWindDetachedEndUnused)) return false;
+                if (!eval(this.IsWindDetachedEndUnknown)) return false;
                 return true;
             }
             #endregion
@@ -199,7 +199,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.Thickness)) return true;
                 if (eval(this.HalfExtents)) return true;
                 if (eval(this.IsWindDetachedEnd)) return true;
-                if (eval(this.IsWindDetachedEndUnused)) return true;
+                if (eval(this.IsWindDetachedEndUnknown)) return true;
                 return false;
             }
             #endregion
@@ -218,7 +218,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.Thickness = eval(this.Thickness);
                 obj.HalfExtents = eval(this.HalfExtents);
                 obj.IsWindDetachedEnd = eval(this.IsWindDetachedEnd);
-                obj.IsWindDetachedEndUnused = eval(this.IsWindDetachedEndUnused);
+                obj.IsWindDetachedEndUnknown = eval(this.IsWindDetachedEndUnknown);
             }
             #endregion
 
@@ -253,9 +253,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(IsWindDetachedEnd, "IsWindDetachedEnd");
                     }
-                    if (printMask?.IsWindDetachedEndUnused ?? true)
+                    if (printMask?.IsWindDetachedEndUnknown ?? true)
                     {
-                        sb.AppendItem(IsWindDetachedEndUnused, "IsWindDetachedEndUnused");
+                        sb.AppendItem(IsWindDetachedEndUnknown, "IsWindDetachedEndUnknown");
                     }
                 }
             }
@@ -285,7 +285,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? Thickness;
             public Exception? HalfExtents;
             public Exception? IsWindDetachedEnd;
-            public Exception? IsWindDetachedEndUnused;
+            public Exception? IsWindDetachedEndUnknown;
             #endregion
 
             #region IErrorMask
@@ -302,8 +302,8 @@ namespace Mutagen.Bethesda.Starfield
                         return HalfExtents;
                     case PlacedObjectSpline_FieldIndex.IsWindDetachedEnd:
                         return IsWindDetachedEnd;
-                    case PlacedObjectSpline_FieldIndex.IsWindDetachedEndUnused:
-                        return IsWindDetachedEndUnused;
+                    case PlacedObjectSpline_FieldIndex.IsWindDetachedEndUnknown:
+                        return IsWindDetachedEndUnknown;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -326,8 +326,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObjectSpline_FieldIndex.IsWindDetachedEnd:
                         this.IsWindDetachedEnd = ex;
                         break;
-                    case PlacedObjectSpline_FieldIndex.IsWindDetachedEndUnused:
-                        this.IsWindDetachedEndUnused = ex;
+                    case PlacedObjectSpline_FieldIndex.IsWindDetachedEndUnknown:
+                        this.IsWindDetachedEndUnknown = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -351,8 +351,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PlacedObjectSpline_FieldIndex.IsWindDetachedEnd:
                         this.IsWindDetachedEnd = (Exception?)obj;
                         break;
-                    case PlacedObjectSpline_FieldIndex.IsWindDetachedEndUnused:
-                        this.IsWindDetachedEndUnused = (Exception?)obj;
+                    case PlacedObjectSpline_FieldIndex.IsWindDetachedEndUnknown:
+                        this.IsWindDetachedEndUnknown = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -366,7 +366,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (Thickness != null) return true;
                 if (HalfExtents != null) return true;
                 if (IsWindDetachedEnd != null) return true;
-                if (IsWindDetachedEndUnused != null) return true;
+                if (IsWindDetachedEndUnknown != null) return true;
                 return false;
             }
             #endregion
@@ -405,7 +405,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(IsWindDetachedEnd, "IsWindDetachedEnd");
                 }
                 {
-                    sb.AppendItem(IsWindDetachedEndUnused, "IsWindDetachedEndUnused");
+                    sb.AppendItem(IsWindDetachedEndUnknown, "IsWindDetachedEndUnknown");
                 }
             }
             #endregion
@@ -419,7 +419,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Thickness = this.Thickness.Combine(rhs.Thickness);
                 ret.HalfExtents = this.HalfExtents.Combine(rhs.HalfExtents);
                 ret.IsWindDetachedEnd = this.IsWindDetachedEnd.Combine(rhs.IsWindDetachedEnd);
-                ret.IsWindDetachedEndUnused = this.IsWindDetachedEndUnused.Combine(rhs.IsWindDetachedEndUnused);
+                ret.IsWindDetachedEndUnknown = this.IsWindDetachedEndUnknown.Combine(rhs.IsWindDetachedEndUnknown);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -447,7 +447,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool Thickness;
             public bool HalfExtents;
             public bool IsWindDetachedEnd;
-            public bool IsWindDetachedEndUnused;
+            public bool IsWindDetachedEndUnknown;
             #endregion
 
             #region Ctors
@@ -461,7 +461,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.Thickness = defaultOn;
                 this.HalfExtents = defaultOn;
                 this.IsWindDetachedEnd = defaultOn;
-                this.IsWindDetachedEndUnused = defaultOn;
+                this.IsWindDetachedEndUnknown = defaultOn;
             }
 
             #endregion
@@ -481,7 +481,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((Thickness, null));
                 ret.Add((HalfExtents, null));
                 ret.Add((IsWindDetachedEnd, null));
-                ret.Add((IsWindDetachedEndUnused, null));
+                ret.Add((IsWindDetachedEndUnknown, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -558,7 +558,7 @@ namespace Mutagen.Bethesda.Starfield
         new Single Thickness { get; set; }
         new P3Float HalfExtents { get; set; }
         new Boolean IsWindDetachedEnd { get; set; }
-        new MemorySlice<Byte> IsWindDetachedEndUnused { get; set; }
+        new MemorySlice<Byte> IsWindDetachedEndUnknown { get; set; }
     }
 
     public partial interface IPlacedObjectSplineGetter :
@@ -577,7 +577,7 @@ namespace Mutagen.Bethesda.Starfield
         Single Thickness { get; }
         P3Float HalfExtents { get; }
         Boolean IsWindDetachedEnd { get; }
-        ReadOnlyMemorySlice<Byte> IsWindDetachedEndUnused { get; }
+        ReadOnlyMemorySlice<Byte> IsWindDetachedEndUnknown { get; }
 
     }
 
@@ -751,7 +751,7 @@ namespace Mutagen.Bethesda.Starfield
         Thickness = 1,
         HalfExtents = 2,
         IsWindDetachedEnd = 3,
-        IsWindDetachedEndUnused = 4,
+        IsWindDetachedEndUnknown = 4,
     }
     #endregion
 
@@ -841,7 +841,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Thickness = default(Single);
             item.HalfExtents = default(P3Float);
             item.IsWindDetachedEnd = default(Boolean);
-            item.IsWindDetachedEndUnused = new byte[3];
+            item.IsWindDetachedEndUnknown = new byte[3];
         }
         
         #region Mutagen
@@ -899,7 +899,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.Thickness = item.Thickness.EqualsWithin(rhs.Thickness);
             ret.HalfExtents = item.HalfExtents.Equals(rhs.HalfExtents);
             ret.IsWindDetachedEnd = item.IsWindDetachedEnd == rhs.IsWindDetachedEnd;
-            ret.IsWindDetachedEndUnused = MemoryExtensions.SequenceEqual(item.IsWindDetachedEndUnused.Span, rhs.IsWindDetachedEndUnused.Span);
+            ret.IsWindDetachedEndUnknown = MemoryExtensions.SequenceEqual(item.IsWindDetachedEndUnknown.Span, rhs.IsWindDetachedEndUnknown.Span);
         }
         
         public string Print(
@@ -960,9 +960,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.IsWindDetachedEnd, "IsWindDetachedEnd");
             }
-            if (printMask?.IsWindDetachedEndUnused ?? true)
+            if (printMask?.IsWindDetachedEndUnknown ?? true)
             {
-                sb.AppendLine($"IsWindDetachedEndUnused => {SpanExt.ToHexString(item.IsWindDetachedEndUnused)}");
+                sb.AppendLine($"IsWindDetachedEndUnknown => {SpanExt.ToHexString(item.IsWindDetachedEndUnknown)}");
             }
         }
         
@@ -989,9 +989,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.IsWindDetachedEnd != rhs.IsWindDetachedEnd) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectSpline_FieldIndex.IsWindDetachedEndUnused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PlacedObjectSpline_FieldIndex.IsWindDetachedEndUnknown) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.IsWindDetachedEndUnused.Span, rhs.IsWindDetachedEndUnused.Span)) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.IsWindDetachedEndUnknown.Span, rhs.IsWindDetachedEndUnknown.Span)) return false;
             }
             return true;
         }
@@ -1003,7 +1003,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.Thickness);
             hash.Add(item.HalfExtents);
             hash.Add(item.IsWindDetachedEnd);
-            hash.AddBytes(item.IsWindDetachedEndUnused);
+            hash.AddBytes(item.IsWindDetachedEndUnknown);
             return hash.ToHashCode();
         }
         
@@ -1052,9 +1052,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.IsWindDetachedEnd = rhs.IsWindDetachedEnd;
             }
-            if ((copyMask?.GetShouldTranslate((int)PlacedObjectSpline_FieldIndex.IsWindDetachedEndUnused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PlacedObjectSpline_FieldIndex.IsWindDetachedEndUnknown) ?? true))
             {
-                item.IsWindDetachedEndUnused = rhs.IsWindDetachedEndUnused.ToArray();
+                item.IsWindDetachedEndUnknown = rhs.IsWindDetachedEndUnknown.ToArray();
             }
             DeepCopyInCustom(
                 item: item,
@@ -1176,7 +1176,7 @@ namespace Mutagen.Bethesda.Starfield
             writer.Write(item.IsWindDetachedEnd);
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.IsWindDetachedEndUnused);
+                item: item.IsWindDetachedEndUnknown);
         }
 
         public void Write(
@@ -1221,7 +1221,7 @@ namespace Mutagen.Bethesda.Starfield
             item.Thickness = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.HalfExtents = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.IsWindDetachedEnd = frame.ReadBoolean();
-            item.IsWindDetachedEndUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
+            item.IsWindDetachedEndUnknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
         }
 
     }
@@ -1291,7 +1291,7 @@ namespace Mutagen.Bethesda.Starfield
         public Single Thickness => _structData.Slice(0x4, 0x4).Float();
         public P3Float HalfExtents => P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Read(_structData.Slice(0x8, 0xC));
         public Boolean IsWindDetachedEnd => _structData.Slice(0x14, 0x1)[0] >= 1;
-        public ReadOnlyMemorySlice<Byte> IsWindDetachedEndUnused => _structData.Span.Slice(0x15, 0x3).ToArray();
+        public ReadOnlyMemorySlice<Byte> IsWindDetachedEndUnknown => _structData.Span.Slice(0x15, 0x3).ToArray();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

@@ -66,16 +66,16 @@ namespace Mutagen.Bethesda.Starfield
         #region PreferredSpeed
         public Package.Speed PreferredSpeed { get; set; } = default(Package.Speed);
         #endregion
-        #region PreferredSpeedUnused
+        #region PreferredSpeedUnknown
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _PreferredSpeedUnused = new byte[3];
-        public MemorySlice<Byte> PreferredSpeedUnused
+        private MemorySlice<Byte> _PreferredSpeedUnknown = new byte[3];
+        public MemorySlice<Byte> PreferredSpeedUnknown
         {
-            get => _PreferredSpeedUnused;
-            set => this._PreferredSpeedUnused = value;
+            get => _PreferredSpeedUnknown;
+            set => this._PreferredSpeedUnknown = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> IPackageFlagsOverrideGetter.PreferredSpeedUnused => this.PreferredSpeedUnused;
+        ReadOnlyMemorySlice<Byte> IPackageFlagsOverrideGetter.PreferredSpeedUnknown => this.PreferredSpeedUnknown;
         #endregion
 
         #region To String
@@ -121,7 +121,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.SetInterruptFlags = initialValue;
                 this.ClearInterruptFlags = initialValue;
                 this.PreferredSpeed = initialValue;
-                this.PreferredSpeedUnused = initialValue;
+                this.PreferredSpeedUnknown = initialValue;
             }
 
             public Mask(
@@ -130,14 +130,14 @@ namespace Mutagen.Bethesda.Starfield
                 TItem SetInterruptFlags,
                 TItem ClearInterruptFlags,
                 TItem PreferredSpeed,
-                TItem PreferredSpeedUnused)
+                TItem PreferredSpeedUnknown)
             {
                 this.SetFlags = SetFlags;
                 this.ClearFlags = ClearFlags;
                 this.SetInterruptFlags = SetInterruptFlags;
                 this.ClearInterruptFlags = ClearInterruptFlags;
                 this.PreferredSpeed = PreferredSpeed;
-                this.PreferredSpeedUnused = PreferredSpeedUnused;
+                this.PreferredSpeedUnknown = PreferredSpeedUnknown;
             }
 
             #pragma warning disable CS8618
@@ -154,7 +154,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem SetInterruptFlags;
             public TItem ClearInterruptFlags;
             public TItem PreferredSpeed;
-            public TItem PreferredSpeedUnused;
+            public TItem PreferredSpeedUnknown;
             #endregion
 
             #region Equals
@@ -172,7 +172,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.SetInterruptFlags, rhs.SetInterruptFlags)) return false;
                 if (!object.Equals(this.ClearInterruptFlags, rhs.ClearInterruptFlags)) return false;
                 if (!object.Equals(this.PreferredSpeed, rhs.PreferredSpeed)) return false;
-                if (!object.Equals(this.PreferredSpeedUnused, rhs.PreferredSpeedUnused)) return false;
+                if (!object.Equals(this.PreferredSpeedUnknown, rhs.PreferredSpeedUnknown)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -183,7 +183,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.SetInterruptFlags);
                 hash.Add(this.ClearInterruptFlags);
                 hash.Add(this.PreferredSpeed);
-                hash.Add(this.PreferredSpeedUnused);
+                hash.Add(this.PreferredSpeedUnknown);
                 return hash.ToHashCode();
             }
 
@@ -197,7 +197,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.SetInterruptFlags)) return false;
                 if (!eval(this.ClearInterruptFlags)) return false;
                 if (!eval(this.PreferredSpeed)) return false;
-                if (!eval(this.PreferredSpeedUnused)) return false;
+                if (!eval(this.PreferredSpeedUnknown)) return false;
                 return true;
             }
             #endregion
@@ -210,7 +210,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.SetInterruptFlags)) return true;
                 if (eval(this.ClearInterruptFlags)) return true;
                 if (eval(this.PreferredSpeed)) return true;
-                if (eval(this.PreferredSpeedUnused)) return true;
+                if (eval(this.PreferredSpeedUnknown)) return true;
                 return false;
             }
             #endregion
@@ -230,7 +230,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.SetInterruptFlags = eval(this.SetInterruptFlags);
                 obj.ClearInterruptFlags = eval(this.ClearInterruptFlags);
                 obj.PreferredSpeed = eval(this.PreferredSpeed);
-                obj.PreferredSpeedUnused = eval(this.PreferredSpeedUnused);
+                obj.PreferredSpeedUnknown = eval(this.PreferredSpeedUnknown);
             }
             #endregion
 
@@ -269,9 +269,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(PreferredSpeed, "PreferredSpeed");
                     }
-                    if (printMask?.PreferredSpeedUnused ?? true)
+                    if (printMask?.PreferredSpeedUnknown ?? true)
                     {
-                        sb.AppendItem(PreferredSpeedUnused, "PreferredSpeedUnused");
+                        sb.AppendItem(PreferredSpeedUnknown, "PreferredSpeedUnknown");
                     }
                 }
             }
@@ -302,7 +302,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? SetInterruptFlags;
             public Exception? ClearInterruptFlags;
             public Exception? PreferredSpeed;
-            public Exception? PreferredSpeedUnused;
+            public Exception? PreferredSpeedUnknown;
             #endregion
 
             #region IErrorMask
@@ -321,8 +321,8 @@ namespace Mutagen.Bethesda.Starfield
                         return ClearInterruptFlags;
                     case PackageFlagsOverride_FieldIndex.PreferredSpeed:
                         return PreferredSpeed;
-                    case PackageFlagsOverride_FieldIndex.PreferredSpeedUnused:
-                        return PreferredSpeedUnused;
+                    case PackageFlagsOverride_FieldIndex.PreferredSpeedUnknown:
+                        return PreferredSpeedUnknown;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -348,8 +348,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PackageFlagsOverride_FieldIndex.PreferredSpeed:
                         this.PreferredSpeed = ex;
                         break;
-                    case PackageFlagsOverride_FieldIndex.PreferredSpeedUnused:
-                        this.PreferredSpeedUnused = ex;
+                    case PackageFlagsOverride_FieldIndex.PreferredSpeedUnknown:
+                        this.PreferredSpeedUnknown = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -376,8 +376,8 @@ namespace Mutagen.Bethesda.Starfield
                     case PackageFlagsOverride_FieldIndex.PreferredSpeed:
                         this.PreferredSpeed = (Exception?)obj;
                         break;
-                    case PackageFlagsOverride_FieldIndex.PreferredSpeedUnused:
-                        this.PreferredSpeedUnused = (Exception?)obj;
+                    case PackageFlagsOverride_FieldIndex.PreferredSpeedUnknown:
+                        this.PreferredSpeedUnknown = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -392,7 +392,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (SetInterruptFlags != null) return true;
                 if (ClearInterruptFlags != null) return true;
                 if (PreferredSpeed != null) return true;
-                if (PreferredSpeedUnused != null) return true;
+                if (PreferredSpeedUnknown != null) return true;
                 return false;
             }
             #endregion
@@ -434,7 +434,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(PreferredSpeed, "PreferredSpeed");
                 }
                 {
-                    sb.AppendItem(PreferredSpeedUnused, "PreferredSpeedUnused");
+                    sb.AppendItem(PreferredSpeedUnknown, "PreferredSpeedUnknown");
                 }
             }
             #endregion
@@ -449,7 +449,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.SetInterruptFlags = this.SetInterruptFlags.Combine(rhs.SetInterruptFlags);
                 ret.ClearInterruptFlags = this.ClearInterruptFlags.Combine(rhs.ClearInterruptFlags);
                 ret.PreferredSpeed = this.PreferredSpeed.Combine(rhs.PreferredSpeed);
-                ret.PreferredSpeedUnused = this.PreferredSpeedUnused.Combine(rhs.PreferredSpeedUnused);
+                ret.PreferredSpeedUnknown = this.PreferredSpeedUnknown.Combine(rhs.PreferredSpeedUnknown);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -478,7 +478,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool SetInterruptFlags;
             public bool ClearInterruptFlags;
             public bool PreferredSpeed;
-            public bool PreferredSpeedUnused;
+            public bool PreferredSpeedUnknown;
             #endregion
 
             #region Ctors
@@ -493,7 +493,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.SetInterruptFlags = defaultOn;
                 this.ClearInterruptFlags = defaultOn;
                 this.PreferredSpeed = defaultOn;
-                this.PreferredSpeedUnused = defaultOn;
+                this.PreferredSpeedUnknown = defaultOn;
             }
 
             #endregion
@@ -514,7 +514,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((SetInterruptFlags, null));
                 ret.Add((ClearInterruptFlags, null));
                 ret.Add((PreferredSpeed, null));
-                ret.Add((PreferredSpeedUnused, null));
+                ret.Add((PreferredSpeedUnknown, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -592,7 +592,7 @@ namespace Mutagen.Bethesda.Starfield
         new Package.InterruptFlag SetInterruptFlags { get; set; }
         new Package.InterruptFlag ClearInterruptFlags { get; set; }
         new Package.Speed PreferredSpeed { get; set; }
-        new MemorySlice<Byte> PreferredSpeedUnused { get; set; }
+        new MemorySlice<Byte> PreferredSpeedUnknown { get; set; }
     }
 
     public partial interface IPackageFlagsOverrideGetter :
@@ -612,7 +612,7 @@ namespace Mutagen.Bethesda.Starfield
         Package.InterruptFlag SetInterruptFlags { get; }
         Package.InterruptFlag ClearInterruptFlags { get; }
         Package.Speed PreferredSpeed { get; }
-        ReadOnlyMemorySlice<Byte> PreferredSpeedUnused { get; }
+        ReadOnlyMemorySlice<Byte> PreferredSpeedUnknown { get; }
 
     }
 
@@ -787,7 +787,7 @@ namespace Mutagen.Bethesda.Starfield
         SetInterruptFlags = 2,
         ClearInterruptFlags = 3,
         PreferredSpeed = 4,
-        PreferredSpeedUnused = 5,
+        PreferredSpeedUnknown = 5,
     }
     #endregion
 
@@ -878,7 +878,7 @@ namespace Mutagen.Bethesda.Starfield
             item.SetInterruptFlags = default(Package.InterruptFlag);
             item.ClearInterruptFlags = default(Package.InterruptFlag);
             item.PreferredSpeed = default(Package.Speed);
-            item.PreferredSpeedUnused = new byte[3];
+            item.PreferredSpeedUnknown = new byte[3];
         }
         
         #region Mutagen
@@ -937,7 +937,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.SetInterruptFlags = item.SetInterruptFlags == rhs.SetInterruptFlags;
             ret.ClearInterruptFlags = item.ClearInterruptFlags == rhs.ClearInterruptFlags;
             ret.PreferredSpeed = item.PreferredSpeed == rhs.PreferredSpeed;
-            ret.PreferredSpeedUnused = MemoryExtensions.SequenceEqual(item.PreferredSpeedUnused.Span, rhs.PreferredSpeedUnused.Span);
+            ret.PreferredSpeedUnknown = MemoryExtensions.SequenceEqual(item.PreferredSpeedUnknown.Span, rhs.PreferredSpeedUnknown.Span);
         }
         
         public string Print(
@@ -1002,9 +1002,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.PreferredSpeed, "PreferredSpeed");
             }
-            if (printMask?.PreferredSpeedUnused ?? true)
+            if (printMask?.PreferredSpeedUnknown ?? true)
             {
-                sb.AppendLine($"PreferredSpeedUnused => {SpanExt.ToHexString(item.PreferredSpeedUnused)}");
+                sb.AppendLine($"PreferredSpeedUnknown => {SpanExt.ToHexString(item.PreferredSpeedUnknown)}");
             }
         }
         
@@ -1035,9 +1035,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.PreferredSpeed != rhs.PreferredSpeed) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)PackageFlagsOverride_FieldIndex.PreferredSpeedUnused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)PackageFlagsOverride_FieldIndex.PreferredSpeedUnknown) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.PreferredSpeedUnused.Span, rhs.PreferredSpeedUnused.Span)) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.PreferredSpeedUnknown.Span, rhs.PreferredSpeedUnknown.Span)) return false;
             }
             return true;
         }
@@ -1050,7 +1050,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.SetInterruptFlags);
             hash.Add(item.ClearInterruptFlags);
             hash.Add(item.PreferredSpeed);
-            hash.AddBytes(item.PreferredSpeedUnused);
+            hash.AddBytes(item.PreferredSpeedUnknown);
             return hash.ToHashCode();
         }
         
@@ -1103,9 +1103,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.PreferredSpeed = rhs.PreferredSpeed;
             }
-            if ((copyMask?.GetShouldTranslate((int)PackageFlagsOverride_FieldIndex.PreferredSpeedUnused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)PackageFlagsOverride_FieldIndex.PreferredSpeedUnknown) ?? true))
             {
-                item.PreferredSpeedUnused = rhs.PreferredSpeedUnused.ToArray();
+                item.PreferredSpeedUnknown = rhs.PreferredSpeedUnknown.ToArray();
             }
             DeepCopyInCustom(
                 item: item,
@@ -1237,7 +1237,7 @@ namespace Mutagen.Bethesda.Starfield
                 length: 1);
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.PreferredSpeedUnused);
+                item: item.PreferredSpeedUnknown);
         }
 
         public void Write(
@@ -1293,7 +1293,7 @@ namespace Mutagen.Bethesda.Starfield
             item.PreferredSpeed = EnumBinaryTranslation<Package.Speed, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 1);
-            item.PreferredSpeedUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
+            item.PreferredSpeedUnknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
         }
 
     }
@@ -1364,7 +1364,7 @@ namespace Mutagen.Bethesda.Starfield
         public Package.InterruptFlag SetInterruptFlags => (Package.InterruptFlag)BinaryPrimitives.ReadUInt16LittleEndian(_structData.Span.Slice(0x8, 0x2));
         public Package.InterruptFlag ClearInterruptFlags => (Package.InterruptFlag)BinaryPrimitives.ReadUInt16LittleEndian(_structData.Span.Slice(0xA, 0x2));
         public Package.Speed PreferredSpeed => (Package.Speed)_structData.Span.Slice(0xC, 0x1)[0];
-        public ReadOnlyMemorySlice<Byte> PreferredSpeedUnused => _structData.Span.Slice(0xD, 0x3).ToArray();
+        public ReadOnlyMemorySlice<Byte> PreferredSpeedUnknown => _structData.Span.Slice(0xD, 0x3).ToArray();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

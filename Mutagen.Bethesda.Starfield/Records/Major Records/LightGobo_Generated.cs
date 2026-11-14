@@ -117,16 +117,16 @@ namespace Mutagen.Bethesda.Starfield
         #region IsAnimated
         public Boolean IsAnimated { get; set; } = default(Boolean);
         #endregion
-        #region IsAnimatedUnused
+        #region IsAnimatedUnknown
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private MemorySlice<Byte> _IsAnimatedUnused = new byte[3];
-        public MemorySlice<Byte> IsAnimatedUnused
+        private MemorySlice<Byte> _IsAnimatedUnknown = new byte[3];
+        public MemorySlice<Byte> IsAnimatedUnknown
         {
-            get => _IsAnimatedUnused;
-            set => this._IsAnimatedUnused = value;
+            get => _IsAnimatedUnknown;
+            set => this._IsAnimatedUnknown = value;
         }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        ReadOnlyMemorySlice<Byte> ILightGoboGetter.IsAnimatedUnused => this.IsAnimatedUnused;
+        ReadOnlyMemorySlice<Byte> ILightGoboGetter.IsAnimatedUnknown => this.IsAnimatedUnknown;
         #endregion
 
         #region To String
@@ -189,7 +189,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.WaveScrollAmountV = initialValue;
                 this.RandomTimeOffsetRange = initialValue;
                 this.IsAnimated = initialValue;
-                this.IsAnimatedUnused = initialValue;
+                this.IsAnimatedUnknown = initialValue;
             }
 
             public Mask(
@@ -215,7 +215,7 @@ namespace Mutagen.Bethesda.Starfield
                 TItem WaveScrollAmountV,
                 TItem RandomTimeOffsetRange,
                 TItem IsAnimated,
-                TItem IsAnimatedUnused)
+                TItem IsAnimatedUnknown)
             {
                 this.StaticOffsetU = StaticOffsetU;
                 this.StaticOffsetV = StaticOffsetV;
@@ -239,7 +239,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.WaveScrollAmountV = WaveScrollAmountV;
                 this.RandomTimeOffsetRange = RandomTimeOffsetRange;
                 this.IsAnimated = IsAnimated;
-                this.IsAnimatedUnused = IsAnimatedUnused;
+                this.IsAnimatedUnknown = IsAnimatedUnknown;
             }
 
             #pragma warning disable CS8618
@@ -273,7 +273,7 @@ namespace Mutagen.Bethesda.Starfield
             public TItem WaveScrollAmountV;
             public TItem RandomTimeOffsetRange;
             public TItem IsAnimated;
-            public TItem IsAnimatedUnused;
+            public TItem IsAnimatedUnknown;
             #endregion
 
             #region Equals
@@ -308,7 +308,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!object.Equals(this.WaveScrollAmountV, rhs.WaveScrollAmountV)) return false;
                 if (!object.Equals(this.RandomTimeOffsetRange, rhs.RandomTimeOffsetRange)) return false;
                 if (!object.Equals(this.IsAnimated, rhs.IsAnimated)) return false;
-                if (!object.Equals(this.IsAnimatedUnused, rhs.IsAnimatedUnused)) return false;
+                if (!object.Equals(this.IsAnimatedUnknown, rhs.IsAnimatedUnknown)) return false;
                 return true;
             }
             public override int GetHashCode()
@@ -336,7 +336,7 @@ namespace Mutagen.Bethesda.Starfield
                 hash.Add(this.WaveScrollAmountV);
                 hash.Add(this.RandomTimeOffsetRange);
                 hash.Add(this.IsAnimated);
-                hash.Add(this.IsAnimatedUnused);
+                hash.Add(this.IsAnimatedUnknown);
                 return hash.ToHashCode();
             }
 
@@ -367,7 +367,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (!eval(this.WaveScrollAmountV)) return false;
                 if (!eval(this.RandomTimeOffsetRange)) return false;
                 if (!eval(this.IsAnimated)) return false;
-                if (!eval(this.IsAnimatedUnused)) return false;
+                if (!eval(this.IsAnimatedUnknown)) return false;
                 return true;
             }
             #endregion
@@ -397,7 +397,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (eval(this.WaveScrollAmountV)) return true;
                 if (eval(this.RandomTimeOffsetRange)) return true;
                 if (eval(this.IsAnimated)) return true;
-                if (eval(this.IsAnimatedUnused)) return true;
+                if (eval(this.IsAnimatedUnknown)) return true;
                 return false;
             }
             #endregion
@@ -434,7 +434,7 @@ namespace Mutagen.Bethesda.Starfield
                 obj.WaveScrollAmountV = eval(this.WaveScrollAmountV);
                 obj.RandomTimeOffsetRange = eval(this.RandomTimeOffsetRange);
                 obj.IsAnimated = eval(this.IsAnimated);
-                obj.IsAnimatedUnused = eval(this.IsAnimatedUnused);
+                obj.IsAnimatedUnknown = eval(this.IsAnimatedUnknown);
             }
             #endregion
 
@@ -541,9 +541,9 @@ namespace Mutagen.Bethesda.Starfield
                     {
                         sb.AppendItem(IsAnimated, "IsAnimated");
                     }
-                    if (printMask?.IsAnimatedUnused ?? true)
+                    if (printMask?.IsAnimatedUnknown ?? true)
                     {
-                        sb.AppendItem(IsAnimatedUnused, "IsAnimatedUnused");
+                        sb.AppendItem(IsAnimatedUnknown, "IsAnimatedUnknown");
                     }
                 }
             }
@@ -591,7 +591,7 @@ namespace Mutagen.Bethesda.Starfield
             public Exception? WaveScrollAmountV;
             public Exception? RandomTimeOffsetRange;
             public Exception? IsAnimated;
-            public Exception? IsAnimatedUnused;
+            public Exception? IsAnimatedUnknown;
             #endregion
 
             #region IErrorMask
@@ -644,8 +644,8 @@ namespace Mutagen.Bethesda.Starfield
                         return RandomTimeOffsetRange;
                     case LightGobo_FieldIndex.IsAnimated:
                         return IsAnimated;
-                    case LightGobo_FieldIndex.IsAnimatedUnused:
-                        return IsAnimatedUnused;
+                    case LightGobo_FieldIndex.IsAnimatedUnknown:
+                        return IsAnimatedUnknown;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
                 }
@@ -722,8 +722,8 @@ namespace Mutagen.Bethesda.Starfield
                     case LightGobo_FieldIndex.IsAnimated:
                         this.IsAnimated = ex;
                         break;
-                    case LightGobo_FieldIndex.IsAnimatedUnused:
-                        this.IsAnimatedUnused = ex;
+                    case LightGobo_FieldIndex.IsAnimatedUnknown:
+                        this.IsAnimatedUnknown = ex;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -801,8 +801,8 @@ namespace Mutagen.Bethesda.Starfield
                     case LightGobo_FieldIndex.IsAnimated:
                         this.IsAnimated = (Exception?)obj;
                         break;
-                    case LightGobo_FieldIndex.IsAnimatedUnused:
-                        this.IsAnimatedUnused = (Exception?)obj;
+                    case LightGobo_FieldIndex.IsAnimatedUnknown:
+                        this.IsAnimatedUnknown = (Exception?)obj;
                         break;
                     default:
                         throw new ArgumentException($"Index is out of range: {index}");
@@ -834,7 +834,7 @@ namespace Mutagen.Bethesda.Starfield
                 if (WaveScrollAmountV != null) return true;
                 if (RandomTimeOffsetRange != null) return true;
                 if (IsAnimated != null) return true;
-                if (IsAnimatedUnused != null) return true;
+                if (IsAnimatedUnknown != null) return true;
                 return false;
             }
             #endregion
@@ -927,7 +927,7 @@ namespace Mutagen.Bethesda.Starfield
                     sb.AppendItem(IsAnimated, "IsAnimated");
                 }
                 {
-                    sb.AppendItem(IsAnimatedUnused, "IsAnimatedUnused");
+                    sb.AppendItem(IsAnimatedUnknown, "IsAnimatedUnknown");
                 }
             }
             #endregion
@@ -959,7 +959,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.WaveScrollAmountV = this.WaveScrollAmountV.Combine(rhs.WaveScrollAmountV);
                 ret.RandomTimeOffsetRange = this.RandomTimeOffsetRange.Combine(rhs.RandomTimeOffsetRange);
                 ret.IsAnimated = this.IsAnimated.Combine(rhs.IsAnimated);
-                ret.IsAnimatedUnused = this.IsAnimatedUnused.Combine(rhs.IsAnimatedUnused);
+                ret.IsAnimatedUnknown = this.IsAnimatedUnknown.Combine(rhs.IsAnimatedUnknown);
                 return ret;
             }
             public static ErrorMask? Combine(ErrorMask? lhs, ErrorMask? rhs)
@@ -1005,7 +1005,7 @@ namespace Mutagen.Bethesda.Starfield
             public bool WaveScrollAmountV;
             public bool RandomTimeOffsetRange;
             public bool IsAnimated;
-            public bool IsAnimatedUnused;
+            public bool IsAnimatedUnknown;
             #endregion
 
             #region Ctors
@@ -1037,7 +1037,7 @@ namespace Mutagen.Bethesda.Starfield
                 this.WaveScrollAmountV = defaultOn;
                 this.RandomTimeOffsetRange = defaultOn;
                 this.IsAnimated = defaultOn;
-                this.IsAnimatedUnused = defaultOn;
+                this.IsAnimatedUnknown = defaultOn;
             }
 
             #endregion
@@ -1075,7 +1075,7 @@ namespace Mutagen.Bethesda.Starfield
                 ret.Add((WaveScrollAmountV, null));
                 ret.Add((RandomTimeOffsetRange, null));
                 ret.Add((IsAnimated, null));
-                ret.Add((IsAnimatedUnused, null));
+                ret.Add((IsAnimatedUnknown, null));
             }
 
             public static implicit operator TranslationMask(bool defaultOn)
@@ -1170,7 +1170,7 @@ namespace Mutagen.Bethesda.Starfield
         new Single WaveScrollAmountV { get; set; }
         new Single RandomTimeOffsetRange { get; set; }
         new Boolean IsAnimated { get; set; }
-        new MemorySlice<Byte> IsAnimatedUnused { get; set; }
+        new MemorySlice<Byte> IsAnimatedUnknown { get; set; }
     }
 
     public partial interface ILightGoboGetter :
@@ -1207,7 +1207,7 @@ namespace Mutagen.Bethesda.Starfield
         Single WaveScrollAmountV { get; }
         Single RandomTimeOffsetRange { get; }
         Boolean IsAnimated { get; }
-        ReadOnlyMemorySlice<Byte> IsAnimatedUnused { get; }
+        ReadOnlyMemorySlice<Byte> IsAnimatedUnknown { get; }
 
     }
 
@@ -1399,7 +1399,7 @@ namespace Mutagen.Bethesda.Starfield
         WaveScrollAmountV = 19,
         RandomTimeOffsetRange = 20,
         IsAnimated = 21,
-        IsAnimatedUnused = 22,
+        IsAnimatedUnknown = 22,
     }
     #endregion
 
@@ -1500,7 +1500,7 @@ namespace Mutagen.Bethesda.Starfield
             item.WaveScrollAmountV = default(Single);
             item.RandomTimeOffsetRange = default(Single);
             item.IsAnimated = default(Boolean);
-            item.IsAnimatedUnused = new byte[3];
+            item.IsAnimatedUnknown = new byte[3];
         }
         
         #region Mutagen
@@ -1572,7 +1572,7 @@ namespace Mutagen.Bethesda.Starfield
             ret.WaveScrollAmountV = item.WaveScrollAmountV.EqualsWithin(rhs.WaveScrollAmountV);
             ret.RandomTimeOffsetRange = item.RandomTimeOffsetRange.EqualsWithin(rhs.RandomTimeOffsetRange);
             ret.IsAnimated = item.IsAnimated == rhs.IsAnimated;
-            ret.IsAnimatedUnused = MemoryExtensions.SequenceEqual(item.IsAnimatedUnused.Span, rhs.IsAnimatedUnused.Span);
+            ret.IsAnimatedUnknown = MemoryExtensions.SequenceEqual(item.IsAnimatedUnknown.Span, rhs.IsAnimatedUnknown.Span);
         }
         
         public string Print(
@@ -1705,9 +1705,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 sb.AppendItem(item.IsAnimated, "IsAnimated");
             }
-            if (printMask?.IsAnimatedUnused ?? true)
+            if (printMask?.IsAnimatedUnknown ?? true)
             {
-                sb.AppendLine($"IsAnimatedUnused => {SpanExt.ToHexString(item.IsAnimatedUnused)}");
+                sb.AppendLine($"IsAnimatedUnknown => {SpanExt.ToHexString(item.IsAnimatedUnknown)}");
             }
         }
         
@@ -1806,9 +1806,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (lhs.IsAnimated != rhs.IsAnimated) return false;
             }
-            if ((equalsMask?.GetShouldTranslate((int)LightGobo_FieldIndex.IsAnimatedUnused) ?? true))
+            if ((equalsMask?.GetShouldTranslate((int)LightGobo_FieldIndex.IsAnimatedUnknown) ?? true))
             {
-                if (!MemoryExtensions.SequenceEqual(lhs.IsAnimatedUnused.Span, rhs.IsAnimatedUnused.Span)) return false;
+                if (!MemoryExtensions.SequenceEqual(lhs.IsAnimatedUnknown.Span, rhs.IsAnimatedUnknown.Span)) return false;
             }
             return true;
         }
@@ -1838,7 +1838,7 @@ namespace Mutagen.Bethesda.Starfield
             hash.Add(item.WaveScrollAmountV);
             hash.Add(item.RandomTimeOffsetRange);
             hash.Add(item.IsAnimated);
-            hash.AddBytes(item.IsAnimatedUnused);
+            hash.AddBytes(item.IsAnimatedUnknown);
             return hash.ToHashCode();
         }
         
@@ -1959,9 +1959,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 item.IsAnimated = rhs.IsAnimated;
             }
-            if ((copyMask?.GetShouldTranslate((int)LightGobo_FieldIndex.IsAnimatedUnused) ?? true))
+            if ((copyMask?.GetShouldTranslate((int)LightGobo_FieldIndex.IsAnimatedUnknown) ?? true))
             {
-                item.IsAnimatedUnused = rhs.IsAnimatedUnused.ToArray();
+                item.IsAnimatedUnknown = rhs.IsAnimatedUnknown.ToArray();
             }
             DeepCopyInCustom(
                 item: item,
@@ -2137,7 +2137,7 @@ namespace Mutagen.Bethesda.Starfield
             writer.Write(item.IsAnimated);
             ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
                 writer: writer,
-                item: item.IsAnimatedUnused);
+                item: item.IsAnimatedUnknown);
         }
 
         public void Write(
@@ -2193,7 +2193,7 @@ namespace Mutagen.Bethesda.Starfield
             item.WaveScrollAmountV = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.RandomTimeOffsetRange = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             item.IsAnimated = frame.ReadBoolean();
-            item.IsAnimatedUnused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
+            item.IsAnimatedUnknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
         }
 
     }
@@ -2281,7 +2281,7 @@ namespace Mutagen.Bethesda.Starfield
         public Single WaveScrollAmountV => _structData.Slice(0x4C, 0x4).Float();
         public Single RandomTimeOffsetRange => _structData.Slice(0x50, 0x4).Float();
         public Boolean IsAnimated => _structData.Slice(0x54, 0x1)[0] >= 1;
-        public ReadOnlyMemorySlice<Byte> IsAnimatedUnused => _structData.Span.Slice(0x55, 0x3).ToArray();
+        public ReadOnlyMemorySlice<Byte> IsAnimatedUnknown => _structData.Span.Slice(0x55, 0x3).ToArray();
         partial void CustomFactoryEnd(
             OverlayStream stream,
             int finalPos,

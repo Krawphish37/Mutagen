@@ -33,7 +33,7 @@ public class CellGridLandFlagTests
             cell.Grid!.Point.X.ShouldBe(-1);
             cell.Grid.Point.Y.ShouldBe(-1);
             cell.Grid.Flags.ShouldBe(CellGrid.Flag.HideQuad1 | CellGrid.Flag.HideQuad2 | CellGrid.Flag.HideQuad3 | CellGrid.Flag.HideQuad4);
-            cell.Grid.Unused.ToArray().ShouldBe(Hex("FE-91-EB"));
+            cell.Grid.Unknown.ToArray().ShouldBe(Hex("FE-91-EB"));
             WritesBack(cell, xclc);
         }
     }
