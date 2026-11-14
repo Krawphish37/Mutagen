@@ -290,4 +290,81 @@ public class RoundTripApiTests
         rebuilt.Messages.Single().SetHeaderFormIdAsStored(0x0100B9B7u);
         WriteMesg(k, rebuilt).ShouldBe(Hex(KgcdoomMesg));
     }
+    // C210: a Small plugin whose own records and links are stored with its full index (00, no masters), as the Creation
+    // Kit writes a small .esm; Mutagen writes them FE000xxx
+    private static (string Dir, string Path, StarfieldMod Mod) WriteFullIndexSmall()
+    {
+        var dir = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "MutagenRoundTripApiTests", Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(dir);
+        var key = ModKey.FromFileName("LinkForms.esm");
+        var mod = new StarfieldMod(key, StarfieldRelease.Starfield);
+        mod.ModHeader.Flags |= StarfieldModHeader.HeaderFlag.Light;
+        var keyword = mod.Keywords.AddNew("TestKeyword");
+        var list = mod.FormLists.AddNew("TestList");
+        list.Items.Add(keyword.ToLink());
+        list.Items.Add(keyword.ToLink());
+        mod.SetOwnFormIdStyle(ModOwnFormIdStyle.FullIndex);
+        var path = System.IO.Path.Combine(dir, key.FileName);
+        mod.WriteToBinary(path, new BinaryWriteParameters { MasterFlagsLookup = new LoadOrder<IModMasterStyledGetter>() });
+        return (dir, path, mod);
+    }
+
+    private static byte[] WriteFlst(IStarfieldModGetter mod, string dir)
+    {
+        var outPath = System.IO.Path.Combine(dir, "Out", mod.ModKey.FileName);
+        Directory.CreateDirectory(System.IO.Path.GetDirectoryName(outPath)!);
+        mod.WriteToBinary(outPath, new BinaryWriteParameters { MasterFlagsLookup = new LoadOrder<IModMasterStyledGetter>() });
+        return RecordBytes(File.ReadAllBytes(outPath), "FLST");
+    }
+
+    [Fact]
+    public void OwnLinkFormsAsStored_RebuiltRecordKeepsItsLinkForms()
+    {
+        var (dir, path, _) = WriteFullIndexSmall();
+        try
+        {
+            var file = RecordBytes(File.ReadAllBytes(path), "FLST");
+            BitConverter.ToUInt32(file, 12).ShouldBe(0x00000801u); // header in the full form
+            var read = StarfieldMod.CreateFromBinary(path, StarfieldRelease.Starfield,
+                new BinaryReadParameters { MasterFlagsLookup = new LoadOrder<IModMasterStyledGetter>() });
+            var forms = read.FormLists.Single().GetOwnLinkFormsAsStored();
+            forms.ShouldNotBeNull();
+            forms.ShouldStartWith("OF1:");
+            using (var overlay = StarfieldMod.CreateFromBinaryOverlay(path, StarfieldRelease.Starfield,
+                       new BinaryReadParameters { MasterFlagsLookup = new LoadOrder<IModMasterStyledGetter>() }))
+            {
+                overlay.FormLists.Single().GetOwnLinkFormsAsStored().ShouldBe(forms);
+                overlay.Keywords.Single().GetOwnLinkFormsAsStored().ShouldBeNull();
+            }
+            read.Keywords.Single().GetOwnLinkFormsAsStored().ShouldBeNull();
+
+            // Rebuilt as from JSON, nothing kept: header and links in Mutagen's FE form
+            var rebuilt = new StarfieldMod(read.ModKey, StarfieldRelease.Starfield);
+            rebuilt.ModHeader.DeepCopyIn(read.ModHeader);
+            rebuilt.Keywords.Add(read.Keywords.Single().DeepCopy());
+            var list = read.FormLists.Single().DeepCopy();
+            list.SetOwnLinkFormsAsStored(null);
+            list.SetHeaderFormIdAsStored(null);
+            list.GetOwnLinkFormsAsStored().ShouldBeNull();
+            rebuilt.FormLists.Add(list);
+            var fe = WriteFlst(rebuilt, dir);
+            BitConverter.ToUInt32(fe, 12).ShouldBe(0xFE000801u);
+            fe.ShouldNotBe(file);
+
+            // Given back: as stored
+            list.SetOwnLinkFormsAsStored(forms);
+            list.SetHeaderFormIdAsStored(read.FormLists.Single().GetHeaderFormIdAsStored());
+            WriteFlst(rebuilt, dir).ShouldBe(file);
+
+            // A changed link gets Mutagen's form, the unchanged one keeps its stored form
+            list.Items[1] = new FormLink<IStarfieldMajorRecordGetter>(new FormKey(read.ModKey, 0x900));
+            var changed = WriteFlst(rebuilt, dir);
+            changed.ShouldNotBe(file);
+            Should.Throw<FormatException>(() => list.SetOwnLinkFormsAsStored("nope"));
+        }
+        finally
+        {
+            try { Directory.Delete(dir, recursive: true); } catch (IOException) { }
+        }
+    }
 }

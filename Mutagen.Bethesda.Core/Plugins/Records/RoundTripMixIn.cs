@@ -215,4 +215,63 @@ public static class RoundTripMixIn
     {
         RawHeaderFormIds.Set(record, raw);
     }
+    private const string OwnLinkFormsPrefix = "OF1:";
+    private const int OwnLinkFormsEntryLength = 16;
+
+    /// <summary>
+    /// The FormIDs in this record's subrecords that were stored in another form than the one Mutagen writes for the same
+    /// FormKey (a Small or Medium plugin's own FormIDs stored with its full index, or in the other own form; a master
+    /// index past the master list), with where each sits; null when there are none (C210, kept since C163/C189).<br/>
+    /// The value is opaque: store it as it is, and give it back with <see cref="SetOwnLinkFormsAsStored"/> on a record
+    /// rebuilt from the same data. Each FormID is written back as stored only where the record still writes Mutagen's
+    /// form of that same FormID; a changed or new link gets Mutagen's form.
+    /// </summary>
+    public static string? GetOwnLinkFormsAsStored(this IMajorRecordGetter record)
+    {
+        var entries = OwnFormIdForms.GetForRoundTrip(record);
+        if (entries == null || entries.Length == 0) return null;
+        var bytes = new byte[entries.Length * OwnLinkFormsEntryLength];
+        for (int i = 0; i < entries.Length; i++)
+        {
+            var span = bytes.AsSpan(i * OwnLinkFormsEntryLength, OwnLinkFormsEntryLength);
+            BinaryPrimitives.WriteUInt32LittleEndian(span, entries[i].SubrecordType);
+            BinaryPrimitives.WriteInt32LittleEndian(span.Slice(4), entries[i].Turn);
+            BinaryPrimitives.WriteInt32LittleEndian(span.Slice(8), entries[i].Offset);
+            BinaryPrimitives.WriteUInt32LittleEndian(span.Slice(12), entries[i].Raw);
+        }
+        return OwnLinkFormsPrefix + Convert.ToBase64String(bytes);
+    }
+
+    /// <summary>
+    /// Gives a record the stored FormID forms of <see cref="GetOwnLinkFormsAsStored"/> (null removes them) (C210)
+    /// </summary>
+    /// <exception cref="FormatException">The value isn't one GetOwnLinkFormsAsStored gave</exception>
+    public static void SetOwnLinkFormsAsStored(this IMajorRecord record, string? forms)
+    {
+        if (forms == null)
+        {
+            OwnFormIdForms.Set(record, null);
+            return;
+        }
+        if (!forms.StartsWith(OwnLinkFormsPrefix, StringComparison.Ordinal))
+        {
+            throw new FormatException("Not stored FormID forms from GetOwnLinkFormsAsStored.");
+        }
+        var bytes = Convert.FromBase64String(forms.Substring(OwnLinkFormsPrefix.Length));
+        if (bytes.Length % OwnLinkFormsEntryLength != 0)
+        {
+            throw new FormatException("Not stored FormID forms from GetOwnLinkFormsAsStored.");
+        }
+        var entries = new OwnFormIdForms.Entry[bytes.Length / OwnLinkFormsEntryLength];
+        for (int i = 0; i < entries.Length; i++)
+        {
+            var span = bytes.AsSpan(i * OwnLinkFormsEntryLength, OwnLinkFormsEntryLength);
+            entries[i] = new OwnFormIdForms.Entry(
+                BinaryPrimitives.ReadUInt32LittleEndian(span),
+                BinaryPrimitives.ReadInt32LittleEndian(span.Slice(4)),
+                BinaryPrimitives.ReadInt32LittleEndian(span.Slice(8)),
+                BinaryPrimitives.ReadUInt32LittleEndian(span.Slice(12)));
+        }
+        OwnFormIdForms.Set(record, entries);
+    }
 }

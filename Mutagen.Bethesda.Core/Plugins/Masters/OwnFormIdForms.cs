@@ -61,6 +61,49 @@ internal static class OwnFormIdForms
     }
 
     /// <summary>
+    /// Sets (null or empty: removes) a record's kept forms (RoundTripMixIn.SetOwnLinkFormsAsStored, C210)
+    /// </summary>
+    public static void Set(object record, Entry[]? entries)
+    {
+        if (entries == null || entries.Length == 0) Records.Remove(record);
+        else Records.AddOrUpdate(record, entries);
+    }
+
+    /// <summary>
+    /// What a record keeps of its FormIDs stored in another form than Mutagen writes, for RoundTripMixIn (C210): a full
+    /// import's notes, or an overlay's own forms and master indices past the list found in its bytes (what a full
+    /// import of the same record notes)
+    /// </summary>
+    public static Entry[]? GetForRoundTrip(IMajorRecordGetter record)
+    {
+        if (record is not PluginBinaryOverlay overlay) return Records.TryGetValue(record, out var entries) ? entries : null;
+        // An overlay keeps nothing: its record is written as it writes back (stored forms put back) and the FormIDs the
+        // write placed are compared with Mutagen's form of the same FormKey (C203's positions), so only FormID fields
+        // count, not any 4 bytes that happen to read as one
+        var package = overlay._package.MetaData.MasterReferences;
+        if (package is not SeparatedMasterPackage) return null;
+        List<Entry>? ret = null;
+        foreach (var position in StoredFormIdMixIn.Collect(record, overlay._package.MetaData.Constants, package))
+        {
+            if (position.Subrecord is not { } type || position.Offset < 0) continue;
+            if (position.Location is not (StoredFormIdLocation.Written or StoredFormIdLocation.Searched)) continue;
+            if (position.Raw == 0 || position.FormKey.IsNull) continue;
+            uint written;
+            try
+            {
+                written = package.GetFormID(position.FormKey).Raw;
+            }
+            catch (Exception)
+            {
+                continue;
+            }
+            if (written == position.Raw) continue;
+            (ret ??= new()).Add(new Entry((uint)type.TypeInt, position.SubrecordIndex, position.Offset, position.Raw));
+        }
+        return ret?.ToArray();
+    }
+
+    /// <summary>
     /// The kept forms of a record about to be written: noted by a full import, or found in an overlay's bytes
     /// </summary>
     public static Entry[]? Get(IMajorRecordGetter record)

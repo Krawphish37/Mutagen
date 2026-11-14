@@ -113,6 +113,17 @@ public static class StoredFormIdMixIn
                 OwnFormIdStyle.GetExplicit(mod));
         }
 
+        return Collect(record, constants, package);
+    }
+
+    /// <summary>
+    /// The positions with a known package (an overlay record's own, for RoundTripMixIn.GetOwnLinkFormsAsStored, C210)
+    /// </summary>
+    internal static List<StoredFormIdPosition> Collect(
+        IMajorRecordGetter record,
+        GameConstants constants,
+        IReadOnlySeparatedMasterPackage package)
+    {
         var ret = new List<StoredFormIdPosition>();
         var header = RawHeaderFormIds.Get(record) is { } kept && package.GetFormKey(new FormID(kept), reference: false) == record.FormKey
             ? kept
