@@ -231,11 +231,11 @@ public class OwnFormIdFormsTests
     // stored; changed, it gets the plugin's own index. A Full plugin with one master: own index 01, the link stores 02.
     private static readonly byte[] PastListFile = Record("TES4", 0x1, 0,
             Sub("HEDR", Convert.FromHexString("8FC2753F0300000002080000"))
-                .Concat(Sub("MAST", Encoding.ASCII.GetBytes("Starfield.esm "))).ToArray())
+                .Concat(Sub("MAST", Encoding.ASCII.GetBytes("Starfield.esm\0"))).ToArray())
         .Concat(Group("KYWD",
-            Record("KYWD", 0, 0x01000801, Sub("EDID", Encoding.ASCII.GetBytes("OwnKeyword ")))))
+            Record("KYWD", 0, 0x01000801, Sub("EDID", Encoding.ASCII.GetBytes("OwnKeyword\0")))))
         .Concat(Group("FLST",
-            Record("FLST", 0, 0x01000802, Sub("EDID", Encoding.ASCII.GetBytes("PastList "))
+            Record("FLST", 0, 0x01000802, Sub("EDID", Encoding.ASCII.GetBytes("PastList\0"))
                 .Concat(Sub("LNAM", BitConverter.GetBytes(0x02000801u))).ToArray())))
         .ToArray();
 
