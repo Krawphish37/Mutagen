@@ -131,7 +131,12 @@ public sealed class TranslatedString : ITranslatedString, IEquatable<TranslatedS
     /// <summary>
     /// The plugin whose string tables StringsKey belongs to
     /// </summary>
-    internal ModKey? StringsMod => (StringsLookup as StringsFolderLookupOverlay)?.ModKey ?? _resolvedFromMod;
+    internal ModKey? StringsMod => StringsLookup switch
+    {
+        StringsFolderLookupOverlay overlay => overlay.ModKey,
+        StringsKeysOnlyLookup keysOnly => keysOnly.ModKey,
+        _ => _resolvedFromMod,
+    };
 
     internal bool UsingLocalizationDictionary => _localization != null || StringsLookup != null;
 

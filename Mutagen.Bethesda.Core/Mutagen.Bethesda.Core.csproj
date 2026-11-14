@@ -720,6 +720,7 @@
         <Compile Include="Strings\IStringsFolderLookup.cs" />
         <Compile Include="Strings\StringsReadParameters.cs" />
         <Compile Include="Strings\StringsFolderLookupOverlay.cs" />
+        <Compile Include="Strings\StringsKeysOnlyLookup.cs" />
         <Compile Include="Strings\StringsUtility.cs" />
         <Compile Include="Strings\StringsWriter.cs" />
         <Compile Include="Strings\TranslatedString.cs" />
