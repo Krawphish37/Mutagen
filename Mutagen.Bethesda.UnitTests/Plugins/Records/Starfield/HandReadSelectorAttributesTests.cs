@@ -78,7 +78,7 @@ public class HandReadSelectorAttributesTests
         selected.ShouldBe(SelectorEnums.Keys, ignoreOrder: true);
 
         var withValues = objects.Where(o => o.Attribute("selectorValue") != null).ToList();
-        withValues.Count.ShouldBe(95);
+        withValues.Count.ShouldBe(97);
         foreach (var o in withValues)
         {
             var name = (string)o.Attribute("name")!;

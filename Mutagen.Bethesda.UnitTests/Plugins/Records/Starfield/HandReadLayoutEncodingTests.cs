@@ -93,8 +93,8 @@ public class HandReadLayoutEncodingTests
     public void EveryAnnotatedFieldHasACheck()
     {
         AnnotatedFields.Value.Keys.Except(AssociationKeys()).Order().ShouldBe(Checked.Order());
-        AssociationKeys().Count().ShouldBe(11);
-        AnnotatedFields.Value.Count.ShouldBe(Checked.Length + 11);
+        AssociationKeys().Count().ShouldBe(13);
+        AnnotatedFields.Value.Count.ShouldBe(Checked.Length + 13);
     }
 
     // ---- writing and finding bytes ----
