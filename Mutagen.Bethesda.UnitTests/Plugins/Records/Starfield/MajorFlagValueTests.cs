@@ -70,6 +70,24 @@ public class MajorFlagValueTests
     [InlineData(typeof(AObjectModification.MajorFlag), nameof(AObjectModification.MajorFlag.PropertyCollection), 0x100)]
     [InlineData(typeof(Location.MajorFlag), nameof(Location.MajorFlag.PartialForm), 0x4000)]
     [InlineData(typeof(Worldspace.MajorFlag), nameof(Worldspace.MajorFlag.PartialForm), 0x4000)]
+    // C55: new enums for types that had none (xEdit's named bits; Unknown bits stay unnamed)
+    [InlineData(typeof(BiomeMarker.MajorFlag), nameof(BiomeMarker.MajorFlag.NonPlayable), 0x04)]
+    [InlineData(typeof(BiomeMarker.MajorFlag), nameof(BiomeMarker.MajorFlag.GroundPiece), 0x10)]
+    [InlineData(typeof(BiomeMarker.MajorFlag), nameof(BiomeMarker.MajorFlag.HiddenFromLocalMap), 0x200)]
+    [InlineData(typeof(BiomeMarker.MajorFlag), nameof(BiomeMarker.MajorFlag.UsedAsPlatform), 0x800)]
+    [InlineData(typeof(BiomeMarker.MajorFlag), nameof(BiomeMarker.MajorFlag.HasCurrents), 0x0008_0000)]
+    [InlineData(typeof(BiomeMarker.MajorFlag), nameof(BiomeMarker.MajorFlag.CalculateOncePerLocation), 0x0010_0000)]
+    [InlineData(typeof(BiomeMarker.MajorFlag), nameof(BiomeMarker.MajorFlag.Obstacle), 0x0200_0000)]
+    [InlineData(typeof(BiomeMarker.MajorFlag), nameof(BiomeMarker.MajorFlag.NavmeshFilter), 0x0400_0000)]
+    [InlineData(typeof(BiomeMarker.MajorFlag), nameof(BiomeMarker.MajorFlag.NavmeshBoundingBox), 0x0800_0000)]
+    [InlineData(typeof(BiomeMarker.MajorFlag), nameof(BiomeMarker.MajorFlag.NavmeshOnlyCut), 0x1000_0000)]
+    [InlineData(typeof(BiomeMarker.MajorFlag), nameof(BiomeMarker.MajorFlag.NavmeshIgnoreErosion), 0x2000_0000)]
+    [InlineData(typeof(BiomeMarker.MajorFlag), nameof(BiomeMarker.MajorFlag.NavmeshGround), 0x4000_0000)]
+    [InlineData(typeof(BiomeMarker.MajorFlag), nameof(BiomeMarker.MajorFlag.MustBeUnique), int.MinValue)]
+    [InlineData(typeof(GenericBaseForm.MajorFlag), nameof(GenericBaseForm.MajorFlag.Unique), 0x04)]
+    [InlineData(typeof(Star.MajorFlag), nameof(Star.MajorFlag.StartsHidden), 0x1000_0000)]
+    [InlineData(typeof(Star.MajorFlag), nameof(Star.MajorFlag.AlwaysDisplayName), 0x2000_0000)]
+    [InlineData(typeof(Projectile.MajorFlag), nameof(Projectile.MajorFlag.ApplyChargeMultiplier), 0x8000)]
     public void Values(Type enumType, string name, int expected)
     {
         Convert.ToInt32(Enum.Parse(enumType, name)).ShouldBe(expected);
@@ -259,6 +277,23 @@ public class MajorFlagValueTests
     }
 
     [Fact]
+    public void NewEnums_ReadAndWriteBack()
+    {
+        CheckFlags<IBiomeMarkerGetter, BiomeMarker.MajorFlag>(Edid("BMMO"), 0x0010_0000,
+            f => BiomeMarker.CreateFromBinary(f), (s, p) => BiomeMarkerBinaryOverlay.BiomeMarkerFactory(s, p),
+            r => r.MajorFlags, BiomeMarker.MajorFlag.CalculateOncePerLocation);
+        CheckFlags<IGenericBaseFormGetter, GenericBaseForm.MajorFlag>(Edid("GBFM"), 0x04,
+            f => GenericBaseForm.CreateFromBinary(f), (s, p) => GenericBaseFormBinaryOverlay.GenericBaseFormFactory(s, p),
+            r => r.MajorFlags, GenericBaseForm.MajorFlag.Unique);
+        CheckFlags<IStarGetter, Star.MajorFlag>(Edid("STDT"), 0x3000_0000,
+            f => Star.CreateFromBinary(f), (s, p) => StarBinaryOverlay.StarFactory(s, p),
+            r => r.MajorFlags, Star.MajorFlag.StartsHidden | Star.MajorFlag.AlwaysDisplayName);
+        CheckFlags<IProjectileGetter, Projectile.MajorFlag>(Edid("PROJ"), 0x8000,
+            f => Projectile.CreateFromBinary(f), (s, p) => ProjectileBinaryOverlay.ProjectileFactory(s, p),
+            r => r.MajorFlags, Projectile.MajorFlag.ApplyChargeMultiplier);
+    }
+
+    [Fact]
     [Trait("Category", "RealData")]
     public void RealData_StarfieldEsm_C55()
     {
@@ -273,7 +308,7 @@ public class MajorFlagValueTests
         {
             Containers = true, Keys = true, Colors = true, StaticCollections = true, ConstructibleObjects = true,
             Actions = true, Statics = true, Transforms = true, Terminals = true, MoveableStatics = true,
-            ObjectModifications = true,
+            ObjectModifications = true, BiomeMarkers = true, GenericBaseForms = true, Stars = true,
         });
         Check(full);
 
@@ -315,6 +350,10 @@ public class MajorFlagValueTests
             mod.MoveableStatics.Count(r => r.MajorFlags.HasFlag(MoveableStatic.MajorFlag.NavMeshGenerationOnlyCut)).ShouldBe(43);
             mod.ObjectModifications.Count(r => r.MajorFlags.HasFlag(AObjectModification.MajorFlag.PropertyCollection)).ShouldBe(101);
             mod.Keys.Count(r => r.MajorFlags.HasFlag(Key.MajorFlag.PackInUseOnly)).ShouldBe(197);
+            mod.BiomeMarkers.Count(r => r.MajorFlags.HasFlag(BiomeMarker.MajorFlag.CalculateOncePerLocation)).ShouldBe(48);
+            mod.GenericBaseForms.Count(r => r.MajorFlags.HasFlag(GenericBaseForm.MajorFlag.Unique)).ShouldBe(49);
+            mod.Stars.Count(r => r.MajorFlags.HasFlag(Star.MajorFlag.StartsHidden)).ShouldBe(6);
+            mod.Stars.Count(r => r.MajorFlags.HasFlag(Star.MajorFlag.AlwaysDisplayName)).ShouldBe(9);
             // No record of these types sets the corrected bit or the old one in Starfield.esm
             mod.Keys.Count(r => (r.MajorRecordFlagsRaw & 0x06) != 0).ShouldBe(0);
             mod.Colors.Count(r => (r.MajorRecordFlagsRaw & 0x06) != 0).ShouldBe(0);

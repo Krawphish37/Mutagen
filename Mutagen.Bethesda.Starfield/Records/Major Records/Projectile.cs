@@ -2,6 +2,13 @@
 
 partial class Projectile
 {
+    // Record header flags, xEdit's PROJ list (4 PROJ in all plugins, in ShatteredSpace.esm and a mod)
+    [Flags]
+    public enum MajorFlag
+    {
+        ApplyChargeMultiplier = 0x0000_8000,
+    }
+
     // PROD Flags, one UInt32 (xEdit). PenetratesGeometry keeps its name (xEdit: Penetrates Through Actors).
     [Flags]
     public enum Flag

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
-  <Object name="Star" recordType="STDT" objType="Record" baseClass="StarfieldMajorRecord">
+  <Object name="Star" recordType="STDT" objType="Record" baseClass="StarfieldMajorRecord" majorFlag="true">
     <Fields>
       <RefList name="Components" refName="AComponent" />
       <List name="Keywords" counterRecType="KSIZ" recordType="KWDA">
