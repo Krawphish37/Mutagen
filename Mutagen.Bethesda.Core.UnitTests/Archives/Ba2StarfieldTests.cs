@@ -58,7 +58,7 @@ public class Ba2StarfieldTests
     /// A BC1 4x4 texture with two mips: the first stored as is, the second compressed (zlib, or LZ4 when version 3
     /// names compression 3).
     /// </summary>
-    private static byte[] BuildTextureBa2(uint version, uint compression)
+    internal static byte[] BuildTextureBa2(uint version, uint compression)
     {
         var packed = version == 3 && compression == 3 ? Lz4(Mip1) : Zlib(Mip1);
         var chunksStart = HeaderLength(version) + 24 + 2 * 24;
