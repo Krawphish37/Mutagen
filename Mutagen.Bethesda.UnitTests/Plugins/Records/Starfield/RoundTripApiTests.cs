@@ -367,4 +367,97 @@ public class RoundTripApiTests
             try { Directory.Delete(dir, recursive: true); } catch (IOException) { }
         }
     }
+
+    // C40: DialogueFCNeonConvo_LendelJoseph01 (024EA9:Starfield.esm), its real bytes. Its first alias condition
+    // (GetDistance) holds FFFFFFFE, which reads past Starfield.esm's empty master list, so the full import looked for such
+    // FormIDs in every 4 bytes of the aliases it had just read and kept their names and numbers ("Jose", "osep", "seph",
+    // the condition floats) as stored link forms. The overlay of the same record keeps none.
+    private const string LendelJosephQust =
+        "515553548901000000000000A94E020000000000450202004544494423004469616C6F67756546434E656F6E436F6E766F5F4C656E64656C4A6F7365" +
+        "7068303100444E414D0C00000000000F00000000000000454E414D0400414449414E4558540000414E414D040002000000414C535404000000000041" +
+        "4C494407004A6F7365706800464E414D040020020400414C46470400000000004354444120008600610071D1250001003145FEFFFFFF000000000000" +
+        "000000000000FFFFFFFF435444412000000061000000803F48003145EEFD2600000000000000000000000000FFFFFFFF435444412000000061000000" +
+        "803F3A03314500000000000000000000000000000000FFFFFFFF5654434B040000000000414C45440000414C5354040001000000414C494407004C65" +
+        "6E64656C00464E414D040020020400414C464704000000000043544441200000FFFFFF0000803F48000D4149832E00000000000000000000000000FF" +
+        "FFFFFF43544441200000FFFFFF0000803F3A030D4100000000000000000000000000000000FFFFFFFF5654434B040000000000414C45440000";
+
+    private static (string Dir, string Path) WriteQuestPlugin(byte[] quest)
+    {
+        var dir = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "MutagenRoundTripApiTests", Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(dir);
+        // The header as Mutagen writes it for a Full plugin without masters, then the quest as stored
+        var empty = new StarfieldMod(StarfieldEsm, StarfieldRelease.Starfield);
+        var headerPath = System.IO.Path.Combine(dir, "Header", StarfieldEsm.FileName);
+        Directory.CreateDirectory(System.IO.Path.GetDirectoryName(headerPath)!);
+        empty.WriteToBinary(headerPath, new BinaryWriteParameters { MasterFlagsLookup = new LoadOrder<IModMasterStyledGetter>() });
+        var header = File.ReadAllBytes(headerPath);
+        header = header.AsSpan(0, 24 + BitConverter.ToInt32(header, 4)).ToArray();
+        var path = System.IO.Path.Combine(dir, StarfieldEsm.FileName);
+        File.WriteAllBytes(path, header.Concat(Group("QUST", quest)).ToArray());
+        return (dir, path);
+    }
+
+    private static byte[] WriteQust(IStarfieldModGetter mod, string dir)
+    {
+        var outPath = System.IO.Path.Combine(dir, "Out", mod.ModKey.FileName);
+        Directory.CreateDirectory(System.IO.Path.GetDirectoryName(outPath)!);
+        mod.WriteToBinary(outPath, new BinaryWriteParameters { MasterFlagsLookup = new LoadOrder<IModMasterStyledGetter>() });
+        return RecordBytes(File.ReadAllBytes(outPath), "QUST");
+    }
+
+    [Fact]
+    public void OwnLinkFormsAsStored_FullImportKeepsOnlyFormIds()
+    {
+        var quest = Hex(LendelJosephQust);
+        var (dir, path) = WriteQuestPlugin(quest);
+        try
+        {
+            var param = new BinaryReadParameters { MasterFlagsLookup = new LoadOrder<IModMasterStyledGetter>() };
+            var read = StarfieldMod.CreateFromBinary(path, StarfieldRelease.Starfield, param);
+            using var overlay = StarfieldMod.CreateFromBinaryOverlay(path, StarfieldRelease.Starfield, param);
+            // Both readers: no FormID of the quest is stored in another form than Mutagen writes
+            overlay.Quests.Single().GetOwnLinkFormsAsStored().ShouldBeNull();
+            read.Quests.Single().GetOwnLinkFormsAsStored().ShouldBeNull();
+            // Written back as stored by both
+            WriteQust(read, dir).ShouldBe(quest);
+            WriteQust(overlay, dir).ShouldBe(quest);
+            // A copy (DeepCopy, as GetOrAddAsOverride makes) of either writes the same
+            foreach (var source in new IQuestGetter[] { read.Quests.Single(), overlay.Quests.Single() })
+            {
+                var copy = new StarfieldMod(StarfieldEsm, StarfieldRelease.Starfield);
+                copy.Quests.Add(source.DeepCopy());
+                copy.Quests.Single().GetOwnLinkFormsAsStored().ShouldBeNull();
+                WriteQust(copy, dir).ShouldBe(quest);
+            }
+        }
+        finally
+        {
+            try { Directory.Delete(dir, recursive: true); } catch (IOException) { }
+        }
+    }
+
+    [Fact]
+    public void OwnLinkFormsAsStored_RenamedAliasKeepsItsText()
+    {
+        var quest = Hex(LendelJosephQust);
+        var (dir, path) = WriteQuestPlugin(quest);
+        try
+        {
+            var read = StarfieldMod.CreateFromBinary(path, StarfieldRelease.Starfield,
+                new BinaryReadParameters { MasterFlagsLookup = new LoadOrder<IModMasterStyledGetter>() });
+            // "Joseph" to "Jos": its first 4 bytes are now 4A 6F 73 00, Mutagen's form of 736F4A:Starfield.esm, which
+            // "Jose" (65736F4A) reads as past the master list. Kept as a stored form, the write put "Jose" back over the
+            // name's terminator.
+            var alias = (QuestReferenceAlias)read.Quests.Single().Aliases![0];
+            alias.Name = "Jos";
+            var written = WriteQust(read, dir);
+            var alid = Encoding.ASCII.GetBytes("ALID\u0004\0Jos\0");
+            written.AsSpan().IndexOf(alid).ShouldBeGreaterThan(0);
+            written.AsSpan().IndexOf(Encoding.ASCII.GetBytes("ALID\u0004\0Jose")).ShouldBeLessThan(0);
+        }
+        finally
+        {
+            try { Directory.Delete(dir, recursive: true); } catch (IOException) { }
+        }
+    }
 }

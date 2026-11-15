@@ -16,11 +16,6 @@ public class RecordException : Exception
     public Type? RecordType { get; private set; }
     public string? EditorID { get; private set; }
 
-    static RecordException()
-    {
-        Warmup.Init();
-    }
-
     public RecordException(FormKey? formKey, Type? recordType, ModKey? modKey, string? edid)
     {
         FormKey = formKey;
@@ -116,6 +111,9 @@ public class RecordException : Exception
 
     private static Type GetRecordType(Type t)
     {
+        // The only use of Loqui's registrations here. Not in a static constructor: a reader that only throws (a refused
+        // plugin's DuplicateFormKeyException) shouldn't wait for every record type's registration (C41)
+        Warmup.Init();
         if (LoquiRegistration.TryGetRegister(t, out var regis))
         {
             return regis.ClassType;
