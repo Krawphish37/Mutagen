@@ -126,6 +126,52 @@ class BsaFileRecord : IArchiveFile
         }
     }
 
+    /// <summary>
+    /// The file's stretch from its record (offset, and size without the compression toggle bit), and its data inside it
+    /// as <see cref="AsStream"/> reads it: after the embedded path (when the archive embeds names) and, when
+    /// compressed, the 4-byte inflated size. Those few bytes are read once and kept with <see cref="Size"/> (C42).
+    /// </summary>
+    public ArchiveFileStorage GetStorage()
+    {
+        try
+        {
+            var size = _size.Value;
+            uint stretch = RawSize;
+            if (FlipCompression)
+                stretch ^= 0x1u << 30;
+            // ReadSize: on disk = the stretch less the embedded path and, when compressed, the inflated size
+            var dataOffset = (long)Offset + (stretch - size.OnDisk);
+            ArchiveCompression compression;
+            uint inflated;
+            if (BSA.HeaderType == BsaVersionType.SSE)
+            {
+                // As AsStream: a compressed file whose inflated size equals its stored size is read as is
+                var lz4 = Compressed && size.Size != size.OnDisk;
+                compression = lz4 ? ArchiveCompression.Lz4Frame : ArchiveCompression.None;
+                inflated = lz4 ? size.Original : size.OnDisk;
+            }
+            else
+            {
+                compression = Compressed ? ArchiveCompression.Zlib : ArchiveCompression.None;
+                inflated = Compressed ? size.Original : size.OnDisk;
+            }
+            return new ArchiveFileStorage(
+                offset: Offset,
+                storedSize: stretch,
+                compression: compression,
+                chunks: [new ArchiveFileChunk(dataOffset, size.OnDisk, inflated, compression)]);
+        }
+        catch (Exception e)
+        {
+            ArchiveException.EnrichAndThrow(
+                e,
+                BSA.FilePath,
+                Folder.Path,
+                Path);
+            throw;
+        }
+    }
+
     private FileName? GetName()
     {
         if (_nameBlock == null) return null;

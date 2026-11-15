@@ -33,6 +33,13 @@ class Ba2Reader : IArchiveReader
     internal const uint Lz4Compression = 3;
 
     /// <summary>
+    /// How this archive's compressed files and chunks are compressed: LZ4 blocks when version 3 names compression 3,
+    /// zlib otherwise (as <see cref="Decompress"/> and the entries' streams read them) (C42)
+    /// </summary>
+    internal ArchiveCompression CompressionKind =>
+        Compression == Lz4Compression ? ArchiveCompression.Lz4Block : ArchiveCompression.Zlib;
+
+    /// <summary>
     /// Starfield's archives (versions 2 and 3) keep Fallout 4's file and texture records, with a longer header
     /// </summary>
     internal static bool IsStarfieldVersion(uint version) => version is 2 or 3;
@@ -398,6 +405,36 @@ class BA2DX10Entry : IArchiveFile
 
     public uint HeaderSize => DDS.HeaderSizeForFormat((DXGI_FORMAT)_format);
 
+    /// <summary>
+    /// The texture's chunks as the archive stores them, read as <see cref="CopyDataTo"/> reads them (a packed size of 0
+    /// is a chunk stored as is); its DDS magic and header are the reader's own (C42)
+    /// </summary>
+    public ArchiveFileStorage GetStorage()
+    {
+        var kind = _bsa.CompressionKind;
+        var chunks = new ArchiveFileChunk[_chunks.Count];
+        long stored = 0;
+        var anyCompressed = false;
+        for (int i = 0; i < chunks.Length; i++)
+        {
+            var chunk = _chunks[i];
+            var isCompressed = chunk._packSz != 0;
+            anyCompressed |= isCompressed;
+            chunks[i] = new ArchiveFileChunk(
+                Offset: checked((long)chunk._offset),
+                StoredSize: isCompressed ? chunk._packSz : chunk._fullSz,
+                Size: chunk._fullSz,
+                Compression: isCompressed ? kind : ArchiveCompression.None);
+            stored += chunks[i].StoredSize;
+        }
+        return new ArchiveFileStorage(
+            offset: chunks.Length == 0 ? 0 : chunks.Min(c => c.Offset),
+            storedSize: stored,
+            compression: anyCompressed ? kind : ArchiveCompression.None,
+            chunks: chunks,
+            synthesizedHeaderLength: HeaderSize + sizeof(uint));
+    }
+
     public Stream AsStream()
     {
         // ToDo
@@ -601,6 +638,11 @@ class BA2FileEntry : IArchiveFile
     internal readonly int _index;
     internal readonly uint _version;
 
+    /// <summary>
+    /// The record's packed size as read: the stored size when <see cref="Compressed"/> (C42)
+    /// </summary>
+    internal readonly uint _packedSize;
+
     public bool Compressed { get; }
 
     public BA2FileEntry(Ba2Reader ba2Reader, uint version, int index, BinaryReader reader)
@@ -622,9 +664,13 @@ class BA2FileEntry : IArchiveFile
         _offset = reader.ReadUInt64();
         if (version > 7)
         {
-            reader.ReadUInt32();
+            _packedSize = reader.ReadUInt32();
         }
         _size = reader.ReadUInt32();
+        if (version <= 7)
+        {
+            _packedSize = _size;
+        }
         _realSize = reader.ReadUInt32();
         if (version <= 1 || starfield)
         {
@@ -645,6 +691,23 @@ class BA2FileEntry : IArchiveFile
     public string Path { get; internal set; }
 
     public uint Size => _realSize;
+
+    /// <summary>
+    /// The file's data as the archive stores it, from its file record alone: <see cref="Size"/> bytes as is, or its
+    /// packed size compressed as the archive says (zlib, or LZ4 blocks in a version 3 archive naming compression 3)
+    /// (C42)
+    /// </summary>
+    public ArchiveFileStorage GetStorage()
+    {
+        var compression = Compressed ? _bsa.CompressionKind : ArchiveCompression.None;
+        var stored = Compressed ? _packedSize : _realSize;
+        var offset = checked((long)_offset);
+        return new ArchiveFileStorage(
+            offset: offset,
+            storedSize: stored,
+            compression: compression,
+            chunks: [new ArchiveFileChunk(offset, stored, _realSize, compression)]);
+    }
 
     public Stream AsStream()
     {

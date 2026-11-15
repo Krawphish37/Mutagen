@@ -37,4 +37,13 @@ public interface IArchiveFile
     /// </summary>
     /// <returns>File data as a Stream</returns>
     Stream AsStream();
+
+    /// <summary>
+    /// Where the file's bytes are in its archive, how many there are on disk and whether (and how) they are compressed:
+    /// its offset, stored size, compression and data chunks (a BA2 texture: one per chunk) (C42).<br/>
+    /// A BA2 file answers from its file record, without reading the archive; a BSA file reads the few bytes the archive
+    /// keeps ahead of its data (as <see cref="Size"/> does, and kept with it).<br/>
+    /// Null from an implementation that can't tell (the default, for implementations outside Mutagen).
+    /// </summary>
+    ArchiveFileStorage? GetStorage() => null;
 }
