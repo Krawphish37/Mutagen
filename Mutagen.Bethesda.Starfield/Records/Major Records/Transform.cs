@@ -7,7 +7,7 @@ public partial class Transform
     [Flags]
     public enum MajorFlag
     {
-        AroundOrigin = 0x0000_8000
+        AroundOrigin = 0x0001_0000
     }
 
     // BNAM, xEdit's Basis

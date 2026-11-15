@@ -9,7 +9,7 @@ public partial class Weapon
     public enum MajorFlag
     {
         NonPlayable = 0x0000_0004,
-        HighResFirstPersonOnly = 0x2000_0000,
+        HighResFirstPersonOnly = 0x4000_0000,
     }
     
     public enum FiringTypeEnum

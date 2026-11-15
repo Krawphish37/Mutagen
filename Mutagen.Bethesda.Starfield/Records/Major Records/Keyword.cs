@@ -5,7 +5,7 @@ public partial class Keyword
     [Flags]
     public enum MajorFlag
     {
-        Restricted = 0x0008_0000
+        Restricted = 0x0000_8000
     }
 
     public enum TypeEnum
