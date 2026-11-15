@@ -23,4 +23,13 @@ public class RecordExceptionTests
         var rec = RecordException.Create<IItem>("Message", FormKey.Null, "SomeEdid");
         rec.RecordType.ShouldBe(typeof(IItem));
     }
+
+    // C41: the record class comes from Loqui's registrations, warmed up where they are looked up, not in a static
+    // constructor of the exception
+    [Fact]
+    public void EnrichAndCreateWithRecordInterfaceGiveItsClass()
+    {
+        RecordException.Enrich<IWeaponGetter>(new Exception(), FormKey.Null, "SomeEdid").RecordType.ShouldBe(typeof(Weapon));
+        RecordException.Create<IWeaponGetter>("Message", FormKey.Null, "SomeEdid").RecordType.ShouldBe(typeof(Weapon));
+    }
 }
