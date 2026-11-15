@@ -17,6 +17,8 @@ partial class PERSBinaryCreateTranslation
     {
         frame = frame.SpawnAll();
         item.Items.Clear();
+        // An XXXX gives the length of the DAT2 right after it only; any other DAT2 has its own length (C50: the length
+        // was kept, so a later DAT2 without an XXXX was read with the earlier one's)
         int? contentLen = null;
         while (frame.TryGetSubrecord(Targets, out var subRec))
         {
@@ -27,14 +29,12 @@ partial class PERSBinaryCreateTranslation
             }
             else
             {
-                if (contentLen == null)
-                {
-                    contentLen = subRec.ContentLength;
-                }
+                var length = contentLen ?? subRec.ContentLength;
+                contentLen = null;
                 frame.Position += subRec.HeaderLength;
 
                 var items = Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<PERSItem>.Instance.Parse(
-                    reader: frame.SpawnWithLength(contentLen.Value),
+                    reader: frame.SpawnWithLength(length),
                     transl: PERSItem.TryCreateFromBinary);
                 item.Items.Add(new PERSItems()
                 {
@@ -85,14 +85,13 @@ partial class PERSBinaryOverlay
             }
             else
             {
-                if (contentLen == null)
-                {
-                    contentLen = subRec.ContentLength;
-                }
+                // as the full reader: an XXXX gives the length of the next DAT2 only
+                var length = contentLen ?? subRec.ContentLength;
+                contentLen = null;
 
                 stream.Position += subRec.HeaderLength;
                 
-                itemsList.Add(PERSItemsBinaryOverlay.PERSItemsFactory(stream.ReadMemory(contentLen.Value), _package));
+                itemsList.Add(PERSItemsBinaryOverlay.PERSItemsFactory(stream.ReadMemory(length), _package));
             }
         }
 

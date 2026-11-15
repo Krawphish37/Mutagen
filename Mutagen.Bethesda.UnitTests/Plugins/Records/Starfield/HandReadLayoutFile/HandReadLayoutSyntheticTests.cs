@@ -8,8 +8,9 @@ namespace Mutagen.Bethesda.UnitTests.Plugins.Records.Starfield.HandReadLayoutFil
 
 // C186 step 2: the layout file's paths that Starfield.esm and the official plugins never use (six placed trap types,
 // perk entry point functions 4/6/7/11/12 and two-float values, string object mod properties, container and unknown-target
-// OMODs, VMAD object format 1, bool list properties), held against what Mutagen writes and reads back. Runs without game
-// data, so the file is checked in every test run.
+// OMODs, VMAD object format 1, bool list properties; C47: a package's topic data input with a topic subtype, the four
+// instance naming rule classes Data lacks, a navigation map info's CRCs, volume enders of type 11), held against what
+// Mutagen writes and reads back. Runs without game data, so the file is checked in every test run.
 public class HandReadLayoutSyntheticTests
 {
     private static readonly string[] Targets =
@@ -30,6 +31,18 @@ public class HandReadLayoutSyntheticTests
         "RecordOMOD/SubDATA/Switch/Default/ConstObjectModificationTargetName",
         "Define/Switch/Case1/FormIDObject",
         "Define/Switch/Case15/RepeatData/U8.",
+        // C47: hand-read lists the official plugins never use
+        "RecordPACK/SegmentsData/SubANAM/Switch/CaseTopic",
+        "RecordPACK/SegmentsData/keyListProcedureTreeDataOrder",
+        "RecordPACK/SegmentsData/Switch/CaseTopic/SubTPIC/BytesTPIC",
+        "Define/SubRepeatPDTO/Switch/Case1/I32Subtype.TypeInt",
+        "RecordINNR/ObjectRules/Switch/Case0",
+        "RecordINNR/ObjectRules/Switch/Case36",
+        "RecordINNR/ObjectRules/Switch/Case46",
+        "RecordINNR/ObjectRules/Switch/Case47",
+        "RecordNAVI/SubRepeatNVMI/RepeatUnknownCrcs/U32.",
+        "AnyRecordBFCB/SegmentsComponents/TypeSwitch/CaseVolumesComponent/SubVLMS/RepeatItems/ObjectEnder/Switch/Case11/TypeSwitch/CaseVolumesUnknownEnderEmpty",
+        "AnyRecordBFCB/SegmentsComponents/TypeSwitch/CaseVolumesComponent/SubVLMS/RepeatItems/ObjectEnder/Switch/Case11/TypeSwitch/CaseVolumesUnknownEnderEmptyPadded/U32Unknown1",
     ];
 
     [Fact]
@@ -45,6 +58,7 @@ public class HandReadLayoutSyntheticTests
             AddPerk(mod, target);
             AddObjectMods(mod, target);
             AddScripts(mod, target);
+            AddHandReadLists(mod, target);
             var path = new ModPath(mod.ModKey, Path.Combine(dir, mod.ModKey.FileName));
             mod.BeginWrite.ToPath(path).WithNoLoadOrder().NoModKeySync().Write();
 
@@ -128,6 +142,44 @@ public class HandReadLayoutSyntheticTests
             ObjectModificationTargetName = "LayoutTest_InstanceData",
         };
         mod.ObjectModifications.Add(unknown);
+    }
+
+    private static void AddHandReadLists(StarfieldMod mod, FormKey target)
+    {
+        var topic = new PackageDataTopic { TPIC = new byte[] { 1, 2, 3, 4 } };
+        var reference = new TopicReference();
+        reference.Reference.SetTo(target);
+        topic.Topics.Add(reference);
+        topic.Topics.Add(new TopicReferenceSubtype { Subtype = new RecordType("ABCD") });
+        var package = new Package(mod) { EditorID = "LayoutPackage" };
+        package.Data[0] = topic;
+        package.Data[1] = new PackageDataBool { Data = true, Name = "Flag", Flags = APackageData.Flag.Public };
+        mod.Packages.Add(package);
+
+        mod.InstanceNamingRules.Add(new InstanceNamingRules(mod) { EditorID = "LayoutRulesNone", Rules = new NoInstanceNamingRules() });
+        mod.InstanceNamingRules.Add(new InstanceNamingRules(mod) { EditorID = "LayoutRulesContainer", Rules = new ContainerInstanceNamingRules() });
+        mod.InstanceNamingRules.Add(new InstanceNamingRules(mod) { EditorID = "LayoutRulesFlora", Rules = new FloraInstanceNamingRules() });
+        mod.InstanceNamingRules.Add(new InstanceNamingRules(mod) { EditorID = "LayoutRulesFurniture", Rules = new FurnitureInstanceNamingRules() });
+
+        var mapInfo = new NavigationMapInfo { PathingCell = new NavmeshPathingCell { Crc = 5 } };
+        mapInfo.PathingCell.ParentCell.SetTo(target);
+        mapInfo.UnknownCrcs.AddRange([0x11111111u, 0x22222222u]);
+        var navi = new NavigationMeshInfoMap(mod) { EditorID = "LayoutNavi" };
+        navi.MapInfos.Add(mapInfo);
+        mod.NavigationMeshInfoMaps.Add(navi);
+
+        // type 11 twice: with nothing after it (another item follows) and with a uint32 (the last, 4 bytes left)
+        var volumes = new VolumesComponent
+        {
+            Items =
+            [
+                new VolumesComponentItem { Ender = new VolumesUnknownEnderEmpty() },
+                new VolumesComponentItem { Ender = new VolumesUnknownEnderEmptyPadded { Unknown1 = 7 } },
+            ],
+        };
+        var stat = new Static(mod) { EditorID = "LayoutVolumes" };
+        stat.Components.Add(volumes);
+        mod.Statics.Add(stat);
     }
 
     private static void AddScripts(StarfieldMod mod, FormKey target)

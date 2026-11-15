@@ -13,20 +13,49 @@
     Sub sig="SIG" [optional="true"] [field="Prop"]   the next subrecord with that signature; its content is described by
                                                       the children. field: the Mutagen object its values belong to.
                                                       optional and absent: the field must be null or empty.
-    SubRepeat sig="SIG" [count="N|$var"] [field="List"] [index="i"]
+    SubRepeat sig="SIG" [count="N|$var"] [field="List"] [index="i"] [at="cursor"]
                                                       consecutive subrecords, one list element each
     AnyOrder                                          the child Subs (and Generated sigs) follow in any order
-    Segments start="SIG" [end="SIG"] [field="List"] [index="i"] [skipStart="true"] [others="generated"]
-                                                      a run of subrecords from each start marker to the end marker (or the
-                                                      next start); one list element each. All subrecords in a segment must
-                                                      be described (or listed in Generated), unless others="generated".
-                                                      skipStart: the start marker itself isn't described.
+    Segments start="SIG[,SIG]" [end="SIG"] [field="List"] [index="i"] [skipStart="true"] [others="generated"]
+             [stopAt="SIG"] [reader="generated"] [at="cursor"] [key="I8"] [keyList="List"] [startName="var"]
+             [prefix="true"]
+                                                      a run of subrecords from each start marker (any of the start
+                                                      signatures) to the end marker (or the next start); one list element
+                                                      each. All subrecords in a segment must be described (or listed in
+                                                      Generated), unless others="generated". skipStart: the start marker
+                                                      itself isn't described. stopAt: a signature that ends the segment.
+                                                      reader="generated": hand-written code finds the items and Mutagen's
+                                                      generated reader of the item's class reads them, so subrecords the
+                                                      children don't describe are allowed. With end, an item runs from its
+                                                      start to its end marker (a start signature inside it is its own);
+                                                      without, to the next start or to the first subrecord it can't hold
+                                                      (one its children neither describe nor pass over). The list ends at
+                                                      the first subrecord after an item that starts none.
+    at="cursor"                                       (Segments, SubRepeat) the list starts at the subrecord where the walk
+                                                      stands, or has no items: it isn't looked for further on
+    key="I8|U8|I16|U16|I32|U32"                       (Segments) field is a dictionary; an item is the entry under the
+                                                      number at offset 0 of its start subrecord, not the next by place (an
+                                                      entry read again is the same entry)
+    keyList="List"                                    (Segments, with key) a list of the object the Segments is in, not of
+                                                      the item: the items' keys, in file order (null: none)
+    startName="var"                                   (Segments) keeps the item's start signature as text for a Switch
+    prefix="true"                                     (Segments) the file holds the first N elements of a longer Mutagen
+                                                      list (or dictionary)
     Generated sigs="A,B"                              subrecords here that the generated code reads; passed over
-    Object field="Prop" [optional="true"]             the children belong to that Mutagen object (optional: when
-                                                      Mutagen's is null, none of the children's subrecords may follow)
+    Object field="Prop" [optional="true"] [reader="generated"]
+                                                      the children belong to that Mutagen object (optional: when
+                                                      Mutagen's is null, none of the children's subrecords may follow).
+                                                      reader="generated": hand-written code picks the class, Mutagen's
+                                                      generated reader of it reads the subrecords the children pass over
     Switch on="var" [mask="0x.."] / Case value="1,2" [type="MutagenClass"] / Default
                                                       chooses by a value read earlier; type: the class Mutagen must have
                                                       made for the current object in that case
+    TypeSwitch                                        as at the content level (below)
+  A dictionary field (Segments, SubRepeat, Repeat): its elements are its values, in the dictionary's order (with key=,
+  the value under the key).
+
+  Not held by the test: GPOG's negative BNAM (a Leaf, through mask 0x80). No plugin in Data has one, and Mutagen writes
+  BNAM as 0 or 1, so the synthetic mod Mutagen writes can't hold one either.
 
   Content level (inside Sub, SubRepeat, Repeat, Object, Switch cases); every byte must be described:
     U8 I8 U16 I16 U32 I32 F32                         little-endian numbers
@@ -40,9 +69,17 @@
     Const field="Prop" value="v|$var"                 no bytes: a field Mutagen derives from a value read earlier
     WString                                           uint16 length, then the text
     Bytes [length="N|$var"]                           raw bytes (to the end of the subrecord without length)
-    Repeat count="N|$var|end" [field="List"] [index="i"] [prefix="true"]
-                                                      the children N times (end: until the subrecord ends); prefix: the
-                                                      file holds the first N elements of a longer Mutagen list
+    P3F32 / P3I16                                     three floats / three int16: a P3Float / P3Int16 (X, Y, Z)
+    F16                                               a half-precision float (Half)
+    Null field="Prop"                                 no bytes: Mutagen's field is null (or empty) here
+    Repeat count="N|$var|end|fit" [field="List"] [index="i"] [prefix="true"] [endsAtZeros="N"]
+                                                      the children N times (end: until the subrecord ends; fit: while a
+                                                      whole item fits in what is left); prefix: the file holds the first N
+                                                      elements of a longer Mutagen list; endsAtZeros: an item that starts
+                                                      with N zero bytes isn't read, it and what follows are left for the
+                                                      elements after the Repeat
+    NotLast                                           inside a counted Repeat: the children on every item but the last
+                                                      (on the last, their fields are null)
     Object field="Prop", Switch                       as above
     Bit of="var" index="N|$i" [invert="true"]         one bit of a value read earlier
     IfMore                                            the children only when bytes are left
@@ -51,11 +88,14 @@
     WString lengthName="var"                          also keeps the text length
   Value attributes:
     field="Prop[.Prop]"                               the Mutagen property it is compared with ("." the list element itself)
-    name="var"                                        keep the value for count, Switch or Bit
+    name="var"                                        keep the value for count, Switch or Bit (a FormID: 0 when null, else
+                                                      the stored value; a ZString: its text)
     expect="value"                                    the value the file must hold (bytes: hex)
     why="..."                                         a value Mutagen doesn't keep, and why
-    encoding="bool|speed|div:N"                       how the stored number maps to the field: bool (not zero),
-                                                      speed ((b - 127) / 1270), div:N (stored / N)
+    encoding="bool|speed|div:N|drop:N|length"         how the stored number maps to the field: bool (not zero),
+                                                      speed ((b - 127) / 1270), div:N (stored / N), drop:N (stored with
+                                                      bit N cleared: the record xml's layoutDroppedBits); on Bytes, length
+                                                      (the field is the number of bytes)
 -->
 <HandReadLayouts game="Starfield" version="1">
 
@@ -77,7 +117,9 @@
     </Sub>
   </Record>
 
-  <!-- REGN: each RDAT starts a region data block; its first uint32 picks the block (3 weather, 7 sound) -->
+  <!-- REGN: each RDAT starts a region data block; its first uint32 picks the block (3 weather, 7 sound), whose generated
+       reader reads on from the RDAT: the weather's RDWT list. RegionBinaryCreateTranslation.FillBinaryRegionAreaLogicCustom
+       and ParseRegionData (Records/Major Records/Region.cs). -->
   <Record sig="REGN" object="Region">
     <Segments start="RDAT">
       <Sub sig="RDAT">
@@ -99,7 +141,10 @@
           </Case>
         </Switch>
       </Sub>
-      <Generated sigs="RDWT" />
+      <Switch on="type">
+        <Case value="3"><Object field="Weather" reader="generated"><Generated sigs="RDWT" /></Object></Case>
+        <Default />
+      </Switch>
     </Segments>
   </Record>
 
@@ -123,7 +168,19 @@
     </Sub>
   </Record>
 
-  <!-- PACK idles: IDLF, then IDLC (count), IDLT (timer) and IDLA (the idles) in any order; an IDLF alone is common -->
+  <!-- PACK (PackageBinaryCreateTranslation, Records/Major Records/Package.cs):
+       - idles: IDLF, then IDLC (count), IDLT (timer) and IDLA (the idles) in any order; an IDLF alone is common.
+       - FillBinaryPackageTemplateCustom and FillPackageData: PKCU (the count of data inputs, then the template and the data
+         input version, which the record xml's layout attributes place); one value block per data input, each ANAM (its
+         kind as text, which picks the class) and its value: CNAM (Bool: a byte; Float and ObjectList: a float; Int: a
+         uint32), TPIC (a topic's bytes), STSC (a scene), PTDA (a target, APackageTarget.CreateFromBinary), CITC and CTDA (a
+         target's conditions), PLDT (a location, its generated reader), PDTO (topics); then UNAM (the input's key) and
+         PNAM (its flags) per input: the k-th UNAM's entry takes the k-th block. The entries a template's names add
+         later (below) come after these in the dictionary, so the blocks are its first entries (prefix).
+       - FillBinaryProcedureTreeCustom: after XNAM, PackageBranch items each starting at ANAM, each read by its generated
+         reader; then AbsorbPackageData (also FillBinaryDataInputNamesCustom when the tree is empty): UNAM (the key of an
+         entry), BNAM (its name), PNAM (its flags); the keys in that order are ProcedureTreeDataOrder.
+       - an event (POBA, POEA or POCA, then INAM) holds topics (PackageEventBinaryCreateTranslation.FillBinaryTopicsCustom). -->
   <Record sig="PACK" object="Package">
     <Object field="IdleAnimations" optional="true">
       <Sub sig="IDLF"><U8 field="Type" /></Sub>
@@ -133,7 +190,104 @@
         <Sub sig="IDLA" optional="true"><Repeat count="end" field="Animations"><FormID field="FormKey" /></Repeat></Sub>
       </AnyOrder>
     </Object>
+    <Sub sig="PKCU">
+      <U32 name="dataCount" why="the count of data inputs; Mutagen counts the UNAM entries instead" />
+      <Bytes length="8" why="PackageTemplate and DataInputVersion: the record xml's layout attributes place them" />
+    </Sub>
+    <Segments start="ANAM" field="Data" reader="generated" at="cursor" prefix="true">
+      <Sub sig="ANAM">
+        <ZString name="dataType" />
+        <Switch on="dataType">
+          <Case value="Bool" type="PackageDataBool" />
+          <Case value="Int" type="PackageDataInt" />
+          <Case value="Float" type="PackageDataFloat" />
+          <Case value="ObjectList" type="PackageDataObjectList" />
+          <Case value="Location" type="PackageDataLocation" />
+          <Case value="SingleRef" type="PackageDataTarget"><Const field="Type" value="SingleRef" /></Case>
+          <Case value="TargetSelector" type="PackageDataTarget"><Const field="Type" value="Target" /></Case>
+          <Case value="Topic" type="PackageDataTopic" />
+          <Case value="Scene" type="PackageDataScene" />
+        </Switch>
+      </Sub>
+      <AnyOrder>
+        <Sub sig="CNAM" optional="true">
+          <Switch on="dataType">
+            <Case value="Bool"><U8 field="Data" encoding="bool" /></Case>
+            <Case value="Int"><U32 field="Data" /></Case>
+            <Case value="Float,ObjectList"><F32 field="Data" /></Case>
+          </Switch>
+        </Sub>
+        <Sub sig="TPIC" optional="true"><Bytes field="TPIC" /></Sub>
+        <Sub sig="STSC" optional="true"><FormID field="Scene" /></Sub>
+        <Sub sig="PTDA" optional="true" field="Target"><Use name="PackageTarget" /></Sub>
+        <Sub sig="CITC" optional="true">
+          <U32 name="conditionCount" />
+          <Const field="Conditions.Count" value="$conditionCount" />
+        </Sub>
+        <Generated sigs="CTDA,PLDT" />
+      </AnyOrder>
+      <!-- a topic's PDTO and TPIC come in either order (Mutagen writes PDTO first; Data has no topic input) -->
+      <Switch on="dataType">
+        <Case value="Topic"><Use name="Topics" /><Sub sig="TPIC" optional="true"><Bytes field="TPIC" /></Sub></Case>
+        <Default />
+      </Switch>
+    </Segments>
+    <Segments start="UNAM" field="Data" key="I8" reader="generated" at="cursor">
+      <Sub sig="UNAM"><I8 name="key" /></Sub>
+      <Sub sig="PNAM" optional="true"><U32 field="Flags" /></Sub>
+    </Segments>
+    <Generated sigs="XNAM" />
+    <Segments start="ANAM" field="ProcedureTree" reader="generated" at="cursor">
+      <Generated sigs="NNAM,CITC,CTDA,CIS1,CIS2,PRCB,PNAM,FNAM,PKC2,PFO2" />
+    </Segments>
+    <Segments start="UNAM" field="Data" key="I8" keyList="ProcedureTreeDataOrder" reader="generated" at="cursor">
+      <Sub sig="UNAM"><I8 name="key" /></Sub>
+      <Sub sig="BNAM" optional="true"><ZString field="Name" /></Sub>
+      <Sub sig="PNAM" optional="true"><U32 field="Flags" /></Sub>
+    </Segments>
+    <Object field="OnBegin" optional="true"><Sub sig="POBA" /><Generated sigs="INAM" /><Use name="Topics" /></Object>
+    <Object field="OnEnd" optional="true"><Sub sig="POEA" /><Generated sigs="INAM" /><Use name="Topics" /></Object>
+    <Object field="OnChange" optional="true"><Sub sig="POCA" /><Generated sigs="INAM" /><Use name="Topics" /></Object>
   </Record>
+
+  <!-- IDLM: IDLC holds the count of animations, which Mutagen passes over (FillBinaryAnimationCountCustom); IDLA the
+       animations, FormIDs to its end (ParseAnimations). IdleMarkerBinaryCreateTranslation (Records/Major Records/IdleMarker.cs). -->
+  <Record sig="IDLM" object="IdleMarker">
+    <Sub sig="IDLC" optional="true"><U32 name="animationCount" why="the count of animations; Mutagen counts IDLA's FormIDs" /></Sub>
+    <Sub sig="IDLA" optional="true"><Repeat count="end" field="Animations"><FormID field="FormKey" /></Repeat></Sub>
+  </Record>
+
+  <!-- Topics of a package event, a package's topic data input and a patrol: one PDTO each, an int32 that picks the class
+       (0 a topic, 1 a subtype), then its FormID or its 4 characters. ATopicReferenceBinaryCreateTranslation.Factory
+       (Records/Common Subrecords/TopicReference.cs). -->
+  <Define name="Topics">
+    <SubRepeat sig="PDTO" field="Topics" at="cursor">
+      <I32 name="topicType" />
+      <Switch on="topicType">
+        <Case value="0" type="TopicReference"><FormID field="Reference" /></Case>
+        <Case value="1" type="TopicReferenceSubtype"><I32 field="Subtype.TypeInt" /></Case>
+      </Switch>
+    </SubRepeat>
+  </Define>
+
+  <!-- A package target (PTDA): an int32 picks the class (0 a specific reference, 1 an object ID, 2 an object type, 3 a
+       linked reference, 4 an alias, 5 interrupt data, 6 self, 7 a keyword, any other an unknown target, which keeps the
+       number), then its 4 bytes, then CountOrDistance. APackageTarget.CreateFromBinary (Records/Major Records/APackageTarget.cs). -->
+  <Define name="PackageTarget">
+    <I32 name="targetType" />
+    <Switch on="targetType">
+      <Case value="0" type="PackageTargetSpecificReference"><FormID field="Reference" /></Case>
+      <Case value="1" type="PackageTargetObjectID"><FormID field="Reference" /></Case>
+      <Case value="2" type="PackageTargetObjectType"><U32 field="Type" /></Case>
+      <Case value="3" type="PackageTargetLinkedReference"><FormID field="Keyword" /></Case>
+      <Case value="4" type="PackageTargetAlias"><I32 field="Alias" /></Case>
+      <Case value="5" type="PackageTargetInterruptData"><U32 field="Data" /></Case>
+      <Case value="6" type="PackageTargetSelf"><I32 field="Data" /></Case>
+      <Case value="7" type="PackageTargetKeyword"><FormID field="Keyword" /></Case>
+      <Default type="PackageTargetUnknown"><Const field="Type" value="$targetType" /><I32 field="Data" /></Default>
+    </Switch>
+    <I32 field="CountOrDistance" />
+  </Define>
 
   <!-- WTHR clouds: 32 layers spread over RNAM (Y speeds), QNAM (X speeds), PNAM (colors), JNAM (alphas) and NAM1
        (disabled-layer bits); DALC holds the ambient colors, eight times (sunrise .. late sunset) -->
@@ -478,5 +632,280 @@
         </Case>
       </TypeSwitch>
     </Sub>
+  </AnyRecord>
+
+  <!-- QUST (QuestBinaryCreateTranslation, Records/Major Records/Quest.cs):
+       - FillBinaryUnusedConditionsLogicCustom: an empty NEXT, then the conditions (ConditionBinaryCreateTranslation
+         .FillConditionsList: each a CTDA and the CIS1, CIS2 after it).
+       - FillBinaryAliasParseCustom: ANAM (NextAliasID) when it comes first; then while the next subrecord is ALST, ALLS,
+         ALCS, ALMI or ALED: ALST starts a QuestReferenceAlias, ALLS a QuestLocationAlias, ALCS or ALMI a
+         QuestCollectionAlias (its Collection: CollectionAlias items, each ALCS, ALMI, ALAM and a reference alias), each
+         read by its generated reader; ALED, written after every alias, is passed over. Any other subrecord ends the list. -->
+  <Record sig="QUST" object="Quest">
+    <Sub sig="NEXT" optional="true" />
+    <Segments start="CTDA" field="UnusedConditions" reader="generated" at="cursor"><Generated sigs="CIS1,CIS2" /></Segments>
+    <Sub sig="ANAM" optional="true" field="NextAliasID"><U32 field="." /></Sub>
+    <Segments start="ALST,ALLS,ALCS,ALMI" end="ALED" field="Aliases" reader="generated" startName="aliasStart">
+      <Switch on="aliasStart">
+        <Case value="ALST" type="QuestReferenceAlias" />
+        <Case value="ALLS" type="QuestLocationAlias" />
+        <Case value="ALCS,ALMI" type="QuestCollectionAlias" />
+      </Switch>
+    </Segments>
+  </Record>
+
+  <!-- INNR rule sets. InstanceNamingRulesBinaryCreateTranslation.FillBinaryRuleSetParserCustom
+       (Records/Major Records/InstanceNamingRules.cs): UNAM's int32 picks the class (0 none, 0x22 armor, 0x24 container,
+       0x2E flora, 0x2F furniture, 0x30 weapon, 0x32 actor), whose generated reader reads every subrecord after UNAM: its
+       Rules, each rule set VNAM (the count of its names), then each name WNAM, KSIZ, KWDA, XNAM, YNAM. -->
+  <Record sig="INNR" object="InstanceNamingRules">
+    <Sub sig="UNAM"><I32 name="target" /></Sub>
+    <Object field="Rules" reader="generated">
+      <Switch on="target">
+        <Case value="0" type="NoInstanceNamingRules" />
+        <Case value="34" type="ArmorInstanceNamingRules" />
+        <Case value="36" type="ContainerInstanceNamingRules" />
+        <Case value="46" type="FloraInstanceNamingRules" />
+        <Case value="47" type="FurnitureInstanceNamingRules" />
+        <Case value="48" type="WeaponInstanceNamingRules" />
+        <Case value="50" type="ActorInstanceNamingRules" />
+      </Switch>
+      <Generated sigs="VNAM,WNAM,KSIZ,KWDA,XNAM,YNAM" />
+    </Object>
+  </Record>
+
+  <!-- LGDI LNAM entries. LegendaryItemBinaryCreateTranslation.FillBinaryLnamEntriesCustom
+       (Records/Major Records/LegendaryItem.cs): one LNAM holds every entry, 8 bytes each (Slot, ReferenceMod; their count
+       is LNAM's length / 8); right after it one block per entry: CITC (the count of its conditions), then that many
+       conditions (each CTDA, and CIS1, CIS2 when there) by Mutagen's condition reader. -->
+  <Record sig="LGDI" object="LegendaryItem">
+    <Sub sig="LNAM" optional="true">
+      <Repeat count="end" field="LnamEntries">
+        <U32 field="Slot" />
+        <U32 field="ReferenceMod" />
+      </Repeat>
+    </Sub>
+    <Segments start="CITC" field="LnamEntries" reader="generated" at="cursor">
+      <Sub sig="CITC">
+        <I32 name="conditionCount" />
+        <Const field="Conditions.Count" value="$conditionCount" />
+      </Sub>
+      <Generated sigs="CTDA,CIS1,CIS2" />
+    </Segments>
+  </Record>
+
+  <!-- SCEN actions. SceneBinaryCreateTranslation.ReadSceneActions and ReadSceneAction (Records/Major Records/Scene.cs):
+       while the next subrecord is ANAM: its int16 picks the class (0 dialogue, 1 package, 2 timer, 3 player dialogue,
+       4 start scene, 5 radio, 6 move, 7 camera, 8 FX, 9 animation, 10 timeline), whose generated reader reads what
+       follows; then an empty ANAM ends the action. -->
+  <Record sig="SCEN" object="Scene">
+    <Segments start="ANAM" end="ANAM" field="Actions" reader="generated">
+      <Sub sig="ANAM">
+        <I16 name="actionType" />
+        <Switch on="actionType">
+          <Case value="0" type="DialogueSceneAction" />
+          <Case value="1" type="PackageSceneAction" />
+          <Case value="2" type="TimerSceneAction" />
+          <Case value="3" type="PlayerDialogueSceneAction" />
+          <Case value="4" type="StartSceneAction" />
+          <Case value="5" type="RadioSceneAction" />
+          <Case value="6" type="MoveSceneAction" />
+          <Case value="7" type="CameraSceneAction" />
+          <Case value="8" type="FxSceneAction" />
+          <Case value="9" type="AnimationSceneAction" />
+          <Case value="10" type="TimelineSceneAction" />
+        </Switch>
+      </Sub>
+    </Segments>
+  </Record>
+
+  <!-- GPOG options. GameplayOptionsGroupBinaryCreateTranslation.FillBinaryGroupsCustom
+       (Records/Major Records/GameplayOptionsGroup.cs): BNAM's int8 picks the class, a GameplayOptionsGroupRoot when it
+       is over 0, else a GameplayOptionsGroupLeaf (the mask 0x80 catches the negative ones), whose generated reader reads
+       every subrecord after BNAM: its GOGL list. -->
+  <Record sig="GPOG" object="GameplayOptionsGroup">
+    <Sub sig="BNAM"><I8 name="root" /></Sub>
+    <Object field="Options" reader="generated">
+      <Switch on="root" mask="0x80">
+        <Case value="128" type="GameplayOptionsGroupLeaf" />
+        <Default>
+          <Switch on="root">
+            <Case value="0" type="GameplayOptionsGroupLeaf" />
+            <Default type="GameplayOptionsGroupRoot" />
+          </Switch>
+        </Default>
+      </Switch>
+      <Generated sigs="GOGL" />
+    </Object>
+  </Record>
+
+  <!-- Traversals of a cell and of a placed object (XTV2). CellBinaryCreateTranslation and
+       PlacedObjectBinaryCreateTranslation.FillBinaryTraversalsCustom, TraversalReferenceBinaryCreateTranslation.Parse
+       and FillBinaryTraversalCustom (Records/Common Subrecords/TraversalReference.cs): entries while what is left holds a
+       whole one (HoldsEntry) that doesn't start with 16 zero bytes (Unknown1 and From zero: Zeroed); the rest is fluff,
+       its length kept as NumTraversalFluffBytes. An entry: Unknown1, From, To and UnknownVector by the generated
+       reader; then the flags (bit 2 set: no traversal FormID follows; Mutagen keeps the flags without it), the FormID
+       when bit 2 is clear, and four halves. -->
+  <Define name="Traversals">
+    <Sub sig="XTV2" optional="true">
+      <Repeat count="fit" endsAtZeros="16" field="Traversals">
+        <I32 field="Unknown1" />
+        <P3F32 field="From" />
+        <P3F32 field="To" />
+        <P3F32 field="UnknownVector" />
+        <U32 name="traversalFlags" field="Flags" encoding="drop:2" />
+        <Switch on="traversalFlags" mask="0x4">
+          <Case value="0"><FormID field="Traversal" /></Case>
+          <Default><Null field="Traversal" /></Default>
+        </Switch>
+        <F16 field="Unknown2" />
+        <F16 field="Unknown3" />
+        <F16 field="Unknown4" />
+        <F16 field="Unknown5" />
+      </Repeat>
+      <Bytes field="NumTraversalFluffBytes" encoding="length" />
+    </Sub>
+  </Define>
+  <Record sig="CELL" object="Cell"><Use name="Traversals" /></Record>
+  <!-- A placed object's patrol (Records/Common Subrecords/Patrol.cs, PatrolBinaryCreateTranslation): XPRD, then XPPA (an
+       empty marker, FillBinaryPatrolScriptMarkerCustom), INAM, then its topics (FillBinaryTopicsCustom) as a package
+       event's. -->
+  <Record sig="REFR" object="PlacedObject">
+    <Use name="Traversals" />
+    <Object field="Patrol" optional="true">
+      <Sub sig="XPRD"><F32 field="IdleTime" /></Sub>
+      <Sub sig="XPPA" optional="true" />
+      <Generated sigs="INAM" />
+      <Use name="Topics" />
+    </Object>
+  </Record>
+
+  <!-- NAVI: each NVMI is one MapInfos item. Its first fields are read by the generated reader (the navigation mesh,
+       flags, approximate location, preferred percent, then four lists each with a uint32 count before it: merged to,
+       preferred merges, linked doors, traversals); the rest by NavigationMapInfoBinaryCreateTranslation
+       .FillBinaryIslandAndPathingLogicCustom and ReadTail (Records/Major Records/NavigationMapInfo.cs): a has-island byte,
+       the island data when it isn't 0 (min, max, then a uint32-counted list of triangles of three int16 and one of
+       vertices of three floats), the pathing cell (CRC, parent world, then the parent cell when the world is null, else
+       the grid, Y then X), one unknown byte and a uint32-counted list of CRCs; what is left is Unknown. -->
+  <Record sig="NAVI" object="NavigationMeshInfoMap">
+    <SubRepeat sig="NVMI" field="MapInfos">
+      <FormID field="NavigationMesh" />
+      <U32 field="Flags" />
+      <P3F32 field="ApproxLocation" />
+      <F32 field="PreferredPercent" />
+      <U32 name="mergedTo" />
+      <Repeat count="$mergedTo" field="MergedTo"><FormID field="." /></Repeat>
+      <U32 name="preferredMerges" />
+      <Repeat count="$preferredMerges" field="PreferredMerges"><FormID field="." /></Repeat>
+      <U32 name="linkedDoors" />
+      <Repeat count="$linkedDoors" field="LinkedDoors"><U32 field="Type" /><FormID field="Door" /></Repeat>
+      <U32 name="traversals" />
+      <Repeat count="$traversals" field="Traversals">
+        <U32 field="Type" />
+        <FormID field="CellOrObject" />
+        <FormID field="Traversal" />
+        <P3F32 field="FromPosition" />
+        <P3F32 field="ToPosition" />
+        <P3F32 field="UnknownVector" />
+        <U32 field="Flags" />
+        <FormID field="FromNavmesh" />
+        <FormID field="ToNavmesh" />
+      </Repeat>
+      <U8 name="hasIsland" />
+      <Switch on="hasIsland">
+        <Case value="0"><Null field="IslandData" /></Case>
+        <Default>
+          <Object field="IslandData">
+            <P3F32 field="Min" />
+            <P3F32 field="Max" />
+            <U32 name="triangles" />
+            <Repeat count="$triangles" field="Triangles"><P3I16 field="." /></Repeat>
+            <U32 name="vertices" />
+            <Repeat count="$vertices" field="Vertices"><P3F32 field="." /></Repeat>
+          </Object>
+        </Default>
+      </Switch>
+      <Object field="PathingCell">
+        <U32 field="Crc" />
+        <FormID name="parentWorld" field="ParentWorld" />
+        <Switch on="parentWorld">
+          <Case value="0"><FormID field="ParentCell" /></Case>
+          <Default><Null field="ParentCell" /><Object field="Grid"><I16 field="Y" /><I16 field="X" /></Object></Default>
+        </Switch>
+      </Object>
+      <U8 field="UnknownByte" />
+      <U32 name="crcs" />
+      <Repeat count="$crcs" field="UnknownCrcs"><U32 field="." /></Repeat>
+      <Bytes field="Unknown" />
+    </SubRepeat>
+  </Record>
+
+  <!-- PERS: PERSBinaryCreateTranslation.FillBinaryItemsParseCustom (Records/Major Records/PERS.cs): each DAT2 (its length
+       from the XXXX before it when there is one) is one Items item, whose Items are PERSItem entries of 12 bytes (the
+       record's FormID, two uint32) to the end of the DAT2. -->
+  <Record sig="PERS" object="PERS">
+    <SubRepeat sig="DAT2" field="Items">
+      <Repeat count="end" field="Items">
+        <FormID field="Record" />
+        <U32 field="Unknown1" />
+        <U32 field="Unknown2" />
+      </Repeat>
+    </SubRepeat>
+  </Record>
+
+  <!-- Components (BFCB ... BFCE) whose lists Mutagen reads with hand-written code, on any record that has components;
+       the class of each component is the one Mutagen made (its BFCB text). Records/Common Subrecords:
+       - a surface tree's pattern swap info: SurfaceTreePatternSwapInfoComponentDataBinaryCreateTranslation
+         .FillBinaryDataLogicCustom: DAT2 holds a uint32 count, then each item: the surface pattern's FormID, one byte, and
+         on every item but the last 4 more bytes (Unknown2); what is left is Unknown, read by the generated reader.
+       - volumes: VolumesComponentBinaryCreateTranslation.FillBinaryItemsCustom and VolumesComponentItemBinaryCreateTranslation:
+         VLMS holds a uint32 count, then each item: its type (int32), which picks the ender, four rows of four floats and
+         three floats (the generated reader), then the ender (type 1 one float, 3 two, 5 three, 11 nothing or a uint32,
+         decided by what still fits in VLMS: VolumesComponentItemLayout.Type11HasValue). -->
+  <AnyRecord sig="BFCB">
+    <Segments start="BFCB" end="BFCE" field="Components" others="generated">
+      <TypeSwitch>
+        <Case type="SurfaceTreePatternSwapInfoComponent">
+          <Sub sig="DAT2" field="Data">
+            <U32 name="patterns" />
+            <Repeat count="$patterns" field="Data">
+              <FormID field="SurfacePattern" />
+              <I8 field="Unknown" />
+              <NotLast><U32 field="Unknown2" /></NotLast>
+            </Repeat>
+            <Bytes field="Unknown" />
+          </Sub>
+        </Case>
+        <Case type="VolumesComponent">
+          <Sub sig="VLMS">
+            <U32 name="volumes" />
+            <Repeat count="$volumes" field="Items">
+              <I32 name="volumeType" />
+              <Object field="Row0"><F32 field="X" /><F32 field="Y" /><F32 field="Z" /><F32 field="W" /></Object>
+              <Object field="Row1"><F32 field="X" /><F32 field="Y" /><F32 field="Z" /><F32 field="W" /></Object>
+              <Object field="Row2"><F32 field="X" /><F32 field="Y" /><F32 field="Z" /><F32 field="W" /></Object>
+              <Object field="Translation"><F32 field="X" /><F32 field="Y" /><F32 field="Z" /><F32 field="W" /></Object>
+              <F32 field="Unknown1" />
+              <F32 field="Unknown2" />
+              <F32 field="Unknown3" />
+              <Object field="Ender">
+                <Switch on="volumeType">
+                  <Case value="1" type="VolumesUnknownEnderSingle"><F32 field="Unknown1" /></Case>
+                  <Case value="3" type="VolumesUnknownEnderDouble"><F32 field="Unknown1" /><F32 field="Unknown2" /></Case>
+                  <Case value="5" type="VolumesUnknownEnderTrio"><F32 field="Unknown1" /><F32 field="Unknown2" /><F32 field="Unknown3" /></Case>
+                  <Case value="11">
+                    <TypeSwitch>
+                      <Case type="VolumesUnknownEnderEmptyPadded"><U32 field="Unknown1" /></Case>
+                      <Case type="VolumesUnknownEnderEmpty" />
+                    </TypeSwitch>
+                  </Case>
+                </Switch>
+              </Object>
+            </Repeat>
+          </Sub>
+        </Case>
+        <Default />
+      </TypeSwitch>
+    </Segments>
   </AnyRecord>
 </HandReadLayouts>
