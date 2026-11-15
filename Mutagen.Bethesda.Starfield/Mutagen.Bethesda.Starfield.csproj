@@ -4580,6 +4580,7 @@
       <DependentUpon>StarfieldModHeader.xml</DependentUpon>
     </Compile>
     <Compile Include="Records\RecordTypes_Generated.cs" />
+    <Compile Include="Records\StarfieldMajorFlagRegistry.cs" />
     <Compile Include="Records\RecordTypeInts_Generated.cs" />
     <Compile Include="Interfaces\IsolatedAbstractInterfaceMapping_Generated.cs" />
     <Compile Include="Interfaces\InheritingInterfaceMapping_Generated.cs" />
