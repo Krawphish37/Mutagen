@@ -1,3 +1,4 @@
+using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using System.Text;
 using Mutagen.Bethesda.Plugins;
@@ -5,6 +6,8 @@ using Mutagen.Bethesda.Plugins.Binary.Parameters;
 using Mutagen.Bethesda.Plugins.Order;
 using Mutagen.Bethesda.Plugins.Records;
 using Mutagen.Bethesda.Starfield;
+using Mutagen.Bethesda.Testing.AutoData;
+using Noggog;
 using Shouldly;
 using Xunit;
 
@@ -107,5 +110,117 @@ public class StoredFormIdTests
     {
         // A Small plugin has no FD form of its own: FD + its medium index (0) reads as itself, past the list
         Check(MasterStyle.Small, 0x101, 0xFE000803, StoredFormIdForm.Small, 0xFD000801, StoredFormIdForm.PastTheList);
+    }
+
+    // Each subrecord's content in a record's bytes (header included), by type and turn
+    private static Dictionary<(string Type, int Turn), (int Start, int Length)> Subrecords(byte[] record)
+    {
+        var ret = new Dictionary<(string, int), (int, int)>();
+        var turns = new Dictionary<string, int>();
+        int p = 24;
+        while (p + 6 <= record.Length)
+        {
+            var type = Encoding.ASCII.GetString(record, p, 4);
+            int length = BitConverter.ToUInt16(record, p + 4);
+            var turn = turns.GetValueOrDefault(type);
+            turns[type] = turn + 1;
+            ret[(type, turn)] = (p + 6, length);
+            p += 6 + length;
+        }
+        return ret;
+    }
+
+    private static byte[] RecordBytes(byte[] file, string type)
+    {
+        int p = 24 + BitConverter.ToInt32(file, 4);
+        while (p + 24 <= file.Length)
+        {
+            var sig = Encoding.ASCII.GetString(file, p, 4);
+            int size = BitConverter.ToInt32(file, p + 4);
+            if (sig == "GRUP") { p += 24; continue; }
+            if (sig == type) return file.AsSpan(p, 24 + size).ToArray();
+            p += 24 + size;
+        }
+        throw new InvalidOperationException(type + " not written");
+    }
+
+    // perf-world: a record with many overflow-capable subrecords (a navmesh info map's NVMI, each written through its
+    // own buffer and moved into the record) has every link placed in its own subrecord, at the bytes it was stored in,
+    // for both readers; and none is stored in another form (GetOwnLinkFormsAsStored)
+    [Theory, MutagenAutoData]
+    public async Task ManyOverflowCapableSubrecords_EachLinkPlaced(IFileSystem fileSystem, DirectoryPath existingTempDir)
+    {
+        const int count = 300;
+        var mod = new StarfieldMod(new ModKey("NaviPlaces", ModType.Master), StarfieldRelease.Starfield);
+        var navi = new NavigationMeshInfoMap(mod) { NavMeshVersion = 15 };
+        for (int i = 0; i < count; i++)
+        {
+            var info = new NavigationMapInfo();
+            info.NavigationMesh.SetTo(new FormKey(mod.ModKey, 0x900 + (uint)i));
+            info.MergedTo.Add(new FormLink<INavigationMeshGetter>(new FormKey(mod.ModKey, 0x2000 + (uint)i)));
+            navi.MapInfos.Add(info);
+        }
+        mod.NavigationMeshInfoMaps.Add(navi);
+        var path = new ModPath(mod.ModKey, System.IO.Path.Combine(existingTempDir, mod.ModKey.FileName));
+        await mod.BeginWrite.ToPath(path).WithNoLoadOrder().NoModKeySync().WithFileSystem(fileSystem).WriteAsync();
+        var stored = RecordBytes(fileSystem.File.ReadAllBytes(path), "NAVI");
+        var subrecords = Subrecords(stored);
+
+        var full = StarfieldMod.Create(StarfieldRelease.Starfield).FromPath(path).WithNoLoadOrder().WithFileSystem(fileSystem).Mutable().Construct();
+        using var overlay = StarfieldMod.Create(StarfieldRelease.Starfield).FromPath(path).WithNoLoadOrder().WithFileSystem(fileSystem).Construct();
+        foreach (var read in new IStarfieldModGetter[] { full, overlay })
+        {
+            var record = read.NavigationMeshInfoMaps.Single();
+            var ids = record.GetStoredFormIds(read);
+            ids[0].Location.ShouldBe(StoredFormIdLocation.Header);
+            var links = ids.Skip(1).ToList();
+            links.Count.ShouldBe(record.EnumerateFormLinks().Count());
+            links.ShouldAllBe(x => x.Location == StoredFormIdLocation.Written && x.Subrecord == new RecordType("NVMI"));
+            for (int i = 0; i < count; i++)
+            {
+                var inTurn = links.Where(x => x.SubrecordIndex == i).ToList();
+                inTurn.Where(x => !x.FormKey.IsNull).Select(x => x.FormKey).ShouldBe(new[] { new FormKey(mod.ModKey, 0x900 + (uint)i), new FormKey(mod.ModKey, 0x2000 + (uint)i) }, ignoreOrder: true);
+                var (start, length) = subrecords[("NVMI", i)];
+                foreach (var x in inTurn)
+                {
+                    (x.Offset + 4).ShouldBeLessThanOrEqualTo(length);
+                    BitConverter.ToUInt32(stored, start + x.Offset).ShouldBe(x.Raw);
+                }
+            }
+            record.GetOwnLinkFormsAsStored().ShouldBeNull();
+        }
+    }
+
+    // A record that holds others (a cell) lists only its own FormIDs, not its children's; a record that holds none (a
+    // placed object) still lists its own, now that its write runs to the end (perf-world)
+    [Theory, MutagenAutoData]
+    public async Task Cell_ChildrenNotListed(IFileSystem fileSystem, DirectoryPath existingTempDir)
+    {
+        var mod = new StarfieldMod(new ModKey("CellPlaces", ModType.Master), StarfieldRelease.Starfield);
+        var keyword = mod.Keywords.AddNew("Base");
+        var cell = new Cell(mod) { EditorID = "TestCell" };
+        cell.Location.SetTo(new FormKey(mod.ModKey, 0xA00));
+        var placed = new PlacedObject(mod) { EditorID = "TestPlaced" };
+        placed.Base.SetTo(keyword.FormKey);
+        cell.Temporary.Add(placed);
+        mod.Cells.Add(new CellBlock { BlockNumber = 0, GroupType = GroupTypeEnum.InteriorCellBlock, SubBlocks = { new CellSubBlock { BlockNumber = 0, GroupType = GroupTypeEnum.InteriorCellSubBlock, Cells = { cell } } } });
+        var path = new ModPath(mod.ModKey, System.IO.Path.Combine(existingTempDir, mod.ModKey.FileName));
+        await mod.BeginWrite.ToPath(path).WithNoLoadOrder().NoModKeySync().WithFileSystem(fileSystem).WriteAsync();
+
+        var full = StarfieldMod.Create(StarfieldRelease.Starfield).FromPath(path).WithNoLoadOrder().WithFileSystem(fileSystem).Mutable().Construct();
+        using var overlay = StarfieldMod.Create(StarfieldRelease.Starfield).FromPath(path).WithNoLoadOrder().WithFileSystem(fileSystem).Construct();
+        foreach (var read in new IStarfieldModGetter[] { full, overlay })
+        {
+            var readCell = read.Cells.Records.Single().SubBlocks.Single().Cells.Single();
+            var cellIds = readCell.GetStoredFormIds(read);
+            cellIds.Select(x => x.FormKey).ShouldContain(new FormKey(mod.ModKey, 0xA00));
+            cellIds.Select(x => x.FormKey).ShouldNotContain(keyword.FormKey);
+            cellIds.ShouldAllBe(x => x.Location != StoredFormIdLocation.NotFound);
+            var placedIds = readCell.Temporary.Single().GetStoredFormIds(read);
+            placedIds[0].FormKey.ShouldBe(placed.FormKey);
+            placedIds.Single(x => x.FormKey == keyword.FormKey).Location.ShouldBe(StoredFormIdLocation.Written);
+            readCell.GetOwnLinkFormsAsStored().ShouldBeNull();
+            readCell.Temporary.Single().GetOwnLinkFormsAsStored().ShouldBeNull();
+        }
     }
 }

@@ -117,18 +117,116 @@ public static class StoredFormIdMixIn
     }
 
     /// <summary>
-    /// The positions with a known package (an overlay record's own, for RoundTripMixIn.GetOwnLinkFormsAsStored, C210)
+    /// The positions with a known package
     /// </summary>
     internal static List<StoredFormIdPosition> Collect(
         IMajorRecordGetter record,
         GameConstants constants,
         IReadOnlySeparatedMasterPackage package)
     {
-        var ret = new List<StoredFormIdPosition>();
+        var sink = new ListSink(package);
+        Collect(record, constants, package, sink);
+        return sink.Positions;
+    }
+
+    /// <summary>
+    /// The FormIDs of an overlay record's subrecords that are stored in another form than Mutagen writes for the FormKey
+    /// they read as (RoundTripMixIn.GetOwnLinkFormsAsStored, C210): the positions <see cref="Collect(IMajorRecordGetter, GameConstants, IReadOnlySeparatedMasterPackage)"/>
+    /// lists as written or searched whose value isn't Mutagen's form of its own FormKey. The same answer as filtering
+    /// that list, without making a position object for every FormID, and each value's answer is worked out once (a
+    /// navmesh info map has 2.5 million FormIDs; perf-world).
+    /// </summary>
+    internal static List<OwnFormIdForms.Entry>? CollectNotAsWritten(
+        IMajorRecordGetter record,
+        GameConstants constants,
+        IReadOnlySeparatedMasterPackage package)
+    {
+        var sink = new NotAsWrittenSink(package);
+        Collect(record, constants, package, sink);
+        return sink.Entries;
+    }
+
+    /// <summary>What the record's write shows, in order: the header's FormID, then each FormID found or not</summary>
+    private abstract class Sink
+    {
+        public abstract void Header(uint raw);
+        public abstract void Found(RecordType type, int turn, int offset, uint raw, StoredFormIdLocation location);
+        public abstract void NotFound(FormKey formKey);
+    }
+
+    /// <summary>Every position, for GetStoredFormIds</summary>
+    private sealed class ListSink : Sink
+    {
+        private readonly IReadOnlySeparatedMasterPackage _package;
+        public readonly List<StoredFormIdPosition> Positions = new();
+        public ListSink(IReadOnlySeparatedMasterPackage package) => _package = package;
+
+        public override void Header(uint raw) =>
+            Positions.Add(Make(_package, null, 0, 0, raw, StoredFormIdLocation.Header));
+
+        public override void Found(RecordType type, int turn, int offset, uint raw, StoredFormIdLocation location) =>
+            Positions.Add(Make(_package, type, turn, offset, raw, location));
+
+        public override void NotFound(FormKey formKey)
+        {
+            var raw = _package.GetFormID(formKey).Raw;
+            var form = Classify(_package, raw, out var own);
+            Positions.Add(new StoredFormIdPosition(null, 0, -1, raw, form, own, formKey, StoredFormIdLocation.NotFound));
+        }
+    }
+
+    /// <summary>
+    /// The written or searched positions whose value isn't Mutagen's form of the FormKey it reads as: what
+    /// OwnFormIdForms.GetForRoundTrip kept of the list (a value that isn't 0, a FormKey that isn't null, and GetFormID
+    /// of it giving another value without throwing). The calls that could throw while making the list are still made.
+    /// </summary>
+    private sealed class NotAsWrittenSink : Sink
+    {
+        private readonly IReadOnlySeparatedMasterPackage _package;
+        private Dictionary<uint, bool>? _differs;
+        public List<OwnFormIdForms.Entry>? Entries;
+        public NotAsWrittenSink(IReadOnlySeparatedMasterPackage package) => _package = package;
+
+        public override void Header(uint raw) => Make(_package, null, 0, 0, raw, StoredFormIdLocation.Header);
+
+        public override void Found(RecordType type, int turn, int offset, uint raw, StoredFormIdLocation location)
+        {
+            if (raw == 0) return;
+            _differs ??= new Dictionary<uint, bool>();
+            if (!_differs.TryGetValue(raw, out var differs))
+            {
+                // Read as Make reads it: a subrecord's FormID is a reference
+                var formKey = _package.GetFormKey(new FormID(raw), reference: true);
+                differs = false;
+                if (!formKey.IsNull)
+                {
+                    try
+                    {
+                        differs = _package.GetFormID(formKey).Raw != raw;
+                    }
+                    catch (Exception)
+                    {
+                        differs = false;
+                    }
+                }
+                _differs[raw] = differs;
+            }
+            if (differs) (Entries ??= new()).Add(new OwnFormIdForms.Entry((uint)type.TypeInt, turn, offset, raw));
+        }
+
+        public override void NotFound(FormKey formKey) => _ = _package.GetFormID(formKey);
+    }
+
+    private static void Collect(
+        IMajorRecordGetter record,
+        GameConstants constants,
+        IReadOnlySeparatedMasterPackage package,
+        Sink sink)
+    {
         var header = RawHeaderFormIds.Get(record) is { } kept && package.GetFormKey(new FormID(kept), reference: false) == record.FormKey
             ? kept
             : package.GetFormID(record.FormKey).Raw;
-        ret.Add(Make(package, null, 0, 0, header, StoredFormIdLocation.Header));
+        sink.Header(header);
 
         var recorder = FormIdPositionRecorder.Begin(record);
         try
@@ -153,42 +251,41 @@ public static class StoredFormIdMixIn
         {
             FormIdPositionRecorder.End();
         }
-        if (recorder.Content is not { } content) return ret;
+        if (recorder.Content is not { } content) return;
 
         // Each subrecord's type, turn among its type and content span
         var subrecords = Subrecords(content, constants);
-        var claimed = new HashSet<int>();
+        // The positions taken, which a search for an unplaced FormID skips; made into a set only when one must be searched
+        var placed = new List<int>(recorder.FormIds.Count);
         var unplaced = new List<FormKey>();
         foreach (var (position, formKey) in recorder.FormIds)
         {
             if (position is { } pos && Place(subrecords, pos) is { } place)
             {
-                claimed.Add(pos);
+                placed.Add(pos);
                 var raw = BinaryPrimitives.ReadUInt32LittleEndian(content.AsSpan(pos));
-                ret.Add(Make(package, place.Type, place.Turn, pos - place.ContentStart, raw, StoredFormIdLocation.Written));
+                sink.Found(place.Type, place.Turn, pos - place.ContentStart, raw, StoredFormIdLocation.Written);
             }
             else
             {
                 unplaced.Add(formKey);
             }
         }
+        var claimed = unplaced.Count > 0 ? new HashSet<int>(placed) : null;
         foreach (var formKey in unplaced)
         {
-            if (Search(content, subrecords, claimed, package, formKey) is { } found)
+            if (Search(content, subrecords, claimed!, package, formKey) is { } found)
             {
-                claimed.Add(found.Position);
+                claimed!.Add(found.Position);
                 var raw = BinaryPrimitives.ReadUInt32LittleEndian(content.AsSpan(found.Position));
-                ret.Add(Make(package, found.Sub.Type, found.Sub.Turn, found.Position - found.Sub.ContentStart, raw,
-                    StoredFormIdLocation.Searched));
+                sink.Found(found.Sub.Type, found.Sub.Turn, found.Position - found.Sub.ContentStart, raw,
+                    StoredFormIdLocation.Searched);
             }
             else
             {
-                var raw = package.GetFormID(formKey).Raw;
-                var form = Classify(package, raw, out var own);
-                ret.Add(new StoredFormIdPosition(null, 0, -1, raw, form, own, formKey, StoredFormIdLocation.NotFound));
+                sink.NotFound(formKey);
             }
         }
-        return ret;
     }
 
     private static bool Caught(Exception ex)
@@ -247,13 +344,31 @@ public static class StoredFormIdMixIn
         return ret;
     }
 
+    /// <summary>
+    /// The subrecord whose content holds the 4 bytes at <paramref name="position"/>. The subrecords are in the order of
+    /// the content and don't overlap (each content start is past the one before), so the one to look at is the last that
+    /// starts at or before the position: a binary search, where a walk from the first made a record with many subrecords
+    /// quadratic (a navmesh info map: 56,633 subrecords and 2.5 million FormIDs; perf-world).
+    /// </summary>
     private static Sub? Place(List<Sub> subrecords, int position)
     {
-        foreach (var s in subrecords)
+        int lo = 0, hi = subrecords.Count - 1, found = -1;
+        while (lo <= hi)
         {
-            if (position >= s.ContentStart && position + 4 <= s.End) return s;
+            int mid = lo + ((hi - lo) >> 1);
+            if (subrecords[mid].ContentStart <= position)
+            {
+                found = mid;
+                lo = mid + 1;
+            }
+            else
+            {
+                hi = mid - 1;
+            }
         }
-        return null;
+        if (found < 0) return null;
+        var s = subrecords[found];
+        return position + 4 <= s.End ? s : null;
     }
 
     private static (int Position, Sub Sub)? Search(byte[] content, List<Sub> subrecords, HashSet<int> claimed,
