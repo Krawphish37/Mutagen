@@ -32,6 +32,14 @@
         <PackageReference Include="GameFinder.StoreHandlers.Steam" />
         <PackageReference Include="GameFinder.StoreHandlers.Xbox" />
     </ItemGroup>
+    <!-- The record definitions (Loqui XML: MajorRecord and MasterReference, the "Bethesda" protocol that the game record
+         xml refers to as Bethesda.*) ship in the package under loqui\Mutagen.Bethesda.Core\Plugins\Records, the same
+         layout as the source, as Mutagen.Bethesda.Starfield ships its record xml, so a tool can describe the exact build
+         it runs on. Not copied into consuming projects (not contentFiles). Added in the outer build only, which is the
+         one pack collects files from. -->
+    <ItemGroup Condition="'$(TargetFramework)' == ''">
+        <None Include="Plugins\Records\*.xml" Pack="true" PackagePath="loqui\Mutagen.Bethesda.Core\Plugins\Records\%(Filename)%(Extension)" />
+    </ItemGroup>
     <ItemGroup>
         <Compile Include="Archives\Archive.cs" />
         <Compile Include="Archives\ArchiveFileStorage.cs" />
