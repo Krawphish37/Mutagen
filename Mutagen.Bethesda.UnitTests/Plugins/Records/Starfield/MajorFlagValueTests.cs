@@ -59,6 +59,7 @@ public class MajorFlagValueTests
     // C55: added members
     [InlineData(typeof(Static.MajorFlag), nameof(Static.MajorFlag.NavMeshGenerationIgnoreErosion), 0x2000_0000)]
     [InlineData(typeof(Static.MajorFlag), nameof(Static.MajorFlag.NavMeshGenerationOnlyCut), 0x1000_0000)]
+    [InlineData(typeof(NavigationMesh.MajorFlag), nameof(NavigationMesh.MajorFlag.NavmeshGenCell), int.MinValue)]
     [InlineData(typeof(Transform.MajorFlag), nameof(Transform.MajorFlag.ApplyTranslation), 0x0002_0000)]
     [InlineData(typeof(Terminal.MajorFlag), nameof(Terminal.MajorFlag.NonOccluder), 0x10)]
     [InlineData(typeof(Terminal.MajorFlag), nameof(Terminal.MajorFlag.PackInUseOnly), 0x2000)]
@@ -246,6 +247,15 @@ public class MajorFlagValueTests
         CheckFlags<ILocationGetter, Location.MajorFlag>(Edid("LCTN"), 0x4000,
             f => Location.CreateFromBinary(f), (s, p) => LocationBinaryOverlay.LocationFactory(s, p),
             r => r.MajorFlags, Location.MajorFlag.PartialForm);
+    }
+
+    [Fact]
+    public void NavigationMesh_NavmeshGenCell_Bit31()
+    {
+        // Bit 31 is the int enum's sign bit; it reads and writes back like any other bit
+        CheckFlags<INavigationMeshGetter, NavigationMesh.MajorFlag>(Record("NAVM"), 0x8400_0000,
+            f => NavigationMesh.CreateFromBinary(f), (s, p) => NavigationMeshBinaryOverlay.NavigationMeshFactory(s, p),
+            r => r.MajorFlags, NavigationMesh.MajorFlag.Autogen | NavigationMesh.MajorFlag.NavmeshGenCell);
     }
 
     [Fact]
