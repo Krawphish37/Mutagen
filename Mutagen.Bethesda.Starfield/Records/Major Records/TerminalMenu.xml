@@ -25,7 +25,7 @@
       <String name="ShortText" translated="Normal" recordType="ISTX" />
       <Data recordType="ISET">
         <Fields>
-          <CustomLogic name="TypeParse" byteLength="2" />
+          <CustomLogic name="TypeParse" byteLength="2" fills="Target" />
           <UInt16 name="UnusedISET" />
           <Enum name="Flags" byteLength="1" enumName="TerminalMenuItem.Flag" />
           <ByteArray name="UnusedISET2" byteLength="3" nullable="false" />
@@ -34,7 +34,7 @@
       <UInt16 name="ID" recordType="ITID" nullable="False" />
       <RefDirect name="Lock" refName="LockData" />
       <RefDirect name="Target" refName="ATerminalMenuItemTarget" nullable="False" binary="NoGeneration" selectedBy="field:TypeParse:UInt16" />
-      <CustomLogic name="TargetParse" >
+      <CustomLogic name="TargetParse" fills="Target">
         <RecordType>UNAM</RecordType>
         <RecordType>TNAM</RecordType>
         <RecordType>BNAM</RecordType>

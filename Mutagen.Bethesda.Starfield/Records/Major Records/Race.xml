@@ -76,8 +76,8 @@
           <Float name="ElectromagneticShockImmunityDurationAfterRecovery" />
         </Fields>
       </Data>
-      <CustomLogic name="MNAMLogic" recordType="MNAM" />
-      <CustomLogic name="FNAMLogic" recordType="FNAM" />
+      <CustomLogic name="MNAMLogic" recordType="MNAM" fills="SkeletalModel" />
+      <CustomLogic name="FNAMLogic" recordType="FNAM" fills="SkeletalModel" />
       <Gendered name="SkeletalModel" binary="CustomWrite">
         <Fields>
           <RefDirect refName="SkeletalModel" />
@@ -100,7 +100,7 @@
         </Fields>
       </Gendered>
       <FormLink name="AimAssistPose" recordType="ENAM" refName="AimAssistPose" />
-      <CustomLogic name="NAM3" recordType="NAM3" />
+      <CustomLogic name="NAM3" recordType="NAM3" fills="" writtenFrom="marker" />
       <FormLink name="ImpactMaterialType" recordType="NAM4" refName="MaterialType" />
       <RefDirect name="OpenCorpseSound" recordType="WED0" refName="SoundReference" />
       <RefDirect name="CloseCorpseSound" recordType="WED1" refName="SoundReference" />

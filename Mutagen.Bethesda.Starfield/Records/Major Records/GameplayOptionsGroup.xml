@@ -3,7 +3,7 @@
   <Object name="GameplayOptionsGroup" recordType="GPOG" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
       <String name="Name" recordType="NNAM" translated="Normal" />
-      <CustomLogic name="Groups" recordType="BNAM" />
+      <CustomLogic name="Groups" recordType="BNAM" fills="Options" />
       <RefDirect name="Options" refName="AGameplayOptionsNode" binary="NoGeneration" nullable="False" selectedBy="subrecord:BNAM:Int8" />
     </Fields>
   </Object>

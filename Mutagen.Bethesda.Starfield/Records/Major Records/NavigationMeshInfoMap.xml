@@ -22,7 +22,7 @@
       <RefList name="LinkedDoors" refName="LinkedDoor" counterLength="4" />
       <RefList name="Traversals" refName="NavmeshTraversal" counterLength="4" />
       <!-- Island data (a has-byte, then the data), the pathing cell (world + grid, or a cell) and the 5-byte tail are read by custom logic: the cell part is a union. -->
-      <CustomLogic name="IslandAndPathingLogic" />
+      <CustomLogic name="IslandAndPathingLogic" fills="IslandData,PathingCell,UnknownByte,UnknownCrcs" />
       <RefDirect name="IslandData" refName="NavmeshIslandData" nullable="True" binary="NoGeneration" />
       <RefDirect name="PathingCell" refName="NavmeshPathingCell" binary="NoGeneration" />
       <UInt8 name="UnknownByte" binary="NoGeneration" />

@@ -7,7 +7,7 @@
       <String name="Name" recordType="FULL" translated="Normal" />
       <String name="Description" recordType="DESC" translated="DL" />
       <RefDirect name="Model" refName="Model" />
-      <CustomLogic name="DataParse" recordType="DATA" />
+      <CustomLogic name="DataParse" recordType="DATA" fills="Unknown,MaxRank,LevelTierScaledOffset,AttachPoint,AttachParentSlots,Unknown3,Includes,Properties,ObjectModificationTargetName" />
       <UInt16 name="Unknown" binary="NoGeneration" />
       <UInt8 name="MaxRank" binary="NoGeneration" />
       <UInt8 name="LevelTierScaledOffset" binary="NoGeneration" />

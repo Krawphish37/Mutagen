@@ -102,7 +102,7 @@
       <Bool name="IsActivationPoint" boolAsMarker="XATP" />
       <Float name="Scale" recordType="XSCL" />
       <Bool name="OpenByDefault" boolAsMarker="ONAM" />
-      <CustomLogic name="PlacementParse" recordType="DATA" />
+      <CustomLogic name="PlacementParse" recordType="DATA" fills="Position,Rotation,HasPlacementData" />
       <P3Float name="Position" binary="NoGeneration" layoutSubrecord="DATA" layoutOffset="0" />
       <P3Float name="Rotation" binary="NoGeneration" layoutSubrecord="DATA" layoutOffset="12" />
       <!-- False on a reference read with no DATA. A deleted one then stays without it. -->

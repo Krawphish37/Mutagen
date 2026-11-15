@@ -8,7 +8,7 @@
     <Fields>
       <Bool name="IsEditorOnly" recordType="OBTF" boolAsMarker="True" />
       <String name="Name" recordType="FULL" translated="Normal" />
-      <CustomLogic name="OBTSLogic" recordType="OBTS" />
+      <CustomLogic name="OBTSLogic" recordType="OBTS" fills="LevelMin,LevelMax,AddonIndex,Default,Keywords,MinLevelForRanks,AltLevelsPerTier,Includes,Properties" />
       <Int16 name="AddonIndex" binary="NoGeneration" default="-1" />
       <UInt16 name="LevelMin" binary="NoGeneration" />
       <UInt16 name="LevelMax" binary="NoGeneration" />

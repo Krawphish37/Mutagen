@@ -12,7 +12,7 @@
       <Enum name="CompareOperator" enumName="CompareOperator" binary="NoGeneration" layoutOffset="0" layoutBits="5-7" />
       <Enum name="Flags" enumName="Condition.Flag" binary="Custom" byteLength="1" layoutOffset="0" layoutBits="0-4" />
       <ByteArray name="Unknown1" byteLength="3" nullable="False" />
-      <CustomLogic name="FunctionParse" layoutOffset="8" layoutEncoding="uint16" />
+      <CustomLogic name="FunctionParse" layoutOffset="8" layoutEncoding="uint16" fills="ComparisonValue,Unknown2,Data" />
       <UInt16 name="Unknown2" binary="NoGeneration" layoutOffset="10" />
       <RefDirect name="Data" binary="NoGeneration" refName="ConditionData" generateClassMembers="false" layoutOffset="12" />
     </Fields>

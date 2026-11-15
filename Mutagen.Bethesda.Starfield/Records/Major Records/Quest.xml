@@ -21,11 +21,11 @@
       <String name="Filter" recordType="FLTR" />
       <String name="Summary" recordType="NAM3" />
       <RefList name="DialogConditions" refName="Condition" binary="Custom" />
-      <CustomLogic name="UnusedConditionsLogic" recordType="NEXT" />
+      <CustomLogic name="UnusedConditionsLogic" recordType="NEXT" fills="UnusedConditions" />
       <RefList name="UnusedConditions" refName="Condition" binary="NoGeneration" nullable="True" />
       <RefList name="Stages" refName="QuestStage" />
       <RefList name="Objectives" refName="QuestObjective" />
-      <CustomLogic name="AliasParse">
+      <CustomLogic name="AliasParse" fills="NextAliasID,Aliases">
         <RecordType>ANAM</RecordType>
         <RecordType>ALST</RecordType>
         <RecordType>ALLS</RecordType>
@@ -56,7 +56,7 @@
     <Fields>
       <Break />
       <UInt8 name="ExtraBindDataVersion" default="3" />
-      <CustomLogic name="FragmentCount" byteLength="2" />
+      <CustomLogic name="FragmentCount" byteLength="2" fills="Script,Fragments,Aliases" />
       <RefDirect name="Script" refName="ScriptEntry" binary="Custom" />
       <RefList name="Fragments" refName="QuestScriptFragment" binary="Custom" />
       <RefList name="Aliases" refName="QuestFragmentAlias" binary="Custom" />

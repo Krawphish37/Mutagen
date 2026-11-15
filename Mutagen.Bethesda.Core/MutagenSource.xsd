@@ -726,6 +726,26 @@
         </xs:documentation>
       </xs:annotation>
     </xs:attribute>
+    <xs:attribute name="fills" type="xs:string" >
+      <xs:annotation>
+        <xs:documentation>
+          Description only, ignored by the generator. The fields the hand-written read step assigns, comma separated:
+          names of this object's fields, or of a subclass's fields; "A.B" is field B of the object in A (of each element
+          when A is a list or array). Empty when the step assigns no field (then writtenFrom says where the bytes come from).
+          Held against the compiled step by the Starfield unit test CustomLogicFillsTests.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="writtenFrom" type="xs:string" >
+      <xs:annotation>
+        <xs:documentation>
+          Description only, ignored by the generator. With fills="": how the writer produces the bytes the step reads.
+          "count:Field" = the number of elements of that list field; "marker" = an empty subrecord, written with the
+          object; "class" = chosen by the object's class (a type name or number); "field:Field" = read and written
+          by that field's own hand-written code.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
 
   <xs:complexType name="MarkerType">

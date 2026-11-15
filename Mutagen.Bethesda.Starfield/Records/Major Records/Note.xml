@@ -11,14 +11,14 @@
       <RefDirect name="Model" refName="Model" />
       <RefDirect name="PickupSound" recordType="PUSH" refName="SoundReference" />
       <RefDirect name="DropdownSound" recordType="PDSH" refName="SoundReference" />
-      <CustomLogic name="TypeParse" recordType="DNAM" />
+      <CustomLogic name="TypeParse" recordType="DNAM" fills="Data" />
       <Data>
         <Fields>
           <UInt32 name="Value" />
           <Float name="Weight" />
         </Fields>
       </Data>
-      <CustomLogic name="DataParse">
+      <CustomLogic name="DataParse" fills="Data.Scene,Data.Terminal,Data.File">
         <RecordType>SNAM</RecordType>
         <RecordType>PNAM</RecordType>
       </CustomLogic>

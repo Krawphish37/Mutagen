@@ -2,7 +2,7 @@
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
   <Object name="AComponent" objType="Subrecord" endMarkerType="BFCE" abstract="true" abstractSplitter="true">
     <Fields>
-      <CustomLogic name="BFCBString" recordType="BFCB" />
+      <CustomLogic name="BFCBString" recordType="BFCB" fills="" writtenFrom="class" />
     </Fields>
   </Object>
   <Object name="AnimationGraphComponent" objType="Subrecord" baseClass="AComponent">
@@ -179,7 +179,7 @@
   </Object>
   <Object name="VolumesComponentItem" objType="Subrecord" >
     <Fields>
-      <CustomLogic name="TypeParse" byteLength="4" />
+      <CustomLogic name="TypeParse" byteLength="4" fills="Ender" />
       <!-- A 4x4 transform by rows; column W is 0, 0, 0, 1 and the last row holds the translation (Starfield.esm, 18,884 volumes) -->
       <RefDirect name="Row0" refName="VolumesMatrix" />
       <RefDirect name="Row1" refName="VolumesMatrix" />
@@ -564,7 +564,7 @@
   </Object>
   <Object name="SurfaceTreePatternSwapInfoComponentData" objType="Subrecord" recordType="DAT2" >
     <Fields>
-      <CustomLogic name="DataLogic" />
+      <CustomLogic name="DataLogic" fills="Data" />
       <List name="Data" binary="NoGeneration">
         <Ref>
           <Direct refName="SurfaceTreePatternSwapInfoItem" />
