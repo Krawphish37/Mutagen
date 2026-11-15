@@ -21,8 +21,9 @@ namespace Mutagen.Bethesda.UnitTests.Plugins.Records.Starfield.HandReadLayoutFil
 //   - the file is well formed and every record it names exists (always runs);
 //   - RealData: every described subrecord of every record of those types in the plugins, read by the file and compared
 //     value by value with Mutagen's full reader, every byte described. Runs when MUTAGEN_STARFIELD_DATA names the Data
-//     folder (MUTAGEN_LAYOUT_PLUGINS: a comma list, default Starfield.esm + the 32 official plugins); a report of the
-//     values checked per layout element goes to MUTAGEN_LAYOUT_REPORT when set.
+//     folder (MUTAGEN_LAYOUT_PLUGINS: a comma list, default Starfield.esm + the 32 official plugins; MUTAGEN_LAYOUT_TYPES:
+//     a comma list of record signatures, default every type the file describes); a report of the values checked per
+//     layout element goes to MUTAGEN_LAYOUT_REPORT when set.
 public class HandReadLayoutFileTests
 {
     public static readonly string[] OfficialPlugins =
@@ -77,7 +78,11 @@ public class HandReadLayoutFileTests
         var plugins = Environment.GetEnvironmentVariable("MUTAGEN_LAYOUT_PLUGINS") is { Length: > 0 } list
             ? list.Split(',')
             : OfficialPlugins;
-        var result = CheckPlugins(data, plugins);
+        // MUTAGEN_LAYOUT_TYPES: a comma list of record signatures to read (default: every type the file describes)
+        var types = Environment.GetEnvironmentVariable("MUTAGEN_LAYOUT_TYPES") is { Length: > 0 } typeList
+            ? typeList.Split(',')
+            : null;
+        var result = CheckPlugins(data, plugins, types);
         if (Environment.GetEnvironmentVariable("MUTAGEN_LAYOUT_REPORT") is { Length: > 0 } report)
         {
             File.WriteAllText(report, result.Report());
@@ -102,7 +107,7 @@ public class HandReadLayoutFileTests
 
     // Reads every record of the described types (and every record holding an AnyRecord subrecord) in the plugins, raw
     // and with Mutagen's full reader, and checks one against the other by the layout file
-    public static CheckResult CheckPlugins(string data, IEnumerable<string> plugins)
+    public static CheckResult CheckPlugins(string data, IEnumerable<string> plugins, IReadOnlyCollection<string>? types = null)
     {
         var doc = XDocument.Load(LayoutPath());
         var layouts = doc.Root!.Elements("Record").ToDictionary(r => (string)r.Attribute("sig")!);
@@ -118,6 +123,7 @@ public class HandReadLayoutFileTests
                         .Any(f => type.GetProperties().Any(p => p.Name == f)))) scanned.Add(sig);
             }
         }
+        if (types != null) scanned.IntersectWith(types);
         var flags = new HeaderMasterFlagCache(data);
         var checkedTotals = new Dictionary<string, long>();
         var errors = new List<string>();

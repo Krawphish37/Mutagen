@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Plugins.Binary.Translations;
 using Mutagen.Bethesda.Plugins.Masters;
+using Noggog;
 
 namespace Mutagen.Bethesda.UnitTests.Plugins.Records.Starfield.HandReadLayoutFile;
 
@@ -49,8 +50,12 @@ public sealed class LayoutChecker
         public int End;
     }
 
+    // A Repeat count="fit" tries an item first with this set: no errors, nothing counted
+    private bool _trial;
+
     private void Fail(Ctx ctx, XElement e, string message)
     {
+        if (_trial) return;
         if (Errors.Count < 2000) Errors.Add($"{Where} {ctx.Path} <{e.Name.LocalName} {Describe(e)}>: {message}");
         else if (Errors.Count == 2000) Errors.Add("... more errors");
     }
@@ -60,6 +65,7 @@ public sealed class LayoutChecker
 
     private void Count(XElement e)
     {
+        if (_trial) return;
         var key = LayoutKey(e);
         Checked[key] = Checked.GetValueOrDefault(key) + 1;
     }
@@ -67,7 +73,8 @@ public sealed class LayoutChecker
     public static string LayoutKey(XElement e)
     {
         var parts = e.AncestorsAndSelf().Reverse().Skip(1)
-            .Select(x => x.Name.LocalName + ((string?)x.Attribute("sig") ?? (string?)x.Attribute("field") ?? (string?)x.Attribute("value") ?? ""));
+            .Select(x => x.Name.LocalName + ((string?)x.Attribute("sig") ?? (string?)x.Attribute("field") ?? (string?)x.Attribute("value")
+                ?? (x.Name.LocalName == "Case" ? (string?)x.Attribute("type") : null) ?? ""));
         return string.Join("/", parts);
     }
 
@@ -94,8 +101,11 @@ public sealed class LayoutChecker
                 case "AnyOrder": RunAnyOrder(e, cur, ctx); break;
                 case "Segments": RunSegments(e, cur, ctx); break;
                 case "Switch": RunSwitch(e, ctx, children => RunSubs(children, cur, ctx)); break;
+                case "TypeSwitch": RunTypeSwitch(e, ctx, children => RunSubs(children, cur, ctx)); break;
                 case "Object":
                 {
+                    // reader="generated": the class is read by Mutagen's generated reader from the subrecords its
+                    // children pass over; checked as any object
                     if ((bool?)e.Attribute("optional") == true
                         && Resolve(ctx.Obj, (string)e.Attribute("field")!, out var maybe) && maybe == null)
                     {
@@ -132,6 +142,18 @@ public sealed class LayoutChecker
         return -1;
     }
 
+    private static int FindAny(Cursor cur, IReadOnlyCollection<string> sigs)
+    {
+        for (int i = cur.Pos; i < cur.End; i++)
+        {
+            if (sigs.Contains(cur.Subs[i].Sig)) return i;
+        }
+        return -1;
+    }
+
+    // at="cursor": the list starts where the walk stands, or has no items (not looked for further on)
+    private static bool AtCursor(XElement e) => (string?)e.Attribute("at") == "cursor";
+
     private void RunSub(XElement e, Cursor cur, Ctx ctx)
     {
         var sig = (string)e.Attribute("sig")!;
@@ -162,7 +184,7 @@ public sealed class LayoutChecker
         var sig = (string)e.Attribute("sig")!;
         var list = ListOf(e, ctx, out var listPath);
         if (list == null) return;
-        if (Find(cur, sig) is var first and >= 0) cur.Pos = first;
+        if (!AtCursor(e) && Find(cur, sig) is var first and >= 0) cur.Pos = first;
         int? count = e.Attribute("count") is { } c ? (int)Number(c.Value, ctx) : null;
         int i = 0;
         while (cur.Pos < cur.End && cur.Subs[cur.Pos].Sig == sig && (count == null || i < count))
@@ -193,28 +215,130 @@ public sealed class LayoutChecker
 
     private void RunSegments(XElement e, Cursor cur, Ctx ctx)
     {
-        var start = (string)e.Attribute("start")!;
+        var starts = ((string)e.Attribute("start")!).Split(',');
         var endSig = (string?)e.Attribute("end");
-        var list = ListOf(e, ctx, out var listPath);
-        if (list == null) return;
-        if (Find(cur, start) is var first and >= 0) cur.Pos = first;
+        var generated = (string?)e.Attribute("reader") == "generated";
+        var keyType = (string?)e.Attribute("key");
+        var startName = (string?)e.Attribute("startName");
+        IList? list = null;
+        object? dict = null;
+        string listPath;
+        if (keyType == null)
+        {
+            list = ListOf(e, ctx, out listPath);
+            if (list == null) return;
+        }
+        else
+        {
+            var field = (string)e.Attribute("field")!;
+            listPath = $"{ctx.Path}.{field}";
+            if (!Resolve(ctx.Obj, field, out dict) || dict == null)
+            {
+                Fail(ctx, e, $"no dictionary {field} on {ctx.Obj?.GetType().Name ?? "null"}");
+                return;
+            }
+        }
+        if (!AtCursor(e) && FindAny(cur, starts) is var first and >= 0) cur.Pos = first;
+        // reader="generated" without an end marker: an item runs to the next start or to the first subrecord it can't hold
+        var holds = generated && endSig == null ? HeldSigs(e, starts) : null;
         int i = 0;
-        while (cur.Pos < cur.End && cur.Subs[cur.Pos].Sig == start)
+        while (cur.Pos < cur.End && starts.Contains(cur.Subs[cur.Pos].Sig))
         {
             var segStart = cur.Pos;
             var stop = segStart + 1;
-            while (stop < cur.End && cur.Subs[stop].Sig != start && (endSig == null || cur.Subs[stop].Sig != endSig)
-                   && !Stops(e, cur.Subs[stop].Sig)) stop++;
+            if (generated && endSig != null)
+            {
+                // the item runs to its end marker; a start signature inside it is its own subrecord
+                while (stop < cur.End && cur.Subs[stop].Sig != endSig) stop++;
+            }
+            else if (holds != null)
+            {
+                while (stop < cur.End && !starts.Contains(cur.Subs[stop].Sig) && holds.Contains(cur.Subs[stop].Sig)) stop++;
+            }
+            else
+            {
+                while (stop < cur.End && !starts.Contains(cur.Subs[stop].Sig) && (endSig == null || cur.Subs[stop].Sig != endSig)
+                       && !Stops(e, cur.Subs[stop].Sig)) stop++;
+            }
             var inner = new Cursor { Subs = cur.Subs, Pos = (bool?)e.Attribute("skipStart") == true ? segStart + 1 : segStart, End = stop };
-            var element = Element(list, i, e);
-            RunSubs(e.Elements(), inner, Indexed(ctx, element, $"{listPath}[{i}]", e, i));
-            if (inner.Pos < inner.End && (string?)e.Attribute("others") != "generated") Fail(ctx, e, $"segment {i}: {string.Join(",", cur.Subs.Skip(inner.Pos).Take(inner.End - inner.Pos).Select(s => s.Sig))} not described");
+            Ctx itemCtx;
+            if (keyType != null)
+            {
+                var key = KeyOf(cur.Subs[segStart].Data, keyType);
+                var entry = Keyed(dict!, key);
+                if (entry == null) Fail(ctx, e, $"segment {i}: no entry of {listPath} has the key {key}");
+                itemCtx = Indexed(ctx, entry, $"{listPath}[key {key}]", e, i);
+            }
+            else
+            {
+                itemCtx = Indexed(ctx, Element(list!, i, e), $"{listPath}[{i}]", e, i);
+            }
+            if (startName != null) itemCtx.Texts[startName] = cur.Subs[segStart].Sig;
+            RunSubs(e.Elements(), inner, itemCtx);
+            if (inner.Pos < inner.End && !generated && (string?)e.Attribute("others") != "generated") Fail(ctx, e, $"segment {i}: {string.Join(",", cur.Subs.Skip(inner.Pos).Take(inner.End - inner.Pos).Select(s => s.Sig))} not described");
             cur.Pos = stop;
             if (endSig != null && cur.Pos < cur.End && cur.Subs[cur.Pos].Sig == endSig) cur.Pos++;
             i++;
         }
-        if (e.Attribute("field") != null && list.Count != i) Fail(ctx, e, $"{i} segments in the file, Mutagen has {list.Count}");
+        // prefix: the file holds the first N elements of a longer Mutagen list (or dictionary)
+        var prefix = (bool?)e.Attribute("prefix") == true;
+        if (keyType == null && e.Attribute("field") != null && (prefix ? list!.Count < i : list!.Count != i)) Fail(ctx, e, $"{i} segments in the file, Mutagen has {list.Count}");
         Count(e);
+    }
+
+    // The signatures an item of a reader="generated" Segments without an end marker can hold: its starts and every
+    // signature its children describe or pass over (Sub, SubRepeat, Generated, nested Segments; through Use)
+    private HashSet<string> HeldSigs(XElement e, IEnumerable<string> starts)
+    {
+        var ret = starts.ToHashSet();
+        void Walk(XElement x)
+        {
+            foreach (var c in x.Elements())
+            {
+                if (c.Name.LocalName == "Use") Walk(_defines[(string)c.Attribute("name")!]);
+                foreach (var a in new[] { "sig", "sigs", "start", "end" })
+                {
+                    if (c.Attribute(a) is { } v) ret.UnionWith(v.Value.Split(','));
+                }
+                Walk(c);
+            }
+        }
+        Walk(e);
+        return ret;
+    }
+
+    // key="I8" (U8, I16, U16, I32, U32): the number at offset 0 of the item's start subrecord
+    private static long KeyOf(byte[] data, string type) => type switch
+    {
+        "I8" => (sbyte)data[0],
+        "U8" => data[0],
+        "I16" => BinaryPrimitives.ReadInt16LittleEndian(data),
+        "U16" => BinaryPrimitives.ReadUInt16LittleEndian(data),
+        "I32" => BinaryPrimitives.ReadInt32LittleEndian(data),
+        "U32" => BinaryPrimitives.ReadUInt32LittleEndian(data),
+        _ => throw new InvalidDataException($"key type {type}"),
+    };
+
+    // The value under that key (Mutagen's class: an IDictionary; an overlay: an IReadOnlyDictionary)
+    private static object? Keyed(object dict, long key)
+    {
+        if (dict is IDictionary d)
+        {
+            foreach (DictionaryEntry entry in d)
+            {
+                if (Convert.ToInt64(entry.Key, CultureInfo.InvariantCulture) == key) return entry.Value;
+            }
+            return null;
+        }
+        foreach (var pair in (IEnumerable)dict)
+        {
+            var type = pair.GetType();
+            if (Convert.ToInt64(type.GetProperty("Key")!.GetValue(pair), CultureInfo.InvariantCulture) == key)
+            {
+                return type.GetProperty("Value")!.GetValue(pair);
+            }
+        }
+        return null;
     }
 
     private static bool Stops(XElement e, string sig) =>
@@ -267,8 +391,47 @@ public sealed class LayoutChecker
                 case "F32": Scalar(e, r, ctx, BinaryPrimitives.ReadSingleLittleEndian(r.Take(4))); break;
                 case "FormID":
                 {
-                    var key = FormKeyBinaryTranslation.Instance.Parse(r.Take(4), _masters);
+                    var bytes = r.Take(4);
+                    var raw = BinaryPrimitives.ReadUInt32LittleEndian(bytes);
+                    var key = FormKeyBinaryTranslation.Instance.Parse(bytes, _masters);
+                    // name: 0 for a null FormID (as Mutagen's IsNull), else the stored value
+                    if (e.Attribute("name") is { } fn) ctx.Vars[fn.Value] = key.IsNull ? 0 : raw;
                     Value(e, ctx, key);
+                    break;
+                }
+                case "P3F32":
+                {
+                    var b = r.Take(12);
+                    Value(e, ctx, new P3Float(BinaryPrimitives.ReadSingleLittleEndian(b), BinaryPrimitives.ReadSingleLittleEndian(b[4..]), BinaryPrimitives.ReadSingleLittleEndian(b[8..])));
+                    break;
+                }
+                case "P3I16":
+                {
+                    var b = r.Take(6);
+                    Value(e, ctx, new P3Int16(BinaryPrimitives.ReadInt16LittleEndian(b), BinaryPrimitives.ReadInt16LittleEndian(b[2..]), BinaryPrimitives.ReadInt16LittleEndian(b[4..])));
+                    break;
+                }
+                case "F16": Value(e, ctx, BinaryPrimitives.ReadHalfLittleEndian(r.Take(2))); break;
+                case "Null":
+                {
+                    // no bytes: Mutagen's field is null (or empty) here
+                    Count(e);
+                    CheckNull(e, ctx, (string)e.Attribute("field")!, "");
+                    break;
+                }
+                case "NotLast":
+                {
+                    // inside a counted Repeat: the children on every item but the last; on the last their fields are null
+                    if (!ctx.Vars.TryGetValue(LastVar, out var last)) throw new InvalidDataException("NotLast outside a counted Repeat");
+                    if (last == 0) RunContent(e.Elements(), r, ctx);
+                    else
+                    {
+                        Count(e);
+                        foreach (var f in e.Descendants().Select(d => (string?)d.Attribute("field")).OfType<string>())
+                        {
+                            CheckNull(e, ctx, f, "the last item stores none, but ");
+                        }
+                    }
                     break;
                 }
                 case "Color":
@@ -291,6 +454,7 @@ public sealed class LayoutChecker
                     if (len < 0) throw new EndOfStreamException("no terminating zero");
                     var s = Encoding.UTF8.GetString(r.Take(len));
                     r.Take(1);
+                    if (e.Attribute("name") is { } zn) ctx.Texts[zn.Value] = s;
                     Value(e, ctx, s);
                     break;
                 }
@@ -304,7 +468,9 @@ public sealed class LayoutChecker
                 case "Bytes":
                 {
                     var n = e.Attribute("length") is { } l ? (int)Number(l.Value, ctx) : r.Remaining;
-                    Value(e, ctx, r.Take(n).ToArray());
+                    var bytes = r.Take(n).ToArray();
+                    // encoding="length": the field is the number of bytes
+                    Value(e, ctx, (string?)e.Attribute("encoding") == "length" ? (double)bytes.Length : bytes);
                     break;
                 }
                 case "LString":
@@ -394,6 +560,9 @@ public sealed class LayoutChecker
         }
     }
 
+    // NotLast: 1 on the last item of a counted Repeat
+    private const string LastVar = "\u0001last";
+
     private void RunRepeat(XElement e, Reader r, Ctx ctx)
     {
         var countText = (string?)e.Attribute("count") ?? "end";
@@ -408,17 +577,51 @@ public sealed class LayoutChecker
                 return;
             }
         }
+        var open = countText is "end" or "fit";
+        var count = open ? int.MaxValue : (int)Number(countText, ctx);
+        var zeros = e.Attribute("endsAtZeros") is { } z ? int.Parse(z.Value, CultureInfo.InvariantCulture) : 0;
         int i = 0;
-        var count = countText == "end" ? int.MaxValue : (int)Number(countText, ctx);
-        while (i < count && (countText != "end" || r.Remaining > 0))
+        while (i < count && (!open || r.Remaining > 0))
         {
+            // endsAtZeros="N": an item starting with N zero bytes isn't read; it and what follows are left
+            if (zeros > 0 && r.Remaining >= zeros && !r.Data.AsSpan(r.Pos, zeros).ContainsAnyExcept((byte)0)) break;
             var element = list != null ? Element(list, i, e) : ctx.Obj;
-            RunContent(e.Elements(), r, Indexed(ctx, element, list != null ? $"{listPath}[{i}]" : ctx.Path, e, i));
+            var itemCtx = Indexed(ctx, element, list != null ? $"{listPath}[{i}]" : ctx.Path, e, i);
+            if (!open) itemCtx.Vars[LastVar] = i == count - 1 ? 1 : 0;
+            if (countText == "fit" && !Fits(e, r, itemCtx)) break;
+            RunContent(e.Elements(), r, itemCtx);
             i++;
         }
         if (list != null && (bool?)e.Attribute("prefix") != true && list.Count != i) Fail(ctx, e, $"{i} in the file, Mutagen has {list.Count}");
         if (list != null && (bool?)e.Attribute("prefix") == true && list.Count < i) Fail(ctx, e, $"{i} in the file, Mutagen has only {list.Count}");
         Count(e);
+    }
+
+    // count="fit": whether a whole item fits in what is left (tried without errors or counts)
+    private bool Fits(XElement e, Reader r, Ctx ctx)
+    {
+        var trial = new Reader(r.Data) { Pos = r.Pos };
+        var was = _trial;
+        _trial = true;
+        try
+        {
+            RunContent(e.Elements(), trial, ctx.With(ctx.Obj, ctx.Path));
+            return true;
+        }
+        catch (EndOfStreamException)
+        {
+            return false;
+        }
+        finally
+        {
+            _trial = was;
+        }
+    }
+
+    private void CheckNull(XElement e, Ctx ctx, string field, string prefix)
+    {
+        if (!Resolve(ctx.Obj, field, out var v)) Fail(ctx, e, $"no property {field} on {ctx.Obj?.GetType().Name ?? "null"}");
+        else if (v != null && !IsEmpty(v)) Fail(ctx, e, $"{prefix}Mutagen has {field} {Show(v)}");
     }
 
     // chooses by the class Mutagen made for the current object
@@ -482,6 +685,10 @@ public sealed class LayoutChecker
             case null: break;
             case "bool": value = raw != 0; break;
             case "speed": value = (double)(((float)raw - 127) / 127f / 10f); break;
+            case var enc when enc.StartsWith("drop:"):
+                // the stored number with that bit cleared (the record xml's layoutDroppedBits: a bit another field stands for)
+                value = (double)((long)raw & ~(1L << int.Parse(enc[5..], CultureInfo.InvariantCulture)));
+                break;
             case var enc when enc.StartsWith("div:"):
                 value = (double)(float)(raw / double.Parse(enc[4..], CultureInfo.InvariantCulture));
                 break;
@@ -625,7 +832,8 @@ public sealed class LayoutChecker
         return child;
     }
 
-    private static readonly Dictionary<(Type, string), PropertyInfo?> Props = new();
+    // public properties, then public fields (a RecordType's TypeInt)
+    private static readonly Dictionary<(Type, string), MemberInfo?> Props = new();
 
     public static bool Resolve(object? obj, string path, out object? value)
     {
@@ -635,19 +843,24 @@ public sealed class LayoutChecker
         {
             if (value == null) return true;
             var type = value.GetType();
-            PropertyInfo? prop;
+            MemberInfo? member;
             lock (Props)
             {
-                if (!Props.TryGetValue((type, part), out prop))
+                if (!Props.TryGetValue((type, part), out member))
                 {
-                    prop = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    member = (MemberInfo?)type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
                         .Where(p => p.Name == part && p.GetIndexParameters().Length == 0)
-                        .OrderBy(p => p.DeclaringType == type ? 0 : 1).FirstOrDefault();
-                    Props[(type, part)] = prop;
+                        .OrderBy(p => p.DeclaringType == type ? 0 : 1).FirstOrDefault()
+                        ?? type.GetField(part, BindingFlags.Public | BindingFlags.Instance);
+                    Props[(type, part)] = member;
                 }
             }
-            if (prop == null) return false;
-            value = prop.GetValue(value);
+            switch (member)
+            {
+                case PropertyInfo prop: value = prop.GetValue(value); break;
+                case FieldInfo field: value = field.GetValue(value); break;
+                default: return false;
+            }
         }
         return true;
     }
