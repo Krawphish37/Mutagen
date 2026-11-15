@@ -201,6 +201,8 @@ internal sealed class KeptOpenArchiveReader : IDisposableArchiveReader
 
     public IEnumerable<string> EnumerateFilePaths() => _reader.EnumerateFilePaths();
 
+    public IEnumerable<string> EnumerateFolderFilePaths(string path) => _reader.EnumerateFolderFilePaths(path);
+
     public bool TryGetFile(string path, [MaybeNullWhen(false)] out IArchiveFile file) => _reader.TryGetFile(path, out file);
 
     public bool ContainsFile(string path) => _reader.ContainsFile(path);

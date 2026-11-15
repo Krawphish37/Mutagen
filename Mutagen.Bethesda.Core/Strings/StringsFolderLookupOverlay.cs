@@ -88,6 +88,30 @@ public sealed class StringsFolderLookupOverlay : IStringsFolderLookup
             .InternalFactory(modKey);
     }
 
+    /// <summary>
+    /// Where each of a plugin's strings tables (a source in a language) is read from, without making a lookup or opening
+    /// any table (C58/W10): the same rule, and the same list, as <see cref="EnumerateTables"/> of the lookup
+    /// <see cref="TypicalFactory"/> makes. Loose files of the Strings folder win; for a source and language no loose file
+    /// has, the first archive that holds it among those that apply to the plugin (named after it, or listed in the
+    /// game's ini), in Mutagen's archive order. Only the folder listing and the archives' file lists (a BA2's name table)
+    /// are read. Sources come in the order Normal, DL, IL.
+    /// </summary>
+    /// <param name="release">The game release</param>
+    /// <param name="modKey">The plugin</param>
+    /// <param name="dataPath">The data folder (its Strings folder and archives)</param>
+    /// <param name="instructions">Strings folder or archive folder overrides, as for <see cref="TypicalFactory"/></param>
+    /// <param name="fileSystem">The file system</param>
+    public static IReadOnlyList<StringsTableSource> ResolveSources(
+        GameRelease release,
+        ModKey modKey,
+        DirectoryPath dataPath,
+        StringsReadParameters? instructions = null,
+        IFileSystem? fileSystem = null)
+    {
+        return new StringsFolderLookupOverlayFactoryContainer(release, fileSystem, dataPath, instructions).Resolve().Value
+            .ResolveSources(modKey);
+    }
+
     /// <inheritdoc />
     public bool TryLookup(StringsSource source, Language language, uint key, [MaybeNullWhen(false)] out string str)
     {

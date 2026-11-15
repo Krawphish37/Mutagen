@@ -215,6 +215,15 @@ class Ba2Reader : IArchiveReader
         }
     }
 
+    /// <summary>
+    /// The paths <see cref="TryGetFolder"/> gives for a folder (every file whose path starts with it, ignoring case), from
+    /// the name table alone (C58/W10)
+    /// </summary>
+    public IEnumerable<string> EnumerateFolderFilePaths(string path)
+    {
+        return EnumerateFilePaths().Where(p => p.StartsWith(path, StringComparison.OrdinalIgnoreCase));
+    }
+
     private int IndexOf(NameTable table, string path)
     {
         var query = Encoding.UTF8.GetBytes(path);
