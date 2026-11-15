@@ -438,7 +438,9 @@ partial class PackageBinaryCreateTranslation
         }
     }
 
-    // With an empty procedure tree the input names and flags (UNAM, BNAM, PNAM) follow XNAM directly
+    // With an empty procedure tree the input names and flags (UNAM, BNAM, PNAM) follow XNAM directly. BNAM and PNAM are
+    // listed as the step's subrecords too (C38); each entry starts with its UNAM (all 5,499 PACK of the 370 plugins in
+    // Data: UNAM BNAM PNAM), so a BNAM or PNAM that comes first is refused instead of read into no entry.
     public static partial ParseResult FillBinaryDataInputNamesCustom(MutagenFrame frame, IPackageInternal item, PreviousParse lastParsed)
     {
         var order = AbsorbPackageData(frame.Reader, item.Data);
@@ -463,10 +465,18 @@ partial class PackageBinaryCreateTranslation
                     order.Add((sbyte)subRecord.Content[0]);
                     break;
                 case RecordTypeInts.BNAM:
-                    lastPackage!.Name = BinaryStringUtility.ProcessWholeToZString(subRecord.Content, stream.MetaData.Encodings.NonTranslated);
+                    if (lastPackage == null)
+                    {
+                        throw new ArgumentException("Package input name (BNAM) came before its index (UNAM)");
+                    }
+                    lastPackage.Name = BinaryStringUtility.ProcessWholeToZString(subRecord.Content, stream.MetaData.Encodings.NonTranslated);
                     break;
                 case RecordTypeInts.PNAM:
-                    lastPackage!.Flags = (APackageData.Flag)BinaryPrimitives.ReadInt32LittleEndian(subRecord.Content);
+                    if (lastPackage == null)
+                    {
+                        throw new ArgumentException("Package input flags (PNAM) came before its index (UNAM)");
+                    }
+                    lastPackage.Flags = (APackageData.Flag)BinaryPrimitives.ReadInt32LittleEndian(subRecord.Content);
                     break;
                 default:
                     return order;

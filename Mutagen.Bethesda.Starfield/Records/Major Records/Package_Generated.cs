@@ -4042,6 +4042,8 @@ namespace Mutagen.Bethesda.Starfield
                     return (int)Package_FieldIndex.ProcedureTree;
                 }
                 case RecordTypeInts.UNAM:
+                case RecordTypeInts.BNAM:
+                case RecordTypeInts.PNAM:
                 {
                     return PackageBinaryCreateTranslation.FillBinaryDataInputNamesCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
@@ -4434,6 +4436,8 @@ namespace Mutagen.Bethesda.Starfield
                     return (int)Package_FieldIndex.ProcedureTree;
                 }
                 case RecordTypeInts.UNAM:
+                case RecordTypeInts.BNAM:
+                case RecordTypeInts.PNAM:
                 {
                     return DataInputNamesCustomParse(
                         stream,

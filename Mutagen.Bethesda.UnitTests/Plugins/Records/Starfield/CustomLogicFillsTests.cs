@@ -202,6 +202,13 @@ public class CustomLogicFillsTests
         Steps().Single(s => s.Object == "FootstepSet" && s.Name == "Count").RecordTypes.ShouldBe(new[] { "XCNT", "DATA" });
     }
 
+    // C38: the step reads them with "case RecordTypeInts.X", which SubrecordsTheStepAsksFor_AreListed can't see
+    [Fact]
+    public void PackageDataInputNames_ListsUnamBnamPnam()
+    {
+        Steps().Single(s => s.Object == "Package" && s.Name == "DataInputNames").RecordTypes.ShouldBe(new[] { "UNAM", "BNAM", "PNAM" });
+    }
+
     // The five steps SFSearch found reading a subrecord into no field: each is written back from another field
     [Theory]
     [InlineData("AComponent", "BFCBString", "class")]
