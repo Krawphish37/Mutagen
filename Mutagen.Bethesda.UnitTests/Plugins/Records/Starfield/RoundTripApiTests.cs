@@ -387,7 +387,8 @@ public class RoundTripApiTests
         Directory.CreateDirectory(dir);
         // The header as Mutagen writes it for a Full plugin without masters, then the quest as stored
         var empty = new StarfieldMod(StarfieldEsm, StarfieldRelease.Starfield);
-        var headerPath = System.IO.Path.Combine(dir, "header.esm");
+        var headerPath = System.IO.Path.Combine(dir, "Header", StarfieldEsm.FileName);
+        Directory.CreateDirectory(System.IO.Path.GetDirectoryName(headerPath)!);
         empty.WriteToBinary(headerPath, new BinaryWriteParameters { MasterFlagsLookup = new LoadOrder<IModMasterStyledGetter>() });
         var header = File.ReadAllBytes(headerPath);
         header = header.AsSpan(0, 24 + BitConverter.ToInt32(header, 4)).ToArray();
@@ -447,12 +448,12 @@ public class RoundTripApiTests
             // "Joseph" to "Jos": its first 4 bytes are now 4A 6F 73 00, Mutagen's form of 736F4A:Starfield.esm, which
             // "Jose" (65736F4A) reads as past the master list. Kept as a stored form, the write put "Jose" back over the
             // name's terminator.
-            var alias = (QuestReferenceAlias)read.Quests.Single().Aliases[0];
+            var alias = (QuestReferenceAlias)read.Quests.Single().Aliases![0];
             alias.Name = "Jos";
             var written = WriteQust(read, dir);
             var alid = Encoding.ASCII.GetBytes("ALID\u0004\0Jos\0");
             written.AsSpan().IndexOf(alid).ShouldBeGreaterThan(0);
-            written.AsSpan().IndexOf(Encoding.ASCII.GetBytes("Jose")).ShouldBeLessThan(0);
+            written.AsSpan().IndexOf(Encoding.ASCII.GetBytes("ALID\u0004\0Jose")).ShouldBeLessThan(0);
         }
         finally
         {
