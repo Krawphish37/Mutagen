@@ -53,6 +53,17 @@ namespace Mutagen.Bethesda.Starfield
         partial void CustomCtor();
         #endregion
 
+        #region Unknown
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        protected MemorySlice<Byte>? _Unknown;
+        public MemorySlice<Byte>? Unknown
+        {
+            get => this._Unknown;
+            set => this._Unknown = value;
+        }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        ReadOnlyMemorySlice<Byte>? INoteProgramGetter.Unknown => this.Unknown;
+        #endregion
         #region File
         public String? File { get; set; }
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -96,9 +107,19 @@ namespace Mutagen.Bethesda.Starfield
             IMask<TItem>
         {
             #region Ctors
-            public Mask(TItem File)
+            public Mask(TItem initialValue)
+            : base(initialValue)
+            {
+                this.Unknown = initialValue;
+                this.File = initialValue;
+            }
+
+            public Mask(
+                TItem Unknown,
+                TItem File)
             : base()
             {
+                this.Unknown = Unknown;
                 this.File = File;
             }
 
@@ -111,6 +132,7 @@ namespace Mutagen.Bethesda.Starfield
             #endregion
 
             #region Members
+            public TItem Unknown;
             public TItem File;
             #endregion
 
@@ -125,12 +147,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return false;
                 if (!base.Equals(rhs)) return false;
+                if (!object.Equals(this.Unknown, rhs.Unknown)) return false;
                 if (!object.Equals(this.File, rhs.File)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
                 var hash = new HashCode();
+                hash.Add(this.Unknown);
                 hash.Add(this.File);
                 hash.Add(base.GetHashCode());
                 return hash.ToHashCode();
@@ -142,6 +166,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool All(Func<TItem, bool> eval)
             {
                 if (!base.All(eval)) return false;
+                if (!eval(this.Unknown)) return false;
                 if (!eval(this.File)) return false;
                 return true;
             }
@@ -151,6 +176,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool Any(Func<TItem, bool> eval)
             {
                 if (base.Any(eval)) return true;
+                if (eval(this.Unknown)) return true;
                 if (eval(this.File)) return true;
                 return false;
             }
@@ -167,6 +193,7 @@ namespace Mutagen.Bethesda.Starfield
             protected void Translate_InternalFill<R>(Mask<R> obj, Func<TItem, R> eval)
             {
                 base.Translate_InternalFill(obj, eval);
+                obj.Unknown = eval(this.Unknown);
                 obj.File = eval(this.File);
             }
             #endregion
@@ -186,6 +213,10 @@ namespace Mutagen.Bethesda.Starfield
                 sb.AppendLine($"{nameof(NoteProgram.Mask<TItem>)} =>");
                 using (sb.Brace())
                 {
+                    if (printMask?.Unknown ?? true)
+                    {
+                        sb.AppendItem(Unknown, "Unknown");
+                    }
                     if (printMask?.File ?? true)
                     {
                         sb.AppendItem(File, "File");
@@ -201,6 +232,7 @@ namespace Mutagen.Bethesda.Starfield
             IErrorMask<ErrorMask>
         {
             #region Members
+            public Exception? Unknown;
             public Exception? File;
             #endregion
 
@@ -210,6 +242,8 @@ namespace Mutagen.Bethesda.Starfield
                 NoteProgram_FieldIndex enu = (NoteProgram_FieldIndex)index;
                 switch (enu)
                 {
+                    case NoteProgram_FieldIndex.Unknown:
+                        return Unknown;
                     case NoteProgram_FieldIndex.File:
                         return File;
                     default:
@@ -222,6 +256,9 @@ namespace Mutagen.Bethesda.Starfield
                 NoteProgram_FieldIndex enu = (NoteProgram_FieldIndex)index;
                 switch (enu)
                 {
+                    case NoteProgram_FieldIndex.Unknown:
+                        this.Unknown = ex;
+                        break;
                     case NoteProgram_FieldIndex.File:
                         this.File = ex;
                         break;
@@ -236,6 +273,9 @@ namespace Mutagen.Bethesda.Starfield
                 NoteProgram_FieldIndex enu = (NoteProgram_FieldIndex)index;
                 switch (enu)
                 {
+                    case NoteProgram_FieldIndex.Unknown:
+                        this.Unknown = (Exception?)obj;
+                        break;
                     case NoteProgram_FieldIndex.File:
                         this.File = (Exception?)obj;
                         break;
@@ -248,6 +288,7 @@ namespace Mutagen.Bethesda.Starfield
             public override bool IsInError()
             {
                 if (Overall != null) return true;
+                if (Unknown != null) return true;
                 if (File != null) return true;
                 return false;
             }
@@ -276,6 +317,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 base.PrintFillInternal(sb);
                 {
+                    sb.AppendItem(Unknown, "Unknown");
+                }
+                {
                     sb.AppendItem(File, "File");
                 }
             }
@@ -286,6 +330,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 if (rhs == null) return this;
                 var ret = new ErrorMask();
+                ret.Unknown = this.Unknown.Combine(rhs.Unknown);
                 ret.File = this.File.Combine(rhs.File);
                 return ret;
             }
@@ -309,6 +354,7 @@ namespace Mutagen.Bethesda.Starfield
             ITranslationMask
         {
             #region Members
+            public bool Unknown;
             public bool File;
             #endregion
 
@@ -318,6 +364,7 @@ namespace Mutagen.Bethesda.Starfield
                 bool onOverall = true)
                 : base(defaultOn, onOverall)
             {
+                this.Unknown = defaultOn;
                 this.File = defaultOn;
             }
 
@@ -326,6 +373,7 @@ namespace Mutagen.Bethesda.Starfield
             protected override void GetCrystal(List<(bool On, TranslationCrystal? SubCrystal)> ret)
             {
                 base.GetCrystal(ret);
+                ret.Add((Unknown, null));
                 ret.Add((File, null));
             }
 
@@ -398,6 +446,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObjectSetter<INoteProgram>,
         INoteProgramGetter
     {
+        new MemorySlice<Byte>? Unknown { get; set; }
         new String? File { get; set; }
     }
 
@@ -407,6 +456,7 @@ namespace Mutagen.Bethesda.Starfield
         ILoquiObject<INoteProgramGetter>
     {
         static new ILoquiRegistration StaticRegistration => NoteProgram_Registration.Instance;
+        ReadOnlyMemorySlice<Byte>? Unknown { get; }
         String? File { get; }
 
     }
@@ -552,7 +602,8 @@ namespace Mutagen.Bethesda.Starfield
     #region Field Index
     internal enum NoteProgram_FieldIndex
     {
-        File = 0,
+        Unknown = 0,
+        File = 1,
     }
     #endregion
 
@@ -563,9 +614,9 @@ namespace Mutagen.Bethesda.Starfield
 
         public static ProtocolKey ProtocolKey => ProtocolDefinition_Starfield.ProtocolKey;
 
-        public const ushort AdditionalFieldCount = 1;
+        public const ushort AdditionalFieldCount = 2;
 
-        public const ushort FieldCount = 1;
+        public const ushort FieldCount = 2;
 
         public static readonly Type MaskType = typeof(NoteProgram.Mask<>);
 
@@ -631,6 +682,7 @@ namespace Mutagen.Bethesda.Starfield
         public void Clear(INoteProgram item)
         {
             ClearPartial();
+            item.Unknown = default;
             item.File = default;
             base.Clear(item);
         }
@@ -699,6 +751,7 @@ namespace Mutagen.Bethesda.Starfield
             NoteProgram.Mask<bool> ret,
             EqualsMaskHelper.Include include = EqualsMaskHelper.Include.All)
         {
+            ret.Unknown = MemorySliceExt.SequenceEqual(item.Unknown, rhs.Unknown);
             ret.File = string.Equals(item.File, rhs.File);
             base.FillEqualsMask(item, rhs, ret, include);
         }
@@ -749,6 +802,11 @@ namespace Mutagen.Bethesda.Starfield
                 item: item,
                 sb: sb,
                 printMask: printMask);
+            if ((printMask?.Unknown ?? true)
+                && item.Unknown is {} UnknownItem)
+            {
+                sb.AppendLine($"Unknown => {SpanExt.ToHexString(UnknownItem)}");
+            }
             if ((printMask?.File ?? true)
                 && item.File is {} FileItem)
             {
@@ -773,6 +831,10 @@ namespace Mutagen.Bethesda.Starfield
         {
             if (!EqualsMaskHelper.RefEquality(lhs, rhs, out var isEqual)) return isEqual;
             if (!base.Equals((IANoteDataGetter)lhs, (IANoteDataGetter)rhs, equalsMask)) return false;
+            if ((equalsMask?.GetShouldTranslate((int)NoteProgram_FieldIndex.Unknown) ?? true))
+            {
+                if (!MemorySliceExt.SequenceEqual(lhs.Unknown, rhs.Unknown)) return false;
+            }
             if ((equalsMask?.GetShouldTranslate((int)NoteProgram_FieldIndex.File) ?? true))
             {
                 if (!string.Equals(lhs.File, rhs.File)) return false;
@@ -794,6 +856,10 @@ namespace Mutagen.Bethesda.Starfield
         public virtual int GetHashCode(INoteProgramGetter item)
         {
             var hash = new HashCode();
+            if (item.Unknown is {} UnknownItem)
+            {
+                hash.AddBytes(UnknownItem);
+            }
             if (item.File is {} Fileitem)
             {
                 hash.Add(Fileitem);
@@ -846,6 +912,17 @@ namespace Mutagen.Bethesda.Starfield
                 errorMask,
                 copyMask,
                 deepCopy: deepCopy);
+            if ((copyMask?.GetShouldTranslate((int)NoteProgram_FieldIndex.Unknown) ?? true))
+            {
+                if(rhs.Unknown is {} Unknownrhs)
+                {
+                    item.Unknown = Unknownrhs.ToArray();
+                }
+                else
+                {
+                    item.Unknown = default;
+                }
+            }
             if ((copyMask?.GetShouldTranslate((int)NoteProgram_FieldIndex.File) ?? true))
             {
                 item.File = rhs.File;

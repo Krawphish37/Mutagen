@@ -7091,5 +7091,8 @@
     <Compile Include="Records\Major Records\TimeOfDayData_Generated.cs">
       <DependentUpon>TimeOfDayData.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Major Records\NoteSound_Generated.cs">
+      <DependentUpon>Note.xml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

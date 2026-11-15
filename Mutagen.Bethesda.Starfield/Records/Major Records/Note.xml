@@ -26,6 +26,12 @@
     </Fields>
   </Object>
   <Object name="ANoteData" objType="Subrecord" abstract="true" />
+  <Object name="NoteSound" objType="Subrecord" baseClass="ANoteData" selectorValue="Sound">
+    <Fields>
+      <!-- xEdit: SNAM FormID to SNDR. Starfield has no SNDR records, so the link is untyped. -->
+      <FormLink name="Sound" refName="StarfieldMajorRecord" nullable="True" />
+    </Fields>
+  </Object>
   <Object name="NoteVoice" objType="Subrecord" baseClass="ANoteData" selectorValue="Voice">
     <Fields>
       <FormLink name="Scene" refName="Scene" nullable="True" />
@@ -33,6 +39,8 @@
   </Object>
   <Object name="NoteProgram" objType="Subrecord" baseClass="ANoteData" selectorValue="Program">
     <Fields>
+      <!-- xEdit: SNAM is unused (4 bytes) for a Program note; kept as read. Read and written in Note.cs. -->
+      <ByteArray name="Unknown" nullable="True" binary="NoGeneration" />
       <String name="File" nullable="True" />
     </Fields>
   </Object>

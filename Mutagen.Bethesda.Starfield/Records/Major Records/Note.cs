@@ -4,13 +4,17 @@ using Mutagen.Bethesda.Plugins.Binary.Translations;
 using Mutagen.Bethesda.Plugins.Exceptions;
 using Mutagen.Bethesda.Starfield.Internals;
 using Mutagen.Bethesda.Translations.Binary;
+using Noggog;
 
 namespace Mutagen.Bethesda.Starfield;
 
 partial class Note
 {
+    // DNAM, per xEdit (wbDefinitionsSF1.pas NOTE). SNAM by type (wbNoteTypeDecider): Sound -> SNDR,
+    // Voice -> SCEN, Terminal -> TERM, Program -> 4 unused bytes.
     public enum Types
     {
+        Sound = 0,
         Voice = 1,
         Program = 2,
         Terminal = 3
@@ -25,6 +29,9 @@ partial class NoteBinaryCreateTranslation
         var type = EnumBinaryTranslation<Note.Types, MutagenFrame, MutagenWriter>.Instance.Parse(frame, 1);
         switch (type)
         {
+            case Note.Types.Sound:
+                item.Data = new NoteSound();
+                break;
             case Note.Types.Voice:
                 item.Data = new NoteVoice();
                 break;
@@ -50,11 +57,15 @@ partial class NoteBinaryCreateTranslation
             case RecordTypeInts.SNAM:
                 switch (item.Data)
                 {
+                    case NoteSound sound:
+                        sound.Sound.SetTo(FormKeyBinaryTranslation.Instance.Parse(frame));
+                        break;
                     case NoteVoice voice:
                         voice.Scene.SetTo(FormKeyBinaryTranslation.Instance.Parse(frame));
                         break;
-                    case NoteProgram _:
-                        // Discard
+                    case NoteProgram prog:
+                        // xEdit: unused for a Program note. Kept as read so it writes back.
+                        prog.Unknown = frame.ReadRemainingBytes();
                         break;
                     case NoteTerminal term:
                         term.Terminal.SetTo(FormKeyBinaryTranslation.Instance.Parse(frame));
@@ -71,6 +82,7 @@ partial class NoteBinaryCreateTranslation
                     case NoteProgram prog:
                         prog.File = StringBinaryTranslation.Instance.Parse(frame, StringBinaryType.NullTerminate, parseWhole: true);
                         break;
+                    case NoteSound _:
                     case NoteVoice _:
                     case NoteTerminal _:
                         // Discard
@@ -78,7 +90,7 @@ partial class NoteBinaryCreateTranslation
                     default:
                         throw SubrecordException.Enrich(
                             new MalformedDataException($"Note type was not parsed first"),
-                            RecordTypes.SNAM);
+                            RecordTypes.PNAM);
                 }
                 break;
             default:
@@ -97,6 +109,9 @@ partial class NoteBinaryWriteTranslation
         Note.Types type;
         switch (item.Data)
         {
+            case INoteSoundGetter _:
+                type = Note.Types.Sound;
+                break;
             case INoteVoiceGetter _:
                 type = Note.Types.Voice;
                 break;
@@ -119,10 +134,14 @@ partial class NoteBinaryWriteTranslation
     {
         switch (item.Data)
         {
+            case INoteSoundGetter sound:
+                FormLinkBinaryTranslation.Instance.WriteNullable(writer, sound.Sound, RecordTypes.SNAM);
+                break;
             case INoteVoiceGetter voice:
                 FormLinkBinaryTranslation.Instance.WriteNullable(writer, voice.Scene, RecordTypes.SNAM);
                 break;
             case INoteProgramGetter prog:
+                ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(writer, prog.Unknown, RecordTypes.SNAM);
                 if (prog.File is { } file)
                 {
                     using var header = HeaderExport.Subrecord(writer, RecordTypes.PNAM);
@@ -156,6 +175,16 @@ partial class NoteBinaryOverlay
             var type = (Note.Types)typeMem[0];
             switch (type)
             {
+                case Note.Types.Sound:
+                    var sound = new NoteSound();
+                    if (_dataContentSNAMLocation.HasValue)
+                    {
+                        sound.Sound.SetTo(
+                            FormKeyBinaryTranslation.Instance.Parse(
+                                HeaderTranslation.ExtractSubrecordMemory(_recordData, _dataContentSNAMLocation.Value, _package.MetaData.Constants),
+                                _package.MetaData.MasterReferences));
+                    }
+                    return sound;
                 case Note.Types.Voice:
                     var voice = new NoteVoice();
                     if (_dataContentSNAMLocation.HasValue)
@@ -168,6 +197,10 @@ partial class NoteBinaryOverlay
                     return voice;
                 case Note.Types.Program:
                     var prog = new NoteProgram();
+                    if (_dataContentSNAMLocation.HasValue)
+                    {
+                        prog.Unknown = HeaderTranslation.ExtractSubrecordMemory(_recordData, _dataContentSNAMLocation.Value, _package.MetaData.Constants).ToArray();
+                    }
                     if (_dataContentPNAMLocation.HasValue)
                     {
                         prog.File = StringBinaryTranslation.Instance.Parse(HeaderTranslation.ExtractSubrecordMemory(_recordData, _dataContentPNAMLocation.Value, _package.MetaData.Constants), _package.MetaData.Encodings.NonTranslated, parseWhole: true);
@@ -210,4 +243,11 @@ partial class NoteBinaryOverlay
         }
         return (int)Note_FieldIndex.DropdownSound;
     }
+}
+
+partial class NoteProgramBinaryOverlay
+{
+    // The NOTE reader never builds this overlay: Note's Data getter (NoteBinaryOverlay) makes a NoteProgram and
+    // reads its SNAM there. Unknown is the SNAM subrecord, which this standalone typeless overlay never holds.
+    public ReadOnlyMemorySlice<byte>? Unknown => null;
 }
