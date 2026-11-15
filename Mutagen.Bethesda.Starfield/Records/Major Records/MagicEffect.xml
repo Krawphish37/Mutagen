@@ -31,7 +31,7 @@
           <FormLink name="ThirdActorValue" refName="ActorValueInformation" />
           <Float name="ScriptEffectAIDelayTime" />
           <Float name="ScriptEffectAIScore" />
-          <RefDirect name="Archetype" binary="Custom" refName="AMagicEffectArchetype" byteLength="4" defaultType="MagicEffectArchetype" selectedBy="here:Int32" layoutOffset="80" />
+          <RefDirect name="Archetype" binary="Custom" refName="AMagicEffectArchetype" byteLength="4" defaultType="MagicEffectArchetype" selectedBy="here:Int32" layoutOffset="80" selectorEnum="MagicEffectArchetype.TypeEnum" />
           <Float name="SpellmakingArea" />
           <Float name="SpellmakingCastingTime" />
           <Float name="BaseCost" />

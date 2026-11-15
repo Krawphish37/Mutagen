@@ -6,7 +6,7 @@
       <Enum name="Flags" enumName="Scene.Flag" byteLength="4" recordType="FNAM" />
       <RefList name="Phases" refName="ScenePhase" />
       <RefList name="Actors" refName="SceneActor" />
-      <RefList name="Actions" refName="ASceneAction" recordType="ANAM" binary="Custom" selectedBy="subrecord:ANAM:UInt16" />
+      <RefList name="Actions" refName="ASceneAction" recordType="ANAM" binary="Custom" selectedBy="subrecord:ANAM:UInt16" selectorEnum="SceneBinaryCreateTranslation.ActionType" />
       <FormLink name="Quest" refName="Quest" recordType="PNAM" />
       <UInt32 name="LastActionIndex" recordType="INAM" />
       <!-- CK 1.16.244.0, Scene > Edit Actor Behavior: the five scene-wide "Set all" overrides (Fallout 4 has the first four).

@@ -94,6 +94,42 @@ public class HandReadSelectorAttributesTests
         }
     }
 
+    // C57: selectorEnum, beside selectedBy, names the enum whose member names the selectorValues are (Mutagen's C# name,
+    // "Outer.Inner" for a nested enum, as enumName does); every selector with enum names has it, the others don't
+    private static Type? EnumByXmlName(string name)
+    {
+        var dot = name.IndexOf('.');
+        var clr = dot < 0 ? name : name[..dot] + "+" + name[(dot + 1)..].Replace('.', '+');
+        return Starfield.GetType($"Mutagen.Bethesda.Starfield.{clr}");
+    }
+
+    [Fact]
+    public void SelectorEnum_NamesTheEnumTheReaderSwitchesOn()
+    {
+        var named = new List<(string Selected, string? Enum)>();
+        foreach (var o in AllObjects())
+        {
+            if (o.Attribute("selectedBy") != null) named.Add(((string)o.Attribute("name")!, (string?)o.Attribute("selectorEnum")));
+            foreach (var f in o.Element(Loqui + "Fields")?.Descendants() ?? Enumerable.Empty<XElement>())
+            {
+                if (f.Attribute("selectedBy") != null) named.Add(((string)f.Attribute("refName")!, (string?)f.Attribute("selectorEnum")));
+                else f.Attribute("selectorEnum").ShouldBeNull($"{f.Attribute("name")}: selectorEnum without selectedBy");
+            }
+        }
+        named.Count.ShouldBeGreaterThan(SelectorEnums.Count - 1);
+        foreach (var (selected, enumName) in named)
+        {
+            var expected = SelectorEnums[selected];
+            if (expected == null)
+            {
+                enumName.ShouldBeNull(selected);
+                continue;
+            }
+            enumName.ShouldNotBeNull($"{selected}: its selector values are {expected.Name} names, but no selectorEnum says so");
+            EnumByXmlName(enumName!).ShouldBe(expected, selected);
+        }
+    }
+
     [Fact]
     public void MagicEffectArchetypes_ReportTheXmlType()
     {

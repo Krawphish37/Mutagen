@@ -237,4 +237,60 @@ public class HandReadLayoutAttributesTests
             }
         }
     }
+
+    // C57: parameter 3 (CTDA offset 28) is read as LinkedReferenceKeyword only when the xml's layoutPresentWhen holds:
+    // RunOnType is LinkedReference and the stored value is neither 0 nor -1 (ConditionBinaryCreateTranslation
+    // .FillEndingParams); otherwise the keyword is null and only ParameterThree holds the bytes. The rule is evaluated
+    // from the attribute's forms, over every RunOnType and the values around the rule's edges.
+    private static bool PresentWhen(string rule, Condition.RunOnType runOn, int stored)
+    {
+        foreach (var form in rule.Split(';'))
+        {
+            var parts = form.Split(':');
+            switch (parts[0])
+            {
+                case "field" when parts[1] == "RunOnType" && parts[2].StartsWith("is="):
+                    if (runOn != Enum.Parse<Condition.RunOnType>(parts[2][3..])) return false;
+                    break;
+                case "value" when parts[1].StartsWith("not="):
+                    if (parts[1][4..].Split(',').Select(int.Parse).Contains(stored)) return false;
+                    break;
+                default:
+                    throw new InvalidDataException($"a layoutPresentWhen form this test doesn't know: {form}");
+            }
+        }
+        return true;
+    }
+
+    [Fact]
+    public void LinkedReferenceKeyword_IsReadOnlyWhenTheXmlSays()
+    {
+        var datas = Path.Combine("Common Subrecords", "ConditionDatas", "ConditionDatas.xml");
+        var keyword = Field(datas, "ConditionData", "LinkedReferenceKeyword");
+        var rule = (string)keyword.Attribute("layoutPresentWhen")!;
+        rule.ShouldBe("field:RunOnType:is=LinkedReference;value:not=0,-1");
+        var offset = int.Parse((string)keyword.Attribute("layoutOffset")!);
+        offset.ShouldBe(int.Parse((string)Field(datas, "ConditionData", "ParameterThree").Attribute("layoutOffset")!));
+        var runOnOffset = int.Parse((string)Field(datas, "ConditionData", "RunOnType").Attribute("layoutOffset")!);
+        var present = 0;
+        foreach (var runOn in Enum.GetValues<Condition.RunOnType>())
+        {
+            foreach (var stored in new[] { 0, -1, 0x812, 1, 0xABCDE })
+            {
+                var bytes = Ctda(packed: 0, 72); // GetIsID
+                BitConverter.GetBytes((int)runOn).CopyTo(bytes, 6 + runOnOffset);
+                BitConverter.GetBytes(stored).CopyTo(bytes, 6 + offset);
+                var expected = PresentWhen(rule, runOn, stored);
+                if (expected) present++;
+                foreach (var c in ReadBoth(bytes))
+                {
+                    c.Data.ParameterThree.ShouldBe(stored);
+                    c.Data.LinkedReferenceKeyword.IsNull.ShouldBe(!expected, $"{runOn}, {stored}");
+                    if (expected) c.Data.LinkedReferenceKeyword.FormKey.ID.ShouldBe((uint)stored & 0xFFFFFF);
+                    Write(c).ShouldBe(bytes, $"{runOn}, {stored}");
+                }
+            }
+        }
+        present.ShouldBe(3);
+    }
 }

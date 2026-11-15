@@ -137,7 +137,8 @@
          with MAST as the item's trigger, each item read by MasterReference's generated reader (Mutagen.Bethesda.Core's
          MasterReference.xml: MAST, the master's file name, then DATA, its file size, when there). The overlay does the
          same (StarfieldModHeaderBinaryOverlay, ParseRepeatedTypelessSubrecord: MAST starts an item, MAST and DATA belong
-         to it). An item runs from its MAST to the next MAST or to the first subrecord that isn't its DATA.
+         to it). An item runs from its MAST to the next MAST or to the first subrecord that isn't its DATA. No official
+         plugin writes a master's DATA (their master lists are MAST only), so the DATA case isn't met by the real-data run.
        The other subrecords (HEDR, OFST, DELE, CNAM, SNAM, ONAM with its XXXX, SCRN, TNAM, BNAM, INTV, INCC, CHGL) are read
        by the generated reader as the record xml (StarfieldModHeader.xml) says. -->
   <Header sig="TES4" object="StarfieldModHeader">
@@ -505,7 +506,75 @@
   </Define>
   <Record sig="WEAP" object="Weapon"><Use name="ObjectTemplates" /></Record>
   <Record sig="ARMO" object="Armor"><Use name="ObjectTemplates" /></Record>
-  <Record sig="NPC_" object="Npc"><Use name="ObjectTemplates" /></Record>
+  <!-- NPC_ (C57): also ONA2, the race overrides (NpcRaceOverrideBinaryCreateTranslation.FillBinaryFlagParseCustom,
+       Records/Major Records/NpcRaceOverride.cs; the overlay parses the same content with it): a uint32 of
+       NpcRaceOverride.Section flags, then the sections whose flag is set, in the flags' order: Size (0x01) as one signed
+       byte (-1 is Size.Unknown), then Movement (0x02), Flight (0x04), UnarmedWeapon (0x08), FlagOverrides (0x10),
+       Bleedout (0x20), General (0x40) and ElectromagneticShock (0x80), each read by its class's generated reader (the
+       fields below, as its record xml has them). A section whose flag is clear is null. -->
+  <Record sig="NPC_" object="Npc">
+    <Use name="ObjectTemplates" />
+    <Sub sig="ONA2" optional="true" field="RaceOverrides">
+      <U32 name="sections" why="which sections follow (NpcRaceOverride.Section); Mutagen derives it from the sections it has" />
+      <Switch on="sections" mask="0x01"><Case value="0x01"><I8 field="Size" /></Case><Default><Null field="Size" /></Default></Switch>
+      <Switch on="sections" mask="0x02">
+        <Case value="0x02">
+          <Object field="Movement">
+            <F32 field="AccelerationRate" /><F32 field="DecelerationRate" /><F32 field="AngularAccelerationRate" /><F32 field="AngularTolerance" />
+          </Object>
+        </Case>
+        <Default><Null field="Movement" /></Default>
+      </Switch>
+      <Switch on="sections" mask="0x04">
+        <Case value="0x04"><Object field="Flight"><F32 field="FlightRadius" /></Object></Case>
+        <Default><Null field="Flight" /></Default>
+      </Switch>
+      <Switch on="sections" mask="0x08">
+        <Case value="0x08"><Object field="UnarmedWeapon"><F32 field="InjuredHealthPercent" /><FormID field="UnarmedWeapon" /></Object></Case>
+        <Default><Null field="UnarmedWeapon" /></Default>
+      </Switch>
+      <Switch on="sections" mask="0x10">
+        <Case value="0x10"><Object field="FlagOverrides"><U64 field="RaceDataFlags" /><U64 field="OverrideActive" /></Object></Case>
+        <Default><Null field="FlagOverrides" /></Default>
+      </Switch>
+      <Switch on="sections" mask="0x20">
+        <Case value="0x20">
+          <Object field="Bleedout">
+            <F32 field="HealthPercent" /><F32 field="Chance" /><F32 field="RecoverChance" /><F32 field="TimeMin" /><F32 field="TimeMax" />
+            <F32 field="HealthDrainRate" />
+          </Object>
+        </Case>
+        <Default><Null field="Bleedout" /></Default>
+      </Switch>
+      <Switch on="sections" mask="0x40">
+        <Case value="0x40">
+          <Object field="General">
+            <FormID field="ImpactMaterialType" />
+            <Object field="CorpseOpenSound"><Use name="SoundReference" /></Object>
+            <Object field="CorpseCloseSound"><Use name="SoundReference" /></Object>
+            <FormID field="OnCrippleExplosion" /><FormID field="OnCrippleDebris" /><FormID field="OnCrippleImpactDataSet" />
+            <F32 field="OnCrippleDebrisScale" /><U8 field="OnCrippleDebrisCount" /><U8 field="OnCrippleDecalCount" />
+            <U32 field="ActiveOverrides" />
+          </Object>
+        </Case>
+        <Default><Null field="General" /></Default>
+      </Switch>
+      <Switch on="sections" mask="0x80">
+        <Case value="0x80">
+          <Object field="ElectromagneticShock">
+            <U8 field="Supported" encoding="bool" /><F32 field="RecoverChance" /><F32 field="TimeMin" /><F32 field="TimeMax" />
+            <F32 field="RecoverChanceOnDamageReceived" /><F32 field="HealthDrainRate" /><F32 field="HealthAfterRecovery" />
+            <F32 field="ImmunityDurationAfterRecovery" />
+          </Object>
+        </Case>
+        <Default><Null field="ElectromagneticShock" /></Default>
+      </Switch>
+    </Sub>
+  </Record>
+  <!-- A sound reference (SoundReference.xml, BGSAudio::WwiseSoundHook): two Wwise GUIDs and two forms -->
+  <Define name="SoundReference">
+    <Guid field="StartEvent" /><Guid field="StopEvent" /><FormID field="ConditionForm" /><FormID field="EventForm" />
+  </Define>
   <Record sig="FLOR" object="Flora"><Use name="ObjectTemplates" /></Record>
   <Record sig="GBFM" object="GenericBaseForm"><Use name="ObjectTemplates" /></Record>
 
@@ -641,7 +710,8 @@
           </IfMore>
         </Case>
         <Case type="DialogResponsesAdapter">
-          <IfMore><Object field="ScriptFragments"><Use name="ScriptFragments" /></Object></IfMore>
+          <Note>DialogResponsesAdapterBinaryCreateTranslation makes a plain ScriptFragments, never a SceneScriptFragments</Note>
+          <IfMore><Object field="ScriptFragments" class="ScriptFragments"><Use name="ScriptFragments" /></Object></IfMore>
         </Case>
         <Case type="SceneAdapter">
           <IfMore>

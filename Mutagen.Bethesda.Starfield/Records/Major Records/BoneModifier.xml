@@ -3,7 +3,7 @@
   <Object name="BoneModifier" recordType="BMOD" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
       <RefList name="Components" refName="AComponent" />
-      <RefDirect name="Data" refName="ABoneModifierData" recordType="DATA" binary="Custom" selectedBy="subrecord:DATA:string" />
+      <RefDirect name="Data" refName="ABoneModifierData" recordType="DATA" binary="Custom" selectedBy="subrecord:DATA:string" selectorEnum="BoneModifierBinaryCreateTranslation.DataType" />
     </Fields>
   </Object>
   <Object name="ABoneModifierData" abstract="true" objType="Subrecord" >

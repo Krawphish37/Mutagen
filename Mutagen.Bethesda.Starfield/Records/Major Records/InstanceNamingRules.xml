@@ -4,7 +4,7 @@
     <Fields>
       <RefDirect name="VirtualMachineAdapter" refName="VirtualMachineAdapter" overflowRecordType="XXXX" />
       <CustomLogic name="RuleSetParser" recordType="UNAM" fills="Rules" />
-      <RefDirect name="Rules" refName="AInstanceNamingRules" binary="NoGeneration" selectedBy="subrecord:UNAM:Int32" />
+      <RefDirect name="Rules" refName="AInstanceNamingRules" binary="NoGeneration" selectedBy="subrecord:UNAM:Int32" selectorEnum="InstanceNamingRulesBinaryCreateTranslation.TargetType" />
     </Fields>
   </Object>
   <Object name="AInstanceNamingRules" objType="Subrecord" abstract="true">
