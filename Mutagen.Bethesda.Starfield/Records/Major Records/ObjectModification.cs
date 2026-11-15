@@ -14,8 +14,8 @@ partial class AObjectModification
     [Flags]
     public enum MajorFlag
     {
-        LegendaryMod = 0x08,
-        ModCollection = 0x40,
+        LegendaryMod = 0x10,
+        ModCollection = 0x80,
     }
 
     public enum NoneProperty
