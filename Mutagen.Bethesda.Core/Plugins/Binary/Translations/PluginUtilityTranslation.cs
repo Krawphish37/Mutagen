@@ -102,6 +102,17 @@ internal static class PluginUtilityTranslation
             frame: frame);
         // A header FormID that isn't the one Mutagen writes for this FormKey is written back as read (RawHeaderFormIds)
         RawHeaderFormIds.Remember(record, rawFormId, frame.MetaData);
+        if (frame.MetaData.ChildRecordsHeadersOnly)
+        {
+            if (frame.MetaData.HeadersOnlyParentRead)
+            {
+                // MajorRecordReader's ChildRecordRead.Headers (C58/W9): a child is read from its header alone
+                frame.SetToFinalPosition();
+                frame.MetaData.FormVersion = null;
+                return record;
+            }
+            frame.MetaData.HeadersOnlyParentRead = true;
+        }
         // Where each field's subrecords start, to note records whose subrecords come in an order Mutagen does not write
         var fieldStarts = frame.MetaData.Constants.KeepSubrecordOrder ? SubrecordOrder.FieldStarts : null;
         var firstField = fieldStarts?.Count ?? 0;

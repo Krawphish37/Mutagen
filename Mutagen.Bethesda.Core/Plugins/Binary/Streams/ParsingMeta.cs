@@ -58,6 +58,17 @@ public sealed class ParsingMeta
     public ushort? FormVersion { get; set; }
 
     /// <summary>
+    /// MajorRecordReader's ChildRecordRead.Headers (C58/W9): every major record after the first one read is read from
+    /// its header alone
+    /// </summary>
+    internal bool ChildRecordsHeadersOnly { get; set; }
+
+    /// <summary>
+    /// With <see cref="ChildRecordsHeadersOnly"/>: whether the first record (the parent) has been started
+    /// </summary>
+    internal bool HeadersOnlyParentRead { get; set; }
+
+    /// <summary>
     /// Mod header HEDR version
     /// </summary>
     public float? ModHeaderVersion { get; set; }
