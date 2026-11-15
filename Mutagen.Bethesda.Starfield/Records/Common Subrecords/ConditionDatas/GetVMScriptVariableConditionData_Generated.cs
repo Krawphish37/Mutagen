@@ -457,38 +457,6 @@ namespace Mutagen.Bethesda.Starfield
         }
         #endregion
 
-        #region Mutagen
-        object? IConditionParameters.Parameter1
-        {
-            get => null;
-            set
-            {
-
-            }
-        }
-        object? IConditionParametersGetter.Parameter1
-        {
-            get => null;
-        }
-        Type? IConditionParametersGetter.Parameter1Type
-        {
-            get => null;
-        }
-        object? IConditionParameters.Parameter2
-        {
-            get => FirstParameter;
-            set => FirstParameter = (value is String v ? v : throw new ArgumentException());
-        }
-        object? IConditionParametersGetter.Parameter2
-        {
-            get => FirstParameter;
-        }
-        Type? IConditionParametersGetter.Parameter2Type
-        {
-            get => typeof(String);
-        }
-        #endregion
-
         #region Binary Translation
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected override object BinaryWriteTranslator => GetVMScriptVariableConditionDataBinaryWriteTranslation.Instance;
