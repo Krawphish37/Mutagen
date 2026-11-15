@@ -18,7 +18,7 @@
           <Float name="Weight" />
         </Fields>
       </Data>
-      <CustomLogic name="DataParse" fills="Data.Scene,Data.Terminal,Data.File">
+      <CustomLogic name="DataParse" fills="Data.Sound,Data.Scene,Data.Unknown,Data.File,Data.Terminal">
         <RecordType>SNAM</RecordType>
         <RecordType>PNAM</RecordType>
       </CustomLogic>
@@ -39,9 +39,10 @@
   </Object>
   <Object name="NoteProgram" objType="Subrecord" baseClass="ANoteData" selectorValue="Program">
     <Fields>
-      <!-- xEdit: SNAM is unused (4 bytes) for a Program note; kept as read. Read and written in Note.cs. -->
-      <ByteArray name="Unknown" nullable="True" binary="NoGeneration" />
       <String name="File" nullable="True" />
+      <!-- xEdit: SNAM is unused (4 bytes) for a Program note; kept as read, any length. On a NOTE, Note.cs reads and
+           writes it as the SNAM subrecord. Standalone (this object's own binary), it is the bytes after File. -->
+      <ByteArray name="Unknown" nullable="True" />
     </Fields>
   </Object>
   <Object name="NoteTerminal" objType="Subrecord" baseClass="ANoteData" selectorValue="Terminal">

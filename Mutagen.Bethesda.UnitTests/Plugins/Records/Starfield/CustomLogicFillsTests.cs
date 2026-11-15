@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Xml.Linq;
+using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Starfield;
 using Shouldly;
 using Xunit;
@@ -172,6 +173,45 @@ public class CustomLogicFillsTests
             {
                 touched.ShouldContain(field, $"{step}: fills names {field}, which the step's code doesn't touch");
             }
+            FillsOneLevelDown_MatchTheCompiledReadStep(step, hierarchy);
+        }
+    }
+
+    // C44: a step that fills fields of the object held in a field ("Data.File") is checked one level down too: every
+    // field of that object's class (or a subclass) the step assigns, or whose form link it sets, must be listed as
+    // "Data.X", and every listed one touched. Without this, Note's DataParse said Data.Scene, Data.Terminal, Data.File
+    // while it also filled Data.Sound and Data.Unknown (C39), and the test passed.
+    private static void FillsOneLevelDown_MatchTheCompiledReadStep(Step step, List<Type> hierarchy)
+    {
+        var calls = IlWalk.Walk(ReadStep(step)).Calls;
+        foreach (var group in step.FillPaths.Where(p => p.Contains('.')).GroupBy(p => p.Split('.')[0]))
+        {
+            var held = hierarchy
+                .SelectMany(c => c.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+                .Where(p => p.Name == group.Key)
+                .Select(p => ElementType(p.PropertyType))
+                .SelectMany(t => StarfieldTypes.Where(s => !s.IsInterface && t.IsAssignableFrom(s)))
+                .Distinct()
+                .ToList();
+            held.ShouldNotBeEmpty($"{step}: {group.Key} holds no Starfield class");
+            var under = calls
+                .Where(c => c.DeclaringType != null && InHierarchy(c.DeclaringType, held))
+                .ToList();
+            var fills = under
+                .Where(c => c.Name.StartsWith("set_")
+                    || (c.Name.StartsWith("get_") && c is MethodInfo m && typeof(IFormLinkGetter).IsAssignableFrom(m.ReturnType)))
+                .Select(c => c.Name[4..])
+                .ToHashSet();
+            var touched = under.Where(c => c.Name.StartsWith("get_") || c.Name.StartsWith("set_")).Select(c => c.Name[4..]).ToHashSet();
+            var listed = group.Select(p => p.Split('.')[1]).ToHashSet();
+            foreach (var fill in fills)
+            {
+                listed.ShouldContain(fill, $"{step} fills {group.Key}.{fill}, which fills doesn't name");
+            }
+            foreach (var field in listed)
+            {
+                touched.ShouldContain(field, $"{step}: fills names {group.Key}.{field}, which the step's code doesn't touch");
+            }
         }
     }
 
@@ -200,6 +240,13 @@ public class CustomLogicFillsTests
     public void FootstepSetCount_ListsXcntAndData()
     {
         Steps().Single(s => s.Object == "FootstepSet" && s.Name == "Count").RecordTypes.ShouldBe(new[] { "XCNT", "DATA" });
+    }
+
+    // C38: the step reads them with "case RecordTypeInts.X", which SubrecordsTheStepAsksFor_AreListed can't see
+    [Fact]
+    public void PackageDataInputNames_ListsUnamBnamPnam()
+    {
+        Steps().Single(s => s.Object == "Package" && s.Name == "DataInputNames").RecordTypes.ShouldBe(new[] { "UNAM", "BNAM", "PNAM" });
     }
 
     // The five steps SFSearch found reading a subrecord into no field: each is written back from another field

@@ -244,10 +244,3 @@ partial class NoteBinaryOverlay
         return (int)Note_FieldIndex.DropdownSound;
     }
 }
-
-partial class NoteProgramBinaryOverlay
-{
-    // The NOTE reader never builds this overlay: Note's Data getter (NoteBinaryOverlay) makes a NoteProgram and
-    // reads its SNAM there. Unknown is the SNAM subrecord, which this standalone typeless overlay never holds.
-    public ReadOnlyMemorySlice<byte>? Unknown => null;
-}

@@ -32,7 +32,32 @@ public class ByteArrayBinaryTranslationGeneration : PrimitiveBinaryTranslationGe
         Accessor converterAccessor)
     {
         var data = typeGen.GetFieldData();
-        
+
+        // A nullable byte array with no header: written when set, nothing when null (the reader's
+        // "if (frame.Complete) return;"). The translation's header-less Write takes no null (C43).
+        if (typeGen.Nullable
+            && !data.RecordType.HasValue
+            && !data.OverflowRecordType.HasValue
+            && !data.MarkerType.HasValue)
+        {
+            sb.AppendLine($"if ({itemAccessor} is {{}} {typeGen.Name}Item)");
+            using (sb.CurlyBrace())
+            {
+                using (var args = sb.Call(
+                           $"{this.NamespacePrefix}{GetTranslatorInstance(typeGen, getter: true)}.Write"))
+                {
+                    args.Add($"writer: {writerAccessor}");
+                    args.Add($"item: {typeGen.Name}Item");
+                    if (this.DoErrorMasks)
+                    {
+                        args.Add($"fieldIndex: (int){typeGen.IndexEnumName}");
+                        args.Add($"errorMask: {errorMaskAccessor}");
+                    }
+                }
+            }
+            return;
+        }
+
         using (var args = sb.Call(
                    $"{this.NamespacePrefix}{GetTranslatorInstance(typeGen, getter: true)}.Write"))
         {
@@ -206,9 +231,16 @@ public class ByteArrayBinaryTranslationGeneration : PrimitiveBinaryTranslationGe
         {
             if (dataType == null)
             {
-                if (typeGen.Nullable)
+                if (typeGen.Nullable && data.Length.HasValue)
                 {
                     sb.AppendLine($"public {typeGen.TypeName(getter: true)}{(typeGen.Nullable ? "?" : null)} {typeGen.Name} => {structDataAccessor}.Length >= {(currentPosition + (await this.ExpectedLength(objGen, typeGen)).Value)} ? {structDataAccessor}.Span.Slice({passedLengthAccessor ?? "0x0"}, {data.Length.Value}).ToArray() : default(ReadOnlyMemorySlice<byte>?);");
+                }
+                else if (typeGen.Nullable)
+                {
+                    // No set length: the rest of the data, as the full import reads it (ByteArrayBinaryTranslation.Parse
+                    // takes what remains), and null when nothing remains (the full import's "if (frame.Complete) return;")
+                    var pos = string.IsNullOrEmpty(passedLengthAccessor) ? "0" : passedLengthAccessor;
+                    sb.AppendLine($"public {typeGen.TypeName(getter: true)}? {typeGen.Name} => {structDataAccessor}.Length <= {pos} ? default(ReadOnlyMemorySlice<byte>?) : {structDataAccessor}.Span.Slice({pos}).ToArray();");
                 }
                 else if (data.Length.HasValue)
                 {
@@ -264,6 +296,31 @@ public class ByteArrayBinaryTranslationGeneration : PrimitiveBinaryTranslationGe
             return $"{nameof(UtilityTranslation)}.{nameof(UtilityTranslation.Zeros)}.Slice(0, {length})";
         }
         return $"new byte[{length}]";
+    }
+
+    /// <summary>
+    /// A nullable byte array of no set length, outside a data subrecord, takes the rest of the struct data (as the full
+    /// import reads it), so it ends where the data ends and a field after it starts there. Such a field couldn't be
+    /// generated before (C43); the non-nullable ones keep their generated code, where nothing reads their EndingPos.
+    /// </summary>
+    public override async Task GenerateWrapperUnknownLengthParse(
+        StructuredStringBuilder sb,
+        ObjectGeneration objGen,
+        TypeGeneration typeGen,
+        Accessor dataAccessor,
+        int? passedLength,
+        string passedLengthAccessor,
+        DataType? data = null)
+    {
+        if (data != null
+            || !typeGen.Nullable
+            || typeGen.GetFieldData().HasTrigger
+            || (await this.ExpectedLength(objGen, typeGen)).HasValue)
+        {
+            await base.GenerateWrapperUnknownLengthParse(sb, objGen, typeGen, dataAccessor, passedLength, passedLengthAccessor, data);
+            return;
+        }
+        sb.AppendLine($"ret.{typeGen.Name}EndingPos = ret.{dataAccessor}.Length;");
     }
 
     public override async Task<int?> GetPassedAmount(ObjectGeneration objGen, TypeGeneration typeGen)
