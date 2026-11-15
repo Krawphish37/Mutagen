@@ -5,7 +5,8 @@ public partial class StaticCollection
     [Flags]
     public enum MajorFlag
     {
-        NonOccluder = 0x00000004,
+        // C55: was 0x04 (the bit number). xEdit bit 4, as Static.NonOccluder
+        NonOccluder = 0x00000010,
         HiddenFromLocalMap = 0x00000200,
         Loadscreen = 0x00000400,
         UsedAsPlatform = 0x00000800,

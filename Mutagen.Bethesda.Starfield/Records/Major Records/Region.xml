@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
-  <Object name="Region" recordType="REGN" objType="Record" baseClass="StarfieldMajorRecord">
+  <Object name="Region" recordType="REGN" objType="Record" baseClass="StarfieldMajorRecord" majorFlag="true">
     <Fields>
       <Color name="MapColor" recordType="RCLR" binaryType="Alpha" nullable="False" />
       <RefList name="RegionAreas" refName="RegionArea" />

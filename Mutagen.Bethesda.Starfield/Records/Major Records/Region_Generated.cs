@@ -601,6 +601,11 @@ namespace Mutagen.Bethesda.Starfield
 
         protected override Type LinkType => typeof(IRegion);
 
+        public MajorFlag MajorFlags
+        {
+            get => (MajorFlag)this.MajorRecordFlagsRaw;
+            set => this.MajorRecordFlagsRaw = (int)value;
+        }
         #region Equals and Hash
         public override bool Equals(object? obj)
         {
@@ -690,6 +695,10 @@ namespace Mutagen.Bethesda.Starfield
         new ExtendedList<RegionArea> RegionAreas { get; }
         new RegionWeather? Weather { get; set; }
         new RegionSounds? Sounds { get; set; }
+        #region Mutagen
+        new Region.MajorFlag MajorFlags { get; set; }
+        #endregion
+
     }
 
     public partial interface IRegionInternal :
@@ -713,6 +722,10 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<IRegionAreaGetter> RegionAreas { get; }
         IRegionWeatherGetter? Weather { get; }
         IRegionSoundsGetter? Sounds { get; }
+
+        #region Mutagen
+        Region.MajorFlag MajorFlags { get; }
+        #endregion
 
     }
 
@@ -1858,6 +1871,7 @@ namespace Mutagen.Bethesda.Starfield
         }
         protected override Type LinkType => typeof(IRegionGetter);
 
+        public Region.MajorFlag MajorFlags => (Region.MajorFlag)this.MajorRecordFlagsRaw;
 
         #region MapColor
         private int? _MapColorLocation;

@@ -7,7 +7,9 @@ public partial class Transform
     [Flags]
     public enum MajorFlag
     {
-        AroundOrigin = 0x0001_0000
+        AroundOrigin = 0x0001_0000,
+        // C55: xEdit bit 17 (323 TRNS in Starfield.esm)
+        ApplyTranslation = 0x0002_0000,
     }
 
     // BNAM, xEdit's Basis

@@ -1532,6 +1532,11 @@ namespace Mutagen.Bethesda.Starfield
 
         protected override Type LinkType => typeof(IStatic);
 
+        public MajorFlag MajorFlags
+        {
+            get => (MajorFlag)this.MajorRecordFlagsRaw;
+            set => this.MajorRecordFlagsRaw = (int)value;
+        }
         [Flags]
         public enum DNAMDataType
         {
@@ -1674,6 +1679,10 @@ namespace Mutagen.Bethesda.Starfield
         new SoundReference? AmbientSound { get; set; }
         new NavmeshGeometry? NavmeshGeometry { get; set; }
         new Static.DNAMDataType DNAMDataTypeState { get; set; }
+        #region Mutagen
+        new Static.MajorFlag MajorFlags { get; set; }
+        #endregion
+
     }
 
     public partial interface IStaticInternal :
@@ -1749,6 +1758,10 @@ namespace Mutagen.Bethesda.Starfield
         ISoundReferenceGetter? AmbientSound { get; }
         INavmeshGeometryGetter? NavmeshGeometry { get; }
         Static.DNAMDataType DNAMDataTypeState { get; }
+
+        #region Mutagen
+        Static.MajorFlag MajorFlags { get; }
+        #endregion
 
     }
 
@@ -3870,6 +3883,7 @@ namespace Mutagen.Bethesda.Starfield
         }
         protected override Type LinkType => typeof(IStaticGetter);
 
+        public Static.MajorFlag MajorFlags => (Static.MajorFlag)this.MajorRecordFlagsRaw;
 
         #region VirtualMachineAdapter
         private int? _VirtualMachineAdapterLengthOverride;

@@ -24,6 +24,8 @@ partial class Static
         /// Sky cell only
         /// </summary>
         ShowInWorldMap = 0x1000_0000,
+        // C55: xEdit bit 29 'Navmesh - Ignore Erosion' (137 STAT in Starfield.esm)
+        NavMeshGenerationIgnoreErosion = 0x2000_0000,
         NavMeshGenerationGround = 0x4000_0000,
     }
 }

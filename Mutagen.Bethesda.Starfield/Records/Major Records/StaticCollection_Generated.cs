@@ -925,6 +925,11 @@ namespace Mutagen.Bethesda.Starfield
 
         protected override Type LinkType => typeof(IStaticCollection);
 
+        public MajorFlag MajorFlags
+        {
+            get => (MajorFlag)this.MajorRecordFlagsRaw;
+            set => this.MajorRecordFlagsRaw = (int)value;
+        }
         public override IEnumerable<IAssetLinkGetter> EnumerateAssetLinks(AssetLinkQuery queryCategories, IAssetLinkCache? linkCache = null, Type? assetType = null, bool iterateNestedRecords = true) => StaticCollectionCommon.Instance.EnumerateAssetLinks(this, queryCategories, linkCache, assetType, iterateNestedRecords);
         public override IEnumerable<IAssetLink> EnumerateListedAssetLinks(bool iterateNestedRecords = true) => StaticCollectionSetterCommon.Instance.EnumerateListedAssetLinks(this, iterateNestedRecords);
         public override void RemapAssetLinks(IReadOnlyDictionary<IAssetLinkGetter, string> mapping, AssetLinkQuery queryCategories, IAssetLinkCache? linkCache) => StaticCollectionSetterCommon.Instance.RemapAssetLinks(this, mapping, linkCache, queryCategories);
@@ -1046,6 +1051,10 @@ namespace Mutagen.Bethesda.Starfield
         new TranslatedString? Name { get; set; }
         new String? Filter { get; set; }
         new ExtendedList<StaticPart> Parts { get; }
+        #region Mutagen
+        new StaticCollection.MajorFlag MajorFlags { get; set; }
+        #endregion
+
     }
 
     public partial interface IStaticCollectionInternal :
@@ -1105,6 +1114,10 @@ namespace Mutagen.Bethesda.Starfield
         #endregion
         String? Filter { get; }
         IReadOnlyList<IStaticPartGetter> Parts { get; }
+
+        #region Mutagen
+        StaticCollection.MajorFlag MajorFlags { get; }
+        #endregion
 
     }
 
@@ -2571,6 +2584,7 @@ namespace Mutagen.Bethesda.Starfield
         }
         protected override Type LinkType => typeof(IStaticCollectionGetter);
 
+        public StaticCollection.MajorFlag MajorFlags => (StaticCollection.MajorFlag)this.MajorRecordFlagsRaw;
 
         #region VirtualMachineAdapter
         private int? _VirtualMachineAdapterLengthOverride;
