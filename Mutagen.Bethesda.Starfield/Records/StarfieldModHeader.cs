@@ -14,10 +14,19 @@ public partial class StarfieldModHeader : IModHeaderInteriorCellCount
     public enum HeaderFlag
     {
         Master = 0x0000_0001,
+        /// <summary>
+        /// xEdit's "Optimized" (TES4 flag bit 4); no plugin in the Starfield Data folder sets it
+        /// </summary>
+        Optimized = 0x0000_0010,
         Localized = 0x0000_0080,
         Light = 0x0000_0100,
         Overlay = 0x0000_0200,
         Medium = 0x0000_0400,
+        /// <summary>
+        /// xEdit's "Blueprint" (TES4 flag bit 11): set by the ship blueprint plugins (BlueprintShips-Starfield.esm and
+        /// the other BlueprintShips-*.esm)
+        /// </summary>
+        Blueprint = 0x0000_0800,
     }
 
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
