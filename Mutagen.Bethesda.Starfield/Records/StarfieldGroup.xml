@@ -5,7 +5,7 @@
       <Where>StarfieldMajorRecord</Where>
     </Generic>
     <Fields>
-      <CustomLogic byteLength="4" name="ContainedRecordTypeParse" />
+      <CustomLogic byteLength="4" name="ContainedRecordTypeParse" fills="" writtenFrom="class" />
       <Enum name="Type" enumName="GroupTypeEnum" byteLength="4" />
       <Int32 name="LastModified" />
       <Int32 name="Unknown" />
@@ -23,7 +23,7 @@
       <Where>CellBlock</Where>
     </Generic>
     <Fields>
-      <CustomLogic byteLength="4" name="ContainedRecordType" />
+      <CustomLogic byteLength="4" name="ContainedRecordType" fills="" writtenFrom="class" />
       <Enum name="Type" enumName="GroupTypeEnum" byteLength="4" />
       <Int32 name="LastModified" />
       <Int32 name="Unknown" />

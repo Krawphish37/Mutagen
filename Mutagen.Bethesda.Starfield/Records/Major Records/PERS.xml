@@ -3,7 +3,7 @@
   <Object name="PERS" recordType="PERS" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
       <UInt32 name="DATA" recordType="DATA" unknown="true" />
-      <CustomLogic name="ItemsParse">
+      <CustomLogic name="ItemsParse" fills="Items">
         <RecordType>XXXX</RecordType>
         <RecordType>DAT2</RecordType>
       </CustomLogic>

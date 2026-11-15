@@ -1334,7 +1334,8 @@ namespace Mutagen.Bethesda.Starfield
                 RecordTypes.FSTS,
                 RecordTypes.VMAD,
                 RecordTypes.XXXX,
-                RecordTypes.XCNT);
+                RecordTypes.XCNT,
+                RecordTypes.DATA);
             return new RecordTriggerSpecs(
                 allRecordTypes: all,
                 triggeringRecordTypes: triggers);
@@ -2321,6 +2322,7 @@ namespace Mutagen.Bethesda.Starfield
                     return (int)FootstepSet_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.XCNT:
+                case RecordTypeInts.DATA:
                 {
                     return FootstepSetBinaryCreateTranslation.FillBinaryCountCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
@@ -2488,6 +2490,7 @@ namespace Mutagen.Bethesda.Starfield
                     return (int)FootstepSet_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.XCNT:
+                case RecordTypeInts.DATA:
                 {
                     return CountCustomParse(
                         stream,

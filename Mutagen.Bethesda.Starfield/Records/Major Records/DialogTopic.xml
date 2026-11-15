@@ -20,7 +20,7 @@
       <List name="TopicInfoList" recordType="TIFL" >
         <FormLink refName="DialogResponses" />
       </List>
-      <CustomLogic name="InfoListCount" recordType="TIFC" />
+      <CustomLogic name="InfoListCount" recordType="TIFC" fills="" writtenFrom="count:TopicInfoList" />
       <Int32 name="Timestamp" binary="NoGeneration" layoutGroup="TopicChildren" layoutOffset="16" />
       <Int32 name="Unknown" binary="NoGeneration" layoutGroup="TopicChildren" layoutOffset="20" />
       <RefList name="Responses" binary="NoGeneration" refName="DialogResponses" layoutGroup="TopicChildren" />

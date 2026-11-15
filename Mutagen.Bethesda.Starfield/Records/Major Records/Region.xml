@@ -4,7 +4,7 @@
     <Fields>
       <Color name="MapColor" recordType="RCLR" binaryType="Alpha" nullable="False" />
       <RefList name="RegionAreas" refName="RegionArea" />
-      <CustomLogic name="RegionAreaLogic" recordType="RDAT" />
+      <CustomLogic name="RegionAreaLogic" recordType="RDAT" fills="Weather,Sounds" />
       <RefDirect name="Weather" refName="RegionWeather" binary="NoGeneration" nullable="True" />
       <RefDirect name="Sounds" refName="RegionSounds" binary="NoGeneration" nullable="True" />
     </Fields>
@@ -20,7 +20,7 @@
   </Object>
   <Object name="RegionData" abstract="true" objType="Subrecord">
     <Fields>
-      <CustomLogic name="HeaderLogic" byteLength="8" recordType="RDAT" />
+      <CustomLogic name="HeaderLogic" byteLength="8" recordType="RDAT" fills="Flags,Priority" />
       <Enum name="Flags" enumName="RegionData.RegionDataFlag" binary="NoGeneration" layoutSubrecord="RDAT" layoutOffset="4" />
       <UInt8 name="Priority" binary="NoGeneration" layoutSubrecord="RDAT" layoutOffset="5" />
     </Fields>

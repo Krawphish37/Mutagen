@@ -317,7 +317,7 @@
   </Object>
   <Object name="NpcRaceOverride" objType="Subrecord" recordType="ONA2" >
     <Fields>
-      <CustomLogic name="FlagParse" />
+      <CustomLogic name="FlagParse" fills="Size,Movement,Flight,UnarmedWeapon,FlagOverrides,Bleedout,General,ElectromagneticShock" />
       <Enum name="Size" enumName="Size" nullable="True" binary="NoGeneration" />
       <RefDirect name="Movement" refName="NpcRaceOverrideMovement" nullable="True" binary="NoGeneration" />
       <RefDirect name="Flight" refName="NpcRaceOverrideFlight" nullable="True" binary="NoGeneration" />

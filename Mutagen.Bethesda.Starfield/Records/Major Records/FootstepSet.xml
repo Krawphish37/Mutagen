@@ -3,7 +3,10 @@
   <Object name="FootstepSet" recordType="FSTS" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
       <RefDirect name="VirtualMachineAdapter" refName="VirtualMachineAdapter" overflowRecordType="XXXX" />
-      <CustomLogic name="Count" recordType="XCNT" />
+      <CustomLogic name="Count" fills="WalkFootsteps,RunFootsteps,SprintFootsteps,SneakFootsteps,SwimFootsteps">
+        <RecordType>XCNT</RecordType>
+        <RecordType>DATA</RecordType>
+      </CustomLogic>
       <List name="WalkFootsteps" binary="NoGeneration">
         <FormLink refName="Footstep" />
       </List>

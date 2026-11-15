@@ -4,7 +4,7 @@
     <Fields>
       <RefDirect name="VirtualMachineAdapter" refName="VirtualMachineAdapter" overflowRecordType="XXXX"/>
       <RefList name="Components" refName="AComponent" />
-      <CustomLogic name="TrapForm" byteLength="4" recordType="NAME"/>
+      <CustomLogic name="TrapForm" byteLength="4" recordType="NAME" fills="Projectile,Hazard" />
       <FormLink name="Emittance" recordType="XEMI">
         <Interface>IEmittance</Interface>
       </FormLink>

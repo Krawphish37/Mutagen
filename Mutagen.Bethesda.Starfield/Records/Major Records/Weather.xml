@@ -12,9 +12,9 @@
       <Array name="Clouds" fixedSize="32" binary="Custom" recordType="RNAM" nullable="False">
         <RefDirect refName="CloudLayer" />
       </Array>
-      <CustomLogic name="CloudXSpeeds" recordType="QNAM" />
-      <CustomLogic name="CloudColors" recordType="PNAM" />
-      <CustomLogic name="CloudAlphas" recordType="JNAM" />
+      <CustomLogic name="CloudXSpeeds" recordType="QNAM" fills="Clouds.XSpeed" />
+      <CustomLogic name="CloudColors" recordType="PNAM" fills="Clouds.Colors" />
+      <CustomLogic name="CloudAlphas" recordType="JNAM" fills="Clouds.Alphas" />
       <Data recordType="NAM0">
         <Fields>
           <RefDirect name="SkyUpperColor" refName="WeatherColor" />
@@ -84,7 +84,7 @@
           <Percent name="WindTurbulance" integerType="Byte" />
         </Fields>
       </Data>
-      <CustomLogic name="DisabledCloudLayers" recordType="NAM1" />
+      <CustomLogic name="DisabledCloudLayers" recordType="NAM1" fills="Clouds.Enabled" />
       <List name="SkyStatics">
         <FormLink refName="Static" recordType="TNAM" />
       </List>

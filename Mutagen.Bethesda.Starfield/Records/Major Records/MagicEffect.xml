@@ -11,7 +11,7 @@
       </List>
       <Data>
         <Fields>
-          <CustomLogic name="AssociatedItem" byteLength="4" />
+          <CustomLogic name="AssociatedItem" byteLength="4" fills="" writtenFrom="field:Archetype" />
           <FormLink name="MagicSkill" refName="ActorValueInformation" />
           <FormLink name="CastingArt" refName="ArtObject" />
           <FormLink name="MovementType" refName="MovementType" />
