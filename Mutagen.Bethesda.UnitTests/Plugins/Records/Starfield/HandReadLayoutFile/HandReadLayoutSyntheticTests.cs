@@ -156,6 +156,17 @@ public class HandReadLayoutSyntheticTests
         package.Data[1] = new PackageDataBool { Data = true, Name = "Flag", Flags = APackageData.Flag.Public };
         mod.Packages.Add(package);
 
+        // C52: a target input whose condition has both text parameters (CIS1, CIS2 in its value block), then another input
+        var cisTarget = new PackageDataTarget { Type = PackageDataTarget.Types.SingleRef, Name = "Target" };
+        IConditionParameters cisData = new ActorExposedToSkyConditionData();
+        cisData.StringParameter1 = "abc";
+        cisData.StringParameter2 = "def";
+        cisTarget.Conditions.Add(new ConditionFloat { ComparisonValue = 1, Data = (ConditionData)cisData });
+        var cisPackage = new Package(mod) { EditorID = "LayoutPackageCis" };
+        cisPackage.Data[0] = cisTarget;
+        cisPackage.Data[1] = new PackageDataBool { Data = true, Name = "Flag" };
+        mod.Packages.Add(cisPackage);
+
         mod.InstanceNamingRules.Add(new InstanceNamingRules(mod) { EditorID = "LayoutRulesNone", Rules = new NoInstanceNamingRules() });
         mod.InstanceNamingRules.Add(new InstanceNamingRules(mod) { EditorID = "LayoutRulesContainer", Rules = new ContainerInstanceNamingRules() });
         mod.InstanceNamingRules.Add(new InstanceNamingRules(mod) { EditorID = "LayoutRulesFlora", Rules = new FloraInstanceNamingRules() });

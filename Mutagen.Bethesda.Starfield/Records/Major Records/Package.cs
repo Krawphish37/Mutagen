@@ -211,8 +211,11 @@ partial class PackageBinaryCreateTranslation
                 case RecordTypeInts.PLDT:
                 case RecordTypeInts.CITC:
                 case RecordTypeInts.CTDA:
+                case RecordTypeInts.CIS1:
+                case RecordTypeInts.CIS2:
                 case RecordTypeInts.STSC:
-                    // Skip
+                    // Skip. CIS1 and CIS2 are a target condition's text parameters, read below with their CTDA by the
+                    // condition reader; before C52 they ended this pass and the inputs after them had no kind.
                     break;
                 default:
                     stream.Position -= subRecord.TotalLength;

@@ -174,7 +174,7 @@
          input version, which the record xml's layout attributes place); one value block per data input, each ANAM (its
          kind as text, which picks the class) and its value: CNAM (Bool: a byte; Float and ObjectList: a float; Int: a
          uint32), TPIC (a topic's bytes), STSC (a scene), PTDA (a target, APackageTarget.CreateFromBinary), CITC and CTDA (a
-         target's conditions), PLDT (a location, its generated reader), PDTO (topics); then UNAM (the input's key) and
+         target's conditions, each CTDA with the CIS1 and CIS2 after it; C52), PLDT (a location, its generated reader), PDTO (topics); then UNAM (the input's key) and
          PNAM (its flags) per input: the k-th UNAM's entry takes the k-th block. The entries a template's names add
          later (below) come after these in the dictionary, so the blocks are its first entries (prefix).
        - FillBinaryProcedureTreeCustom: after XNAM, PackageBranch items each starting at ANAM, each read by its generated
@@ -224,7 +224,7 @@
           <U32 name="conditionCount" />
           <Const field="Conditions.Count" value="$conditionCount" />
         </Sub>
-        <Generated sigs="CTDA,PLDT" />
+        <Generated sigs="CTDA,CIS1,CIS2,PLDT" />
       </AnyOrder>
       <!-- a topic's PDTO and TPIC come in either order (Mutagen writes PDTO first; Data has no topic input) -->
       <Switch on="dataType">
