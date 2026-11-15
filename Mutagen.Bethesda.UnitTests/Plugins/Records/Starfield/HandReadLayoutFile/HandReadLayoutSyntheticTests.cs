@@ -43,6 +43,11 @@ public class HandReadLayoutSyntheticTests
         "RecordNAVI/SubRepeatNVMI/RepeatUnknownCrcs/U32.",
         "AnyRecordBFCB/SegmentsComponents/TypeSwitch/CaseVolumesComponent/SubVLMS/RepeatItems/ObjectEnder/Switch/Case11/TypeSwitch/CaseVolumesUnknownEnderEmpty",
         "AnyRecordBFCB/SegmentsComponents/TypeSwitch/CaseVolumesComponent/SubVLMS/RepeatItems/ObjectEnder/Switch/Case11/TypeSwitch/CaseVolumesUnknownEnderEmptyPadded/U32Unknown1",
+        // C57: the record header of every record written, and the plugin header
+        "Header/I32MajorRecordFlagsRaw", "Header/BitIsDeleted", "Header/BitIsCompressed", "Header/ViewStarfieldMajorRecordFlags",
+        "Header/ViewMajorFlags", "Header/FormIDFormKey", "Header/U32VersionControl", "Header/U16FormVersion", "Header/U16Version2",
+        "HeaderTES4/U32Flags", "HeaderTES4/U32FormID", "HeaderTES4/I32Version", "HeaderTES4/U16FormVersion", "HeaderTES4/U16Version2",
+        "RecordTES4/SegmentsMasterReferences",
     ];
 
     [Fact]

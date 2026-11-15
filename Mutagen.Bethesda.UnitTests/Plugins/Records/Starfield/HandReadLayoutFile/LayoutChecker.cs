@@ -89,6 +89,17 @@ public sealed class LayoutChecker
         RunSubs(recordLayout.Elements(), cursor, new Ctx { Obj = record, Path = record.GetType().Name });
     }
 
+    // C57: the record header (a Header entry), its 24 bytes read at the content level against the record (or TES4)
+    public void CheckHeader(XElement headerLayout, byte[] head, object record)
+    {
+        if (_defines.Count == 0)
+        {
+            _defines = headerLayout.Document!.Root!.Elements("Define").ToDictionary(d => (string)d.Attribute("name")!);
+        }
+        ReadContent(headerLayout, head, new Ctx { Obj = record, Path = record.GetType().Name + ".(header)" });
+        Count(headerLayout);
+    }
+
     // ---- subrecord level ----
 
     private void RunSubs(IEnumerable<XElement> items, Cursor cur, Ctx ctx)
@@ -117,7 +128,7 @@ public sealed class LayoutChecker
                         break;
                     }
                     var (child, ok) = Child(e, ctx);
-                    if (ok) RunSubs(e.Elements(), cur, child);
+                    if (ok && IsClass(e, child)) RunSubs(e.Elements(), cur, child);
                     break;
                 }
                 case "Use": RunSubs(_defines[(string)e.Attribute("name")!].Elements(), cur, ctx); break;
@@ -556,8 +567,35 @@ public sealed class LayoutChecker
                 case "Object":
                 {
                     var (child, ok) = Child(e, ctx);
-                    if (ok) RunContent(e.Elements(), r, child);
+                    if (ok && IsClass(e, child)) RunContent(e.Elements(), r, child);
                     else r.Pos = r.Data.Length;
+                    break;
+                }
+                case "U64":
+                {
+                    // C57: a uint64, compared as one (a double can't hold every value)
+                    var value = BinaryPrimitives.ReadUInt64LittleEndian(r.Take(8));
+                    if (e.Attribute("name") is { } un) ctx.Vars[un.Value] = value;
+                    Value(e, ctx, value);
+                    break;
+                }
+                case "Guid":
+                    // C57: 16 bytes, a .NET Guid in its own byte order (as Mutagen reads one)
+                    Value(e, ctx, new Guid(r.Take(16)));
+                    break;
+                case "View":
+                {
+                    // C57: no bytes: the field is a value read earlier as a whole, seen as the field's type (an enum view
+                    // of a flags value); optional: only some classes have the property
+                    Count(e);
+                    var field = (string)e.Attribute("field")!;
+                    if (!Resolve(ctx.Obj, field, out var actual))
+                    {
+                        if ((bool?)e.Attribute("optional") != true) Fail(ctx, e, $"no property {field} on {ctx.Obj?.GetType().Name ?? "null"}");
+                        break;
+                    }
+                    var of = (ulong)(long)ctx.Vars[(string)e.Attribute("of")!] & 0xFFFF_FFFF;
+                    if (actual == null || (Bits(actual) & 0xFFFF_FFFF) != of) Fail(ctx, e, $"Mutagen {Show(actual)}, the value read {of:X}");
                     break;
                 }
                 case "Bit":
@@ -762,6 +800,8 @@ public sealed class LayoutChecker
                 };
             case bool flag:
                 return actual is bool a2 && a2 == flag;
+            case ulong u:
+                return actual != null && Bits(actual) == u;
             case double d:
                 if (actual == null) return false;
                 if (actual is float f) return f.Equals((float)d) || (float.IsNaN(f) && double.IsNaN(d));
@@ -796,6 +836,30 @@ public sealed class LayoutChecker
 
     private static double Number(string text, Ctx ctx) =>
         text.StartsWith('$') ? ctx.Vars[text[1..]] : ParseLong(text);
+
+    // An integer or enum as its bits (a negative int32 as its uint32 bits)
+    private static ulong Bits(object v)
+    {
+        if (v is Enum en) v = Convert.ChangeType(en, Enum.GetUnderlyingType(en.GetType()), CultureInfo.InvariantCulture);
+        return v switch
+        {
+            sbyte x => (byte)x,
+            short x => (ushort)x,
+            int x => (uint)x,
+            long x => (ulong)x,
+            _ => Convert.ToUInt64(v, CultureInfo.InvariantCulture),
+        };
+    }
+
+    // C57: class="X" on an Object: the reader always makes that class there (the field's type has subclasses it never makes)
+    private bool IsClass(XElement e, Ctx child)
+    {
+        if (e.Attribute("class") is not { } cls) return true;
+        var actual = child.Obj?.GetType().Name.Replace("BinaryOverlay", "");
+        if (actual == cls.Value) return true;
+        Fail(child, e, $"Mutagen made {actual ?? "null"}, the layout says the reader always makes {cls.Value}");
+        return false;
+    }
 
     // ---- Mutagen side ----
 

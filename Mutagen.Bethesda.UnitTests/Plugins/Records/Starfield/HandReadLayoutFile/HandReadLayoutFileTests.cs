@@ -19,7 +19,8 @@ namespace Mutagen.Bethesda.UnitTests.Plugins.Records.Starfield.HandReadLayoutFil
 // C186 step 2: Mutagen.Bethesda.Starfield/Layouts/HandReadLayouts.xml describes the layouts the record xml can't (VMAD,
 // OMOD/OBTS properties, perk entry points, weather clouds, ...). These tests hold it against Mutagen's own parse:
 //   - the file is well formed and every record it names exists (always runs);
-//   - RealData: every described subrecord of every record of those types in the plugins, read by the file and compared
+//   - RealData: every described subrecord of every record of those types in the plugins (and, C57, each record's 24-byte
+//     header by the file's Header entries; TES4, the plugin header, at the start of each plugin), read by the file and compared
 //     value by value with Mutagen's full reader, every byte described. Runs when MUTAGEN_STARFIELD_DATA names the Data
 //     folder (MUTAGEN_LAYOUT_PLUGINS: a comma list, default Starfield.esm + the 32 official plugins; MUTAGEN_LAYOUT_TYPES:
 //     a comma list of record signatures, default every type the file describes); a report of the values checked per
@@ -113,6 +114,8 @@ public class HandReadLayoutFileTests
         var layouts = doc.Root!.Elements("Record").ToDictionary(r => (string)r.Attribute("sig")!);
         // AnyRecord sig="SIG": checked on every record that has that subrecord, whatever its type
         var anywhere = doc.Root.Elements("AnyRecord").ToList();
+        // Header [sig="SIG"] (C57): the record header; with sig, that type's (TES4: the plugin header), else every record's
+        var headers = doc.Root.Elements("Header").ToDictionary(h => (string?)h.Attribute("sig") ?? "");
         var classes = RecordClasses();
         var scanned = layouts.Keys.ToHashSet();
         if (anywhere.Count > 0)
@@ -146,17 +149,24 @@ public class HandReadLayoutFileTests
                 meta.StringsLookup = Mutagen.Bethesda.Strings.StringsFolderLookupOverlay.TypicalFactory(GameRelease.Starfield, modPath.ModKey, data, null);
             }
             var checker = new LayoutChecker(meta.MasterReferences, localized);
+            // TES4, the plugin header, isn't in the record locations: read at the file's start
+            if (scanned.Contains("TES4"))
+            {
+                stream.Position = 0;
+                var tes4 = ReadRecordBytes(stream);
+                var header = Parse(typeof(StarfieldModHeader), new MutagenFrame(new MutagenMemoryReadStream(tes4, meta)));
+                checker.Where = $"{plugin} TES4";
+                if (layouts.TryGetValue("TES4", out var tes4Layout)) checker.CheckRecord(tes4Layout, RawSubrecords(new MemoryStream(tes4), out _), header);
+                if (headers.TryGetValue("TES4", out var tes4Header)) checker.CheckHeader(tes4Header, tes4[..24], header);
+                records["TES4"] = records.GetValueOrDefault("TES4") + 1;
+            }
             foreach (var marker in locations.ListedRecords.Values)
             {
                 if (!scanned.Contains(marker.Record.Type)) continue;
                 layouts.TryGetValue(marker.Record.Type, out var layout);
                 // the record's bytes, read into memory as a mod import does (hand-written code may need RemainingMemory)
                 stream.Position = marker.Location.Min;
-                var head = new byte[24];
-                stream.ReadExactly(head);
-                var recordBytes = new byte[24 + BitConverter.ToInt32(head, 4)];
-                head.CopyTo(recordBytes, 0);
-                stream.ReadExactly(recordBytes.AsSpan(24));
+                var recordBytes = ReadRecordBytes(stream);
                 var subs = RawSubrecords(new MemoryStream(recordBytes), out var raw);
                 if (raw.Deleted) continue;
                 var applies = anywhere.Where(a => subs.Any(x => x.Sig == (string)a.Attribute("sig")!)).ToList();
@@ -177,6 +187,10 @@ public class HandReadLayoutFileTests
                 checker.Where = $"{plugin} {marker.Record} {marker.FormKey}";
                 if (layout != null) checker.CheckRecord(layout, subs, record);
                 foreach (var a in applies) checker.CheckRecord(a, subs, record);
+                if ((headers.GetValueOrDefault(marker.Record.Type) ?? headers.GetValueOrDefault("")) is { } recordHeader)
+                {
+                    checker.CheckHeader(recordHeader, recordBytes[..24], record);
+                }
                 records[marker.Record.Type] = records.GetValueOrDefault(marker.Record.Type) + 1;
             }
             errors.AddRange(checker.Errors);
@@ -190,6 +204,17 @@ public class HandReadLayoutFileTests
                 .Select(e => $"{LayoutChecker.LayoutKey(e)}/keyList{(string)e.Attribute("keyList")!}"))
             .Distinct().Where(k => !checkedTotals.ContainsKey(k)).ToList();
         return new CheckResult(errors, checkedTotals, records, never);
+    }
+
+    // The record at the stream's position, its 24-byte header and its data, as stored
+    private static byte[] ReadRecordBytes(Stream stream)
+    {
+        var head = new byte[24];
+        stream.ReadExactly(head);
+        var recordBytes = new byte[24 + BitConverter.ToInt32(head, 4)];
+        head.CopyTo(recordBytes, 0);
+        stream.ReadExactly(recordBytes.AsSpan(24));
+        return recordBytes;
     }
 
     // Record signature -> the Mutagen class that reads it (where several share one, the dispatching base, e.g. OMOD)

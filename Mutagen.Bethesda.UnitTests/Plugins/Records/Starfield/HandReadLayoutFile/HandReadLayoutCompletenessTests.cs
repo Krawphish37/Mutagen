@@ -25,7 +25,6 @@ public class HandReadLayoutCompletenessTests
         ["ScenePhase.StartConditions"] = "conditions (CTDA, then CIS1, CIS2) by the condition reader",
         ["ScenePhase.CompletionConditions"] = "conditions (CTDA, then CIS1, CIS2) by the condition reader, between NEXT markers",
         ["Reflection.FormLinks"] = "not a layout: the FormIDs ReflectionData.FindFormIds finds in the reflection blob",
-        ["StarfieldModHeader.MasterReferences"] = "the plugin header (TES4), which the layout file's records don't cover",
     };
 
     private static string RecordsDir()
