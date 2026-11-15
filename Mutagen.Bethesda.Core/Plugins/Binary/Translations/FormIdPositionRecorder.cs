@@ -56,12 +56,24 @@ internal sealed class FormIdPositionRecorder
     }
 
     /// <summary>
-    /// A buffer's content was copied into another stream at <paramref name="offset"/> (an overflow-capable subrecord)
+    /// Where the FormIDs noted from now on start: taken when a buffer is made whose content is later copied into another
+    /// stream (<see cref="Relocate"/>). Nothing can be noted in that buffer before it exists, so its relocation only looks
+    /// at the FormIDs noted after this mark.
     /// </summary>
-    public static void Relocate(Stream from, Stream to, long offset)
+    public static (object? Recorder, int Count) Mark() => _current is { } c ? (c, c._noted.Count) : (null, 0);
+
+    /// <summary>
+    /// A buffer's content was copied into another stream at <paramref name="offset"/> (an overflow-capable subrecord).
+    /// <paramref name="since"/> is the <see cref="Mark"/> taken when the buffer was made: only the FormIDs noted after it
+    /// can be in the buffer. Looking at every FormID noted so far made a record with many such subrecords quadratic (a
+    /// navmesh info map: 56,631 NVMI and 2.5 million FormIDs, 50 s; perf-world).
+    /// </summary>
+    public static void Relocate(Stream from, Stream to, long offset, (object? Recorder, int Count) since = default)
     {
         if (_current is not { Content: null } c) return;
-        for (int i = 0; i < c._noted.Count; i++)
+        // A mark from another recorder (or none) says nothing about this one's list: look at all of it
+        int start = ReferenceEquals(since.Recorder, c) ? Math.Min(since.Count, c._noted.Count) : 0;
+        for (int i = start; i < c._noted.Count; i++)
         {
             var n = c._noted[i];
             if (ReferenceEquals(n.Stream, from)) c._noted[i] = (to, n.Position + offset, n.FormKey);
@@ -76,6 +88,10 @@ internal sealed class FormIdPositionRecorder
         {
             c.FormIds.Add((ReferenceEquals(n.Stream, buffer) ? checked((int)n.Position) : null, n.FormKey));
         }
-        throw new Done();
+        // Only a record that holds others (a cell, a worldspace, a quest, a topic) writes child groups after its
+        // subrecords. Any other record's write is let finish (what is left is its header's length): an exception for
+        // every record was most of what finding a placed object's FormIDs cost (perf-world). Notes and relocations
+        // after this are ignored, since Content is set.
+        if (record is IMajorRecordGetterEnumerable) throw new Done();
     }
 }

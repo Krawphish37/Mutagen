@@ -25,6 +25,8 @@ internal static class CompressedOriginals
     private sealed class Holder
     {
         public readonly ReadOnlyMemorySlice<byte> Content;
+        // Whether Mutagen's compression gives Content again (Reproduces): 0 not asked yet, 1 yes, 2 no
+        public int Reproduced;
         public Holder(ReadOnlyMemorySlice<byte> content) => Content = content;
     }
 
@@ -53,6 +55,21 @@ internal static class CompressedOriginals
     }
 
     internal static void Remove(object record) => Originals.Remove(record);
+
+    /// <summary>
+    /// A record's kept compressed content, only when Mutagen's compression wouldn't give it again
+    /// (FileLayoutMixIn.GetOriginalCompressedDataIfNotReproduced, C213). The answer is kept with the content: compressing
+    /// at zlib's best level is the costly part, and a record is often asked more than once (its links, then its JSON).
+    /// </summary>
+    internal static bool TryGetNotReproduced(object record, out ReadOnlyMemorySlice<byte> content)
+    {
+        content = default;
+        if (!Originals.TryGetValue(record, out var holder)) return false;
+        if (holder.Reproduced == 0) holder.Reproduced = Reproduces(holder.Content) ? 1 : 2;
+        if (holder.Reproduced == 1) return false;
+        content = holder.Content;
+        return true;
+    }
 
     internal static void Copy(object from, object to)
     {

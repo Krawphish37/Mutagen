@@ -43,8 +43,7 @@ public static class FileLayoutMixIn
     /// </summary>
     public static byte[]? GetOriginalCompressedDataIfNotReproduced(this IMajorRecordGetter record)
     {
-        if (!CompressedOriginals.TryGet(record, out var content)) return null;
-        return CompressedOriginals.Reproduces(content) ? null : content.ToArray();
+        return CompressedOriginals.TryGetNotReproduced(record, out var content) ? content.ToArray() : null;
     }
 
     /// <summary>

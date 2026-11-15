@@ -10,6 +10,8 @@ public sealed class ExtraLengthHeaderExport : IDisposable
     private readonly MutagenWriter _writer;
     private readonly RecordType _mainRecord;
     private readonly RecordType _overflowRecord;
+    // Where FormIDs noted in the tributary start, for the position recorder (StoredFormIdMixIn, C203)
+    private readonly (object? Recorder, int Count) _notedMark;
 
     public MutagenWriter PrepWriter { get; }
 
@@ -21,6 +23,7 @@ public sealed class ExtraLengthHeaderExport : IDisposable
         _writer = writer;
         _mainRecord = mainRecord;
         _overflowRecord = overflowRecord;
+        _notedMark = FormIdPositionRecorder.Mark();
         PrepWriter = new MutagenWriter(_tributary, writer.MetaData);
     }
 
@@ -32,7 +35,7 @@ public sealed class ExtraLengthHeaderExport : IDisposable
             using (HeaderExport.Subrecord(_writer, _mainRecord))
             {
                 var contentStart = _writer.Position;
-                FormIdPositionRecorder.Relocate(_tributary, _writer.BaseStream, contentStart);
+                FormIdPositionRecorder.Relocate(_tributary, _writer.BaseStream, contentStart, _notedMark);
                 _tributary.CopyTo(_writer.BaseStream);
             }
         }
@@ -45,7 +48,7 @@ public sealed class ExtraLengthHeaderExport : IDisposable
             _writer.Write(_mainRecord.TypeInt);
             _writer.WriteZeros(2);
             var overflowContentStart = _writer.Position;
-            FormIdPositionRecorder.Relocate(_tributary, _writer.BaseStream, overflowContentStart);
+            FormIdPositionRecorder.Relocate(_tributary, _writer.BaseStream, overflowContentStart, _notedMark);
             _tributary.CopyTo(_writer.BaseStream);
         }
     }

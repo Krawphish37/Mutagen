@@ -510,6 +510,14 @@ public class ExactFileLayoutTests
         var keyword = read.Keywords.Single();
         var data = keyword.GetOriginalCompressedDataIfNotReproduced().ShouldNotBeNull();
         data.ShouldBe(otherContent);
+        // The answer is kept with the content (perf-world): asked again, the same; given new content, worked out again
+        keyword.GetOriginalCompressedDataIfNotReproduced().ShouldBe(otherContent);
+        same.GetOriginalCompressedDataIfNotReproduced().ShouldBeNull();
+        var reproducedContent = same.GetOriginalCompressedData().ShouldNotBeNull();
+        same.SetOriginalCompressedData(otherContent);
+        same.GetOriginalCompressedDataIfNotReproduced().ShouldBe(otherContent);
+        same.SetOriginalCompressedData(reproducedContent);
+        same.GetOriginalCompressedDataIfNotReproduced().ShouldBeNull();
         var fresh = new StarfieldMod(read.ModKey, StarfieldRelease.Starfield);
         var freshKeyword = fresh.Keywords.AddNew(keyword.FormKey);
         freshKeyword.DeepCopyIn(keyword);

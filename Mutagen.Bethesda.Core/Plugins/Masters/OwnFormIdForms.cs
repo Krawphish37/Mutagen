@@ -82,25 +82,7 @@ internal static class OwnFormIdForms
         // count, not any 4 bytes that happen to read as one
         var package = overlay._package.MetaData.MasterReferences;
         if (package is not SeparatedMasterPackage) return null;
-        List<Entry>? ret = null;
-        foreach (var position in StoredFormIdMixIn.Collect(record, overlay._package.MetaData.Constants, package))
-        {
-            if (position.Subrecord is not { } type || position.Offset < 0) continue;
-            if (position.Location is not (StoredFormIdLocation.Written or StoredFormIdLocation.Searched)) continue;
-            if (position.Raw == 0 || position.FormKey.IsNull) continue;
-            uint written;
-            try
-            {
-                written = package.GetFormID(position.FormKey).Raw;
-            }
-            catch (Exception)
-            {
-                continue;
-            }
-            if (written == position.Raw) continue;
-            (ret ??= new()).Add(new Entry((uint)type.TypeInt, position.SubrecordIndex, position.Offset, position.Raw));
-        }
-        return ret?.ToArray();
+        return StoredFormIdMixIn.CollectNotAsWritten(record, overlay._package.MetaData.Constants, package)?.ToArray();
     }
 
     /// <summary>
