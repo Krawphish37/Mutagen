@@ -998,6 +998,7 @@ internal class ProtocolDefinition_Starfield : IProtocolRegistration
             NoInstanceNamingRules_Registration.Instance,
             Note_Registration.Instance,
             NoteProgram_Registration.Instance,
+            NoteSound_Registration.Instance,
             NoteTerminal_Registration.Instance,
             NoteVoice_Registration.Instance,
             Npc_Registration.Instance,
