@@ -18,7 +18,7 @@
           <Float name="Weight" />
         </Fields>
       </Data>
-      <CustomLogic name="DataParse" fills="Data.Scene,Data.Terminal,Data.File">
+      <CustomLogic name="DataParse" fills="Data.Sound,Data.Scene,Data.Unknown,Data.File,Data.Terminal">
         <RecordType>SNAM</RecordType>
         <RecordType>PNAM</RecordType>
       </CustomLogic>
