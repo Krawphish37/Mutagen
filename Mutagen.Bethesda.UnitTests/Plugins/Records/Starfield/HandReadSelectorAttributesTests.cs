@@ -58,6 +58,7 @@ public class HandReadSelectorAttributesTests
         ["ATerminalMenuItemTarget"] = typeof(TerminalMenuItemBinaryCreateTranslation.TypeOption),
         ["APerkEffect"] = typeof(Perk.EffectType),
         ["APackageData"] = null,
+        ["AComponent"] = typeof(AComponent.ComponentType), // C57: BFCB's text
     };
 
     [Fact]
@@ -78,7 +79,7 @@ public class HandReadSelectorAttributesTests
         selected.ShouldBe(SelectorEnums.Keys, ignoreOrder: true);
 
         var withValues = objects.Where(o => o.Attribute("selectorValue") != null).ToList();
-        withValues.Count.ShouldBe(99); // 99 since C39 (NoteSound)
+        withValues.Count.ShouldBe(165); // 99 since C39 (NoteSound); 165 since C57 (the 66 component kinds)
         foreach (var o in withValues)
         {
             var name = (string)o.Attribute("name")!;

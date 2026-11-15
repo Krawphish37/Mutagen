@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
-  <Object name="AComponent" objType="Subrecord" endMarkerType="BFCE" abstract="true" abstractSplitter="true">
+  <Object name="AComponent" objType="Subrecord" endMarkerType="BFCE" abstract="true" abstractSplitter="true" selectedBy="subrecord:BFCB:string" selectorEnum="AComponent.ComponentType">
     <Fields>
       <CustomLogic name="BFCBString" recordType="BFCB" fills="" writtenFrom="class" />
     </Fields>
   </Object>
-  <Object name="AnimationGraphComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="AnimationGraphComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSAnimationGraph_Component">
     <Fields>
       <String name="RootAnimationGraph" recordType="ANAM" nullable="true" />
       <String name="RigFile" recordType="BNAM" nullable="true" />
@@ -14,37 +14,37 @@
       <Bool name="ControlsBaseSkeleton" recordType="ENAM" boolAsMarker="True" />
     </Fields>
   </Object>
-  <Object name="AttachParentArrayComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="AttachParentArrayComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSAttachParentArray_Component">
     <Fields>
       <List name="Slots" recordType="APPR">
         <FormLink refName="Keyword" />
       </List>
     </Fields>
   </Object>
-  <Object name="ActivityTrackerComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="ActivityTrackerComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSActivityTracker">
     <Fields>
       <RefList name="Activities" refName="Activity" counterRecType="ATCP" />
     </Fields>
   </Object>
-  <Object name="ScannableComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="ScannableComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSScannable">
     <Fields>
     </Fields>
   </Object>
-  <Object name="KeywordFormComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="KeywordFormComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSKeywordForm_Component">
     <Fields>
       <List name="Keywords" counterRecType="KSIZ" recordType="KWDA">
         <FormLink refName="Keyword" />
       </List>
     </Fields>
   </Object>
-  <Object name="ObjectWindowFilterComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="ObjectWindowFilterComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSObjectWindowFilter_Component">
     <Fields>
       <List name="Filters" counterRecType="INTV" allowNoCounter="false" nullable="false" >
         <String recordType="FLTR" />
       </List>
     </Fields>
   </Object>
-  <Object name="ContactShadowComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="ContactShadowComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSContactShadowComponent_Component">
     <Fields>
       <RefList name="Items" refName="ContactShadowComponentItem" />
     </Fields>
@@ -58,17 +58,17 @@
       <Float name="ProximityLimit" />
     </Fields>
   </Object>
-  <Object name="FullNameComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="FullNameComponent" objType="Subrecord" baseClass="AComponent" selectorValue="TESFullName_Component">
     <Fields>
       <String name="Name" recordType="FULL" translated="Normal" />
     </Fields>
   </Object>
-  <Object name="ModelComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="ModelComponent" objType="Subrecord" baseClass="AComponent" selectorValue="TESModel_Component">
     <Fields>
       <RefDirect name="Model" refName="Model" />
     </Fields>
   </Object>
-  <Object name="PlanetModelComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="PlanetModelComponent" objType="Subrecord" baseClass="AComponent" selectorValue="TESPlanetModel_Component">
     <Fields>
       <RefDirect name="Model" refName="Model" />
       <RefDirect name="XMPM" refName="PlanetModelComponentXMPM" />
@@ -93,7 +93,7 @@
       <UInt32 name="FolderHash" />
     </Fields>
   </Object>
-  <Object name="HoudiniDataComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="HoudiniDataComponent" objType="Subrecord" baseClass="AComponent" selectorValue="HoudiniData_Component">
     <Fields>
       <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX">
         <RecordTypeOverrides>
@@ -102,23 +102,23 @@
       </RefDirect>
     </Fields>
   </Object>
-  <Object name="SkinFormComponent" objType="Subrecord" baseClass="AComponent" />
-  <Object name="BodyPartInfoComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="SkinFormComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSSkinForm_Component" />
+  <Object name="BodyPartInfoComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSBodyPartInfo_Component">
     <Fields>
       <FormLink name="BodyPartData" recordType="GNAM" refName="BodyPartData" />
     </Fields>
   </Object>
-  <Object name="EffectSequenceComponent" ckName="Effect Sequence Component" objType="Subrecord" baseClass="AComponent">
+  <Object name="EffectSequenceComponent" ckName="Effect Sequence Component" objType="Subrecord" baseClass="AComponent" selectorValue="BGSEffectSequenceComponent">
     <Fields>
       <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
   </Object>
-  <Object name="LightAttachmentFormComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="LightAttachmentFormComponent" objType="Subrecord" baseClass="AComponent" selectorValue="LightAttachmentFormComponent">
     <Fields>
       <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
   </Object>
-  <Object name="LightAnimFormComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="LightAnimFormComponent" objType="Subrecord" baseClass="AComponent" selectorValue="LightAnimFormComponent">
     <Fields>
       <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX">
         <RecordTypeOverrides>
@@ -127,7 +127,7 @@
       </RefDirect>
     </Fields>
   </Object>
-  <Object name="ParticleSystemComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="ParticleSystemComponent" objType="Subrecord" baseClass="AComponent" selectorValue="ParticleSystem_Component">
     <Fields>
       <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX">
         <RecordTypeOverrides>
@@ -136,17 +136,17 @@
       </RefDirect>
     </Fields>
   </Object>
-  <Object name="LodOwnerComponent" ckName="LOD Component" objType="Subrecord" baseClass="AComponent">
+  <Object name="LodOwnerComponent" ckName="LOD Component" objType="Subrecord" baseClass="AComponent" selectorValue="BGSLodOwner_Component">
     <Fields>
       <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
   </Object>
-  <Object name="SoundTagComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="SoundTagComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSSoundTag_Component">
     <Fields>
       <FormLink name="AnimationSound" refName="AnimationSoundTagSet" recordType="STCP" />
     </Fields>
   </Object>
-  <Object name="DisplayCaseComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="DisplayCaseComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSDisplayCase">
     <Fields>
       <RefList name="Items" recordType="DCSD" refName="DisplayCaseComponentItem" />
       <RefList name="Exclusivity" recordType="DCED" refName="DisplayCaseExclusivity" />
@@ -167,12 +167,12 @@
       <UInt32 name="Number" />
     </Fields>
   </Object>
-  <Object name="ObjectPaletteDefaultsComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="ObjectPaletteDefaultsComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSObjectPaletteDefaults_Component">
     <Fields>
       <RefDirect name="ObjectPaletteDefaults" refName="ObjectPaletteDefaults" />
     </Fields>
   </Object>
-  <Object name="VolumesComponent" objType="Subrecord" baseClass="AComponent" >
+  <Object name="VolumesComponent" objType="Subrecord" baseClass="AComponent" selectorValue="Volumes_Component">
     <Fields>
       <RefList name="Items" refName="VolumesComponentItem" counterLength="4" recordType="VLMS" binary="Custom" />
     </Fields>
@@ -230,7 +230,7 @@
       <UInt32 name="Unknown1" />
     </Fields>
   </Object>
-  <Object name="PlanetContentManagerContentPropertiesComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="PlanetContentManagerContentPropertiesComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSPlanetContentManagerContentProperties_Component">
     <Fields>
       <!-- C131: a float (0 or 1.0f in every plugin of the Data folder; xEdit wbUnknown(ZNAM, 4), "presume this is the Days Until Reset manual value") -->
       <Float name="ZNAM" recordType="ZNAM" unknown="true" />
@@ -252,11 +252,11 @@
       <RefList name="Conditions" refName="Condition" counterRecType="CITC" />
     </Fields>
   </Object>
-  <Object name="ShipManagementComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="ShipManagementComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSShipManagement">
     <Fields>
     </Fields>
   </Object>
-  <Object name="ExternalDataSourceComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="ExternalDataSourceComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSExternalComponentDataSource_Component">
     <Fields>
       <FormLink name="ExternalBaseTemplate" recordType="EXDC" >
         <Interface>IExternalBaseTemplate</Interface>
@@ -277,42 +277,42 @@
       </FormLink>
     </Fields>
   </Object>
-  <Object name="ForcedLocRefTypeComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="ForcedLocRefTypeComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSForcedLocRefType_Component">
     <Fields>
       <List name="ForcedLocations" recordType="FTYP" >
         <FormLink refName="LocationReferenceType" />
       </List>
     </Fields>
   </Object>
-  <Object name="LinkedVoiceTypeComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="LinkedVoiceTypeComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSLinkedVoiceType_Component">
     <Fields>
       <FormLink name="VoiceType" recordType="FCTF" refName="VoiceType" />
     </Fields>
   </Object>
-  <Object name="PapyrusScriptsComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="PapyrusScriptsComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSPapyrusScripts_Component">
     <Fields>
     </Fields>
   </Object>
-  <Object name="PathingDataComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="PathingDataComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSPathingData_Component">
     <Fields>
     </Fields>
   </Object>
-  <Object name="PropertySheetComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="PropertySheetComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSPropertySheet_Component">
     <Fields>
       <RefList name="Properties" refName="ObjectProperty" recordType="PRPS" />
     </Fields>
   </Object>
-  <Object name="SpaceshipAIActorComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="SpaceshipAIActorComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSSpaceshipAIActor_Component">
     <Fields>
       <FormLink name="SpaceshipAIActor" recordType="SAIA" refName="Npc" />
     </Fields>
   </Object>
-  <Object name="SpaceshipEquipmentComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="SpaceshipEquipmentComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSSpaceshipEquipment_Component">
     <Fields>
       <Bool name="Essential" recordType="ESSF" byteLength="4" />
     </Fields>
   </Object>
-  <Object name="SpaceshipWeaponBindingsComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="SpaceshipWeaponBindingsComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSSpaceshipWeaponBindings_Component">
     <Fields>
       <Data recordType="SHWB" >
         <Fields>
@@ -323,7 +323,7 @@
       </Data>
     </Fields>
   </Object>
-  <Object name="FormLinkDataComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="FormLinkDataComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSFormLinkData_Component">
     <Fields>
       <RefList name="Links" refName="FormLinkComponentLink" counterRecType="ITMC" />
     </Fields>
@@ -334,7 +334,7 @@
       <FormLink name="LinkedForm" refName="StarfieldMajorRecord" recordType="FLFM" />
     </Fields>
   </Object>
-  <Object name="BlueprintComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="BlueprintComponent" objType="Subrecord" baseClass="AComponent" selectorValue="Blueprint_Component">
     <Fields>
       <RefList name="Items" refName="BlueprintComponentItem" recordType="BUO4" />
       <RefList name="BODSRows" refName="BlueprintComponentBODSRow" counterRecType="BODM" allowNoCounter="false" nullable="false" />
@@ -369,21 +369,21 @@
       </Data>
     </Fields>
   </Object>
-  <Object name="DestructibleObjectComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="DestructibleObjectComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSDestructibleObject_Component">
     <Fields>
       <RefDirect name="Destructible" refName="Destructible" />
     </Fields>
   </Object>
-  <Object name="ContainerComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="ContainerComponent" objType="Subrecord" baseClass="AComponent" selectorValue="TESContainer_Component">
     <Fields>
       <RefList name="Items" counterRecType="COCT" refName="ContainerEntry" />
     </Fields>
   </Object>
-  <Object name="MagicTargetFormComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="MagicTargetFormComponent" objType="Subrecord" baseClass="AComponent" selectorValue="TESMagicTargetForm_Component">
     <Fields>
     </Fields>
   </Object>
-  <Object name="StoredTraversalsComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="StoredTraversalsComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSStoredTraversals_Component">
     <Fields>
       <Data recordType="STRD" overflowRecordType="XXXX">
         <Fields>
@@ -400,12 +400,12 @@
       <RefList name="Traversals" counterLength="4" refName="TraversalReference" />
     </Fields>
   </Object>
-  <Object name="AddToInventoryOnDestroyComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="AddToInventoryOnDestroyComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSAddToInventoryOnDestroy_Component">
     <Fields>
       <FormLink name="Item" refName="LeveledItem" recordType="INAM" />
     </Fields>
   </Object>
-  <Object name="CrowdComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="CrowdComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSCrowdComponent_Component">
     <Fields>
       <Float name="Density" recordType="CDND" />
       <RefList name="Items" refName="CrowdComponentItem" counterRecType="CDNS" />
@@ -428,59 +428,59 @@
       </FormLink>
     </Fields>
   </Object>
-  <Object name="SpaceshipHullCodeComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="SpaceshipHullCodeComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSSpaceshipHullCode_Component">
     <Fields>
       <String name="HullCode" recordType="HULL" translated="Normal" />
     </Fields>
   </Object>
-  <Object name="PrimitiveComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="PrimitiveComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSPrimitive_Component">
     <Fields>
     </Fields>
   </Object>
-  <Object name="SpawnOnDestroyComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="SpawnOnDestroyComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSSpawnOnDestroy_Component">
     <Fields>
       <FormLink name="SpawnOnDestroy" recordType="SODA" >
         <Interface>IPlaceableObject</Interface>
       </FormLink>
     </Fields>
   </Object>
-  <Object name="WorldSpaceOverlayComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="WorldSpaceOverlayComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSWorldSpaceOverlay_Component">
     <Fields>
       <Int32 name="StarSystemId" recordType="SNAM" />
       <Int32 name="PlanetId" recordType="PNAM" />
       <FormLink name="SurfaceBlock" recordType="BNAM" refName="SurfaceBlock" />
     </Fields>
   </Object>
-  <Object name="ReflectionProbesComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="ReflectionProbesComponent" objType="Subrecord" baseClass="AComponent" selectorValue="ReflectionProbes_Component">
     <Fields>
       <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
   </Object>
-  <Object name="ImageSpaceModifiableFormComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="ImageSpaceModifiableFormComponent" objType="Subrecord" baseClass="AComponent" selectorValue="TESImageSpaceModifiableForm_Component">
     <Fields>
       <FormLink name="ImageSpaceAdapter" recordType="MNAM" refName="ImageSpaceAdapter" />
     </Fields>
   </Object>
-  <Object name="LensFlareAttachmentFormComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="LensFlareAttachmentFormComponent" objType="Subrecord" baseClass="AComponent" selectorValue="LensFlareAttachmentFormComponent">
     <Fields>
       <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
   </Object>
-  <Object name="MaterialPropertyComponent" ckName="Material Properties" objType="Subrecord" baseClass="AComponent">
+  <Object name="MaterialPropertyComponent" ckName="Material Properties" objType="Subrecord" baseClass="AComponent" selectorValue="BGSMaterialPropertyComponent">
     <Fields>
       <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
   </Object>
-  <Object name="WorkshopItemColorComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="WorkshopItemColorComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSWorkshopItemColor">
     <Fields>
     </Fields>
   </Object>
-  <Object name="SpacePhysicsComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="SpacePhysicsComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSSpacePhysicsComponent">
     <Fields>
       <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
   </Object>
-  <Object name="BlockEditorMetaDataComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="BlockEditorMetaDataComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSBlockEditorMetaData_Component">
     <Fields>
       <!-- optional: a component can be an empty BFCB..BFCE block (kgcdoom.esm OverlayBlockkgcDoomDR023World (00BA67:kgcdoom.esm)) -->
       <Data recordType="DAT2" optional="true">
@@ -515,12 +515,12 @@
       <UInt8 name="Unknown2" />
     </Fields>
   </Object>
-  <Object name="BlockCellHeightGridComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="BlockCellHeightGridComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSBlockCellHeighGrid_Component">
     <Fields>
       <ByteArray name="DATA" recordType="DATA" />
     </Fields>
   </Object>
-  <Object name="BlockHeightAdjustmentComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="BlockHeightAdjustmentComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BlockHeightAdjustment_Component">
     <Fields>
       <Array2D name="SurfaceBlocks" fixedWidth="16" fixedHeight="16" recordType="DAT2" nullable="False">
         <RefDirect refName="BlockHeightAdjustmentComponentItem" />
@@ -534,7 +534,7 @@
       <Float name="WaterHeight" />
     </Fields>
   </Object>
-  <Object name="UniqueOverlayListComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="UniqueOverlayListComponent" objType="Subrecord" baseClass="AComponent" selectorValue="UniqueOverlayList_Component">
     <Fields>
       <RefList name="Worldspaces" refName="UniqueOverlayListComponentItem" recordType="DATA" counterLength="4" />
     </Fields>
@@ -546,7 +546,7 @@
       <Int32 name="GridX" />
     </Fields>
   </Object>
-  <Object name="UniquePatternPlacementInfoComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="UniquePatternPlacementInfoComponent" objType="Subrecord" baseClass="AComponent" selectorValue="UniquePatternPlacementInfo_Component">
     <Fields>
       <Data>
         <Fields>
@@ -557,7 +557,7 @@
       </Data>
     </Fields>
   </Object>
-  <Object name="SurfaceTreePatternSwapInfoComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="SurfaceTreePatternSwapInfoComponent" objType="Subrecord" baseClass="AComponent" selectorValue="SurfaceTreePatternSwapInfo_Component">
     <Fields>
       <RefDirect name="Data" refName="SurfaceTreePatternSwapInfoComponentData" />
     </Fields>
@@ -581,7 +581,7 @@
       <UInt32 name="Unknown2" nullable="True" binary="NoGeneration" />
     </Fields>
   </Object>
-  <Object name="OrbitedDataComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="OrbitedDataComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSOrbitedDataComponent_Component">
     <Fields>
       <Data>
         <Fields>
@@ -593,7 +593,7 @@
       </Data>
     </Fields>
   </Object>
-  <Object name="StarDataComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="StarDataComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSStarDataComponent_Component">
     <Fields>
       <Data>
         <Fields>
@@ -610,22 +610,22 @@
       </Data>
     </Fields>
   </Object>
-  <Object name="OrbitalDataComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="OrbitalDataComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSOrbitalDataComponent_Component">
     <Fields>
       <ByteArray name="DATA" recordType="DATA" unknown="true" />
     </Fields>
   </Object>
-  <Object name="CityMapsUsageComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="CityMapsUsageComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSCityMapsUsage_Component">
     <Fields>
       <!-- xEdit: Model Path, a 260-byte zero-padded string (SFBGS008.esm) -->
       <String name="ModelPath" recordType="MOD2" binaryType="NullPaddedFixedLength" byteLength="260" />
     </Fields>
   </Object>
-  <Object name="VehicleManagementComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="VehicleManagementComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSVehicleManagement">
     <Fields>
     </Fields>
   </Object>
-  <Object name="VehicleConfigComponent" objType="Subrecord" baseClass="AComponent" >
+  <Object name="VehicleConfigComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSVehicleConfig">
     <Fields>
       <List name="SuspensionBoneModifiers" recordType="VCSB" >
         <FormLink refName="BoneModifier" />
@@ -637,7 +637,7 @@
       <RefDirect name="Material" refName="VehicleMaterialTable" />
     </Fields>
   </Object>
-  <Object name="OverlayDesignatedPlacementInfoComponent" objType="Subrecord" baseClass="AComponent" >
+  <Object name="OverlayDesignatedPlacementInfoComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSOverlayDesignatedPlacementInfo_Component">
     <Fields>
       <RefList name="Items" recordType="DATA" refName="OverlayDesignatedPlacementInfoItem" counterLength="4" />
     </Fields>
@@ -648,7 +648,7 @@
       <P2Int32 name="Point" />
     </Fields>
   </Object>
-  <Object name="AdaptiveTriggerDataComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="AdaptiveTriggerDataComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSAdaptiveTriggerData_Component">
     <Fields>
       <RefDirect name="FireEffect" refName="AdaptiveTriggerEffect" recordType="WFIR" />
       <RefDirect name="AdsEffect" refName="AdaptiveTriggerEffect" recordType="WAIM" />
@@ -662,7 +662,7 @@
       <UInt8 name="Strength" />
     </Fields>
   </Object>
-  <Object name="QualityUpgradeComponent" objType="Subrecord" baseClass="AComponent">
+  <Object name="QualityUpgradeComponent" objType="Subrecord" baseClass="AComponent" selectorValue="BGSQualityUpgrade_Component">
     <Fields>
       <List name="QualityMods" recordType="QUPA">
         <FormLink refName="AObjectModification" />
