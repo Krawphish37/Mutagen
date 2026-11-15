@@ -28,16 +28,50 @@ internal static class OwnFormIdForms
 {
     internal readonly record struct Entry(uint SubrecordType, int Turn, int Offset, uint Raw);
 
-    private static readonly ConditionalWeakTable<object, Entry[]> Records = new();
+    /// <summary>
+    /// What a record keeps. Entries found by looking at its bytes (a full import's notes, a copy of an overlay record) are
+    /// any 4 bytes of the subrecords that read as such a FormID, text and numbers included (C40: a quest's alias names
+    /// and condition floats in Starfield.esm, read past its empty master list). Until they are checked against where the
+    /// record writes FormIDs, <see cref="Package"/> is set; the check keeps only the FormIDs, once, when the record is
+    /// first written or exported.
+    /// </summary>
+    private sealed class Kept
+    {
+        public Entry[] Entries = Array.Empty<Entry>();
+        public IReadOnlySeparatedMasterPackage? Package;
+        public GameConstants? Constants;
+    }
+
+    private static readonly ConditionalWeakTable<object, Kept> Records = new();
+
+    // The kept entries being checked on this thread: the check's own write of the record uses them as they are
+    [ThreadStatic] private static Kept? _checking;
 
     /// <summary>
     /// A copy of a record (DeepCopy) keeps the forms of the record it copies; a copy of an overlay record takes them from
-    /// its bytes
+    /// its bytes (checked against the copy's FormIDs before use)
     /// </summary>
     public static void Copy(IMajorRecordGetter from, object to)
     {
         if (ReferenceEquals(from, to)) return;
-        if (Get(from) is { } entries) Records.AddOrUpdate(to, entries);
+        if (from is PluginBinaryOverlay overlay)
+        {
+            if (Get(from) is { } found)
+            {
+                Records.AddOrUpdate(to, new Kept
+                {
+                    Entries = found,
+                    Package = overlay._package.MetaData.MasterReferences,
+                    Constants = overlay._package.MetaData.Constants,
+                });
+            }
+            else Records.Remove(to);
+            return;
+        }
+        if (Records.TryGetValue(from, out var kept))
+        {
+            Records.AddOrUpdate(to, new Kept { Entries = kept.Entries, Package = kept.Package, Constants = kept.Constants });
+        }
         else Records.Remove(to);
     }
 
@@ -55,9 +89,10 @@ internal static class OwnFormIdForms
         if (package is not SeparatedMasterPackage separated) return;
         // Only subrecords whose read met a FormID Mutagen writes differently: own forms (Small/Medium) and master
         // indices past the list (any size, C189)
+        // Any 4 bytes of those subrecords that read so: checked against the record's FormIDs before use (C40)
         var found = Scan(content, constants, separated, ranges, firstRange, includePastList: true);
         if (found == null) Records.Remove(record);
-        else Records.AddOrUpdate(record, found);
+        else Records.AddOrUpdate(record, new Kept { Entries = found, Package = package, Constants = constants });
     }
 
     /// <summary>
@@ -66,7 +101,7 @@ internal static class OwnFormIdForms
     public static void Set(object record, Entry[]? entries)
     {
         if (entries == null || entries.Length == 0) Records.Remove(record);
-        else Records.AddOrUpdate(record, entries);
+        else Records.AddOrUpdate(record, new Kept { Entries = entries });
     }
 
     /// <summary>
@@ -76,7 +111,7 @@ internal static class OwnFormIdForms
     /// </summary>
     public static Entry[]? GetForRoundTrip(IMajorRecordGetter record)
     {
-        if (record is not PluginBinaryOverlay overlay) return Records.TryGetValue(record, out var entries) ? entries : null;
+        if (record is not PluginBinaryOverlay overlay) return Records.TryGetValue(record, out var kept) ? Checked(record, kept) : null;
         // An overlay keeps nothing: its record is written as it writes back (stored forms put back) and the FormIDs the
         // write placed are compared with Mutagen's form of the same FormKey (C203's positions), so only FormID fields
         // count, not any 4 bytes that happen to read as one
@@ -116,7 +151,55 @@ internal static class OwnFormIdForms
             }
             return Scan(overlay._recordData, overlay._package.MetaData.Constants, separated, ranges: null, firstRange: 0, includePastList: false);
         }
-        return Records.TryGetValue(record, out var entries) ? entries : null;
+        return Records.TryGetValue(record, out var kept) ? Checked(record, kept) : null;
+    }
+
+    /// <summary>
+    /// The kept entries at a place where the record writes a FormID (C40). Entries found in the record's bytes are checked
+    /// once: the record is written as it would write back (entries put back), and an entry stays only where a FormID sits
+    /// with the same stored value, as an overlay of the same record reports (GetForRoundTrip). Text, numbers and other
+    /// bytes that only happen to read as such a FormID go, so they are neither exported nor written into a changed field.
+    /// </summary>
+    private static Entry[]? Checked(IMajorRecordGetter record, Kept kept)
+    {
+        var package = kept.Package;
+        var constants = kept.Constants;
+        // Already checked, given back by SetOwnLinkFormsAsStored, or this check's own write of the record; while a
+        // record's FormIDs are being collected (StoredFormIdMixIn), they aren't checked inside that write
+        if (package == null || constants == null
+            || ReferenceEquals(_checking, kept)
+            || Mutagen.Bethesda.Plugins.Binary.Translations.FormIdPositionRecorder.Active)
+        {
+            return kept.Entries.Length == 0 ? null : kept.Entries;
+        }
+        var previous = _checking;
+        _checking = kept;
+        List<StoredFormIdPosition> positions;
+        try
+        {
+            positions = StoredFormIdMixIn.Collect(record, constants, package);
+        }
+        catch (Exception)
+        {
+            // The record can't be written: its entries are used as they are, and the write reports the problem
+            return kept.Entries.Length == 0 ? null : kept.Entries;
+        }
+        finally
+        {
+            _checking = previous;
+        }
+        var places = new HashSet<(uint Type, int Turn, int Offset, uint Raw)>();
+        foreach (var position in positions)
+        {
+            if (position.Subrecord is not { } type || position.Offset < 0) continue;
+            if (position.Location is not (StoredFormIdLocation.Written or StoredFormIdLocation.Searched)) continue;
+            places.Add(((uint)type.TypeInt, position.SubrecordIndex, position.Offset, position.Raw));
+        }
+        var entries = kept.Entries.Where(e => places.Contains((e.SubrecordType, e.Turn, e.Offset, e.Raw))).ToArray();
+        kept.Entries = entries;
+        kept.Package = null;
+        kept.Constants = null;
+        return entries.Length == 0 ? null : entries;
     }
 
     /// <summary>

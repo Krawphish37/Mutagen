@@ -39,6 +39,9 @@ internal sealed class FormIdPositionRecorder
 
     public static void End() => _current = null;
 
+    /// <summary>Whether a record's FormIDs are being collected on this thread</summary>
+    public static bool Active => _current != null;
+
     public static bool IsTarget(object record) => _current is { } c && ReferenceEquals(c._target, record) && c.Content == null;
 
     // Set once the record's subrecords start being written (its header's FormID is not one of them)
