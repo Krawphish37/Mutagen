@@ -58,6 +58,7 @@ public class MajorFlagValueTests
     [InlineData(typeof(ActionRecord.MajorFlag), nameof(ActionRecord.MajorFlag.Restricted), 0x0000_8000)]
     // C55: added members
     [InlineData(typeof(Static.MajorFlag), nameof(Static.MajorFlag.NavMeshGenerationIgnoreErosion), 0x2000_0000)]
+    [InlineData(typeof(Static.MajorFlag), nameof(Static.MajorFlag.NavMeshGenerationOnlyCut), 0x1000_0000)]
     [InlineData(typeof(Transform.MajorFlag), nameof(Transform.MajorFlag.ApplyTranslation), 0x0002_0000)]
     [InlineData(typeof(Terminal.MajorFlag), nameof(Terminal.MajorFlag.NonOccluder), 0x10)]
     [InlineData(typeof(Terminal.MajorFlag), nameof(Terminal.MajorFlag.PackInUseOnly), 0x2000)]
@@ -297,6 +298,7 @@ public class MajorFlagValueTests
             mod.Containers.Count(r => r.MajorFlags.HasFlag(Container.MajorFlag.NavMeshOnlyCut)).ShouldBe(2);
             mod.Containers.Count(r => r.MajorFlags.HasFlag(Container.MajorFlag.NavMeshIgnoreErosion)).ShouldBe(0);
             mod.Statics.Count(r => r.MajorFlags.HasFlag(Static.MajorFlag.NavMeshGenerationIgnoreErosion)).ShouldBe(137);
+            mod.Statics.Count(r => r.MajorFlags.HasFlag(Static.MajorFlag.NavMeshGenerationOnlyCut)).ShouldBe(778);
             mod.Transforms.Count(r => r.MajorFlags.HasFlag(Transform.MajorFlag.ApplyTranslation)).ShouldBe(323);
             mod.ConstructibleObjects.Count(r => r.MajorFlags.HasFlag(ConstructibleObject.MajorFlag.ListContainsVariants)).ShouldBe(401);
             mod.Terminals.Count(r => r.MajorFlags.HasFlag(Terminal.MajorFlag.NavmeshIgnoreErosion)).ShouldBe(129);
