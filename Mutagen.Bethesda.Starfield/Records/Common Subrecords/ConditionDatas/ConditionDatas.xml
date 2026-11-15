@@ -1640,7 +1640,7 @@
   </Object>
   <Object name="GetCauseofDeathConditionData" conditionFunction="396" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
     <Fields>
-      <Enum enumName="DamageCauseType" name="FirstParameter" />
+      <Enum enumName="DamageCauseType" name="FirstParameter" engineEnum="DamageCauseType" />
       <String name="FirstUnusedStringParameter" recordType="CIS1" nullable="true" binary="NoGeneration" />
       <Int32 name="SecondParameter" />
       <String name="SecondUnusedStringParameter" recordType="CIS2" nullable="true" binary="NoGeneration" />

@@ -16,7 +16,7 @@
         <Fields>
           <Float name="DamageMult" />
           <Enum name="Flags" enumName="BodyPart.Flag" byteLength="1" />
-          <Enum name="Type" enumName="BodyPart.PartType" byteLength="1" />
+          <Enum name="Type" enumName="BodyPart.PartType" byteLength="1" engineEnum="BGSBodyPartDefs::LIMB_ENUM" />
           <Percent name="HealthPercent" integerType="ByteHundred" />
           <FormLink name="ActorValue" refName="ActorValueInformation" />
           <Percent name="ToHitChance" integerType="ByteHundred" />

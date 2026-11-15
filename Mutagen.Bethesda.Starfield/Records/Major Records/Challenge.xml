@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
-  <Object name="Challenge" ckName="Challenge Form" recordType="CHAL" objType="Record" baseClass="StarfieldMajorRecord">
+  <Object name="Challenge" engineClass="BGSChallengeForm" ckName="Challenge Form" recordType="CHAL" objType="Record" baseClass="StarfieldMajorRecord">
     <Fields>
       <RefList name="Components" refName="AComponent" />
     </Fields>

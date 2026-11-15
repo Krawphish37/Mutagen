@@ -108,7 +108,7 @@
       <FormLink name="BodyPartData" recordType="GNAM" refName="BodyPartData" />
     </Fields>
   </Object>
-  <Object name="EffectSequenceComponent" ckName="Effect Sequence Component" objType="Subrecord" baseClass="AComponent" selectorValue="BGSEffectSequenceComponent">
+  <Object name="EffectSequenceComponent" engineClass="BGSEffectSequenceFormComponent" ckName="Effect Sequence Component" objType="Subrecord" baseClass="AComponent" selectorValue="BGSEffectSequenceComponent">
     <Fields>
       <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
@@ -136,7 +136,7 @@
       </RefDirect>
     </Fields>
   </Object>
-  <Object name="LodOwnerComponent" ckName="LOD Component" objType="Subrecord" baseClass="AComponent" selectorValue="BGSLodOwner_Component">
+  <Object name="LodOwnerComponent" engineClass="BGSLodOwnerComponent" ckName="LOD Component" objType="Subrecord" baseClass="AComponent" selectorValue="BGSLodOwner_Component">
     <Fields>
       <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
@@ -466,7 +466,7 @@
       <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
   </Object>
-  <Object name="MaterialPropertyComponent" ckName="Material Properties" objType="Subrecord" baseClass="AComponent" selectorValue="BGSMaterialPropertyComponent">
+  <Object name="MaterialPropertyComponent" engineClass="BGSMaterialPropertyComponent" ckName="Material Properties" objType="Subrecord" baseClass="AComponent" selectorValue="BGSMaterialPropertyComponent">
     <Fields>
       <RefDirect name="Reflection" refName="Reflection" overflowRecordType="XXXX" />
     </Fields>
