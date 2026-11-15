@@ -17,7 +17,8 @@
                                                       consecutive subrecords, one list element each
     AnyOrder                                          the child Subs (and Generated sigs) follow in any order
     Segments start="SIG[,SIG]" [end="SIG"] [field="List"] [index="i"] [skipStart="true"] [others="generated"]
-             [stopAt="SIG"] [reader="generated"] [at="cursor"] [key="I8"] [startName="var"] [prefix="true"]
+             [stopAt="SIG"] [reader="generated"] [at="cursor"] [key="I8"] [keyList="List"] [startName="var"]
+             [prefix="true"]
                                                       a run of subrecords from each start marker (any of the start
                                                       signatures) to the end marker (or the next start); one list element
                                                       each. All subrecords in a segment must be described (or listed in
@@ -35,6 +36,8 @@
     key="I8|U8|I16|U16|I32|U32"                       (Segments) field is a dictionary; an item is the entry under the
                                                       number at offset 0 of its start subrecord, not the next by place (an
                                                       entry read again is the same entry)
+    keyList="List"                                    (Segments, with key) a list of the object the Segments is in, not of
+                                                      the item: the items' keys, in file order (null: none)
     startName="var"                                   (Segments) keeps the item's start signature as text for a Switch
     prefix="true"                                     (Segments) the file holds the first N elements of a longer Mutagen
                                                       list (or dictionary)
@@ -50,6 +53,9 @@
     TypeSwitch                                        as at the content level (below)
   A dictionary field (Segments, SubRepeat, Repeat): its elements are its values, in the dictionary's order (with key=,
   the value under the key).
+
+  Not held by the test: GPOG's negative BNAM (a Leaf, through mask 0x80). No plugin in Data has one, and Mutagen writes
+  BNAM as 0 or 1, so the synthetic mod Mutagen writes can't hold one either.
 
   Content level (inside Sub, SubRepeat, Repeat, Object, Switch cases); every byte must be described:
     U8 I8 U16 I16 U32 I32 F32                         little-endian numbers
@@ -173,7 +179,7 @@
          later (below) come after these in the dictionary, so the blocks are its first entries (prefix).
        - FillBinaryProcedureTreeCustom: after XNAM, PackageBranch items each starting at ANAM, each read by its generated
          reader; then AbsorbPackageData (also FillBinaryDataInputNamesCustom when the tree is empty): UNAM (the key of an
-         entry), BNAM (its name), PNAM (its flags).
+         entry), BNAM (its name), PNAM (its flags); the keys in that order are ProcedureTreeDataOrder.
        - an event (POBA, POEA or POCA, then INAM) holds topics (PackageEventBinaryCreateTranslation.FillBinaryTopicsCustom). -->
   <Record sig="PACK" object="Package">
     <Object field="IdleAnimations" optional="true">
@@ -234,7 +240,7 @@
     <Segments start="ANAM" field="ProcedureTree" reader="generated" at="cursor">
       <Generated sigs="NNAM,CITC,CTDA,CIS1,CIS2,PRCB,PNAM,FNAM,PKC2,PFO2" />
     </Segments>
-    <Segments start="UNAM" field="Data" key="I8" reader="generated" at="cursor">
+    <Segments start="UNAM" field="Data" key="I8" keyList="ProcedureTreeDataOrder" reader="generated" at="cursor">
       <Sub sig="UNAM"><I8 name="key" /></Sub>
       <Sub sig="BNAM" optional="true"><ZString field="Name" /></Sub>
       <Sub sig="PNAM" optional="true"><U32 field="Flags" /></Sub>

@@ -63,10 +63,11 @@ public sealed class LayoutChecker
     private static string Describe(XElement e) =>
         string.Join(" ", e.Attributes().Select(a => $"{a.Name}=\"{a.Value}\""));
 
-    private void Count(XElement e)
+    private void Count(XElement e) => CountKey(LayoutKey(e));
+
+    private void CountKey(string key)
     {
         if (_trial) return;
-        var key = LayoutKey(e);
         Checked[key] = Checked.GetValueOrDefault(key) + 1;
     }
 
@@ -241,6 +242,7 @@ public sealed class LayoutChecker
         if (!AtCursor(e) && FindAny(cur, starts) is var first and >= 0) cur.Pos = first;
         // reader="generated" without an end marker: an item runs to the next start or to the first subrecord it can't hold
         var holds = generated && endSig == null ? HeldSigs(e, starts) : null;
+        var keys = new List<long>();
         int i = 0;
         while (cur.Pos < cur.End && starts.Contains(cur.Subs[cur.Pos].Sig))
         {
@@ -265,6 +267,7 @@ public sealed class LayoutChecker
             if (keyType != null)
             {
                 var key = KeyOf(cur.Subs[segStart].Data, keyType);
+                keys.Add(key);
                 var entry = Keyed(dict!, key);
                 if (entry == null) Fail(ctx, e, $"segment {i}: no entry of {listPath} has the key {key}");
                 itemCtx = Indexed(ctx, entry, $"{listPath}[key {key}]", e, i);
@@ -283,6 +286,18 @@ public sealed class LayoutChecker
         // prefix: the file holds the first N elements of a longer Mutagen list (or dictionary)
         var prefix = (bool?)e.Attribute("prefix") == true;
         if (keyType == null && e.Attribute("field") != null && (prefix ? list!.Count < i : list!.Count != i)) Fail(ctx, e, $"{i} segments in the file, Mutagen has {list.Count}");
+        // keyList="List" (with key): a list of the object the Segments is in, not of the item, that holds the items' keys
+        // in file order (null: none)
+        if (keyType != null && (string?)e.Attribute("keyList") is { } keyList)
+        {
+            if (!Resolve(ctx.Obj, keyList, out var held)) Fail(ctx, e, $"no list {keyList} on {ctx.Obj?.GetType().Name ?? "null"}");
+            else
+            {
+                var mutagen = held == null ? new List<long>() : ((IEnumerable)held).Cast<object>().Select(k => Convert.ToInt64(k, CultureInfo.InvariantCulture)).ToList();
+                if (!mutagen.SequenceEqual(keys)) Fail(ctx, e, $"keys in the file {string.Join(",", keys)}, Mutagen's {keyList} {string.Join(",", mutagen)}");
+                CountKey($"{LayoutKey(e)}/keyList{keyList}");
+            }
+        }
         Count(e);
     }
 

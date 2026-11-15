@@ -93,6 +93,11 @@ public class HandReadLayoutCompletenessTests
                     // the class Mutagen made in that case (the first of a list)
                     type = Starfield.GetType($"Mutagen.Bethesda.Starfield.{caseType.Split(',')[0]}");
                 }
+                // keyList names a list of the object the Segments is in
+                if ((string?)c.Attribute("keyList") is { } keyList && current != null && Property(current, keyList) != null)
+                {
+                    ret.Add($"{Name(current)}.{keyList}");
+                }
                 if ((string?)c.Attribute("field") is { } field && field != ".")
                 {
                     if (type == null && e.Name.LocalName == "AnyRecord")

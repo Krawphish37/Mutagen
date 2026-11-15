@@ -185,7 +185,10 @@ public class HandReadLayoutFileTests
 
         var never = doc.Descendants()
             .Where(e => e.Attribute("field") != null || e.Name.LocalName is "Case" or "Sub" or "SubRepeat" or "Segments" or "Repeat")
-            .Select(LayoutChecker.LayoutKey).Distinct().Where(k => !checkedTotals.ContainsKey(k)).ToList();
+            .Select(LayoutChecker.LayoutKey)
+            .Concat(doc.Descendants().Where(e => e.Attribute("keyList") != null)
+                .Select(e => $"{LayoutChecker.LayoutKey(e)}/keyList{(string)e.Attribute("keyList")!}"))
+            .Distinct().Where(k => !checkedTotals.ContainsKey(k)).ToList();
         return new CheckResult(errors, checkedTotals, records, never);
     }
 

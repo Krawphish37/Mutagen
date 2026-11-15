@@ -33,6 +33,7 @@ public class HandReadLayoutSyntheticTests
         "Define/Switch/Case15/RepeatData/U8.",
         // C47: hand-read lists the official plugins never use
         "RecordPACK/SegmentsData/SubANAM/Switch/CaseTopic",
+        "RecordPACK/SegmentsData/keyListProcedureTreeDataOrder",
         "RecordPACK/SegmentsData/Switch/CaseTopic/SubTPIC/BytesTPIC",
         "Define/SubRepeatPDTO/Switch/Case1/I32Subtype.TypeInt",
         "RecordINNR/ObjectRules/Switch/Case0",
