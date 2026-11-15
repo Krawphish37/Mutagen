@@ -1,3 +1,5 @@
+using Mutagen.Bethesda.Plugins.Binary.Headers;
+using Mutagen.Bethesda.Plugins.Binary.Parameters;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
 using Mutagen.Bethesda.Plugins.Binary.Translations;
 using Mutagen.Bethesda.Plugins.Records;
@@ -10,6 +12,26 @@ namespace Mutagen.Bethesda.Starfield;
 
 public partial class StarfieldModHeader : IModHeaderInteriorCellCount
 {
+    /// <summary>
+    /// Reads a plugin's header (its TES4 record) alone, as the full import reads it when it opens the plugin: flags,
+    /// HEDR stats, author, description, masters and overridden forms. Only the header's bytes are read; the rest of
+    /// the plugin isn't opened (C58/W17).<br/>
+    /// The overridden forms (ONAM) are FormIDs, so each master's size must be known, as for opening the plugin: from
+    /// <see cref="BinaryReadParameters.MasterFlagsLookup"/> (a master whose size isn't known is an error, C180).
+    /// </summary>
+    /// <param name="path">The plugin's ModKey and path</param>
+    /// <param name="release">The game release to read it as</param>
+    /// <param name="param">The reading parameters (file system, file share, master sizes, masters override, encodings)</param>
+    /// <returns>The header, as a new object</returns>
+    public static StarfieldModHeader CreateFromPath(ModPath path, StarfieldRelease release, BinaryReadParameters? param = null)
+    {
+        param ??= BinaryReadParameters.Default;
+        var gameRelease = release.ToGameRelease();
+        var header = ModHeaderFrame.FromPath(path, gameRelease, fileSystem: param.FileSystem, share: param.FileShare);
+        var meta = ParsingMeta.FactoryForModHeader(param, gameRelease, path.ModKey, header);
+        return CreateFromBinary(new MutagenFrame(new MutagenMemoryReadStream(header.HeaderAndContentData, meta)));
+    }
+
     [Flags]
     public enum HeaderFlag
     {

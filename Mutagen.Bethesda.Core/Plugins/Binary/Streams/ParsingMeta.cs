@@ -260,6 +260,27 @@ public sealed class ParsingMeta
         return meta;
     }
 
+    /// <summary>
+    /// The reading state for a plugin's header (TES4) alone (C58/W17): its masters as <see cref="Factory(BinaryReadParameters, GameRelease, ModPath)"/>
+    /// takes them, without the checks that walk the rest of the file (how the mod stores its own FormIDs, duplicate
+    /// FormKeys), which the header doesn't need. A master whose size isn't known is an error, as when the plugin is
+    /// opened (C180).
+    /// </summary>
+    internal static ParsingMeta FactoryForModHeader(
+        BinaryReadParameters param,
+        GameRelease release,
+        ModKey modKey,
+        ModHeaderFrame header)
+    {
+        var rawMasters = param.MasterOverrides
+            ?? MasterReferenceCollection.FromModHeader(modKey, header);
+        var masters = SeparatedMasterPackage.Factory(release, modKey, header.MasterStyle, rawMasters, param.MasterFlagsLookup);
+        var meta = new ParsingMeta(GameConstants.Get(release), modKey, masters);
+        meta.ReadModHeaderVersion(header);
+        meta.Absorb(param);
+        return meta;
+    }
+
     public static ParsingMeta FactoryNoMasters(
         BinaryReadParameters param,
         GameRelease release,
