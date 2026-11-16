@@ -603,4 +603,38 @@ public class StringsFolderLookupOverlayTests
         StringsFolderLookupOverlay.ResolveSources(GameRelease.SkyrimSE, modKey, existingPath, fileSystem: fileSystem)
             .ShouldBeEmpty();
     }
+
+    /// <summary>
+    /// C74: the batch gives each plugin what a call per plugin gives (the Strings folder listed once for all)
+    /// </summary>
+    [Theory, MutagenModAutoData]
+    internal void ResolveSources_Batch_IsThePerPluginResolution(
+        IFileSystem fileSystem,
+        DirectoryPath existingPath,
+        MutagenEncodingProvider encodingProvider)
+    {
+        var first = ModKey.FromFileName("First.esp");
+        var second = ModKey.FromFileName("FirstSecond.esp");
+        var none = ModKey.FromFileName("None.esp");
+        using (var writer = new StringsWriter(GameRelease.SkyrimSE, first, existingPath, encodingProvider, fileSystem))
+        {
+            writer.Register("Iron Sword", Language.English, StringsSource.Normal);
+            writer.Register("Épée de fer", Language.French, StringsSource.Normal);
+        }
+        using (var writer = new StringsWriter(GameRelease.SkyrimSE, second, existingPath, encodingProvider, fileSystem))
+        {
+            writer.Register("Steel Sword", Language.English, StringsSource.Normal);
+        }
+        var factory = EnumerationFactory(fileSystem, existingPath);
+        var batch = factory.ResolveSources(new[] { first, second, none, first });
+        batch.Keys.ShouldBe(new[] { first, second, none });
+        foreach (var mod in new[] { first, second, none })
+        {
+            batch[mod].ShouldBe(factory.ResolveSources(mod));
+            batch[mod].ShouldBe(EnumerationFactory(fileSystem, existingPath).InternalFactory(mod).EnumerateTables().ToArray());
+        }
+        batch[first].Count.ShouldBe(6);
+        batch[second].Count.ShouldBe(3);
+        batch[none].ShouldBeEmpty();
+    }
 }

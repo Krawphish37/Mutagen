@@ -18,6 +18,40 @@ public class StringsSourcesRealDataTests
 
     public StringsSourcesRealDataTests(ITestOutputHelper output) => _output = output;
 
+    /// <summary>
+    /// C74: every plugin of the Data folder resolved in one batch gives the same tables as a call per plugin, and the
+    /// batch reads each archive's listing once (SFSearch's own copy: 0.4 s for its load order; the per-plugin call 5.5 s)
+    /// </summary>
+    [Fact]
+    [Trait("Category", "RealData")]
+    public void RealData_DataFolder_BatchIsThePerPluginResolution()
+    {
+        var data = Environment.GetEnvironmentVariable("MUTAGEN_STARFIELD_DATA");
+        if (string.IsNullOrEmpty(data)) return; // needs the game's Data folder
+        var plugins = Directory.EnumerateFiles(data)
+            .Where(f => Path.GetExtension(f).ToLowerInvariant() is ".esm" or ".esp" or ".esl")
+            .Select(f => ModKey.FromFileName(Path.GetFileName(f)))
+            .ToArray();
+
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        var batch = StringsFolderLookupOverlay.ResolveSources(GameRelease.Starfield, plugins, data);
+        var batchTime = watch.Elapsed;
+
+        watch.Restart();
+        var single = plugins.ToDictionary(p => p, p => StringsFolderLookupOverlay.ResolveSources(GameRelease.Starfield, p, data));
+        var singleTime = watch.Elapsed;
+
+        batch.Count.ShouldBe(plugins.Length);
+        foreach (var plugin in plugins)
+        {
+            batch[plugin].ShouldBe(single[plugin], plugin.FileName);
+        }
+        var tables = batch.Values.Sum(x => x.Count);
+        _output.WriteLine($"{plugins.Length} plugins, {tables} tables ({batch.Values.Count(x => x.Count > 0)} plugins with tables): " +
+                          $"batch {batchTime.TotalSeconds:0.00} s, a call per plugin {singleTime.TotalSeconds:0.00} s");
+        tables.ShouldBeGreaterThan(0);
+    }
+
     [Fact]
     [Trait("Category", "RealData")]
     public void RealData_OfficialPlugins_ResolveSourcesIsWhatTheLookupsRead()

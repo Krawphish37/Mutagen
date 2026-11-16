@@ -14,6 +14,7 @@ public interface IStringsFolderLookupFactory
     IStringsFolderLookup Factory(ModKey modKey);
     internal StringsFolderLookupOverlay InternalFactory(ModKey modKey);
     internal IReadOnlyList<StringsTableSource> ResolveSources(ModKey modKey);
+    internal IReadOnlyDictionary<ModKey, IReadOnlyList<StringsTableSource>> ResolveSources(IEnumerable<ModKey> modKeys);
 }
 
 public class StringsFolderLookupFactory : IStringsFolderLookupFactory
@@ -105,17 +106,95 @@ public class StringsFolderLookupFactory : IStringsFolderLookupFactory
     /// game's ini lists, in Mutagen's archive order). An archive's file is in its Strings folder when its path starts
     /// with "strings". Only the folder listing and the archives' file lists (a BA2's name table) are read: no strings
     /// file is opened. Sources come in the order Normal, DL, IL, as <see cref="StringsFolderLookupOverlay.EnumerateTables"/>
-    /// lists them.
+    /// lists them.<br/>
+    /// Each archive's strings listing is read once per factory and kept while the archive's size and time stay the same
+    /// (C74), so later calls, and the lookups this factory makes, don't read it again.
     /// </summary>
     public IReadOnlyList<StringsTableSource> ResolveSources(ModKey modKey)
     {
-        var languageFormat = GameConstants.Get(_gameRelease.Release).StringsLanguageFormat ?? throw new ArgumentException($"Tried to get language format for an unsupported game: {_gameRelease.Release}", nameof(_gameRelease.Release));
+        var languageFormat = LanguageFormat();
+        return Resolve(modKey, LooseFilesOf(languageFormat, modKey), _getApplicableArchivePaths.Get(modKey), languageFormat, new Dictionary<string, Dictionary<string, List<Table>>>(StringComparer.OrdinalIgnoreCase));
+    }
+
+    /// <summary>
+    /// <see cref="ResolveSources(ModKey)"/> for many plugins at once (C74): the Strings folder and the data folder's
+    /// archives are listed once, and each archive's strings listing is read once for all of them (a load order's plugins
+    /// share the archives the ini lists). The same lists as a call per plugin, in the order the plugins are given.
+    /// </summary>
+    /// <param name="modKeys">The plugins; one listed twice is resolved once</param>
+    /// <returns>Each plugin's tables, as <see cref="ResolveSources(ModKey)"/> gives them</returns>
+    public IReadOnlyDictionary<ModKey, IReadOnlyList<StringsTableSource>> ResolveSources(IEnumerable<ModKey> modKeys)
+    {
+        var languageFormat = LanguageFormat();
+        var loose = LooseFiles(languageFormat, modKey: null);
+        // The data folder's archives listed once for all of them
+        var mods = modKeys.Distinct().ToArray();
+        var archives = _getApplicableArchivePaths.Get(mods);
+        var ret = new Dictionary<ModKey, IReadOnlyList<StringsTableSource>>();
+        // Each archive is looked at (its size and time) once for all the plugins
+        var seen = new Dictionary<string, Dictionary<string, List<Table>>>(StringComparer.OrdinalIgnoreCase);
+        foreach (var modKey in mods)
+        {
+            ret[modKey] = Resolve(
+                modKey,
+                loose.TryGetValue(modKey.Name, out var files) ? files : [],
+                archives.TryGetValue(modKey, out var applicable) ? applicable : _getApplicableArchivePaths.Get(modKey),
+                languageFormat,
+                seen);
+        }
+        return ret;
+    }
+
+    private StringsLanguageFormat LanguageFormat() =>
+        GameConstants.Get(_gameRelease.Release).StringsLanguageFormat
+        ?? throw new ArgumentException($"Tried to get language format for an unsupported game: {_gameRelease.Release}", nameof(_gameRelease.Release));
+
+    private readonly record struct Table(string Path, StringsSource Source, Language Language);
+
+    /// <summary>
+    /// The strings files of the Strings folder, by the plugin name they are for (OrdinalIgnoreCase), in the folder's
+    /// order; only those of one plugin (listed by a name pattern) when <paramref name="modKey"/> is given
+    /// </summary>
+    private Dictionary<string, List<Table>> LooseFiles(StringsLanguageFormat languageFormat, ModKey? modKey)
+    {
+        var ret = new Dictionary<string, List<Table>>(StringComparer.OrdinalIgnoreCase);
         var stringsFolderPath = _readParameters?.StringsFolderOverride;
         if (stringsFolderPath == null)
         {
             stringsFolderPath = Path.Combine(_dataDirectoryProvider.Path, "Strings");
         }
+        if (!_fileSystem.Directory.Exists(stringsFolderPath.Value)) return ret;
+        var pattern = modKey is { } one ? $"{one.Name}*{StringsUtility.StringsFileExtension}" : $"*{StringsUtility.StringsFileExtension}";
+        foreach (var file in _fileSystem.Directory.EnumerateFilesIgnoringCase(stringsFolderPath.Value, pattern))
+        {
+            if (!StringsUtility.TryRetrieveInfoFromString(
+                    languageFormat,
+                    file.Name.String,
+                    out var type,
+                    out var lang,
+                    out var modName))
+            {
+                continue;
+            }
+            var name = modName.ToString();
+            if (modKey is { } only && !only.Name.Equals(name, StringComparison.OrdinalIgnoreCase)) continue;
+            if (!ret.TryGetValue(name, out var list)) ret[name] = list = new List<Table>();
+            list.Add(new Table(file.Path, type, lang));
+        }
+        return ret;
+    }
 
+    private IReadOnlyList<Table> LooseFilesOf(StringsLanguageFormat languageFormat, ModKey modKey) =>
+        LooseFiles(languageFormat, (ModKey?)modKey).TryGetValue(modKey.Name, out var files) ? files : [];
+
+    /// <param name="seen">The archives' listings already looked at in this call</param>
+    private IReadOnlyList<StringsTableSource> Resolve(
+        ModKey modKey,
+        IReadOnlyList<Table> looseFiles,
+        IEnumerable<FilePath> archives,
+        StringsLanguageFormat languageFormat,
+        Dictionary<string, Dictionary<string, List<Table>>> seen)
+    {
         var normal = new Dictionary<Language, StringsTableSource>();
         var dl = new Dictionary<Language, StringsTableSource>();
         var il = new Dictionary<Language, StringsTableSource>();
@@ -127,62 +206,82 @@ public class StringsFolderLookupFactory : IStringsFolderLookupFactory
             _ => throw new NotImplementedException(),
         };
 
-        if (_fileSystem.Directory.Exists(stringsFolderPath.Value))
+        foreach (var file in looseFiles)
         {
-            var stringsFiles = _fileSystem.Directory
-                .EnumerateFilesIgnoringCase(stringsFolderPath.Value, $"{modKey.Name}*{StringsUtility.StringsFileExtension}");
-            foreach (var file in stringsFiles)
+            Get(file.Source)[file.Language] = new StringsTableSource(file.Source, file.Language, file.Path, ArchivePath: null, ArchiveEntryPath: null);
+        }
+        foreach (var bsaFile in archives)
+        {
+            if (!seen.TryGetValue(bsaFile.Path, out var listing))
             {
-                if (!StringsUtility.TryRetrieveInfoFromString(
-                        languageFormat,
-                        file.Name.String,
-                        out var type,
-                        out var lang,
-                        out var modName)
-                    || !modKey.Name.AsSpan().Equals(modName, StringComparison.OrdinalIgnoreCase))
-                {
-                    continue;
-                }
-                Get(type)[lang] = new StringsTableSource(type, lang, file.Path, ArchivePath: null, ArchiveEntryPath: null);
+                seen[bsaFile.Path] = listing = ArchiveStrings(bsaFile, languageFormat);
+            }
+            if (!listing.TryGetValue(modKey.Name, out var entries)) continue;
+            foreach (var entry in entries)
+            {
+                var dict = Get(entry.Source);
+                if (dict.ContainsKey(entry.Language)) continue;
+                dict[entry.Language] = new StringsTableSource(entry.Source, entry.Language, Path.Combine(bsaFile, entry.Path), ArchivePath: bsaFile.Path, ArchiveEntryPath: entry.Path);
             }
         }
-        foreach (var bsaFile in _getApplicableArchivePaths.Get(modKey))
+        return normal.Values.Concat(dl.Values).Concat(il.Values).ToArray();
+    }
+
+    private sealed record ArchiveListing(long Length, DateTime Written, Dictionary<string, List<Table>> ByMod);
+
+    // Each archive's strings files by the plugin name they are for (Table.Path: the entry's path in the archive), kept
+    // while the archive's size and last write time stay the same
+    private readonly Dictionary<string, ArchiveListing> _archiveListings = new(StringComparer.OrdinalIgnoreCase);
+
+    private Dictionary<string, List<Table>> ArchiveStrings(FilePath bsaFile, StringsLanguageFormat languageFormat)
+    {
+        var info = _fileSystem.FileInfo.New(bsaFile.Path);
+        var (length, written) = (info.Length, info.LastWriteTimeUtc);
+        lock (_archiveListings)
         {
+            if (_archiveListings.TryGetValue(bsaFile.Path, out var kept) && kept.Length == length && kept.Written == written)
+            {
+                return kept.ByMod;
+            }
+        }
+        var byMod = new Dictionary<string, List<Table>>(StringComparer.OrdinalIgnoreCase);
+        try
+        {
+            var bsaReader = Archive.CreateReader(_gameRelease.Release, bsaFile, _fileSystem);
             try
             {
-                var bsaReader = Archive.CreateReader(_gameRelease.Release, bsaFile, _fileSystem);
-                try
+                foreach (var itemPath in bsaReader.EnumerateFolderFilePaths("strings"))
                 {
-                    foreach (var itemPath in bsaReader.EnumerateFolderFilePaths("strings"))
+                    var itemFileName = Path.GetFileName(IFileSystemExt.CleanDirectorySeparators(itemPath));
+                    if (!StringsUtility.TryRetrieveInfoFromString(
+                            languageFormat,
+                            itemFileName,
+                            out var type,
+                            out var lang,
+                            out var modName))
                     {
-                        var itemFileName = Path.GetFileName(IFileSystemExt.CleanDirectorySeparators(itemPath));
-                        if (!StringsUtility.TryRetrieveInfoFromString(
-                                languageFormat,
-                                itemFileName,
-                                out var type,
-                                out var lang,
-                                out var modName))
-                        {
-                            continue;
-                        }
-                        if (!MemoryExtensions.Equals(modKey.Name, modName, StringComparison.OrdinalIgnoreCase)) continue;
-                        var dict = Get(type);
-                        if (dict.ContainsKey(lang)) continue;
-                        dict[lang] = new StringsTableSource(type, lang, Path.Combine(bsaFile, itemPath), ArchivePath: bsaFile.Path, ArchiveEntryPath: itemPath);
+                        continue;
                     }
-                }
-                catch (Exception ex)
-                {
-                    ArchiveException.EnrichWithFolderAccessedAndThrow("BSA folder failed to parse for string file", ex, "strings");
-                    throw;
+                    var name = modName.ToString();
+                    if (!byMod.TryGetValue(name, out var list)) byMod[name] = list = new List<Table>();
+                    list.Add(new Table(itemPath, type, lang));
                 }
             }
             catch (Exception ex)
             {
-                ArchiveException.EnrichWithArchivePathAndThrow("BSA failed to parse for string file", ex, bsaFile);
+                ArchiveException.EnrichWithFolderAccessedAndThrow("BSA folder failed to parse for string file", ex, "strings");
                 throw;
             }
         }
-        return normal.Values.Concat(dl.Values).Concat(il.Values).ToArray();
+        catch (Exception ex)
+        {
+            ArchiveException.EnrichWithArchivePathAndThrow("BSA failed to parse for string file", ex, bsaFile);
+            throw;
+        }
+        lock (_archiveListings)
+        {
+            _archiveListings[bsaFile.Path] = new ArchiveListing(length, written, byMod);
+        }
+        return byMod;
     }
 }
