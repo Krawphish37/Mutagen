@@ -1175,7 +1175,7 @@ namespace Mutagen.Bethesda.Starfield
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Structs");
             item.Structs.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ScriptEntryStructs>.Instance.Parse(
-                    amount: checked((int)frame.ReadUInt32()),
+                    amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4),
                     reader: frame,
                     transl: ScriptEntryStructs.TryCreateFromBinary));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);

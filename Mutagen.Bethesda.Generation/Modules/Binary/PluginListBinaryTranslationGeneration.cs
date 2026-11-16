@@ -471,20 +471,21 @@ public class PluginListBinaryTranslationGeneration : BinaryTranslationGeneration
                             }
                             break;
                         case ListBinaryType.PrependCount:
+                            // C85: the count read inline is noted as the list's Count position (value positions)
                             byte countLen = (byte)list.CustomData[CounterByteLength];
                             switch (countLen)
                             {
                                 case 1:
-                                    args.Add("amount: frame.ReadUInt8()");
+                                    args.Add("amount: ValuePositionRecorder.Counted(frame, frame.ReadUInt8(), 1)");
                                     break;
                                 case 2:
-                                    args.Add("amount: frame.ReadUInt16()");
+                                    args.Add("amount: ValuePositionRecorder.Counted(frame, frame.ReadUInt16(), 2)");
                                     break;
                                 case 4:
-                                    args.Add("amount: checked((int)frame.ReadUInt32())");
+                                    args.Add("amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4)");
                                     break;
                                 case 8:
-                                    args.Add("amount: checked((int)frame.ReadUInt64())");
+                                    args.Add("amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt64()), 8)");
                                     break;
                                 default:
                                     throw new NotImplementedException();

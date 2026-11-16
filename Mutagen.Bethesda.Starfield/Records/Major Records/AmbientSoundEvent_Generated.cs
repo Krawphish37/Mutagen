@@ -1735,14 +1735,14 @@ namespace Mutagen.Bethesda.Starfield
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "WeatherKeywords");
             item.WeatherKeywords.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
-                    amount: checked((int)frame.ReadUInt32()),
+                    amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4),
                     reader: frame,
                     transl: FormLinkBinaryTranslation.Instance.Parse));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MarkerKeywords");
             item.MarkerKeywords.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
-                    amount: checked((int)frame.ReadUInt32()),
+                    amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4),
                     reader: frame,
                     transl: FormLinkBinaryTranslation.Instance.Parse));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
@@ -1758,7 +1758,7 @@ namespace Mutagen.Bethesda.Starfield
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "PlanetCustomizations");
             item.PlanetCustomizations.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AmbientSoundPlanetCustomization>.Instance.Parse(
-                    amount: checked((int)frame.ReadUInt32()),
+                    amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4),
                     reader: frame,
                     transl: AmbientSoundPlanetCustomization.TryCreateFromBinary));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);

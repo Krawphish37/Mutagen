@@ -1341,7 +1341,7 @@ namespace Mutagen.Bethesda.Skyrim
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AlternateTextures = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AlternateTexture>.Instance.Parse(
-                            amount: checked((int)frame.ReadUInt32()),
+                            amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4),
                             reader: frame,
                             transl: AlternateTexture.TryCreateFromBinary)
                         .CastExtendedList<AlternateTexture>();

@@ -3,10 +3,13 @@
   Starfield layouts that Mutagen reads with hand-written code and that the record xml (Records/**/*.xml) can't describe.
   Ships in the package next to the record xml (loqui/Mutagen.Bethesda.Starfield/Layouts/). Not read by the generator or
   at run time: it is a description, held against Mutagen's own parse by the unit test HandReadLayoutFileTests, which
-  reads Starfield.esm and the official plugins with it and compares every value that names a field.
+  reads Starfield.esm and the official plugins with it and compares every value that names a field, and (C84) each
+  value's bytes with where Mutagen's reader read it (its value positions, C60).
 
   Record sig="XXXX" object="MutagenClass": the subrecords of one record type, in file order (TES4: the plugin header's).
-  AnyRecord sig="XXXX": checked on every record (of any type) that has that subrecord.
+  AnyRecord sig="XXXX[,YYYY]": checked on every record (of any type) that has that subrecord (C84: with several, any of
+                                                      them); the walk starts at the record's first subrecord, whatever
+                                                      other entries describe.
   Header [sig="XXXX"] object="MutagenClass": the record header, the 24 bytes before a record's subrecords (its signature,
                                                       the size of its data, then the fields the generated FillBinaryStructs
                                                       reads), described at the content level. With sig: that record type's
@@ -15,9 +18,13 @@
   Define name="N" / Use name="N": a block written once and used in several places (either level).
 
   Subrecord level (inside Record, Segments, Object, Switch cases):
-    Sub sig="SIG" [optional="true"] [field="Prop"]   the next subrecord with that signature; its content is described by
+    Sub sig="SIG" [optional="true"] [field="Prop"] [at="cursor"]
+                                                      the next subrecord with that signature; its content is described by
                                                       the children. field: the Mutagen object its values belong to.
-                                                      optional and absent: the field must be null or empty.
+                                                      optional and absent: the field must be null or empty (C84: without
+                                                      field, so must the lists its direct children name). at="cursor"
+                                                      (C84): only the subrecord where the walk stands (an optional Object's
+                                                      check that none of its subrecords follow leaves it out)
     SubRepeat sig="SIG" [count="N|$var"] [field="List"] [index="i"] [at="cursor"]
                                                       consecutive subrecords, one list element each
     AnyOrder                                          the child Subs (and Generated sigs) follow in any order
@@ -37,7 +44,7 @@
                                                       (one its children neither describe nor pass over). The list ends at
                                                       the first subrecord after an item that starts none.
     at="cursor"                                       (Segments, SubRepeat) the list starts at the subrecord where the walk
-                                                      stands, or has no items: it isn't looked for further on
+                                                      stands, or has no items: it isn't looked for further on (Sub: above)
     key="I8|U8|I16|U16|I32|U32"                       (Segments) field is a dictionary; an item is the entry under the
                                                       number at offset 0 of its start subrecord, not the next by place (an
                                                       entry read again is the same entry)
@@ -94,7 +101,20 @@
                                                       as the field's type (an enum view of a flags value); optional: only
                                                       some classes have the property (where it is missing, nothing is said)
     IfMore                                            the children only when bytes are left
-    Peek offset="N" type="U8|U16|U32" name="var"      a value further on, read without moving
+    ReflectionFormLinks field="List"                  (C86) no bytes: the FormIDs that Bethesda's reflection format (BETH,
+                                                      STRT, TYPE, CLAS, then OBJT/DIFF with LIST/MAPC/USER/USRD) stores in
+                                                      the bytes the Bytes element before it read: its pointers to forms and
+                                                      the plain FormID fields ReflectionData.PlainFormIdFields lists, in
+                                                      stored order, each through the plugin's masters. Mutagen's public
+                                                      ReflectionData.FindFormIds finds them (ReflectionData documents the
+                                                      format); the format is self-describing, so it isn't laid out here
+    Peek offset="N" type="U8|U16|U32|FormID" name="var"
+                                                      a value further on, read without moving (FormID, C84: kept as FormID
+                                                      name keeps one, 0 when null)
+    Versioning formVersion="N"                        (C84) the children only when the record's form version (the uint16 at
+                                                      offset 20 of its header) is at least N, as the record xml's Versioning
+                                                      formVersion="N" action="Add"; below it they have no bytes and their
+                                                      fields keep their defaults (0, null, empty)
     TypeSwitch / Case type="A,B" / Default            chooses by the class Mutagen made for the current object
     WString lengthName="var"                          also keeps the text length
   Value attributes:
@@ -896,7 +916,8 @@
   <Record sig="CELL" object="Cell"><Use name="Traversals" /></Record>
   <!-- A placed object's patrol (Records/Common Subrecords/Patrol.cs, PatrolBinaryCreateTranslation): XPRD, then XPPA (an
        empty marker, FillBinaryPatrolScriptMarkerCustom), INAM, then its topics (FillBinaryTopicsCustom) as a package
-       event's. -->
+       event's, then (C84) TNAM, the topic, read by the generated reader when it follows the topics (Patrol.xml). A map
+       marker's TNAM (its type) is another object's, so TNAM is the patrol's only right after its topics (at="cursor"). -->
   <Record sig="REFR" object="PlacedObject">
     <Use name="Traversals" />
     <Object field="Patrol" optional="true">
@@ -904,8 +925,35 @@
       <Sub sig="XPPA" optional="true" />
       <Generated sigs="INAM" />
       <Use name="Topics" />
+      <Sub sig="TNAM" optional="true" at="cursor"><FormID field="Topic" /></Sub>
     </Object>
   </Record>
+  <!-- C84: XTRV, a placed object's traversal (XTRV.xml, the generated reader of the XTRV subrecord object): the
+       traversal's FormID, then the rest of the subrecord as Unknown. -->
+  <AnyRecord sig="XTRV">
+    <Sub sig="XTRV" field="XTRV">
+      <FormID field="Traversal" />
+      <Bytes field="Unknown" />
+    </Sub>
+  </AnyRecord>
+  <!-- C84: a placed object's XCZA subrecords (PlacedObject.xml). An XCZA belongs to what comes before it:
+       - WaterCurrentReferences (PlacedObjectWaterCurrentReference): each item starts at XCZR (the reference) and takes
+         the XCZA right after it (its bytes); ListBinaryTranslation with XCZR as the trigger, each item by the generated
+         reader of the object, which reads XCZR, then XCZA when it is next;
+       - CurrentZoneCell (PlacedObjectCurrentZoneCell): XCZC (the cell) and/or an XCZA that no XCZR comes right before;
+         the generated reader of the placed object starts it at either signature, and it reads XCZC, then XCZA, each
+         when it is next.
+       XCZA's bytes are kept whole (Unknown in xEdit). -->
+  <AnyRecord sig="XCZR,XCZC,XCZA">
+    <Segments start="XCZR" field="WaterCurrentReferences" reader="generated">
+      <Sub sig="XCZR"><FormID field="Reference" /></Sub>
+      <Sub sig="XCZA" optional="true" at="cursor"><Bytes field="XCZA" /></Sub>
+    </Segments>
+    <Object field="CurrentZoneCell" optional="true">
+      <Sub sig="XCZC" optional="true"><FormID field="CurrentZoneCell" /></Sub>
+      <Sub sig="XCZA" optional="true"><Bytes field="XCZA" /></Sub>
+    </Object>
+  </AnyRecord>
 
   <!-- NAVI: each NVMI is one MapInfos item. Its first fields are read by the generated reader (the navigation mesh,
        flags, approximate location, preferred percent, then four lists each with a uint32 count before it: merged to,
@@ -1035,4 +1083,114 @@
       </TypeSwitch>
     </Segments>
   </AnyRecord>
+  <!-- C86: a reflection subrecord (Records/Common Subrecords/Reflection.cs): Data is the subrecord's bytes whole (the
+       generated reader, ByteArray); FormLinks are the FormIDs stored inside them (ReflectionBinaryCreateTranslation
+       .CustomBinaryEndImport, ReflectionMixIn.ReadFormLinks). A blob over 65,535 bytes has its length in an XXXX. -->
+  <Define name="Reflection">
+    <Bytes field="Data" />
+    <ReflectionFormLinks field="FormLinks" />
+  </Define>
+  <!-- C86: XNSE, a placed object's navmesh spline extra data (PlacedObject.xml NavMeshSplineExtraData: a Reflection read
+       under XNSE). Its FormIDs are NavMeshSplineExtraData::ChunkDataRef.RefID, a plain UInt32 field. -->
+  <AnyRecord sig="XNSE">
+    <Sub sig="XNSE" field="NavMeshSplineExtraData"><Use name="Reflection" /></Sub>
+  </AnyRecord>
+  <!-- C84: NVNM, a navigation mesh's geometry, on any record that has one (NAVM; ACTI, DOOR, GBFM and STAT keep one too).
+       NavmeshGeometryBinaryCreateTranslation.FillBinaryStructs (generated, NavmeshGeometry.xml) with the hand-written
+       GetBinaryParent (Records/Common Subrecords/NavmeshGeometry.cs). Each list's uint32 count is its Count value
+       position (C85):
+       - the version and CRC;
+       - the parent: a FormID; null makes a CellNavmeshParent (that null FormID is UnusedWorldspaceParent, then the cell's
+         FormID), else a WorldspaceNavmeshParent (the worldspace, then the grid cell stored Y then X);
+       - seven lists, each a uint32 count and its items: vertices (a point, then from form version 493 an int32), triangles
+         (21 bytes), edge links, door triangles, cover, cover-triangle maps, waypoints;
+       - the grid: its size, max distance (X, Y), min and max;
+       - GridArrays: a list read to the end of the subrecord, whose item reads int16s to the end of the subrecord, so the
+         bytes left after the grid are one item (none when no bytes are left). Nothing is left for Unknown3 after it: the
+         reader stops at the break, so Unknown3 stays 0 and Versioning has Break0. -->
+  <AnyRecord sig="NVNM">
+    <Sub sig="NVNM" field="NavmeshGeometry">
+      <U32 field="NavmeshVersion" />
+      <U32 field="CrcHash" />
+      <Object field="Parent">
+        <Peek offset="0" type="FormID" name="parentWorld" />
+        <Switch on="parentWorld">
+          <Case value="0" type="CellNavmeshParent">
+            <FormID field="UnusedWorldspaceParent" />
+            <FormID field="Parent" />
+          </Case>
+          <Default type="WorldspaceNavmeshParent">
+            <FormID field="Parent" />
+            <Object field="Coordinates"><I16 field="Y" /><I16 field="X" /></Object>
+          </Default>
+        </Switch>
+      </Object>
+      <U32 name="vertices" />
+      <Repeat count="$vertices" field="Vertices">
+        <P3F32 field="Point" />
+        <Versioning formVersion="493"><I32 field="Unknown" /></Versioning>
+      </Repeat>
+      <U32 name="triangles" />
+      <Repeat count="$triangles" field="Triangles">
+        <P3I16 field="Vertices" />
+        <I16 field="EdgeLink_0_1" />
+        <I16 field="EdgeLink_1_2" />
+        <I16 field="EdgeLink_2_0" />
+        <F32 field="Height" />
+        <U8 field="Unknown" />
+        <U16 field="Flags" />
+        <U16 field="CoverFlags" />
+      </Repeat>
+      <U32 name="edgeLinks" />
+      <Repeat count="$edgeLinks" field="EdgeLinks">
+        <U32 field="Type" />
+        <FormID field="Mesh" />
+        <I16 field="TriangleIndex" />
+        <I8 field="EdgeIndex" />
+      </Repeat>
+      <U32 name="doorTriangles" />
+      <Repeat count="$doorTriangles" field="DoorTriangles">
+        <I16 field="TriangleBeforeDoor" />
+        <U32 field="CrcHash" />
+        <FormID field="Door" />
+      </Repeat>
+      <U32 name="cover" />
+      <Repeat count="$cover" field="Cover">
+        <U16 field="Vertex1" />
+        <U16 field="Vertex2" />
+        <U64 field="Data" />
+      </Repeat>
+      <U32 name="coverTriangleMappings" />
+      <Repeat count="$coverTriangleMappings" field="CoverTriangleMappings">
+        <U16 field="Cover" />
+        <U16 field="Triangle" />
+      </Repeat>
+      <U32 name="waypoints" />
+      <Repeat count="$waypoints" field="Waypoints">
+        <P3F32 field="Location" />
+        <I16 field="TriangleIndex" />
+        <U32 field="Flags" />
+      </Repeat>
+      <U32 field="GridSize" />
+      <Object field="GridMaxDistance"><F32 field="X" /><F32 field="Y" /></Object>
+      <P3F32 field="GridMin" />
+      <P3F32 field="GridMax" />
+      <Repeat count="end" field="GridArrays">
+        <Repeat count="end" field="GridCell"><I16 field="." /></Repeat>
+      </Repeat>
+      <Const field="Versioning" value="Break0" />
+      <Const field="Unknown3" value="0" />
+    </Sub>
+  </AnyRecord>
+  <!-- C84: SFTR, a surface tree's grids. SurfaceTreeBinaryCreateTranslation.FillBinaryRecordTypes (generated,
+       SurfaceTree.xml): an FNAM holds 65,536 surface pattern FormIDs (a 256 x 256 grid, row by row), a GNAM 65,536 bytes.
+       Which field each one fills goes by what was read before it: the first FNAM is SurfacePatterns, the GNAM after it
+       GNAM, the FNAM after that SurfacePatterns2, the GNAM after that GNAM2 (one written without the one before it reads
+       back as that one). Both FNAMs are over 65,535 bytes, so an XXXX holds their length. -->
+  <Record sig="SFTR" object="SurfaceTree">
+    <Sub sig="FNAM" optional="true"><Repeat count="65536" field="SurfacePatterns"><FormID field="." /></Repeat></Sub>
+    <Sub sig="GNAM" optional="true"><Bytes field="GNAM" /></Sub>
+    <Sub sig="FNAM" optional="true"><Repeat count="65536" field="SurfacePatterns2"><FormID field="." /></Repeat></Sub>
+    <Sub sig="GNAM" optional="true"><Bytes field="GNAM2" /></Sub>
+  </Record>
 </HandReadLayouts>

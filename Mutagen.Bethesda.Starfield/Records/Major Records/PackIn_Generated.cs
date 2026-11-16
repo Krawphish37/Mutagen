@@ -3820,7 +3820,7 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MaterialSwaps = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ILayeredMaterialSwapGetter>>.Instance.Parse(
-                            amount: frame.ReadUInt16(),
+                            amount: ValuePositionRecorder.Counted(frame, frame.ReadUInt16(), 2),
                             reader: frame,
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<ILayeredMaterialSwapGetter>>();

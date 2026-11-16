@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Plugins.Binary.Translations;
 using Mutagen.Bethesda.Plugins.Masters;
+using Mutagen.Bethesda.Plugins.Records;
 using Noggog;
 
 namespace Mutagen.Bethesda.UnitTests.Plugins.Records.Starfield.HandReadLayoutFile;
@@ -15,6 +16,9 @@ namespace Mutagen.Bethesda.UnitTests.Plugins.Records.Starfield.HandReadLayoutFil
 // C186 step 2: reads a record's subrecords by Mutagen.Bethesda.Starfield/Layouts/HandReadLayouts.xml and compares every
 // value that names a field with what Mutagen parsed. Every byte of a described subrecord has to be described (a
 // leftover is an error), so the file can't silently skip a span. The language is documented at the top of the file.
+// C84: with Positions set (Mutagen's value positions of the record, C60), every value read with bytes is also held to
+// where Mutagen's reader read it: the value's own position when Mutagen notes one, else inside the nearest position of
+// what holds it; a counted list's count to the list's Count position.
 public sealed class LayoutChecker
 {
     public sealed record Sub(string Sig, byte[] Data);
@@ -28,6 +32,14 @@ public sealed class LayoutChecker
 
     private Dictionary<string, XElement> _defines = new();
 
+    /// <summary>
+    /// C84: Mutagen's value positions of the record being checked (C60), or null. Set before CheckRecord and CheckHeader.
+    /// </summary>
+    public RecordValuePositions? Positions { get; set; }
+
+    // The positions' subrecords don't line up with the walk's (reported once per record; then no position checks)
+    private bool _positionsBroken;
+
     public LayoutChecker(IReadOnlySeparatedMasterPackage masters, bool localized)
     {
         _masters = masters;
@@ -40,7 +52,9 @@ public sealed class LayoutChecker
         public string Path = "";
         public Dictionary<string, double> Vars = new();
         public Dictionary<string, string> Texts = new();
-        public Ctx With(object? obj, string path) => new() { Obj = obj, Path = path, Vars = new(Vars), Texts = new(Texts) };
+        // C84: where a named value's bytes sit in the record's bytes (start, length), when positions are checked
+        public Dictionary<string, (int Start, int Length)> Spans = new();
+        public Ctx With(object? obj, string path) => new() { Obj = obj, Path = path, Vars = new(Vars), Texts = new(Texts), Spans = new(Spans) };
     }
 
     private sealed class Cursor
@@ -86,8 +100,27 @@ public sealed class LayoutChecker
             _defines = recordLayout.Document!.Root!.Elements("Define").ToDictionary(d => (string)d.Attribute("name")!);
         }
         var cursor = new Cursor { Subs = subs, Pos = 0, End = subs.Count };
-        RunSubs(recordLayout.Elements(), cursor, new Ctx { Obj = record, Path = record.GetType().Name });
+        var ctx = new Ctx { Obj = record, Path = record.GetType().Name };
+        // C84: the record's form version (its header's), for Versioning
+        if (Resolve(record, "FormVersion", out var formVersion) && formVersion != null)
+        {
+            ctx.Vars[FormVersionVar] = Convert.ToDouble(formVersion, CultureInfo.InvariantCulture);
+        }
+        _positionsBroken = false;
+        if (Positions != null)
+        {
+            var theirs = Positions.Subrecords;
+            if (theirs.Count != subs.Count || theirs.Where((t, i) => t.Type.Type != subs[i].Sig || t.ContentLength != subs[i].Data.Length).Any())
+            {
+                _positionsBroken = true;
+                Errors.Add($"{Where}: the value positions' subrecords ({theirs.Count}) don't line up with the record's ({subs.Count})");
+            }
+        }
+        RunSubs(recordLayout.Elements(), cursor, ctx);
     }
+
+    // C84: the record's form version, kept for Versioning
+    private const string FormVersionVar = "\u0001formVersion";
 
     // C57: the record header (a Header entry), its 24 bytes read at the content level against the record (or TES4)
     public void CheckHeader(XElement headerLayout, byte[] head, object record)
@@ -96,7 +129,8 @@ public sealed class LayoutChecker
         {
             _defines = headerLayout.Document!.Root!.Elements("Define").ToDictionary(d => (string)d.Attribute("name")!);
         }
-        ReadContent(headerLayout, head, new Ctx { Obj = record, Path = record.GetType().Name + ".(header)" });
+        _positionsBroken = false;
+        ReadContent(headerLayout, head, new Ctx { Obj = record, Path = record.GetType().Name + ".(header)" }, subIndex: -1);
         Count(headerLayout);
     }
 
@@ -121,7 +155,8 @@ public sealed class LayoutChecker
                     if ((bool?)e.Attribute("optional") == true
                         && Resolve(ctx.Obj, (string)e.Attribute("field")!, out var maybe) && maybe == null)
                     {
-                        foreach (var sig in e.Descendants().Select(d => (string?)d.Attribute("sig")).OfType<string>().Distinct())
+                        // a Sub at="cursor" can only follow the object's own subrecords, which aren't there
+                        foreach (var sig in e.Descendants().Where(d => !AtCursor(d)).Select(d => (string?)d.Attribute("sig")).OfType<string>().Distinct())
                         {
                             if (Find(cur, sig) >= 0) Fail(ctx, e, $"Mutagen's is null, but {sig} follows");
                         }
@@ -169,13 +204,30 @@ public sealed class LayoutChecker
     private void RunSub(XElement e, Cursor cur, Ctx ctx)
     {
         var sig = (string)e.Attribute("sig")!;
-        var at = Find(cur, sig);
+        // C84: at="cursor": the subrecord where the walk stands, or none (not looked for further on)
+        var at = AtCursor(e)
+            ? (cur.Pos < cur.End && cur.Subs[cur.Pos].Sig == sig ? cur.Pos : -1)
+            : Find(cur, sig);
         if (at < 0)
         {
             if ((bool?)e.Attribute("optional") != true) Fail(ctx, e, "subrecord missing");
-            else if (e.Attribute("field") != null && Resolve(ctx.Obj, (string)e.Attribute("field")!, out var v) && v != null && !IsEmpty(v))
+            else if (e.Attribute("field") != null)
             {
-                Fail(ctx, e, $"absent in the file, but Mutagen has {Show(v)}");
+                if (Resolve(ctx.Obj, (string)e.Attribute("field")!, out var v) && v != null && !IsEmpty(v))
+                {
+                    Fail(ctx, e, $"absent in the file, but Mutagen has {Show(v)}");
+                }
+            }
+            else
+            {
+                // C84: without field, the lists its direct children name are empty
+                foreach (var held in e.Elements().Where(c => c.Name.LocalName is "Repeat"))
+                {
+                    if ((string?)held.Attribute("field") is { } f && f != "." && Resolve(ctx.Obj, f, out var hv) && hv != null && !IsEmpty(hv))
+                    {
+                        Fail(ctx, e, $"absent in the file, but Mutagen has {f} {Show(hv)}");
+                    }
+                }
             }
             return;
         }
@@ -187,7 +239,7 @@ public sealed class LayoutChecker
             if (!ok) return;
             target = child;
         }
-        ReadContent(e, cur.Subs[at].Data, target);
+        ReadContent(e, cur.Subs[at].Data, target, at);
         Count(e);
     }
 
@@ -202,7 +254,7 @@ public sealed class LayoutChecker
         while (cur.Pos < cur.End && cur.Subs[cur.Pos].Sig == sig && (count == null || i < count))
         {
             var element = Element(list, i, e);
-            ReadContent(e, cur.Subs[cur.Pos].Data, Indexed(ctx, element, $"{listPath}[{i}]", e, i));
+            ReadContent(e, cur.Subs[cur.Pos].Data, Indexed(ctx, element, ItemPath(list, listPath, i), e, i), cur.Pos);
             cur.Pos++;
             i++;
         }
@@ -285,7 +337,7 @@ public sealed class LayoutChecker
             }
             else
             {
-                itemCtx = Indexed(ctx, Element(list!, i, e), $"{listPath}[{i}]", e, i);
+                itemCtx = Indexed(ctx, Element(list!, i, e), ItemPath(list!, listPath, i), e, i);
             }
             if (startName != null) itemCtx.Texts[startName] = cur.Subs[segStart].Sig;
             RunSubs(e.Elements(), inner, itemCtx);
@@ -372,9 +424,11 @@ public sealed class LayoutChecker
 
     // ---- content level ----
 
-    private sealed class Reader(byte[] data)
+    private sealed class Reader(byte[] data, int @base = -1)
     {
         public readonly byte[] Data = data;
+        // C84: where Data starts in the record's bytes (Positions.Bytes); -1: positions aren't checked
+        public readonly int Base = @base;
         public int Pos;
         public int Remaining => Data.Length - Pos;
         public ReadOnlySpan<byte> Take(int n)
@@ -386,9 +440,16 @@ public sealed class LayoutChecker
         }
     }
 
-    private void ReadContent(XElement e, byte[] data, Ctx ctx)
+    // subIndex: the subrecord's index in the record (-1: the record header), for value positions
+    private void ReadContent(XElement e, byte[] data, Ctx ctx, int subIndex = -2)
     {
-        var r = new Reader(data);
+        var @base = -1;
+        if (Positions != null && !_positionsBroken)
+        {
+            if (subIndex == -1) @base = 0;
+            else if (subIndex >= 0) @base = Positions.Subrecords[subIndex].ContentStart;
+        }
+        var r = new Reader(data, @base);
         try
         {
             RunContent(e.Elements(), r, ctx);
@@ -401,11 +462,20 @@ public sealed class LayoutChecker
         if (r.Remaining > 0) Fail(ctx, e, $"{r.Remaining} of {data.Length} bytes not described");
     }
 
+    // C84: the reader and the place the element being read started at, for the value's position
+    private Reader? _valueReader;
+    private int _valueStart;
+
+    // C86: the bytes the last Bytes element read (a ReflectionFormLinks reads its FormIDs from them)
+    private byte[]? _lastBytes;
+
     private void RunContent(IEnumerable<XElement> items, Reader r, Ctx ctx)
     {
         foreach (var e in items)
         {
             var kind = e.Name.LocalName;
+            _valueReader = r;
+            _valueStart = r.Pos;
             switch (kind)
             {
                 case "U8": Scalar(e, r, ctx, r.Take(1)[0]); break;
@@ -421,7 +491,11 @@ public sealed class LayoutChecker
                     var raw = BinaryPrimitives.ReadUInt32LittleEndian(bytes);
                     var key = FormKeyBinaryTranslation.Instance.Parse(bytes, _masters);
                     // name: 0 for a null FormID (as Mutagen's IsNull), else the stored value
-                    if (e.Attribute("name") is { } fn) ctx.Vars[fn.Value] = key.IsNull ? 0 : raw;
+                    if (e.Attribute("name") is { } fn)
+                    {
+                        ctx.Vars[fn.Value] = key.IsNull ? 0 : raw;
+                        KeepSpan(ctx, fn.Value);
+                    }
                     Value(e, ctx, key);
                     break;
                 }
@@ -495,6 +569,7 @@ public sealed class LayoutChecker
                 {
                     var n = e.Attribute("length") is { } l ? (int)Number(l.Value, ctx) : r.Remaining;
                     var bytes = r.Take(n).ToArray();
+                    _lastBytes = bytes;
                     // encoding="length": the field is the number of bytes
                     Value(e, ctx, (string?)e.Attribute("encoding") == "length" ? (double)bytes.Length : bytes);
                     break;
@@ -546,6 +621,10 @@ public sealed class LayoutChecker
                     var at = r.Pos + (int)Number((string)e.Attribute("offset")!, ctx);
                     ctx.Vars[(string)e.Attribute("name")!] = (string)e.Attribute("type")! switch
                     {
+                        // C84: a FormID, as FormID name keeps one (0 when null, else the stored value)
+                        "FormID" => FormKeyBinaryTranslation.Instance.Parse(r.Data.AsSpan(at, 4), _masters).IsNull
+                            ? 0
+                            : BinaryPrimitives.ReadUInt32LittleEndian(r.Data.AsSpan(at)),
                         "U16" => BinaryPrimitives.ReadUInt16LittleEndian(r.Data.AsSpan(at)),
                         "U32" => BinaryPrimitives.ReadUInt32LittleEndian(r.Data.AsSpan(at)),
                         "U8" => r.Data[at],
@@ -575,7 +654,11 @@ public sealed class LayoutChecker
                 {
                     // C57: a uint64, compared as one (a double can't hold every value)
                     var value = BinaryPrimitives.ReadUInt64LittleEndian(r.Take(8));
-                    if (e.Attribute("name") is { } un) ctx.Vars[un.Value] = value;
+                    if (e.Attribute("name") is { } un)
+                    {
+                        ctx.Vars[un.Value] = value;
+                        KeepSpan(ctx, un.Value);
+                    }
                     Value(e, ctx, value);
                     break;
                 }
@@ -607,6 +690,51 @@ public sealed class LayoutChecker
                     Value(e, ctx, set);
                     break;
                 }
+                case "Versioning":
+                {
+                    // C84: the children only when the record's form version (its header's) is at least formVersion (the
+                    // record xml's Versioning action="Add"); below it, their fields keep their defaults
+                    var min = int.Parse((string)e.Attribute("formVersion")!, CultureInfo.InvariantCulture);
+                    if (!ctx.Vars.TryGetValue(FormVersionVar, out var formVersion)) throw new InvalidDataException("Versioning outside a record");
+                    if (formVersion >= min)
+                    {
+                        CountKey($"{LayoutKey(e)}/from");
+                        RunContent(e.Elements(), r, ctx);
+                    }
+                    else
+                    {
+                        CountKey($"{LayoutKey(e)}/below");
+                        foreach (var f in e.Descendants().Select(d => (string?)d.Attribute("field")).OfType<string>())
+                        {
+                            if (!Resolve(ctx.Obj, f, out var v)) Fail(ctx, e, $"no property {f} on {ctx.Obj?.GetType().Name ?? "null"}");
+                            else if (!IsDefault(v)) Fail(ctx, e, $"form version {formVersion} is below {min}, but Mutagen has {f} {Show(v)}");
+                        }
+                    }
+                    break;
+                }
+                case "ReflectionFormLinks":
+                {
+                    // C86: no bytes: the FormIDs Bethesda's reflection format stores in the bytes the Bytes element before
+                    // it read, in order, through the plugin's masters (ReflectionData.FindFormIds, public)
+                    Count(e);
+                    var blob = _lastBytes ?? throw new InvalidDataException("ReflectionFormLinks without a Bytes before it");
+                    var found = Mutagen.Bethesda.Starfield.ReflectionData.FindFormIds(blob)
+                        .Select(l => FormKeyBinaryTranslation.Instance.Parse(blob.AsSpan(l.Position, 4), _masters))
+                        .ToList();
+                    var field = (string)e.Attribute("field")!;
+                    if (!Resolve(ctx.Obj, field, out var links) || links is not IEnumerable linkList)
+                    {
+                        Fail(ctx, e, $"no list {field} on {ctx.Obj?.GetType().Name ?? "null"}");
+                        break;
+                    }
+                    var mutagen = linkList.Cast<IFormLinkGetter>().Select(l => l.FormKeyNullable ?? FormKey.Null).ToList();
+                    if (!mutagen.SequenceEqual(found))
+                    {
+                        Fail(ctx, e, $"the blob holds {string.Join(",", found)}, Mutagen's {field} {string.Join(",", mutagen)}");
+                    }
+                    if (!_trial && found.Count > 0) Checked[$"{LayoutKey(e)}/links"] = Checked.GetValueOrDefault($"{LayoutKey(e)}/links") + found.Count;
+                    break;
+                }
                 case "Note": break;
                 default: throw new InvalidDataException($"unknown content element {kind}");
             }
@@ -632,6 +760,7 @@ public sealed class LayoutChecker
         }
         var open = countText is "end" or "fit";
         var count = open ? int.MaxValue : (int)Number(countText, ctx);
+        if (list != null && countText.StartsWith('$')) CheckCountPosition(e, ctx, listPath, countText[1..]);
         var zeros = e.Attribute("endsAtZeros") is { } z ? int.Parse(z.Value, CultureInfo.InvariantCulture) : 0;
         int i = 0;
         while (i < count && (!open || r.Remaining > 0))
@@ -639,7 +768,7 @@ public sealed class LayoutChecker
             // endsAtZeros="N": an item starting with N zero bytes isn't read; it and what follows are left
             if (zeros > 0 && r.Remaining >= zeros && !r.Data.AsSpan(r.Pos, zeros).ContainsAnyExcept((byte)0)) break;
             var element = list != null ? Element(list, i, e) : ctx.Obj;
-            var itemCtx = Indexed(ctx, element, list != null ? $"{listPath}[{i}]" : ctx.Path, e, i);
+            var itemCtx = Indexed(ctx, element, list != null ? ItemPath(list, listPath, i) : ctx.Path, e, i);
             if (!open) itemCtx.Vars[LastVar] = i == count - 1 ? 1 : 0;
             if (countText == "fit" && !Fits(e, r, itemCtx)) break;
             RunContent(e.Elements(), r, itemCtx);
@@ -731,7 +860,11 @@ public sealed class LayoutChecker
 
     private void Scalar(XElement e, Reader r, Ctx ctx, double raw)
     {
-        if (e.Attribute("name") is { } name) ctx.Vars[name.Value] = raw;
+        if (e.Attribute("name") is { } name)
+        {
+            ctx.Vars[name.Value] = raw;
+            KeepSpan(ctx, name.Value);
+        }
         object value = raw;
         switch ((string?)e.Attribute("encoding"))
         {
@@ -771,6 +904,80 @@ public sealed class LayoutChecker
             return;
         }
         if (!Same(actual, raw)) Fail(ctx, e, $"file {Show(raw)}, Mutagen {Show(actual)}");
+        if (ValueSpan() is { } span) CheckPosition(e, ctx, PositionPath(ctx.Path, field.Value), span.Start, span.Length);
+    }
+
+    // ---- value positions (C84) ----
+
+    // The bytes of the value just read, in the record's bytes; null when positions aren't checked or it has none
+    private (int Start, int Length)? ValueSpan()
+    {
+        if (_trial || Positions == null || _valueReader is not { Base: >= 0 } r) return null;
+        var length = r.Pos - _valueStart;
+        return length > 0 ? (r.Base + _valueStart, length) : null;
+    }
+
+    private void KeepSpan(Ctx ctx, string name)
+    {
+        if (ValueSpan() is { } span) ctx.Spans[name] = span;
+        else ctx.Spans.Remove(name);
+    }
+
+    private static readonly System.Text.RegularExpressions.Regex KeyIndex = new(@"\[key ([^\]]+)\]");
+
+    // The checker's path of a field as a value position's path: from the record (not its class name), a dictionary entry as [key]
+    private static string PositionPath(string ctxPath, string field)
+    {
+        var path = field == "." ? ctxPath : $"{ctxPath}.{field}";
+        var dot = path.IndexOf('.');
+        path = dot < 0 ? "" : path[(dot + 1)..];
+        if (path.StartsWith("(header).", StringComparison.Ordinal)) path = path["(header).".Length..];
+        return KeyIndex.Replace(path, "[$1]");
+    }
+
+    // What holds a path: the list of an item, the object of a field; null at the record
+    private static string? HolderPath(string path)
+    {
+        if (path.Length == 0) return null;
+        var cut = path.EndsWith(']') ? path.LastIndexOf('[') : path.LastIndexOf('.');
+        return cut <= 0 ? "" : path[..cut];
+    }
+
+    private static string ShowPositions(IEnumerable<ValuePosition> positions) =>
+        string.Join(", ", positions.Select(p => $"{p.Kind} {p.Start}+{p.Length}"));
+
+    // A value read at start (length bytes) is where Mutagen noted it: its own position when it has a value position, else
+    // inside the nearest position of what holds it
+    private void CheckPosition(XElement e, Ctx ctx, string path, int start, int length)
+    {
+        var key = LayoutKey(e);
+        var own = Positions![path];
+        if (own.Any(p => p.Kind is ValuePositionKind.Value or ValuePositionKind.Presence or ValuePositionKind.Count))
+        {
+            if (own.Any(p => p.Start == start && p.Length == length)) CountKey($"{key}/position");
+            else Fail(ctx, e, $"read at {start}+{length}, Mutagen's value position of {path}: {ShowPositions(own)}");
+            return;
+        }
+        for (var holder = own.Count > 0 ? path : HolderPath(path); holder != null; holder = HolderPath(holder))
+        {
+            var outer = Positions[holder];
+            if (outer.Count == 0) continue;
+            if (outer.Any(p => start >= p.Start && start + length <= p.Start + p.Length)) CountKey($"{key}/positionWithin");
+            else Fail(ctx, e, $"read at {start}+{length}, outside Mutagen's positions of {(holder.Length == 0 ? "the record" : holder)}: {ShowPositions(outer)}");
+            return;
+        }
+        CountKey($"{key}/positionNone");
+    }
+
+    // A counted list's count (a value named earlier) is where Mutagen noted the list's count
+    private void CheckCountPosition(XElement e, Ctx ctx, string listPath, string countName)
+    {
+        if (_trial || Positions == null || !ctx.Spans.TryGetValue(countName, out var span)) return;
+        var path = PositionPath(listPath, ".");
+        var counts = Positions[path].Where(p => p.Kind == ValuePositionKind.Count).ToList();
+        if (counts.Count == 0) return;
+        if (counts.Any(p => p.Start == span.Start && p.Length == span.Length)) CountKey($"{LayoutKey(e)}/positionCount");
+        else Fail(ctx, e, $"count read at {span.Start}+{span.Length}, Mutagen's count position of {path}: {ShowPositions(counts)}");
     }
 
     private static bool Same(object? actual, object raw)
@@ -821,6 +1028,10 @@ public sealed class LayoutChecker
         IFormLinkGetter l => l.FormKeyNullable?.ToString() ?? "null link",
         _ => v.ToString() ?? "",
     };
+
+    // C84: a field at its type's default (null, empty, zero, false)
+    private static bool IsDefault(object? v) =>
+        v == null || IsEmpty(v) || (v.GetType().IsValueType && v.Equals(Activator.CreateInstance(v.GetType())));
 
     private static bool IsEmpty(object v) => v switch
     {
@@ -884,23 +1095,45 @@ public sealed class LayoutChecker
     {
         path = ctx.Path;
         if (e.Attribute("field") is not { } field) return new ArrayList();
-        path = $"{ctx.Path}.{field.Value}";
+        // field=".": the current object is the list (a Sub field="List" holding a Repeat)
+        path = field.Value == "." ? ctx.Path : $"{ctx.Path}.{field.Value}";
         if (!Resolve(ctx.Obj, field.Value, out var value))
         {
             Fail(ctx, e, $"no list {field.Value} on {ctx.Obj?.GetType().Name ?? "null"}");
             return null;
         }
         if (value == null) return new ArrayList(); // a null list: the file must have none either
-        if (value is IDictionary dict) return dict.Values.Cast<object>().ToList();
+        if (value is IDictionary dict)
+        {
+            var values = new List<object?>();
+            var keys = new List<string>();
+            var entry = dict.GetEnumerator();
+            while (entry.MoveNext())
+            {
+                keys.Add(entry.Key.ToString() ?? "");
+                values.Add(entry.Value);
+            }
+            _keys.AddOrUpdate(values, keys);
+            return values;
+        }
         if (value.GetType().GetInterfaces().FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IReadOnlyDictionary<,>)) is { } rod)
         {
             // keyed by an enum or number: element i is the value under key i
             var pairs = ((IEnumerable)value).Cast<object>().ToList();
             var ordered = pairs.OrderBy(p => Convert.ToInt64(p.GetType().GetProperty("Key")!.GetValue(p))).ToList();
-            return ordered.Select(p => p.GetType().GetProperty("Value")!.GetValue(p)).ToList();
+            var values = ordered.Select(p => p.GetType().GetProperty("Value")!.GetValue(p)).ToList();
+            _keys.AddOrUpdate(values, ordered.Select(p => p.GetType().GetProperty("Key")!.GetValue(p)?.ToString() ?? "").ToList());
+            return values;
         }
         return value as IList ?? ((IEnumerable)value).Cast<object>().ToList();
     }
+
+    // C84: the keys of the dictionaries ListOf gave as lists, so an element's path names its entry ([key K]), as value
+    // positions do
+    private readonly System.Runtime.CompilerServices.ConditionalWeakTable<IList, List<string>> _keys = new();
+
+    private string ItemPath(IList list, string listPath, int i) =>
+        _keys.TryGetValue(list, out var keys) && i < keys.Count ? $"{listPath}[key {keys[i]}]" : $"{listPath}[{i}]";
 
     private object? Element(IList list, int i, XElement e) => i < list.Count ? list[i] : null;
 

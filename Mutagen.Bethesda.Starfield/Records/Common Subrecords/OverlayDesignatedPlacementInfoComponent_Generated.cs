@@ -1194,7 +1194,7 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Items = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<OverlayDesignatedPlacementInfoItem>.Instance.Parse(
-                            amount: checked((int)frame.ReadUInt32()),
+                            amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4),
                             reader: frame,
                             transl: OverlayDesignatedPlacementInfoItem.TryCreateFromBinary)
                         .CastExtendedList<OverlayDesignatedPlacementInfoItem>();

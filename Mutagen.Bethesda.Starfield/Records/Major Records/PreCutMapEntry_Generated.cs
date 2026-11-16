@@ -1163,7 +1163,7 @@ namespace Mutagen.Bethesda.Starfield
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Triangles");
             item.Triangles.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<UInt16>.Instance.Parse(
-                    amount: frame.ReadUInt16(),
+                    amount: ValuePositionRecorder.Counted(frame, frame.ReadUInt16(), 2),
                     reader: frame,
                     transl: UInt16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
