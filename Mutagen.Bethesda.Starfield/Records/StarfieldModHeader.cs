@@ -111,15 +111,32 @@ public partial interface IStarfieldModHeader : IModHeaderCommon
 {
 }
 
+public static partial class StarfieldModHeaderMixIn
+{
+    /// <summary>
+    /// Where the plugin header's values sit in its bytes (C82): the record header's flags and versions, HEDR, CNAM,
+    /// SNAM, the masters (MAST/DATA), ONAM, INTV, INCC and the rest, as the full-import reader reads them. The header
+    /// must come from a binary overlay (<c>StarfieldMod.CreateFromBinaryOverlay(...).ModHeader</c>); for a full import,
+    /// use <see cref="ValuePositionMixIn.ReadModHeaderValuePositions"/> on a <see cref="Plugins.Binary.MajorRecordReader"/>.
+    /// </summary>
+    public static ModHeaderValuePositions GetValuePositions(this IStarfieldModHeaderGetter header)
+    {
+        return ValuePositionMixIn.GetModHeaderValuePositions(header);
+    }
+}
+
 partial class StarfieldModHeaderBinaryCreateTranslation
 {
     public static partial void FillBinaryMasterReferencesCustom(MutagenFrame frame, IStarfieldModHeader item, PreviousParse lastParsed)
     {
+        // C82: the masters as a list of their own (the generated step around this call is transparent for paths)
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.MasterReferences));
         item.MasterReferences.SetTo(
             ListBinaryTranslation<MasterReference>.Instance.Parse(
                 reader: frame.SpawnAll(),
                 triggeringRecord: RecordTypes.MAST,
                 transl: MasterReference.TryCreateFromBinary));
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
     }
 }
 

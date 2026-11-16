@@ -2543,6 +2543,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "BoundOverride");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BoundOverride = BinaryOverlayArrayHelper.FloatSliceFromFixedSize(frame.ReadBytes(4 * 6), 6).ToArray();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.ItemsBefore(frame, 6, 4);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SnapTemplate_FieldIndex.BoundOverride;
                 }

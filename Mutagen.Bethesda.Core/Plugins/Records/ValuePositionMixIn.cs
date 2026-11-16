@@ -42,6 +42,12 @@ public enum ValuePositionKind
     /// own positions too.
     /// </summary>
     HandRead,
+
+    /// <summary>
+    /// The stored key of a dictionary entry whose key is read from the bytes (a package data input's UNAM index, C83):
+    /// its path is the entry's ("Data[3]"), its bytes the key's
+    /// </summary>
+    Key,
 }
 
 /// <summary>
@@ -94,14 +100,12 @@ public sealed record ValuePosition(
     bool Converted = false);
 
 /// <summary>
-/// Where a record's values were read, as the reader read them (C60)
+/// Where the values of one record's bytes were read, as the reader read them (C60): a major record's
+/// (<see cref="RecordValuePositions"/>) or a plugin header's (<see cref="ModHeaderValuePositions"/>, C82)
 /// </summary>
-public sealed class RecordValuePositions
+public abstract class ValuePositions
 {
     private Dictionary<string, List<ValuePosition>>? _byPath;
-
-    /// <summary>The record as it was read while its positions were noted (a full-import object)</summary>
-    public IMajorRecord Record { get; }
 
     /// <summary>
     /// The bytes the positions are in: the record header as stored, then the content (decompressed when the record is
@@ -111,9 +115,6 @@ public sealed class RecordValuePositions
 
     /// <summary>The length of the record header at the start of <see cref="Bytes"/></summary>
     public int HeaderLength { get; }
-
-    /// <summary>The record is stored compressed: the positions of its content are in its decompressed form</summary>
-    public bool Compressed { get; }
 
     /// <summary>The record's subrecords, in order</summary>
     public IReadOnlyList<RecordSubrecord> Subrecords { get; }
@@ -127,19 +128,15 @@ public sealed class RecordValuePositions
     /// </summary>
     public IReadOnlyList<string> Unplaced { get; }
 
-    internal RecordValuePositions(
-        IMajorRecord record,
+    private protected ValuePositions(
         ReadOnlyMemorySlice<byte> bytes,
         int headerLength,
-        bool compressed,
         IReadOnlyList<RecordSubrecord> subrecords,
         IReadOnlyList<ValuePosition> positions,
         IReadOnlyList<string> unplaced)
     {
-        Record = record;
         Bytes = bytes;
         HeaderLength = headerLength;
-        Compressed = compressed;
         Subrecords = subrecords;
         Positions = positions;
         Unplaced = unplaced;
@@ -173,6 +170,56 @@ public sealed class RecordValuePositions
 }
 
 /// <summary>
+/// Where a record's values were read, as the reader read them (C60)
+/// </summary>
+public sealed class RecordValuePositions : ValuePositions
+{
+    /// <summary>The record as it was read while its positions were noted (a full-import object)</summary>
+    public IMajorRecord Record { get; }
+
+    /// <summary>The record is stored compressed: the positions of its content are in its decompressed form</summary>
+    public bool Compressed { get; }
+
+    internal RecordValuePositions(
+        IMajorRecord record,
+        ReadOnlyMemorySlice<byte> bytes,
+        int headerLength,
+        bool compressed,
+        IReadOnlyList<RecordSubrecord> subrecords,
+        IReadOnlyList<ValuePosition> positions,
+        IReadOnlyList<string> unplaced)
+        : base(bytes, headerLength, subrecords, positions, unplaced)
+    {
+        Record = record;
+        Compressed = compressed;
+    }
+}
+
+/// <summary>
+/// Where a plugin header's values (its TES4 record: the record header's flags and versions, HEDR, the masters, ONAM,
+/// INTV, INCC, CNAM, SNAM, ...) were read, as the reader read them (C82). The paths are the header class's property
+/// names (<c>Stats.NumRecords</c>, <c>MasterReferences[1].Master</c>, <c>OverriddenForms[3]</c>). A plugin header is
+/// never stored compressed.
+/// </summary>
+public sealed class ModHeaderValuePositions : ValuePositions
+{
+    /// <summary>The header as it was read while its positions were noted (the game's mod header class, e.g. StarfieldModHeader)</summary>
+    public IModHeaderCommon Header { get; }
+
+    internal ModHeaderValuePositions(
+        IModHeaderCommon header,
+        ReadOnlyMemorySlice<byte> bytes,
+        int headerLength,
+        IReadOnlyList<RecordSubrecord> subrecords,
+        IReadOnlyList<ValuePosition> positions,
+        IReadOnlyList<string> unplaced)
+        : base(bytes, headerLength, subrecords, positions, unplaced)
+    {
+        Header = header;
+    }
+}
+
+/// <summary>
 /// Where a record's values sit in its bytes (C60). The record is read by Mutagen's full-import reader, which notes where
 /// it reads each value (the generated readers, the list and gendered translations and the hand-written readers alike),
 /// so the positions are the reader's own and can't fall behind it. Nothing is noted unless asked for.
@@ -193,14 +240,71 @@ public static class ValuePositionMixIn
                 $"{record} doesn't come from a binary overlay, so its bytes aren't kept. Read it with MajorRecordReader.ReadValuePositionsAt.",
                 nameof(record));
         }
+        var creator = GetCreator(record.Registration.ClassType);
+        var (bytes, parseMeta) = OverlayBytes(overlay, creator.RecordType);
+        return Read(
+            bytes,
+            contentDecompressed: true,
+            read: () => creator.Create(new MutagenFrame(new MutagenMemoryReadStream(bytes, parseMeta))),
+            position: 0);
+    }
+
+    /// <summary>
+    /// Where a plugin header's values sit in its bytes (C82). The header must come from a binary overlay (a mod opened
+    /// with CreateFromBinaryOverlay: its ModHeader keeps its bytes); they are read again by the header's full-import
+    /// reader, noting positions. A header from a full import keeps no bytes: read it with
+    /// <see cref="ReadModHeaderValuePositions"/> from a <see cref="MajorRecordReader"/> on its plugin.<br/>
+    /// Starfield's header getter has this as an extension too (<c>IStarfieldModHeaderGetter.GetValuePositions()</c>).
+    /// </summary>
+    /// <param name="modHeader">A mod's header (e.g. <c>IStarfieldModGetter.ModHeader</c>)</param>
+    public static ModHeaderValuePositions GetModHeaderValuePositions(ILoquiObject modHeader)
+    {
+        if (modHeader is not PluginBinaryOverlay overlay)
+        {
+            throw new ArgumentException(
+                $"{modHeader} doesn't come from a binary overlay, so its bytes aren't kept. Read it with MajorRecordReader.ReadModHeaderValuePositions.",
+                nameof(modHeader));
+        }
+        var creator = GetHeaderCreator(modHeader.Registration.ClassType);
+        var (bytes, parseMeta) = OverlayBytes(overlay, creator.RecordType);
+        return ReadHeader(
+            bytes,
+            parseMeta.Constants,
+            read: () => creator.Create(new MutagenFrame(new MutagenMemoryReadStream(bytes, parseMeta))),
+            position: 0);
+    }
+
+    /// <summary>
+    /// Reads a plugin's header (its first record, TES4) from the plugin the reader is open on, noting where each of its
+    /// values sits (C82). The header is read by the game's header class (e.g. StarfieldModHeader), as a full import
+    /// reads it, with the reader's masters and encodings.
+    /// </summary>
+    public static ModHeaderValuePositions ReadModHeaderValuePositions(this MajorRecordReader reader)
+    {
+        var bytes = reader.ReadBytesAt(0);
+        var meta = reader.CloneMetaForRead();
+        var creator = GetHeaderCreator(HeaderClass(reader.Release.ToCategory()));
+        if (BinaryPrimitives.ReadInt32LittleEndian(bytes) != creator.RecordType.TypeInt)
+        {
+            throw new ArgumentException($"{reader.ModKey} doesn't start with a {creator.RecordType} plugin header");
+        }
+        return ReadHeader(
+            bytes,
+            meta.Constants,
+            read: () => creator.Create(new MutagenFrame(new MutagenMemoryReadStream(bytes, meta))),
+            position: 0);
+    }
+
+    /// <summary>An overlay's bytes as stored (its content decompressed), header first, with a reading state of its own</summary>
+    private static (byte[] Bytes, ParsingMeta Meta) OverlayBytes(PluginBinaryOverlay overlay, RecordType recordType)
+    {
         var meta = overlay._package.MetaData;
         var constants = meta.Constants;
-        var creator = GetCreator(record.Registration.ClassType);
         var structData = overlay._structData;
         var recordData = overlay._recordData;
         var typeAndLength = constants.MajorConstants.TypeAndLengthLength;
         var bytes = new byte[typeAndLength + structData.Length + recordData.Length];
-        BinaryPrimitives.WriteInt32LittleEndian(bytes, creator.RecordType.TypeInt);
+        BinaryPrimitives.WriteInt32LittleEndian(bytes, recordType.TypeInt);
         // An overlay holds a compressed record's content decompressed: the header's length is the decompressed one
         BinaryPrimitives.WriteUInt32LittleEndian(bytes.AsSpan(4), checked((uint)recordData.Length));
         structData.Span.CopyTo(bytes.AsSpan(typeAndLength));
@@ -208,11 +312,32 @@ public static class ValuePositionMixIn
         var parseMeta = meta.CloneForParallelParse();
         parseMeta.Parallel = false;
         parseMeta.FormVersion = null;
-        return Read(
-            bytes,
-            contentDecompressed: true,
-            read: () => creator.Create(new MutagenFrame(new MutagenMemoryReadStream(bytes, parseMeta))),
-            position: 0);
+        return (bytes, parseMeta);
+    }
+
+    private static ModHeaderValuePositions ReadHeader(
+        byte[] bytes,
+        GameConstants constants,
+        Func<IModHeaderCommon> read,
+        long position)
+    {
+        // A plugin header isn't a major record, so its reader doesn't say where it starts: it starts at the bytes'
+        // start, and its content after the record header
+        var recording = ValuePositionRecorder.Start(
+            contentDecompressed: false,
+            recordStart: position,
+            contentStart: position + constants.MajorConstants.HeaderLength);
+        IModHeaderCommon header;
+        try
+        {
+            header = read();
+        }
+        finally
+        {
+            ValuePositionRecorder.Stop(recording);
+        }
+        var built = Build(header, bytes, recording, position);
+        return new ModHeaderValuePositions(header, built.Bytes, built.HeaderLength, built.Subrecords, built.Positions, built.Unplaced);
     }
 
     /// <summary>
@@ -254,11 +379,20 @@ public static class ValuePositionMixIn
         {
             ValuePositionRecorder.Stop(recording);
         }
-        return Build(record, bytes, recording, position);
+        var built = Build(record, bytes, recording, position);
+        return new RecordValuePositions(record, built.Bytes, built.HeaderLength, built.Compressed, built.Subrecords, built.Positions, built.Unplaced);
     }
 
-    private static RecordValuePositions Build(
-        IMajorRecord record,
+    private sealed record Built(
+        ReadOnlyMemorySlice<byte> Bytes,
+        int HeaderLength,
+        bool Compressed,
+        IReadOnlyList<RecordSubrecord> Subrecords,
+        IReadOnlyList<ValuePosition> Positions,
+        IReadOnlyList<string> Unplaced);
+
+    private static Built Build(
+        object record,
         ReadOnlyMemorySlice<byte> given,
         ValuePositionRecorder.Recording recording,
         long position)
@@ -321,7 +455,7 @@ public static class ValuePositionMixIn
             var leaf = n.Kind switch
             {
                 ValuePositionRecorder.NodeKind.Field or ValuePositionRecorder.NodeKind.Item => !n.HasChildren,
-                ValuePositionRecorder.NodeKind.Count or ValuePositionRecorder.NodeKind.At => true,
+                ValuePositionRecorder.NodeKind.Count or ValuePositionRecorder.NodeKind.At or ValuePositionRecorder.NodeKind.Key => true,
                 _ => false,
             };
             var kind = n.Kind switch
@@ -329,6 +463,7 @@ public static class ValuePositionMixIn
                 ValuePositionRecorder.NodeKind.List => ValuePositionKind.List,
                 ValuePositionRecorder.NodeKind.HandRead => ValuePositionKind.HandRead,
                 ValuePositionRecorder.NodeKind.Count => ValuePositionKind.Count,
+                ValuePositionRecorder.NodeKind.Key => ValuePositionKind.Key,
                 _ => leaf ? ValuePositionKind.Value : ValuePositionKind.Object,
             };
             if (kind == ValuePositionKind.HandRead && end == start && !n.HasChildren) continue;
@@ -339,7 +474,7 @@ public static class ValuePositionMixIn
                     && nodes[n.Parent] is { Kind: ValuePositionRecorder.NodeKind.List, Converted: true });
             positions.Add(converted ? place with { Converted = true } : place);
         }
-        return new RecordValuePositions(record, bytes, headerLength, compressed, subrecords, positions, unplaced);
+        return new Built(bytes, headerLength, compressed, subrecords, positions, unplaced);
     }
 
     private static bool IsCompressedHeader(ReadOnlySpan<byte> header)
@@ -440,6 +575,52 @@ public static class ValuePositionMixIn
             pos = contentStart + contentLength;
         }
         return ret;
+    }
+
+    private sealed record HeaderCreator(RecordType RecordType, Func<MutagenFrame, IModHeaderCommon> Create);
+
+    private static readonly ConcurrentDictionary<Type, HeaderCreator> HeaderCreators = new();
+
+    /// <summary>A game's plugin header class: the type of its mod class's ModHeader</summary>
+    [UnconditionalSuppressMessage("Trimming", "IL2075", Justification = "The mod classes are registered with Loqui and their ModHeader is public")]
+    private static Type HeaderClass(GameCategory category)
+    {
+        return category.ToModRegistration().ClassType
+                   .GetProperty("ModHeader", BindingFlags.Public | BindingFlags.Instance)?.PropertyType
+               ?? throw new ArgumentException($"{category}'s mod class has no ModHeader");
+    }
+
+    [UnconditionalSuppressMessage("Trimming", "IL2075", Justification = "The header classes are registered with Loqui and their readers are public")]
+    [UnconditionalSuppressMessage("Trimming", "IL2070", Justification = "The header classes are registered with Loqui and their readers are public")]
+    private static HeaderCreator GetHeaderCreator(Type classType)
+    {
+        return HeaderCreators.GetOrAdd(classType, static cls =>
+        {
+            var registration = LoquiRegistration.GetRegister(cls);
+            if (registration.GetType().GetField(Mutagen.Bethesda.Plugins.Internals.Constants.TriggeringRecordTypeMember, BindingFlags.Public | BindingFlags.Static)
+                    ?.GetValue(null) is not RecordType recordType)
+            {
+                throw new ArgumentException($"{cls} has no record type of its own");
+            }
+            // The getter's registration gives the class (an overlay header's registration is the class's)
+            cls = registration.ClassType;
+            if (!cls.IsAssignableTo(typeof(IModHeaderCommon)))
+            {
+                throw new ArgumentException($"{cls} isn't a plugin header");
+            }
+            var method = cls.GetMethod(
+                             "CreateFromBinary",
+                             BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly,
+                             new[] { typeof(MutagenFrame), typeof(TypedParseParams) })
+                         ?? throw new ArgumentException($"{cls} has no binary reader");
+            var frame = Expression.Parameter(typeof(MutagenFrame), "frame");
+            var create = Expression.Lambda<Func<MutagenFrame, IModHeaderCommon>>(
+                Expression.Convert(
+                    Expression.Call(method, frame, Expression.Default(typeof(TypedParseParams))),
+                    typeof(IModHeaderCommon)),
+                frame).Compile();
+            return new HeaderCreator(recordType, create);
+        });
     }
 
     private sealed record Creator(RecordType RecordType, Func<MutagenFrame, IMajorRecord> Create);

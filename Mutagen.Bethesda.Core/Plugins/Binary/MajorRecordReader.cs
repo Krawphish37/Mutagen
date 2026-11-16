@@ -221,6 +221,15 @@ public sealed class MajorRecordReader : IDisposable
         return create(new MutagenFrame(stream));
     }
 
+    /// <summary>A reading state of its own for one read, as <see cref="Read(ReadOnlyMemorySlice{byte}, long, ChildRecordRead)"/> uses (C82)</summary>
+    internal ParsingMeta CloneMetaForRead()
+    {
+        var meta = _meta.CloneForParallelParse();
+        meta.ChildRecordsHeadersOnly = false;
+        meta.HeadersOnlyParentRead = false;
+        return meta;
+    }
+
     /// <summary>
     /// A record's bytes with its children group as <see cref="ChildRecordRead.Headers"/> reads it: the groups inside it
     /// (blocks, persistent and temporary groups) kept, each child's own children group (a group of the game's children

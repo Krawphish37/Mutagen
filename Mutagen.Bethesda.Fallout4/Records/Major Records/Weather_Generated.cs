@@ -7761,6 +7761,7 @@ namespace Mutagen.Bethesda.Fallout4
                     if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "NAM4");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NAM4 = BinaryOverlayArrayHelper.FloatSliceFromFixedSize(frame.ReadBytes(4 * 32), 32).ToArray();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.ItemsBefore(frame, 32, 4);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Weather_FieldIndex.NAM4;
                 }

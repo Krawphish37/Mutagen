@@ -50,6 +50,22 @@ partial class TraversalReferenceBinaryCreateTranslation
         return Enums.HasFlag(flags, HasNoTraversal) || rest.Length >= 0x38;
     }
 
+    /// <summary>
+    /// C83: a traversal list's NumTraversalFluffBytes, read just before (the list's subrecord ends here). It counts the
+    /// bytes after the last traversal, so its position is those bytes, converted (their count is the value, not their
+    /// content). With no such bytes there is nothing to point at: the field is noted as filled, with no position (C75).
+    /// </summary>
+    public static void NoteFluffBytes(MutagenFrame frame, string name, uint fluffBytes)
+    {
+        if (fluffBytes == 0)
+        {
+            ValuePositionRecorder.Filled(name);
+            return;
+        }
+        var end = ValuePositionRecorder.Pos(frame);
+        ValuePositionRecorder.At(name, end - fluffBytes, checked((int)fluffBytes), converted: true);
+    }
+
     public static TraversalReference.Flag GetFlags(int flags) =>
         ((TraversalReference.Flag)flags).SetFlag(TraversalReference.Flag.NoTraversalFormID, false);
 

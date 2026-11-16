@@ -70,11 +70,14 @@ partial class Fallout4ModHeaderBinaryCreateTranslation
 {
     public static partial void FillBinaryMasterReferencesCustom(MutagenFrame frame, IFallout4ModHeader item, PreviousParse lastParsed)
     {
+        // C82: the masters as a list of their own (the generated step around this call is transparent for paths)
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.MasterReferences));
         item.MasterReferences.SetTo(
             ListBinaryTranslation<MasterReference>.Instance.Parse(
                 reader: frame.SpawnAll(),
                 triggeringRecord: RecordTypes.MAST,
                 transl: MasterReference.TryCreateFromBinary));
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
     }
 }
 
