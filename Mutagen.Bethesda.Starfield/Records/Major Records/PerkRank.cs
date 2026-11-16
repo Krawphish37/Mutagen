@@ -420,6 +420,22 @@ partial class PerkRankBinaryCreateTranslation
                 // DATA 1 is the function, which picked the class (and Modification, where there is one)
                 ValuePositionRecorder.At(nameof(entryPoint.EntryPoint), data, 1);
                 ValuePositionRecorder.At(nameof(entryPoint.PerkConditionTabCount), data + 2, 1);
+                // C83: the values taken from the function (DATA 1): converted, the function's number isn't theirs
+                switch (entryPoint)
+                {
+                    case PerkEntryPointModifyValue value:
+                        ValuePositionRecorder.At(nameof(value.Modification), data + 1, 1, converted: true);
+                        break;
+                    case PerkEntryPointModifyValues values:
+                        ValuePositionRecorder.At(nameof(values.Modification), data + 1, 1, converted: true);
+                        break;
+                    case PerkEntryPointModifyActorValue av:
+                        ValuePositionRecorder.At(nameof(av.Modification), data + 1, 1, converted: true);
+                        break;
+                    case PerkEntryPointAbsoluteValue absolute:
+                        ValuePositionRecorder.At(nameof(absolute.Negative), data + 1, 1, converted: true);
+                        break;
+                }
                 if (epfd < 0) break;
                 switch (entryPoint)
                 {

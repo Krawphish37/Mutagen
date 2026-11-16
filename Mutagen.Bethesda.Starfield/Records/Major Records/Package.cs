@@ -206,12 +206,17 @@ partial class PackageBinaryCreateTranslation
         // Retrieve the expected types, then skip rest of data
         var valuesPosition = stream.Position;
         var types = new List<string>(expectedCount);
-        while (stream.TryReadSubrecord(out var subRecord))
+        // C83: where each type's text (ANAM content) sits, while recording (a target input's Type is read from it)
+        List<(long Start, int Length)>? typeAts = ValuePositionRecorder.On ? new(expectedCount) : null;
+        while (true)
         {
+            var typeAt = typeAts != null ? ValuePositionRecorder.Here(stream) : -1;
+            if (!stream.TryReadSubrecord(out var subRecord)) break;
             switch (subRecord.RecordTypeInt)
             {
                 case RecordTypeInts.ANAM:
                     types.Add(BinaryStringUtility.ProcessWholeToZString(subRecord.Content, stream.MetaData.Encodings.NonTranslated));
+                    typeAts?.Add((typeAt + subRecord.HeaderLength, subRecord.ContentLength));
                     break;
                 case RecordTypeInts.CNAM:
                 case RecordTypeInts.BNAM:
@@ -249,10 +254,12 @@ partial class PackageBinaryCreateTranslation
                 case RecordTypeInts.UNAM:
                     var index = (sbyte)subRecord.Content[0];
                     keys.Add(index);
+                    var typeIndex = -1;
                     lastPackage = data.GetOrAdd<sbyte, APackageData>(
                         index,
                         () =>
                         {
+                            typeIndex = itemIndex;
                             return (types[itemIndex++]) switch
                             {
                                 IntKey => new PackageDataInt(),
@@ -275,6 +282,16 @@ partial class PackageBinaryCreateTranslation
                             };
                         });
                     packages.Add(lastPackage);
+                    if (subAt >= 0 && typeIndex >= 0)
+                    {
+                        // C83: the entry's key is its UNAM index; a target input's Type comes from its ANAM text
+                        ValuePositionRecorder.KeyAt($"[{index}]", subAt + subRecord.HeaderLength, 1);
+                        if (lastPackage is PackageDataTarget && typeAts != null && typeIndex < typeAts.Count)
+                        {
+                            var (typeStart, typeLength) = typeAts[typeIndex];
+                            ValuePositionRecorder.At($"[{index}].{nameof(PackageDataTarget.Type)}", typeStart, typeLength, converted: true);
+                        }
+                    }
                     break;
                 case RecordTypeInts.PNAM:
                     if (lastPackage == null)
@@ -503,8 +520,15 @@ partial class PackageBinaryCreateTranslation
             switch (subRecord.RecordTypeInt)
             {
                 case RecordTypeInts.UNAM:
-                    lastPackage = dict.GetOrAdd((sbyte)subRecord.Content[0], () => new APackageData());
+                    var created = false;
+                    lastPackage = dict.GetOrAdd((sbyte)subRecord.Content[0], () =>
+                    {
+                        created = true;
+                        return new APackageData();
+                    });
                     order.Add((sbyte)subRecord.Content[0]);
+                    // C83: an entry these names make (an input of no type) has its key here
+                    if (created && contentAt >= 0) ValuePositionRecorder.KeyAt($"Data[{order[^1]}]", contentAt, 1);
                     // The order is Package.ProcedureTreeDataOrder (the readers that call this keep it)
                     if (contentAt >= 0) ValuePositionRecorder.At($"ProcedureTreeDataOrder[{order.Count - 1}]", contentAt, 1);
                     break;

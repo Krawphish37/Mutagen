@@ -210,6 +210,7 @@ partial class PlacedObjectBinaryCreateTranslation
         item.Traversals = TraversalReferenceBinaryCreateTranslation.Parse(frame.SpawnWithLength(len), out var fluffBytes);
         if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         item.NumTraversalFluffBytes = fluffBytes;
+        if (ValuePositionRecorder.On) TraversalReferenceBinaryCreateTranslation.NoteFluffBytes(frame, nameof(item.NumTraversalFluffBytes), fluffBytes);
     }
 }
 
