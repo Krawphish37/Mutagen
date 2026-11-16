@@ -59,7 +59,6 @@ public class MajorFlagValueTests
     // C55: added members
     [InlineData(typeof(Static.MajorFlag), nameof(Static.MajorFlag.NavMeshGenerationIgnoreErosion), 0x2000_0000)]
     [InlineData(typeof(Static.MajorFlag), nameof(Static.MajorFlag.NavMeshGenerationOnlyCut), 0x1000_0000)]
-    [InlineData(typeof(NavigationMesh.MajorFlag), nameof(NavigationMesh.MajorFlag.NavmeshGenCell), int.MinValue)]
     [InlineData(typeof(Transform.MajorFlag), nameof(Transform.MajorFlag.ApplyTranslation), 0x0002_0000)]
     [InlineData(typeof(Terminal.MajorFlag), nameof(Terminal.MajorFlag.NonOccluder), 0x10)]
     [InlineData(typeof(Terminal.MajorFlag), nameof(Terminal.MajorFlag.PackInUseOnly), 0x2000)]
@@ -83,7 +82,6 @@ public class MajorFlagValueTests
     [InlineData(typeof(BiomeMarker.MajorFlag), nameof(BiomeMarker.MajorFlag.NavmeshOnlyCut), 0x1000_0000)]
     [InlineData(typeof(BiomeMarker.MajorFlag), nameof(BiomeMarker.MajorFlag.NavmeshIgnoreErosion), 0x2000_0000)]
     [InlineData(typeof(BiomeMarker.MajorFlag), nameof(BiomeMarker.MajorFlag.NavmeshGround), 0x4000_0000)]
-    [InlineData(typeof(BiomeMarker.MajorFlag), nameof(BiomeMarker.MajorFlag.MustBeUnique), int.MinValue)]
     [InlineData(typeof(GenericBaseForm.MajorFlag), nameof(GenericBaseForm.MajorFlag.Unique), 0x04)]
     [InlineData(typeof(Star.MajorFlag), nameof(Star.MajorFlag.StartsHidden), 0x1000_0000)]
     [InlineData(typeof(Star.MajorFlag), nameof(Star.MajorFlag.AlwaysDisplayName), 0x2000_0000)]
@@ -267,13 +265,59 @@ public class MajorFlagValueTests
             r => r.MajorFlags, Location.MajorFlag.PartialForm);
     }
 
+    // C71: the two enums that name bit 31 are uint (an int member at 0x8000_0000 is negative, and Noggog's
+    // EnumerateContainedFlags, used by the JSON/YAML serializer, never returns for such an enum)
     [Fact]
-    public void NavigationMesh_NavmeshGenCell_Bit31()
+    public void Bit31Enums_AreUint()
     {
-        // Bit 31 is the int enum's sign bit; it reads and writes back like any other bit
-        CheckFlags<INavigationMeshGetter, NavigationMesh.MajorFlag>(Record("NAVM"), 0x8400_0000,
+        Enum.GetUnderlyingType(typeof(NavigationMesh.MajorFlag)).ShouldBe(typeof(uint));
+        Enum.GetUnderlyingType(typeof(BiomeMarker.MajorFlag)).ShouldBe(typeof(uint));
+        ((uint)NavigationMesh.MajorFlag.NavmeshGenCell).ShouldBe(0x8000_0000u);
+        ((uint)BiomeMarker.MajorFlag.MustBeUnique).ShouldBe(0x8000_0000u);
+    }
+
+    public static TheoryData<NavigationMesh.MajorFlag> NavmeshFlags => new(Enum.GetValues<NavigationMesh.MajorFlag>());
+    public static TheoryData<BiomeMarker.MajorFlag> BiomeMarkerFlags => new(Enum.GetValues<BiomeMarker.MajorFlag>());
+
+    // Each NAVM flag, alone and with every other one, read by both readers and written back byte-identical
+    [Theory]
+    [MemberData(nameof(NavmeshFlags))]
+    public void NavigationMesh_EachFlag(NavigationMesh.MajorFlag flag)
+    {
+        CheckFlags<INavigationMeshGetter, NavigationMesh.MajorFlag>(Record("NAVM"), (uint)flag,
             f => NavigationMesh.CreateFromBinary(f), (s, p) => NavigationMeshBinaryOverlay.NavigationMeshFactory(s, p),
-            r => r.MajorFlags, NavigationMesh.MajorFlag.Autogen | NavigationMesh.MajorFlag.NavmeshGenCell);
+            r => r.MajorFlags, flag);
+        var all = Enum.GetValues<NavigationMesh.MajorFlag>().Aggregate((a, b) => a | b);
+        CheckFlags<INavigationMeshGetter, NavigationMesh.MajorFlag>(Record("NAVM"), (uint)all,
+            f => NavigationMesh.CreateFromBinary(f), (s, p) => NavigationMeshBinaryOverlay.NavigationMeshFactory(s, p),
+            r => r.MajorFlags, all);
+    }
+
+    [Theory]
+    [MemberData(nameof(BiomeMarkerFlags))]
+    public void BiomeMarker_EachFlag(BiomeMarker.MajorFlag flag)
+    {
+        CheckFlags<IBiomeMarkerGetter, BiomeMarker.MajorFlag>(Edid("BMMO"), (uint)flag,
+            f => BiomeMarker.CreateFromBinary(f), (s, p) => BiomeMarkerBinaryOverlay.BiomeMarkerFactory(s, p),
+            r => r.MajorFlags, flag);
+        var all = Enum.GetValues<BiomeMarker.MajorFlag>().Aggregate((a, b) => a | b);
+        CheckFlags<IBiomeMarkerGetter, BiomeMarker.MajorFlag>(Edid("BMMO"), (uint)all,
+            f => BiomeMarker.CreateFromBinary(f), (s, p) => BiomeMarkerBinaryOverlay.BiomeMarkerFactory(s, p),
+            r => r.MajorFlags, all);
+    }
+
+    // The generated setter and getter carry bit 31 through the int MajorRecordFlagsRaw
+    [Fact]
+    public void Bit31_SetterAndGetter()
+    {
+        var navm = new NavigationMesh(FormKey.Factory("000800:Test.esp"), StarfieldRelease.Starfield);
+        navm.MajorFlags = NavigationMesh.MajorFlag.NavmeshGenCell | NavigationMesh.MajorFlag.Autogen;
+        navm.MajorRecordFlagsRaw.ShouldBe(unchecked((int)0x8400_0000));
+        navm.MajorFlags.ShouldBe(NavigationMesh.MajorFlag.NavmeshGenCell | NavigationMesh.MajorFlag.Autogen);
+        var bmmo = new BiomeMarker(FormKey.Factory("000801:Test.esp"), StarfieldRelease.Starfield);
+        bmmo.MajorFlags = BiomeMarker.MajorFlag.MustBeUnique;
+        bmmo.MajorRecordFlagsRaw.ShouldBe(int.MinValue);
+        bmmo.MajorFlags.ShouldBe(BiomeMarker.MajorFlag.MustBeUnique);
     }
 
     [Fact]
