@@ -62,6 +62,7 @@ internal static class PresentFields
 
     // A record class's field names and indices, from its FieldIndex enum (Location_FieldIndex, ...)
     [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "The record classes and their FieldIndex enums are public types of the game assembly")]
+    [UnconditionalSuppressMessage("Trimming", "IL2072", Justification = "The record classes and their FieldIndex enums are public types of the game assembly")]
     private static IReadOnlyDictionary<string, int> FieldIndices(ILoquiRegistration registration)
     {
         return FieldIndexCache.GetOrAdd(registration.ClassType, static cls =>
@@ -69,9 +70,11 @@ internal static class PresentFields
             var ret = new Dictionary<string, int>(StringComparer.Ordinal);
             if (cls.Assembly.GetType($"{cls.Namespace}.{cls.Name}_FieldIndex") is { IsEnum: true } fieldIndex)
             {
-                foreach (var value in Enum.GetValues(fieldIndex))
+                var names = Enum.GetNames(fieldIndex);
+                var values = Enum.GetValuesAsUnderlyingType(fieldIndex);
+                for (int i = 0; i < names.Length; i++)
                 {
-                    ret[Enum.GetName(fieldIndex, value)!] = Convert.ToInt32(value);
+                    ret[names[i]] = Convert.ToInt32(values.GetValue(i));
                 }
             }
             return ret;
