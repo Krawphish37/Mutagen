@@ -187,7 +187,7 @@ public class StringsFolderLookupFactory : IStringsFolderLookupFactory
     private IReadOnlyList<Table> LooseFilesOf(StringsLanguageFormat languageFormat, ModKey modKey) =>
         LooseFiles(languageFormat, (ModKey?)modKey).TryGetValue(modKey.Name, out var files) ? files : [];
 
-    /// <param name="seen">The archives' listings already looked at in this call</param>
+    // seen: the archives' listings already looked at in this call
     private IReadOnlyList<StringsTableSource> Resolve(
         ModKey modKey,
         IReadOnlyList<Table> looseFiles,
