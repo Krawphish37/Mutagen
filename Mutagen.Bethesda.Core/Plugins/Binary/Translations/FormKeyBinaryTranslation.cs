@@ -9,6 +9,12 @@ using Mutagen.Bethesda.Plugins.Records;
 
 namespace Mutagen.Bethesda.Plugins.Binary.Translations;
 
+/// <summary>
+/// Reads and writes a FormID as a FormKey. A master index past the plugin's master list reads as the plugin itself, as
+/// the game reads it; the FormKey can't hold the stored index, so it is written as the plugin's own index. Within a
+/// record read from a plugin the stored bytes of an unchanged link are put back when the record is written (C189,
+/// decision 6.1 revised); an object read or written on its own, outside a record, gets the plugin's own index (C64).
+/// </summary>
 public sealed class FormKeyBinaryTranslation
 {
     public static readonly FormKeyBinaryTranslation Instance = new();

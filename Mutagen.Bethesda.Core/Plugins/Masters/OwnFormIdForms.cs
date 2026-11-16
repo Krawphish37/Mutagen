@@ -22,7 +22,10 @@ namespace Mutagen.Bethesda.Plugins.Masters;
 /// Written back: when the record writes, at that place, Mutagen's form of the same own FormID (the link is unchanged)
 /// and the stored form still means the plugin itself with the master list written. A changed link, a new one and every
 /// link of a new mod get Mutagen's form. A master index past the master list (decision 6.1) is not an own form here and
-/// is written as before. Record headers are kept by RawHeaderFormIds (C147).
+/// is written as before. Record headers are kept by RawHeaderFormIds (C147).<br/>
+/// The owner is always a major record read from a plugin (or a copy of one). A subrecord object read or written on
+/// its own, outside a record (Condition.CreateFromBinary, a VMAD piece), has nowhere to keep them: its own FormIDs and
+/// indices past the list are written in Mutagen's form (C64). No plugin is read or written that way by Mutagen itself.
 /// </summary>
 internal static class OwnFormIdForms
 {
