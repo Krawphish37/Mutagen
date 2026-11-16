@@ -365,7 +365,7 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkGetter<IAimModelGetter> IWeaponGetter.AimModel => this.AimModel;
         #endregion
         #region AccuracyBonus
-        public Byte AccuracyBonus { get; set; } = default(Byte);
+        public SByte AccuracyBonus { get; set; } = default(SByte);
         #endregion
         #region HasScope
         public Boolean HasScope { get; set; } = default(Boolean);
@@ -6835,7 +6835,7 @@ namespace Mutagen.Bethesda.Starfield
         new Single SightedTransitionSeconds { get; set; }
         new IFormLink<IZoomGetter> AimDownSightTemplate { get; set; }
         new IFormLink<IAimModelGetter> AimModel { get; set; }
-        new Byte AccuracyBonus { get; set; }
+        new SByte AccuracyBonus { get; set; }
         new Boolean HasScope { get; set; }
         new IFormLink<IAimAssistModelGetter> AimAssistTemplate { get; set; }
         new IFormLink<IAimOpticalSightMarkerGetter> AimOpticalSightModel { get; set; }
@@ -7068,7 +7068,7 @@ namespace Mutagen.Bethesda.Starfield
         Single SightedTransitionSeconds { get; }
         IFormLinkGetter<IZoomGetter> AimDownSightTemplate { get; }
         IFormLinkGetter<IAimModelGetter> AimModel { get; }
-        Byte AccuracyBonus { get; }
+        SByte AccuracyBonus { get; }
         Boolean HasScope { get; }
         IFormLinkGetter<IAimAssistModelGetter> AimAssistTemplate { get; }
         IFormLinkGetter<IAimOpticalSightMarkerGetter> AimOpticalSightModel { get; }
@@ -7730,7 +7730,7 @@ namespace Mutagen.Bethesda.Starfield
             item.SightedTransitionSeconds = default(Single);
             item.AimDownSightTemplate.Clear();
             item.AimModel.Clear();
-            item.AccuracyBonus = default(Byte);
+            item.AccuracyBonus = default(SByte);
             item.HasScope = default(Boolean);
             item.AimAssistTemplate.Clear();
             item.AimOpticalSightModel.Clear();
@@ -12591,7 +12591,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
                     if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "AccuracyBonus");
-                    item.AccuracyBonus = dataFrame.ReadUInt8();
+                    item.AccuracyBonus = dataFrame.ReadInt8();
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
                     if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "HasScope");
@@ -13457,7 +13457,7 @@ namespace Mutagen.Bethesda.Starfield
         #region AccuracyBonus
         private int _AccuracyBonusLocation => _WAIMLocation!.Value.Min + 0xC;
         private bool _AccuracyBonus_IsSet => _WAIMLocation.HasValue && _WAIMLocation!.Value.Max - _AccuracyBonusLocation + 1 >= 1;
-        public Byte AccuracyBonus => _AccuracyBonus_IsSet ? _recordData.Span[_AccuracyBonusLocation] : default(Byte);
+        public SByte AccuracyBonus => _AccuracyBonus_IsSet ? (sbyte)_recordData.Slice(_AccuracyBonusLocation, 1)[0] : default(SByte);
         #endregion
         #region HasScope
         private int _HasScopeLocation => _WAIMLocation!.Value.Min + 0xD;

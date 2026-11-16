@@ -41,7 +41,7 @@
           <Float name="SightedTransitionSeconds" />
           <FormLink name="AimDownSightTemplate" refName="Zoom" />
           <FormLink name="AimModel" refName="AimModel" />
-          <UInt8 name="AccuracyBonus" />
+          <Int8 name="AccuracyBonus" />
           <Bool name="HasScope" byteLength="1" />
           <FormLink name="AimAssistTemplate" refName="AimAssistModel" />
           <FormLink name="AimOpticalSightModel" refName="AimOpticalSightMarker" />

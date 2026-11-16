@@ -9902,7 +9902,7 @@
     <Property name="SightedTransitionSeconds" type="Single" field="Float" nullable="false" binary="Normal" data="WAIM" offset="0" length="4" />
     <Property name="AimDownSightTemplate" type="IFormLink&lt;IZoomGetter&gt;" field="FormLink" nullable="false" binary="Normal" data="WAIM" offset="4" length="4" />
     <Property name="AimModel" type="IFormLink&lt;IAimModelGetter&gt;" field="FormLink" nullable="false" binary="Normal" data="WAIM" offset="8" length="4" />
-    <Property name="AccuracyBonus" type="Byte" field="UInt8" nullable="false" binary="Normal" data="WAIM" offset="12" length="1" />
+    <Property name="AccuracyBonus" type="SByte" field="Int8" nullable="false" binary="Normal" data="WAIM" offset="12" length="1" />
     <Property name="HasScope" type="Boolean" field="Bool" nullable="false" binary="Normal" data="WAIM" offset="13" length="1" />
     <Property name="AimAssistTemplate" type="IFormLink&lt;IAimAssistModelGetter&gt;" field="FormLink" nullable="false" binary="Normal" data="WAIM" offset="14" length="4" />
     <Property name="AimOpticalSightModel" type="IFormLink&lt;IAimOpticalSightMarkerGetter&gt;" field="FormLink" nullable="false" binary="Normal" data="WAIM" offset="18" length="4" />
