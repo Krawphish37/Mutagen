@@ -216,7 +216,7 @@ public static class ValuePositionMixIn
     }
 
     /// <summary>
-    /// Reads one record from its bytes (as <see cref="MajorRecordReader.Read"/> does), noting where each value sits
+    /// Reads one record from its bytes (as <see cref="MajorRecordReader.Read(ReadOnlyMemorySlice{byte}, long)"/> does), noting where each value sits
     /// </summary>
     /// <param name="reader">A reader opened on the record's plugin</param>
     /// <param name="bytes">The record's bytes, starting with its header. A child group after it isn't covered.</param>

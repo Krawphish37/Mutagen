@@ -233,6 +233,10 @@ internal static class ValuePositionRecorder
     /// <paramref name="start"/> (with the stream's offset, as <see cref="MutagenFrame.PositionWithOffset"/> gives it),
     /// optionally only the bits of <paramref name="bitMask"/> (of the little-endian value of those bytes)
     /// </summary>
+    /// <param name="name">The value's name, relative to the object being read ("Data.Function", "[3]" for an item)</param>
+    /// <param name="start">Where its bytes start, with the stream's offset</param>
+    /// <param name="length">How many bytes</param>
+    /// <param name="bitMask">0, or the bits of those bytes that hold the value</param>
     /// <param name="converted">The reader computes the value from the bytes (scaled, inverted, a byte of 255, an index
     /// it looks up, ...): the bytes are the value's, but not the value as it reads</param>
     public static void At(string name, long start, int length, ulong bitMask = 0, bool converted = false)
