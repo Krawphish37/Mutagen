@@ -722,6 +722,7 @@
     <Property name="MarkerType" type="IFormLink&lt;IKeywordGetter&gt;" field="FormLink" nullable="false" binary="Normal" subrecords="KNAM" />
     <Property name="FloraList" type="IFormLink&lt;ILeveledItemGetter&gt;" field="FormLink" nullable="false" binary="Normal" subrecords="LNAM" />
     <Property name="NavmeshObject" type="IFormLink&lt;IStarfieldMajorRecordGetter&gt;" field="FormLink" nullable="false" binary="Normal" subrecords="LNA2" />
+    <Property name="MajorFlags" type="BiomeMarker.MajorFlag" derived="majorFlag" from="MajorRecordFlagsRaw" />
   </Object>
   <Object name="BiomeMarkerType" objType="Subrecord" recordTypes="KNAM,KSIZ,KWDA">
     <Property name="MarkerType" type="IFormLinkNullable&lt;IKeywordGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="KNAM" />
@@ -2333,6 +2334,7 @@
     <Marker subrecord="STOP" />
     <Marker subrecord="STOP" />
     <Property name="NavmeshGeometry" type="NavmeshGeometry" field="Loqui" nullable="true" binary="Normal" subrecords="NVNM" />
+    <Property name="MajorFlags" type="GenericBaseForm.MajorFlag" derived="majorFlag" from="MajorRecordFlagsRaw" />
   </Object>
   <Object name="GenericBaseFormTemplate" baseClass="StarfieldMajorRecord" objType="Record" recordTypes="GBFT">
     <Property name="Components" type="ExtendedList&lt;String&gt;" field="List" nullable="false" binary="Normal" subrecords="STRV" />
@@ -5743,6 +5745,7 @@
     <Property name="Weight" type="Single" field="Float" nullable="false" binary="Normal" data="DATA" offset="4" length="4" />
     <Property name="Flags" type="Key.Flag" field="Enum" nullable="true" binary="Normal" subrecords="FLAG" />
     <Property name="ShortName" type="TranslatedString" field="String" nullable="true" binary="Normal" subrecords="NNAM" />
+    <Property name="MajorFlags" type="Key.MajorFlag" derived="majorFlag" from="MajorRecordFlagsRaw" />
   </Object>
   <Object name="Keyword" baseClass="StarfieldMajorRecord" objType="Record" recordTypes="KYWD">
     <Property name="VirtualMachineAdapter" type="VirtualMachineAdapter" field="Loqui" nullable="true" binary="Normal" subrecords="VMAD" />
@@ -5897,6 +5900,7 @@
     <Property name="Entries" type="ExtendedList&lt;LeveledBaseFormEntry&gt;" field="List" nullable="true" binary="Normal" subrecords="LVLO,LLCT" />
     <Property name="FilterKeywordChances" type="ExtendedList&lt;FilterKeywordChance&gt;" field="List" nullable="true" binary="Normal" subrecords="LLKC" />
     <Property name="Model" type="Model" field="Loqui" nullable="true" binary="Normal" subrecords="MODL,MODT,MOLM,FLLD,XFLG,MODC,MODF" />
+    <Property name="MajorFlags" type="LeveledBaseForm.MajorFlag" derived="majorFlag" from="MajorRecordFlagsRaw" />
   </Object>
   <Object name="LeveledBaseFormEntry" objType="Subrecord" recordTypes="LVLO">
     <Property name="Level" type="Int16" field="Int16" nullable="false" binary="Normal" data="LVLO" offset="0" length="2" />
@@ -8120,6 +8124,7 @@
     <Property name="DisableSound" type="SoundReference" field="Loqui" nullable="true" binary="Normal" subrecords="PRDS" />
     <Property name="SoundLevel" type="SoundLevel" field="Enum" nullable="true" binary="Normal" subrecords="VNAM" />
     <Property name="CurveTable" type="IFormLinkNullable&lt;ICurveTableGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="NAM3" />
+    <Property name="MajorFlags" type="Projectile.MajorFlag" derived="majorFlag" from="MajorRecordFlagsRaw" />
   </Object>
   <Object name="PropertySheetComponent" baseClass="AComponent" objType="Subrecord" recordTypes="BFCB">
     <Property name="Properties" type="ExtendedList&lt;ObjectProperty&gt;" field="List" nullable="true" binary="Normal" subrecords="PRPS" />
@@ -8443,6 +8448,7 @@
     <Step name="RegionAreaLogic" fills="Weather,Sounds" subrecords="RDAT" />
     <Property name="Weather" type="RegionWeather" field="Loqui" nullable="true" binary="NoGeneration" subrecords="RDAT" filledBy="RegionAreaLogic" />
     <Property name="Sounds" type="RegionSounds" field="Loqui" nullable="true" binary="NoGeneration" subrecords="RDAT" filledBy="RegionAreaLogic" />
+    <Property name="MajorFlags" type="Region.MajorFlag" derived="majorFlag" from="MajorRecordFlagsRaw" />
   </Object>
   <Object name="RegionArea" objType="Subrecord" recordTypes="RPLI">
     <Property name="EdgeFallOff" type="UInt32" field="UInt32" nullable="false" binary="Normal" subrecords="RPLI" />
@@ -9058,6 +9064,7 @@
     <Property name="ID" type="UInt32" field="UInt32" nullable="true" binary="Normal" subrecords="DNAM" />
     <Property name="Color" type="Color" field="Color" nullable="true" binary="Normal" subrecords="ENAM" />
     <Property name="SunPreset" type="IFormLinkNullable&lt;ISunPresetGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="PNAM" />
+    <Property name="MajorFlags" type="Star.MajorFlag" derived="majorFlag" from="MajorRecordFlagsRaw" />
   </Object>
   <Object name="StarDataComponent" baseClass="AComponent" objType="Subrecord" recordTypes="BFCB">
     <Property name="CatalogueId" type="String" field="String" nullable="false" binary="Normal" data="DATA" offset="0" />
@@ -9130,6 +9137,7 @@
     <Property name="AmbientSound" type="SoundReference" field="Loqui" nullable="true" binary="Normal" subrecords="STLS" />
     <Property name="NavmeshGeometry" type="NavmeshGeometry" field="Loqui" nullable="true" binary="Normal" subrecords="NVNM" />
     <Property name="DNAMDataTypeState" type="Static.DNAMDataType" field="Enum" nullable="false" derived="DataType" from="DNAM" />
+    <Property name="MajorFlags" type="Static.MajorFlag" derived="majorFlag" from="MajorRecordFlagsRaw" />
   </Object>
   <Object name="StaticCollection" baseClass="StarfieldMajorRecord" objType="Record" recordTypes="SCOL">
     <Property name="VirtualMachineAdapter" type="VirtualMachineAdapter" field="Loqui" nullable="true" binary="Normal" subrecords="VMAD" />
@@ -9141,6 +9149,7 @@
     <Property name="Name" type="TranslatedString" field="String" nullable="true" binary="Normal" subrecords="FULL" />
     <Property name="Filter" type="String" field="String" nullable="true" binary="Normal" subrecords="FLTR" />
     <Property name="Parts" type="ExtendedList&lt;StaticPart&gt;" field="List" nullable="false" binary="Normal" subrecords="ONAM" />
+    <Property name="MajorFlags" type="StaticCollection.MajorFlag" derived="majorFlag" from="MajorRecordFlagsRaw" />
   </Object>
   <Object name="StaticPart" objType="Subrecord" recordTypes="ONAM">
     <Property name="Static" type="IFormLink&lt;IStaticTargetGetter&gt;" field="FormLink" nullable="false" binary="Normal" data="ONAM" offset="0" length="4" />
