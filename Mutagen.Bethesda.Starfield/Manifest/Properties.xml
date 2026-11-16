@@ -9503,6 +9503,10 @@
     <Property name="Longitude" type="Double" field="Double" nullable="false" binary="Normal" data="DATA" offset="4" length="8" />
     <Property name="Latitude" type="Double" field="Double" nullable="false" binary="Normal" data="DATA" offset="12" length="8" />
   </Object>
+  <Object name="UnknownComponent" baseClass="AComponent" objType="Subrecord" recordTypes="BFCB">
+    <Property name="TypeName" type="String" field="String" nullable="false" binary="NoGeneration" />
+    <Property name="Data" type="MemorySlice&lt;Byte&gt;" field="ByteArray" nullable="false" binary="NoGeneration" />
+  </Object>
   <Object name="UnknownConditionData" baseClass="ConditionData" objType="Subrecord">
     <Property name="Function" type="Condition.Function" field="Enum" nullable="false" binary="NoGeneration" />
     <Property name="ParameterOne" type="Int32" field="Int32" nullable="false" binary="Normal" offset="0" length="4" />
