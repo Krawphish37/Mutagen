@@ -1,3 +1,5 @@
+using Loqui;
+using Loqui.Internal;
 using Mutagen.Bethesda.Plugins.Binary.Headers;
 using Mutagen.Bethesda.Plugins.Binary.Parameters;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
@@ -138,5 +140,25 @@ partial class StarfieldModHeaderBinaryWriteTranslation
                     writer: subWriter,
                     translationParams: conv);
             });
+    }
+}
+
+internal partial class TransientTypeSetterTranslationCommon
+{
+    // The header is copied before it is written (the writer adjusts the copy): each TNAM link's stored form goes with it,
+    // so a Small or Medium plugin's own FormIDs stored in their full form are written back that way (StoredOwnLinkForms)
+    partial void DeepCopyInCustom(
+        ITransientType item,
+        ITransientTypeGetter rhs,
+        ErrorMaskBuilder? errorMask,
+        TranslationCrystal? copyMask,
+        bool deepCopy)
+    {
+        using var from = rhs.Links.GetEnumerator();
+        foreach (var to in item.Links)
+        {
+            if (!from.MoveNext()) break;
+            Mutagen.Bethesda.Plugins.Binary.Translations.StoredOwnLinkForms.Copy(from.Current, to);
+        }
     }
 }

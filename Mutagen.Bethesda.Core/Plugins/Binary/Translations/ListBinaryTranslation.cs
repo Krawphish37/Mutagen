@@ -1361,9 +1361,14 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
 
             if (count > maxCount)
             {
-                count = 0;
+                // Starfield: the Creation Kit stores the low bits of a count that doesn't fit (VariousCrewExtended.esm's
+                // LCharCitizenFaceAndGender_GenericCrew (009C0F:Starfield.esm): 618 LVLO, LLCT 0x6A), so a list read
+                // and written back keeps its counter. The other games keep 0.
+                count = writer.MetaData.Constants.Release.ToCategory() == GameCategory.Starfield
+                    ? count & maxCount
+                    : 0;
             }
-            writer.Write(count, counterLength); 
+            writer.Write(count, counterLength);
         } 
     }
 

@@ -415,21 +415,28 @@ internal static class GenderedItemBinaryOverlay
         where T : class
     {
         T? male = existing?.Male, female = existing?.Female;
+        // The markers met, here and in an earlier call for the same field: a half read without its marker is written
+        // without it while it is still empty (GenderedItemBinaryTranslation.WriteGenderedEnumRecord)
+        byte seen = GenderedItemBinaryTranslation.SeenMarkers(existing);
         for (int i = 0; i < 2; i++)
         {
             if (!stream.TryReadSubrecord(genderEnumRecord, out var enumRec)) break;
             switch ((GenderedItemBinaryTranslation.GenderEnum)enumRec.AsInt32())
             {
                 case GenderedItemBinaryTranslation.GenderEnum.Male:
+                    seen |= 1;
                     male = creator(stream, package);
                     break;
                 case GenderedItemBinaryTranslation.GenderEnum.Female:
+                    seen |= 2;
                     female = creator(stream, package);
                     break;
             }
         }
 
-        return new GenderedItem<T>(male ?? getDefault(), female ?? getDefault());
+        var ret = new GenderedItem<T>(male ?? getDefault(), female ?? getDefault());
+        GenderedItemBinaryTranslation.NoteSeenMarkers(ret, seen);
+        return ret;
     }
 
     internal static GenderedItemBinaryOverlay<T> Factory<T>(

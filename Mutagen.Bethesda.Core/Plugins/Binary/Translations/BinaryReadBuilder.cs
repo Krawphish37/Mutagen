@@ -854,6 +854,27 @@ public record BinaryReadBuilder<TMod, TModGetter, TGroupMask>
     }
 
     /// <summary>
+    /// What to do with a plugin whose records share a FormKey (two stored FormIDs that read as one record of the plugin,
+    /// as when it was written for another master list): refuse it (the default), or read it as the game does, the later
+    /// record of each pair in its group and the earlier one kept aside and written back in its place
+    /// </summary>
+    /// <param name="option">Refuse, or KeepLater</param>
+    /// <returns>Builder object to continue customization</returns>
+    public BinaryReadBuilder<TMod, TModGetter, TGroupMask> WithDuplicateFormKeys(Mutagen.Bethesda.Plugins.Binary.Parameters.DuplicateFormKeyOption option)
+    {
+        return this with
+        {
+            _param = _param with
+            {
+                Params = _param.Params with
+                {
+                    DuplicateFormKeys = option
+                }
+            }
+        };
+    }
+
+    /// <summary>
     /// Separated master games (like Starfield) need to know what their masters styles are in order to parse correctly, 
     /// which is normally retrieved via looking at the mod files themselves from the Data Folder. <br />
     /// This is an alternative to hand provide the information so that they do not need to be present in the Data folder
@@ -1350,6 +1371,27 @@ public record BinaryReadMutableBuilder<TMod, TModGetter, TGroupMask> : BinaryRea
                 Params = _param.Params with
                 {
                     ThrowOnUnknownSubrecord = shouldThrow
+                }
+            }
+        };
+    }
+
+    /// <summary>
+    /// What to do with a plugin whose records share a FormKey (two stored FormIDs that read as one record of the plugin,
+    /// as when it was written for another master list): refuse it (the default), or read it as the game does, the later
+    /// record of each pair in its group and the earlier one kept aside and written back in its place
+    /// </summary>
+    /// <param name="option">Refuse, or KeepLater</param>
+    /// <returns>Builder object to continue customization</returns>
+    public BinaryReadMutableBuilder<TMod, TModGetter, TGroupMask> WithDuplicateFormKeys(Mutagen.Bethesda.Plugins.Binary.Parameters.DuplicateFormKeyOption option)
+    {
+        return this with
+        {
+            _param = _param with
+            {
+                Params = _param.Params with
+                {
+                    DuplicateFormKeys = option
                 }
             }
         };

@@ -67,9 +67,15 @@ public sealed class FormLinkBinaryTranslation
         [MaybeNullWhen(false)] out IFormLinkGetter<T> item)
         where T : class, IMajorRecordGetter
     {
+        // The stored form of one of the mod's own FormIDs, for a list no record keeps (StoredOwnLinkForms)
+        uint? raw = reader.MetaData.MasterReferences is Mutagen.Bethesda.Plugins.Masters.SeparatedMasterPackage { HasOwnFormVariants: true }
+                    && reader.Remaining >= 4
+            ? reader.GetUInt32()
+            : null;
         if (FormKeyBinaryTranslation.Instance.Parse(reader, out FormKey id))
         {
             item = new FormLink<T>(id);
+            if (raw is { } stored) StoredOwnLinkForms.Note(reader.MetaData.MasterReferences, stored, item);
             return true;
         }
         item = new FormLink<T>();
@@ -240,7 +246,10 @@ public sealed class FormLinkBinaryTranslation
         where TMajorGetter : class, IMajorRecordGetter
     {
         var formId = new FormID(BinaryPrimitives.ReadUInt32LittleEndian(s));
-        return new FormLink<TMajorGetter>(FormKey.Factory(p.MetaData.MasterReferences, formId, reference: true, maxIsNull: false));
+        var link = new FormLink<TMajorGetter>(FormKey.Factory(p.MetaData.MasterReferences, formId, reference: true, maxIsNull: false));
+        // The stored form of one of the mod's own FormIDs, for a list no record keeps (StoredOwnLinkForms)
+        StoredOwnLinkForms.Note(p.MetaData.MasterReferences, formId.Raw, link);
+        return link;
     }
 
     internal IFormLinkGetter<TMajorGetter> OverlayFactory<TMajorGetter>(BinaryOverlayFactoryPackage p, ReadOnlySpan<byte> s, bool isSet, bool maxIsNull = false)

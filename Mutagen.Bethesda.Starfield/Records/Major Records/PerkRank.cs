@@ -360,6 +360,7 @@ partial class PerkRankBinaryCreateTranslation
                     Perk.EffectType.Ability => new PerkAbilityEffect(),
                     _ => throw new MalformedDataException($"Expected DATA subrecord that did not exist."),
                 };
+                PerkEffectData.MarkWithoutData(effect);
             }
             effect.Rank = rank;
             effect.Priority = priority;
@@ -472,6 +473,29 @@ partial class PerkRankBinaryCreateTranslation
     }
 }
 
+/// <summary>
+/// Quest and ability effects that were read without a DATA subrecord (s1n_excursion.esm, realfuel_creations.esm): the
+/// reader gives them an empty effect, and the writer leaves the DATA out again while the effect is still empty, so the
+/// record is written back as it was read instead of gaining a DATA of zeros
+/// </summary>
+internal static class PerkEffectData
+{
+    private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<object, object> _withoutData = new();
+
+    public static void MarkWithoutData(object effect) => _withoutData.AddOrUpdate(effect, effect);
+
+    public static bool StillWithoutData(object effect)
+    {
+        if (!_withoutData.TryGetValue(effect, out _)) return false;
+        return effect switch
+        {
+            IPerkQuestEffectGetter quest => quest.Quest.IsNull && quest.Stage == 0,
+            IPerkAbilityEffectGetter ability => ability.Ability.IsNull,
+            _ => false,
+        };
+    }
+}
+
 partial class PerkRankBinaryWriteTranslation
 {
     public static partial void WriteBinaryEffectsCustom(MutagenWriter writer, IPerkRankGetter item)
@@ -490,7 +514,9 @@ partial class PerkRankBinaryWriteTranslation
                 writer.Write(effect.Rank);
                 writer.Write(effect.Priority);
             }
-            using (HeaderExport.Subrecord(writer, RecordTypes.DATA))
+            // A quest or ability effect read without a DATA and still empty is written without one (PerkEffectData)
+            if (PerkEffectData.StillWithoutData(effect)) { }
+            else using (HeaderExport.Subrecord(writer, RecordTypes.DATA))
             {
                 switch (effect)
                 {

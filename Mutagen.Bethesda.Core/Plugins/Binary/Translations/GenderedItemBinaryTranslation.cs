@@ -45,12 +45,15 @@ internal sealed class GenderedItemBinaryTranslation
         int i = 0;
         TItem? male = existing != null ? existing.Male : default;
         TItem? female = existing != null ? existing.Female : default;
+        // The markers met, here and in an earlier call for the same field (bit 0 male, bit 1 female)
+        byte seen = SeenMarkers(existing);
         while (i < 2 && frame.TryReadSubrecord(genderEnumRecord, out var markerRec))
         {
             i++;
             switch ((GenderEnum)markerRec.AsInt32())
             {
                 case GenderEnum.Male:
+                    seen |= 1;
                     if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Male");
                     if (!transl(frame, out male))
                     {
@@ -59,6 +62,7 @@ internal sealed class GenderedItemBinaryTranslation
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     break;
                 case GenderEnum.Female:
+                    seen |= 2;
                     if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Female");
                     if (!transl(frame, out female))
                     {
@@ -77,7 +81,29 @@ internal sealed class GenderedItemBinaryTranslation
         {
             female = new TItem();
         }
-        return new GenderedItem<TItem>(male, female);
+        var ret = new GenderedItem<TItem>(male, female);
+        // A record that holds one gender's marker only (starfield_crowd_overhaul_z.esm's ARMA 000DB8 has a male BSMP and
+        // no female one) is written back that way while the other half is still empty: WriteGenderedEnumRecord
+        NoteSeenMarkers(ret, seen);
+        return ret;
+    }
+
+    /// <summary>The gender markers an item was read with so far (bit 0 male, bit 1 female); 0 for one never read</summary>
+    internal static byte SeenMarkers(object? existing) =>
+        existing != null && _seenMarkers.TryGetValue(existing, out var seenBefore) ? seenBefore.Value : (byte)0;
+
+    internal static void NoteSeenMarkers(object item, byte seen)
+    {
+        if (seen != 3) _seenMarkers.AddOrUpdate(item, new System.Runtime.CompilerServices.StrongBox<byte>(seen));
+    }
+
+    private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<object, System.Runtime.CompilerServices.StrongBox<byte>> _seenMarkers = new();
+
+    private static bool StillEmpty<T>(T half)
+    {
+        if (half is not System.Collections.IEnumerable items || half is string) return false;
+        foreach (var _ in items) return false;
+        return true;
     }
 
     public static GenderedItem<TItem> Parse<TItem>(
@@ -558,18 +584,26 @@ internal sealed class GenderedItemBinaryTranslation
         RecordType genderEnumRecord,
         BinarySubWriteDelegate<MutagenWriter, T> transl)
     {
+        // A half whose marker the record was read without, and that is still empty, is left out again (ParseRequired)
+        byte seen = _seenMarkers.TryGetValue(item, out var seenWhenRead) ? seenWhenRead.Value : (byte)3;
         var male = item.Male;
-        using (HeaderExport.Subrecord(writer, genderEnumRecord))
+        if ((seen & 1) != 0 || !StillEmpty(male))
         {
-            writer.Write((int)GenderEnum.Male);
-        }
-        transl(writer, male);
-        using (HeaderExport.Subrecord(writer, genderEnumRecord))
-        {
-            writer.Write((int)GenderEnum.Female);
+            using (HeaderExport.Subrecord(writer, genderEnumRecord))
+            {
+                writer.Write((int)GenderEnum.Male);
+            }
+            transl(writer, male);
         }
         var female = item.Female;
-        transl(writer, female);
+        if ((seen & 2) != 0 || !StillEmpty(female))
+        {
+            using (HeaderExport.Subrecord(writer, genderEnumRecord))
+            {
+                writer.Write((int)GenderEnum.Female);
+            }
+            transl(writer, female);
+        }
     }
 
     public static void Write<T>(

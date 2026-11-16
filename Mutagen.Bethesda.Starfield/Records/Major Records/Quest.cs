@@ -173,11 +173,13 @@ partial class QuestBinaryCreateTranslation
                     break;
                 default:
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    QuestAliasCounter.Remember(item, item.Aliases);
                     return (int)Quest_FieldIndex.Aliases;
             }
         }
         if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
 
+        QuestAliasCounter.Remember(item, item.Aliases);
         return (int)Quest_FieldIndex.Aliases;
     }
     
@@ -228,15 +230,108 @@ partial class QuestBinaryCreateTranslation
                             throw new NotImplementedException();
                     }
                 });
-            obj.Scenes.SetTo(records.WhereCastable<IMajorRecord, Scene>());
-            obj.DialogTopics.SetTo(records.WhereCastable<IMajorRecord, DialogTopic>());
-            obj.DialogBranches.SetTo(records.WhereCastable<IMajorRecord, DialogBranch>());
+            var children = records as IReadOnlyList<IMajorRecord> ?? records.ToList();
+            obj.Scenes.SetTo(children.WhereCastable<IMajorRecord, Scene>());
+            obj.DialogTopics.SetTo(children.WhereCastable<IMajorRecord, DialogTopic>());
+            obj.DialogBranches.SetTo(children.WhereCastable<IMajorRecord, DialogBranch>());
+            QuestChildrenOrder.Remember(obj, children.Select(QuestChildrenOrder.Kind));
         }
         catch (Exception ex)
         {
             RecordException.EnrichAndThrow(ex, obj);
             throw;
         }
+    }
+}
+
+/// <summary>
+/// What a quest's next alias ID (ANAM) would be by its aliases alone, as it was when the quest was read from a plugin: the
+/// writer keeps the stored counter while this hasn't changed, so a quest read and written back keeps its ANAM byte for byte
+/// </summary>
+internal static class QuestAliasCounter
+{
+    private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<object, System.Runtime.CompilerServices.StrongBox<uint>> _whenRead = new();
+
+    public static uint NextFromAliases(IEnumerable<object>? aliases)
+    {
+        if (aliases == null) return 0;
+        uint next = 0;
+        foreach (var alias in aliases)
+        {
+            uint id = alias switch
+            {
+                IQuestReferenceAliasGetter refAlias => refAlias.ID,
+                IQuestLocationAliasGetter locAlias => locAlias.ID,
+                IQuestCollectionAliasGetter collAlias => collAlias.Collection
+                    .Select(x => Math.Max(x.ReferenceAlias.ID, x.ID ?? 0))
+                    .StartWith((uint)0)
+                    .Max(),
+                _ => throw new NotImplementedException(),
+            };
+            if (id + 1 > next) next = id + 1;
+        }
+        return next;
+    }
+
+    public static void Remember(object quest, IEnumerable<object>? aliases)
+    {
+        _whenRead.AddOrUpdate(quest, new System.Runtime.CompilerServices.StrongBox<uint>(NextFromAliases(aliases)));
+    }
+
+    public static bool SameAsRead(object quest, uint next)
+    {
+        return _whenRead.TryGetValue(quest, out var box) && box.Value == next;
+    }
+}
+
+/// <summary>
+/// The order a quest's children (dialog branches, topics, scenes) were read in, kept only when it isn't the order the
+/// writer uses (branches, then topics, then scenes): which kind came at each place. The writer follows it while the
+/// quest still holds as many of each kind, so a plugin that mixes topics and scenes (Aurie_UpgradedCompanions.esm) is
+/// written back in its own order. Both readers keep it (the full import and the overlay).
+/// </summary>
+internal static class QuestChildrenOrder
+{
+    public const byte Branch = 0, Topic = 1, Scene = 2;
+
+    private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<object, byte[]> _asRead = new();
+
+    public static byte Kind(object child) => child switch
+    {
+        IDialogBranchGetter => Branch,
+        IDialogTopicGetter => Topic,
+        _ => Scene,
+    };
+
+    public static byte Kind(RecordType type) =>
+        type == RecordTypes.DLBR ? Branch : type == RecordTypes.DIAL ? Topic : Scene;
+
+    public static void Remember(object quest, IEnumerable<byte> kinds)
+    {
+        var asRead = kinds.ToArray();
+        bool writersOrder = true;
+        for (int i = 1; i < asRead.Length; i++)
+        {
+            if (asRead[i] < asRead[i - 1]) { writersOrder = false; break; }
+        }
+        if (writersOrder)
+        {
+            _asRead.Remove(quest);
+            return;
+        }
+        _asRead.AddOrUpdate(quest, asRead);
+    }
+
+    public static byte[]? TryGet(object quest, int scenes, int topics, int branches)
+    {
+        if (!_asRead.TryGetValue(quest, out var asRead)) return null;
+        if (asRead.Length != scenes + topics + branches) return null;
+        int s = 0, t = 0, b = 0;
+        foreach (var kind in asRead)
+        {
+            if (kind == Branch) b++; else if (kind == Topic) t++; else s++;
+        }
+        return s == scenes && t == topics && b == branches ? asRead : null;
     }
 }
 
@@ -275,33 +370,23 @@ partial class QuestBinaryWriteTranslation
         }
         using (HeaderExport.Subrecord(writer, RecordTypes.ANAM))
         {
-            uint next = 0;
-            if (aliases.Count > 0)
+            uint next = QuestAliasCounter.NextFromAliases(aliases);
+            // The next alias ID is a counter that can sit above the existing aliases (IDs of deleted aliases are not
+            // reused) and, in real plugins, below them too (SFBGS050.esm's SFTER_INC_Dialogue stores 0 with an alias 0).
+            // A quest whose aliases are as they were read keeps the counter it was read with, whatever it is; once the
+            // aliases' IDs changed, the stored counter is kept unless it would collide
+            if (nextAliasId is not { } stored)
             {
-                var max = aliases.Select(x =>
-                {
-                    switch (x)
-                    {
-                        case IQuestReferenceAliasGetter refAlias:
-                            return refAlias.ID;
-                        case IQuestLocationAliasGetter locAlias:
-                            return locAlias.ID;
-                        case IQuestCollectionAliasGetter collAlias:
-                        {
-                            return collAlias.Collection
-                                .Select(x => Math.Max(x.ReferenceAlias.ID, x.ID ?? 0))
-                                .StartWith((uint)0)
-                                .Max();
-                        }
-                        default:
-                            throw new NotImplementedException();
-                    }
-                }).Max();
-                next = max + 1;
+                writer.Write(next);
             }
-            // The next alias ID is a counter that can sit above the existing aliases
-            // (IDs of deleted aliases are not reused), so keep it unless it would collide
-            writer.Write(Math.Max(next, nextAliasId ?? 0));
+            else if (item is PluginBinaryOverlay || QuestAliasCounter.SameAsRead(item, next))
+            {
+                writer.Write(stored);
+            }
+            else
+            {
+                writer.Write(Math.Max(next, stored));
+            }
         }
 
         foreach (var alias in aliases)
@@ -343,6 +428,22 @@ partial class QuestBinaryWriteTranslation
                 writer.Write((int)GroupTypeEnum.QuestChildren);
                 writer.Write(obj.Timestamp);
                 writer.Write(obj.Unknown);
+                // Children read in another order than branches, topics, scenes (Aurie_UpgradedCompanions.esm mixes
+                // topics and scenes) are written in the order they were read while they are the same records
+                if (QuestChildrenOrder.TryGet(obj, scenes.Count, dialogTopics.Count, dialogBranches.Count) is { } asRead)
+                {
+                    int nextScene = 0, nextTopic = 0, nextBranch = 0;
+                    foreach (var kind in asRead)
+                    {
+                        switch (kind)
+                        {
+                            case QuestChildrenOrder.Branch: dialogBranches[nextBranch++].WriteToBinary(writer); break;
+                            case QuestChildrenOrder.Topic: dialogTopics[nextTopic++].WriteToBinary(writer); break;
+                            default: scenes[nextScene++].WriteToBinary(writer); break;
+                        }
+                    }
+                    return;
+                }
                 ListBinaryTranslation<IDialogBranchGetter>.Instance.Write(
                     writer: writer,
                     items: dialogBranches,
@@ -512,6 +613,7 @@ partial class QuestBinaryOverlay
                     constants: stream.MetaData.Constants.MajorConstants,
                     triggersAlwaysAreNewRecords: true,
                     skipHeader: false).Select(x => _package.MetaData.Constants.MajorRecordHeader(contentSpan.Slice(x)).Pin(x));
+            QuestChildrenOrder.Remember(this, locs.Select(l => QuestChildrenOrder.Kind(l.RecordType)).ToArray());
 
             this.DialogBranches = BinaryOverlayList.FactoryByArray<IDialogBranchGetter>(
                 contentSpan,

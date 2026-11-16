@@ -242,7 +242,9 @@ internal static class OwnFormIdForms
             var end = Math.Min(content.Length, contentStart + length);
             var turn = turns.TryGetValue(type, out var t) ? t : 0;
             turns[type] = turn + 1;
-            if (ranges == null || InRanges(ranges, firstRange, subrecordStart))
+            // A subrecord behind an XXXX is noted from its own header, not the XXXX's (a navmesh's NVNM over 64 KB:
+            // ase4.esm's 63 navmeshes with their own FormIDs in the full form lost them on a full import's write)
+            if (ranges == null || InRanges(ranges, firstRange, subrecordStart) || (pos != subrecordStart && InRanges(ranges, firstRange, pos)))
             {
                 var sub = content.Slice(contentStart, end - contentStart);
                 for (int i = 0; i + 4 <= sub.Length; i++)

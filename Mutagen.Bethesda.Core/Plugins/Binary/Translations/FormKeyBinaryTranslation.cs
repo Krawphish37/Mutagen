@@ -91,6 +91,17 @@ public sealed class FormKeyBinaryTranslation
 
         var formID = writer.MetaData.SeparatedMasterPackage!.GetFormID(item.FormKey);
 
+        // A link read from one of the mod's own FormIDs in another form than the one written here, and still that
+        // record, goes back as it was stored (StoredOwnLinkForms: the plugin header's TNAM lists, which no record keeps)
+        if (writer.MetaData.SeparatedMasterPackage is Mutagen.Bethesda.Plugins.Masters.SeparatedMasterPackage { HasOwnFormVariants: true } own
+            && StoredOwnLinkForms.TryGet(item, out var storedRaw)
+            && storedRaw != formID.Raw
+            && own.IsOwnFormVariant(storedRaw)
+            && FormKey.Factory(own, new FormID(storedRaw), reference) == item.FormKey)
+        {
+            formID = new FormID(storedRaw);
+        }
+
         // StoredFormIdMixIn.GetStoredFormIds: where this FormID goes (C203; nothing unless a record is being looked at)
         FormIdPositionRecorder.Note(writer, item.FormKey);
         UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Write(
@@ -127,5 +138,46 @@ public sealed class FormKeyBinaryTranslation
     {
         if (item.FormKeyNullable == null) return;
         Write(writer, item.ToStandardizedIdentifier(), header);
+    }
+}
+/// <summary>
+/// The stored form of a link that was read from one of the mod's own FormIDs in a form Mutagen doesn't write (a Small
+/// or Medium Starfield plugin's full index, where Mutagen writes FE / FD + its index), kept with the link object itself.
+/// Records keep these by position (OwnFormIdForms); this covers links no record holds, the plugin header's TNAM lists
+/// (ase4.esm, fleet commander.esm and eight more plugins in a 370-plugin Data folder store them in the full form).
+/// FormKeyBinaryTranslation.Write puts the stored form back while the link still names that record of the mod.
+/// </summary>
+internal static class StoredOwnLinkForms
+{
+    private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<object, System.Runtime.CompilerServices.StrongBox<uint>> _stored = new();
+
+    /// <summary>Notes the link's stored form when it is an own FormID in a form Mutagen doesn't write</summary>
+    public static void Note(Mutagen.Bethesda.Plugins.Masters.IReadOnlySeparatedMasterPackage? package, uint raw, object link)
+    {
+        if (package is Mutagen.Bethesda.Plugins.Masters.SeparatedMasterPackage { HasOwnFormVariants: true } own
+            && own.IsOwnFormVariant(raw))
+        {
+            _stored.AddOrUpdate(link, new System.Runtime.CompilerServices.StrongBox<uint>(raw));
+        }
+    }
+
+    /// <summary>A copy of a link (a header copied to be written) keeps the stored form of the link it copies</summary>
+    public static void Copy(object from, object to)
+    {
+        if (!ReferenceEquals(from, to) && _stored.TryGetValue(from, out var box))
+        {
+            _stored.AddOrUpdate(to, new System.Runtime.CompilerServices.StrongBox<uint>(box.Value));
+        }
+    }
+
+    public static bool TryGet(object link, out uint raw)
+    {
+        if (_stored.TryGetValue(link, out var box))
+        {
+            raw = box.Value;
+            return true;
+        }
+        raw = 0;
+        return false;
     }
 }

@@ -123,14 +123,28 @@ public class QuestNextAliasIdTests
         }
     }
 
+    /// <summary>
+    /// A quest read with a counter below its aliases' IDs and written back unchanged keeps the counter: real plugins
+    /// store it so (SFBGS050.esm's SFTER_INC_Dialogue stores 0 with an alias 0; 8 plugins of a 370-plugin Data folder),
+    /// and raising it made their round trip differ by that byte
+    /// </summary>
     [Fact]
-    public void Write_NextAliasIdBelowAliases_IsRaised()
+    public void Write_NextAliasIdBelowAliases_IsKeptWhileAliasesAreAsRead()
     {
         var bytes = BuildQuestBytes(1, 0, 3);
         foreach (var quest in ReadBoth(bytes))
         {
-            WrittenAnam(Write(quest)).ShouldBe(4u);
+            WrittenAnam(Write(quest)).ShouldBe(1u);
         }
+    }
+
+    /// <summary>Once an alias with a higher ID is added, the stored counter is raised past it so it can't collide</summary>
+    [Fact]
+    public void Write_NextAliasIdBelowAliases_IsRaisedWhenAnAliasIsAdded()
+    {
+        var quest = (Quest)ReadDirect(BuildQuestBytes(1, 0, 3));
+        quest.Aliases!.Add(new QuestReferenceAlias() { ID = 5, Name = "Alias5" });
+        WrittenAnam(Write(quest)).ShouldBe(6u);
     }
 
     [Fact]

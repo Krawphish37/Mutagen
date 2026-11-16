@@ -29,6 +29,11 @@ partial class VirtualMachineAdapterIndexedBinaryCreateTranslation
                 reader: frame,
                 transl: ScriptFragmentIndexed.TryCreateFromBinary));
         if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+        // What the VMAD holds after its fragments is kept and written back (ScriptFragmentsTail)
+        if (!frame.Complete)
+        {
+            ScriptFragmentsTail.Remember(ret, frame.ReadSpan(checked((int)frame.Remaining)).ToArray());
+        }
         return ret;
     }
 
@@ -55,7 +60,29 @@ partial class VirtualMachineAdapterIndexedBinaryWriteTranslation
             {
                 i.WriteToBinary(w);
             });
+        if (ScriptFragmentsTail.TryGet(frags) is { } tail)
+        {
+            writer.Write(tail);
+        }
     }
+}
+
+/// <summary>
+/// Bytes a VMAD holds after its script fragments, which no field reads: MissionsGalore.esm's four terminal menus end
+/// their VMAD with three zero bytes after an unnamed fragment script and a fragment count of 0 (an unnamed script entry
+/// written with its flags and property count, by the look of it). They are kept with the fragments object and written
+/// back after it, so the VMAD is written as it was read.
+/// </summary>
+internal static class ScriptFragmentsTail
+{
+    private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<object, byte[]> _tails = new();
+
+    public static void Remember(object fragments, byte[] tail)
+    {
+        if (tail.Length > 0) _tails.AddOrUpdate(fragments, tail);
+    }
+
+    public static byte[]? TryGet(object fragments) => _tails.TryGetValue(fragments, out var tail) ? tail : null;
 }
 
 partial class VirtualMachineAdapterIndexedBinaryOverlay
