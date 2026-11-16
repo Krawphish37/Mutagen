@@ -1372,10 +1372,12 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<VoiceType.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)VoiceType_FieldIndex.Flags;
                 }
                 default:

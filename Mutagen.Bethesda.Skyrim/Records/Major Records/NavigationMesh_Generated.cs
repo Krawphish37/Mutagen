@@ -1671,27 +1671,35 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.NVNM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Skyrim.NavigationMeshData.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.Data;
                 }
                 case RecordTypeInts.ONAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ONAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ONAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.ONAM;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.PNAM;
                 }
                 case RecordTypeInts.NNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.NNAM;
                 }
                 case RecordTypeInts.XXXX:

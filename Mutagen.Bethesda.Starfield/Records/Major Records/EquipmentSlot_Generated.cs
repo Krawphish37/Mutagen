@@ -1081,18 +1081,22 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.QNAM:
                 {
                     if (lastParsed.ShortCircuit((int)EquipmentSlot_FieldIndex.Slot, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Slot");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Slot.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)EquipmentSlot_FieldIndex.Slot;
                 }
                 case RecordTypeInts.ZNAM:
                 {
                     if (lastParsed.ShortCircuit((int)EquipmentSlot_FieldIndex.Node, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Node");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Node = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)EquipmentSlot_FieldIndex.Node;
                 }
                 default:

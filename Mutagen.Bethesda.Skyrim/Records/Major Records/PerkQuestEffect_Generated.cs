@@ -1187,9 +1187,15 @@ namespace Mutagen.Bethesda.Skyrim
             IPerkQuestEffect item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Quest");
             item.Quest.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Stage");
             item.Stage = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unknown");
             item.Unknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

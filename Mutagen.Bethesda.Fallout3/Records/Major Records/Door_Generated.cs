@@ -2136,16 +2136,20 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Fallout3.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Door_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Door_FieldIndex.Name;
                 }
                 case RecordTypeInts.MODL:
@@ -2154,49 +2158,63 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.MODS:
                 case RecordTypeInts.MODD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Door_FieldIndex.Model;
                 }
                 case RecordTypeInts.SCRI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Script");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Script.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Door_FieldIndex.Script;
                 }
                 case RecordTypeInts.DEST:
                 case RecordTypeInts.DSTD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Destructible");
                     item.Destructible = Mutagen.Bethesda.Fallout3.Destructible.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Door_FieldIndex.Destructible;
                 }
                 case RecordTypeInts.SNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OpenSound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.OpenSound.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Door_FieldIndex.OpenSound;
                 }
                 case RecordTypeInts.ANAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CloseSound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CloseSound.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Door_FieldIndex.CloseSound;
                 }
                 case RecordTypeInts.BNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LoopingSound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LoopingSound.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Door_FieldIndex.LoopingSound;
                 }
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<Door.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Door_FieldIndex.Flags;
                 }
                 default:

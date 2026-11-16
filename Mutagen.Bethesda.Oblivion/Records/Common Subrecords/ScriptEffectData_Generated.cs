@@ -1248,24 +1248,32 @@ namespace Mutagen.Bethesda.Oblivion
             IScriptEffectData item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Script");
             item.Script.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (frame.Complete)
             {
                 item.Versioning |= ScriptEffectData.VersioningBreaks.Break0;
                 return;
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MagicSchool");
             item.MagicSchool = EnumBinaryTranslation<MagicSchool, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VisualEffect");
             item.VisualEffect.SetTo(RecordTypeBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (frame.Complete)
             {
                 item.Versioning |= ScriptEffectData.VersioningBreaks.Break1;
                 return;
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
             item.Flags = EnumBinaryTranslation<ScriptEffect.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

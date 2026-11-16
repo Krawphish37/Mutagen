@@ -1932,51 +1932,63 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MagicEffect_FieldIndex.Name;
                 }
                 case RecordTypeInts.DESC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Description");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Description = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MagicEffect_FieldIndex.Description;
                 }
                 case RecordTypeInts.ICON:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Icon");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Icon = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MagicEffect_FieldIndex.Icon;
                 }
                 case RecordTypeInts.MODL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Oblivion.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MagicEffect_FieldIndex.Model;
                 }
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Oblivion.MagicEffectData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MagicEffect_FieldIndex.Data;
                 }
                 case RecordTypeInts.ESCE:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "CounterEffects");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CounterEffects = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IEDIDLinkGetter<IMagicEffectGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: RecordTypeBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IEDIDLinkGetter<IMagicEffectGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MagicEffect_FieldIndex.CounterEffects;
                 }
                 default:

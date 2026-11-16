@@ -1049,10 +1049,14 @@ namespace Mutagen.Bethesda.Fallout4
             IFilterKeywordChance item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FilterKeyword");
             item.FilterKeyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Chance", true);
             item.Chance = PercentBinaryTranslation.Parse(
                 reader: frame,
                 integerType: FloatIntegerType.UInt);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

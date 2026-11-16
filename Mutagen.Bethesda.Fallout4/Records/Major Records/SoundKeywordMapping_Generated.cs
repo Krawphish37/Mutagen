@@ -1963,45 +1963,57 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PrimaryDescriptor");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PrimaryDescriptor.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundKeywordMapping_FieldIndex.PrimaryDescriptor;
                 }
                 case RecordTypeInts.ENAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ExteriorTail");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ExteriorTail.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundKeywordMapping_FieldIndex.ExteriorTail;
                 }
                 case RecordTypeInts.VNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VatsDescriptor");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.VatsDescriptor.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundKeywordMapping_FieldIndex.VatsDescriptor;
                 }
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VatsThreshold");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.VatsThreshold = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundKeywordMapping_FieldIndex.VatsThreshold;
                 }
                 case RecordTypeInts.KNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Keywords");
                     item.Keywords.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.KNAM),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundKeywordMapping_FieldIndex.Keywords;
                 }
                 case RecordTypeInts.RNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Sounds");
                     item.Sounds.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<MappingSound>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: MappingSound_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: MappingSound.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundKeywordMapping_FieldIndex.Sounds;
                 }
                 default:

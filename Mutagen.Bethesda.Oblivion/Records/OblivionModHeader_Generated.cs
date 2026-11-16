@@ -1661,11 +1661,17 @@ namespace Mutagen.Bethesda.Oblivion
             IOblivionModHeader item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
             item.Flags = EnumBinaryTranslation<OblivionModHeader.HeaderFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FormID");
             item.FormID = frame.ReadUInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Version");
             item.Version = frame.ReadInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static ParseResult FillBinaryRecordTypes(
@@ -1682,45 +1688,57 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 case RecordTypeInts.HEDR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Stats");
                     item.Stats = Mutagen.Bethesda.Oblivion.ModStats.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)OblivionModHeader_FieldIndex.Stats;
                 }
                 case RecordTypeInts.OFST:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TypeOffsets");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TypeOffsets = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)OblivionModHeader_FieldIndex.TypeOffsets;
                 }
                 case RecordTypeInts.DELE:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Deleted");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Deleted = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)OblivionModHeader_FieldIndex.Deleted;
                 }
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Author");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Author = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)OblivionModHeader_FieldIndex.Author;
                 }
                 case RecordTypeInts.SNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Description");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Description = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)OblivionModHeader_FieldIndex.Description;
                 }
                 case RecordTypeInts.MAST:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "MasterReferences");
                     OblivionModHeaderBinaryCreateTranslation.FillBinaryMasterReferencesCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)OblivionModHeader_FieldIndex.MasterReferences;
                 }
                 default:

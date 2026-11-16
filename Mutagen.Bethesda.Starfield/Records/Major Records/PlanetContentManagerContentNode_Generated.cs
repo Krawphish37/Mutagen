@@ -2017,45 +2017,57 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.BFCB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Components");
                     item.Components.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AComponent>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: AComponent_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: AComponent.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentNode_FieldIndex.Components;
                 }
                 case RecordTypeInts.PCCC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Content");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Content.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentNode_FieldIndex.Content;
                 }
                 case RecordTypeInts.IOVR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OverrideContentPlacementPropertiesAndConditions");
                     item.OverrideContentPlacementPropertiesAndConditions = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentNode_FieldIndex.OverrideContentPlacementPropertiesAndConditions;
                 }
                 case RecordTypeInts.KWDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Keywords");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Keywords = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentNode_FieldIndex.Keywords;
                 }
                 case RecordTypeInts.PRTN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ParentNode");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ParentNode.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentNode_FieldIndex.ParentNode;
                 }
                 case RecordTypeInts.PRVN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PreviousNode");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PreviousNode.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentNode_FieldIndex.PreviousNode;
                 }
                 default:

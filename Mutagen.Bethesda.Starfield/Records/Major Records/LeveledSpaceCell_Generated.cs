@@ -2087,52 +2087,65 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Starfield.VirtualMachineAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledSpaceCell_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.LVLD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "ChanceNone");
                     LeveledSpaceCellBinaryCreateTranslation.FillBinaryChanceNoneCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledSpaceCell_FieldIndex.ChanceNone;
                 }
                 case RecordTypeInts.LVLM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaxCount");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MaxCount = frame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledSpaceCell_FieldIndex.MaxCount;
                 }
                 case RecordTypeInts.LVLF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<LeveledSpaceCell.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledSpaceCell_FieldIndex.Flags;
                 }
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledSpaceCell_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.LVLG:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UseGlobal");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.UseGlobal.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledSpaceCell_FieldIndex.UseGlobal;
                 }
                 case RecordTypeInts.LVLO:
                 case RecordTypeInts.LLCT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Entries");
                     item.Entries = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LeveledSpaceCellEntry>.Instance.ParsePerItem(
                             reader: frame,
@@ -2142,6 +2155,7 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams,
                             transl: LeveledSpaceCellEntry.TryCreateFromBinary)
                         .CastExtendedList<LeveledSpaceCellEntry>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledSpaceCell_FieldIndex.Entries;
                 }
                 case RecordTypeInts.XXXX:

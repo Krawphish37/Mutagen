@@ -1486,8 +1486,10 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Data = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GameSettingFloat_FieldIndex.Data;
                 }
                 default:

@@ -1089,8 +1089,12 @@ namespace Mutagen.Bethesda.Skyrim
             INavigationMapInfoWorldParent item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ParentWorldspace");
             item.ParentWorldspace.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ParentWorldspaceCoord");
             item.ParentWorldspaceCoord = P2Int16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

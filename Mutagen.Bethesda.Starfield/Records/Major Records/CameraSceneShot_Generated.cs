@@ -1845,79 +1845,105 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.CNAM:
                 {
                     if (lastParsed.ShortCircuit((int)CameraSceneShot_FieldIndex.CameraShot, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CameraShot");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CameraShot.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CameraSceneShot_FieldIndex.CameraShot;
                 }
                 case RecordTypeInts.ALLA:
                 {
                     if (lastParsed.ShortCircuit((int)CameraSceneShot_FieldIndex.CameraLocationReference, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CameraLocationReference");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CameraLocationReference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CameraSceneShot_FieldIndex.CameraLocationReference;
                 }
                 case RecordTypeInts.REPL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LookTargetReference");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LookTargetReference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CameraSceneShot_FieldIndex.LookTargetReference;
                 }
                 case RecordTypeInts.HNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LookTargetAlias");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LookTargetAlias = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CameraSceneShot_FieldIndex.LookTargetAlias;
                 }
                 case RecordTypeInts.VCLR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CameraLocationAlias");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CameraLocationAlias = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CameraSceneShot_FieldIndex.CameraLocationAlias;
                 }
                 case RecordTypeInts.LVCR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DelayStartTimeAction");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DelayStartTimeAction = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CameraSceneShot_FieldIndex.DelayStartTimeAction;
                 }
                 case RecordTypeInts.BTXT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UseCameraLocationReference");
                     item.UseCameraLocationReference = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CameraSceneShot_FieldIndex.UseCameraLocationReference;
                 }
                 case RecordTypeInts.ATXT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UseLookTargetReference");
                     item.UseLookTargetReference = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CameraSceneShot_FieldIndex.UseLookTargetReference;
                 }
                 case RecordTypeInts.VTXT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UseCameraLocationAlias");
                     item.UseCameraLocationAlias = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CameraSceneShot_FieldIndex.UseCameraLocationAlias;
                 }
                 case RecordTypeInts.MPCD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UseLookTargetAlias");
                     item.UseLookTargetAlias = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CameraSceneShot_FieldIndex.UseLookTargetAlias;
                 }
                 case RecordTypeInts.AIDT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IgnoreCollision");
                     item.IgnoreCollision = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CameraSceneShot_FieldIndex.IgnoreCollision;
                 }
                 case RecordTypeInts.VNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ForceLookAtFirstPersonCamera");
                     item.ForceLookAtFirstPersonCamera = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CameraSceneShot_FieldIndex.ForceLookAtFirstPersonCamera;
                 }
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CameraSceneShot_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.XNAM: // End Marker

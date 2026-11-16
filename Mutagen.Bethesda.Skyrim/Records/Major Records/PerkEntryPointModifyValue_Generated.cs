@@ -1228,9 +1228,11 @@ namespace Mutagen.Bethesda.Skyrim
             APerkEntryPointEffectBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Modification");
             item.Modification = EnumBinaryTranslation<PerkEntryPointModifyValue.ModificationType, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static ParseResult FillBinaryRecordTypes(
@@ -1247,8 +1249,10 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.EPFD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Value");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Value = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PerkEntryPointModifyValue_FieldIndex.Value;
                 }
                 default:

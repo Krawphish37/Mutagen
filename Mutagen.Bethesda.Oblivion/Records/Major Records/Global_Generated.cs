@@ -1266,10 +1266,12 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "TypeChar");
                     return GlobalBinaryCreateTranslation.FillBinaryTypeCharCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 }
                 default:
                     return OblivionMajorRecordBinaryCreateTranslation.FillBinaryRecordTypes(

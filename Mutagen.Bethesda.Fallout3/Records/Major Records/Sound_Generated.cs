@@ -1945,39 +1945,50 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Fallout3.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Sound_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "File");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.File = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Sound_FieldIndex.File;
                 }
                 case RecordTypeInts.RNAM:
                 {
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "RandomChancePercent");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.RandomChancePercent = frame.ReadUInt8();
                     }
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Sound_FieldIndex.RandomChancePercent;
                 }
                 case RecordTypeInts.SNDX:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Fallout3.SoundData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Sound_FieldIndex.Data;
                 }
                 case RecordTypeInts.SNDD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Fallout3.SoundDataExtended.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Sound_FieldIndex.Data;
                 }
                 case RecordTypeInts.ANAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "AttenuationCurve");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AttenuationCurve = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Int16>.Instance.Parse(
@@ -1985,18 +1996,23 @@ namespace Mutagen.Bethesda.Fallout3
                             amount: 5,
                             transl: Int16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse)
                         .ToArray();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Sound_FieldIndex.AttenuationCurve;
                 }
                 case RecordTypeInts.GNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ReverbAttenuationControl");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ReverbAttenuationControl = frame.ReadInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Sound_FieldIndex.ReverbAttenuationControl;
                 }
                 case RecordTypeInts.HNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Priority");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Priority = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Sound_FieldIndex.Priority;
                 }
                 default:

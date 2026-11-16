@@ -1110,8 +1110,12 @@ namespace Mutagen.Bethesda.Starfield
             IResourceGenerationDataValues item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Biome");
             item.Biome = Mutagen.Bethesda.Starfield.ResourceGenerationBiomeData.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Cell");
             item.Cell = Mutagen.Bethesda.Starfield.ResourceGenerationCellData.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

@@ -1224,11 +1224,17 @@ namespace Mutagen.Bethesda.Fallout4
             IAVirtualMachineAdapter item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Version");
             item.Version = frame.ReadInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectFormat");
             item.ObjectFormat = frame.ReadUInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Scripts");
             AVirtualMachineAdapterBinaryCreateTranslation.FillBinaryScriptsCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void FillBinaryScriptsCustom(

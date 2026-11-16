@@ -1812,28 +1812,38 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.ENAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ENAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ENAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpace_FieldIndex.ENAM;
                 }
                 case RecordTypeInts.HNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Hdr");
                     item.Hdr = Mutagen.Bethesda.Skyrim.ImageSpaceHdr.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpace_FieldIndex.Hdr;
                 }
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Cinematic");
                     item.Cinematic = Mutagen.Bethesda.Skyrim.ImageSpaceCinematic.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpace_FieldIndex.Cinematic;
                 }
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Tint");
                     item.Tint = Mutagen.Bethesda.Skyrim.ImageSpaceTint.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpace_FieldIndex.Tint;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DepthOfField");
                     item.DepthOfField = Mutagen.Bethesda.Skyrim.ImageSpaceDepthOfField.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpace_FieldIndex.DepthOfField;
                 }
                 default:

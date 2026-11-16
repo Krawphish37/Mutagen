@@ -1893,50 +1893,74 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     item.DAT2DataTypeState &= ~BlockEditorMetaDataComponent.DAT2DataType.Absent;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "CreatedTime");
                     item.CreatedTime = StringBinaryTranslation.Instance.Parse(
                         reader: dataFrame,
                         stringBinaryType: StringBinaryType.PrependLength,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SourceType");
                     item.SourceType = EnumBinaryTranslation<BlockEditorMetaDataComponent.SourceTypeOption, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 1);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "AlsoCreatedTime");
                     item.AlsoCreatedTime = StringBinaryTranslation.Instance.Parse(
                         reader: dataFrame,
                         stringBinaryType: StringBinaryType.PrependLength,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SourceEditorID");
                     item.SourceEditorID = StringBinaryTranslation.Instance.Parse(
                         reader: dataFrame,
                         stringBinaryType: StringBinaryType.PrependLength,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(dataFrame, "UnknownItems");
                     item.UnknownItems.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<BlockEditorMetaDataItem>.Instance.Parse(
                             amount: checked((int)frame.ReadUInt32()),
                             reader: frame,
                             transl: BlockEditorMetaDataItem.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "LocationX");
                     item.LocationX = dataFrame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "LocationY");
                     item.LocationY = dataFrame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "PlanetSystemId");
                     item.PlanetSystemId = dataFrame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SatelliteId");
                     item.SatelliteId = dataFrame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Complete)
                     {
                         item.DAT2DataTypeState |= BlockEditorMetaDataComponent.DAT2DataType.Break0;
                         return (int)BlockEditorMetaDataComponent_FieldIndex.SatelliteId;
                     }
                     if (dataFrame.Remaining < 8) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Longitude");
                     item.Longitude = dataFrame.ReadDouble();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Complete)
                     {
                         item.DAT2DataTypeState |= BlockEditorMetaDataComponent.DAT2DataType.Break1;
                         return (int)BlockEditorMetaDataComponent_FieldIndex.Longitude;
                     }
                     if (dataFrame.Remaining < 8) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Latitude");
                     item.Latitude = dataFrame.ReadDouble();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "UnknownEnding");
                     item.UnknownEnding = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)BlockEditorMetaDataComponent_FieldIndex.UnknownEnding;
                 }
                 default:

@@ -1243,21 +1243,25 @@ namespace Mutagen.Bethesda.Oblivion
                 case RecordTypeInts.MODL:
                 {
                     if (lastParsed.ShortCircuit((int)BodyData_FieldIndex.Model, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Oblivion.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BodyData_FieldIndex.Model;
                 }
                 case RecordTypeInts.INDX:
                 case RecordTypeInts.ICON:
                 {
                     if (lastParsed.ShortCircuit((int)BodyData_FieldIndex.BodyParts, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "BodyParts");
                     item.BodyParts.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<BodyPartItem>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: BodyPartItem_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: BodyPartItem.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BodyData_FieldIndex.BodyParts;
                 }
                 default:

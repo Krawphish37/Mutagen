@@ -1264,10 +1264,14 @@ namespace Mutagen.Bethesda.Skyrim
             ConditionDataBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Target");
             FormLinkOrIndexBinaryTranslation.Instance.ParseInto(
                 reader: frame,
                 item: item.Target);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Distance");
             item.Distance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

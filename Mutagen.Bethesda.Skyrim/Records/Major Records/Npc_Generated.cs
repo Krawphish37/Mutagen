@@ -5950,58 +5950,75 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Skyrim.VirtualMachineAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Skyrim.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.ACBS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Configuration");
                     item.Configuration = Mutagen.Bethesda.Skyrim.NpcConfiguration.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.Configuration;
                 }
                 case RecordTypeInts.SNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Factions");
                     item.Factions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<RankPlacement>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: RankPlacement_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: RankPlacement.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.Factions;
                 }
                 case RecordTypeInts.INAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DeathItem");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DeathItem.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.DeathItem;
                 }
                 case RecordTypeInts.VTCK:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Voice");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Voice.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.Voice;
                 }
                 case RecordTypeInts.TPLT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Template");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Template.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.Template;
                 }
                 case RecordTypeInts.RNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Race");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Race.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.Race;
                 }
                 case RecordTypeInts.SPLO:
                 case RecordTypeInts.SPCT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "ActorEffect");
                     item.ActorEffect = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ISpellRecordGetter>>.Instance.ParsePerItem(
                             reader: frame,
@@ -6010,73 +6027,93 @@ namespace Mutagen.Bethesda.Skyrim
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.SPLO),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<ISpellRecordGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.ActorEffect;
                 }
                 case RecordTypeInts.DEST:
                 case RecordTypeInts.DSTD:
                 case RecordTypeInts.DMDL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Destructible");
                     item.Destructible = Mutagen.Bethesda.Skyrim.Destructible.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.Destructible;
                 }
                 case RecordTypeInts.WNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WornArmor");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.WornArmor.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.WornArmor;
                 }
                 case RecordTypeInts.ANAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FarAwayModel");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FarAwayModel.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.FarAwayModel;
                 }
                 case RecordTypeInts.ATKR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AttackRace");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AttackRace.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.AttackRace;
                 }
                 case RecordTypeInts.ATKD:
                 case RecordTypeInts.ATKE:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Attacks");
                     item.Attacks.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Attack>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Attack_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Attack.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.Attacks;
                 }
                 case RecordTypeInts.SPOR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SpectatorOverridePackageList");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SpectatorOverridePackageList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.SpectatorOverridePackageList;
                 }
                 case RecordTypeInts.OCOR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObserveDeadBodyOverridePackageList");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ObserveDeadBodyOverridePackageList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.ObserveDeadBodyOverridePackageList;
                 }
                 case RecordTypeInts.GWOR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GuardWarnOverridePackageList");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.GuardWarnOverridePackageList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.GuardWarnOverridePackageList;
                 }
                 case RecordTypeInts.ECOR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CombatOverridePackageList");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CombatOverridePackageList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.CombatOverridePackageList;
                 }
                 case RecordTypeInts.PRKR:
                 case RecordTypeInts.PRKZ:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Perks");
                     item.Perks = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<PerkPlacement>.Instance.ParsePerItem(
                             reader: frame,
@@ -6086,11 +6123,13 @@ namespace Mutagen.Bethesda.Skyrim
                             translationParams: translationParams,
                             transl: PerkPlacement.TryCreateFromBinary)
                         .CastExtendedList<PerkPlacement>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.Perks;
                 }
                 case RecordTypeInts.CNTO:
                 case RecordTypeInts.COCT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Items");
                     item.Items = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ContainerEntry>.Instance.ParsePerItem(
                             reader: frame,
@@ -6100,25 +6139,31 @@ namespace Mutagen.Bethesda.Skyrim
                             translationParams: translationParams,
                             transl: ContainerEntry.TryCreateFromBinary)
                         .CastExtendedList<ContainerEntry>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.Items;
                 }
                 case RecordTypeInts.AIDT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AIData");
                     item.AIData = Mutagen.Bethesda.Skyrim.AIData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.AIData;
                 }
                 case RecordTypeInts.PKID:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Packages");
                     item.Packages.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IPackageGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.PKID),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.Packages;
                 }
                 case RecordTypeInts.KSIZ:
                 case RecordTypeInts.KWDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Keywords");
                     item.Keywords = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame,
@@ -6127,16 +6172,20 @@ namespace Mutagen.Bethesda.Skyrim
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.KWDA),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.Keywords;
                 }
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Class");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Class.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.Class;
                 }
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -6144,10 +6193,12 @@ namespace Mutagen.Bethesda.Skyrim
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.Name;
                 }
                 case RecordTypeInts.SHRT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ShortName");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ShortName = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -6155,133 +6206,174 @@ namespace Mutagen.Bethesda.Skyrim
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.ShortName;
                 }
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "DataMarker");
                     return NpcBinaryCreateTranslation.FillBinaryDataMarkerCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PlayerSkills");
                     item.PlayerSkills = Mutagen.Bethesda.Skyrim.PlayerSkills.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.PlayerSkills;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HeadParts");
                     item.HeadParts.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IHeadPartGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.PNAM),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.HeadParts;
                 }
                 case RecordTypeInts.HCLF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HairColor");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HairColor.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.HairColor;
                 }
                 case RecordTypeInts.ZNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CombatStyle");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CombatStyle.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.CombatStyle;
                 }
                 case RecordTypeInts.GNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GiftFilter");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.GiftFilter.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.GiftFilter;
                 }
                 case RecordTypeInts.NAM5:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NAM5");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NAM5 = frame.ReadUInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.NAM5;
                 }
                 case RecordTypeInts.NAM6:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Height");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Height = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.Height;
                 }
                 case RecordTypeInts.NAM7:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Weight");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Weight = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.Weight;
                 }
                 case RecordTypeInts.NAM8:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SoundLevel");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SoundLevel = EnumBinaryTranslation<SoundLevel, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.SoundLevel;
                 }
                 case RecordTypeInts.CSCR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Sound");
                     item.Sound = Mutagen.Bethesda.Skyrim.NpcInheritSound.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.Sound;
                 }
                 case RecordTypeInts.CSDT:
                 case RecordTypeInts.CSDI:
                 case RecordTypeInts.CSDC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Sound");
                     item.Sound = Mutagen.Bethesda.Skyrim.NpcSoundTypes.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.Sound;
                 }
                 case RecordTypeInts.DOFT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DefaultOutfit");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DefaultOutfit.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.DefaultOutfit;
                 }
                 case RecordTypeInts.SOFT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SleepingOutfit");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SleepingOutfit.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.SleepingOutfit;
                 }
                 case RecordTypeInts.DPLT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DefaultPackageList");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DefaultPackageList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.DefaultPackageList;
                 }
                 case RecordTypeInts.CRIF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CrimeFaction");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CrimeFaction.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.CrimeFaction;
                 }
                 case RecordTypeInts.FTST:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HeadTexture");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HeadTexture.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.HeadTexture;
                 }
                 case RecordTypeInts.QNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TextureLighting");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TextureLighting = frame.ReadColor(ColorBinaryType.NoAlphaFloat);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.TextureLighting;
                 }
                 case RecordTypeInts.NAM9:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FaceMorph");
                     item.FaceMorph = Mutagen.Bethesda.Skyrim.NpcFaceMorph.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.FaceMorph;
                 }
                 case RecordTypeInts.NAMA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FaceParts");
                     item.FaceParts = Mutagen.Bethesda.Skyrim.NpcFaceParts.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.FaceParts;
                 }
                 case RecordTypeInts.TINI:
@@ -6289,12 +6381,14 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.TINV:
                 case RecordTypeInts.TIAS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "TintLayers");
                     item.TintLayers.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<TintLayer>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: TintLayer_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: TintLayer.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Npc_FieldIndex.TintLayers;
                 }
                 case RecordTypeInts.XXXX:

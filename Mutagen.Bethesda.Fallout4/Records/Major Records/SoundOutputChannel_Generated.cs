@@ -1339,14 +1339,30 @@ namespace Mutagen.Bethesda.Fallout4
             ISoundOutputChannel item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "L");
             item.L = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "R");
             item.R = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "C");
             item.C = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LFE");
             item.LFE = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RL");
             item.RL = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RR");
             item.RR = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BL");
             item.BL = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BR");
             item.BR = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

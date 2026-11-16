@@ -1234,36 +1234,44 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.FNAM:
                 {
                     if (lastParsed.ShortCircuit((int)MapMarker_FieldIndex.Flags, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<MapMarker.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MapMarker_FieldIndex.Flags;
                 }
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MapMarker_FieldIndex.Name;
                 }
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Type");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Type = EnumBinaryTranslation<MapMarker.MarkerType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MapMarker_FieldIndex.Type;
                 }
                 case RecordTypeInts.WMI1:
                 {
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "Reputation");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.Reputation.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)MapMarker_FieldIndex.Reputation;
                 }
                 default:

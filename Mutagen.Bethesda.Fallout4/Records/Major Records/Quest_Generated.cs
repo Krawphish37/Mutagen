@@ -5013,13 +5013,16 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Fallout4.QuestAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -5027,82 +5030,103 @@ namespace Mutagen.Bethesda.Fallout4
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.Name;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Fallout4.QuestData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.Data;
                 }
                 case RecordTypeInts.ENAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Event");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Event = RecordTypeBinaryTranslation.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.Event;
                 }
                 case RecordTypeInts.LNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Location");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Location.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.Location;
                 }
                 case RecordTypeInts.XNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "QuestCompletionXp");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.QuestCompletionXp.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.QuestCompletionXp;
                 }
                 case RecordTypeInts.QTGL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "TextDisplayGlobals");
                     item.TextDisplayGlobals.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IGlobalGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.QTGL),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.TextDisplayGlobals;
                 }
                 case RecordTypeInts.FLTR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Filter");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Filter = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.Filter;
                 }
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "DialogConditions");
                     QuestBinaryCreateTranslation.FillBinaryDialogConditionsCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.DialogConditions;
                 }
                 case RecordTypeInts.NEXT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "UnusedConditionsLogic");
                     return QuestBinaryCreateTranslation.FillBinaryUnusedConditionsLogicCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 }
                 case RecordTypeInts.INDX:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Stages");
                     item.Stages.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<QuestStage>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: QuestStage_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: QuestStage.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.Stages;
                 }
                 case RecordTypeInts.QOBJ:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Objectives");
                     item.Objectives.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<QuestObjective>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: QuestObjective_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: QuestObjective.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.Objectives;
                 }
                 case RecordTypeInts.ANAM:
@@ -5111,13 +5135,16 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.ALCS:
                 case RecordTypeInts.ALMI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "AliasParse");
                     return QuestBinaryCreateTranslation.FillBinaryAliasParseCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 }
                 case RecordTypeInts.NNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Description");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Description = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -5125,21 +5152,26 @@ namespace Mutagen.Bethesda.Fallout4
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.Description;
                 }
                 case RecordTypeInts.GNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "QuestGroup");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.QuestGroup.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.QuestGroup;
                 }
                 case RecordTypeInts.SNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SwfFile");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SwfFile = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.SwfFile;
                 }
                 case RecordTypeInts.XXXX:

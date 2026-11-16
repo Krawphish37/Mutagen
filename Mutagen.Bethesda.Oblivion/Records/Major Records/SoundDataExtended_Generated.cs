@@ -1239,17 +1239,23 @@ namespace Mutagen.Bethesda.Oblivion
             SoundDataBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StaticAttenuation", true);
             item.StaticAttenuation = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 integerType: FloatIntegerType.UShort,
                 multiplier: null,
                 divisor: 100f);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "StopTime");
             SoundDataExtendedBinaryCreateTranslation.FillBinaryStopTimeCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "StartTime");
             SoundDataExtendedBinaryCreateTranslation.FillBinaryStartTimeCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void FillBinaryStopTimeCustom(

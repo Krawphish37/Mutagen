@@ -1814,6 +1814,7 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.DESC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Description");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Description = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1821,40 +1822,50 @@ namespace Mutagen.Bethesda.Fallout4
                         source: StringsSource.DL,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CollisionLayer_FieldIndex.Description;
                 }
                 case RecordTypeInts.BNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CollisionLayer_FieldIndex.Index;
                 }
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DebugColor");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DebugColor = frame.ReadColor(ColorBinaryType.Alpha);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CollisionLayer_FieldIndex.DebugColor;
                 }
                 case RecordTypeInts.GNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<CollisionLayer.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CollisionLayer_FieldIndex.Flags;
                 }
                 case RecordTypeInts.MNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CollisionLayer_FieldIndex.Name;
                 }
                 case RecordTypeInts.INTV:
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "CollidesWith");
                     item.CollidesWith = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ICollisionLayerGetter>>.Instance.Parse(
                             reader: frame,
@@ -1864,6 +1875,7 @@ namespace Mutagen.Bethesda.Fallout4
                             nullIfZero: true,
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedListIfAny<IFormLinkGetter<ICollisionLayerGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CollisionLayer_FieldIndex.CollidesWith;
                 }
                 default:

@@ -1159,12 +1159,16 @@ namespace Mutagen.Bethesda.Starfield
             ICellMaxHeightData item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Offset");
             item.Offset = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HeightMap");
             item.HeightMap.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.Array2dBinaryTranslation<Byte>.Instance.Parse(
                     reader: frame,
                     size: CellMaxHeightData.HeightMapFixedSize,
                     transl: ByteBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

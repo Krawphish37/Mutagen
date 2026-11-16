@@ -1080,11 +1080,13 @@ namespace Mutagen.Bethesda.Starfield
             IDisplayCaseExclusivity item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "ExclusiveDisplaySlots");
             item.ExclusiveDisplaySlots.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<UInt32>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt32()),
                     reader: frame,
                     transl: UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

@@ -1212,15 +1212,25 @@ namespace Mutagen.Bethesda.Starfield
             IFurnitureMarkerParameters item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Offset");
             item.Offset = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RotationZ");
             item.RotationZ = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Keyword");
             item.Keyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EntryTypes");
             item.EntryTypes = EnumBinaryTranslation<Furniture.EntryParameterType, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ExitTypes");
             item.ExitTypes = EnumBinaryTranslation<Furniture.EntryParameterType, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

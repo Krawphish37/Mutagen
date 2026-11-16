@@ -2445,36 +2445,46 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Starfield.VirtualMachineAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StaticCollection_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Starfield.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StaticCollection_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.ODTY:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DirtinessScale");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DirtinessScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StaticCollection_FieldIndex.DirtinessScale;
                 }
                 case RecordTypeInts.SNTP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SnapTemplate");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SnapTemplate.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StaticCollection_FieldIndex.SnapTemplate;
                 }
                 case RecordTypeInts.BFCB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Components");
                     item.Components.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AComponent>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: AComponent_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: AComponent.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StaticCollection_FieldIndex.Components;
                 }
                 case RecordTypeInts.MODL:
@@ -2485,13 +2495,16 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MODC:
                 case RecordTypeInts.MODF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Starfield.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StaticCollection_FieldIndex.Model;
                 }
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -2499,25 +2512,30 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StaticCollection_FieldIndex.Name;
                 }
                 case RecordTypeInts.FLTR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Filter");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Filter = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StaticCollection_FieldIndex.Filter;
                 }
                 case RecordTypeInts.ONAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Parts");
                     item.Parts.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<StaticPart>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: StaticPart_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: StaticPart.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StaticCollection_FieldIndex.Parts;
                 }
                 case RecordTypeInts.XXXX:

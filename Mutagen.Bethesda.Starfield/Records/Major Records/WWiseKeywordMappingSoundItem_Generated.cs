@@ -1214,12 +1214,16 @@ namespace Mutagen.Bethesda.Starfield
             IWWiseKeywordMappingSoundItem item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Sound");
             item.Sound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "SwitchData");
             item.SwitchData.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<WWiseKeywordMappingSoundItemGuidPair>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt32()),
                     reader: frame,
                     transl: WWiseKeywordMappingSoundItemGuidPair.TryCreateFromBinary));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

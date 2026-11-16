@@ -1793,14 +1793,18 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TextureSet");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TextureSet.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LandscapeTexture_FieldIndex.TextureSet;
                 }
                 case RecordTypeInts.MNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaterialType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MaterialType.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LandscapeTexture_FieldIndex.MaterialType;
                 }
                 case RecordTypeInts.HNAM:
@@ -1808,24 +1812,32 @@ namespace Mutagen.Bethesda.Fallout4
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "HavokFriction");
                     item.HavokFriction = dataFrame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "HavokRestitution");
                     item.HavokRestitution = dataFrame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)LandscapeTexture_FieldIndex.HavokRestitution;
                 }
                 case RecordTypeInts.SNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TextureSpecularExponent");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TextureSpecularExponent = frame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LandscapeTexture_FieldIndex.TextureSpecularExponent;
                 }
                 case RecordTypeInts.GNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Grasses");
                     item.Grasses.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IGrassGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.GNAM),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LandscapeTexture_FieldIndex.Grasses;
                 }
                 default:

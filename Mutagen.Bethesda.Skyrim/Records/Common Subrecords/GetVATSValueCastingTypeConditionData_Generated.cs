@@ -1138,9 +1138,11 @@ namespace Mutagen.Bethesda.Skyrim
             AGetVATSValueConditionDataBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Value");
             item.Value = EnumBinaryTranslation<CastType, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

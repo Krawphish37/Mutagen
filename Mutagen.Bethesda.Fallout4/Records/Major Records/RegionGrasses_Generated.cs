@@ -1341,24 +1341,30 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.RDGS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Grasses");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Grasses = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<RegionGrass>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: RegionGrass.TryCreateFromBinary)
                         .CastExtendedList<RegionGrass>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionGrasses_FieldIndex.Grasses;
                 }
                 case RecordTypeInts.RLDM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LodDisplayDistanceMultiplier");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LodDisplayDistanceMultiplier = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionGrasses_FieldIndex.LodDisplayDistanceMultiplier;
                 }
                 case RecordTypeInts.ANAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OcclusionAccuracyDist");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.OcclusionAccuracyDist = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionGrasses_FieldIndex.OcclusionAccuracyDist;
                 }
                 default:

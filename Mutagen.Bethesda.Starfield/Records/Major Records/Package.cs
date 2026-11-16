@@ -179,6 +179,7 @@ partial class PackageBinaryCreateTranslation
 
     public static partial void FillBinaryPackageTemplateCustom(MutagenFrame frame, IPackageInternal item, PreviousParse lastParsed)
     {
+        var at = ValuePositionRecorder.Here(frame);
         var pkcuRecord = frame.ReadSubrecord();
         if (pkcuRecord.Content.Length != 12)
         {
@@ -187,8 +188,17 @@ partial class PackageBinaryCreateTranslation
         var dataCount = checked((int)BinaryPrimitives.ReadUInt32LittleEndian(pkcuRecord.Content));
         item.PackageTemplate.FormKey = FormKeyBinaryTranslation.Instance.Parse(pkcuRecord.Content.Slice(4, 4), frame.MetaData.MasterReferences);
         item.DataInputVersion = BinaryPrimitives.ReadInt32LittleEndian(pkcuRecord.Content.Slice(8));
+        if (at >= 0)
+        {
+            at += pkcuRecord.HeaderLength;
+            ValuePositionRecorder.At(nameof(item.PackageTemplate), at + 4, 4);
+            ValuePositionRecorder.At(nameof(item.DataInputVersion), at + 8, 4);
+            // PKCU 0-3 counts the template's typed inputs, not Data's entries (names alone add more), so it is no Count
+            ValuePositionRecorder.List(frame, nameof(item.Data));
+        }
 
         FillPackageData(frame.Reader, dataCount, item.Data);
+        if (at >= 0) ValuePositionRecorder.End(frame);
     }
 
     public static void FillPackageData(IMutagenReadStream stream, int expectedCount, IDictionary<sbyte, APackageData> data)
@@ -228,12 +238,17 @@ partial class PackageBinaryCreateTranslation
         APackageData? lastPackage = null;
         int itemIndex = 0;
         var packages = new List<APackageData>(expectedCount);
+        // C60: each input's key (the dictionary's), and where the subrecord read sits; noted as the entries of the
+        // dictionary the caller began
+        var keys = new List<sbyte>(expectedCount);
         while (stream.TryGetSubrecord(out var subRecord))
         {
+            var subAt = ValuePositionRecorder.Here(stream);
             switch (subRecord.RecordTypeInt)
             {
                 case RecordTypeInts.UNAM:
                     var index = (sbyte)subRecord.Content[0];
+                    keys.Add(index);
                     lastPackage = data.GetOrAdd<sbyte, APackageData>(
                         index,
                         () =>
@@ -267,6 +282,7 @@ partial class PackageBinaryCreateTranslation
                         throw new ArgumentException("Package flags came before index");
                     }
                     lastPackage.Flags = (APackageData.Flag)BinaryPrimitives.ReadInt32LittleEndian(subRecord.Content);
+                    if (subAt >= 0) ValuePositionRecorder.At($"[{keys[^1]}].Flags", subAt + subRecord.HeaderLength, subRecord.ContentLength);
                     break;
                 default:
                     goto done_indexes;
@@ -283,13 +299,17 @@ partial class PackageBinaryCreateTranslation
         stream.Position = valuesPosition;
         itemIndex = -1;
         lastPackage = null;
+        string key = "";
         while (itemIndex < actualCount)
         {
             if (!stream.TryGetSubrecord(out var subRecord)) break;
+            var subAt = ValuePositionRecorder.Here(stream);
+            var contentAt = subAt >= 0 ? subAt + subRecord.HeaderLength : -1;
             switch (subRecord.RecordTypeInt)
             {
                 case RecordTypeInts.ANAM:
                     lastPackage = packages[++itemIndex];
+                    if (subAt >= 0) key = $"[{keys[itemIndex]}]";
                     stream.Position += subRecord.TotalLength;
                     break;
                 case RecordTypeInts.CNAM:
@@ -297,15 +317,19 @@ partial class PackageBinaryCreateTranslation
                     {
                         case PackageDataBool b:
                             b.Data = subRecord.Content[0] > 0;
+                            if (contentAt >= 0) ValuePositionRecorder.At($"{key}.Data", contentAt, 1);
                             break;
                         case PackageDataFloat f:
                             f.Data = subRecord.Content.Float();
+                            if (contentAt >= 0) ValuePositionRecorder.At($"{key}.Data", contentAt, 4);
                             break;
                         case PackageDataObjectList f:
                             f.Data = subRecord.Content.Float();
+                            if (contentAt >= 0) ValuePositionRecorder.At($"{key}.Data", contentAt, 4);
                             break;
                         case PackageDataInt i:
                             i.Data = BinaryPrimitives.ReadUInt32LittleEndian(subRecord.Content);
+                            if (contentAt >= 0) ValuePositionRecorder.At($"{key}.Data", contentAt, 4);
                             break;
                         default:
                             throw new NotImplementedException();
@@ -320,6 +344,7 @@ partial class PackageBinaryCreateTranslation
                     if (lastPackage is PackageDataTopic tpic)
                     {
                         tpic.TPIC = subRecord.Content.ToArray();
+                        if (contentAt >= 0) ValuePositionRecorder.At($"{key}.TPIC", contentAt, subRecord.ContentLength);
                     }
                     else
                     {
@@ -335,8 +360,10 @@ partial class PackageBinaryCreateTranslation
                     }
                     if (lastPackage is PackageDataTarget target)
                     {
+                        if (contentAt >= 0) ValuePositionRecorder.Field(stream, $"{key}.Target");
                         stream.Position += subRecord.HeaderLength;
                         target.Target = APackageTarget.CreateFromBinary(new MutagenFrame(stream));
+                        if (contentAt >= 0) ValuePositionRecorder.End(stream);
                     }
                     else
                     {
@@ -354,6 +381,7 @@ partial class PackageBinaryCreateTranslation
                     {
                         stream.Position += subRecord.HeaderLength;
                         scene.Scene.SetTo(FormKeyBinaryTranslation.Instance.Parse(stream));
+                        if (contentAt >= 0) ValuePositionRecorder.At($"{key}.Scene", contentAt, 4);
                     }
                     else
                     {
@@ -370,6 +398,7 @@ partial class PackageBinaryCreateTranslation
                     }
                     if (lastPackage is PackageDataTarget target)
                     {
+                        if (contentAt >= 0) ValuePositionRecorder.List(stream, $"{key}.Conditions");
                         target.Conditions.SetTo(
                             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.ParsePerItem(
                                     reader: new MutagenFrame(stream),
@@ -377,6 +406,7 @@ partial class PackageBinaryCreateTranslation
                                     countRecord: RecordTypes.CITC,
                                     triggeringRecord: Condition_Registration.TriggerSpecs,
                                     transl: Condition.TryCreateFromBinary));
+                        if (contentAt >= 0) ValuePositionRecorder.End(stream);
                     }
                     else
                     {
@@ -391,7 +421,9 @@ partial class PackageBinaryCreateTranslation
                     }
                     if (lastPackage is PackageDataTopic topic)
                     {
+                        if (contentAt >= 0) ValuePositionRecorder.List(stream, $"{key}.Topics");
                         topic.Topics.SetTo(ATopicReferenceBinaryCreateTranslation.Factory(new MutagenFrame(stream)));
+                        if (contentAt >= 0) ValuePositionRecorder.End(stream);
                     }
                     else
                     {
@@ -405,8 +437,10 @@ partial class PackageBinaryCreateTranslation
                     }
                     if (lastPackage is PackageDataLocation loc)
                     {
+                        if (contentAt >= 0) ValuePositionRecorder.Field(stream, $"{key}.Location");
                         stream.Position += subRecord.HeaderLength;
                         loc.Location = Mutagen.Bethesda.Starfield.LocationTargetRadius.CreateFromBinary(new MutagenFrame(stream).SpawnWithLength(subRecord.ContentLength));
+                        if (contentAt >= 0) ValuePositionRecorder.End(stream);
                     }
                     else
                     {
@@ -425,6 +459,7 @@ partial class PackageBinaryCreateTranslation
 
     public static partial void FillBinaryProcedureTreeCustom(MutagenFrame frame, IPackageInternal item, PreviousParse lastParsed)
     {
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.ProcedureTree));
         item.ProcedureTree.SetTo(
             ListBinaryTranslation<PackageBranch>.Instance.Parse(
                 reader: frame.SpawnAll(),
@@ -434,6 +469,7 @@ partial class PackageBinaryCreateTranslation
                     listSubItem = PackageBranch.CreateFromBinary(r);
                     return true;
                 }));
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         var order = AbsorbPackageData(frame.Reader, item.Data);
         if (item is Package package)
         {
@@ -461,11 +497,16 @@ partial class PackageBinaryCreateTranslation
         APackageData? lastPackage = null;
         while (stream.TryGetSubrecord(out var subRecord))
         {
+            // C60: noted as the package's Data entries (the readers that call this are the package's own steps)
+            var contentAt = ValuePositionRecorder.Here(stream);
+            if (contentAt >= 0) contentAt += subRecord.HeaderLength;
             switch (subRecord.RecordTypeInt)
             {
                 case RecordTypeInts.UNAM:
                     lastPackage = dict.GetOrAdd((sbyte)subRecord.Content[0], () => new APackageData());
                     order.Add((sbyte)subRecord.Content[0]);
+                    // The order is Package.ProcedureTreeDataOrder (the readers that call this keep it)
+                    if (contentAt >= 0) ValuePositionRecorder.At($"ProcedureTreeDataOrder[{order.Count - 1}]", contentAt, 1);
                     break;
                 case RecordTypeInts.BNAM:
                     if (lastPackage == null)
@@ -473,6 +514,7 @@ partial class PackageBinaryCreateTranslation
                         throw new ArgumentException("Package input name (BNAM) came before its index (UNAM)");
                     }
                     lastPackage.Name = BinaryStringUtility.ProcessWholeToZString(subRecord.Content, stream.MetaData.Encodings.NonTranslated);
+                    if (contentAt >= 0) ValuePositionRecorder.At($"Data[{order[^1]}].Name", contentAt, subRecord.ContentLength);
                     break;
                 case RecordTypeInts.PNAM:
                     if (lastPackage == null)
@@ -480,6 +522,7 @@ partial class PackageBinaryCreateTranslation
                         throw new ArgumentException("Package input flags (PNAM) came before its index (UNAM)");
                     }
                     lastPackage.Flags = (APackageData.Flag)BinaryPrimitives.ReadInt32LittleEndian(subRecord.Content);
+                    if (contentAt >= 0) ValuePositionRecorder.At($"Data[{order[^1]}].Flags", contentAt, subRecord.ContentLength);
                     break;
                 default:
                     return order;

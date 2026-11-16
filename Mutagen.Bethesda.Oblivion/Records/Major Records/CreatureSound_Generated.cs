@@ -1195,22 +1195,26 @@ namespace Mutagen.Bethesda.Oblivion
                 case RecordTypeInts.CSDT:
                 {
                     if (lastParsed.ShortCircuit((int)CreatureSound_FieldIndex.SoundType, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SoundType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SoundType = EnumBinaryTranslation<CreatureSound.CreatureSoundType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CreatureSound_FieldIndex.SoundType;
                 }
                 case RecordTypeInts.CSDI:
                 case RecordTypeInts.CSDC:
                 {
                     if (lastParsed.ShortCircuit((int)CreatureSound_FieldIndex.Sounds, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Sounds");
                     item.Sounds.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<SoundItem>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: SoundItem_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: SoundItem.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CreatureSound_FieldIndex.Sounds;
                 }
                 default:

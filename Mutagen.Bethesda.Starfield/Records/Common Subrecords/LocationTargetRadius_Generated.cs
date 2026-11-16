@@ -1197,16 +1197,22 @@ namespace Mutagen.Bethesda.Starfield
             ILocationTargetRadius item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Target");
             LocationTargetRadiusBinaryCreateTranslation.FillBinaryTargetCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Radius");
             item.Radius = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (frame.Complete)
             {
                 item.Versioning |= LocationTargetRadius.VersioningBreaks.Break0;
                 return;
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CollectionIndex");
             item.CollectionIndex = frame.ReadUInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void FillBinaryTargetCustom(

@@ -1172,11 +1172,13 @@ namespace Mutagen.Bethesda.Fallout4
             ScriptPropertyBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Members");
             item.Members.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ScriptEntry>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt32()),
                     reader: frame,
                     transl: ScriptEntry.TryCreateFromBinary));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

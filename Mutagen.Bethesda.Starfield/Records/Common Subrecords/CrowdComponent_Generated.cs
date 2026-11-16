@@ -1266,8 +1266,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.CDND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Density");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Density = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CrowdComponent_FieldIndex.Density;
                 }
                 case RecordTypeInts.PRPS:
@@ -1277,6 +1279,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FLTV:
                 case RecordTypeInts.CDNS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Items");
                     item.Items = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<CrowdComponentItem>.Instance.ParsePerItem(
                             reader: frame,
@@ -1286,6 +1289,7 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams,
                             transl: CrowdComponentItem.TryCreateFromBinary)
                         .CastExtendedList<CrowdComponentItem>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CrowdComponent_FieldIndex.Items;
                 }
                 default:

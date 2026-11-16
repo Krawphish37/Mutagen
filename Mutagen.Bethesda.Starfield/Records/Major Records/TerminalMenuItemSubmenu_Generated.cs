@@ -1052,8 +1052,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.TNAM:
                 {
                     if (lastParsed.ShortCircuit((int)TerminalMenuItemSubmenu_FieldIndex.Submenu, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Submenu");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Submenu.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TerminalMenuItemSubmenu_FieldIndex.Submenu;
                 }
                 default:

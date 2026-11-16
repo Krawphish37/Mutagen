@@ -54,7 +54,27 @@ partial class ExtraDataBinaryCreateTranslation
 
     public static partial void FillBinaryOwnerCustom(MutagenFrame frame, IExtraData item)
     {
+        var at = ValuePositionRecorder.Here(frame);
         item.Owner = GetBinaryOwner(frame.ReadSpan(8), frame.MetaData.RecordInfoCache!, frame.MetaData.MasterReferences);
+        if (at >= 0)
+        {
+            // The first FormID's record type picks the class
+            switch (item.Owner)
+            {
+                case NpcOwner:
+                    ValuePositionRecorder.At("Owner.Npc", at, 4);
+                    ValuePositionRecorder.At("Owner.Global", at + 4, 4);
+                    break;
+                case FactionOwner:
+                    ValuePositionRecorder.At("Owner.Faction", at, 4);
+                    ValuePositionRecorder.At("Owner.RequiredRank", at + 4, 4);
+                    break;
+                case UntypedOwner:
+                    ValuePositionRecorder.At("Owner.OwnerData", at, 4);
+                    ValuePositionRecorder.At("Owner.VariableData", at + 4, 4);
+                    break;
+            }
+        }
     }
 }
 

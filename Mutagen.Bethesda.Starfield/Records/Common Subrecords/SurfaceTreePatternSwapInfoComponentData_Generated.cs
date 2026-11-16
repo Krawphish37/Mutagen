@@ -1196,10 +1196,14 @@ namespace Mutagen.Bethesda.Starfield
             ISurfaceTreePatternSwapInfoComponentData item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "DataLogic");
             SurfaceTreePatternSwapInfoComponentDataBinaryCreateTranslation.FillBinaryDataLogicCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unknown");
             item.Unknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void FillBinaryDataLogicCustom(

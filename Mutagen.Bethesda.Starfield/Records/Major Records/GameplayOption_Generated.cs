@@ -1999,6 +1999,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.NNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -2006,10 +2007,12 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GameplayOption_FieldIndex.Name;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Description");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Description = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -2017,14 +2020,17 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GameplayOption_FieldIndex.Description;
                 }
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Data");
                     GameplayOptionBinaryCreateTranslation.FillBinaryDataCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GameplayOption_FieldIndex.Data;
                 }
                 case RecordTypeInts.VOVS:
@@ -2032,17 +2038,20 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.RESN:
                 case RecordTypeInts.VORN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Rewards");
                     item.Rewards.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<GameplayOptionReward>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: GameplayOptionReward_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: GameplayOptionReward.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GameplayOption_FieldIndex.Rewards;
                 }
                 case RecordTypeInts.KSIZ:
                 case RecordTypeInts.KWDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Keywords");
                     item.Keywords = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame,
@@ -2051,6 +2060,7 @@ namespace Mutagen.Bethesda.Starfield
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.KWDA),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GameplayOption_FieldIndex.Keywords;
                 }
                 default:

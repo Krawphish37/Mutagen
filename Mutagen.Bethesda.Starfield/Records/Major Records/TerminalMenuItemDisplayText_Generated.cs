@@ -1041,6 +1041,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.UNAM:
                 {
                     if (lastParsed.ShortCircuit((int)TerminalMenuItemDisplayText_FieldIndex.DisplayText, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DisplayText");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DisplayText = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1048,6 +1049,7 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TerminalMenuItemDisplayText_FieldIndex.DisplayText;
                 }
                 default:

@@ -1100,11 +1100,17 @@ namespace Mutagen.Bethesda.Fallout3
             IHavokData item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Material");
             item.Material = EnumBinaryTranslation<HavokData.MaterialType, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 1);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Friction");
             item.Friction = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Restitution");
             item.Restitution = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

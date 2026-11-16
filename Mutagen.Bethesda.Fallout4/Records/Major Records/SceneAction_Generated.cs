@@ -4340,10 +4340,12 @@ namespace Mutagen.Bethesda.Fallout4
                     if (!lastParsed.ParsedIndex.HasValue)
                     {
                         if (lastParsed.ShortCircuit((int)SceneAction_FieldIndex.Type, translationParams)) return ParseResult.Stop;
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Type");
                         SceneActionBinaryCreateTranslation.FillBinaryTypeCustom(
                             frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                             item: item,
                             lastParsed: lastParsed);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)SceneAction_FieldIndex.Type, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)SceneAction_FieldIndex.Unused)
@@ -4357,10 +4359,12 @@ namespace Mutagen.Bethesda.Fallout4
                         {
                             case 0:
                                 if (lastParsed.ShortCircuit((int)SceneAction_FieldIndex.Type, translationParams)) return ParseResult.Stop;
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Type");
                                 SceneActionBinaryCreateTranslation.FillBinaryTypeCustom(
                                     frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                                     item: item,
                                     lastParsed: lastParsed);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)SceneAction_FieldIndex.Type, nextRecordType);
                             case 1:
                                 frame.ReadSubrecord();
@@ -4372,31 +4376,39 @@ namespace Mutagen.Bethesda.Fallout4
                 }
                 case RecordTypeInts.NAM0:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.Name;
                 }
                 case RecordTypeInts.ALID:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AliasID");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AliasID = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.AliasID;
                 }
                 case RecordTypeInts.INAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.Index;
                 }
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<SceneAction.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.Flags;
                 }
                 case RecordTypeInts.SNAM:
@@ -4404,14 +4416,18 @@ namespace Mutagen.Bethesda.Fallout4
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)SceneAction_FieldIndex.Flags)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StartPhase");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.StartPhase = frame.ReadUInt32();
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)SceneAction_FieldIndex.StartPhase, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)SceneAction_FieldIndex.EndPhase)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TimerMaxSeconds");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.TimerMaxSeconds = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)SceneAction_FieldIndex.TimerMaxSeconds, nextRecordType);
                     }
                     else
@@ -4419,12 +4435,16 @@ namespace Mutagen.Bethesda.Fallout4
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StartPhase");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.StartPhase = frame.ReadUInt32();
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)SceneAction_FieldIndex.StartPhase, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TimerMaxSeconds");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.TimerMaxSeconds = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)SceneAction_FieldIndex.TimerMaxSeconds, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -4433,26 +4453,34 @@ namespace Mutagen.Bethesda.Fallout4
                 }
                 case RecordTypeInts.ENAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EndPhase");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EndPhase = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.EndPhase;
                 }
                 case RecordTypeInts.SCQS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SetParentQuestStage");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SetParentQuestStage = frame.ReadInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.SetParentQuestStage;
                 }
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TimerMinSeconds");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TimerMinSeconds = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.TimerMinSeconds;
                 }
                 case RecordTypeInts.STSC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "STSC");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.STSC = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.STSC;
                 }
                 case RecordTypeInts.LCEP:
@@ -4461,36 +4489,46 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.CTDA:
                 case RecordTypeInts.CITC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "StartScenes");
                     item.StartScenes.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<StartScene>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: StartScene_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: StartScene.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.StartScenes;
                 }
                 case RecordTypeInts.PTOP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PlayerPositiveResponse");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PlayerPositiveResponse.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.PlayerPositiveResponse;
                 }
                 case RecordTypeInts.NTOP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PlayerNegativeResponse");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PlayerNegativeResponse.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.PlayerNegativeResponse;
                 }
                 case RecordTypeInts.NETO:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PlayerNeutralResponse");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PlayerNeutralResponse.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.PlayerNeutralResponse;
                 }
                 case RecordTypeInts.QTOP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PlayerQuestionResponse");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PlayerQuestionResponse.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.PlayerQuestionResponse;
                 }
                 case RecordTypeInts.VENC:
@@ -4498,14 +4536,18 @@ namespace Mutagen.Bethesda.Fallout4
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)SceneAction_FieldIndex.PlayerQuestionResponse)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PlayerPositiveSubtype");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.PlayerPositiveSubtype.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)SceneAction_FieldIndex.PlayerPositiveSubtype, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)SceneAction_FieldIndex.PlayerHeadTrackingActorIds)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DialogueSubtype");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.DialogueSubtype.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)SceneAction_FieldIndex.DialogueSubtype, nextRecordType);
                     }
                     else
@@ -4513,12 +4555,16 @@ namespace Mutagen.Bethesda.Fallout4
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PlayerPositiveSubtype");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.PlayerPositiveSubtype.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)SceneAction_FieldIndex.PlayerPositiveSubtype, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DialogueSubtype");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.DialogueSubtype.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)SceneAction_FieldIndex.DialogueSubtype, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -4527,84 +4573,110 @@ namespace Mutagen.Bethesda.Fallout4
                 }
                 case RecordTypeInts.PLVD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PlayerNegativeSubtype");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PlayerNegativeSubtype.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.PlayerNegativeSubtype;
                 }
                 case RecordTypeInts.JOUT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PlayerNeutralSubtype");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PlayerNeutralSubtype.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.PlayerNeutralSubtype;
                 }
                 case RecordTypeInts.DALC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PlayerQuestionSubtype");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PlayerQuestionSubtype.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.PlayerQuestionSubtype;
                 }
                 case RecordTypeInts.DTID:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "NpcHeadtrackingActorIds");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NpcHeadtrackingActorIds = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Int32>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse)
                         .CastExtendedList<Int32>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.NpcHeadtrackingActorIds;
                 }
                 case RecordTypeInts.NPOT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NpcPositiveResponse");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NpcPositiveResponse.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.NpcPositiveResponse;
                 }
                 case RecordTypeInts.NNGT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NpcNegativeResponse");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NpcNegativeResponse.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.NpcNegativeResponse;
                 }
                 case RecordTypeInts.NNUT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NpcNeutralResponse");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NpcNeutralResponse.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.NpcNeutralResponse;
                 }
                 case RecordTypeInts.NQUT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NpcQuestionResponse");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NpcQuestionResponse.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.NpcQuestionResponse;
                 }
                 case RecordTypeInts.NPOS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NpcPositiveSubtype");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NpcPositiveSubtype.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.NpcPositiveSubtype;
                 }
                 case RecordTypeInts.NNGS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NpcNegativeSubtype");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NpcNegativeSubtype.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.NpcNegativeSubtype;
                 }
                 case RecordTypeInts.NNUS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NpcNeutralSubtype");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NpcNeutralSubtype.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.NpcNeutralSubtype;
                 }
                 case RecordTypeInts.NQUS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NpcQuestionSubtype");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NpcQuestionSubtype.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.NpcQuestionSubtype;
                 }
                 case RecordTypeInts.DTGT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DialogueTargetActorId");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DialogueTargetActorId = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.DialogueTargetActorId;
                 }
                 case RecordTypeInts.PNAM:
@@ -4612,17 +4684,21 @@ namespace Mutagen.Bethesda.Fallout4
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)SceneAction_FieldIndex.DialogueTargetActorId)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Packages");
                         item.Packages.SetTo(
                             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IPackageGetter>>.Instance.Parse(
                                 reader: frame,
                                 triggeringRecord: translationParams.ConvertToCustom(RecordTypes.PNAM),
                                 transl: FormLinkBinaryTranslation.Instance.Parse));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)SceneAction_FieldIndex.Packages, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)SceneAction_FieldIndex.DialogueSubtype)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AnimArchType");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.AnimArchType.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)SceneAction_FieldIndex.AnimArchType, nextRecordType);
                     }
                     else
@@ -4630,15 +4706,19 @@ namespace Mutagen.Bethesda.Fallout4
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Packages");
                                 item.Packages.SetTo(
                                     Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IPackageGetter>>.Instance.Parse(
                                         reader: frame,
                                         triggeringRecord: translationParams.ConvertToCustom(RecordTypes.PNAM),
                                         transl: FormLinkBinaryTranslation.Instance.Parse));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)SceneAction_FieldIndex.Packages, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AnimArchType");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.AnimArchType.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)SceneAction_FieldIndex.AnimArchType, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -4647,8 +4727,10 @@ namespace Mutagen.Bethesda.Fallout4
                 }
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Topic");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Topic.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.Topic;
                 }
                 case RecordTypeInts.HTID:
@@ -4656,19 +4738,23 @@ namespace Mutagen.Bethesda.Fallout4
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)SceneAction_FieldIndex.Topic)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "HTIDParsing");
                         return SceneActionBinaryCreateTranslation.FillBinaryHTIDParsingCustom(
                             frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                             item: item,
                             lastParsed: lastParsed);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)SceneAction_FieldIndex.EmotionValue)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "PlayerHeadTrackingActorIds");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.PlayerHeadTrackingActorIds = 
                             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Int32>.Instance.Parse(
                                 reader: frame.SpawnWithLength(contentLength),
                                 transl: Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse)
                             .CastExtendedList<Int32>();
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)SceneAction_FieldIndex.PlayerHeadTrackingActorIds, nextRecordType);
                     }
                     else
@@ -4676,17 +4762,21 @@ namespace Mutagen.Bethesda.Fallout4
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "HTIDParsing");
                                 return SceneActionBinaryCreateTranslation.FillBinaryHTIDParsingCustom(
                                     frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                                     item: item,
                                     lastParsed: lastParsed);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "PlayerHeadTrackingActorIds");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.PlayerHeadTrackingActorIds = 
                                     Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Int32>.Instance.Parse(
                                         reader: frame.SpawnWithLength(contentLength),
                                         transl: Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse)
                                     .CastExtendedList<Int32>();
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)SceneAction_FieldIndex.PlayerHeadTrackingActorIds, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -4695,39 +4785,51 @@ namespace Mutagen.Bethesda.Fallout4
                 }
                 case RecordTypeInts.DMAX:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LoopingMax");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LoopingMax = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.LoopingMax;
                 }
                 case RecordTypeInts.DMIN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LoopingMin");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LoopingMin = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.LoopingMin;
                 }
                 case RecordTypeInts.CRIS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Camera");
                     item.Camera = Mutagen.Bethesda.Fallout4.SceneCamera.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.Camera;
                 }
                 case RecordTypeInts.DEMO:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Emotion");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Emotion = EnumBinaryTranslation<Emotion, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.Emotion;
                 }
                 case RecordTypeInts.DEVA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EmotionValue");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EmotionValue = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.EmotionValue;
                 }
                 case RecordTypeInts.ONAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AudioOutputOverride");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AudioOutputOverride.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.AudioOutputOverride;
                 }
                 case RecordTypeInts.SCHR:
@@ -4736,9 +4838,11 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.QNAM:
                 case RecordTypeInts.SCRO:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unused");
                     item.Unused = Mutagen.Bethesda.Fallout4.ScenePhaseUnusedData.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.Unused;
                 }
                 default:

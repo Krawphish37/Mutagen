@@ -1280,16 +1280,26 @@ namespace Mutagen.Bethesda.Fallout4
             IPlacedObjectSpline item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Slack");
             item.Slack = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Thickness");
             item.Thickness = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HalfExtents");
             item.HalfExtents = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (frame.Complete)
             {
                 item.Versioning |= PlacedObjectSpline.VersioningBreaks.Break0;
                 return;
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IsWindDetachedEnd");
             item.IsWindDetachedEnd = frame.ReadBoolean();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unknown");
             item.Unknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

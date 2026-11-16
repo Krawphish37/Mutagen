@@ -1449,16 +1449,20 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.XALG:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "XalgFlags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.XalgFlags = EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DefaultObject_FieldIndex.XalgFlags;
                 }
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Object");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Object.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DefaultObject_FieldIndex.Object;
                 }
                 default:

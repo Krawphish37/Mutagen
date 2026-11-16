@@ -1101,9 +1101,15 @@ namespace Mutagen.Bethesda.Skyrim
             IMusicTrackLoopData item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Begins");
             item.Begins = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Ends");
             item.Ends = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Count");
             item.Count = frame.ReadUInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

@@ -1290,13 +1290,19 @@ namespace Mutagen.Bethesda.Skyrim
             ConditionDataBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Function");
             item.Function = EnumBinaryTranslation<GetEventDataConditionData.EventFunction, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 2);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Member");
             item.Member = EnumBinaryTranslation<GetEventDataConditionData.EventMember, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 2);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Record");
             item.Record.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

@@ -1611,25 +1611,33 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Starfield.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AudioOcclusionPrimitive_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.ODTY:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DirtinessScale");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DirtinessScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AudioOcclusionPrimitive_FieldIndex.DirtinessScale;
                 }
                 case RecordTypeInts.OBSV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Obstruction");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Obstruction = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AudioOcclusionPrimitive_FieldIndex.Obstruction;
                 }
                 case RecordTypeInts.OCCV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Occlusion");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Occlusion = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AudioOcclusionPrimitive_FieldIndex.Occlusion;
                 }
                 default:

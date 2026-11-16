@@ -1059,17 +1059,21 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FMRG:
                 {
                     if (lastParsed.ShortCircuit((int)NpcMorphGroup_FieldIndex.MorphGroup, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MorphGroup");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MorphGroup = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcMorphGroup_FieldIndex.MorphGroup;
                 }
                 case RecordTypeInts.FMRS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BlendIntensity");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BlendIntensity = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcMorphGroup_FieldIndex.BlendIntensity;
                 }
                 default:

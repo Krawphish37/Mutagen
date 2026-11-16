@@ -96,7 +96,7 @@
       <RefDirect name="EnableParent" refName="EnableParent" />
       <RefDirect name="LightFlicker" refName="PlacedObjectLightFlicker" />
       <RefDirect name="Ownership" refName="Ownership"/>
-      <RefList name="Traversals" refName="TraversalReference" recordType="XTV2" binary="Custom" />
+      <RefList name="Traversals" refName="TraversalReference" recordType="XTV2" binary="Custom" fills="Traversals,NumTraversalFluffBytes" />
       <UInt32 name="NumTraversalFluffBytes" binary="NoGeneration" layoutSubrecord="XTV2" layoutOffset="after:Traversals" layoutEncoding="trailingZeroCount" />
       <RefDirect name="NavigationDoorLink" refName="NavigationDoorLink" />
       <Bool name="IsActivationPoint" boolAsMarker="XATP" />
@@ -119,7 +119,7 @@
   </Object>
   <Object name="PlacedPrimitive" objType="Subrecord" recordType="XPRM">
     <Fields>
-      <P3Float name="Bounds" binary="Custom" byteLength="12" layoutEncoding="float*2" />
+      <P3Float name="Bounds" binary="Custom" fills="Bounds" byteLength="12" layoutEncoding="float*2" />
       <P3Float name="Color" />
       <Float name="Alpha" />
       <Enum name="Type" enumName="PlacedPrimitive.TypeEnum" byteLength="4" />

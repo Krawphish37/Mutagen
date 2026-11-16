@@ -2941,6 +2941,7 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -2948,10 +2949,12 @@ namespace Mutagen.Bethesda.Fallout4
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AObjectModification_FieldIndex.Name;
                 }
                 case RecordTypeInts.DESC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Description");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Description = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -2959,6 +2962,7 @@ namespace Mutagen.Bethesda.Fallout4
                         source: StringsSource.DL,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AObjectModification_FieldIndex.Description;
                 }
                 case RecordTypeInts.MODL:
@@ -2966,57 +2970,71 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.MODT:
                 case RecordTypeInts.MODS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Fallout4.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AObjectModification_FieldIndex.Model;
                 }
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "DataParse");
                     return AObjectModificationBinaryCreateTranslation.FillBinaryDataParseCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 }
                 case RecordTypeInts.MNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "TargetOmodKeywords");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TargetOmodKeywords = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AObjectModification_FieldIndex.TargetOmodKeywords;
                 }
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "FilterKeywords");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FilterKeywords = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AObjectModification_FieldIndex.FilterKeywords;
                 }
                 case RecordTypeInts.LNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LooseMod");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LooseMod.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AObjectModification_FieldIndex.LooseMod;
                 }
                 case RecordTypeInts.NAM1:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Priority");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Priority = frame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AObjectModification_FieldIndex.Priority;
                 }
                 case RecordTypeInts.FLTR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Filter");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Filter = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AObjectModification_FieldIndex.Filter;
                 }
                 default:

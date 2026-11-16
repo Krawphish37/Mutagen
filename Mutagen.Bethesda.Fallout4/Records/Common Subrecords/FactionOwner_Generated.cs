@@ -1087,8 +1087,12 @@ namespace Mutagen.Bethesda.Fallout4
             IFactionOwner item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Faction");
             item.Faction.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RequiredRank");
             item.RequiredRank = frame.ReadInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

@@ -1098,9 +1098,15 @@ namespace Mutagen.Bethesda.Starfield
             IFilterKeywordChance item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Keyword");
             item.Keyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Chance");
             item.Chance = frame.ReadUInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unknown");
             item.Unknown = frame.ReadInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

@@ -1204,12 +1204,14 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.RDID:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Imposters");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Imposters = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IPlacedObjectGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IPlacedObjectGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionImposters_FieldIndex.Imposters;
                 }
                 default:

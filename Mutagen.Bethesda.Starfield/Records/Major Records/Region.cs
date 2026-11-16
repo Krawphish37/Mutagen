@@ -49,10 +49,14 @@ partial class RegionBinaryCreateTranslation
         switch (dataType)
         {
             case RegionData.RegionDataType.Weather:
+                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.Weather));
                 item.Weather = RegionWeather.CreateFromBinary(frame);
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 break;
             case RegionData.RegionDataType.Sound:
+                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.Sounds));
                 item.Sounds = RegionSounds.CreateFromBinary(frame);
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 break;
             default:
                 throw new NotImplementedException();

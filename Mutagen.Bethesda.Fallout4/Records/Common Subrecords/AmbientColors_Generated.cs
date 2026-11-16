@@ -1357,14 +1357,30 @@ namespace Mutagen.Bethesda.Fallout4
             IAmbientColors item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DirectionalXPlus");
             item.DirectionalXPlus = frame.ReadColor(ColorBinaryType.Alpha);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DirectionalXMinus");
             item.DirectionalXMinus = frame.ReadColor(ColorBinaryType.Alpha);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DirectionalYPlus");
             item.DirectionalYPlus = frame.ReadColor(ColorBinaryType.Alpha);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DirectionalYMinus");
             item.DirectionalYMinus = frame.ReadColor(ColorBinaryType.Alpha);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DirectionalZPlus");
             item.DirectionalZPlus = frame.ReadColor(ColorBinaryType.Alpha);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DirectionalZMinus");
             item.DirectionalZMinus = frame.ReadColor(ColorBinaryType.Alpha);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Specular");
             item.Specular = frame.ReadColor(ColorBinaryType.Alpha);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Scale");
             item.Scale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

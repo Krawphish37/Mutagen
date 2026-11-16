@@ -2199,11 +2199,13 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.MNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MovementType_FieldIndex.Name;
                 }
                 case RecordTypeInts.SPED:
@@ -2211,46 +2213,70 @@ namespace Mutagen.Bethesda.Skyrim
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "LeftWalk");
                     item.LeftWalk = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "LeftRun");
                     item.LeftRun = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RightWalk");
                     item.RightWalk = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RightRun");
                     item.RightRun = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ForwardWalk");
                     item.ForwardWalk = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ForwardRun");
                     item.ForwardRun = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "BackWalk");
                     item.BackWalk = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "BackRun");
                     item.BackRun = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RotateInPlaceWalk", true);
                     item.RotateInPlaceWalk = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         multiplier: 57.295799255371094f,
                         divisor: null);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RotateInPlaceRun", true);
                     item.RotateInPlaceRun = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         multiplier: 57.295799255371094f,
                         divisor: null);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Complete)
                     {
                         item.SPEDDataTypeState |= MovementType.SPEDDataType.Break0;
                         return (int)MovementType_FieldIndex.RotateInPlaceRun;
                     }
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RotateWhileMovingRun", true);
                     item.RotateWhileMovingRun = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         multiplier: 57.295799255371094f,
                         divisor: null);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)MovementType_FieldIndex.RotateWhileMovingRun;
                 }
                 case RecordTypeInts.INAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AnimationChangeThresholds");
                     item.AnimationChangeThresholds = Mutagen.Bethesda.Skyrim.AnimationChangeThresholds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MovementType_FieldIndex.AnimationChangeThresholds;
                 }
                 default:

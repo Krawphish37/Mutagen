@@ -1046,8 +1046,12 @@ namespace Mutagen.Bethesda.Fallout4
             ILinkedAlias item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Keyword");
             item.Keyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AliasID");
             item.AliasID = frame.ReadInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

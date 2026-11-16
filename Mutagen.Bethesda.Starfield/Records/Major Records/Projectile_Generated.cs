@@ -4892,47 +4892,60 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Starfield.VirtualMachineAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Projectile_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Starfield.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Projectile_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.ODTY:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DirtinessScale");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DirtinessScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Projectile_FieldIndex.DirtinessScale;
                 }
                 case RecordTypeInts.OPDS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectPaletteDefaults");
                     item.ObjectPaletteDefaults = Mutagen.Bethesda.Starfield.ObjectPaletteDefaults.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Projectile_FieldIndex.ObjectPaletteDefaults;
                 }
                 case RecordTypeInts.XALG:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "XalgFlags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.XalgFlags = EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Projectile_FieldIndex.XalgFlags;
                 }
                 case RecordTypeInts.BFCB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Components");
                     item.Components.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AComponent>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: AComponent_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: AComponent.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Projectile_FieldIndex.Components;
                 }
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -4940,6 +4953,7 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Projectile_FieldIndex.Name;
                 }
                 case RecordTypeInts.MODL:
@@ -4949,9 +4963,11 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MODC:
                 case RecordTypeInts.MODF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Starfield.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Projectile_FieldIndex.Model;
                 }
                 case RecordTypeInts.FLLD:
@@ -4959,17 +4975,21 @@ namespace Mutagen.Bethesda.Starfield
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)Projectile_FieldIndex.Name)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                         item.Model = Mutagen.Bethesda.Starfield.Model.CreateFromBinary(
                             frame: frame,
                             translationParams: translationParams.DoNotShortCircuit());
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Projectile_FieldIndex.Model, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Projectile_FieldIndex.TextureFilesHashes)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MuzzleFlashLightLayer");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.MuzzleFlashLightLayer = EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
                             reader: frame,
                             length: contentLength);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Projectile_FieldIndex.MuzzleFlashLightLayer, nextRecordType);
                     }
                     else
@@ -4977,15 +4997,19 @@ namespace Mutagen.Bethesda.Starfield
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                                 item.Model = Mutagen.Bethesda.Starfield.Model.CreateFromBinary(
                                     frame: frame,
                                     translationParams: translationParams.DoNotShortCircuit());
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Projectile_FieldIndex.Model, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MuzzleFlashLightLayer");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.MuzzleFlashLightLayer = EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
                                     reader: frame,
                                     length: contentLength);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Projectile_FieldIndex.MuzzleFlashLightLayer, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -4997,15 +5021,19 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.DSDL:
                 case RecordTypeInts.DSTD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Destructible");
                     item.Destructible = Mutagen.Bethesda.Starfield.Destructible.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Projectile_FieldIndex.Destructible;
                 }
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unused");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Unused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Projectile_FieldIndex.Unused;
                 }
                 case RecordTypeInts.PROD:
@@ -5013,122 +5041,196 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Flags");
                     item.Flags = EnumBinaryTranslation<Projectile.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 4);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Gravity");
                     item.Gravity = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Speed");
                     item.Speed = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Range");
                     item.Range = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Light");
                     item.Light.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "MuzzleFlash");
                     item.MuzzleFlash.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ExplosionAltTriggerProximity");
                     item.ExplosionAltTriggerProximity = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ExplosionAltTriggerTimer");
                     item.ExplosionAltTriggerTimer = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Explosion");
                     item.Explosion.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "MuzzleFlashDuration");
                     item.MuzzleFlashDuration = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "FadeDuration");
                     item.FadeDuration = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ImpactForce");
                     item.ImpactForce = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DefaultWeaponSource");
                     item.DefaultWeaponSource.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ConeSpread");
                     item.ConeSpread = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "CollisionRadius");
                     item.CollisionRadius = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Lifetime");
                     item.Lifetime = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RelaunchInterval");
                     item.RelaunchInterval = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DecalData");
                     item.DecalData.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "CollisionLayer");
                     item.CollisionLayer.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "TracerFrequency");
                     item.TracerFrequency = dataFrame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "VatsProjectile");
                     item.VatsProjectile.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "MuzzleFlashParticleDefine");
                     item.MuzzleFlashParticleDefine = StringBinaryTranslation.Instance.Parse(
                         reader: dataFrame,
                         stringBinaryType: StringBinaryType.PrependLengthWithNullIfContent,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SeekStrength");
                     item.SeekStrength = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SoundActivationCondition");
                     item.SoundActivationCondition = EnumBinaryTranslation<Projectile.SoundActivationConditionOption, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 4);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Type");
                     item.Type = EnumBinaryTranslation<Projectile.TypeEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 1);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ParticleDefine");
                     item.ParticleDefine = StringBinaryTranslation.Instance.Parse(
                         reader: dataFrame,
                         stringBinaryType: StringBinaryType.PrependLengthWithNullIfContent,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "TracerSpeed");
                     item.TracerSpeed = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ZeroGRecoilStrength");
                     item.ZeroGRecoilStrength = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ZeroGRecoilLength");
                     item.ZeroGRecoilLength = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ExplosionDelayBeforeRemoval");
                     item.ExplosionDelayBeforeRemoval = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)Projectile_FieldIndex.ExplosionDelayBeforeRemoval;
                 }
                 case RecordTypeInts.NAM1:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MuzzleFlashModel");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MuzzleFlashModel = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Projectile_FieldIndex.MuzzleFlashModel;
                 }
                 case RecordTypeInts.NAM2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TextureFilesHashes");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TextureFilesHashes = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Projectile_FieldIndex.TextureFilesHashes;
                 }
                 case RecordTypeInts.PRAS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ActiveSound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.ActiveSound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Projectile_FieldIndex.ActiveSound;
                 }
                 case RecordTypeInts.PRCS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CountdownEndSound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.CountdownEndSound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Projectile_FieldIndex.CountdownEndSound;
                 }
                 case RecordTypeInts.PRDS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DisableSound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.DisableSound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Projectile_FieldIndex.DisableSound;
                 }
                 case RecordTypeInts.VNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SoundLevel");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SoundLevel = EnumBinaryTranslation<SoundLevel, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Projectile_FieldIndex.SoundLevel;
                 }
                 case RecordTypeInts.NAM3:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CurveTable");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CurveTable.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Projectile_FieldIndex.CurveTable;
                 }
                 case RecordTypeInts.XXXX:

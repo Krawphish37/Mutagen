@@ -1116,9 +1116,15 @@ namespace Mutagen.Bethesda.Fallout4
             INavigationDoorLink item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NavMesh");
             item.NavMesh.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TeleportMarkerTriangle");
             item.TeleportMarkerTriangle = frame.ReadInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unused");
             item.Unused = frame.ReadInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

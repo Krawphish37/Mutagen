@@ -2,7 +2,7 @@
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
   <Object name="LocationTargetRadius" objType="Subrecord">
     <Fields>
-      <RefDirect name="Target" refName="ALocationTarget" byteLength="8" generateClassMembers="false" binary="Custom" selectedBy="here:Int32" selectorEnum="LocationTargetRadius.LocationType" />
+      <RefDirect name="Target" refName="ALocationTarget" byteLength="8" generateClassMembers="false" binary="Custom" fills="Target" selectedBy="here:Int32" selectorEnum="LocationTargetRadius.LocationType" />
       <Float name="Radius" />
       <Break />
       <UInt32 name="CollectionIndex" />

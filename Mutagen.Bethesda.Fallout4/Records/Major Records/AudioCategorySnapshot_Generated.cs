@@ -1560,18 +1560,22 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Priority");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Priority = frame.ReadUInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AudioCategorySnapshot_FieldIndex.Priority;
                 }
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Multipliers");
                     item.Multipliers.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AudioCategoryMultiplier>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: AudioCategoryMultiplier_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: AudioCategoryMultiplier.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AudioCategorySnapshot_FieldIndex.Multipliers;
                 }
                 default:

@@ -2731,22 +2731,27 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.BFCB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Components");
                     item.Components.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AComponent>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: AComponent_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: AComponent.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SurfacePattern_FieldIndex.Components;
                 }
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SurfacePatternStyle");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SurfacePatternStyle.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SurfacePattern_FieldIndex.SurfacePatternStyle;
                 }
                 case RecordTypeInts.BNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Blocks");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Blocks = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.Array2dBinaryTranslation<IFormLinkGetter<ISurfaceBlockGetter>>.Instance.Parse(
@@ -2754,10 +2759,12 @@ namespace Mutagen.Bethesda.Starfield
                             size: SurfacePattern.BlocksFixedSize,
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         ;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SurfacePattern_FieldIndex.Blocks;
                 }
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MasterBlocks");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MasterBlocks = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.Array2dBinaryTranslation<IFormLinkGetter<ISurfaceBlockGetter>>.Instance.Parse(
@@ -2765,10 +2772,12 @@ namespace Mutagen.Bethesda.Starfield
                             size: SurfacePattern.MasterBlocksFixedSize,
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         ;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SurfacePattern_FieldIndex.MasterBlocks;
                 }
                 case RecordTypeInts.GNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MasterBlockRotations");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MasterBlockRotations = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.Array2dBinaryTranslation<SByte>.Instance.Parse(
@@ -2776,10 +2785,12 @@ namespace Mutagen.Bethesda.Starfield
                             size: SurfacePattern.MasterBlockRotationsFixedSize,
                             transl: SByteBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse)
                         ;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SurfacePattern_FieldIndex.MasterBlockRotations;
                 }
                 case RecordTypeInts.EFRM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "OverrideBlocks");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.OverrideBlocks = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.Array2dBinaryTranslation<IFormLinkGetter<ISurfaceBlockGetter>>.Instance.Parse(
@@ -2787,10 +2798,12 @@ namespace Mutagen.Bethesda.Starfield
                             size: SurfacePattern.OverrideBlocksFixedSize,
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         ;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SurfacePattern_FieldIndex.OverrideBlocks;
                 }
                 case RecordTypeInts.EORI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "OverrideBlockRotations");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.OverrideBlockRotations = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.Array2dBinaryTranslation<SByte>.Instance.Parse(
@@ -2798,16 +2811,19 @@ namespace Mutagen.Bethesda.Starfield
                             size: SurfacePattern.OverrideBlockRotationsFixedSize,
                             transl: SByteBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse)
                         ;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SurfacePattern_FieldIndex.OverrideBlockRotations;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Worldspaces");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Worldspaces = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IWorldspaceGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IWorldspaceGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SurfacePattern_FieldIndex.Worldspaces;
                 }
                 default:

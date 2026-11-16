@@ -4454,16 +4454,20 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Fallout3.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.Name;
                 }
                 case RecordTypeInts.MODL:
@@ -4472,36 +4476,45 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.MODS:
                 case RecordTypeInts.MODD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.Model;
                 }
                 case RecordTypeInts.SPLO:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "ActorEffects");
                     item.ActorEffects.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ISpellGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.SPLO),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.ActorEffects;
                 }
                 case RecordTypeInts.EITM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UnarmedAttackEffect");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.UnarmedAttackEffect.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.UnarmedAttackEffect;
                 }
                 case RecordTypeInts.EAMT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UnarmedAttackAnimation");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.UnarmedAttackAnimation = EnumBinaryTranslation<AttackAnimation, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.UnarmedAttackAnimation;
                 }
                 case RecordTypeInts.NIFZ:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Models");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Models = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<String>.Instance.ParseTrimNullEnding(
@@ -4515,87 +4528,111 @@ namespace Mutagen.Bethesda.Fallout3
                                     binaryType: StringBinaryType.NullTerminate);
                             })
                         .CastExtendedList<String>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.Models;
                 }
                 case RecordTypeInts.NIFT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ModelListTextures");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ModelListTextures = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.ModelListTextures;
                 }
                 case RecordTypeInts.ACBS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Configuration");
                     item.Configuration = Mutagen.Bethesda.Fallout3.CreatureConfiguration.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.Configuration;
                 }
                 case RecordTypeInts.SNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Factions");
                     item.Factions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<RankPlacement>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: RankPlacement_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: RankPlacement.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.Factions;
                 }
                 case RecordTypeInts.INAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DeathItem");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DeathItem.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.DeathItem;
                 }
                 case RecordTypeInts.VTCK:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Voice");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Voice.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.Voice;
                 }
                 case RecordTypeInts.TPLT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Template");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Template.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.Template;
                 }
                 case RecordTypeInts.DEST:
                 case RecordTypeInts.DSTD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Destructible");
                     item.Destructible = Mutagen.Bethesda.Fallout3.Destructible.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.Destructible;
                 }
                 case RecordTypeInts.SCRI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Script");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Script.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.Script;
                 }
                 case RecordTypeInts.CNTO:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Items");
                     item.Items.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ContainerEntry>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: ContainerEntry_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: ContainerEntry.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.Items;
                 }
                 case RecordTypeInts.AIDT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AIData");
                     item.AIData = Mutagen.Bethesda.Fallout3.CreatureAIData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.AIData;
                 }
                 case RecordTypeInts.PKID:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Packages");
                     item.Packages.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IPackageGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.PKID),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.Packages;
                 }
                 case RecordTypeInts.KFFZ:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Animations");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Animations = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<String>.Instance.ParseTrimNullEnding(
@@ -4609,92 +4646,119 @@ namespace Mutagen.Bethesda.Fallout3
                                     binaryType: StringBinaryType.NullTerminate);
                             })
                         .CastExtendedList<String>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.Animations;
                 }
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Fallout3.CreatureData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.Data;
                 }
                 case RecordTypeInts.RNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AttackReach");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AttackReach = frame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.AttackReach;
                 }
                 case RecordTypeInts.ZNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CombatStyle");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CombatStyle.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.CombatStyle;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BodyPartData");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BodyPartData.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.BodyPartData;
                 }
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TurningSpeed");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TurningSpeed = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.TurningSpeed;
                 }
                 case RecordTypeInts.BNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BaseScale");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BaseScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.BaseScale;
                 }
                 case RecordTypeInts.WNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FootWeight");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FootWeight = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.FootWeight;
                 }
                 case RecordTypeInts.NAM4:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ImpactMaterialType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ImpactMaterialType = EnumBinaryTranslation<Creature.ImpactMaterial, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.ImpactMaterialType;
                 }
                 case RecordTypeInts.NAM5:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SoundLevel");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SoundLevel = EnumBinaryTranslation<SoundLevel, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.SoundLevel;
                 }
                 case RecordTypeInts.CSCR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "InheritsSoundFrom");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.InheritsSoundFrom.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.InheritsSoundFrom;
                 }
                 case RecordTypeInts.CSDT:
                 case RecordTypeInts.CSDI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "SoundTypes");
                     item.SoundTypes.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<CreatureSoundType>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: CreatureSoundType_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: CreatureSoundType.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.SoundTypes;
                 }
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ImpactDataset");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ImpactDataset.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.ImpactDataset;
                 }
                 case RecordTypeInts.LNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MeleeWeaponList");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MeleeWeaponList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Creature_FieldIndex.MeleeWeaponList;
                 }
                 default:

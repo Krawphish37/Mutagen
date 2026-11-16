@@ -1083,10 +1083,14 @@ namespace Mutagen.Bethesda.Skyrim
             ILocationTargetRadius item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Target");
             LocationTargetRadiusBinaryCreateTranslation.FillBinaryTargetCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Radius");
             item.Radius = frame.ReadUInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void FillBinaryTargetCustom(

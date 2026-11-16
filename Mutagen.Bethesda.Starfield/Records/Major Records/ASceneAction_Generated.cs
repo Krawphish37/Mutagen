@@ -1370,52 +1370,66 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.NAM0:
                 {
                     if (lastParsed.ShortCircuit((int)ASceneAction_FieldIndex.Name, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ASceneAction_FieldIndex.Name;
                 }
                 case RecordTypeInts.SNOT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SceneNotes");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SceneNotes = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ASceneAction_FieldIndex.SceneNotes;
                 }
                 case RecordTypeInts.ALID:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AliasID");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AliasID = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ASceneAction_FieldIndex.AliasID;
                 }
                 case RecordTypeInts.INAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ASceneAction_FieldIndex.Index;
                 }
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<ASceneAction.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ASceneAction_FieldIndex.Flags;
                 }
                 case RecordTypeInts.SNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StartPhase");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.StartPhase = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ASceneAction_FieldIndex.StartPhase;
                 }
                 case RecordTypeInts.ENAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EndPhase");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EndPhase = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ASceneAction_FieldIndex.EndPhase;
                 }
                 default:

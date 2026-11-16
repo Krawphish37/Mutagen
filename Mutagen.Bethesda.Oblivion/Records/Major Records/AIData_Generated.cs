@@ -1369,19 +1369,35 @@ namespace Mutagen.Bethesda.Oblivion
             IAIData item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Aggression");
             item.Aggression = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Confidence");
             item.Confidence = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EnergyLevel");
             item.EnergyLevel = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Responsibility");
             item.Responsibility = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BuySellServices");
             item.BuySellServices = EnumBinaryTranslation<Npc.BuySellServiceFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (frame.Complete) return;
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Teaches");
             item.Teaches = EnumBinaryTranslation<Skill, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 1);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaximumTrainingLevel");
             item.MaximumTrainingLevel = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unused");
             item.Unused = frame.ReadInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

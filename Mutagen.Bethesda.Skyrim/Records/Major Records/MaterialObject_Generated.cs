@@ -2286,18 +2286,22 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.MODL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Skyrim.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MaterialObject_FieldIndex.Model;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "DNAMs");
                     item.DNAMs.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<MemorySlice<Byte>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.DNAM),
                             transl: ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MaterialObject_FieldIndex.DNAMs;
                 }
                 case RecordTypeInts.DATA:
@@ -2305,42 +2309,60 @@ namespace Mutagen.Bethesda.Skyrim
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "FalloffScale");
                     item.FalloffScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "FalloffBias");
                     item.FalloffBias = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "NoiseUvScale");
                     item.NoiseUvScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "MaterialUvScale");
                     item.MaterialUvScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 12) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ProjectionVector");
                     item.ProjectionVector = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Complete)
                     {
                         item.DATADataTypeState |= MaterialObject.DATADataType.Break0;
                         return (int)MaterialObject_FieldIndex.ProjectionVector;
                     }
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "NormalDampener");
                     item.NormalDampener = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Complete)
                     {
                         item.DATADataTypeState |= MaterialObject.DATADataType.Break1;
                         return (int)MaterialObject_FieldIndex.NormalDampener;
                     }
                     if (dataFrame.Remaining < 12) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SinglePassColor");
                     item.SinglePassColor = dataFrame.ReadColor(ColorBinaryType.NoAlphaFloat);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Flags");
                     item.Flags = EnumBinaryTranslation<MaterialObject.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 4);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Complete)
                     {
                         item.DATADataTypeState |= MaterialObject.DATADataType.Break2;
                         return (int)MaterialObject_FieldIndex.Flags;
                     }
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "HasSnow");
                     item.HasSnow = BooleanBinaryTranslation<MutagenFrame>.Instance.Parse(
                         reader: dataFrame,
                         byteLength: 4);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)MaterialObject_FieldIndex.HasSnow;
                 }
                 default:

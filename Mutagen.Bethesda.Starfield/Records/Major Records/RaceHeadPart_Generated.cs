@@ -1078,14 +1078,18 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.INDX:
                 {
                     if (lastParsed.ShortCircuit((int)RaceHeadPart_FieldIndex.Index, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RaceHeadPart_FieldIndex.Index;
                 }
                 case RecordTypeInts.HEAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Part");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Part.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RaceHeadPart_FieldIndex.Part;
                 }
                 default:

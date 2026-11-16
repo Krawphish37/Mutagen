@@ -1061,8 +1061,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.INAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Item");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Item.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AddToInventoryOnDestroyComponent_FieldIndex.Item;
                 }
                 default:

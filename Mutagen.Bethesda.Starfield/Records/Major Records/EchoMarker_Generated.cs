@@ -1700,75 +1700,93 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ECTE:
                 {
                     if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.WwiseGuid, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WwiseGuid");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.WwiseGuid = GuidBinaryTranslation.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)EchoMarker_FieldIndex.WwiseGuid;
                 }
                 case RecordTypeInts.ECSH:
                 {
                     if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.Sound, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Sound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.Sound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)EchoMarker_FieldIndex.Sound;
                 }
                 case RecordTypeInts.ANAM:
                 {
                     if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.VoiceCount, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VoiceCount");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.VoiceCount = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)EchoMarker_FieldIndex.VoiceCount;
                 }
                 case RecordTypeInts.BNAM:
                 {
                     if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.Duration, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Duration");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Duration = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)EchoMarker_FieldIndex.Duration;
                 }
                 case RecordTypeInts.CNAM:
                 {
                     if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.ActionAtLimit, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ActionAtLimit");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ActionAtLimit = EnumBinaryTranslation<EchoMarker.ActionAtLimitType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)EchoMarker_FieldIndex.ActionAtLimit;
                 }
                 case RecordTypeInts.DNAM:
                 {
                     if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.Use, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Use");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Use = EnumBinaryTranslation<EchoMarker.UseType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)EchoMarker_FieldIndex.Use;
                 }
                 case RecordTypeInts.ENAM:
                 {
                     if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.TriggerRelease, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TriggerRelease");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TriggerRelease = frame.ReadBoolean();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)EchoMarker_FieldIndex.TriggerRelease;
                 }
                 case RecordTypeInts.CTDA:
                 {
                     if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.Conditions, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)EchoMarker_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.NNAM:
                 {
                     if (lastParsed.ShortCircuit((int)EchoMarker_FieldIndex.Description, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Description");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Description = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)EchoMarker_FieldIndex.Description;
                 }
                 default:

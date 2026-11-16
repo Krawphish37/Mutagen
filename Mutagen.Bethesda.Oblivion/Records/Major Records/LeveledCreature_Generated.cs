@@ -1741,40 +1741,50 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 case RecordTypeInts.LVLD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChanceNone", true);
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ChanceNone = PercentBinaryTranslation.Parse(
                         reader: frame,
                         integerType: FloatIntegerType.ByteHundred);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledCreature_FieldIndex.ChanceNone;
                 }
                 case RecordTypeInts.LVLF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<LeveledFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledCreature_FieldIndex.Flags;
                 }
                 case RecordTypeInts.LVLO:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Entries");
                     item.Entries.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LeveledCreatureEntry>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: LeveledCreatureEntry_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: LeveledCreatureEntry.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledCreature_FieldIndex.Entries;
                 }
                 case RecordTypeInts.SCRI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Script");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Script.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledCreature_FieldIndex.Script;
                 }
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Template");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Template.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledCreature_FieldIndex.Template;
                 }
                 default:

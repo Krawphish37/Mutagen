@@ -1086,15 +1086,19 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.CS2K:
                 {
                     if (lastParsed.ShortCircuit((int)NpcSound_FieldIndex.Keyword, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Keyword");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Keyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcSound_FieldIndex.Keyword;
                 }
                 case RecordTypeInts.CS2D:
                 {
                     if (lastParsed.ShortCircuit((int)NpcSound_FieldIndex.Sound, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Sound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Sound.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcSound_FieldIndex.Sound;
                 }
                 default:

@@ -1692,6 +1692,7 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1699,40 +1700,49 @@ namespace Mutagen.Bethesda.Skyrim
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundCategory_FieldIndex.Name;
                 }
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<SoundCategory.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundCategory_FieldIndex.Flags;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Parent");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Parent.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundCategory_FieldIndex.Parent;
                 }
                 case RecordTypeInts.VNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StaticVolumeMultiplier", true);
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.StaticVolumeMultiplier = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         integerType: FloatIntegerType.UShort,
                         multiplier: null,
                         divisor: 65535f);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundCategory_FieldIndex.StaticVolumeMultiplier;
                 }
                 case RecordTypeInts.UNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DefaultMenuVolume", true);
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DefaultMenuVolume = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         integerType: FloatIntegerType.UShort,
                         multiplier: null,
                         divisor: 65535f);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundCategory_FieldIndex.DefaultMenuVolume;
                 }
                 default:

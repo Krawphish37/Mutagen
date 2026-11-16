@@ -2896,60 +2896,92 @@ namespace Mutagen.Bethesda.Starfield
             INavmeshGeometry item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NavmeshVersion");
             item.NavmeshVersion = frame.ReadUInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CrcHash");
             item.CrcHash = frame.ReadUInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Parent");
             NavmeshGeometryBinaryCreateTranslation.FillBinaryParentCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Vertices");
             item.Vertices.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavmeshVertex>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt32()),
                     reader: frame,
                     transl: NavmeshVertex.TryCreateFromBinary));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Triangles");
             item.Triangles.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavmeshTriangle>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt32()),
                     reader: frame,
                     transl: NavmeshTriangle.TryCreateFromBinary));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "EdgeLinks");
             item.EdgeLinks.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<EdgeLink>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt32()),
                     reader: frame,
                     transl: EdgeLink.TryCreateFromBinary));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "DoorTriangles");
             item.DoorTriangles.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<DoorTriangle>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt32()),
                     reader: frame,
                     transl: DoorTriangle.TryCreateFromBinary));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Cover");
             item.Cover.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavmeshCover>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt32()),
                     reader: frame,
                     transl: NavmeshCover.TryCreateFromBinary));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "CoverTriangleMappings");
             item.CoverTriangleMappings.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavmeshCoverTriangleMap>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt32()),
                     reader: frame,
                     transl: NavmeshCoverTriangleMap.TryCreateFromBinary));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Waypoints");
             item.Waypoints.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavmeshWaypoint>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt32()),
                     reader: frame,
                     transl: NavmeshWaypoint.TryCreateFromBinary));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GridSize");
             item.GridSize = frame.ReadUInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GridMaxDistance");
             item.GridMaxDistance = P2FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GridMin");
             item.GridMin = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GridMax");
             item.GridMax = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "GridArrays");
             item.GridArrays.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavmeshGridArray>.Instance.Parse(
                     reader: frame,
                     transl: NavmeshGridArray.TryCreateFromBinary));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (frame.Complete)
             {
                 item.Versioning |= NavmeshGeometry.VersioningBreaks.Break0;
                 return;
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unknown3");
             item.Unknown3 = frame.ReadInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void FillBinaryParentCustom(

@@ -1494,12 +1494,14 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.INTV:
                 case RecordTypeInts.NAM1:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "SubObjects");
                     item.SubObjects.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavigationMeshObstacleManagerSubObject>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: NavigationMeshObstacleManagerSubObject_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: NavigationMeshObstacleManagerSubObject.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMeshObstacleCoverManager_FieldIndex.SubObjects;
                 }
                 default:

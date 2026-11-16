@@ -1187,8 +1187,10 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.ALCO:
                 {
                     if (lastParsed.ShortCircuit((int)CreateReferenceToObject_FieldIndex.Object, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Object");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Object.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CreateReferenceToObject_FieldIndex.Object;
                 }
                 case RecordTypeInts.ALCA:
@@ -1196,19 +1198,25 @@ namespace Mutagen.Bethesda.Fallout4
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 2) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "AliasID");
                     item.AliasID = dataFrame.ReadInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 2) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Create");
                     item.Create = EnumBinaryTranslation<CreateReferenceToObject.CreateEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 2);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)CreateReferenceToObject_FieldIndex.Create;
                 }
                 case RecordTypeInts.ALCL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Level");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Level = EnumBinaryTranslation<Level, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CreateReferenceToObject_FieldIndex.Level;
                 }
                 default:

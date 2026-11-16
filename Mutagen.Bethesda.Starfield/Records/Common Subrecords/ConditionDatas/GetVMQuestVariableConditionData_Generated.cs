@@ -469,6 +469,32 @@ namespace Mutagen.Bethesda.Starfield
         #region Mutagen
         public override IEnumerable<IFormLinkGetter> EnumerateFormLinks(bool iterateNestedRecords = true) => GetVMQuestVariableConditionDataCommon.Instance.EnumerateFormLinks(this, iterateNestedRecords);
         public override void RemapLinks(IReadOnlyDictionary<FormKey, FormKey> mapping) => GetVMQuestVariableConditionDataSetterCommon.Instance.RemapLinks(this, mapping);
+        object? IConditionParameters.Parameter1
+        {
+            get => FirstParameter;
+            set => FirstParameter = (value is IFormLinkOrIndex<IQuestGetter> v ? v : throw new ArgumentException());
+        }
+        object? IConditionParametersGetter.Parameter1
+        {
+            get => FirstParameter;
+        }
+        Type? IConditionParametersGetter.Parameter1Type
+        {
+            get => typeof(IFormLinkOrIndexGetter<IQuestGetter>);
+        }
+        object? IConditionParameters.Parameter2
+        {
+            get => SecondParameter;
+            set => SecondParameter = value is null or string ? (string?)value : throw new ArgumentException("Parameter2 is a string");
+        }
+        object? IConditionParametersGetter.Parameter2
+        {
+            get => SecondParameter;
+        }
+        Type? IConditionParametersGetter.Parameter2Type
+        {
+            get => typeof(string);
+        }
         #endregion
 
         #region Binary Translation
@@ -1264,10 +1290,14 @@ namespace Mutagen.Bethesda.Starfield
             ConditionDataBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FirstParameter");
             FormLinkOrIndexBinaryTranslation.Instance.ParseInto(
                 reader: frame,
                 item: item.FirstParameter);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SecondUnusedIntParameter");
             item.SecondUnusedIntParameter = frame.ReadInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static ParseResult FillBinaryRecordTypes(

@@ -1386,8 +1386,10 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Parent");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Parent.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Layer_FieldIndex.Parent;
                 }
                 default:

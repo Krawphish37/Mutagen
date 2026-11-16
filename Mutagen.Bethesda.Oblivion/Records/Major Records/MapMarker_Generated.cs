@@ -1277,25 +1277,30 @@ namespace Mutagen.Bethesda.Oblivion
                 case RecordTypeInts.FNAM:
                 {
                     if (lastParsed.ShortCircuit((int)MapMarker_FieldIndex.Flags, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<MapMarker.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MapMarker_FieldIndex.Flags;
                 }
                 case RecordTypeInts.FULL:
                 {
                     if (lastParsed.ShortCircuit((int)MapMarker_FieldIndex.Name, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MapMarker_FieldIndex.Name;
                 }
                 case RecordTypeInts.TNAM:
                 {
                     if (lastParsed.ShortCircuit((int)MapMarker_FieldIndex.Types, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Types");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Types = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<MapMarker.Type>.Instance.Parse(
@@ -1307,6 +1312,7 @@ namespace Mutagen.Bethesda.Oblivion
                                     item: out listSubItem);
                             })
                         .CastExtendedList<MapMarker.Type>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MapMarker_FieldIndex.Types;
                 }
                 default:

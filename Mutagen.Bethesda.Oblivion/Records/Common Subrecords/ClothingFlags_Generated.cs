@@ -1051,12 +1051,16 @@ namespace Mutagen.Bethesda.Oblivion
             IClothingFlags item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BipedFlags");
             item.BipedFlags = EnumBinaryTranslation<BipedFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 2);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GeneralFlags");
             item.GeneralFlags = EnumBinaryTranslation<EquipmentFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 2);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

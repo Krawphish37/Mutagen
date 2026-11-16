@@ -2812,6 +2812,7 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.BPTN:
                 {
                     if (lastParsed.ShortCircuit((int)BodyPart_FieldIndex.Name, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -2819,42 +2820,51 @@ namespace Mutagen.Bethesda.Skyrim
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BodyPart_FieldIndex.Name;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PoseMatching");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PoseMatching = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BodyPart_FieldIndex.PoseMatching;
                 }
                 case RecordTypeInts.BPNN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PartNode");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PartNode = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BodyPart_FieldIndex.PartNode;
                 }
                 case RecordTypeInts.BPNT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VatsTarget");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.VatsTarget = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BodyPart_FieldIndex.VatsTarget;
                 }
                 case RecordTypeInts.BPNI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IkStartNode");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.IkStartNode = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BodyPart_FieldIndex.IkStartNode;
                 }
                 case RecordTypeInts.BPND:
@@ -2862,83 +2872,137 @@ namespace Mutagen.Bethesda.Skyrim
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DamageMult");
                     item.DamageMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Flags");
                     item.Flags = EnumBinaryTranslation<BodyPart.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 1);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Type");
                     item.Type = EnumBinaryTranslation<BodyPart.PartType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 1);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "HealthPercent");
                     item.HealthPercent = dataFrame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ActorValue");
                     item.ActorValue = EnumBinaryTranslation<ActorValue, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 1);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ToHitChance");
                     item.ToHitChance = dataFrame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ExplodableExplosionChance");
                     item.ExplodableExplosionChance = dataFrame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 2) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ExplodableDebrisCount");
                     item.ExplodableDebrisCount = dataFrame.ReadUInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ExplodableDebris");
                     item.ExplodableDebris.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ExplodableExplosion");
                     item.ExplodableExplosion.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "TrackingMaxAngle");
                     item.TrackingMaxAngle = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ExplodableDebrisScale");
                     item.ExplodableDebrisScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SeverableDebrisCount");
                     item.SeverableDebrisCount = dataFrame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SeverableDebris");
                     item.SeverableDebris.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SeverableExplosion");
                     item.SeverableExplosion.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SeverableDebrisScale");
                     item.SeverableDebrisScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 12) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "GorePositioning");
                     item.GorePositioning = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 12) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "GoreRotation");
                     item.GoreRotation = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SeverableImpactData");
                     item.SeverableImpactData.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ExplodableImpactData");
                     item.ExplodableImpactData.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SeverableDecalCount");
                     item.SeverableDecalCount = dataFrame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ExplodableDecalCount");
                     item.ExplodableDecalCount = dataFrame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 2) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Unknown");
                     item.Unknown = dataFrame.ReadUInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "LimbReplacementScale");
                     item.LimbReplacementScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)BodyPart_FieldIndex.LimbReplacementScale;
                 }
                 case RecordTypeInts.NAM1:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LimbReplacementModel");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LimbReplacementModel = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BodyPart_FieldIndex.LimbReplacementModel;
                 }
                 case RecordTypeInts.NAM4:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GoreTargetBone");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.GoreTargetBone = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BodyPart_FieldIndex.GoreTargetBone;
                 }
                 case RecordTypeInts.NAM5:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TextureFilesHashes");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TextureFilesHashes = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BodyPart_FieldIndex.TextureFilesHashes;
                 }
                 default:

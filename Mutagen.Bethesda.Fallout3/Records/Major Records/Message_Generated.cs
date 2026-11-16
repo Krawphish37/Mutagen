@@ -2574,111 +2574,143 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.DESC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Description");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Description = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Message_FieldIndex.Description;
                 }
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Message_FieldIndex.Name;
                 }
                 case RecordTypeInts.INAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Icon");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Icon.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Message_FieldIndex.Icon;
                 }
                 case RecordTypeInts.NAM0:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NAM0");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NAM0 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Message_FieldIndex.NAM0;
                 }
                 case RecordTypeInts.NAM1:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NAM1");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NAM1 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Message_FieldIndex.NAM1;
                 }
                 case RecordTypeInts.NAM2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NAM2");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NAM2 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Message_FieldIndex.NAM2;
                 }
                 case RecordTypeInts.NAM3:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NAM3");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NAM3 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Message_FieldIndex.NAM3;
                 }
                 case RecordTypeInts.NAM4:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NAM4");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NAM4 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Message_FieldIndex.NAM4;
                 }
                 case RecordTypeInts.NAM5:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NAM5");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NAM5 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Message_FieldIndex.NAM5;
                 }
                 case RecordTypeInts.NAM6:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NAM6");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NAM6 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Message_FieldIndex.NAM6;
                 }
                 case RecordTypeInts.NAM7:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NAM7");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NAM7 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Message_FieldIndex.NAM7;
                 }
                 case RecordTypeInts.NAM8:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NAM8");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NAM8 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Message_FieldIndex.NAM8;
                 }
                 case RecordTypeInts.NAM9:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NAM9");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NAM9 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Message_FieldIndex.NAM9;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<Message.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Message_FieldIndex.Flags;
                 }
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DisplayTime");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DisplayTime = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Message_FieldIndex.DisplayTime;
                 }
                 case RecordTypeInts.ITXT:
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MenuButtons");
                     item.MenuButtons.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<MessageButton>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: MessageButton_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: MessageButton.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Message_FieldIndex.MenuButtons;
                 }
                 default:

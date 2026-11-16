@@ -1409,30 +1409,38 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.RDMO:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Music");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Music.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionSounds_FieldIndex.Music;
                 }
                 case RecordTypeInts.RDSA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Sounds");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Sounds = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<RegionSound>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: RegionSound.TryCreateFromBinary)
                         .CastExtendedList<RegionSound>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionSounds_FieldIndex.Sounds;
                 }
                 case RecordTypeInts.RLDM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LodDisplayDistanceMultiplier");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LodDisplayDistanceMultiplier = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionSounds_FieldIndex.LodDisplayDistanceMultiplier;
                 }
                 case RecordTypeInts.ANAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OcclusionAccuracyDist");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.OcclusionAccuracyDist = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionSounds_FieldIndex.OcclusionAccuracyDist;
                 }
                 default:

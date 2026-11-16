@@ -2979,78 +2979,152 @@ namespace Mutagen.Bethesda.Oblivion
             ICombatStyleData item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DodgePercentChance");
             item.DodgePercentChance = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LeftRightPercentChance");
             item.LeftRightPercentChance = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             frame.SetPosition(frame.Position + 2);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DodgeLeftRightTimerMin");
             item.DodgeLeftRightTimerMin = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DodgeLeftRightTimerMax");
             item.DodgeLeftRightTimerMax = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DodgeForwardTimerMin");
             item.DodgeForwardTimerMin = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DodgeForwardTimerMax");
             item.DodgeForwardTimerMax = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DodgeBackTimerMin");
             item.DodgeBackTimerMin = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DodgeBackTimerMax");
             item.DodgeBackTimerMax = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IdleTimerMin");
             item.IdleTimerMin = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IdleTimerMax");
             item.IdleTimerMax = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BlockPercentChance");
             item.BlockPercentChance = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AttackPercentChance");
             item.AttackPercentChance = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             frame.SetPosition(frame.Position + 2);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RecoilStaggerBonusToAttack");
             item.RecoilStaggerBonusToAttack = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UnconsciousBonusToAttack");
             item.UnconsciousBonusToAttack = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HandToHandBonusToAttack");
             item.HandToHandBonusToAttack = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PowerAttackPercentChance");
             item.PowerAttackPercentChance = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             frame.SetPosition(frame.Position + 3);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RecoilStaggerBonusToPowerAttack");
             item.RecoilStaggerBonusToPowerAttack = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UnconsciousBonusToPowerAttack");
             item.UnconsciousBonusToPowerAttack = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PowerAttackNormal");
             item.PowerAttackNormal = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PowerAttackForward");
             item.PowerAttackForward = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PowerAttackBack");
             item.PowerAttackBack = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PowerAttackLeft");
             item.PowerAttackLeft = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PowerAttackRight");
             item.PowerAttackRight = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             frame.SetPosition(frame.Position + 3);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HoldTimerMin");
             item.HoldTimerMin = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HoldTimerMax");
             item.HoldTimerMax = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
             item.Flags = EnumBinaryTranslation<CombatStyle.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 1);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AcrobaticDodgePercentChance");
             item.AcrobaticDodgePercentChance = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             frame.SetPosition(frame.Position + 2);
             if (frame.Complete)
             {
                 item.Versioning |= CombatStyleData.VersioningBreaks.Break0;
                 return;
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RangeMultOptimal");
             item.RangeMultOptimal = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RangeMultMax");
             item.RangeMultMax = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (frame.Complete)
             {
                 item.Versioning |= CombatStyleData.VersioningBreaks.Break1;
                 return;
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SwitchDistanceMelee");
             item.SwitchDistanceMelee = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SwitchDistanceRanged");
             item.SwitchDistanceRanged = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BuffStandoffDistance");
             item.BuffStandoffDistance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (frame.Complete)
             {
                 item.Versioning |= CombatStyleData.VersioningBreaks.Break2;
                 return;
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RangedStandoffDistance");
             item.RangedStandoffDistance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GroupStandoffDistance");
             item.GroupStandoffDistance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (frame.Complete)
             {
                 item.Versioning |= CombatStyleData.VersioningBreaks.Break3;
                 return;
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RushingAttackPercentChance");
             item.RushingAttackPercentChance = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             frame.SetPosition(frame.Position + 3);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RushingAttackDistanceMult");
             item.RushingAttackDistanceMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (frame.Complete)
             {
                 item.Versioning |= CombatStyleData.VersioningBreaks.Break4;
                 return;
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "SecondaryFlags");
             CombatStyleDataBinaryCreateTranslation.FillBinarySecondaryFlagsCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void FillBinarySecondaryFlagsCustom(

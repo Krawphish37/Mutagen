@@ -2328,8 +2328,10 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.NVER:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Version");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Version = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Ragdoll_FieldIndex.Version;
                 }
                 case RecordTypeInts.DATA:
@@ -2337,62 +2339,90 @@ namespace Mutagen.Bethesda.Fallout3
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DynamicBoneCount");
                     item.DynamicBoneCount = dataFrame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Unused");
                     item.Unused = dataFrame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "FeedbackEnabled");
                     item.FeedbackEnabled = dataFrame.ReadBoolean();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "FootIkEnabled");
                     item.FootIkEnabled = dataFrame.ReadBoolean();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "LookIkEnabled");
                     item.LookIkEnabled = dataFrame.ReadBoolean();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "GrabIkEnabled");
                     item.GrabIkEnabled = dataFrame.ReadBoolean();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "PoseMatchingEnabled");
                     item.PoseMatchingEnabled = dataFrame.ReadBoolean();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Unused2");
                     item.Unused2 = dataFrame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)Ragdoll_FieldIndex.Unused2;
                 }
                 case RecordTypeInts.XNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ActorBase");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ActorBase.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Ragdoll_FieldIndex.ActorBase;
                 }
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BodyPartData");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BodyPartData.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Ragdoll_FieldIndex.BodyPartData;
                 }
                 case RecordTypeInts.RAFD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FeedbackData");
                     item.FeedbackData = Mutagen.Bethesda.Fallout3.RagdollFeedbackData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Ragdoll_FieldIndex.FeedbackData;
                 }
                 case RecordTypeInts.RAFB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "FeedbackDynamicBones");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FeedbackDynamicBones = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<UInt16>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: UInt16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse)
                         .CastExtendedList<UInt16>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Ragdoll_FieldIndex.FeedbackDynamicBones;
                 }
                 case RecordTypeInts.RAPS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PoseMatchingData");
                     item.PoseMatchingData = Mutagen.Bethesda.Fallout3.RagdollPoseMatchingData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Ragdoll_FieldIndex.PoseMatchingData;
                 }
                 case RecordTypeInts.ANAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DeathPose");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DeathPose = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Ragdoll_FieldIndex.DeathPose;
                 }
                 default:

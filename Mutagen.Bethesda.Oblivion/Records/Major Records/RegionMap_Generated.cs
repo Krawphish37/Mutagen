@@ -1068,11 +1068,13 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 case RecordTypeInts.RDMP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Map");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Map = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionMap_FieldIndex.Map;
                 }
                 default:

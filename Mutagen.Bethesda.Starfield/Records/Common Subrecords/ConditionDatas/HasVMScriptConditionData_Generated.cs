@@ -457,6 +457,35 @@ namespace Mutagen.Bethesda.Starfield
         }
         #endregion
 
+        #region Mutagen
+        object? IConditionParameters.Parameter1
+        {
+            get => FirstParameter;
+            set => FirstParameter = value is null or string ? (string?)value : throw new ArgumentException("Parameter1 is a string");
+        }
+        object? IConditionParametersGetter.Parameter1
+        {
+            get => FirstParameter;
+        }
+        Type? IConditionParametersGetter.Parameter1Type
+        {
+            get => typeof(string);
+        }
+        object? IConditionParameters.Parameter2
+        {
+            get => SecondParameter;
+            set => SecondParameter = (value is Int32 v ? v : throw new ArgumentException());
+        }
+        object? IConditionParametersGetter.Parameter2
+        {
+            get => SecondParameter;
+        }
+        Type? IConditionParametersGetter.Parameter2Type
+        {
+            get => typeof(Int32);
+        }
+        #endregion
+
         #region Binary Translation
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected override object BinaryWriteTranslator => HasVMScriptConditionDataBinaryWriteTranslation.Instance;
@@ -1241,8 +1270,12 @@ namespace Mutagen.Bethesda.Starfield
             ConditionDataBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FirstUnusedIntParameter");
             item.FirstUnusedIntParameter = frame.ReadInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SecondParameter");
             item.SecondParameter = frame.ReadInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static ParseResult FillBinaryRecordTypes(

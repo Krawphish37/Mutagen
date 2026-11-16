@@ -2081,42 +2081,52 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Starfield.VirtualMachineAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.BFCB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Components");
                     item.Components.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AComponent>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: AComponent_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: AComponent.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.Components;
                 }
                 case RecordTypeInts.NVNM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NavmeshGeometry");
                     item.NavmeshGeometry = Mutagen.Bethesda.Starfield.NavmeshGeometry.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.NavmeshGeometry;
                 }
                 case RecordTypeInts.NNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.NNAM;
                 }
                 case RecordTypeInts.MNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "PreCutMapEntries");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PreCutMapEntries = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<PreCutMapEntry>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: PreCutMapEntry.TryCreateFromBinary)
                         .CastExtendedList<PreCutMapEntry>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.PreCutMapEntries;
                 }
                 case RecordTypeInts.XXXX:

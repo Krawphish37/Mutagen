@@ -952,9 +952,11 @@ namespace Mutagen.Bethesda.Fallout4
             IAAudioEffect item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Enabled");
             item.Enabled = BooleanBinaryTranslation<MutagenFrame>.Instance.Parse(
                 reader: frame,
                 byteLength: 4);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

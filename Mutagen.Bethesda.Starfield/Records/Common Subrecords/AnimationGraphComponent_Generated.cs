@@ -1300,43 +1300,53 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.ANAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RootAnimationGraph");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RootAnimationGraph = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AnimationGraphComponent_FieldIndex.RootAnimationGraph;
                 }
                 case RecordTypeInts.BNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RigFile");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RigFile = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AnimationGraphComponent_FieldIndex.RigFile;
                 }
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AnimationsPath");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AnimationsPath = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AnimationGraphComponent_FieldIndex.AnimationsPath;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ResponseFile");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ResponseFile = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AnimationGraphComponent_FieldIndex.ResponseFile;
                 }
                 case RecordTypeInts.ENAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ControlsBaseSkeleton");
                     item.ControlsBaseSkeleton = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AnimationGraphComponent_FieldIndex.ControlsBaseSkeleton;
                 }
                 default:

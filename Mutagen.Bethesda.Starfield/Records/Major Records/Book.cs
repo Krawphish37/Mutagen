@@ -43,7 +43,9 @@ partial class BookBinaryCreateTranslation
 
     public static partial void FillBinaryFlagsCustom(MutagenFrame frame, IBookInternal item)
     {
+        var at = ValuePositionRecorder.Here(frame);
         item.Flags = (Book.Flag)frame.ReadUInt8();
+        ValuePositionRecorder.Value(frame, nameof(item.Flags), at);
     }
 
     public static TeachesOption GetTeachingOption(int flags)
@@ -78,6 +80,7 @@ partial class BookBinaryCreateTranslation
 
     public static partial void FillBinaryTeachesCustom(MutagenFrame frame, IBookInternal item)
     {
+        var at = ValuePositionRecorder.Here(frame);
         switch (GetTeachingOption((int)item.Flags))
         {
             case TeachesOption.None:
@@ -85,24 +88,28 @@ partial class BookBinaryCreateTranslation
                 {
                     RawContent = frame.ReadUInt32()
                 };
+                ValuePositionRecorder.Value(frame, "Teaches.RawContent", at);
                 break;
             case TeachesOption.Skill:
                 item.Teaches = new BookActorValue()
                 {
                     ActorValue = new FormLink<IActorValueInformationGetter>(FormLinkBinaryTranslation.Instance.Parse(frame))
                 };
+                ValuePositionRecorder.Value(frame, "Teaches.ActorValue", at);
                 break;
             case TeachesOption.Spell:
                 item.Teaches = new BookSpell()
                 {
                     Spell = new FormLink<ISpellGetter>(FormLinkBinaryTranslation.Instance.Parse(frame))
                 };
+                ValuePositionRecorder.Value(frame, "Teaches.Spell", at);
                 break;
             case TeachesOption.Perk:
                 item.Teaches = new BookPerk()
                 {
                     Perk = new FormLink<IPerkGetter>(FormLinkBinaryTranslation.Instance.Parse(frame))
                 };
+                ValuePositionRecorder.Value(frame, "Teaches.Perk", at);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

@@ -18,10 +18,14 @@ partial class PackageBranchBinaryCreateTranslation
 {
     public static partial void FillBinaryFlagsOverrideCustom(MutagenFrame frame, IPackageBranch item, PreviousParse lastParsed)
     {
+        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.FlagsOverride));
         item.FlagsOverride = PackageFlagsOverride.CreateFromBinary(frame);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         if (frame.Reader.TryGetSubrecordHeader(RecordTypes.PFO2, out var rec))
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.FlagsOverrideUnused));
             item.FlagsOverrideUnused = PackageFlagsOverride.CreateFromBinary(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
     }
 }

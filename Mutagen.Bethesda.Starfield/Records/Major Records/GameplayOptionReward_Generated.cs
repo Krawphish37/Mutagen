@@ -1243,6 +1243,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.VOVS:
                 {
                     if (lastParsed.ShortCircuit((int)GameplayOptionReward_FieldIndex.Description, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Description");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Description = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1250,18 +1251,22 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GameplayOptionReward_FieldIndex.Description;
                 }
                 case RecordTypeInts.VORV:
                 {
                     if (lastParsed.ShortCircuit((int)GameplayOptionReward_FieldIndex.SettingValue, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SettingValue");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SettingValue = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GameplayOptionReward_FieldIndex.SettingValue;
                 }
                 case RecordTypeInts.RESN:
                 {
                     if (lastParsed.ShortCircuit((int)GameplayOptionReward_FieldIndex.Name, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1269,13 +1274,16 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GameplayOptionReward_FieldIndex.Name;
                 }
                 case RecordTypeInts.VORN:
                 {
                     if (lastParsed.ShortCircuit((int)GameplayOptionReward_FieldIndex.RewardValue, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RewardValue");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RewardValue = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GameplayOptionReward_FieldIndex.RewardValue;
                 }
                 default:

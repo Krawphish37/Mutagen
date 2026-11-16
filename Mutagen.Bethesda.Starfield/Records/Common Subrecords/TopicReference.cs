@@ -18,23 +18,45 @@ partial class ATopicReferenceBinaryCreateTranslation
 {
     public static IEnumerable<ATopicReference> Factory(MutagenFrame frame)
     {
+        // C60: noted as the items of the list the caller began
+        var index = 0;
         while (frame.TryReadSubrecordHeader(RecordTypes.PDTO, out var _))
         {
+            var at = ValuePositionRecorder.Here(frame);
+            if (at >= 0) ValuePositionRecorder.ItemFrom(at, index);
+            index++;
+            // The type picks the class
             var type = (ATopicReference.TopicType)frame.ReadInt32();
             switch (type)
             {
                 case ATopicReference.TopicType.Ref:
-                    yield return new TopicReference()
+                {
+                    var reference = new TopicReference()
                     {
                         Reference = new FormLink<IDialogTopicGetter>(FormLinkBinaryTranslation.Instance.Parse(frame))
                     };
+                    if (at >= 0)
+                    {
+                        ValuePositionRecorder.At(nameof(reference.Reference), at + 4, 4);
+                        ValuePositionRecorder.End(frame);
+                    }
+                    yield return reference;
                     break;
+                }
                 case ATopicReference.TopicType.Subtype:
-                    yield return new TopicReferenceSubtype()
+                {
+                    var subtype = new TopicReferenceSubtype()
                     {
                         Subtype = new RecordType(frame.ReadInt32())
                     };
+                    if (at >= 0)
+                    {
+                        ValuePositionRecorder.At(nameof(subtype.Subtype), at + 4, 4);
+                        ValuePositionRecorder.End(frame);
+                    }
+                    yield return subtype;
                     break;
+                }
                 default:
                     throw new NotImplementedException();
             }

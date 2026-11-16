@@ -1971,33 +1971,53 @@ namespace Mutagen.Bethesda.Skyrim
             INavigationMapInfo item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NavigationMesh");
             item.NavigationMesh.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unknown");
             item.Unknown = frame.ReadInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Point");
             item.Point = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PreferredMergesFlag");
             item.PreferredMergesFlag = frame.ReadUInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MergedTo");
             item.MergedTo.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<INavigationMeshGetter>>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt32()),
                     reader: frame,
                     transl: FormLinkBinaryTranslation.Instance.Parse));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "PreferredMerges");
             item.PreferredMerges.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<INavigationMeshGetter>>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt32()),
                     reader: frame,
                     transl: FormLinkBinaryTranslation.Instance.Parse));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "LinkedDoors");
             item.LinkedDoors.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LinkedDoor>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt32()),
                     reader: frame,
                     transl: LinkedDoor.TryCreateFromBinary));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (frame.Complete) return;
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Island");
             NavigationMapInfoBinaryCreateTranslation.FillBinaryIslandCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unknown2");
             item.Unknown2 = frame.ReadInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "ParentParseLogic");
             NavigationMapInfoBinaryCreateTranslation.FillBinaryParentParseLogicCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void FillBinaryIslandCustom(

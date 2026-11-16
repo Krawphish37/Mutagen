@@ -1401,36 +1401,43 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.QSDT:
                 {
                     if (lastParsed.ShortCircuit((int)QuestLogEntry_FieldIndex.Flags, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<QuestLogEntry.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLogEntry_FieldIndex.Flags;
                 }
                 case RecordTypeInts.CTDA:
                 {
                     if (lastParsed.ShortCircuit((int)QuestLogEntry_FieldIndex.Conditions, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLogEntry_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.NAM2:
                 {
                     if (lastParsed.ShortCircuit((int)QuestLogEntry_FieldIndex.Note, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Note");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Note = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLogEntry_FieldIndex.Note;
                 }
                 case RecordTypeInts.CNAM:
                 {
                     if (lastParsed.ShortCircuit((int)QuestLogEntry_FieldIndex.Entry, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Entry");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Entry = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1438,13 +1445,16 @@ namespace Mutagen.Bethesda.Fallout4
                         source: StringsSource.DL,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLogEntry_FieldIndex.Entry;
                 }
                 case RecordTypeInts.NAM0:
                 {
                     if (lastParsed.ShortCircuit((int)QuestLogEntry_FieldIndex.NextQuest, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NextQuest");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NextQuest.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLogEntry_FieldIndex.NextQuest;
                 }
                 default:

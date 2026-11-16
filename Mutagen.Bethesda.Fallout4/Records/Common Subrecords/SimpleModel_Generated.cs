@@ -1227,32 +1227,40 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.MODL:
                 {
                     if (lastParsed.ShortCircuit((int)SimpleModel_FieldIndex.File, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "File");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.File = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SimpleModel_FieldIndex.File;
                 }
                 case RecordTypeInts.MODC:
                 {
                     if (lastParsed.ShortCircuit((int)SimpleModel_FieldIndex.ColorRemappingIndex, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ColorRemappingIndex");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ColorRemappingIndex = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SimpleModel_FieldIndex.ColorRemappingIndex;
                 }
                 case RecordTypeInts.MODT:
                 {
                     if (lastParsed.ShortCircuit((int)SimpleModel_FieldIndex.Data, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Data = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SimpleModel_FieldIndex.Data;
                 }
                 case RecordTypeInts.MODS:
                 {
                     if (lastParsed.ShortCircuit((int)SimpleModel_FieldIndex.MaterialSwap, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaterialSwap");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MaterialSwap.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SimpleModel_FieldIndex.MaterialSwap;
                 }
                 default:

@@ -3540,30 +3540,39 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Fallout4.VirtualMachineAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Fallout4.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.PTRN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PreviewTransform");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PreviewTransform.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.PreviewTransform;
                 }
                 case RecordTypeInts.STCP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AnimationSound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AnimationSound.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.AnimationSound;
                 }
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -3571,6 +3580,7 @@ namespace Mutagen.Bethesda.Fallout4
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.Name;
                 }
                 case RecordTypeInts.MODL:
@@ -3578,23 +3588,28 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.MODT:
                 case RecordTypeInts.MODS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Fallout4.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.Model;
                 }
                 case RecordTypeInts.DEST:
                 case RecordTypeInts.DAMC:
                 case RecordTypeInts.DSTD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Destructible");
                     item.Destructible = Mutagen.Bethesda.Fallout4.Destructible.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.Destructible;
                 }
                 case RecordTypeInts.KSIZ:
                 case RecordTypeInts.KWDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Keywords");
                     item.Keywords = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame,
@@ -3603,56 +3618,72 @@ namespace Mutagen.Bethesda.Fallout4
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.KWDA),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.Keywords;
                 }
                 case RecordTypeInts.PRPS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Properties");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Properties = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ObjectProperty>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: ObjectProperty.TryCreateFromBinary)
                         .CastExtendedList<ObjectProperty>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.Properties;
                 }
                 case RecordTypeInts.NTRM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NativeTerminal");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NativeTerminal.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.NativeTerminal;
                 }
                 case RecordTypeInts.FTYP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ForcedLocRefType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ForcedLocRefType.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.ForcedLocRefType;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MarkerColor");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MarkerColor = frame.ReadColor(ColorBinaryType.Alpha);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.MarkerColor;
                 }
                 case RecordTypeInts.SNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LoopingSound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LoopingSound.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.LoopingSound;
                 }
                 case RecordTypeInts.VNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ActivationSound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ActivationSound.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.ActivationSound;
                 }
                 case RecordTypeInts.WNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WaterType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.WaterType.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.WaterType;
                 }
                 case RecordTypeInts.ATTX:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ActivateTextOverride");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ActivateTextOverride = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -3660,30 +3691,38 @@ namespace Mutagen.Bethesda.Fallout4
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.ActivateTextOverride;
                 }
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<Activator.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.Flags;
                 }
                 case RecordTypeInts.KNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "InteractionKeyword");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.InteractionKeyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.InteractionKeyword;
                 }
                 case RecordTypeInts.RADR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RadioReceiver");
                     item.RadioReceiver = Mutagen.Bethesda.Fallout4.RadioReceiver.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.RadioReceiver;
                 }
                 case RecordTypeInts.CTDA:
                 case RecordTypeInts.CITC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.ParsePerItem(
                             reader: frame,
@@ -3693,13 +3732,16 @@ namespace Mutagen.Bethesda.Fallout4
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary)
                         .CastExtendedList<Condition>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.NVNM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NavmeshGeometry");
                     item.NavmeshGeometry = Mutagen.Bethesda.Fallout4.NavmeshGeometry.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Activator_FieldIndex.NavmeshGeometry;
                 }
                 case RecordTypeInts.XXXX:

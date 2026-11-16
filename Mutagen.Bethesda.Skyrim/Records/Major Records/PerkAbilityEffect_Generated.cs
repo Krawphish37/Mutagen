@@ -1073,7 +1073,9 @@ namespace Mutagen.Bethesda.Skyrim
             IPerkAbilityEffect item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Ability");
             item.Ability.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

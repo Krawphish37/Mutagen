@@ -3109,71 +3109,90 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Fallout4.DialogResponsesAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.ENAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     item.Flags = Mutagen.Bethesda.Fallout4.DialogResponseFlags.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.Flags;
                 }
                 case RecordTypeInts.TPIC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Topic");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Topic.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.Topic;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PreviousDialog");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PreviousDialog.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.PreviousDialog;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SharedDialog");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SharedDialog.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.SharedDialog;
                 }
                 case RecordTypeInts.GNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DialogGroup");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DialogGroup.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.DialogGroup;
                 }
                 case RecordTypeInts.IOVR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OverrideFileName");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.OverrideFileName = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.OverrideFileName;
                 }
                 case RecordTypeInts.TRDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Responses");
                     item.Responses.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<DialogResponse>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: DialogResponse_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: DialogResponse.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.Responses;
                 }
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.RNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Prompt");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Prompt = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -3181,78 +3200,101 @@ namespace Mutagen.Bethesda.Fallout4
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.Prompt;
                 }
                 case RecordTypeInts.ANAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Speaker");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Speaker.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.Speaker;
                 }
                 case RecordTypeInts.TSCE:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StartScene");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.StartScene.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.StartScene;
                 }
                 case RecordTypeInts.INTV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "INTV");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.INTV = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.INTV;
                 }
                 case RecordTypeInts.ALFA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ForcedAlias");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ForcedAlias = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.ForcedAlias;
                 }
                 case RecordTypeInts.ONAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AudioOutputOverride");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AudioOutputOverride.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.AudioOutputOverride;
                 }
                 case RecordTypeInts.GREE:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GreetDistance");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.GreetDistance = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.GreetDistance;
                 }
                 case RecordTypeInts.TIQS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SetParentQuestStage");
                     item.SetParentQuestStage = Mutagen.Bethesda.Fallout4.DialogSetParentQuestStage.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.SetParentQuestStage;
                 }
                 case RecordTypeInts.NAM0:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StartScenePhase");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.StartScenePhase = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.StartScenePhase;
                 }
                 case RecordTypeInts.INCC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Challenge");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Challenge = EnumBinaryTranslation<DialogResponses.ChallengeType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.Challenge;
                 }
                 case RecordTypeInts.MODQ:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ResetGlobal");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ResetGlobal.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.ResetGlobal;
                 }
                 case RecordTypeInts.INAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SubtitlePriority");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SubtitlePriority = EnumBinaryTranslation<DialogResponses.SubtitlePriorityLevel, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.SubtitlePriority;
                 }
                 case RecordTypeInts.XXXX:

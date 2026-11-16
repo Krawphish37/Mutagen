@@ -706,9 +706,11 @@ namespace Mutagen.Bethesda.Starfield
                 frame: frame,
                 translationParams: translationParams,
                 fillStructs: ConditionGlobalBinaryCreateTranslation.FillBinaryStructs);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "CustomBinaryEnd");
             ConditionGlobalBinaryCreateTranslation.CustomBinaryEndImportPublic(
                 frame: frame,
                 obj: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
         
         public override void CopyInFromBinary(

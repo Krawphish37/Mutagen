@@ -8,38 +8,54 @@ namespace Mutagen.Bethesda.Starfield;
 
 partial class AVirtualMachineAdapterBinaryCreateTranslation
 {
+    /// <summary>The scripts (C60: noted as the items of the list the caller began)</summary>
     public static IEnumerable<ScriptEntry> ReadEntries(MutagenFrame frame, ushort objectFormat)
     {
+        var countAt = ValuePositionRecorder.Here(frame);
         ushort count = frame.ReadUInt16();
+        if (countAt >= 0) ValuePositionRecorder.Count(frame, countAt);
         for (int i = 0; i < count; i++)
         {
-            yield return ReadEntry(frame, objectFormat);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(frame, i);
+            var entry = ReadEntry(frame, objectFormat);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            yield return entry;
         }
     }
 
     public static ScriptEntry ReadEntry(MutagenFrame frame, ushort objectFormat)
     {
+        var at = ValuePositionRecorder.Here(frame);
         var scriptName = StringBinaryTranslation.Instance.Parse(frame, stringBinaryType: StringBinaryType.PrependLengthUShort, parseWhole: true);
+        ValuePositionRecorder.Value(frame, nameof(ScriptEntry.Name), at);
         var entry = new ScriptEntry()
         {
             Name = scriptName,
         };
         if (scriptName.IsNullOrEmpty()) return entry;
+        at = ValuePositionRecorder.Here(frame);
         entry.Flags = (ScriptEntry.Flag)frame.ReadUInt8();
+        ValuePositionRecorder.Value(frame, nameof(ScriptEntry.Flags), at);
         FillProperties(frame, objectFormat, entry);
         return entry;
     }
 
     public static partial void FillBinaryScriptsCustom(MutagenFrame frame, IAVirtualMachineAdapter item)
     {
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.Scripts));
         item.Scripts.AddRange(ReadEntries(frame, item.ObjectFormat));
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
     }
 
     public static ScriptProperty ParseProperty(MutagenFrame frame, ushort objectFormat)
     {
+        var nameAt = ValuePositionRecorder.Here(frame);
         var name = StringBinaryTranslation.Instance.Parse(frame, stringBinaryType: StringBinaryType.PrependLengthUShort, parseWhole: true);
+        ValuePositionRecorder.Value(frame, nameof(ScriptProperty.Name), nameAt);
         var type = (ScriptProperty.Type)frame.ReadUInt8();
+        var flagsAt = ValuePositionRecorder.Here(frame);
         var flags = (ScriptProperty.Flag)frame.ReadUInt8();
+        ValuePositionRecorder.Value(frame, nameof(ScriptProperty.Flags), flagsAt);
         ScriptProperty prop = type switch
         {
             ScriptProperty.Type.None => new ScriptProperty(),
@@ -67,37 +83,75 @@ partial class AVirtualMachineAdapterBinaryCreateTranslation
                 FillObject(frame, obj, objectFormat);
                 break;
             case ScriptObjectListProperty objList:
+            {
+                if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(objList.Objects));
+                var countAt = ValuePositionRecorder.Here(frame);
                 var objListCount = frame.ReadUInt32();
+                if (countAt >= 0) ValuePositionRecorder.Count(frame, countAt);
                 for (int j = 0; j < objListCount; j++)
                 {
                     var subObj = new ScriptObjectProperty();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Item(frame, j);
                     FillObject(frame, subObj, objectFormat);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     objList.Objects.Add(subObj);
                 }
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 break;
+            }
             case ScriptVariableProperty varProp:
             case ScriptVariableListProperty varPropList:
                 throw new NotImplementedException();
             case ScriptStructProperty subStructs:
+                // One struct: the members list's only item
+                if (ValuePositionRecorder.On)
+                {
+                    ValuePositionRecorder.List(frame, nameof(subStructs.Members));
+                    ValuePositionRecorder.Item(frame, 0);
+                }
                 subStructs.Members.Add(GetScriptEntryStruct(frame, objectFormat));
+                if (ValuePositionRecorder.On)
+                {
+                    ValuePositionRecorder.End(frame);
+                    ValuePositionRecorder.End(frame);
+                }
                 break;
             case ScriptStructListProperty structList:
+            {
+                if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(structList.Structs));
+                var countAt = ValuePositionRecorder.Here(frame);
                 var structListCount = frame.ReadUInt32();
+                if (countAt >= 0) ValuePositionRecorder.Count(frame, countAt);
                 for (int j = 0; j < structListCount; j++)
                 {
                     var subStructs = new ScriptEntryStructs();
+                    if (ValuePositionRecorder.On)
+                    {
+                        ValuePositionRecorder.Item(frame, j);
+                        ValuePositionRecorder.List(frame, nameof(subStructs.Members));
+                    }
+                    var membersAt = ValuePositionRecorder.Here(frame);
+                    var membersCount = frame.ReadInt32();
+                    if (membersAt >= 0) ValuePositionRecorder.Count(frame, membersAt);
                     subStructs.Members.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ScriptProperty>.Instance.Parse(
-                            amount: frame.ReadInt32(),
+                            amount: membersCount,
                             reader: frame,
                             transl: (MutagenFrame f, [MaybeNullWhen(false)] out ScriptProperty item, TypedParseParams p) =>
                             {
                                 item = ParseProperty(f, objectFormat);
                                 return true;
                             }));
+                    if (ValuePositionRecorder.On)
+                    {
+                        ValuePositionRecorder.End(frame);
+                        ValuePositionRecorder.End(frame);
+                    }
                     structList.Structs.Add(subStructs);
                 }
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 break;
+            }
             default:
                 prop.CopyInFromBinary(frame);
                 break;
@@ -107,11 +161,17 @@ partial class AVirtualMachineAdapterBinaryCreateTranslation
 
     static void FillProperties(MutagenFrame frame, ushort objectFormat, IScriptEntry item, bool isStruct = false)
     {
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.Properties));
+        var countAt = ValuePositionRecorder.Here(frame);
         var count = isStruct ? frame.ReadUInt32() : frame.ReadUInt16();
+        if (countAt >= 0) ValuePositionRecorder.Count(frame, countAt);
         for (int i = 0; i < count; i++)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(frame, i);
             item.Properties.Add(ParseProperty(frame, objectFormat));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
     }
 
     static IEnumerable<ScriptProperty> ParseProperties(MutagenFrame frame, ushort objectFormat, bool isStruct = false)
@@ -125,21 +185,28 @@ partial class AVirtualMachineAdapterBinaryCreateTranslation
 
     public static void FillObject(MutagenFrame frame, IScriptObjectProperty obj, ushort objectFormat)
     {
+        var at = ValuePositionRecorder.Here(frame);
         switch (objectFormat)
         {
             case 2:
                 obj.Unused = frame.ReadUInt16();
+                if (at >= 0) ValuePositionRecorder.At(nameof(obj.Unused), at, 2);
                 obj.Alias = frame.ReadInt16();
+                if (at >= 0) ValuePositionRecorder.At(nameof(obj.Alias), at + 2, 2);
                 obj.Object.FormKey = FormLinkBinaryTranslation.Instance.Parse(
                     reader: frame,
                     defaultVal: FormKey.Null);
+                if (at >= 0) ValuePositionRecorder.At(nameof(obj.Object), at + 4, 4);
                 break;
             case 1:
                 obj.Object.FormKey = FormLinkBinaryTranslation.Instance.Parse(
                     reader: frame,
                     defaultVal: FormKey.Null);
+                if (at >= 0) ValuePositionRecorder.At(nameof(obj.Object), at, 4);
                 obj.Alias = frame.ReadInt16();
+                if (at >= 0) ValuePositionRecorder.At(nameof(obj.Alias), at + 4, 2);
                 obj.Unused = frame.ReadUInt16();
+                if (at >= 0) ValuePositionRecorder.At(nameof(obj.Unused), at + 6, 2);
                 break;
             default:
                 throw new NotImplementedException();

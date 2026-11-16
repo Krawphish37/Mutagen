@@ -1152,12 +1152,20 @@ namespace Mutagen.Bethesda.Starfield
             IDestructableData item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Health");
             item.Health = frame.ReadInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DESTCount");
             item.DESTCount = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
             item.Flags = EnumBinaryTranslation<Destructible.DestructibleFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 1);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unknown");
             item.Unknown = frame.ReadInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

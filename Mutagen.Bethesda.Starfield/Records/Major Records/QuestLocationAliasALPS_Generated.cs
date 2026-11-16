@@ -1208,18 +1208,22 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLocationAliasALPS_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.LNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PcmTypeKeyword");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PcmTypeKeyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLocationAliasALPS_FieldIndex.PcmTypeKeyword;
                 }
                 default:

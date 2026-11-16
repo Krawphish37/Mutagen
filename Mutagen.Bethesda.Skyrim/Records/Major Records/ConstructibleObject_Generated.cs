@@ -1899,6 +1899,7 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.CNTO:
                 case RecordTypeInts.COCT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Items");
                     item.Items = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ContainerEntry>.Instance.ParsePerItem(
                             reader: frame,
@@ -1908,34 +1909,43 @@ namespace Mutagen.Bethesda.Skyrim
                             translationParams: translationParams,
                             transl: ContainerEntry.TryCreateFromBinary)
                         .CastExtendedList<ContainerEntry>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ConstructibleObject_FieldIndex.Items;
                 }
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ConstructibleObject_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CreatedObject");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CreatedObject.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ConstructibleObject_FieldIndex.CreatedObject;
                 }
                 case RecordTypeInts.BNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WorkbenchKeyword");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.WorkbenchKeyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ConstructibleObject_FieldIndex.WorkbenchKeyword;
                 }
                 case RecordTypeInts.NAM1:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CreatedObjectCount");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CreatedObjectCount = frame.ReadUInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ConstructibleObject_FieldIndex.CreatedObjectCount;
                 }
                 default:

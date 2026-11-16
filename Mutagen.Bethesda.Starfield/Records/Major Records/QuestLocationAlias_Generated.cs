@@ -2334,116 +2334,148 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ALLS:
                 {
                     if (lastParsed.ShortCircuit((int)QuestLocationAlias_FieldIndex.ID, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ID");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ID = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLocationAlias_FieldIndex.ID;
                 }
                 case RecordTypeInts.ALID:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLocationAlias_FieldIndex.Name;
                 }
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<AQuestAlias.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLocationAlias_FieldIndex.Flags;
                 }
                 case RecordTypeInts.ALFG:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ExtraFlags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ExtraFlags = EnumBinaryTranslation<QuestLocationAlias.ExtraFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLocationAlias_FieldIndex.ExtraFlags;
                 }
                 case RecordTypeInts.ALFI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AliasIDToForceIntoWhenFilled");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AliasIDToForceIntoWhenFilled = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLocationAlias_FieldIndex.AliasIDToForceIntoWhenFilled;
                 }
                 case RecordTypeInts.ALFL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SpecificLocation");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SpecificLocation.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLocationAlias_FieldIndex.SpecificLocation;
                 }
                 case RecordTypeInts.ALFA:
                 case RecordTypeInts.KNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ReferenceAliasLocation");
                     item.ReferenceAliasLocation = Mutagen.Bethesda.Starfield.ReferenceAliasLocation.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLocationAlias_FieldIndex.ReferenceAliasLocation;
                 }
                 case RecordTypeInts.ALEQ:
                 case RecordTypeInts.ALEA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ExternalAliasLocation");
                     item.ExternalAliasLocation = Mutagen.Bethesda.Starfield.ExternalAliasLocation.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLocationAlias_FieldIndex.ExternalAliasLocation;
                 }
                 case RecordTypeInts.ALFE:
                 case RecordTypeInts.ALFD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FindMatchingRefFromEvent");
                     item.FindMatchingRefFromEvent = Mutagen.Bethesda.Starfield.FindMatchingRefFromEvent.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLocationAlias_FieldIndex.FindMatchingRefFromEvent;
                 }
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLocationAlias_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.ALPS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PlanetContentRequest");
                     item.PlanetContentRequest = Mutagen.Bethesda.Starfield.QuestLocationAliasALPS.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLocationAlias_FieldIndex.PlanetContentRequest;
                 }
                 case RecordTypeInts.ALCC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ClosestToAlias");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ClosestToAlias = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLocationAlias_FieldIndex.ClosestToAlias;
                 }
                 case RecordTypeInts.ALSY:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SystemLocationAliasID");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SystemLocationAliasID = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLocationAlias_FieldIndex.SystemLocationAliasID;
                 }
                 case RecordTypeInts.ALPN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ParentSystemLocationAliasID");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ParentSystemLocationAliasID = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLocationAlias_FieldIndex.ParentSystemLocationAliasID;
                 }
                 case RecordTypeInts.ALKF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LocationTypeKeyword");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LocationTypeKeyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLocationAlias_FieldIndex.LocationTypeKeyword;
                 }
                 case RecordTypeInts.ALDN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DisplayName");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DisplayName.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestLocationAlias_FieldIndex.DisplayName;
                 }
                 default:

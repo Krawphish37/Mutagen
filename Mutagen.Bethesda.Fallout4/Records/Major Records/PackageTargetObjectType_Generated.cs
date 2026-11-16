@@ -1029,9 +1029,11 @@ namespace Mutagen.Bethesda.Fallout4
             APackageTargetBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Type");
             item.Type = EnumBinaryTranslation<TargetObjectType, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

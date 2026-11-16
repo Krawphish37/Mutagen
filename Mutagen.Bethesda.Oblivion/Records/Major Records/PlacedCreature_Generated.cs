@@ -2031,54 +2031,72 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 case RecordTypeInts.NAME:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Base");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Base.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedCreature_FieldIndex.Base;
                 }
                 case RecordTypeInts.XOWN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Owner");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Owner.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedCreature_FieldIndex.Owner;
                 }
                 case RecordTypeInts.XRNK:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FactionRank");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FactionRank = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedCreature_FieldIndex.FactionRank;
                 }
                 case RecordTypeInts.XGLB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GlobalVariable");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.GlobalVariable.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedCreature_FieldIndex.GlobalVariable;
                 }
                 case RecordTypeInts.XLOD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DistantLODData");
                     item.DistantLODData = Mutagen.Bethesda.Oblivion.DistantLODData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedCreature_FieldIndex.DistantLODData;
                 }
                 case RecordTypeInts.XESP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EnableParent");
                     item.EnableParent = Mutagen.Bethesda.Oblivion.EnableParent.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedCreature_FieldIndex.EnableParent;
                 }
                 case RecordTypeInts.XRGD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RagdollData");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RagdollData = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedCreature_FieldIndex.RagdollData;
                 }
                 case RecordTypeInts.XSCL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Scale");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Scale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedCreature_FieldIndex.Scale;
                 }
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Location");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.Location = Mutagen.Bethesda.Oblivion.Location.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedCreature_FieldIndex.Location;
                 }
                 default:

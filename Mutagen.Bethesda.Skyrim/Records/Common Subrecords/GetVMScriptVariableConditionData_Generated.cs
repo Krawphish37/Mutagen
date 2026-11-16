@@ -482,19 +482,16 @@ namespace Mutagen.Bethesda.Skyrim
         }
         object? IConditionParameters.Parameter2
         {
-            get => null;
-            set
-            {
-
-            }
+            get => VariableName;
+            set => VariableName = value is null or string ? (string?)value : throw new ArgumentException("Parameter2 is a string");
         }
         object? IConditionParametersGetter.Parameter2
         {
-            get => null;
+            get => VariableName;
         }
         Type? IConditionParametersGetter.Parameter2Type
         {
-            get => null;
+            get => typeof(string);
         }
         #endregion
 
@@ -1265,10 +1262,14 @@ namespace Mutagen.Bethesda.Skyrim
             ConditionDataBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Target");
             FormLinkOrIndexBinaryTranslation.Instance.ParseInto(
                 reader: frame,
                 item: item.Target);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SecondUnusedIntParameter");
             item.SecondUnusedIntParameter = frame.ReadInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

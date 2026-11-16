@@ -1225,19 +1225,27 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Percentage");
                     item.Percentage = dataFrame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ModelFilename");
                     item.ModelFilename.GivenPath = StringBinaryTranslation.Instance.Parse(
                         reader: dataFrame,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: false);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "HasCollision");
                     item.HasCollision = dataFrame.ReadBoolean();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)DebrisModel_FieldIndex.HasCollision;
                 }
                 case RecordTypeInts.MODT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TextureFileHashes");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TextureFileHashes = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DebrisModel_FieldIndex.TextureFileHashes;
                 }
                 default:

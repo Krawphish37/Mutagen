@@ -1047,14 +1047,18 @@ namespace Mutagen.Bethesda.Starfield
             IFurnitureMarkerFile item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
             item.Name = StringBinaryTranslation.Instance.Parse(
                 reader: frame,
                 stringBinaryType: StringBinaryType.NullTerminate,
                 parseWhole: false);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ModelFilename");
             item.ModelFilename = StringBinaryTranslation.Instance.Parse(
                 reader: frame,
                 stringBinaryType: StringBinaryType.NullTerminate,
                 parseWhole: false);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

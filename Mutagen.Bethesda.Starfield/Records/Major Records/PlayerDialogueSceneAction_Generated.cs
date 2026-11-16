@@ -1662,21 +1662,27 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.WED0:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Sound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.Sound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlayerDialogueSceneAction_FieldIndex.Sound;
                 }
                 case RecordTypeInts.HNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Headtracking");
                     item.Headtracking = Mutagen.Bethesda.Starfield.HeadTracking.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlayerDialogueSceneAction_FieldIndex.Headtracking;
                 }
                 case RecordTypeInts.DTGT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DialogueTargetActor");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DialogueTargetActor = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlayerDialogueSceneAction_FieldIndex.DialogueTargetActor;
                 }
                 case RecordTypeInts.ESCE:
@@ -1687,28 +1693,36 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.PAPN:
                 case RecordTypeInts.ESCS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "DialogueList");
                     item.DialogueList.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<PlayerDialogueSceneActionItem>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: PlayerDialogueSceneActionItem_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: PlayerDialogueSceneActionItem.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlayerDialogueSceneAction_FieldIndex.DialogueList;
                 }
                 case RecordTypeInts.ATTR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ReactToAction");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ReactToAction = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlayerDialogueSceneAction_FieldIndex.ReactToAction;
                 }
                 case RecordTypeInts.ACBS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NpcReaction");
                     item.NpcReaction = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlayerDialogueSceneAction_FieldIndex.NpcReaction;
                 }
                 case RecordTypeInts.JAIL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "JAIL");
                     item.JAIL = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlayerDialogueSceneAction_FieldIndex.JAIL;
                 }
                 default:

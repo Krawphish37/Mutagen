@@ -2583,83 +2583,103 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Oblivion.DialogItemData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogItem_FieldIndex.Data;
                 }
                 case RecordTypeInts.QSTI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Quest");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Quest.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogItem_FieldIndex.Quest;
                 }
                 case RecordTypeInts.TPIC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Topic");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Topic.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogItem_FieldIndex.Topic;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PreviousItem");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PreviousItem.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogItem_FieldIndex.PreviousItem;
                 }
                 case RecordTypeInts.NAME:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Topics");
                     item.Topics.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IDialogTopicGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.NAME),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogItem_FieldIndex.Topics;
                 }
                 case RecordTypeInts.TRDT:
                 case RecordTypeInts.NAM1:
                 case RecordTypeInts.NAM2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Responses");
                     item.Responses.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<DialogResponse>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: DialogResponse_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: DialogResponse.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogItem_FieldIndex.Responses;
                 }
                 case RecordTypeInts.CTDA:
                 case RecordTypeInts.CTDT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogItem_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.TCLT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Choices");
                     item.Choices.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IDialogTopicGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.TCLT),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogItem_FieldIndex.Choices;
                 }
                 case RecordTypeInts.TCLF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "LinkFrom");
                     item.LinkFrom.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IDialogTopicGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.TCLF),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogItem_FieldIndex.LinkFrom;
                 }
                 case RecordTypeInts.SCHD:
                 case RecordTypeInts.SCHR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Script");
                     item.Script.CopyInFromBinary(
                         frame: frame,
                         translationParams: null);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogItem_FieldIndex.Script;
                 }
                 default:

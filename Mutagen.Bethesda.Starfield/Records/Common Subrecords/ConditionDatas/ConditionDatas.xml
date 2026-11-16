@@ -15,10 +15,10 @@
     </Fields>
   </Object>
   <!-- conditionFunction="*": the catch-all, for every function index no other ConditionData claims; Function keeps the
-       index itself (CTDA offset 8, a UInt16, the same bytes Condition's FunctionParse reads). generateConditionData="false":
-       its Parameter1/2 are ParameterOne/Two, written in UnknownConditionData.cs (generated, they took the first two
-       fields, Function and ParameterOne; C58/W19) -->
-  <Object name="UnknownConditionData" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration" conditionFunction="*" generateConditionData="false">
+       index itself (CTDA offset 8, a UInt16, the same bytes Condition's FunctionParse reads). Its Parameter1/2 are
+       ParameterOne/Two: ConditionDataModule maps them from the CTDA's parameter slots (C60; before, it took the first two
+       fields, Function and ParameterOne, C58/W19) -->
+  <Object name="UnknownConditionData" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration" conditionFunction="*">
     <Fields>
       <Enum name="Function" enumName="Condition.Function" byteLength="2" binary="NoGeneration" layoutOffset="8" layoutEncoding="uint16"/>
       <Int32 name="ParameterOne"/>
@@ -1862,9 +1862,9 @@
       <String name="SecondUnusedStringParameter" recordType="CIS2" nullable="true" binary="NoGeneration" />
     </Fields>
   </Object>
-  <!-- generateConditionData="false" on the five classes whose parameter is a string (CIS1/CIS2): their Parameter1/2 are
+  <!-- on the five classes whose parameter is a string (CIS1/CIS2): their Parameter1/2 are
        written in their partials, as the generator takes the first two fields (an unused Int32 slot) (C58/W19) -->
-  <Object name="GetGraphVariableFloatConditionData" conditionFunction="447" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration" generateConditionData="false">
+  <Object name="GetGraphVariableFloatConditionData" conditionFunction="447" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
     <Fields>
       <Int32 name="FirstUnusedIntParameter" />
       <String recordType="CIS1" nullable="true" binary="NoGeneration" name="FirstParameter" />
@@ -2761,7 +2761,7 @@
       <String name="SecondUnusedStringParameter" recordType="CIS2" nullable="true" binary="NoGeneration" />
     </Fields>
   </Object>
-  <Object name="GetVMQuestVariableConditionData" conditionFunction="629" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration" generateConditionData="false">
+  <Object name="GetVMQuestVariableConditionData" conditionFunction="629" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
     <Fields>
       <FormLinkOrIndex refName="Quest" name="FirstParameter" />
       <String name="FirstUnusedStringParameter" recordType="CIS1" nullable="true" binary="NoGeneration" />
@@ -2959,7 +2959,7 @@
       <String name="SecondUnusedStringParameter" recordType="CIS2" nullable="true" binary="NoGeneration" />
     </Fields>
   </Object>
-  <Object name="HasVMScriptConditionData" conditionFunction="659" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration" generateConditionData="false">
+  <Object name="HasVMScriptConditionData" conditionFunction="659" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
     <Fields>
       <Int32 name="FirstUnusedIntParameter" />
       <String recordType="CIS1" nullable="true" binary="NoGeneration" name="FirstParameter" />
@@ -2967,7 +2967,7 @@
       <String name="SecondUnusedStringParameter" recordType="CIS2" nullable="true" binary="NoGeneration" />
     </Fields>
   </Object>
-  <Object name="GetVMScriptVariableConditionData" conditionFunction="660" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration" generateConditionData="false">
+  <Object name="GetVMScriptVariableConditionData" conditionFunction="660" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
     <Fields>
       <Int32 name="FirstUnusedIntParameter" />
       <String recordType="CIS1" nullable="true" binary="NoGeneration" name="FirstParameter" />
@@ -3015,7 +3015,7 @@
       <String name="SecondUnusedStringParameter" recordType="CIS2" nullable="true" binary="NoGeneration" />
     </Fields>
   </Object>
-  <Object name="GetGraphVariableIntConditionData" conditionFunction="675" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration" generateConditionData="false">
+  <Object name="GetGraphVariableIntConditionData" conditionFunction="675" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
     <Fields>
       <Int32 name="FirstUnusedIntParameter" />
       <String recordType="CIS1" nullable="true" binary="NoGeneration" name="FirstParameter" />

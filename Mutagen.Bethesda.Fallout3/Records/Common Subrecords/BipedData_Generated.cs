@@ -1051,12 +1051,16 @@ namespace Mutagen.Bethesda.Fallout3
             IBipedData item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BipedFlags");
             item.BipedFlags = EnumBinaryTranslation<BipedData.BipedFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GeneralFlags");
             item.GeneralFlags = EnumBinaryTranslation<BipedData.GeneralFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

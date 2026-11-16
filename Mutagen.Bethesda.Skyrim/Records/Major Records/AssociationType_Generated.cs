@@ -1557,6 +1557,7 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.MPRT:
                 case RecordTypeInts.FPRT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ParentTitle");
                     item.ParentTitle = Mutagen.Bethesda.Plugins.Binary.Translations.GenderedItemBinaryTranslation.Parse<String>(
                         frame: frame,
                         maleMarker: RecordTypes.MPRT,
@@ -1564,11 +1565,13 @@ namespace Mutagen.Bethesda.Skyrim
                         transl: StringBinaryTranslation.Instance.Parse,
                         skipMarker: false,
                         existing: item.ParentTitle);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AssociationType_FieldIndex.ParentTitle;
                 }
                 case RecordTypeInts.MCHT:
                 case RecordTypeInts.FCHT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Title");
                     item.Title = Mutagen.Bethesda.Plugins.Binary.Translations.GenderedItemBinaryTranslation.Parse<String>(
                         frame: frame,
                         maleMarker: RecordTypes.MCHT,
@@ -1576,14 +1579,17 @@ namespace Mutagen.Bethesda.Skyrim
                         transl: StringBinaryTranslation.Instance.Parse,
                         skipMarker: false,
                         existing: item.Title);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AssociationType_FieldIndex.Title;
                 }
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IsFamily");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.IsFamily = BooleanBinaryTranslation<MutagenFrame>.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         byteLength: 4);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AssociationType_FieldIndex.IsFamily;
                 }
                 default:

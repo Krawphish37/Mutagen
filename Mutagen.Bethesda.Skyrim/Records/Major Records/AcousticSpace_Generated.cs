@@ -1640,25 +1640,33 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Skyrim.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.SNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AmbientSound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AmbientSound.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.AmbientSound;
                 }
                 case RecordTypeInts.RDAT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UseSoundFromRegion");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.UseSoundFromRegion.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.UseSoundFromRegion;
                 }
                 case RecordTypeInts.BNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EnvironmentType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EnvironmentType.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.EnvironmentType;
                 }
                 default:

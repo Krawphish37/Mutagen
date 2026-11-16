@@ -1905,33 +1905,43 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 case RecordTypeInts.PKDT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Oblivion.AIPackageData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AIPackage_FieldIndex.Data;
                 }
                 case RecordTypeInts.PLDT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Location");
                     item.Location = Mutagen.Bethesda.Oblivion.AIPackageLocation.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AIPackage_FieldIndex.Location;
                 }
                 case RecordTypeInts.PSDT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Schedule");
                     item.Schedule = Mutagen.Bethesda.Oblivion.AIPackageSchedule.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AIPackage_FieldIndex.Schedule;
                 }
                 case RecordTypeInts.PTDT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Target");
                     item.Target = Mutagen.Bethesda.Oblivion.AIPackageTarget.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AIPackage_FieldIndex.Target;
                 }
                 case RecordTypeInts.CTDA:
                 case RecordTypeInts.CTDT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AIPackage_FieldIndex.Conditions;
                 }
                 default:

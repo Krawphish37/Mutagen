@@ -984,9 +984,11 @@ namespace Mutagen.Bethesda.Fallout4
             IDistantLod item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Mesh");
             DistantLodBinaryCreateTranslation.FillBinaryMeshCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void FillBinaryMeshCustom(

@@ -2181,48 +2181,61 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Starfield.VirtualMachineAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundEchoMarker_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Starfield.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundEchoMarker_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.ODTY:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DirtinessScale");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DirtinessScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundEchoMarker_FieldIndex.DirtinessScale;
                 }
                 case RecordTypeInts.XALG:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "XalgFlags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.XalgFlags = EnumBinaryTranslation<XalgFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundEchoMarker_FieldIndex.XalgFlags;
                 }
                 case RecordTypeInts.NNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Description");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Description = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundEchoMarker_FieldIndex.Description;
                 }
                 case RecordTypeInts.ECHL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LoopingSound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.LoopingSound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundEchoMarker_FieldIndex.LoopingSound;
                 }
                 case RecordTypeInts.ECHO:
                 case RecordTypeInts.ECHE:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Markers");
                     item.Markers.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<EchoMarker>.Instance.Parse(
                             reader: frame,
@@ -2230,15 +2243,18 @@ namespace Mutagen.Bethesda.Starfield
                             itemEndMarker: RecordTypes.ECHE,
                             translationParams: translationParams,
                             transl: EchoMarker.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundEchoMarker_FieldIndex.Markers;
                 }
                 case RecordTypeInts.ECHD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DefaultStartMarker");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength + contentLength; // Skip marker
                     item.DefaultStartMarker = Mutagen.Bethesda.Starfield.EchoMarker.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
                     frame.TryReadSubrecord(RecordTypes.ECHE, out _);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundEchoMarker_FieldIndex.DefaultStartMarker;
                 }
                 case RecordTypeInts.XXXX:

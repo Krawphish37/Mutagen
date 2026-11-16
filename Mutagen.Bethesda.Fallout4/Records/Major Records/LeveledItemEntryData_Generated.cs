@@ -1275,14 +1275,26 @@ namespace Mutagen.Bethesda.Fallout4
             ILeveledItemEntryData item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Level");
             item.Level = frame.ReadInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unused");
             item.Unused = frame.ReadInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Reference");
             item.Reference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Count");
             item.Count = frame.ReadInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChanceNone", true);
             item.ChanceNone = PercentBinaryTranslation.Parse(
                 reader: frame,
                 integerType: FloatIntegerType.ByteHundred);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unused2");
             item.Unused2 = frame.ReadInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

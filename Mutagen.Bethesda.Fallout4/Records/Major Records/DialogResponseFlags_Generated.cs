@@ -1053,14 +1053,18 @@ namespace Mutagen.Bethesda.Fallout4
             IDialogResponseFlags item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
             item.Flags = EnumBinaryTranslation<DialogResponses.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 2);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ResetHours", true);
             item.ResetHours = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 integerType: FloatIntegerType.UShort,
                 multiplier: 24f,
                 divisor: 65535f);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

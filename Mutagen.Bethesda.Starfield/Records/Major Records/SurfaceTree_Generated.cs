@@ -2230,24 +2230,30 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.BFCB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Components");
                     item.Components.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AComponent>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: AComponent_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: AComponent.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SurfaceTree_FieldIndex.Components;
                 }
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CNAM = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SurfaceTree_FieldIndex.CNAM;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EdgeSize");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EdgeSize = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SurfaceTree_FieldIndex.EdgeSize;
                 }
                 case RecordTypeInts.FNAM:
@@ -2255,6 +2261,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)SurfaceTree_FieldIndex.EdgeSize)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "SurfacePatterns");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.SurfacePatterns = 
                             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ISurfacePatternGetter>>.Instance.Parse(
@@ -2262,10 +2269,12 @@ namespace Mutagen.Bethesda.Starfield
                                 amount: 65536,
                                 transl: FormLinkBinaryTranslation.Instance.Parse)
                             .ToArray();
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)SurfaceTree_FieldIndex.SurfacePatterns, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)SurfaceTree_FieldIndex.GNAM)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "SurfacePatterns2");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.SurfacePatterns2 = 
                             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ISurfacePatternGetter>>.Instance.Parse(
@@ -2273,6 +2282,7 @@ namespace Mutagen.Bethesda.Starfield
                                 amount: 65536,
                                 transl: FormLinkBinaryTranslation.Instance.Parse)
                             .ToArray();
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)SurfaceTree_FieldIndex.SurfacePatterns2, nextRecordType);
                     }
                     else
@@ -2280,6 +2290,7 @@ namespace Mutagen.Bethesda.Starfield
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "SurfacePatterns");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.SurfacePatterns = 
                                     Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ISurfacePatternGetter>>.Instance.Parse(
@@ -2287,8 +2298,10 @@ namespace Mutagen.Bethesda.Starfield
                                         amount: 65536,
                                         transl: FormLinkBinaryTranslation.Instance.Parse)
                                     .ToArray();
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)SurfaceTree_FieldIndex.SurfacePatterns, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "SurfacePatterns2");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.SurfacePatterns2 = 
                                     Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ISurfacePatternGetter>>.Instance.Parse(
@@ -2296,6 +2309,7 @@ namespace Mutagen.Bethesda.Starfield
                                         amount: 65536,
                                         transl: FormLinkBinaryTranslation.Instance.Parse)
                                     .ToArray();
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)SurfaceTree_FieldIndex.SurfacePatterns2, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -2307,14 +2321,18 @@ namespace Mutagen.Bethesda.Starfield
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)SurfaceTree_FieldIndex.SurfacePatterns)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GNAM");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.GNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)SurfaceTree_FieldIndex.GNAM, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)SurfaceTree_FieldIndex.SurfacePatterns2)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GNAM2");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.GNAM2 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)SurfaceTree_FieldIndex.GNAM2, nextRecordType);
                     }
                     else
@@ -2322,12 +2340,16 @@ namespace Mutagen.Bethesda.Starfield
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GNAM");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.GNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)SurfaceTree_FieldIndex.GNAM, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GNAM2");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.GNAM2 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)SurfaceTree_FieldIndex.GNAM2, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -2336,11 +2358,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.NAM1:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Filter");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Filter = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SurfaceTree_FieldIndex.Filter;
                 }
                 case RecordTypeInts.XXXX:

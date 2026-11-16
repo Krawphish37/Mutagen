@@ -1068,21 +1068,25 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.ICON:
                 {
                     if (lastParsed.ShortCircuit((int)Icons_FieldIndex.InventoryImage, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "InventoryImage");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.InventoryImage = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Icons_FieldIndex.InventoryImage;
                 }
                 case RecordTypeInts.MICO:
                 {
                     if (lastParsed.ShortCircuit((int)Icons_FieldIndex.MessageIcon, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MessageIcon");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MessageIcon = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Icons_FieldIndex.MessageIcon;
                 }
                 default:

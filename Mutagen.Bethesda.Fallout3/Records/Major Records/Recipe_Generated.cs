@@ -2198,6 +2198,7 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -2205,16 +2206,19 @@ namespace Mutagen.Bethesda.Fallout3
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Recipe_FieldIndex.Name;
                 }
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Recipe_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.DATA:
@@ -2222,25 +2226,35 @@ namespace Mutagen.Bethesda.Fallout3
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Skill");
                     item.Skill = EnumBinaryTranslation<ActorValue, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 4);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Level");
                     item.Level = dataFrame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Category");
                     item.Category.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SubCategory");
                     item.SubCategory.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)Recipe_FieldIndex.SubCategory;
                 }
                 case RecordTypeInts.RCIL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Ingredients");
                     item.Ingredients.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<RecipeIngredient>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: RecipeIngredient_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: RecipeIngredient.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Recipe_FieldIndex.Ingredients;
                 }
                 case RecordTypeInts.RCQY:
@@ -2248,22 +2262,26 @@ namespace Mutagen.Bethesda.Fallout3
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)Recipe_FieldIndex.SubCategory)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Ingredients");
                         item.Ingredients.SetTo(
                             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<RecipeIngredient>.Instance.Parse(
                                 reader: frame,
                                 triggeringRecord: RecipeIngredient_Registration.TriggerSpecs,
                                 translationParams: translationParams,
                                 transl: RecipeIngredient.TryCreateFromBinary));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Recipe_FieldIndex.Ingredients, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Recipe_FieldIndex.Ingredients)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Outputs");
                         item.Outputs.SetTo(
                             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<RecipeOutput>.Instance.Parse(
                                 reader: frame,
                                 triggeringRecord: RecipeOutput_Registration.TriggerSpecs,
                                 translationParams: translationParams,
                                 transl: RecipeOutput.TryCreateFromBinary));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Recipe_FieldIndex.Outputs, nextRecordType);
                     }
                     else
@@ -2271,20 +2289,24 @@ namespace Mutagen.Bethesda.Fallout3
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Ingredients");
                                 item.Ingredients.SetTo(
                                     Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<RecipeIngredient>.Instance.Parse(
                                         reader: frame,
                                         triggeringRecord: RecipeIngredient_Registration.TriggerSpecs,
                                         translationParams: translationParams,
                                         transl: RecipeIngredient.TryCreateFromBinary));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Recipe_FieldIndex.Ingredients, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Outputs");
                                 item.Outputs.SetTo(
                                     Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<RecipeOutput>.Instance.Parse(
                                         reader: frame,
                                         triggeringRecord: RecipeOutput_Registration.TriggerSpecs,
                                         translationParams: translationParams,
                                         transl: RecipeOutput.TryCreateFromBinary));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Recipe_FieldIndex.Outputs, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -2293,12 +2315,14 @@ namespace Mutagen.Bethesda.Fallout3
                 }
                 case RecordTypeInts.RCOD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Outputs");
                     item.Outputs.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<RecipeOutput>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: RecipeOutput_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: RecipeOutput.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Recipe_FieldIndex.Outputs;
                 }
                 default:

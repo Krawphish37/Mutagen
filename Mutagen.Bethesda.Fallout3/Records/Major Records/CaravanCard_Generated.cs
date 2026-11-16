@@ -2368,11 +2368,14 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Fallout3.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CaravanCard_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -2380,6 +2383,7 @@ namespace Mutagen.Bethesda.Fallout3
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CaravanCard_FieldIndex.Name;
                 }
                 case RecordTypeInts.MODL:
@@ -2388,52 +2392,66 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.MODS:
                 case RecordTypeInts.MODD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CaravanCard_FieldIndex.Model;
                 }
                 case RecordTypeInts.ICON:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Icons");
                     item.Icons = Mutagen.Bethesda.Fallout3.Icons.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CaravanCard_FieldIndex.Icons;
                 }
                 case RecordTypeInts.SCRI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Script");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Script.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CaravanCard_FieldIndex.Script;
                 }
                 case RecordTypeInts.YNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PickUpSound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PickUpSound.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CaravanCard_FieldIndex.PickUpSound;
                 }
                 case RecordTypeInts.ZNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DropSound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DropSound.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CaravanCard_FieldIndex.DropSound;
                 }
                 case RecordTypeInts.TX00:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HighResFaceImage");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HighResFaceImage = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CaravanCard_FieldIndex.HighResFaceImage;
                 }
                 case RecordTypeInts.TX01:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HighResBackImage");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HighResBackImage = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CaravanCard_FieldIndex.HighResBackImage;
                 }
                 case RecordTypeInts.INTV:
@@ -2441,18 +2459,22 @@ namespace Mutagen.Bethesda.Fallout3
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)CaravanCard_FieldIndex.HighResBackImage)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CardSuit");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.CardSuit = EnumBinaryTranslation<CaravanCard.CaravanSuit, MutagenFrame, MutagenWriter>.Instance.Parse(
                             reader: frame,
                             length: contentLength);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)CaravanCard_FieldIndex.CardSuit, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)CaravanCard_FieldIndex.CardSuit)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CardValue");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.CardValue = EnumBinaryTranslation<CaravanCard.CaravanValue, MutagenFrame, MutagenWriter>.Instance.Parse(
                             reader: frame,
                             length: contentLength);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)CaravanCard_FieldIndex.CardValue, nextRecordType);
                     }
                     else
@@ -2460,16 +2482,20 @@ namespace Mutagen.Bethesda.Fallout3
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CardSuit");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.CardSuit = EnumBinaryTranslation<CaravanCard.CaravanSuit, MutagenFrame, MutagenWriter>.Instance.Parse(
                                     reader: frame,
                                     length: contentLength);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)CaravanCard_FieldIndex.CardSuit, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CardValue");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.CardValue = EnumBinaryTranslation<CaravanCard.CaravanValue, MutagenFrame, MutagenWriter>.Instance.Parse(
                                     reader: frame,
                                     length: contentLength);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)CaravanCard_FieldIndex.CardValue, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -2478,8 +2504,10 @@ namespace Mutagen.Bethesda.Fallout3
                 }
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Value");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Value = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CaravanCard_FieldIndex.Value;
                 }
                 default:

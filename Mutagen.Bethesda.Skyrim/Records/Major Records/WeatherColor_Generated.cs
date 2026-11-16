@@ -1140,10 +1140,18 @@ namespace Mutagen.Bethesda.Skyrim
             IWeatherColor item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Sunrise");
             item.Sunrise = frame.ReadColor(ColorBinaryType.Alpha);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Day");
             item.Day = frame.ReadColor(ColorBinaryType.Alpha);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Sunset");
             item.Sunset = frame.ReadColor(ColorBinaryType.Alpha);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Night");
             item.Night = frame.ReadColor(ColorBinaryType.Alpha);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

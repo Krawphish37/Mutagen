@@ -1107,7 +1107,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.DAT2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Starfield.SurfaceTreePatternSwapInfoComponentData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SurfaceTreePatternSwapInfoComponent_FieldIndex.Data;
                 }
                 default:

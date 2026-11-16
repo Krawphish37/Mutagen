@@ -1327,41 +1327,51 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ATKD:
                 {
                     if (lastParsed.ShortCircuit((int)Attack_FieldIndex.AttackData, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AttackData");
                     item.AttackData = Mutagen.Bethesda.Starfield.AttackData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Attack_FieldIndex.AttackData;
                 }
                 case RecordTypeInts.ATKE:
                 {
                     if (lastParsed.ShortCircuit((int)Attack_FieldIndex.AttackEvent, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AttackEvent");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AttackEvent = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Attack_FieldIndex.AttackEvent;
                 }
                 case RecordTypeInts.ATKW:
                 {
                     if (lastParsed.ShortCircuit((int)Attack_FieldIndex.WeaponSlot, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WeaponSlot");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.WeaponSlot.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Attack_FieldIndex.WeaponSlot;
                 }
                 case RecordTypeInts.ATKS:
                 {
                     if (lastParsed.ShortCircuit((int)Attack_FieldIndex.RequiredSlot, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RequiredSlot");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RequiredSlot.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Attack_FieldIndex.RequiredSlot;
                 }
                 case RecordTypeInts.ATKT:
                 {
                     if (lastParsed.ShortCircuit((int)Attack_FieldIndex.Description, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Description");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Description = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Attack_FieldIndex.Description;
                 }
                 default:

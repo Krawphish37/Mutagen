@@ -842,9 +842,11 @@ namespace Mutagen.Bethesda.Starfield
                 frame: frame,
                 translationParams: translationParams,
                 fillStructs: ReflectionBinaryCreateTranslation.FillBinaryStructs);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "CustomBinaryEnd");
             ReflectionBinaryCreateTranslation.CustomBinaryEndImportPublic(
                 frame: frame,
                 obj: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
         
         #endregion
@@ -1193,7 +1195,9 @@ namespace Mutagen.Bethesda.Starfield
             IReflection item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
             item.Data = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void CustomBinaryEndImport(

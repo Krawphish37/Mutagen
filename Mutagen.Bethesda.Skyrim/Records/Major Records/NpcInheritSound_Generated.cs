@@ -1052,8 +1052,10 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.CSCR:
                 {
                     if (lastParsed.ShortCircuit((int)NpcInheritSound_FieldIndex.InheritsSoundsFrom, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "InheritsSoundsFrom");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.InheritsSoundsFrom.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcInheritSound_FieldIndex.InheritsSoundsFrom;
                 }
                 default:

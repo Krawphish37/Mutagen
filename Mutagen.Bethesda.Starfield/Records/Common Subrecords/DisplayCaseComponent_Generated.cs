@@ -1384,22 +1384,26 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.DCSD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Items");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Items = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<DisplayCaseComponentItem>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: DisplayCaseComponentItem.TryCreateFromBinary)
                         .CastExtendedList<DisplayCaseComponentItem>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DisplayCaseComponent_FieldIndex.Items;
                 }
                 case RecordTypeInts.DCED:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Exclusivity");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Exclusivity = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<DisplayCaseExclusivity>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: DisplayCaseExclusivity.TryCreateFromBinary)
                         .CastExtendedList<DisplayCaseExclusivity>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DisplayCaseComponent_FieldIndex.Exclusivity;
                 }
                 default:

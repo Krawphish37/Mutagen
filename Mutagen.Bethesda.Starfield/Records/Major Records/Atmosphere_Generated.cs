@@ -1622,16 +1622,20 @@ namespace Mutagen.Bethesda.Starfield
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)MajorRecord_FieldIndex.EditorID)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Reflection");
                         item.Reflection = Mutagen.Bethesda.Starfield.Reflection.CreateFromBinary(
                             frame: frame,
                             translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Atmosphere_FieldIndex.Reflection, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Atmosphere_FieldIndex.ReflectionParent)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ReflectionDiff");
                         item.ReflectionDiff = Mutagen.Bethesda.Starfield.Reflection.CreateFromBinary(
                             frame: frame,
                             translationParams: translationParams.With(Atmosphere_Registration.ReflectionDiffConverter, lastParsed.LengthOverride).DoNotShortCircuit());
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Atmosphere_FieldIndex.ReflectionDiff, nextRecordType);
                     }
                     else
@@ -1639,14 +1643,18 @@ namespace Mutagen.Bethesda.Starfield
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Reflection");
                                 item.Reflection = Mutagen.Bethesda.Starfield.Reflection.CreateFromBinary(
                                     frame: frame,
                                     translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Atmosphere_FieldIndex.Reflection, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ReflectionDiff");
                                 item.ReflectionDiff = Mutagen.Bethesda.Starfield.Reflection.CreateFromBinary(
                                     frame: frame,
                                     translationParams: translationParams.With(Atmosphere_Registration.ReflectionDiffConverter, lastParsed.LengthOverride).DoNotShortCircuit());
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Atmosphere_FieldIndex.ReflectionDiff, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -1655,15 +1663,19 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.RFDP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ReflectionParent");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ReflectionParent.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Atmosphere_FieldIndex.ReflectionParent;
                 }
                 case RecordTypeInts.RDIF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ReflectionDiff");
                     item.ReflectionDiff = Mutagen.Bethesda.Starfield.Reflection.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(Atmosphere_Registration.ReflectionDiffConverter, lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Atmosphere_FieldIndex.ReflectionDiff;
                 }
                 case RecordTypeInts.XXXX:

@@ -3381,129 +3381,167 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Starfield.VirtualMachineAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APlacedTrap_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.BFCB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Components");
                     item.Components.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AComponent>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: AComponent_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: AComponent.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APlacedTrap_FieldIndex.Components;
                 }
                 case RecordTypeInts.NAME:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "TrapForm");
                     return APlacedTrapBinaryCreateTranslation.FillBinaryTrapFormCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 }
                 case RecordTypeInts.XEMI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Emittance");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Emittance.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APlacedTrap_FieldIndex.Emittance;
                 }
                 case RecordTypeInts.XLRT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "LocationRefTypes");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LocationRefTypes = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ILocationReferenceTypeGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<ILocationReferenceTypeGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APlacedTrap_FieldIndex.LocationRefTypes;
                 }
                 case RecordTypeInts.XRGD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "RagdollData");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RagdollData = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<RagdollData>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: RagdollData.TryCreateFromBinary)
                         .CastExtendedList<RagdollData>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APlacedTrap_FieldIndex.RagdollData;
                 }
                 case RecordTypeInts.XLYR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Layer");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Layer.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APlacedTrap_FieldIndex.Layer;
                 }
                 case RecordTypeInts.XRFG:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ReferenceGroup");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ReferenceGroup.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APlacedTrap_FieldIndex.ReferenceGroup;
                 }
                 case RecordTypeInts.XPCS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SourcePackIn");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SourcePackIn.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APlacedTrap_FieldIndex.SourcePackIn;
                 }
                 case RecordTypeInts.XIS2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IgnoredBySandbox");
                     item.IgnoredBySandbox = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APlacedTrap_FieldIndex.IgnoredBySandbox;
                 }
                 case RecordTypeInts.XRNK:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OwnerFactionRank");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.OwnerFactionRank = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APlacedTrap_FieldIndex.OwnerFactionRank;
                 }
                 case RecordTypeInts.XLKR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "LinkedReferences");
                     item.LinkedReferences.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LinkedReferences>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: LinkedReferences_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: LinkedReferences.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APlacedTrap_FieldIndex.LinkedReferences;
                 }
                 case RecordTypeInts.XLKT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IsLinkedRefTransient");
                     item.IsLinkedRefTransient = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APlacedTrap_FieldIndex.IsLinkedRefTransient;
                 }
                 case RecordTypeInts.XOWN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Ownership");
                     item.Ownership = Mutagen.Bethesda.Starfield.Ownership.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APlacedTrap_FieldIndex.Ownership;
                 }
                 case RecordTypeInts.XEZN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EncounterLocation");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EncounterLocation.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APlacedTrap_FieldIndex.EncounterLocation;
                 }
                 case RecordTypeInts.XHTW:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HeadTrackingWeight");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HeadTrackingWeight = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APlacedTrap_FieldIndex.HeadTrackingWeight;
                 }
                 case RecordTypeInts.XESP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EnableParent");
                     item.EnableParent = Mutagen.Bethesda.Starfield.EnableParent.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APlacedTrap_FieldIndex.EnableParent;
                 }
                 case RecordTypeInts.XATP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ActivationPoint");
                     item.ActivationPoint = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APlacedTrap_FieldIndex.ActivationPoint;
                 }
                 case RecordTypeInts.XSCL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Scale");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Scale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APlacedTrap_FieldIndex.Scale;
                 }
                 case RecordTypeInts.DATA:
@@ -3511,18 +3549,24 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 12) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Position");
                     item.Position = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 12) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Rotation");
                     item.Rotation = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)APlacedTrap_FieldIndex.Rotation;
                 }
                 case RecordTypeInts.MNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Comments");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Comments = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APlacedTrap_FieldIndex.Comments;
                 }
                 case RecordTypeInts.XXXX:

@@ -1173,12 +1173,14 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.VNAM:
                 {
                     if (lastParsed.ShortCircuit((int)FurnitureInstanceNamingRules_FieldIndex.Rules, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Rules");
                     item.Rules.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<InstanceNamingRuleSet<FurnitureInstanceNamingRules.Target>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: InstanceNamingRuleSet_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: InstanceNamingRuleSet<FurnitureInstanceNamingRules.Target>.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FurnitureInstanceNamingRules_FieldIndex.Rules;
                 }
                 default:

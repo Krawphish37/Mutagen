@@ -1170,12 +1170,16 @@ namespace Mutagen.Bethesda.Starfield
             ISnapLink item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LinkedReference");
             item.LinkedReference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Links");
             item.Links.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<SnapLinkItem>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt32()),
                     reader: frame,
                     transl: SnapLinkItem.TryCreateFromBinary));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

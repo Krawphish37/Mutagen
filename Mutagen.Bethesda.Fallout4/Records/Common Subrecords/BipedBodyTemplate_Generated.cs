@@ -990,9 +990,11 @@ namespace Mutagen.Bethesda.Fallout4
             IBipedBodyTemplate item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FirstPersonFlags");
             item.FirstPersonFlags = EnumBinaryTranslation<BipedObjectFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

@@ -1080,15 +1080,19 @@ namespace Mutagen.Bethesda.Oblivion
                 case RecordTypeInts.CSDI:
                 {
                     if (lastParsed.ShortCircuit((int)SoundItem_FieldIndex.Sound, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Sound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Sound.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundItem_FieldIndex.Sound;
                 }
                 case RecordTypeInts.CSDC:
                 {
                     if (lastParsed.ShortCircuit((int)SoundItem_FieldIndex.Chance, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Chance");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Chance = frame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundItem_FieldIndex.Chance;
                 }
                 default:

@@ -1049,11 +1049,15 @@ namespace Mutagen.Bethesda.Starfield
             IAmbientSoundPlanetCustomization item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Planet");
             item.Planet.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SwitchState");
             item.SwitchState = StringBinaryTranslation.Instance.Parse(
                 reader: frame,
                 stringBinaryType: StringBinaryType.NullTerminate,
                 parseWhole: false);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

@@ -1156,14 +1156,17 @@ namespace Mutagen.Bethesda.Oblivion
                 case RecordTypeInts.RNAM:
                 {
                     if (lastParsed.ShortCircuit((int)Rank_FieldIndex.RankNumber, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RankNumber");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RankNumber = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Rank_FieldIndex.RankNumber;
                 }
                 case RecordTypeInts.MNAM:
                 case RecordTypeInts.FNAM:
                 {
                     if (lastParsed.ShortCircuit((int)Rank_FieldIndex.Name, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     item.Name = Mutagen.Bethesda.Plugins.Binary.Translations.GenderedItemBinaryTranslation.Parse<String>(
                         frame: frame,
                         maleMarker: RecordTypes.MNAM,
@@ -1171,16 +1174,19 @@ namespace Mutagen.Bethesda.Oblivion
                         transl: StringBinaryTranslation.Instance.Parse,
                         skipMarker: false,
                         existing: item.Name);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Rank_FieldIndex.Name;
                 }
                 case RecordTypeInts.INAM:
                 {
                     if (lastParsed.ShortCircuit((int)Rank_FieldIndex.Insignia, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Insignia");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Insignia = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Rank_FieldIndex.Insignia;
                 }
                 default:

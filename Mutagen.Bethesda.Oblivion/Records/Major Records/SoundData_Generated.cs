@@ -1215,17 +1215,27 @@ namespace Mutagen.Bethesda.Oblivion
             ISoundDataInternal item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "MinimumAttenuationDistance");
             SoundDataBinaryCreateTranslation.FillBinaryMinimumAttenuationDistanceCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "MaximumAttenuationDistance");
             SoundDataBinaryCreateTranslation.FillBinaryMaximumAttenuationDistanceCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FrequencyAdjustment");
             item.FrequencyAdjustment = frame.ReadInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Marker");
             frame.Position += 1;
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
             item.Flags = EnumBinaryTranslation<SoundData.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void FillBinaryMinimumAttenuationDistanceCustom(

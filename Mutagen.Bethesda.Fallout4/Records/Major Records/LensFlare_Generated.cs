@@ -1628,18 +1628,23 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ColorInfluence");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ColorInfluence = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LensFlare_FieldIndex.ColorInfluence;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FadeDistanceRadiusScale");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FadeDistanceRadiusScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LensFlare_FieldIndex.FadeDistanceRadiusScale;
                 }
                 case RecordTypeInts.LFSP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Sprites");
                     item.Sprites = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LensFlareSprite>.Instance.ParsePerItem(
                             reader: frame,
@@ -1649,6 +1654,7 @@ namespace Mutagen.Bethesda.Fallout4
                             translationParams: translationParams,
                             transl: LensFlareSprite.TryCreateFromBinary)
                         .CastExtendedList<LensFlareSprite>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LensFlare_FieldIndex.Sprites;
                 }
                 default:

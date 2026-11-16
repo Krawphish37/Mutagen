@@ -1027,8 +1027,12 @@ namespace Mutagen.Bethesda.Fallout4
             INavmeshCoverTriangleMap item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Cover");
             item.Cover = frame.ReadUInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Triangle");
             item.Triangle = frame.ReadUInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

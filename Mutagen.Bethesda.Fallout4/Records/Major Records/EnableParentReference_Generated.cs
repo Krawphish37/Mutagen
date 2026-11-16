@@ -1112,11 +1112,17 @@ namespace Mutagen.Bethesda.Fallout4
             IEnableParentReference item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Actor");
             item.Actor.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Ref");
             item.Ref.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Grid", true);
             item.Grid = P2Int16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 swapCoords: true);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

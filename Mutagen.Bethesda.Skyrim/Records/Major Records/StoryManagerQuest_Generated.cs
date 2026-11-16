@@ -1144,25 +1144,31 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.NNAM:
                 {
                     if (lastParsed.ShortCircuit((int)StoryManagerQuest_FieldIndex.Quest, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Quest");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Quest.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StoryManagerQuest_FieldIndex.Quest;
                 }
                 case RecordTypeInts.FNAM:
                 {
                     if (lastParsed.ShortCircuit((int)StoryManagerQuest_FieldIndex.FNAM, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FNAM = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StoryManagerQuest_FieldIndex.FNAM;
                 }
                 case RecordTypeInts.RNAM:
                 {
                     if (lastParsed.ShortCircuit((int)StoryManagerQuest_FieldIndex.HoursUntilReset, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HoursUntilReset", true);
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HoursUntilReset = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         multiplier: null,
                         divisor: 24f);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StoryManagerQuest_FieldIndex.HoursUntilReset;
                 }
                 default:

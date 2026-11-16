@@ -2206,41 +2206,52 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Fallout4.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledNpc_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.LVLD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChanceNone", true);
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ChanceNone = PercentBinaryTranslation.Parse(
                         reader: frame,
                         integerType: FloatIntegerType.ByteHundred);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledNpc_FieldIndex.ChanceNone;
                 }
                 case RecordTypeInts.LVLM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaxCount");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MaxCount = frame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledNpc_FieldIndex.MaxCount;
                 }
                 case RecordTypeInts.LVLF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<LeveledNpc.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledNpc_FieldIndex.Flags;
                 }
                 case RecordTypeInts.LVLG:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Global");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Global.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledNpc_FieldIndex.Global;
                 }
                 case RecordTypeInts.LVLO:
                 case RecordTypeInts.COED:
                 case RecordTypeInts.LLCT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Entries");
                     item.Entries = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LeveledNpcEntry>.Instance.ParsePerItem(
                             reader: frame,
@@ -2250,16 +2261,19 @@ namespace Mutagen.Bethesda.Fallout4
                             translationParams: translationParams,
                             transl: LeveledNpcEntry.TryCreateFromBinary)
                         .CastExtendedList<LeveledNpcEntry>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledNpc_FieldIndex.Entries;
                 }
                 case RecordTypeInts.LLKC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "FilterKeywordChances");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FilterKeywordChances = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<FilterKeywordChance>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FilterKeywordChance.TryCreateFromBinary)
                         .CastExtendedList<FilterKeywordChance>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledNpc_FieldIndex.FilterKeywordChances;
                 }
                 case RecordTypeInts.MODL:
@@ -2267,9 +2281,11 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.MODT:
                 case RecordTypeInts.MODS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Fallout4.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledNpc_FieldIndex.Model;
                 }
                 default:

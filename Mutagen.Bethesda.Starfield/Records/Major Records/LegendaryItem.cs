@@ -35,6 +35,9 @@ partial class LegendaryItemBinaryCreateTranslation
 		var entryCount = lnamHeader.ContentLength / 8;
 
 		var entries = new ExtendedList<LegendaryItemLnamEntry>();
+		// C60: the entries' values sit in LNAM, their conditions in the CITC/CTDA blocks after it
+		if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.LnamEntries));
+		var lnamAt = ValuePositionRecorder.Here(frame);
 
 		// Read LNAM entries (8 bytes each: slot + unknown)
 		for (int i = 0; i < entryCount; i++)
@@ -44,22 +47,40 @@ partial class LegendaryItemBinaryCreateTranslation
 				Slot = (LegendaryItem.StarSlot)frame.Reader.ReadUInt32(),
 				ReferenceMod = frame.Reader.ReadUInt32(),
 			});
+			if (lnamAt >= 0)
+			{
+				ValuePositionRecorder.At($"[{i}].Slot", lnamAt + 8 * i, 4);
+				ValuePositionRecorder.At($"[{i}].ReferenceMod", lnamAt + 8 * i + 4, 4);
+			}
 		}
 
 		// Read one CITC/CTDA condition block per LNAM entry from the shared Reader
 		var reader = frame.Reader;
 		for (int i = 0; i < entryCount; i++)
 		{
+			var citcAt = ValuePositionRecorder.Here(reader);
 			var citcHeader = reader.ReadSubrecord(RecordTypes.CITC);
 			var condCount = BinaryPrimitives.ReadInt32LittleEndian(citcHeader.Content);
 
 			var outerFrame = new MutagenFrame(reader);
+			if (ValuePositionRecorder.On)
+			{
+				ValuePositionRecorder.ItemFrom(citcAt, i);
+				ValuePositionRecorder.List(outerFrame, "Conditions");
+				ValuePositionRecorder.CountAt(citcAt + citcHeader.HeaderLength, 4);
+			}
 			entries[i].Conditions = Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
 					reader: outerFrame,
 					amount: condCount,
 					transl: Condition.TryCreateFromBinary)
 				.CastExtendedList<Condition>();
+			if (ValuePositionRecorder.On)
+			{
+				ValuePositionRecorder.End(outerFrame);
+				ValuePositionRecorder.End(outerFrame);
+			}
 		}
+		if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
 
 		item.LnamEntries = entries;
 	}

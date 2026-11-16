@@ -31,7 +31,7 @@
       <FormLink name="CombatStyle" recordType="CNAM" refName="CombatStyle" />
       <FormLink name="OwnerQuest" recordType="QNAM" refName="Quest" />
       <FormLink name="AnimationFlavor" recordType="FLAV" refName="Keyword" />
-      <FormLink name="PackageTemplate" recordType="PKCU" refName="Package" nullable="False" binary="Custom" byteLength="8" layoutOffset="4" />
+      <FormLink name="PackageTemplate" recordType="PKCU" refName="Package" nullable="False" binary="Custom" fills="PackageTemplate,DataInputVersion,Data" byteLength="8" layoutOffset="4" />
       <Int32 name="DataInputVersion" binary="NoGeneration" byteLength="4" layoutSubrecord="PKCU" layoutOffset="8" />
       <Dict name="Data" binary="NoGeneration">
         <Key>
@@ -42,7 +42,7 @@
         </Value>
       </Dict>
       <Enum name="PackageGroup" enumName="Package.Group" recordType="XNAM" byteLength="1" nullable="false" />
-      <RefList name="ProcedureTree" refName="PackageBranch" recordType="ANAM" binary="Custom" nullable="false" />
+      <RefList name="ProcedureTree" refName="PackageBranch" recordType="ANAM" binary="Custom" fills="ProcedureTree,Data,ProcedureTreeDataOrder" nullable="false" />
       <!-- Input names and flags (UNAM, BNAM, PNAM) when the procedure tree is empty; ProcedureTree reads and writes them -->
       <CustomLogic name="DataInputNames" fills="Data,ProcedureTreeDataOrder">
         <RecordType>UNAM</RecordType>
@@ -53,10 +53,11 @@
       <RefDirect name="OnEnd" refName="PackageEvent" markerType="POEA" />
       <RefDirect name="OnChange" refName="PackageEvent" markerType="POCA" />
     </Fields>
+    <HandWritten name="ProcedureTreeDataOrder" type="List&lt;SByte&gt;" from="UNAM" note="the order of the data inputs' UNAM indexes after the procedure tree, kept to write them back in it (C51)" />
   </Object>
   <Object name="PackageAdapter" baseClass="AVirtualMachineAdapter" recordType="VMAD" objType="Subrecord">
     <Fields>
-      <RefDirect name="ScriptFragments" refName="PackageScriptFragments" binary="Custom" nullable="True" />
+      <RefDirect name="ScriptFragments" refName="PackageScriptFragments" binary="Custom" fills="ScriptFragments" nullable="True" />
     </Fields>
   </Object>
   <Object name="PackageScriptFragments" objType="Subrecord">
@@ -71,8 +72,8 @@
   <Object name="PackageIdles" objType="Subrecord">
     <Fields>
       <Enum name="Type" enumName="PackageIdles.Types" byteLength="1" nullable="False" recordType="IDLF" />
-      <Float name="TimerSetting" recordType="IDLT" binary="Custom" />
-      <List name="Animations" recordType="IDLA" counterRecType="IDLC" counterLength="4" binary="Custom">
+      <Float name="TimerSetting" recordType="IDLT" binary="Custom" fills="TimerSetting,Animations" />
+      <List name="Animations" recordType="IDLA" counterRecType="IDLC" counterLength="4" binary="Custom" fills="Animations,TimerSetting">
         <FormLink refName="IdleAnimation" />
       </List>
     </Fields>
@@ -193,7 +194,7 @@
       <List name="DataInputIndices">
         <UInt8 recordType="PKC2" />
       </List>
-      <RefDirect name="FlagsOverride" refName="PackageFlagsOverride" binary="Custom" />
+      <RefDirect name="FlagsOverride" refName="PackageFlagsOverride" binary="Custom" fills="FlagsOverride,FlagsOverrideUnused" />
       <RefDirect name="FlagsOverrideUnused" refName="PackageFlagsOverride" binary="NoGeneration" />
     </Fields>
   </Object>
@@ -216,7 +217,7 @@
   <Object name="PackageEvent" objType="Subrecord">
     <Fields>
       <FormLink name="Idle" refName="IdleAnimation" recordType="INAM" nullable="False" />
-      <RefList name="Topics" refName="ATopicReference" binary="Custom" selectedBy="here:Int32" selectorEnum="ATopicReference.TopicType" />
+      <RefList name="Topics" refName="ATopicReference" binary="Custom" fills="Topics" selectedBy="here:Int32" selectorEnum="ATopicReference.TopicType" />
     </Fields>
   </Object>
 </Loqui>

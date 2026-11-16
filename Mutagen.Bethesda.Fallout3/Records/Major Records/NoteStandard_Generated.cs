@@ -1151,12 +1151,16 @@ namespace Mutagen.Bethesda.Fallout3
             MutagenFrame frame)
         {
             if (frame.Complete) return;
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Text");
             item.Text = StringBinaryTranslation.Instance.Parse(
                 reader: frame,
                 stringBinaryType: StringBinaryType.NullTerminate,
                 parseWhole: false);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (frame.Complete) return;
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Sound");
             item.Sound.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

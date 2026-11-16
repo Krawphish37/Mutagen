@@ -1313,22 +1313,26 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.INDX:
                 {
                     if (lastParsed.ShortCircuit((int)HeadPartsAndBoneModifiers_FieldIndex.HeadParts, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HeadParts");
                     item.HeadParts.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<RaceHeadPart>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: RaceHeadPart_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: RaceHeadPart.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadPartsAndBoneModifiers_FieldIndex.HeadParts;
                 }
                 case RecordTypeInts.BNAM:
                 {
                     if (lastParsed.ShortCircuit((int)HeadPartsAndBoneModifiers_FieldIndex.BoneModifiers, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "BoneModifiers");
                     item.BoneModifiers.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IBoneModifierGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.BNAM),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadPartsAndBoneModifiers_FieldIndex.BoneModifiers;
                 }
                 default:

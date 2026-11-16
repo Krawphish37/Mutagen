@@ -1213,13 +1213,19 @@ namespace Mutagen.Bethesda.Skyrim
             ILandscapeVertexHeightMap item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Offset");
             item.Offset = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HeightMap");
             item.HeightMap.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.Array2dBinaryTranslation<SByte>.Instance.Parse(
                     reader: frame,
                     size: LandscapeVertexHeightMap.HeightMapFixedSize,
                     transl: SByteBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unknown");
             item.Unknown = P3UInt8BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

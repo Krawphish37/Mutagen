@@ -3225,76 +3225,95 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Fallout3.DialogResponsesData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.Data;
                 }
                 case RecordTypeInts.QSTI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Quest");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Quest.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.Quest;
                 }
                 case RecordTypeInts.TPIC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PreviousTopic");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PreviousTopic.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.PreviousTopic;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PreviousInfo");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PreviousInfo.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.PreviousInfo;
                 }
                 case RecordTypeInts.NAME:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "AddTopics");
                     item.AddTopics.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IDialogTopicGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.NAME),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.AddTopics;
                 }
                 case RecordTypeInts.TRDT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Responses");
                     item.Responses.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<DialogResponse>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: DialogResponse_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: DialogResponse.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.Responses;
                 }
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.TCLT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Choices");
                     item.Choices.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IDialogTopicGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.TCLT),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.Choices;
                 }
                 case RecordTypeInts.TCLF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "LinkFrom");
                     item.LinkFrom.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IDialogTopicGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.TCLF),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.LinkFrom;
                 }
                 case RecordTypeInts.TCFU:
                 {
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.List(frame, "FollowUp");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         item.FollowUp.SetTo(
@@ -3303,56 +3322,71 @@ namespace Mutagen.Bethesda.Fallout3
                                 triggeringRecord: translationParams.ConvertToCustom(RecordTypes.TCFU),
                                 transl: FormLinkBinaryTranslation.Instance.Parse));
                     }
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.FollowUp;
                 }
                 case RecordTypeInts.SCHR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BeginScript");
                     item.BeginScript = Mutagen.Bethesda.Fallout3.ScriptFields.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.BeginScript;
                 }
                 case RecordTypeInts.NEXT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EndScript");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength + contentLength; // Skip marker
                     item.EndScript = Mutagen.Bethesda.Fallout3.ScriptFields.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.EndScript;
                 }
                 case RecordTypeInts.SNDD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UnusedSound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.UnusedSound.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.UnusedSound;
                 }
                 case RecordTypeInts.RNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Prompt");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Prompt = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.Prompt;
                 }
                 case RecordTypeInts.ANAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Speaker");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Speaker.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.Speaker;
                 }
                 case RecordTypeInts.KNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ActorValuePerk");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ActorValuePerk.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.ActorValuePerk;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SpeechChallenge");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SpeechChallenge = EnumBinaryTranslation<DialogResponses.SpeechChallengeEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.SpeechChallenge;
                 }
                 default:

@@ -10,8 +10,14 @@ partial class QuestAdapterBinaryCreateTranslation
 {
     public static partial void FillBinaryFragmentCountCustom(MutagenFrame frame, IQuestAdapter item)
     {
+        // The fragment count comes before the script, the list after it
+        var countAt = ValuePositionRecorder.Here(frame);
         var count = frame.ReadUInt16();
+        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.Script));
         item.Script = AVirtualMachineAdapterBinaryCreateTranslation.ReadEntry(frame, item.ObjectFormat);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.Fragments));
+        if (countAt >= 0) ValuePositionRecorder.CountAt(countAt, 2);
         item.Fragments.SetTo(
             ListBinaryTranslation<QuestScriptFragment>.Instance.Parse(
                 frame,
@@ -21,7 +27,11 @@ partial class QuestAdapterBinaryCreateTranslation
                     listSubItem = QuestScriptFragment.CreateFromBinary(frame);
                     return true;
                 }));
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.Aliases));
+        var aliasCountAt = ValuePositionRecorder.Here(frame);
         var aliasCount = frame.ReadUInt16();
+        if (aliasCountAt >= 0) ValuePositionRecorder.Count(frame, aliasCountAt);
         item.Aliases.SetTo(
             ListBinaryTranslation<QuestFragmentAlias>.Instance.Parse(
                 frame,
@@ -31,6 +41,7 @@ partial class QuestAdapterBinaryCreateTranslation
                     listSubItem = QuestFragmentAlias.CreateFromBinary(frame);
                     return true;
                 }));
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
     }
 
     public static partial void FillBinaryScriptCustom(MutagenFrame frame, IQuestAdapter item)

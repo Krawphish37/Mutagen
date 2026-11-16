@@ -93,13 +93,16 @@ internal static class PluginUtilityTranslation
         MajorRecordFill<M> fillTyped)
         where M : IMajorRecordGetter
     {
+        if (ValuePositionRecorder.On) ValuePositionRecorder.RecordStart(record, frame);
         var majorHeader = frame.Reader.GetMajorRecordHeader();
         frame.MetaData.FormVersion = (ushort?)majorHeader.FormVersion;
         var rawFormId = majorHeader.FormID.Raw;
         frame = frame.SpawnWithFinalPosition(HeaderTranslation.ParseRecord(frame.Reader));
+        var structsMark = ValuePositionRecorder.On ? ValuePositionRecorder.Mark() : 0;
         fillStructs(
             record: record,
             frame: frame);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.CloseTo(frame, structsMark);
         // A header FormID that isn't the one Mutagen writes for this FormKey is written back as read (RawHeaderFormIds)
         RawHeaderFormIds.Remember(record, rawFormId, frame.MetaData);
         if (frame.MetaData.ChildRecordsHeadersOnly)
@@ -124,7 +127,8 @@ internal static class PluginUtilityTranslation
         try
         {
             MutagenFrame targetFrame = frame;
-            if (record.IsCompressed)
+            if (record.IsCompressed
+                && !(ValuePositionRecorder.On && ValuePositionRecorder.Decompress(record, frame, out targetFrame)))
             {
                 if (fieldStarts != null && frame.MetaData.KeepCompressedRecords)
                 {
@@ -139,6 +143,7 @@ internal static class PluginUtilityTranslation
             Dictionary<RecordType, int>? recordParseCount = null;
             var lastParsed = new PreviousParse();
             var contentStart = targetFrame.Position;
+            if (ValuePositionRecorder.On) ValuePositionRecorder.ContentStart(record, targetFrame);
             var highestIndex = -1;
             var outOfOrder = false;
             while (!targetFrame.Complete)
@@ -148,6 +153,7 @@ internal static class PluginUtilityTranslation
                 var subrecordStart = targetFrame.Position;
                 ParseResult parsed;
                 var unknownBefore = fieldStarts != null ? SubrecordOrder.UnknownLength(record) : 0;
+                var positionsMark = ValuePositionRecorder.On ? ValuePositionRecorder.Mark() : 0;
                 try
                 {
                     if (rewritten != null) SubrecordOrder.NonCanonicalFormIdRead = false;
@@ -159,6 +165,7 @@ internal static class PluginUtilityTranslation
                         nextRecordType: subMeta.RecordType,
                         contentLength: lastParsed.LengthOverride ?? subMeta.ContentLength,
                         translationParams: translationParams);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.CloseTo(targetFrame, positionsMark);
                 }
                 catch (Exception ex)
                     when (ex is not SubrecordException)
@@ -279,15 +286,18 @@ internal static class PluginUtilityTranslation
         RecordStructFill<M> fillStructs,
         MajorRecordFill<M> fillTyped)
     {
+        var structsMark = ValuePositionRecorder.On ? ValuePositionRecorder.Mark() : 0;
         fillStructs?.Invoke(
             record: record,
             frame: frame);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.CloseTo(frame, structsMark);
         Dictionary<RecordType, int>? recordParseCount = null;
         var previousParse = new PreviousParse();
         while (!frame.Complete)
         {
             var subMeta = frame.GetSubrecordHeader();
             var finalPos = frame.Position + subMeta.TotalLength;
+            var positionsMark = ValuePositionRecorder.On ? ValuePositionRecorder.Mark() : 0;
             var parsed = fillTyped(
                 record: record,
                 frame: frame,
@@ -296,6 +306,7 @@ internal static class PluginUtilityTranslation
                 nextRecordType: subMeta.RecordType,
                 contentLength: previousParse.LengthOverride ?? subMeta.ContentLength,
                 translationParams: translationParams);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.CloseTo(frame, positionsMark);
             if (!parsed.KeepParsing) break;
             if (parsed.DuplicateParseMarker != null)
             {
@@ -352,9 +363,11 @@ internal static class PluginUtilityTranslation
         RecordStructFill<M>? fillStructs,
         SubrecordFill<M> fillTyped)
     {
+        var structsMark = ValuePositionRecorder.On ? ValuePositionRecorder.Mark() : 0;
         fillStructs?.Invoke(
             record: record,
             frame: frame);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.CloseTo(frame, structsMark);
         // A parent that read an overflow (XXXX) hands the real length of our first subrecord over in LengthOverride
         // (that subrecord's own header says 0). Apply it to the first subrecord only, like the parent's own loop does.
         var lastParsed = new PreviousParse(parsedIndex: null, lengthOverride: translationParams.LengthOverride);
@@ -366,6 +379,7 @@ internal static class PluginUtilityTranslation
         {
             var subMeta = frame.GetSubrecordHeader();
             var finalPos = frame.Position + subMeta.TotalLength;
+            var positionsMark = ValuePositionRecorder.On ? ValuePositionRecorder.Mark() : 0;
             var parsed = fillTyped(
                 record: record,
                 frame: frame,
@@ -374,6 +388,7 @@ internal static class PluginUtilityTranslation
                 nextRecordType: subMeta.RecordType,
                 contentLength: lastParsed.LengthOverride ?? subMeta.ContentLength,
                 translationParams: translationParams);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.CloseTo(frame, positionsMark);
             if (!parsed.KeepParsing)
             {
                 if (lastParsed.LengthOverride.HasValue)

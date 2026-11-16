@@ -1046,8 +1046,12 @@ namespace Mutagen.Bethesda.Starfield
             IBlockEditorMetaDataItem item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SourceBlock");
             item.SourceBlock.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unknown2");
             item.Unknown2 = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

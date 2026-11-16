@@ -1227,8 +1227,10 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.XPRD:
                 {
                     if (lastParsed.ShortCircuit((int)Patrol_FieldIndex.IdleTime, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IdleTime");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.IdleTime = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Patrol_FieldIndex.IdleTime;
                 }
                 case RecordTypeInts.XPPA:
@@ -1238,20 +1240,26 @@ namespace Mutagen.Bethesda.Fallout3
                 }
                 case RecordTypeInts.INAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Idle");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Idle.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Patrol_FieldIndex.Idle;
                 }
                 case RecordTypeInts.SCHR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SCHR");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SCHR = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Patrol_FieldIndex.SCHR;
                 }
                 case RecordTypeInts.SCTX:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SCTX");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SCTX = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Patrol_FieldIndex.SCTX;
                 }
                 default:

@@ -1126,15 +1126,19 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.WMSI:
                 {
                     if (lastParsed.ShortCircuit((int)WWiseKeywordMappingItem_FieldIndex.SoundId, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SoundId");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SoundId = EnumBinaryTranslation<WWiseKeywordMappingItem.SoundIdType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)WWiseKeywordMappingItem_FieldIndex.SoundId;
                 }
                 case RecordTypeInts.WMSD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Sound");
                     item.Sound = Mutagen.Bethesda.Starfield.WWiseKeywordMappingSoundItem.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)WWiseKeywordMappingItem_FieldIndex.Sound;
                 }
                 default:

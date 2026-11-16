@@ -60,6 +60,25 @@
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <!-- C60 (W6): an Object may hold <HandWritten name="..." type="..." from="..." note="..."/> elements (outside Fields):
+               properties written by hand beyond the XML. The generator copies them into the manifest
+               (Manifest\Properties.xml, derived="handWritten"); PropertyManifestTests fails on an undeclared one. -->
+          <xs:attribute name="customBinaryEndFills" type="xs:string" >
+            <xs:annotation>
+              <xs:documentation>
+                Description only, ignored by the generator (C60, W5). The fields the customBinaryEnd read assigns, as a
+                CustomLogic step's fills says. Empty when it assigns none (then customBinaryEndWrittenFrom says why).
+                Held against the compiled CustomBinaryEndImport by the Starfield unit test CustomLogicFillsTests.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="customBinaryEndWrittenFrom" type="xs:string" >
+            <xs:annotation>
+              <xs:documentation>
+                Description only (C60, W5). With customBinaryEndFills="": as a CustomLogic step's writtenFrom.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="customBinary" type="xs:boolean" >
             <xs:annotation>
               <xs:documentation>
@@ -161,6 +180,32 @@
             <xs:annotation>
               <xs:documentation>
                 Typical four letter ASCII tag used for the record type.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="fills" type="xs:string" >
+            <xs:annotation>
+              <xs:documentation>
+                Description only, ignored by the generator (C60, W5). On a binary="Custom" field: the fields its
+                hand-written reader (FillBinary&lt;Field&gt;Custom) assigns, as a CustomLogic step's fills says (the field
+                itself included). Empty when the reader assigns none: then readBy names the step that reads the bytes
+                (and lists the field in its fills), or writtenFrom says how they are written. Held against the compiled
+                reader by the Starfield unit test CustomLogicFillsTests.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="writtenFrom" type="xs:string" >
+            <xs:annotation>
+              <xs:documentation>
+                Description only (C60, W5). On a binary="Custom" field with fills="": as a CustomLogic step's writtenFrom.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="readBy" type="xs:string" >
+            <xs:annotation>
+              <xs:documentation>
+                Description only (C60, W5). On a binary="Custom" field with fills="": the CustomLogic step or Custom
+                field of the same object whose reader reads this field's bytes (its fills lists the field).
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>

@@ -174,7 +174,7 @@
   </Object>
   <Object name="VolumesComponent" objType="Subrecord" baseClass="AComponent" selectorValue="Volumes_Component">
     <Fields>
-      <RefList name="Items" refName="VolumesComponentItem" counterLength="4" recordType="VLMS" binary="Custom" />
+      <RefList name="Items" refName="VolumesComponentItem" counterLength="4" recordType="VLMS" binary="Custom" fills="Items" />
     </Fields>
   </Object>
   <Object name="VolumesComponentItem" objType="Subrecord" >
@@ -188,7 +188,7 @@
       <Float name="Unknown1" />
       <Float name="Unknown2" />
       <Float name="Unknown3" />
-      <RefDirect name="Ender" refName="AVolumesUnknownEnder" binary="Custom" selectedBy="field:TypeParse:Int32" />
+      <RefDirect name="Ender" refName="AVolumesUnknownEnder" binary="Custom" fills="Ender" selectedBy="field:TypeParse:Int32" />
     </Fields>
   </Object>
   <Object name="VolumesMatrix" objType="Subrecord" >

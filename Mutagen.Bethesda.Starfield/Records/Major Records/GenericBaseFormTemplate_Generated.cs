@@ -1477,11 +1477,13 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.STRV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Components");
                     item.Components.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<String>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.STRV),
                             transl: StringBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GenericBaseFormTemplate_FieldIndex.Components;
                 }
                 default:

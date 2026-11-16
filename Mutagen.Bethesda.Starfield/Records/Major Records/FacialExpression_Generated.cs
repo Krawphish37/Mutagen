@@ -1602,6 +1602,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1609,17 +1610,20 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FacialExpression_FieldIndex.Name;
                 }
                 case RecordTypeInts.MNAM:
                 case RecordTypeInts.MWGT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Morphs");
                     item.Morphs.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<FacialExpressionMorph>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: FacialExpressionMorph_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: FacialExpressionMorph.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FacialExpression_FieldIndex.Morphs;
                 }
                 default:

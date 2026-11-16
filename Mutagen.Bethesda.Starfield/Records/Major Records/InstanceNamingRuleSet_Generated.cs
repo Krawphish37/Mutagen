@@ -867,6 +867,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.VNAM:
                 {
                     if (lastParsed.ShortCircuit((int)InstanceNamingRuleSet_FieldIndex.Names, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Names");
                     item.Names = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<InstanceNamingRule<T>>.Instance.ParsePerItem(
                             reader: frame,
@@ -876,6 +877,7 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams,
                             transl: InstanceNamingRule<T>.TryCreateFromBinary)
                         .CastExtendedList<InstanceNamingRule<T>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)InstanceNamingRuleSet_FieldIndex.Names;
                 }
                 default:

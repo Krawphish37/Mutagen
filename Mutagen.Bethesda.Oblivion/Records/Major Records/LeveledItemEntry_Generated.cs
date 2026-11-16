@@ -1232,13 +1232,23 @@ namespace Mutagen.Bethesda.Oblivion
             ILeveledItemEntry item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Level");
             item.Level = frame.ReadInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unknown");
             item.Unknown = frame.ReadInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Reference");
             item.Reference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (frame.Complete) return;
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Count");
             item.Count = frame.ReadInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (frame.Complete) return;
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unknown2");
             item.Unknown2 = frame.ReadInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

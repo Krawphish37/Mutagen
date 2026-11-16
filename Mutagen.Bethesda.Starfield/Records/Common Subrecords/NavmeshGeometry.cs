@@ -26,12 +26,19 @@ partial class NavmeshGeometryBinaryCreateTranslation
     public static ANavmeshParent GetBinaryParent<TReader>(TReader frame)
         where TReader : IMutagenReadStream
     {
+        // C60: noted as Parent's values (the caller reads Parent); a null worldspace picks the cell class
+        var at = ValuePositionRecorder.Here(frame);
         var formKey = FormKeyBinaryTranslation.Instance.Parse(frame);
         if (formKey.IsNull)
         {
             var cell = new CellNavmeshParent();
             cell.UnusedWorldspaceParent.SetTo(formKey);
             cell.Parent.SetTo(FormKeyBinaryTranslation.Instance.Parse(frame));
+            if (at >= 0)
+            {
+                ValuePositionRecorder.At("Parent.UnusedWorldspaceParent", at, 4);
+                ValuePositionRecorder.At("Parent.Parent", at + 4, 4);
+            }
             return cell;
         }
         else
@@ -39,6 +46,12 @@ partial class NavmeshGeometryBinaryCreateTranslation
             var wrld = new WorldspaceNavmeshParent();
             wrld.Parent.SetTo(formKey);
             wrld.Coordinates = P2Int16BinaryTranslation<TReader, MutagenWriter>.Instance.Parse(reader: frame, swapCoords: true);
+            if (at >= 0)
+            {
+                ValuePositionRecorder.At("Parent.Parent", at, 4);
+                // Stored Y then X
+                ValuePositionRecorder.At("Parent.Coordinates", at + 4, 4, converted: true);
+            }
             return wrld;
         }
     }

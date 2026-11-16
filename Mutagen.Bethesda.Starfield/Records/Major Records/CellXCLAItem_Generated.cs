@@ -1067,18 +1067,22 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.XCLA:
                 {
                     if (lastParsed.ShortCircuit((int)CellXCLAItem_FieldIndex.XCLA, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "XCLA");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.XCLA = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CellXCLAItem_FieldIndex.XCLA;
                 }
                 case RecordTypeInts.XCLD:
                 {
                     if (lastParsed.ShortCircuit((int)CellXCLAItem_FieldIndex.XCLD, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "XCLD");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.XCLD = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CellXCLAItem_FieldIndex.XCLD;
                 }
                 default:

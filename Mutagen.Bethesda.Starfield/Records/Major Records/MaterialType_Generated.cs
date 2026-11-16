@@ -2042,43 +2042,55 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Parent");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Parent.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MaterialType_FieldIndex.Parent;
                 }
                 case RecordTypeInts.MNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MaterialType_FieldIndex.Name;
                 }
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HavokDisplayColor");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HavokDisplayColor = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MaterialType_FieldIndex.HavokDisplayColor;
                 }
                 case RecordTypeInts.BNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Buoyancy");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Buoyancy = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MaterialType_FieldIndex.Buoyancy;
                 }
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<MaterialType.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MaterialType_FieldIndex.Flags;
                 }
                 case RecordTypeInts.HNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HavokImpactDataSet");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HavokImpactDataSet.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MaterialType_FieldIndex.HavokImpactDataSet;
                 }
                 case RecordTypeInts.MODL:
@@ -2088,9 +2100,11 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MODC:
                 case RecordTypeInts.MODF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Starfield.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MaterialType_FieldIndex.Model;
                 }
                 case RecordTypeInts.FLLD:
@@ -2098,17 +2112,21 @@ namespace Mutagen.Bethesda.Starfield
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)MaterialType_FieldIndex.HavokImpactDataSet)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                         item.Model = Mutagen.Bethesda.Starfield.Model.CreateFromBinary(
                             frame: frame,
                             translationParams: translationParams.DoNotShortCircuit());
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)MaterialType_FieldIndex.Model, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)MaterialType_FieldIndex.BreakableFX)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LightLayer");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.LightLayer = EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
                             reader: frame,
                             length: contentLength);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)MaterialType_FieldIndex.LightLayer, nextRecordType);
                     }
                     else
@@ -2116,15 +2134,19 @@ namespace Mutagen.Bethesda.Starfield
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                                 item.Model = Mutagen.Bethesda.Starfield.Model.CreateFromBinary(
                                     frame: frame,
                                     translationParams: translationParams.DoNotShortCircuit());
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)MaterialType_FieldIndex.Model, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LightLayer");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.LightLayer = EnumBinaryTranslation<Light.LightLayer, MutagenFrame, MutagenWriter>.Instance.Parse(
                                     reader: frame,
                                     length: contentLength);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)MaterialType_FieldIndex.LightLayer, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -2133,11 +2155,13 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.ANAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BreakableFX");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BreakableFX = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MaterialType_FieldIndex.BreakableFX;
                 }
                 default:

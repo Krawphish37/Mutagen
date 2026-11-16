@@ -1337,6 +1337,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ITXT:
                 {
                     if (lastParsed.ShortCircuit((int)MessageButton_FieldIndex.Text, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Text");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Text = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1344,34 +1345,41 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MessageButton_FieldIndex.Text;
                 }
                 case RecordTypeInts.IBIN:
                 {
                     if (lastParsed.ShortCircuit((int)MessageButton_FieldIndex.ButtonText, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ButtonText");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ButtonText = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MessageButton_FieldIndex.ButtonText;
                 }
                 case RecordTypeInts.CTDA:
                 {
                     if (lastParsed.ShortCircuit((int)MessageButton_FieldIndex.Conditions, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MessageButton_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.DODT:
                 {
                     if (lastParsed.ShortCircuit((int)MessageButton_FieldIndex.Reference, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Reference");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Reference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MessageButton_FieldIndex.Reference;
                 }
                 default:

@@ -1209,12 +1209,14 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 case RecordTypeInts.RDWT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Weathers");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Weathers = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<WeatherType>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: WeatherType.TryCreateFromBinary)
                         .CastExtendedList<WeatherType>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionWeather_FieldIndex.Weathers;
                 }
                 default:

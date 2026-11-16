@@ -10,7 +10,7 @@
   <Object name="Condition" objType="Subrecord" abstract="true" recordType="CTDA" selectedBy="field:Flags:bit=2">
     <Fields>
       <Enum name="CompareOperator" enumName="CompareOperator" binary="NoGeneration" layoutOffset="0" layoutBits="5-7" />
-      <Enum name="Flags" enumName="Condition.Flag" binary="Custom" byteLength="1" layoutOffset="0" layoutBits="0-4" />
+      <Enum name="Flags" enumName="Condition.Flag" binary="Custom" fills="Flags,CompareOperator" byteLength="1" layoutOffset="0" layoutBits="0-4" />
       <ByteArray name="Unknown1" byteLength="3" nullable="False" />
       <CustomLogic name="FunctionParse" layoutOffset="8" layoutEncoding="uint16" fills="ComparisonValue,Unknown2,Data" />
       <UInt16 name="Unknown2" binary="NoGeneration" layoutOffset="10" />
@@ -20,12 +20,12 @@
     <AdditionalContainedRecordType>CIS1</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>CIS2</AdditionalContainedRecordType>
   </Object>
-  <Object name="ConditionGlobal" objType="Subrecord" baseClass="Condition" recordType="CTDA" customBinaryEnd="Normal" selectorValue="1">
+  <Object name="ConditionGlobal" objType="Subrecord" baseClass="Condition" recordType="CTDA" customBinaryEnd="Normal" customBinaryEndFills="Data.StringParameter1,Data.StringParameter2" selectorValue="1">
     <Fields>
       <FormLink name="ComparisonValue" refName="Global" binary="NoGeneration" layoutOffset="4" />
     </Fields>
   </Object>
-  <Object name="ConditionFloat" objType="Subrecord" baseClass="Condition" recordType="CTDA" customBinaryEnd="Normal" selectorValue="0">
+  <Object name="ConditionFloat" objType="Subrecord" baseClass="Condition" recordType="CTDA" customBinaryEnd="Normal" customBinaryEndFills="Data.StringParameter1,Data.StringParameter2" selectorValue="0">
     <Fields>
       <Float name="ComparisonValue" binary="NoGeneration" layoutOffset="4" />
     </Fields>

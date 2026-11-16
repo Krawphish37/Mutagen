@@ -1067,18 +1067,22 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MNAM:
                 {
                     if (lastParsed.ShortCircuit((int)FacialExpressionMorph_FieldIndex.Morph, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Morph");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Morph = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FacialExpressionMorph_FieldIndex.Morph;
                 }
                 case RecordTypeInts.MWGT:
                 {
                     if (lastParsed.ShortCircuit((int)FacialExpressionMorph_FieldIndex.Value, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Value");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Value = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FacialExpressionMorph_FieldIndex.Value;
                 }
                 default:

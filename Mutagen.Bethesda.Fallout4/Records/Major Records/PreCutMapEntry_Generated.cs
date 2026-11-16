@@ -1157,12 +1157,16 @@ namespace Mutagen.Bethesda.Fallout4
             IPreCutMapEntry item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Reference");
             item.Reference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Triangles");
             item.Triangles.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<UInt16>.Instance.Parse(
                     amount: frame.ReadUInt16(),
                     reader: frame,
                     transl: UInt16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

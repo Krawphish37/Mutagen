@@ -2087,13 +2087,23 @@ namespace Mutagen.Bethesda.Skyrim
             ISkyrimModHeader item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
             item.Flags = EnumBinaryTranslation<SkyrimModHeader.HeaderFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FormID");
             item.FormID = frame.ReadUInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Version");
             item.Version = frame.ReadInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FormVersion");
             item.FormVersion = frame.ReadUInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Version2");
             item.Version2 = frame.ReadUInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static ParseResult FillBinaryRecordTypes(
@@ -2110,67 +2120,85 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.HEDR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Stats");
                     item.Stats = Mutagen.Bethesda.Skyrim.ModStats.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SkyrimModHeader_FieldIndex.Stats;
                 }
                 case RecordTypeInts.OFST:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TypeOffsets");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TypeOffsets = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SkyrimModHeader_FieldIndex.TypeOffsets;
                 }
                 case RecordTypeInts.DELE:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Deleted");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Deleted = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SkyrimModHeader_FieldIndex.Deleted;
                 }
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Author");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Author = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SkyrimModHeader_FieldIndex.Author;
                 }
                 case RecordTypeInts.SNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Description");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Description = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SkyrimModHeader_FieldIndex.Description;
                 }
                 case RecordTypeInts.MAST:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "MasterReferences");
                     SkyrimModHeaderBinaryCreateTranslation.FillBinaryMasterReferencesCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SkyrimModHeader_FieldIndex.MasterReferences;
                 }
                 case RecordTypeInts.ONAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "OverriddenForms");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.OverriddenForms = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ISkyrimMajorRecordGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<ISkyrimMajorRecordGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SkyrimModHeader_FieldIndex.OverriddenForms;
                 }
                 case RecordTypeInts.INTV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "INTV");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.INTV = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SkyrimModHeader_FieldIndex.INTV;
                 }
                 case RecordTypeInts.INCC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "INCC");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.INCC = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SkyrimModHeader_FieldIndex.INCC;
                 }
                 case RecordTypeInts.XXXX:

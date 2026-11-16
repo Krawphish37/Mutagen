@@ -1725,9 +1725,11 @@ namespace Mutagen.Bethesda.Starfield
             INpcRaceOverride item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "FlagParse");
             NpcRaceOverrideBinaryCreateTranslation.FillBinaryFlagParseCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void FillBinaryFlagParseCustom(

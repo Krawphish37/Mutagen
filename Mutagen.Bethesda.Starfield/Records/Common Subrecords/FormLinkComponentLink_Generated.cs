@@ -1086,15 +1086,19 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FLKW:
                 {
                     if (lastParsed.ShortCircuit((int)FormLinkComponentLink_FieldIndex.Keyword, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Keyword");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Keyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FormLinkComponentLink_FieldIndex.Keyword;
                 }
                 case RecordTypeInts.FLFM:
                 {
                     if (lastParsed.ShortCircuit((int)FormLinkComponentLink_FieldIndex.LinkedForm, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LinkedForm");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LinkedForm.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FormLinkComponentLink_FieldIndex.LinkedForm;
                 }
                 default:

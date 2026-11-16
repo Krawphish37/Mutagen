@@ -1166,6 +1166,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.INTV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Filters");
                     item.Filters = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<String>.Instance.ParsePerItem(
                             reader: frame,
@@ -1174,6 +1175,7 @@ namespace Mutagen.Bethesda.Starfield
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.FLTR),
                             transl: StringBinaryTranslation.Instance.Parse)
                         .CastExtendedList<String>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ObjectWindowFilterComponent_FieldIndex.Filters;
                 }
                 default:

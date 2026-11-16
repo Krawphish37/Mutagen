@@ -1682,6 +1682,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.AAAP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "AttachPoints");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength + contentLength; // Skip marker
                     item.AttachPoints.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AimAssistPosePoint>.Instance.Parse(
@@ -1689,6 +1690,7 @@ namespace Mutagen.Bethesda.Starfield
                             triggeringRecord: AimAssistPosePoint_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: AimAssistPosePoint.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AimAssistPose_FieldIndex.AttachPoints;
                 }
                 case RecordTypeInts.ANAM:
@@ -1697,6 +1699,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.WTMX:
                 case RecordTypeInts.AAPS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Connections");
                     item.Connections = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AimAssistPosePoint>.Instance.ParsePerItem(
                             reader: frame,
@@ -1706,6 +1709,7 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams,
                             transl: AimAssistPosePoint.TryCreateFromBinary)
                         .CastExtendedList<AimAssistPosePoint>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AimAssistPose_FieldIndex.Connections;
                 }
                 default:

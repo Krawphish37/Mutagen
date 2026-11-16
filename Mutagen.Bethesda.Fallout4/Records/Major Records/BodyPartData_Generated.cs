@@ -1650,20 +1650,24 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.MODT:
                 case RecordTypeInts.MODS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Fallout4.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BodyPartData_FieldIndex.Model;
                 }
                 case RecordTypeInts.BPTN:
                 case RecordTypeInts.BPNN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Parts");
                     item.Parts.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<BodyPart>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: BodyPart_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: BodyPart.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BodyPartData_FieldIndex.Parts;
                 }
                 default:

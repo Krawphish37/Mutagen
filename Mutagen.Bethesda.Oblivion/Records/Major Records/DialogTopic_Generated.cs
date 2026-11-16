@@ -1496,9 +1496,11 @@ namespace Mutagen.Bethesda.Oblivion
                 translationParams: translationParams,
                 fillStructs: DialogTopicBinaryCreateTranslation.FillBinaryStructs,
                 fillTyped: DialogTopicBinaryCreateTranslation.FillBinaryRecordTypes);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "CustomBinaryEnd");
             DialogTopicBinaryCreateTranslation.CustomBinaryEndImportPublic(
                 frame: frame,
                 obj: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
         
         public override void CopyInFromBinary(
@@ -2497,28 +2499,34 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 case RecordTypeInts.QSTI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Quests");
                     item.Quests.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IQuestGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.QSTI),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogTopic_FieldIndex.Quests;
                 }
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogTopic_FieldIndex.Name;
                 }
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DialogType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DialogType = EnumBinaryTranslation<DialogType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogTopic_FieldIndex.DialogType;
                 }
                 default:

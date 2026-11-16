@@ -88,8 +88,10 @@ public class CustomLogicFillsTests
         IEnumerable<Type> candidates = hierarchy;
         foreach (var segment in path.Split('.'))
         {
+            // A reader may set a value through an interface the class implements explicitly (IConditionParameters)
             var props = candidates
-                .SelectMany(c => c.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+                .SelectMany(c => c.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .Concat(c.GetInterfaces().SelectMany(i => i.GetProperties())))
                 .Where(p => p.Name == segment)
                 .ToList();
             if (props.Count == 0) return false;
@@ -173,7 +175,7 @@ public class CustomLogicFillsTests
             {
                 touched.ShouldContain(field, $"{step}: fills names {field}, which the step's code doesn't touch");
             }
-            FillsOneLevelDown_MatchTheCompiledReadStep(step, hierarchy);
+            FillsOneLevelDown_MatchTheCompiledReadStep(step, hierarchy, IlWalk.Walk(ReadStep(step)));
         }
     }
 
@@ -181,9 +183,9 @@ public class CustomLogicFillsTests
     // field of that object's class (or a subclass) the step assigns, or whose form link it sets, must be listed as
     // "Data.X", and every listed one touched. Without this, Note's DataParse said Data.Scene, Data.Terminal, Data.File
     // while it also filled Data.Sound and Data.Unknown (C39), and the test passed.
-    private static void FillsOneLevelDown_MatchTheCompiledReadStep(Step step, List<Type> hierarchy)
+    private static void FillsOneLevelDown_MatchTheCompiledReadStep(Step step, List<Type> hierarchy, IlWalk.Touch walk)
     {
-        var calls = IlWalk.Walk(ReadStep(step)).Calls;
+        var calls = walk.Calls;
         foreach (var group in step.FillPaths.Where(p => p.Contains('.')).GroupBy(p => p.Split('.')[0]))
         {
             var held = hierarchy
@@ -263,6 +265,118 @@ public class CustomLogicFillsTests
         step.WrittenFrom.ShouldBe(writtenFrom);
     }
 
+    // C60 (W5): a binary="Custom" field's hand-written reader (FillBinary<Field>Custom) and an object's customBinaryEnd
+    // (CustomBinaryEndImport) say what they fill too, like the steps: fills="A,B" (a reader that assigns nothing names the
+    // step that reads its bytes with readBy=, or says how they are written with writtenFrom=), on the field and as
+    // customBinaryEndFills= / customBinaryEndWrittenFrom= on the object.
+    private static List<Step> CustomFields() =>
+        Directory.EnumerateFiles(RecordsDir(), "*.xml", SearchOption.AllDirectories)
+            .SelectMany(f => XDocument.Load(f).Root!.Elements(Loqui + "Object"))
+            .SelectMany(o => o.Element(Loqui + "Fields")?.Descendants()
+                .Where(e => (string?)e.Attribute("binary") == "Custom" && e.Name.LocalName != "CustomLogic")
+                .Select(e => new Step(
+                    (string)o.Attribute("name")!,
+                    (string)e.Attribute("name")!,
+                    (string?)e.Attribute("fills"),
+                    WrittenFromOrReadBy(e),
+                    [])) ?? [])
+            .ToList();
+
+    private static string? WrittenFromOrReadBy(XElement e) =>
+        (string?)e.Attribute("writtenFrom") ?? ((string?)e.Attribute("readBy") is { } r ? "readBy:" + r : null);
+
+    private static List<Step> CustomBinaryEnds() =>
+        Directory.EnumerateFiles(RecordsDir(), "*.xml", SearchOption.AllDirectories)
+            .SelectMany(f => XDocument.Load(f).Root!.Elements(Loqui + "Object"))
+            .Where(o => (string?)o.Attribute("customBinaryEnd") is { } end && end != "Off")
+            .Select(o => new Step(
+                (string)o.Attribute("name")!,
+                "CustomBinaryEnd",
+                (string?)o.Attribute("customBinaryEndFills"),
+                (string?)o.Attribute("customBinaryEndWrittenFrom"),
+                []))
+            .ToList();
+
+    private static MethodInfo? CustomReader(Step field)
+    {
+        var translation = FindType(field.Object + "BinaryCreateTranslation");
+        var name = field.Name == "CustomBinaryEnd" ? "CustomBinaryEndImport" : $"FillBinary{field.Name}Custom";
+        return translation.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+            .SingleOrDefault(m => m.Name == name && m.GetMethodBody() != null);
+    }
+
+    // The reader's own class and the reading classes of the object's base classes (ConditionFloat's end reader uses
+    // Condition's helpers)
+    private static Type[] ReaderHomes(Step step) =>
+        Bases(FindType(step.Object)).Skip(1)
+            .Select(b => StarfieldTypes.SingleOrDefault(t => !t.IsNested && Def(t).Name.Split('`')[0] == Def(b).Name.Split('`')[0] + "BinaryCreateTranslation"))
+            .Where(t => t != null)
+            .Select(t => t!)
+            .ToArray();
+
+    private static void CheckFills(Step step, MethodInfo reader)
+    {
+        var hierarchy = Hierarchy(FindType(step.Object));
+        var walk = IlWalk.Walk(reader, ReaderHomes(step));
+        var calls = walk.Calls.Where(c => c.DeclaringType != null && InHierarchy(c.DeclaringType, hierarchy)).ToList();
+        var sets = calls.Where(c => c.Name.StartsWith("set_")).Select(c => c.Name[4..]).ToHashSet();
+        var touched = calls.Where(c => c.Name.StartsWith("get_") || c.Name.StartsWith("set_")).Select(c => c.Name[4..]).ToHashSet();
+        var filled = step.FillPaths.Select(p => p.Split('.')[0]).ToHashSet();
+        foreach (var set in sets)
+        {
+            filled.ShouldContain(set, $"{step} assigns {set}, which fills doesn't name");
+        }
+        foreach (var field in filled)
+        {
+            touched.ShouldContain(field, $"{step}: fills names {field}, which the reader's code doesn't touch");
+        }
+        FillsOneLevelDown_MatchTheCompiledReadStep(step, hierarchy, walk);
+    }
+
+    [Fact]
+    public void EveryCustomFieldAndCustomBinaryEnd_SaysWhatItFills()
+    {
+        var all = CustomFields().Concat(CustomBinaryEnds()).ToList();
+        all.Count.ShouldBe(68);
+        foreach (var f in all)
+        {
+            f.Fills.ShouldNotBeNull($"{f} has no fills attribute");
+            if (f.Fills == "")
+            {
+                f.WrittenFrom.ShouldNotBeNull($"{f} fills nothing but has no writtenFrom or readBy");
+            }
+            else
+            {
+                f.WrittenFrom.ShouldBeNull($"{f} fills fields, so writtenFrom/readBy are not used");
+            }
+        }
+    }
+
+    [Fact]
+    public void CustomFieldAndCustomBinaryEndFills_NameRealFields_AndMatchTheCompiledReader()
+    {
+        var steps = Steps();
+        var fields = CustomFields();
+        foreach (var f in fields.Concat(CustomBinaryEnds()))
+        {
+            var hierarchy = Hierarchy(FindType(f.Object));
+            foreach (var path in f.FillPaths)
+            {
+                Resolves(hierarchy, path).ShouldBeTrue($"{f}: fills names {path}, which is no field");
+            }
+            if (f.WrittenFrom is { } w && w.StartsWith("readBy:"))
+            {
+                // The step or Custom field named reads this field's bytes, and says so
+                var by = w["readBy:".Length..];
+                steps.Concat(fields).Where(s => s.Object == f.Object && s.Name == by)
+                    .ShouldContain(s => s.FillPaths.Any(p => p.Split('.')[0] == f.Name), $"{f}: readBy {by}, which doesn't list it in fills");
+            }
+            var reader = CustomReader(f);
+            reader.ShouldNotBeNull($"{f} has no hand-written reader");
+            CheckFills(f, reader!);
+        }
+    }
+
     // Calls and field loads in a method's IL, following calls into the methods (and lambdas, local functions) of its own
     // class, not into other types.
     private static class IlWalk
@@ -274,13 +388,14 @@ public class CustomLogicFillsTests
 
         public sealed record Touch(List<MethodBase> Calls, List<FieldInfo> Fields);
 
-        public static Touch Walk(MethodBase root)
+        public static Touch Walk(MethodBase root, params Type[] alsoHome)
         {
             var calls = new List<MethodBase>();
             var fields = new List<FieldInfo>();
             var seen = new HashSet<MethodBase>();
             var queue = new Queue<MethodBase>();
             var home = Def(root.DeclaringType!);
+            var homes = alsoHome.Select(Def).Append(home).ToHashSet();
             queue.Enqueue(root);
             while (queue.Count > 0)
             {
@@ -312,7 +427,7 @@ public class CustomLogicFillsTests
                             if (callee?.DeclaringType is { } decl)
                             {
                                 calls.Add(callee);
-                                if (Def(decl) == home || (decl.DeclaringType is { } outer && Def(outer) == home))
+                                if (homes.Contains(Def(decl)) || (decl.DeclaringType is { } outer && homes.Contains(Def(outer))))
                                 {
                                     queue.Enqueue(callee);
                                 }

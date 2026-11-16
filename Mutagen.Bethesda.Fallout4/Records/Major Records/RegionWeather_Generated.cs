@@ -1341,24 +1341,30 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.RDWT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Weathers");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Weathers = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<WeatherType>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: WeatherType.TryCreateFromBinary)
                         .CastExtendedList<WeatherType>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionWeather_FieldIndex.Weathers;
                 }
                 case RecordTypeInts.RLDM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LodDisplayDistanceMultiplier");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LodDisplayDistanceMultiplier = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionWeather_FieldIndex.LodDisplayDistanceMultiplier;
                 }
                 case RecordTypeInts.ANAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OcclusionAccuracyDist");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.OcclusionAccuracyDist = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionWeather_FieldIndex.OcclusionAccuracyDist;
                 }
                 default:

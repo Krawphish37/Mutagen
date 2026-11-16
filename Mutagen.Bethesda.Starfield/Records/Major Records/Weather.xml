@@ -9,7 +9,7 @@
       <FormLink name="Precipitation" recordType="MNAM" refName="ShaderParticleGeometry" nullable="true" />
       <FormLink name="CameraEffect" recordType="NNAM" refName="ArtObject" nullable="true" />
       <FormLink name="CloudType" recordType="CLDC" refName="Clouds" />
-      <Array name="Clouds" fixedSize="32" binary="Custom" recordType="RNAM" nullable="False">
+      <Array name="Clouds" fixedSize="32" binary="Custom" fills="Clouds.YSpeed" recordType="RNAM" nullable="False">
         <RefDirect refName="CloudLayer" />
       </Array>
       <CustomLogic name="CloudXSpeeds" recordType="QNAM" fills="Clouds.XSpeed" />
@@ -101,7 +101,7 @@
         </Fields>
       </Data>
       <RefDirect name="VolumetricLighting" refName="WeatherVolumetricLighting" />
-      <RefDirect name="DirectionalAmbientLightingColors" refName="WeatherAmbientColorSet" recordType="DALC" binary="Custom" />
+      <RefDirect name="DirectionalAmbientLightingColors" refName="WeatherAmbientColorSet" recordType="DALC" binary="Custom" fills="DirectionalAmbientLightingColors" />
       <RefDirect name="Aurora" refName="Model" />
       <FormLink name="SunGlareLensFlare" recordType="GNAM" refName="LensFlare" />
       <RefDirect name="Magic" refName="WeatherMagic" />

@@ -1195,22 +1195,26 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.CSDT:
                 {
                     if (lastParsed.ShortCircuit((int)NpcSoundType_FieldIndex.Type, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Type");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Type = EnumBinaryTranslation<NpcSoundType.SoundType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcSoundType_FieldIndex.Type;
                 }
                 case RecordTypeInts.CSDI:
                 case RecordTypeInts.CSDC:
                 {
                     if (lastParsed.ShortCircuit((int)NpcSoundType_FieldIndex.Sounds, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Sounds");
                     item.Sounds.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NpcSound>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: NpcSound_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: NpcSound.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcSoundType_FieldIndex.Sounds;
                 }
                 default:

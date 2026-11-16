@@ -1120,17 +1120,21 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.SLSD:
                 {
                     if (lastParsed.ShortCircuit((int)LocalVariable_FieldIndex.Data, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Fallout3.LocalVariableData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LocalVariable_FieldIndex.Data;
                 }
                 case RecordTypeInts.SCVR:
                 {
                     if (lastParsed.ShortCircuit((int)LocalVariable_FieldIndex.Name, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LocalVariable_FieldIndex.Name;
                 }
                 default:

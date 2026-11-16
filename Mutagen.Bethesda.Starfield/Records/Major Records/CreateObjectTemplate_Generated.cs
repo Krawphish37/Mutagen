@@ -1066,15 +1066,19 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ALCM:
                 {
                     if (lastParsed.ShortCircuit((int)CreateObjectTemplate_FieldIndex.TemplateAlias, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TemplateAlias");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TemplateAlias = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CreateObjectTemplate_FieldIndex.TemplateAlias;
                 }
                 case RecordTypeInts.ALCA:
                 {
                     if (lastParsed.ShortCircuit((int)CreateObjectTemplate_FieldIndex.TargetOverrideAlias, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TargetOverrideAlias");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TargetOverrideAlias = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CreateObjectTemplate_FieldIndex.TargetOverrideAlias;
                 }
                 default:

@@ -2171,49 +2171,65 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Starfield.VirtualMachineAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Climate_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.WLST:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Weathers");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Weathers = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<WeatherType>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: WeatherType.TryCreateFromBinary)
                         .CastExtendedList<WeatherType>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Climate_FieldIndex.Weathers;
                 }
                 case RecordTypeInts.WSLT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "WeatherSettings");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.WeatherSettings = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ClimateWeatherSettings>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: ClimateWeatherSettings.TryCreateFromBinary)
                         .CastExtendedList<ClimateWeatherSettings>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Climate_FieldIndex.WeatherSettings;
                 }
                 case RecordTypeInts.TNAM:
                 {
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(dataFrame, "SunriseBegin");
                     ClimateBinaryCreateTranslation.FillBinarySunriseBeginCustom(
                         frame: dataFrame,
                         item: item);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(dataFrame, "SunriseEnd");
                     ClimateBinaryCreateTranslation.FillBinarySunriseEndCustom(
                         frame: dataFrame,
                         item: item);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(dataFrame, "SunsetBegin");
                     ClimateBinaryCreateTranslation.FillBinarySunsetBeginCustom(
                         frame: dataFrame,
                         item: item);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(dataFrame, "SunsetEnd");
                     ClimateBinaryCreateTranslation.FillBinarySunsetEndCustom(
                         frame: dataFrame,
                         item: item);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Volatility");
                     item.Volatility = dataFrame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)Climate_FieldIndex.Volatility;
                 }
                 case RecordTypeInts.XXXX:

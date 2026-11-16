@@ -1431,12 +1431,15 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.EPFB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PerkEntryID");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PerkEntryID = frame.ReadUInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APerkEffect_FieldIndex.PerkEntryID;
                 }
                 case RecordTypeInts.EPF2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ButtonLabel");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ButtonLabel = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1444,14 +1447,17 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APerkEffect_FieldIndex.ButtonLabel;
                 }
                 case RecordTypeInts.EPF3:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<APerkEffect.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APerkEffect_FieldIndex.Flags;
                 }
                 case RecordTypeInts.PRKF: // End Marker

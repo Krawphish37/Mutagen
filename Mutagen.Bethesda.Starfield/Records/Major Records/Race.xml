@@ -104,7 +104,7 @@
       <FormLink name="ImpactMaterialType" recordType="NAM4" refName="MaterialType" />
       <RefDirect name="OpenCorpseSound" recordType="WED0" refName="SoundReference" />
       <RefDirect name="CloseCorpseSound" recordType="WED1" refName="SoundReference" />
-      <Dict name="BipedObjects" binary="Custom" recordType="NAME">
+      <Dict name="BipedObjects" binary="Custom" fills="BipedObjects" recordType="NAME">
         <Key>
           <Enum enumName="BipedObject" />
         </Key>
@@ -197,7 +197,7 @@
       <List name="AnimationPaths">
         <String recordType="SAPT" />
       </List>
-      <Enum name="Role" enumName="Subgraph.SubgraphRole" binary="Custom" recordType="SRAF" nullable="False" layoutOffset="0" layoutEncoding="uint16" />
+      <Enum name="Role" enumName="Subgraph.SubgraphRole" binary="Custom" fills="Role,Perspective" recordType="SRAF" nullable="False" layoutOffset="0" layoutEncoding="uint16" />
       <Enum name="Perspective" enumName="Perspective" binary="NoGeneration" layoutSubrecord="SRAF" layoutOffset="2" layoutEncoding="uint16" />
     </Fields>
   </Object>

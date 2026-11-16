@@ -2197,68 +2197,90 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Skyrim.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.TX00:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Diffuse");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Diffuse = AssetLinkBinaryTranslation.Instance.Parse<SkyrimTextureAssetType>(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.Diffuse;
                 }
                 case RecordTypeInts.TX01:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NormalOrGloss");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NormalOrGloss = AssetLinkBinaryTranslation.Instance.Parse<SkyrimTextureAssetType>(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.NormalOrGloss;
                 }
                 case RecordTypeInts.TX02:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EnvironmentMaskOrSubsurfaceTint");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EnvironmentMaskOrSubsurfaceTint = AssetLinkBinaryTranslation.Instance.Parse<SkyrimTextureAssetType>(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.EnvironmentMaskOrSubsurfaceTint;
                 }
                 case RecordTypeInts.TX03:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GlowOrDetailMap");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.GlowOrDetailMap = AssetLinkBinaryTranslation.Instance.Parse<SkyrimTextureAssetType>(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.GlowOrDetailMap;
                 }
                 case RecordTypeInts.TX04:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Height");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Height = AssetLinkBinaryTranslation.Instance.Parse<SkyrimTextureAssetType>(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.Height;
                 }
                 case RecordTypeInts.TX05:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Environment");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Environment = AssetLinkBinaryTranslation.Instance.Parse<SkyrimTextureAssetType>(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.Environment;
                 }
                 case RecordTypeInts.TX06:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Multilayer");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Multilayer = AssetLinkBinaryTranslation.Instance.Parse<SkyrimTextureAssetType>(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.Multilayer;
                 }
                 case RecordTypeInts.TX07:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BacklightMaskOrSpecular");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BacklightMaskOrSpecular = AssetLinkBinaryTranslation.Instance.Parse<SkyrimTextureAssetType>(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.BacklightMaskOrSpecular;
                 }
                 case RecordTypeInts.DODT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Decal");
                     item.Decal = Mutagen.Bethesda.Skyrim.Decal.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.Decal;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<TextureSet.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.Flags;
                 }
                 default:

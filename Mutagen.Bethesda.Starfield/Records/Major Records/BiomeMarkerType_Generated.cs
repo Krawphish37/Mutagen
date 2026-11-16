@@ -1230,14 +1230,17 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.KNAM:
                 {
                     if (lastParsed.ShortCircuit((int)BiomeMarkerType_FieldIndex.MarkerType, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MarkerType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MarkerType.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BiomeMarkerType_FieldIndex.MarkerType;
                 }
                 case RecordTypeInts.KSIZ:
                 case RecordTypeInts.KWDA:
                 {
                     if (lastParsed.ShortCircuit((int)BiomeMarkerType_FieldIndex.Keywords, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Keywords");
                     item.Keywords = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame,
@@ -1246,6 +1249,7 @@ namespace Mutagen.Bethesda.Starfield
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.KWDA),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BiomeMarkerType_FieldIndex.Keywords;
                 }
                 default:

@@ -1179,23 +1179,29 @@ namespace Mutagen.Bethesda.Oblivion
                 case RecordTypeInts.EFID:
                 {
                     if (lastParsed.ShortCircuit((int)Effect_FieldIndex.Data, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "EffectInitial");
                     return EffectBinaryCreateTranslation.FillBinaryEffectInitialCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 }
                 case RecordTypeInts.EFIT:
                 {
                     if (lastParsed.ShortCircuit((int)Effect_FieldIndex.Data, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Oblivion.EffectData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Effect_FieldIndex.Data;
                 }
                 case RecordTypeInts.SCIT:
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ScriptEffect");
                     item.ScriptEffect = Mutagen.Bethesda.Oblivion.ScriptEffect.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Effect_FieldIndex.ScriptEffect;
                 }
                 default:

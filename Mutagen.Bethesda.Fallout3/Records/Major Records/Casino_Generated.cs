@@ -3611,6 +3611,7 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -3618,6 +3619,7 @@ namespace Mutagen.Bethesda.Fallout3
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Casino_FieldIndex.Name;
                 }
                 case RecordTypeInts.DATA:
@@ -3625,35 +3627,63 @@ namespace Mutagen.Bethesda.Fallout3
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DecksPercentBeforeShuffle");
                     item.DecksPercentBeforeShuffle = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "BlackJackPayoutRatio");
                     item.BlackJackPayoutRatio = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SlotReelSymbol1");
                     item.SlotReelSymbol1 = dataFrame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SlotReelSymbol2");
                     item.SlotReelSymbol2 = dataFrame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SlotReelSymbol3");
                     item.SlotReelSymbol3 = dataFrame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SlotReelSymbol4");
                     item.SlotReelSymbol4 = dataFrame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SlotReelSymbol5");
                     item.SlotReelSymbol5 = dataFrame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SlotReelSymbol6");
                     item.SlotReelSymbol6 = dataFrame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SlotReelSymbolW");
                     item.SlotReelSymbolW = dataFrame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "NumberOfDecks");
                     item.NumberOfDecks = dataFrame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "MaxWinnings");
                     item.MaxWinnings = dataFrame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Currency");
                     item.Currency.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "CasinoWinningsQuest");
                     item.CasinoWinningsQuest.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DealerStayOnSoft17");
                     item.DealerStayOnSoft17 = BooleanBinaryTranslation<MutagenFrame>.Instance.Parse(
                         reader: dataFrame,
                         byteLength: 4);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)Casino_FieldIndex.DealerStayOnSoft17;
                 }
                 case RecordTypeInts.MODL:
@@ -3661,74 +3691,90 @@ namespace Mutagen.Bethesda.Fallout3
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)Casino_FieldIndex.DealerStayOnSoft17)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChipModelOneDollar");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.ChipModelOneDollar = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Casino_FieldIndex.ChipModelOneDollar, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Casino_FieldIndex.ChipModelOneDollar)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChipModelFiveDollar");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.ChipModelFiveDollar = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Casino_FieldIndex.ChipModelFiveDollar, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Casino_FieldIndex.ChipModelFiveDollar)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChipModelTenDollar");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.ChipModelTenDollar = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Casino_FieldIndex.ChipModelTenDollar, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Casino_FieldIndex.ChipModelTenDollar)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChipModelTwentyFiveDollar");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.ChipModelTwentyFiveDollar = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Casino_FieldIndex.ChipModelTwentyFiveDollar, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Casino_FieldIndex.ChipModelTwentyFiveDollar)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChipModelOneHundredDollar");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.ChipModelOneHundredDollar = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Casino_FieldIndex.ChipModelOneHundredDollar, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Casino_FieldIndex.ChipModelOneHundredDollar)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChipModelFiveHundredDollar");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.ChipModelFiveHundredDollar = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Casino_FieldIndex.ChipModelFiveHundredDollar, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Casino_FieldIndex.ChipModelFiveHundredDollar)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChipModelRoulette");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.ChipModelRoulette = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Casino_FieldIndex.ChipModelRoulette, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Casino_FieldIndex.ChipModelRoulette)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SlotMachineModel");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.SlotMachineModel = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Casino_FieldIndex.SlotMachineModel, nextRecordType);
                     }
                     else
@@ -3736,60 +3782,76 @@ namespace Mutagen.Bethesda.Fallout3
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChipModelOneDollar");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.ChipModelOneDollar = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Casino_FieldIndex.ChipModelOneDollar, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChipModelFiveDollar");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.ChipModelFiveDollar = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Casino_FieldIndex.ChipModelFiveDollar, nextRecordType);
                             case 2:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChipModelTenDollar");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.ChipModelTenDollar = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Casino_FieldIndex.ChipModelTenDollar, nextRecordType);
                             case 3:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChipModelTwentyFiveDollar");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.ChipModelTwentyFiveDollar = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Casino_FieldIndex.ChipModelTwentyFiveDollar, nextRecordType);
                             case 4:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChipModelOneHundredDollar");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.ChipModelOneHundredDollar = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Casino_FieldIndex.ChipModelOneHundredDollar, nextRecordType);
                             case 5:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChipModelFiveHundredDollar");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.ChipModelFiveHundredDollar = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Casino_FieldIndex.ChipModelFiveHundredDollar, nextRecordType);
                             case 6:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChipModelRoulette");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.ChipModelRoulette = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Casino_FieldIndex.ChipModelRoulette, nextRecordType);
                             case 7:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SlotMachineModel");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.SlotMachineModel = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Casino_FieldIndex.SlotMachineModel, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -3798,38 +3860,46 @@ namespace Mutagen.Bethesda.Fallout3
                 }
                 case RecordTypeInts.MOD2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SlotMachineModel2");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SlotMachineModel2 = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Casino_FieldIndex.SlotMachineModel2;
                 }
                 case RecordTypeInts.MOD3:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BlackJackTableModel");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BlackJackTableModel = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Casino_FieldIndex.BlackJackTableModel;
                 }
                 case RecordTypeInts.MODT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BlackJackTableModelRelated");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BlackJackTableModelRelated = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Casino_FieldIndex.BlackJackTableModelRelated;
                 }
                 case RecordTypeInts.MOD4:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RouletteTableModel");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RouletteTableModel = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Casino_FieldIndex.RouletteTableModel;
                 }
                 case RecordTypeInts.ICON:
@@ -3837,65 +3907,79 @@ namespace Mutagen.Bethesda.Fallout3
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)Casino_FieldIndex.RouletteTableModel)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SlotReelTextureSymbol1");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.SlotReelTextureSymbol1 = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Casino_FieldIndex.SlotReelTextureSymbol1, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Casino_FieldIndex.SlotReelTextureSymbol1)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SlotReelTextureSymbol2");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.SlotReelTextureSymbol2 = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Casino_FieldIndex.SlotReelTextureSymbol2, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Casino_FieldIndex.SlotReelTextureSymbol2)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SlotReelTextureSymbol3");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.SlotReelTextureSymbol3 = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Casino_FieldIndex.SlotReelTextureSymbol3, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Casino_FieldIndex.SlotReelTextureSymbol3)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SlotReelTextureSymbol4");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.SlotReelTextureSymbol4 = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Casino_FieldIndex.SlotReelTextureSymbol4, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Casino_FieldIndex.SlotReelTextureSymbol4)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SlotReelTextureSymbol5");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.SlotReelTextureSymbol5 = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Casino_FieldIndex.SlotReelTextureSymbol5, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Casino_FieldIndex.SlotReelTextureSymbol5)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SlotReelTextureSymbol6");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.SlotReelTextureSymbol6 = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Casino_FieldIndex.SlotReelTextureSymbol6, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Casino_FieldIndex.SlotReelTextureSymbol6)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SlotReelTextureSymbolW");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.SlotReelTextureSymbolW = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Casino_FieldIndex.SlotReelTextureSymbolW, nextRecordType);
                     }
                     else
@@ -3903,53 +3987,67 @@ namespace Mutagen.Bethesda.Fallout3
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SlotReelTextureSymbol1");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.SlotReelTextureSymbol1 = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Casino_FieldIndex.SlotReelTextureSymbol1, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SlotReelTextureSymbol2");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.SlotReelTextureSymbol2 = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Casino_FieldIndex.SlotReelTextureSymbol2, nextRecordType);
                             case 2:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SlotReelTextureSymbol3");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.SlotReelTextureSymbol3 = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Casino_FieldIndex.SlotReelTextureSymbol3, nextRecordType);
                             case 3:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SlotReelTextureSymbol4");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.SlotReelTextureSymbol4 = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Casino_FieldIndex.SlotReelTextureSymbol4, nextRecordType);
                             case 4:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SlotReelTextureSymbol5");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.SlotReelTextureSymbol5 = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Casino_FieldIndex.SlotReelTextureSymbol5, nextRecordType);
                             case 5:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SlotReelTextureSymbol6");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.SlotReelTextureSymbol6 = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Casino_FieldIndex.SlotReelTextureSymbol6, nextRecordType);
                             case 6:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SlotReelTextureSymbolW");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.SlotReelTextureSymbolW = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Casino_FieldIndex.SlotReelTextureSymbolW, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -3961,38 +4059,46 @@ namespace Mutagen.Bethesda.Fallout3
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)Casino_FieldIndex.SlotReelTextureSymbolW)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BlackJackDeckTexture1");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.BlackJackDeckTexture1 = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Casino_FieldIndex.BlackJackDeckTexture1, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Casino_FieldIndex.BlackJackDeckTexture1)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BlackJackDeckTexture2");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.BlackJackDeckTexture2 = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Casino_FieldIndex.BlackJackDeckTexture2, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Casino_FieldIndex.BlackJackDeckTexture2)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BlackJackDeckTexture3");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.BlackJackDeckTexture3 = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Casino_FieldIndex.BlackJackDeckTexture3, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Casino_FieldIndex.BlackJackDeckTexture3)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BlackJackDeckTexture4");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.BlackJackDeckTexture4 = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Casino_FieldIndex.BlackJackDeckTexture4, nextRecordType);
                     }
                     else
@@ -4000,32 +4106,40 @@ namespace Mutagen.Bethesda.Fallout3
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BlackJackDeckTexture1");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.BlackJackDeckTexture1 = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Casino_FieldIndex.BlackJackDeckTexture1, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BlackJackDeckTexture2");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.BlackJackDeckTexture2 = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Casino_FieldIndex.BlackJackDeckTexture2, nextRecordType);
                             case 2:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BlackJackDeckTexture3");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.BlackJackDeckTexture3 = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Casino_FieldIndex.BlackJackDeckTexture3, nextRecordType);
                             case 3:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BlackJackDeckTexture4");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.BlackJackDeckTexture4 = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Casino_FieldIndex.BlackJackDeckTexture4, nextRecordType);
                             default:
                                 throw new NotImplementedException();

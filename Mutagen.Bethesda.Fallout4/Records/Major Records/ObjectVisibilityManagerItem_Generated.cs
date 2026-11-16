@@ -1207,19 +1207,23 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.INDX:
                 {
                     if (lastParsed.ShortCircuit((int)ObjectVisibilityManagerItem_FieldIndex.Object, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Object");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Object.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ObjectVisibilityManagerItem_FieldIndex.Object;
                 }
                 case RecordTypeInts.DATA:
                 {
                     if (lastParsed.ShortCircuit((int)ObjectVisibilityManagerItem_FieldIndex.ObjectBounds, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "ObjectBounds");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ObjectBounds = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ObjectBoundsFloat>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: ObjectBoundsFloat.TryCreateFromBinary)
                         .CastExtendedList<ObjectBoundsFloat>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ObjectVisibilityManagerItem_FieldIndex.ObjectBounds;
                 }
                 default:

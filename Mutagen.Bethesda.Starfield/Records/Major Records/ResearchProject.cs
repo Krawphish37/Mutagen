@@ -31,6 +31,7 @@ partial class ResearchProjectBinaryCreateTranslation
         // The frame ends with the first subrecord, and the conditions run on past it
         var outer = new MutagenFrame(frame.Reader);
         item.ConditionsHaveNoCount = outer.GetSubrecordHeader().RecordType != RecordTypes.CITC;
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(outer, nameof(item.Conditions));
         item.Conditions = ListBinaryTranslation<Condition>.Instance.ParsePerItem(
                 reader: outer,
                 countLengthLength: 4,
@@ -39,6 +40,7 @@ partial class ResearchProjectBinaryCreateTranslation
                 translationParams: default(TypedParseParams),
                 transl: Condition.TryCreateFromBinary)
             .CastExtendedList<Condition>();
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(outer);
     }
 }
 

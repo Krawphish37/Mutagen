@@ -1192,20 +1192,26 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.SNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StarSystemId");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.StarSystemId = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)WorldSpaceOverlayComponent_FieldIndex.StarSystemId;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PlanetId");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PlanetId = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)WorldSpaceOverlayComponent_FieldIndex.PlanetId;
                 }
                 case RecordTypeInts.BNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SurfaceBlock");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SurfaceBlock.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)WorldSpaceOverlayComponent_FieldIndex.SurfaceBlock;
                 }
                 default:

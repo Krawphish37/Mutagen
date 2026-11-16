@@ -1086,15 +1086,19 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.NNAM:
                 {
                     if (lastParsed.ShortCircuit((int)ActorReaction_FieldIndex.Actor, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Actor");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Actor.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ActorReaction_FieldIndex.Actor;
                 }
                 case RecordTypeInts.RNAM:
                 {
                     if (lastParsed.ShortCircuit((int)ActorReaction_FieldIndex.ReactionValue, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ReactionValue");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ReactionValue.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ActorReaction_FieldIndex.ReactionValue;
                 }
                 default:

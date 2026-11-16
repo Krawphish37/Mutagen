@@ -76,7 +76,9 @@ partial class CellBinaryCreateTranslation
         {
             len = sub.ContentLength;
         }
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.Traversals));
         item.Traversals = TraversalReferenceBinaryCreateTranslation.Parse(frame.SpawnWithLength(len), out var fluffBytes);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         item.NumTraversalFluffBytes = fluffBytes;
     }
     

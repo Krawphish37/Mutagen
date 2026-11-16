@@ -1381,15 +1381,25 @@ namespace Mutagen.Bethesda.Fallout3
             SoundDataBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "AttenuationCurve");
             item.AttenuationCurve.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Int16>.Instance.Parse(
                     reader: frame,
                     amount: 5,
                     transl: Int16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ReverbAttenuationControl");
             item.ReverbAttenuationControl = frame.ReadInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Priority");
             item.Priority = frame.ReadInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LoopBegin");
             item.LoopBegin = frame.ReadInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LoopEnd");
             item.LoopEnd = frame.ReadInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

@@ -1853,18 +1853,22 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.QNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Quest");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Quest.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneCollection_FieldIndex.Quest;
                 }
                 case RecordTypeInts.SNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Scenes");
                     item.Scenes.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<SceneCollectionItem>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: SceneCollectionItem_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: SceneCollectionItem.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneCollection_FieldIndex.Scenes;
                 }
                 case RecordTypeInts.VNAM:
@@ -1872,14 +1876,18 @@ namespace Mutagen.Bethesda.Fallout4
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)SceneCollection_FieldIndex.Scenes)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VNAM");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.VNAM = frame.ReadInt32();
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)SceneCollection_FieldIndex.VNAM, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)SceneCollection_FieldIndex.XNAMs)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VNAM2");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.VNAM2 = frame.ReadInt32();
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)SceneCollection_FieldIndex.VNAM2, nextRecordType);
                     }
                     else
@@ -1887,12 +1895,16 @@ namespace Mutagen.Bethesda.Fallout4
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VNAM");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.VNAM = frame.ReadInt32();
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)SceneCollection_FieldIndex.VNAM, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VNAM2");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.VNAM2 = frame.ReadInt32();
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)SceneCollection_FieldIndex.VNAM2, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -1901,11 +1913,13 @@ namespace Mutagen.Bethesda.Fallout4
                 }
                 case RecordTypeInts.XNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "XNAMs");
                     item.XNAMs.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Int64>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.XNAM),
                             transl: Int64BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneCollection_FieldIndex.XNAMs;
                 }
                 default:

@@ -1045,8 +1045,12 @@ namespace Mutagen.Bethesda.Fallout4
             IDialogSetParentQuestStage item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OnBegin");
             item.OnBegin = frame.ReadInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OnEnd");
             item.OnEnd = frame.ReadInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

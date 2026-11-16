@@ -3783,16 +3783,20 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.PKDT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Flags");
                     PackageBinaryCreateTranslation.FillBinaryFlagsCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Package_FieldIndex.Flags;
                 }
                 case RecordTypeInts.PLDT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Location");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.Location = Mutagen.Bethesda.Fallout3.PackageLocation.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Package_FieldIndex.Location;
                 }
                 case RecordTypeInts.PLD2:
@@ -3800,14 +3804,18 @@ namespace Mutagen.Bethesda.Fallout3
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)Package_FieldIndex.Location)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Location2");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                         item.Location2 = Mutagen.Bethesda.Fallout3.PackageLocation.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Package_FieldIndex.Location2, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Package_FieldIndex.DialogueData)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DialogueLocation");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                         item.DialogueLocation = Mutagen.Bethesda.Fallout3.PackageLocation.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Package_FieldIndex.DialogueLocation, nextRecordType);
                     }
                     else
@@ -3815,12 +3823,16 @@ namespace Mutagen.Bethesda.Fallout3
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Location2");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                                 item.Location2 = Mutagen.Bethesda.Fallout3.PackageLocation.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Package_FieldIndex.Location2, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DialogueLocation");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                                 item.DialogueLocation = Mutagen.Bethesda.Fallout3.PackageLocation.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Package_FieldIndex.DialogueLocation, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -3832,121 +3844,163 @@ namespace Mutagen.Bethesda.Fallout3
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ScheduleMonth");
                     item.ScheduleMonth = dataFrame.ReadInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ScheduleDayOfWeek");
                     item.ScheduleDayOfWeek = EnumBinaryTranslation<Package.DayOfWeek, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 1);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ScheduleDate");
                     item.ScheduleDate = dataFrame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ScheduleTime");
                     item.ScheduleTime = dataFrame.ReadInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Duration");
                     item.Duration = dataFrame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)Package_FieldIndex.Duration;
                 }
                 case RecordTypeInts.PTDT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Target");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.Target = Mutagen.Bethesda.Fallout3.PackageTarget.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Package_FieldIndex.Target;
                 }
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Package_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.IDLF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IdleAnimations");
                     item.IdleAnimations = Mutagen.Bethesda.Fallout3.PackageIdles.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Package_FieldIndex.IdleAnimations;
                 }
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CombatStyle");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CombatStyle.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Package_FieldIndex.CombatStyle;
                 }
                 case RecordTypeInts.PKED:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IsEatMarker");
                     item.IsEatMarker = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Package_FieldIndex.IsEatMarker;
                 }
                 case RecordTypeInts.PKE2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EscortDistance");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EscortDistance = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Package_FieldIndex.EscortDistance;
                 }
                 case RecordTypeInts.PKFD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FollowStartLocationTriggerRadius");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FollowStartLocationTriggerRadius = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Package_FieldIndex.FollowStartLocationTriggerRadius;
                 }
                 case RecordTypeInts.PKPT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "IsRepeatable");
                     PackageBinaryCreateTranslation.FillBinaryIsRepeatableCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Package_FieldIndex.IsRepeatable;
                 }
                 case RecordTypeInts.PKW3:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WeaponData");
                     item.WeaponData = Mutagen.Bethesda.Fallout3.PackageWeaponData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Package_FieldIndex.WeaponData;
                 }
                 case RecordTypeInts.PTD2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Target2");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.Target2 = Mutagen.Bethesda.Fallout3.PackageTarget.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Package_FieldIndex.Target2;
                 }
                 case RecordTypeInts.PUID:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IsUseItem");
                     item.IsUseItem = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Package_FieldIndex.IsUseItem;
                 }
                 case RecordTypeInts.PKAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IsAmbush");
                     item.IsAmbush = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Package_FieldIndex.IsAmbush;
                 }
                 case RecordTypeInts.PKDD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DialogueData");
                     item.DialogueData = Mutagen.Bethesda.Fallout3.PackageDialogueData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Package_FieldIndex.DialogueData;
                 }
                 case RecordTypeInts.POBA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OnBegin");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength + contentLength; // Skip marker
                     item.OnBegin = Mutagen.Bethesda.Fallout3.PackageEvent.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Package_FieldIndex.OnBegin;
                 }
                 case RecordTypeInts.POEA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OnEnd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength + contentLength; // Skip marker
                     item.OnEnd = Mutagen.Bethesda.Fallout3.PackageEvent.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Package_FieldIndex.OnEnd;
                 }
                 case RecordTypeInts.POCA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OnChange");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength + contentLength; // Skip marker
                     item.OnChange = Mutagen.Bethesda.Fallout3.PackageEvent.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Package_FieldIndex.OnChange;
                 }
                 default:

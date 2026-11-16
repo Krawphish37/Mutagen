@@ -1100,10 +1100,14 @@ namespace Mutagen.Bethesda.Skyrim
             IAPerkEntryPointEffect item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EntryPoint");
             item.EntryPoint = EnumBinaryTranslation<APerkEntryPointEffect.EntryType, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 1);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PerkConditionTabCount");
             item.PerkConditionTabCount = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

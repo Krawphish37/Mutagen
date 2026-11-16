@@ -1404,26 +1404,34 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Topic");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Topic.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RadioSceneAction_FieldIndex.Topic;
                 }
                 case RecordTypeInts.WED0:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VoiceOverride");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.VoiceOverride = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RadioSceneAction_FieldIndex.VoiceOverride;
                 }
                 case RecordTypeInts.WED1:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SoundEffect");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.SoundEffect = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RadioSceneAction_FieldIndex.SoundEffect;
                 }
                 case RecordTypeInts.VENC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DialogueSubtype");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DialogueSubtype.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RadioSceneAction_FieldIndex.DialogueSubtype;
                 }
                 default:

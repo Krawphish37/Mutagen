@@ -2272,32 +2272,40 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.RCLR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MapColor");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MapColor = frame.ReadColor(ColorBinaryType.Alpha);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Region_FieldIndex.MapColor;
                 }
                 case RecordTypeInts.WNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Worldspace");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Worldspace.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Region_FieldIndex.Worldspace;
                 }
                 case RecordTypeInts.RPLI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "RegionAreas");
                     item.RegionAreas.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<RegionArea>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: RegionArea_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: RegionArea.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Region_FieldIndex.RegionAreas;
                 }
                 case RecordTypeInts.RDAT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "RegionAreaLogic");
                     return RegionBinaryCreateTranslation.FillBinaryRegionAreaLogicCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 }
                 default:
                     return Fallout4MajorRecordBinaryCreateTranslation.FillBinaryRecordTypes(

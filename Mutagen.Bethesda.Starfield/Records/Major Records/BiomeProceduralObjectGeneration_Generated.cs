@@ -1342,35 +1342,43 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FNAM:
                 {
                     if (lastParsed.ShortCircuit((int)BiomeProceduralObjectGeneration_FieldIndex.ProceduralObjectGenerationMaskName, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ProceduralObjectGenerationMaskName");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ProceduralObjectGenerationMaskName = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BiomeProceduralObjectGeneration_FieldIndex.ProceduralObjectGenerationMaskName;
                 }
                 case RecordTypeInts.BNAM:
                 {
                     if (lastParsed.ShortCircuit((int)BiomeProceduralObjectGeneration_FieldIndex.BNAM, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BNAM = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BiomeProceduralObjectGeneration_FieldIndex.BNAM;
                 }
                 case RecordTypeInts.GNAM:
                 {
                     if (lastParsed.ShortCircuit((int)BiomeProceduralObjectGeneration_FieldIndex.Objects, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Objects");
                     item.Objects.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<BiomeObject>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: BiomeObject_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: BiomeObject.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BiomeProceduralObjectGeneration_FieldIndex.Objects;
                 }
                 case RecordTypeInts.DNAM:
                 {
                     if (lastParsed.ShortCircuit((int)BiomeProceduralObjectGeneration_FieldIndex.Footprints, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Footprints");
                     item.Footprints = Mutagen.Bethesda.Starfield.BiomeFootprints.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BiomeProceduralObjectGeneration_FieldIndex.Footprints;
                 }
                 default:

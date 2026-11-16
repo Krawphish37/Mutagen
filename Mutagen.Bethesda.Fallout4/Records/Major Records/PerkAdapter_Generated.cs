@@ -1134,9 +1134,11 @@ namespace Mutagen.Bethesda.Fallout4
                 item: item,
                 frame: frame);
             if (frame.Complete) return;
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "ScriptFragments");
             PerkAdapterBinaryCreateTranslation.FillBinaryScriptFragmentsCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void FillBinaryScriptFragmentsCustom(

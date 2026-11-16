@@ -1500,16 +1500,19 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.BUO4:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Items");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Items = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<BlueprintComponentItem>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: BlueprintComponentItem.TryCreateFromBinary)
                         .CastExtendedList<BlueprintComponentItem>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BlueprintComponent_FieldIndex.Items;
                 }
                 case RecordTypeInts.BODM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "BODSRows");
                     item.BODSRows.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<BlueprintComponentBODSRow>.Instance.ParsePerItem(
                             reader: frame,
@@ -1518,18 +1521,23 @@ namespace Mutagen.Bethesda.Starfield
                             triggeringRecord: BlueprintComponentBODSRow_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: BlueprintComponentBODSRow.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BlueprintComponent_FieldIndex.BODSRows;
                 }
                 case RecordTypeInts.BLUF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BLUF");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BLUF = frame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BlueprintComponent_FieldIndex.BLUF;
                 }
                 case RecordTypeInts.BOID:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NextPartID");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NextPartID = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BlueprintComponent_FieldIndex.NextPartID;
                 }
                 default:

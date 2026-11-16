@@ -1223,29 +1223,37 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.FGGS:
                 {
                     if (lastParsed.ShortCircuit((int)FaceGenData_FieldIndex.SymmetricGeometry, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SymmetricGeometry");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SymmetricGeometry = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FaceGenData_FieldIndex.SymmetricGeometry;
                 }
                 case RecordTypeInts.FGGA:
                 {
                     if (lastParsed.ShortCircuit((int)FaceGenData_FieldIndex.AsymmetricGeometry, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AsymmetricGeometry");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AsymmetricGeometry = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FaceGenData_FieldIndex.AsymmetricGeometry;
                 }
                 case RecordTypeInts.FGTS:
                 {
                     if (lastParsed.ShortCircuit((int)FaceGenData_FieldIndex.SymmetricTexture, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SymmetricTexture");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SymmetricTexture = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FaceGenData_FieldIndex.SymmetricTexture;
                 }
                 case RecordTypeInts.SNAM:
                 {
                     if (lastParsed.ShortCircuit((int)FaceGenData_FieldIndex.SNAM, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SNAM = frame.ReadInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FaceGenData_FieldIndex.SNAM;
                 }
                 default:

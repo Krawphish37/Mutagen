@@ -1512,13 +1512,27 @@ namespace Mutagen.Bethesda.Starfield
             IResourceGenerationCellData item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Common");
             item.Common = Mutagen.Bethesda.Starfield.ResourceGenerationCellTier.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Uncommon");
             item.Uncommon = Mutagen.Bethesda.Starfield.ResourceGenerationCellTier.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Rare");
             item.Rare = Mutagen.Bethesda.Starfield.ResourceGenerationCellTier.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Exotic");
             item.Exotic = Mutagen.Bethesda.Starfield.ResourceGenerationCellTier.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unique");
             item.Unique = Mutagen.Bethesda.Starfield.ResourceGenerationCellTier.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Special");
             item.Special = Mutagen.Bethesda.Starfield.ResourceGenerationCellTier.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Everywhere");
             item.Everywhere = Mutagen.Bethesda.Starfield.ResourceGenerationCellTier.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

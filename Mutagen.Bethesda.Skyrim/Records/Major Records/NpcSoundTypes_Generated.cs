@@ -1168,12 +1168,14 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.CSDC:
                 {
                     if (lastParsed.ShortCircuit((int)NpcSoundTypes_FieldIndex.Types, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Types");
                     item.Types.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NpcSoundType>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: NpcSoundType_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: NpcSoundType.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcSoundTypes_FieldIndex.Types;
                 }
                 default:

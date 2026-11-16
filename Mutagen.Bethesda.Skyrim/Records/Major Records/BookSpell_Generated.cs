@@ -1028,7 +1028,9 @@ namespace Mutagen.Bethesda.Skyrim
             IBookSpell item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Spell");
             item.Spell.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

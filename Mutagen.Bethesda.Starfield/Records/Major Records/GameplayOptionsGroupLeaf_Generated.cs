@@ -1160,11 +1160,13 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.GOGL:
                 {
                     if (lastParsed.ShortCircuit((int)GameplayOptionsGroupLeaf_FieldIndex.GameplayOptions, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "GameplayOptions");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.GameplayOptions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IGameplayOptionGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GameplayOptionsGroupLeaf_FieldIndex.GameplayOptions;
                 }
                 default:

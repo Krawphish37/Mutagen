@@ -3909,9 +3909,11 @@ namespace Mutagen.Bethesda.Starfield
                 translationParams: translationParams,
                 fillStructs: CellBinaryCreateTranslation.FillBinaryStructs,
                 fillTyped: CellBinaryCreateTranslation.FillBinaryRecordTypes);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "CustomBinaryEnd");
             CellBinaryCreateTranslation.CustomBinaryEndImportPublic(
                 frame: frame,
                 obj: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
         
         public override void CopyInFromBinary(
@@ -6488,16 +6490,19 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.BFCB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Components");
                     item.Components.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AComponent>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: AComponent_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: AComponent.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.Components;
                 }
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -6505,106 +6510,136 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.Name;
                 }
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<Cell.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.Flags;
                 }
                 case RecordTypeInts.XCLC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Grid");
                     item.Grid = Mutagen.Bethesda.Starfield.CellGrid.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.Grid;
                 }
                 case RecordTypeInts.XCLL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Lighting");
                     item.Lighting = Mutagen.Bethesda.Starfield.CellLighting.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.Lighting;
                 }
                 case RecordTypeInts.MHDT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaxHeightData");
                     item.MaxHeightData = Mutagen.Bethesda.Starfield.CellMaxHeightData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.MaxHeightData;
                 }
                 case RecordTypeInts.LTMP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LightingTemplate");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LightingTemplate.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.LightingTemplate;
                 }
                 case RecordTypeInts.XCLW:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WaterHeight");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.WaterHeight = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.WaterHeight;
                 }
                 case RecordTypeInts.XILS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "XILS");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.XILS = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.XILS;
                 }
                 case RecordTypeInts.XCLA:
                 case RecordTypeInts.XCLD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "XCLAs");
                     item.XCLAs.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<CellXCLAItem>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: CellXCLAItem_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: CellXCLAItem.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.XCLAs;
                 }
                 case RecordTypeInts.XCIM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ImageSpace");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ImageSpace.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.ImageSpace;
                 }
                 case RecordTypeInts.XCCM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CellSkyRegion");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CellSkyRegion.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.CellSkyRegion;
                 }
                 case RecordTypeInts.XLCN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Location");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Location.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.Location;
                 }
                 case RecordTypeInts.XCWT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Water");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Water.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.Water;
                 }
                 case RecordTypeInts.XCWM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WaterType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.WaterType = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.WaterType;
                 }
                 case RecordTypeInts.XBPS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "ShipBlueprintSnapLinks");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ShipBlueprintSnapLinks = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<CellShipBlueprintSnapLink>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: CellShipBlueprintSnapLink.TryCreateFromBinary)
                         .CastExtendedList<CellShipBlueprintSnapLink>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.ShipBlueprintSnapLinks;
                 }
                 case RecordTypeInts.XWCN:
                 case RecordTypeInts.XWCU:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "WaterCurrentVelocities");
                     item.WaterCurrentVelocities = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<WaterCurrentVelocity>.Instance.Parse(
                             reader: frame,
@@ -6614,91 +6649,116 @@ namespace Mutagen.Bethesda.Starfield
                             skipHeader: true,
                             transl: WaterCurrentVelocity.TryCreateFromBinary)
                         .CastExtendedList<WaterCurrentVelocity>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.WaterCurrentVelocities;
                 }
                 case RecordTypeInts.XWEM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WaterEnvironmentMap");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.WaterEnvironmentMap = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.WaterEnvironmentMap;
                 }
                 case RecordTypeInts.XILL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LockList");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LockList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.LockList;
                 }
                 case RecordTypeInts.XCMO:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Music");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Music.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.Music;
                 }
                 case RecordTypeInts.XCAS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AcousticSpace");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AcousticSpace.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.AcousticSpace;
                 }
                 case RecordTypeInts.XOWN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Ownership");
                     item.Ownership = Mutagen.Bethesda.Starfield.Ownership.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.Ownership;
                 }
                 case RecordTypeInts.XCGD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GlobalDirtLayerMaterial");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.GlobalDirtLayerMaterial = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.GlobalDirtLayerMaterial;
                 }
                 case RecordTypeInts.XCIB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GlobalDirtLayerInheritBiomeLayer");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.GlobalDirtLayerInheritBiomeLayer = frame.ReadBoolean();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.GlobalDirtLayerInheritBiomeLayer;
                 }
                 case RecordTypeInts.TODD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TimeOfDay");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TimeOfDay.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.TimeOfDay;
                 }
                 case RecordTypeInts.XLKR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "LinkedReferences");
                     item.LinkedReferences.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LinkedReferences>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: LinkedReferences_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: LinkedReferences.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.LinkedReferences;
                 }
                 case RecordTypeInts.XLKT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IsLinkedRefTransient");
                     item.IsLinkedRefTransient = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.IsLinkedRefTransient;
                 }
                 case RecordTypeInts.XTV2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Traversals");
                     CellBinaryCreateTranslation.FillBinaryTraversalsCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.Traversals;
                 }
                 case RecordTypeInts.XEMP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EnvironmentMap");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EnvironmentMap = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Cell_FieldIndex.EnvironmentMap;
                 }
                 case RecordTypeInts.XXXX:

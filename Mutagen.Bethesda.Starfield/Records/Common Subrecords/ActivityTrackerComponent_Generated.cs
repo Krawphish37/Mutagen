@@ -1202,6 +1202,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ATAN:
                 case RecordTypeInts.ATCP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Activities");
                     item.Activities = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Activity>.Instance.ParsePerItem(
                             reader: frame,
@@ -1211,6 +1212,7 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams,
                             transl: Activity.TryCreateFromBinary)
                         .CastExtendedList<Activity>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ActivityTrackerComponent_FieldIndex.Activities;
                 }
                 default:

@@ -1179,13 +1179,17 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.LVLO:
                 {
                     if (lastParsed.ShortCircuit((int)LeveledItemEntry_FieldIndex.Data, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Skyrim.LeveledItemEntryData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledItemEntry_FieldIndex.Data;
                 }
                 case RecordTypeInts.COED:
                 {
                     if (lastParsed.ShortCircuit((int)LeveledItemEntry_FieldIndex.ExtraData, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ExtraData");
                     item.ExtraData = Mutagen.Bethesda.Skyrim.ExtraData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledItemEntry_FieldIndex.ExtraData;
                 }
                 default:

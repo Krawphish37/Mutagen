@@ -1512,13 +1512,27 @@ namespace Mutagen.Bethesda.Starfield
             IBiomeBTPS item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Base");
             item.Base = Mutagen.Bethesda.Starfield.BiomeBTPSItem.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flow");
             item.Flow = Mutagen.Bethesda.Starfield.BiomeBTPSItem.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FlatOuter");
             item.FlatOuter = Mutagen.Bethesda.Starfield.BiomeBTPSItem.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FlatInner");
             item.FlatInner = Mutagen.Bethesda.Starfield.BiomeBTPSItem.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Talus");
             item.Talus = Mutagen.Bethesda.Starfield.BiomeBTPSItem.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Solid");
             item.Solid = Mutagen.Bethesda.Starfield.BiomeBTPSItem.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Path");
             item.Path = Mutagen.Bethesda.Starfield.BiomeBTPSItem.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

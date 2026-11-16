@@ -10,11 +10,16 @@ partial class SceneScriptFragmentsBinaryCreateTranslation
     {
         var ret = new SceneScriptFragments();
         FillFragments(frame, objectFormat, ret);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(ret.PhaseFragments));
+        var phaseFragmentsCountAt = ValuePositionRecorder.Here(frame);
+        var phaseFragmentsCount = frame.ReadUInt16();
+        if (phaseFragmentsCountAt >= 0) ValuePositionRecorder.Count(frame, phaseFragmentsCountAt);
         ret.PhaseFragments.SetTo(
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ScenePhaseFragment>.Instance.Parse(
-                amount: frame.ReadUInt16(),
+                amount: phaseFragmentsCount,
                 reader: frame,
                 transl: ScenePhaseFragment.TryCreateFromBinary));
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         return ret;
     }
 }

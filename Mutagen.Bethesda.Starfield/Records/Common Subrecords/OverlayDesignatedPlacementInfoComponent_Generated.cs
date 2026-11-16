@@ -1190,6 +1190,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Items");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Items = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<OverlayDesignatedPlacementInfoItem>.Instance.Parse(
@@ -1197,6 +1198,7 @@ namespace Mutagen.Bethesda.Starfield
                             reader: frame,
                             transl: OverlayDesignatedPlacementInfoItem.TryCreateFromBinary)
                         .CastExtendedList<OverlayDesignatedPlacementInfoItem>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)OverlayDesignatedPlacementInfoComponent_FieldIndex.Items;
                 }
                 default:

@@ -1543,16 +1543,20 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "TypeChar");
                     GlobalUnknownBinaryCreateTranslation.FillBinaryTypeCharCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GlobalUnknown_FieldIndex.TypeChar;
                 }
                 case RecordTypeInts.FLTV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Data = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GlobalUnknown_FieldIndex.Data;
                 }
                 default:

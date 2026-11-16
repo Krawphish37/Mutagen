@@ -1287,49 +1287,61 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MNAM:
                 {
                     if (lastParsed.ShortCircuit((int)NpcTint_FieldIndex.TintType, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TintType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TintType = EnumBinaryTranslation<TintType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcTint_FieldIndex.TintType;
                 }
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TintGroup");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TintGroup = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcTint_FieldIndex.TintGroup;
                 }
                 case RecordTypeInts.QNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TintName");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TintName = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcTint_FieldIndex.TintName;
                 }
                 case RecordTypeInts.VNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TintTexture");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TintTexture = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcTint_FieldIndex.TintTexture;
                 }
                 case RecordTypeInts.NNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TintColor");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TintColor = frame.ReadColor(ColorBinaryType.Alpha);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcTint_FieldIndex.TintColor;
                 }
                 case RecordTypeInts.INTV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TintIntensity");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TintIntensity = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcTint_FieldIndex.TintIntensity;
                 }
                 default:

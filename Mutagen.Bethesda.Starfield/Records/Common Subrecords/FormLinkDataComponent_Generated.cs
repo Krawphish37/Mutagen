@@ -1194,6 +1194,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FLFM:
                 case RecordTypeInts.ITMC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Links");
                     item.Links = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<FormLinkComponentLink>.Instance.ParsePerItem(
                             reader: frame,
@@ -1203,6 +1204,7 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams,
                             transl: FormLinkComponentLink.TryCreateFromBinary)
                         .CastExtendedList<FormLinkComponentLink>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FormLinkDataComponent_FieldIndex.Links;
                 }
                 default:

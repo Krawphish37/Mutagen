@@ -3481,12 +3481,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.BFCB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Components");
                     item.Components.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AComponent>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: AComponent_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: AComponent.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Planet_FieldIndex.Components;
                 }
                 case RecordTypeInts.CNAM:
@@ -3494,20 +3496,24 @@ namespace Mutagen.Bethesda.Starfield
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)Planet_FieldIndex.Components)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MasterWorldspaces");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.MasterWorldspaces = 
                             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<MasterWorldspace>.Instance.Parse(
                                 reader: frame.SpawnWithLength(contentLength),
                                 transl: MasterWorldspace.TryCreateFromBinary)
                             .CastExtendedList<MasterWorldspace>();
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Planet_FieldIndex.MasterWorldspaces, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Planet_FieldIndex.EnvironmentMap)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BodyType");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.BodyType = EnumBinaryTranslation<Planet.BodyTypeEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
                             reader: frame,
                             length: contentLength);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Planet_FieldIndex.BodyType, nextRecordType);
                     }
                     else
@@ -3515,18 +3521,22 @@ namespace Mutagen.Bethesda.Starfield
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MasterWorldspaces");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.MasterWorldspaces = 
                                     Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<MasterWorldspace>.Instance.Parse(
                                         reader: frame.SpawnWithLength(contentLength),
                                         transl: MasterWorldspace.TryCreateFromBinary)
                                     .CastExtendedList<MasterWorldspace>();
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Planet_FieldIndex.MasterWorldspaces, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BodyType");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.BodyType = EnumBinaryTranslation<Planet.BodyTypeEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
                                     reader: frame,
                                     length: contentLength);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Planet_FieldIndex.BodyType, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -3535,22 +3545,26 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.EOVR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "AddedWorldspaces");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AddedWorldspaces = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AddedWorldspace>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: AddedWorldspace.TryCreateFromBinary)
                         .CastExtendedList<AddedWorldspace>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Planet_FieldIndex.AddedWorldspaces;
                 }
                 case RecordTypeInts.PPBD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Biomes");
                     item.Biomes.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<PlanetBiome>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: PlanetBiome_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: PlanetBiome.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Planet_FieldIndex.Biomes;
                 }
                 case RecordTypeInts.FNAM:
@@ -3558,13 +3572,17 @@ namespace Mutagen.Bethesda.Starfield
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)Planet_FieldIndex.Biomes)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SurfaceTree");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.SurfaceTree.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Planet_FieldIndex.SurfaceTree, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Planet_FieldIndex.OrbitalData)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OrbitedData");
                         item.OrbitedData = Mutagen.Bethesda.Starfield.OrbitedData.CreateFromBinary(frame: frame);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Planet_FieldIndex.OrbitedData, nextRecordType);
                     }
                     else
@@ -3572,11 +3590,15 @@ namespace Mutagen.Bethesda.Starfield
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SurfaceTree");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.SurfaceTree.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Planet_FieldIndex.SurfaceTree, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OrbitedData");
                                 item.OrbitedData = Mutagen.Bethesda.Starfield.OrbitedData.CreateFromBinary(frame: frame);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Planet_FieldIndex.OrbitedData, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -3588,13 +3610,17 @@ namespace Mutagen.Bethesda.Starfield
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)Planet_FieldIndex.SurfaceTree)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ScanWorldspaceMultiplier");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.ScanWorldspaceMultiplier = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Planet_FieldIndex.ScanWorldspaceMultiplier, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Planet_FieldIndex.OrbitedData)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GalaxyData");
                         item.GalaxyData = Mutagen.Bethesda.Starfield.GalaxyData.CreateFromBinary(frame: frame);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Planet_FieldIndex.GalaxyData, nextRecordType);
                     }
                     else
@@ -3602,11 +3628,15 @@ namespace Mutagen.Bethesda.Starfield
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ScanWorldspaceMultiplier");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.ScanWorldspaceMultiplier = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Planet_FieldIndex.ScanWorldspaceMultiplier, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GalaxyData");
                                 item.GalaxyData = Mutagen.Bethesda.Starfield.GalaxyData.CreateFromBinary(frame: frame);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Planet_FieldIndex.GalaxyData, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -3620,53 +3650,69 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.ANAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Planet_FieldIndex.Name;
                 }
                 case RecordTypeInts.XEMP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EnvironmentMap");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EnvironmentMap = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Planet_FieldIndex.EnvironmentMap;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SpaceCell");
                     item.SpaceCell = Mutagen.Bethesda.Starfield.SpaceCell.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Planet_FieldIndex.SpaceCell;
                 }
                 case RecordTypeInts.ENAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OrbitalData");
                     item.OrbitalData = Mutagen.Bethesda.Starfield.OrbitalData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Planet_FieldIndex.OrbitalData;
                 }
                 case RecordTypeInts.HNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Details");
                     item.Details = Mutagen.Bethesda.Starfield.PlanetDetails.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Planet_FieldIndex.Details;
                 }
                 case RecordTypeInts.INAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AtmosphereData");
                     item.AtmosphereData = Mutagen.Bethesda.Starfield.AtmosphereData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Planet_FieldIndex.AtmosphereData;
                 }
                 case RecordTypeInts.KNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BiomeNoise");
                     item.BiomeNoise = Mutagen.Bethesda.Starfield.BiomeNoise.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Planet_FieldIndex.BiomeNoise;
                 }
                 case RecordTypeInts.NNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PlayerKnowledge");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PlayerKnowledge = EnumBinaryTranslation<Planet.PlayerKnowledgeFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Planet_FieldIndex.PlayerKnowledge;
                 }
                 case RecordTypeInts.BDED:
@@ -3676,26 +3722,34 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.TEMP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Temperature");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Temperature = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Planet_FieldIndex.Temperature;
                 }
                 case RecordTypeInts.DENS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Density");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Density = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Planet_FieldIndex.Density;
                 }
                 case RecordTypeInts.PHLA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PerihelionAngleDegrees");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PerihelionAngleDegrees = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Planet_FieldIndex.PerihelionAngleDegrees;
                 }
                 case RecordTypeInts.RSCS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ResourceCreationSeed");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ResourceCreationSeed = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Planet_FieldIndex.ResourceCreationSeed;
                 }
                 default:

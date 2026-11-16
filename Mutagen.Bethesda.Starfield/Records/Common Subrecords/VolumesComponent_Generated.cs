@@ -1177,10 +1177,12 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VLMS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Items");
                     VolumesComponentBinaryCreateTranslation.FillBinaryItemsCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)VolumesComponent_FieldIndex.Items;
                 }
                 default:

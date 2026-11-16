@@ -3,8 +3,8 @@
   <Object name="ColorRecord" recordType="CLFM" objType="Record" baseClass="StarfieldMajorRecord" majorFlag="true">
     <Fields>
       <RefDirect name="VirtualMachineAdapter" refName="VirtualMachineAdapter" overflowRecordType="XXXX" />
-      <RefDirect name="Data" refName="AColorRecordData" binary="Custom" recordType="CNAM" nullable="False" defaultType="ColorData" selectedBy="subrecord:FNAM:Int32:bit=1" />
-      <Enum name="Flags" recordType="FNAM" byteLength="4" nullable="False" enumName="ColorRecord.Flag" binary="Custom" layoutDroppedBits="1" />
+      <RefDirect name="Data" refName="AColorRecordData" binary="Custom" fills="Data" recordType="CNAM" nullable="False" defaultType="ColorData" selectedBy="subrecord:FNAM:Int32:bit=1" />
+      <Enum name="Flags" recordType="FNAM" byteLength="4" nullable="False" enumName="ColorRecord.Flag" binary="Custom" fills="Flags" layoutDroppedBits="1" />
       <RefList name="Conditions" refName="Condition" />
     </Fields>
   </Object>

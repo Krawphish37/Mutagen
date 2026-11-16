@@ -1430,20 +1430,24 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FileName");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FileName = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MusicType_FieldIndex.FileName;
                 }
                 case RecordTypeInts.ANAM:
                 {
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "DecibelValue");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.DecibelValue = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
                     }
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)MusicType_FieldIndex.DecibelValue;
                 }
                 default:

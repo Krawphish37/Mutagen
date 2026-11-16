@@ -30,10 +30,17 @@ partial class PlacedNpcBinaryCreateTranslation
         IPlacedNpcInternal item,
         PreviousParse lastParsed)
     {
+        var dataAt = ValuePositionRecorder.Here(frame);
         frame.ReadSubrecordHeader();
+        var at = ValuePositionRecorder.Here(frame);
         item.Position = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(frame);
+        ValuePositionRecorder.Value(frame, nameof(item.Position), at);
+        at = ValuePositionRecorder.Here(frame);
         item.Rotation = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(frame);
+        ValuePositionRecorder.Value(frame, nameof(item.Rotation), at);
         item.HasPlacementData = true;
+        // Given by the DATA subrecord being there
+        if (dataAt >= 0) ValuePositionRecorder.At(nameof(item.HasPlacementData), dataAt, 0);
         return (int)PlacedNpc_FieldIndex.HasPlacementData;
     }
 }

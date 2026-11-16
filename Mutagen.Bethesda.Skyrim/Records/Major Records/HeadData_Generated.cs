@@ -2203,55 +2203,67 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.HEAD:
                 {
                     if (lastParsed.ShortCircuit((int)HeadData_FieldIndex.HeadParts, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HeadParts");
                     item.HeadParts.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<HeadPartReference>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: HeadPartReference_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: HeadPartReference.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadData_FieldIndex.HeadParts;
                 }
                 case RecordTypeInts.MPAI:
                 {
                     if (lastParsed.ShortCircuit((int)HeadData_FieldIndex.AvailableMorphs, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AvailableMorphs");
                     item.AvailableMorphs = Mutagen.Bethesda.Skyrim.AvailableMorphs.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadData_FieldIndex.AvailableMorphs;
                 }
                 case RecordTypeInts.RPRM:
                 {
                     if (lastParsed.ShortCircuit((int)HeadData_FieldIndex.RacePresets, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "RacePresets");
                     item.RacePresets.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<INpcGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.RPRM),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadData_FieldIndex.RacePresets;
                 }
                 case RecordTypeInts.AHCM:
                 {
                     if (lastParsed.ShortCircuit((int)HeadData_FieldIndex.AvailableHairColors, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "AvailableHairColors");
                     item.AvailableHairColors.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IColorRecordGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.AHCM),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadData_FieldIndex.AvailableHairColors;
                 }
                 case RecordTypeInts.FTSM:
                 {
                     if (lastParsed.ShortCircuit((int)HeadData_FieldIndex.FaceDetails, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "FaceDetails");
                     item.FaceDetails.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ITextureSetGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.FTSM),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadData_FieldIndex.FaceDetails;
                 }
                 case RecordTypeInts.DFTM:
                 {
                     if (lastParsed.ShortCircuit((int)HeadData_FieldIndex.DefaultFaceTexture, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DefaultFaceTexture");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DefaultFaceTexture.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadData_FieldIndex.DefaultFaceTexture;
                 }
                 case RecordTypeInts.TINI:
@@ -2263,20 +2275,24 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.TIRS:
                 {
                     if (lastParsed.ShortCircuit((int)HeadData_FieldIndex.TintMasks, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "TintMasks");
                     item.TintMasks.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<TintAssets>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: TintAssets_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: TintAssets.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadData_FieldIndex.TintMasks;
                 }
                 case RecordTypeInts.MODL:
                 {
                     if (lastParsed.ShortCircuit((int)HeadData_FieldIndex.Model, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Skyrim.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadData_FieldIndex.Model;
                 }
                 default:

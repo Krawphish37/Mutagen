@@ -1181,21 +1181,27 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.INAM:
                 {
                     if (lastParsed.ShortCircuit((int)PackageEvent_FieldIndex.Idle, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Idle");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Idle.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PackageEvent_FieldIndex.Idle;
                 }
                 case RecordTypeInts.SCHR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EmbeddedScript");
                     item.EmbeddedScript.CopyInFromBinary(
                         frame: frame,
                         translationParams: null);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PackageEvent_FieldIndex.EmbeddedScript;
                 }
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Topic");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Topic.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PackageEvent_FieldIndex.Topic;
                 }
                 default:

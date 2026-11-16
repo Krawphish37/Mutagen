@@ -1886,9 +1886,11 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Starfield.VirtualMachineAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MorphableObject_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.MODL:
@@ -1899,27 +1901,33 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MODC:
                 case RecordTypeInts.MODF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Starfield.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MorphableObject_FieldIndex.Model;
                 }
                 case RecordTypeInts.TMPP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TargetMorphPath");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TargetMorphPath = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MorphableObject_FieldIndex.TargetMorphPath;
                 }
                 case RecordTypeInts.TCMP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TargetChargenMorphPath");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TargetChargenMorphPath = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MorphableObject_FieldIndex.TargetChargenMorphPath;
                 }
                 case RecordTypeInts.MOBC:
@@ -1927,8 +1935,12 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "BaseVertexColor");
                     item.BaseVertexColor = dataFrame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "BaseVertexColorUnknown");
                     item.BaseVertexColorUnknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(3));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)MorphableObject_FieldIndex.BaseVertexColorUnknown;
                 }
                 case RecordTypeInts.XXXX:

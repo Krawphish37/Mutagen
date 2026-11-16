@@ -2163,101 +2163,125 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Fallout4.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.TX00:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Diffuse");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Diffuse = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.Diffuse;
                 }
                 case RecordTypeInts.TX01:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NormalOrGloss");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NormalOrGloss = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.NormalOrGloss;
                 }
                 case RecordTypeInts.TX03:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Glow");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Glow = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.Glow;
                 }
                 case RecordTypeInts.TX04:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Height");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Height = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.Height;
                 }
                 case RecordTypeInts.TX05:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Environment");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Environment = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.Environment;
                 }
                 case RecordTypeInts.TX02:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Wrinkles");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Wrinkles = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.Wrinkles;
                 }
                 case RecordTypeInts.TX06:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Multilayer");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Multilayer = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.Multilayer;
                 }
                 case RecordTypeInts.TX07:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SmoothSpec");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SmoothSpec = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.SmoothSpec;
                 }
                 case RecordTypeInts.DODT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Decal");
                     item.Decal = Mutagen.Bethesda.Fallout4.Decal.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.Decal;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<TextureSet.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.Flags;
                 }
                 case RecordTypeInts.MNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Material");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Material = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.Material;
                 }
                 default:

@@ -1997,35 +1997,44 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Skyrim.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledNpc_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.LVLD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChanceNone", true);
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ChanceNone = PercentBinaryTranslation.Parse(
                         reader: frame,
                         integerType: FloatIntegerType.ByteHundred);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledNpc_FieldIndex.ChanceNone;
                 }
                 case RecordTypeInts.LVLF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<LeveledNpc.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledNpc_FieldIndex.Flags;
                 }
                 case RecordTypeInts.LVLG:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Global");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Global.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledNpc_FieldIndex.Global;
                 }
                 case RecordTypeInts.LVLO:
                 case RecordTypeInts.COED:
                 case RecordTypeInts.LLCT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Entries");
                     item.Entries = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LeveledNpcEntry>.Instance.ParsePerItem(
                             reader: frame,
@@ -2035,13 +2044,16 @@ namespace Mutagen.Bethesda.Skyrim
                             translationParams: translationParams,
                             transl: LeveledNpcEntry.TryCreateFromBinary)
                         .CastExtendedList<LeveledNpcEntry>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledNpc_FieldIndex.Entries;
                 }
                 case RecordTypeInts.MODL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Skyrim.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledNpc_FieldIndex.Model;
                 }
                 default:

@@ -1181,19 +1181,23 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.RPLI:
                 {
                     if (lastParsed.ShortCircuit((int)RegionArea_FieldIndex.EdgeFallOff, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EdgeFallOff");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EdgeFallOff = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionArea_FieldIndex.EdgeFallOff;
                 }
                 case RecordTypeInts.RPLD:
                 {
                     if (lastParsed.ShortCircuit((int)RegionArea_FieldIndex.RegionPoints, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "RegionPoints");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RegionPoints = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<P2Float>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: P2FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse)
                         .CastExtendedList<P2Float>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionArea_FieldIndex.RegionPoints;
                 }
                 default:

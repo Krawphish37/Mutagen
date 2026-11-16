@@ -1412,53 +1412,67 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ESCE:
                 {
                     if (lastParsed.ShortCircuit((int)PlayerDialogueSceneActionItem_FieldIndex.PlayerChoice, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PlayerChoice");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PlayerChoice.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlayerDialogueSceneActionItem_FieldIndex.PlayerChoice;
                 }
                 case RecordTypeInts.PPST:
                 {
                     if (lastParsed.ShortCircuit((int)PlayerDialogueSceneActionItem_FieldIndex.PlayerDialogueSubtype, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PlayerDialogueSubtype");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PlayerDialogueSubtype.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlayerDialogueSceneActionItem_FieldIndex.PlayerDialogueSubtype;
                 }
                 case RecordTypeInts.PNST:
                 {
                     if (lastParsed.ShortCircuit((int)PlayerDialogueSceneActionItem_FieldIndex.NpcDialogueSubtype, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NpcDialogueSubtype");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NpcDialogueSubtype.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlayerDialogueSceneActionItem_FieldIndex.NpcDialogueSubtype;
                 }
                 case RecordTypeInts.PASP:
                 {
                     if (lastParsed.ShortCircuit((int)PlayerDialogueSceneActionItem_FieldIndex.StartScene, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StartScene");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.StartScene.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlayerDialogueSceneActionItem_FieldIndex.StartScene;
                 }
                 case RecordTypeInts.PAPI:
                 {
                     if (lastParsed.ShortCircuit((int)PlayerDialogueSceneActionItem_FieldIndex.PhaseIndex, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PhaseIndex");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PhaseIndex = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlayerDialogueSceneActionItem_FieldIndex.PhaseIndex;
                 }
                 case RecordTypeInts.PAPN:
                 {
                     if (lastParsed.ShortCircuit((int)PlayerDialogueSceneActionItem_FieldIndex.PhaseName, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PhaseName");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PhaseName = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlayerDialogueSceneActionItem_FieldIndex.PhaseName;
                 }
                 case RecordTypeInts.ESCS:
                 {
                     if (lastParsed.ShortCircuit((int)PlayerDialogueSceneActionItem_FieldIndex.NpcResponse, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NpcResponse");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NpcResponse.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlayerDialogueSceneActionItem_FieldIndex.NpcResponse;
                 }
                 default:

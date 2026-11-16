@@ -1108,9 +1108,11 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.REFL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Reflection");
                     item.Reflection = Mutagen.Bethesda.Starfield.Reflection.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SpacePhysicsComponent_FieldIndex.Reflection;
                 }
                 case RecordTypeInts.XXXX:

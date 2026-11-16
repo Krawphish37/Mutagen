@@ -2645,101 +2645,133 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Starfield.VirtualMachineAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Starfield.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.ODTY:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DirtinessScale");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DirtinessScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.DirtinessScale;
                 }
                 case RecordTypeInts.OPDS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectPaletteDefaults");
                     item.ObjectPaletteDefaults = Mutagen.Bethesda.Starfield.ObjectPaletteDefaults.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.ObjectPaletteDefaults;
                 }
                 case RecordTypeInts.ASLS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LoopingSound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.LoopingSound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.LoopingSound;
                 }
                 case RecordTypeInts.WED0:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "InteriorSound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.InteriorSound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.InteriorSound;
                 }
                 case RecordTypeInts.WED1:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ExteriorSound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.ExteriorSound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.ExteriorSound;
                 }
                 case RecordTypeInts.AAMB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AmbientSet");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AmbientSet.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.AmbientSet;
                 }
                 case RecordTypeInts.AMUS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MusicType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MusicType.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.MusicType;
                 }
                 case RecordTypeInts.BNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EnvironmentType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EnvironmentType.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.EnvironmentType;
                 }
                 case RecordTypeInts.AEAR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ExteriorWeatherAttenuation");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ExteriorWeatherAttenuation = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.ExteriorWeatherAttenuation;
                 }
                 case RecordTypeInts.FLTV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "InteriorExteriorRatio");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.InteriorExteriorRatio = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.InteriorExteriorRatio;
                 }
                 case RecordTypeInts.XTRI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IsInterior");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.IsInterior = frame.ReadBoolean();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.IsInterior;
                 }
                 case RecordTypeInts.BOLV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AllowExterior");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AllowExterior = frame.ReadBoolean();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.AllowExterior;
                 }
                 case RecordTypeInts.DEVT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SoundDetectionLevel");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SoundDetectionLevel = EnumBinaryTranslation<SoundLevel, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.SoundDetectionLevel;
                 }
                 case RecordTypeInts.ASDF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DisableFlags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DisableFlags = EnumBinaryTranslation<AcousticSpace.DisableFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.DisableFlags;
                 }
                 case RecordTypeInts.XXXX:

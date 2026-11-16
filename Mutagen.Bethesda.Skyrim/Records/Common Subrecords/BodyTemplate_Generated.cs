@@ -1177,21 +1177,27 @@ namespace Mutagen.Bethesda.Skyrim
             IBodyTemplate item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FirstPersonFlags");
             item.FirstPersonFlags = EnumBinaryTranslation<BipedObjectFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value < 44)) ValuePositionRecorder.Field(frame, "Flags");
             if (frame.MetaData.FormVersion!.Value < 44)
             {
                 item.Flags = EnumBinaryTranslation<BodyTemplate.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                     reader: frame,
                     length: 4);
             }
+            if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value < 44)) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 22)) ValuePositionRecorder.Field(frame, "ArmorType");
             if (frame.MetaData.FormVersion!.Value >= 22)
             {
                 item.ArmorType = EnumBinaryTranslation<ArmorType, MutagenFrame, MutagenWriter>.Instance.Parse(
                     reader: frame,
                     length: 4);
             }
+            if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 22)) ValuePositionRecorder.End(frame);
         }
 
     }

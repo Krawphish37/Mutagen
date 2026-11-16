@@ -2027,66 +2027,84 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<AffinityEvent.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AffinityEvent_FieldIndex.Flags;
                 }
                 case RecordTypeInts.NLDT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ContextNotes");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ContextNotes = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AffinityEvent_FieldIndex.ContextNotes;
                 }
                 case RecordTypeInts.NNAM:
                 case RecordTypeInts.RNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "ActorReactions");
                     item.ActorReactions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ActorReaction>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: ActorReaction_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: ActorReaction.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AffinityEvent_FieldIndex.ActorReactions;
                 }
                 case RecordTypeInts.ANAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ActorValue");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ActorValue.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AffinityEvent_FieldIndex.ActorValue;
                 }
                 case RecordTypeInts.ENAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EventSize");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EventSize.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AffinityEvent_FieldIndex.EventSize;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DistanceToPlayer");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DistanceToPlayer.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AffinityEvent_FieldIndex.DistanceToPlayer;
                 }
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CooldownInMinutes");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CooldownInMinutes.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AffinityEvent_FieldIndex.CooldownInMinutes;
                 }
                 case RecordTypeInts.BNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RequiredFaction");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RequiredFaction.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AffinityEvent_FieldIndex.RequiredFaction;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AddToEvent");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AddToEvent.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AffinityEvent_FieldIndex.AddToEvent;
                 }
                 default:

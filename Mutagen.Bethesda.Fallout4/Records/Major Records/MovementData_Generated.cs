@@ -1655,19 +1655,35 @@ namespace Mutagen.Bethesda.Fallout4
             IMovementData item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Left");
             item.Left = Mutagen.Bethesda.Fallout4.MovementDirectionData.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Right");
             item.Right = Mutagen.Bethesda.Fallout4.MovementDirectionData.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Forward");
             item.Forward = Mutagen.Bethesda.Fallout4.MovementDirectionData.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Back");
             item.Back = Mutagen.Bethesda.Fallout4.MovementDirectionData.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Pitch");
             item.Pitch = Mutagen.Bethesda.Fallout4.MovementRotationData.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Roll");
             item.Roll = Mutagen.Bethesda.Fallout4.MovementRotationData.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Yaw");
             item.Yaw = Mutagen.Bethesda.Fallout4.MovementRotationData.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (frame.Complete)
             {
                 item.Versioning |= MovementData.VersioningBreaks.Break0;
                 return;
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unused");
             item.Unused = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(12));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

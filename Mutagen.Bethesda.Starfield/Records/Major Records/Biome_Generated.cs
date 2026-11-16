@@ -4451,6 +4451,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -4458,6 +4459,7 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.Name;
                 }
                 case RecordTypeInts.KSIZ:
@@ -4466,6 +4468,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)Biome_FieldIndex.Name)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Keywords");
                         item.Keywords = 
                             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                                 reader: frame,
@@ -4474,16 +4477,19 @@ namespace Mutagen.Bethesda.Starfield
                                 triggeringRecord: translationParams.ConvertToCustom(RecordTypes.KWDA),
                                 transl: FormLinkBinaryTranslation.Instance.Parse)
                             .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Biome_FieldIndex.Keywords, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)Biome_FieldIndex.Type)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MarkerObjectKeywords");
                         item.MarkerObjectKeywords.SetTo(
                             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<BiomeMarkerType>.Instance.Parse(
                                 reader: frame,
                                 triggeringRecord: BiomeMarkerType_Registration.TriggerSpecs,
                                 translationParams: translationParams,
                                 transl: BiomeMarkerType.TryCreateFromBinary));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)Biome_FieldIndex.MarkerObjectKeywords, nextRecordType);
                     }
                     else
@@ -4491,6 +4497,7 @@ namespace Mutagen.Bethesda.Starfield
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Keywords");
                                 item.Keywords = 
                                     Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                                         reader: frame,
@@ -4499,14 +4506,17 @@ namespace Mutagen.Bethesda.Starfield
                                         triggeringRecord: translationParams.ConvertToCustom(RecordTypes.KWDA),
                                         transl: FormLinkBinaryTranslation.Instance.Parse)
                                     .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Biome_FieldIndex.Keywords, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MarkerObjectKeywords");
                                 item.MarkerObjectKeywords.SetTo(
                                     Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<BiomeMarkerType>.Instance.Parse(
                                         reader: frame,
                                         triggeringRecord: BiomeMarkerType_Registration.TriggerSpecs,
                                         translationParams: translationParams,
                                         transl: BiomeMarkerType.TryCreateFromBinary));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)Biome_FieldIndex.MarkerObjectKeywords, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -4515,30 +4525,36 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.SNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FilterString");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FilterString = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.FilterString;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Flora");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flora = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IFloraGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IFloraGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.Flora;
                 }
                 case RecordTypeInts.RNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "ResourceGeneration");
                     item.ResourceGeneration.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IResourceGenerationDataGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.RNAM),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.ResourceGeneration;
                 }
                 case RecordTypeInts.FNAM:
@@ -4546,135 +4562,173 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.GNAM:
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "ProceduralObjectGeneration");
                     item.ProceduralObjectGeneration.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<BiomeProceduralObjectGeneration>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: BiomeProceduralObjectGeneration_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: BiomeProceduralObjectGeneration.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.ProceduralObjectGeneration;
                 }
                 case RecordTypeInts.ONAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "ObjectSwaps");
                     item.ObjectSwaps.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IObjectSwapGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.ONAM),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.ObjectSwaps;
                 }
                 case RecordTypeInts.NAM1:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MaterialSwaps");
                     item.MaterialSwaps.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ILayeredMaterialSwapGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.NAM1),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.MaterialSwaps;
                 }
                 case RecordTypeInts.ENAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Climate");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Climate.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.Climate;
                 }
                 case RecordTypeInts.MNAM:
                 case RecordTypeInts.INAM:
                 case RecordTypeInts.JNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Water");
                     item.Water = Mutagen.Bethesda.Starfield.BiomeWaterData.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.Water;
                 }
                 case RecordTypeInts.WNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BlockDensityMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BlockDensityMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.BlockDensityMult;
                 }
                 case RecordTypeInts.YNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CellDensityMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CellDensityMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.CellDensityMult;
                 }
                 case RecordTypeInts.UNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ScanWorldspaceMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ScanWorldspaceMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.ScanWorldspaceMult;
                 }
                 case RecordTypeInts.ZNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Child");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Child.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.Child;
                 }
                 case RecordTypeInts.BIAS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AmbienceSet");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AmbienceSet.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.AmbienceSet;
                 }
                 case RecordTypeInts.BIMT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MusicType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MusicType.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.MusicType;
                 }
                 case RecordTypeInts.NAM0:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TimeOfDay");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TimeOfDay.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.TimeOfDay;
                 }
                 case RecordTypeInts.NNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PatternStyle");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PatternStyle.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.PatternStyle;
                 }
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Color");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Color = frame.ReadColor(ColorBinaryType.Alpha);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.Color;
                 }
                 case RecordTypeInts.BMC1:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SurfaceColor1");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SurfaceColor1 = frame.ReadColor(ColorBinaryType.Alpha);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.SurfaceColor1;
                 }
                 case RecordTypeInts.BMC2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SurfaceColor2");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SurfaceColor2 = frame.ReadColor(ColorBinaryType.Alpha);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.SurfaceColor2;
                 }
                 case RecordTypeInts.BMC3:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RockTint");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RockTint = frame.ReadColor(ColorBinaryType.Alpha);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.RockTint;
                 }
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Type");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Type = EnumBinaryTranslation<Biome.TypeEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.Type;
                 }
                 case RecordTypeInts.KNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MarkerObjectKeywords");
                     item.MarkerObjectKeywords.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<BiomeMarkerType>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: BiomeMarkerType_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: BiomeMarkerType.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.MarkerObjectKeywords;
                 }
                 case RecordTypeInts.LNAM:
@@ -4686,60 +4740,76 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.XX00:
                 case RecordTypeInts.YX00:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Terrain");
                     item.Terrain.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<BiomeTerrain>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: BiomeTerrain_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: BiomeTerrain.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.Terrain;
                 }
                 case RecordTypeInts.TX16:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GroundLayerNormal");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.GroundLayerNormal = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.GroundLayerNormal;
                 }
                 case RecordTypeInts.BTPS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TerrainSettings");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.TerrainSettings = Mutagen.Bethesda.Starfield.BiomeBTPS.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.TerrainSettings;
                 }
                 case RecordTypeInts.BDFS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DistantView");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.DistantView = Mutagen.Bethesda.Starfield.BiomeDistantView.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.DistantView;
                 }
                 case RecordTypeInts.EFSD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GlobalLayerMaterial");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.GlobalLayerMaterial = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.GlobalLayerMaterial;
                 }
                 case RecordTypeInts.NAM2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BlockDensityMultGlobal");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BlockDensityMultGlobal.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.BlockDensityMultGlobal;
                 }
                 case RecordTypeInts.NAM3:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CellDensityMultGlobal");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CellDensityMultGlobal.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.CellDensityMultGlobal;
                 }
                 case RecordTypeInts.NAM4:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ScanWorldspaceMultGlobal");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ScanWorldspaceMultGlobal.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Biome_FieldIndex.ScanWorldspaceMultGlobal;
                 }
                 default:

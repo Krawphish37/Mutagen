@@ -1114,15 +1114,19 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ONAM:
                 {
                     if (lastParsed.ShortCircuit((int)SnapParentNodeEntry_FieldIndex.NodeID, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NodeID");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NodeID = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SnapParentNodeEntry_FieldIndex.NodeID;
                 }
                 case RecordTypeInts.TNAM:
                 {
                     if (lastParsed.ShortCircuit((int)SnapParentNodeEntry_FieldIndex.OffsetRotation, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OffsetRotation");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.OffsetRotation = Mutagen.Bethesda.Starfield.OffsetRotation.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SnapParentNodeEntry_FieldIndex.OffsetRotation;
                 }
                 default:

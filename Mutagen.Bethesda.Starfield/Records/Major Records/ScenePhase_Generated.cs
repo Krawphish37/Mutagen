@@ -1733,51 +1733,65 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.NAM0:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScenePhase_FieldIndex.Name;
                 }
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "StartConditions");
                     ScenePhaseBinaryCreateTranslation.FillBinaryStartConditionsCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScenePhase_FieldIndex.StartConditions;
                 }
                 case RecordTypeInts.NEXT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "CompletionConditions");
                     ScenePhaseBinaryCreateTranslation.FillBinaryCompletionConditionsCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScenePhase_FieldIndex.CompletionConditions;
                 }
                 case RecordTypeInts.WNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EditorWidth");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EditorWidth = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScenePhase_FieldIndex.EditorWidth;
                 }
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<ScenePhase.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScenePhase_FieldIndex.Flags;
                 }
                 case RecordTypeInts.SCQS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PhaseSetParentQuestStage");
                     item.PhaseSetParentQuestStage = Mutagen.Bethesda.Starfield.SceneSetParentQuestStage.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScenePhase_FieldIndex.PhaseSetParentQuestStage;
                 }
                 case RecordTypeInts.SPMV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PhaseVisibilityMarker");
                     item.PhaseVisibilityMarker = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScenePhase_FieldIndex.PhaseVisibilityMarker;
                 }
                 default:

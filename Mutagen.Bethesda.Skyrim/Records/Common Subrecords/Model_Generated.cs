@@ -1206,6 +1206,7 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.MODS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "AlternateTextures");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AlternateTextures = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AlternateTexture>.Instance.Parse(
@@ -1213,6 +1214,7 @@ namespace Mutagen.Bethesda.Skyrim
                             reader: frame,
                             transl: AlternateTexture.TryCreateFromBinary)
                         .CastExtendedList<AlternateTexture>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Model_FieldIndex.AlternateTextures;
                 }
                 default:

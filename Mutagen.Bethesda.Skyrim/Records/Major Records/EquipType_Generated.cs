@@ -1572,20 +1572,24 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "SlotParents");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SlotParents = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IEquipTypeGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IEquipTypeGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)EquipType_FieldIndex.SlotParents;
                 }
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UseAllParents");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.UseAllParents = BooleanBinaryTranslation<MutagenFrame>.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         byteLength: 4);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)EquipType_FieldIndex.UseAllParents;
                 }
                 default:

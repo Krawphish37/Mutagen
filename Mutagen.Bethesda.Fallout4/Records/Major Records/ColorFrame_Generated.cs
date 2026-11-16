@@ -1033,8 +1033,12 @@ namespace Mutagen.Bethesda.Fallout4
             IColorFrame item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Time");
             item.Time = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Color");
             item.Color = frame.ReadColor(ColorBinaryType.AlphaFloat);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

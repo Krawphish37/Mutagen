@@ -1149,21 +1149,27 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.SCHR:
                 {
                     if (lastParsed.ShortCircuit((int)DialogResponsesUnknownData_FieldIndex.SCHR, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SCHR");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SCHR = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponsesUnknownData_FieldIndex.SCHR;
                 }
                 case RecordTypeInts.QNAM:
                 {
                     if (lastParsed.ShortCircuit((int)DialogResponsesUnknownData_FieldIndex.QNAM, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "QNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.QNAM.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponsesUnknownData_FieldIndex.QNAM;
                 }
                 case RecordTypeInts.NEXT:
                 {
                     if (lastParsed.ShortCircuit((int)DialogResponsesUnknownData_FieldIndex.NEXT, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NEXT");
                     item.NEXT = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogResponsesUnknownData_FieldIndex.NEXT;
                 }
                 default:

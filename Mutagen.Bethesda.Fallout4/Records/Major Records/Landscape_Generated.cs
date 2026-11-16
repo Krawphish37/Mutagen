@@ -2404,12 +2404,15 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DATA");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DATA = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Landscape_FieldIndex.DATA;
                 }
                 case RecordTypeInts.VNML:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "VertexNormals");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.VertexNormals = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.Array2dBinaryTranslation<P3UInt8>.Instance.Parse(
@@ -2417,15 +2420,19 @@ namespace Mutagen.Bethesda.Fallout4
                             size: Landscape.VertexNormalsFixedSize,
                             transl: P3UInt8BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse)
                         ;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Landscape_FieldIndex.VertexNormals;
                 }
                 case RecordTypeInts.VHGT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VertexHeightMap");
                     item.VertexHeightMap = Mutagen.Bethesda.Fallout4.LandscapeVertexHeightMap.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Landscape_FieldIndex.VertexHeightMap;
                 }
                 case RecordTypeInts.VCLR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "VertexColors");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.VertexColors = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.Array2dBinaryTranslation<P3UInt8>.Instance.Parse(
@@ -2433,11 +2440,13 @@ namespace Mutagen.Bethesda.Fallout4
                             size: Landscape.VertexColorsFixedSize,
                             transl: P3UInt8BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse)
                         ;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Landscape_FieldIndex.VertexColors;
                 }
                 case RecordTypeInts.BTXT:
                 case RecordTypeInts.ATXT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Layers");
                     item.Layers.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<BaseLayer>.Instance.Parse(
                             reader: frame,
@@ -2463,26 +2472,31 @@ namespace Mutagen.Bethesda.Fallout4
                                         throw new NotImplementedException();
                                 }
                             }));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Landscape_FieldIndex.Layers;
                 }
                 case RecordTypeInts.VTEX:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Textures");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Textures = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ILandscapeTextureGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<ILandscapeTextureGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Landscape_FieldIndex.Textures;
                 }
                 case RecordTypeInts.MPCD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MPCDs");
                     item.MPCDs.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LandscapeMPCD>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: LandscapeMPCD_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: LandscapeMPCD.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Landscape_FieldIndex.MPCDs;
                 }
                 default:

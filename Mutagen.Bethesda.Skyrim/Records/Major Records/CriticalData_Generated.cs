@@ -1457,27 +1457,43 @@ namespace Mutagen.Bethesda.Skyrim
             ICriticalData item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Damage");
             item.Damage = frame.ReadUInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unused");
             item.Unused = frame.ReadInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PercentMult");
             item.PercentMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
             item.Flags = EnumBinaryTranslation<CriticalData.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 1);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unused2");
             item.Unused2 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 44)) ValuePositionRecorder.Field(frame, "Unused3");
             if (frame.MetaData.FormVersion!.Value >= 44)
             {
                 item.Unused3 = frame.ReadInt32();
             }
+            if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 44)) ValuePositionRecorder.End(frame);
             if (frame.Complete)
             {
                 item.Versioning |= CriticalData.VersioningBreaks.Break0;
                 return;
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Effect");
             item.Effect.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 44)) ValuePositionRecorder.Field(frame, "Unused4");
             if (frame.MetaData.FormVersion!.Value >= 44)
             {
                 item.Unused4 = frame.ReadInt32();
             }
+            if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 44)) ValuePositionRecorder.End(frame);
         }
 
     }

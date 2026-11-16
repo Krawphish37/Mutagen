@@ -2061,74 +2061,98 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Intensity");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Intensity = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)VolumetricLighting_FieldIndex.Intensity;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CustomColorContribution");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CustomColorContribution = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)VolumetricLighting_FieldIndex.CustomColorContribution;
                 }
                 case RecordTypeInts.ENAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ColorR");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ColorR = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)VolumetricLighting_FieldIndex.ColorR;
                 }
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ColorG");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ColorG = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)VolumetricLighting_FieldIndex.ColorG;
                 }
                 case RecordTypeInts.GNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ColorB");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ColorB = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)VolumetricLighting_FieldIndex.ColorB;
                 }
                 case RecordTypeInts.HNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DensityContribution");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DensityContribution = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)VolumetricLighting_FieldIndex.DensityContribution;
                 }
                 case RecordTypeInts.INAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DensitySize");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DensitySize = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)VolumetricLighting_FieldIndex.DensitySize;
                 }
                 case RecordTypeInts.JNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DensityWindSpeed");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DensityWindSpeed = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)VolumetricLighting_FieldIndex.DensityWindSpeed;
                 }
                 case RecordTypeInts.KNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DensityFallingSpeed");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DensityFallingSpeed = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)VolumetricLighting_FieldIndex.DensityFallingSpeed;
                 }
                 case RecordTypeInts.LNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PhaseFunctionContribution");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PhaseFunctionContribution = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)VolumetricLighting_FieldIndex.PhaseFunctionContribution;
                 }
                 case RecordTypeInts.MNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PhaseFunctionScattering");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PhaseFunctionScattering = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)VolumetricLighting_FieldIndex.PhaseFunctionScattering;
                 }
                 case RecordTypeInts.NNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SamplingRepartitionRangeFactor");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SamplingRepartitionRangeFactor = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)VolumetricLighting_FieldIndex.SamplingRepartitionRangeFactor;
                 }
                 default:

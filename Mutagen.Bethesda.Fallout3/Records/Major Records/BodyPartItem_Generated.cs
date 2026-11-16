@@ -1314,10 +1314,12 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.INDX:
                 {
                     if (lastParsed.ShortCircuit((int)BodyPartItem_FieldIndex.BodyPartNumber, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BodyPartNumber");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BodyPartNumber = EnumBinaryTranslation<Race.BodyPart, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BodyPartItem_FieldIndex.BodyPartNumber;
                 }
                 case RecordTypeInts.MODL:
@@ -1327,17 +1329,21 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.MODD:
                 {
                     if (lastParsed.ShortCircuit((int)BodyPartItem_FieldIndex.Model, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BodyPartItem_FieldIndex.Model;
                 }
                 case RecordTypeInts.ICON:
                 {
                     if (lastParsed.ShortCircuit((int)BodyPartItem_FieldIndex.Icons, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Icons");
                     item.Icons = Mutagen.Bethesda.Fallout3.Icons.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BodyPartItem_FieldIndex.Icons;
                 }
                 default:

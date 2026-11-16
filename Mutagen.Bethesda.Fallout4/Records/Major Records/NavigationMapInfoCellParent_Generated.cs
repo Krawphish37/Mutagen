@@ -1028,7 +1028,9 @@ namespace Mutagen.Bethesda.Fallout4
             INavigationMapInfoCellParent item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Cell");
             item.Cell.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

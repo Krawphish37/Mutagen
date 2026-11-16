@@ -6631,13 +6631,16 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Starfield.QuestAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -6645,129 +6648,162 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.Name;
                 }
                 case RecordTypeInts.BFCB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Components");
                     item.Components.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AComponent>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: AComponent_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: AComponent.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.Components;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Starfield.QuestData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.Data;
                 }
                 case RecordTypeInts.QTYP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "QuestType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.QuestType.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.QuestType;
                 }
                 case RecordTypeInts.FTYP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "QuestFaction");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.QuestFaction.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.QuestFaction;
                 }
                 case RecordTypeInts.ENAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Event");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Event = RecordTypeBinaryTranslation.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.Event;
                 }
                 case RecordTypeInts.LNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Location");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Location.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.Location;
                 }
                 case RecordTypeInts.QTLM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "QuestTimeLimit");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.QuestTimeLimit.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.QuestTimeLimit;
                 }
                 case RecordTypeInts.QSRC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SourceQuest");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SourceQuest.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.SourceQuest;
                 }
                 case RecordTypeInts.QDUP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "QDUPs");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.QDUPs = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IStarfieldMajorRecordGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IStarfieldMajorRecordGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.QDUPs;
                 }
                 case RecordTypeInts.QTGL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "TextDisplayGlobals");
                     item.TextDisplayGlobals.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IGlobalGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.QTGL),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.TextDisplayGlobals;
                 }
                 case RecordTypeInts.FLTR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Filter");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Filter = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.Filter;
                 }
                 case RecordTypeInts.NAM3:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Summary");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Summary = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.Summary;
                 }
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "DialogConditions");
                     QuestBinaryCreateTranslation.FillBinaryDialogConditionsCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.DialogConditions;
                 }
                 case RecordTypeInts.NEXT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "UnusedConditionsLogic");
                     return QuestBinaryCreateTranslation.FillBinaryUnusedConditionsLogicCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 }
                 case RecordTypeInts.INDX:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Stages");
                     item.Stages.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<QuestStage>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: QuestStage_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: QuestStage.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.Stages;
                 }
                 case RecordTypeInts.QOBJ:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Objectives");
                     item.Objectives.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<QuestObjective>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: QuestObjective_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: QuestObjective.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.Objectives;
                 }
                 case RecordTypeInts.ANAM:
@@ -6776,34 +6812,43 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ALCS:
                 case RecordTypeInts.ALMI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "AliasParse");
                     return QuestBinaryCreateTranslation.FillBinaryAliasParseCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 }
                 case RecordTypeInts.GNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "QuestGroup");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.QuestGroup.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.QuestGroup;
                 }
                 case RecordTypeInts.SNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SwfFile");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SwfFile = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.SwfFile;
                 }
                 case RecordTypeInts.QMTY:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MissionTypeKeyword");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MissionTypeKeyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.MissionTypeKeyword;
                 }
                 case RecordTypeInts.QMSU:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MissionBoardDescription");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MissionBoardDescription = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -6811,23 +6856,27 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.MissionBoardDescription;
                 }
                 case RecordTypeInts.QMDT:
                 case RecordTypeInts.QMDP:
                 case RecordTypeInts.QMDS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MissionBoardInfoPanels");
                     item.MissionBoardInfoPanels.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<QuestMissionBoardPanel>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: QuestMissionBoardPanel_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: QuestMissionBoardPanel.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.MissionBoardInfoPanels;
                 }
                 case RecordTypeInts.KSIZ:
                 case RecordTypeInts.KWDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Keywords");
                     item.Keywords = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame,
@@ -6836,15 +6885,18 @@ namespace Mutagen.Bethesda.Starfield
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.KWDA),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.Keywords;
                 }
                 case RecordTypeInts.SCCM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ScriptComment");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ScriptComment = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.ScriptComment;
                 }
                 case RecordTypeInts.XXXX:

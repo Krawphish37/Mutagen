@@ -1192,20 +1192,24 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.XAPD:
                 {
                     if (lastParsed.ShortCircuit((int)ActivateParents_FieldIndex.Flags, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<ActivateParents.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ActivateParents_FieldIndex.Flags;
                 }
                 case RecordTypeInts.XAPR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Parents");
                     item.Parents.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ActivateParent>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: ActivateParent_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: ActivateParent.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ActivateParents_FieldIndex.Parents;
                 }
                 default:

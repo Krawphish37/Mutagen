@@ -1160,12 +1160,16 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.CNTO:
                 {
                     if (lastParsed.ShortCircuit((int)ContainerEntry_FieldIndex.Item, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Item");
                     item.Item = Mutagen.Bethesda.Fallout4.ContainerItem.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ContainerEntry_FieldIndex.Item;
                 }
                 case RecordTypeInts.COED:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Fallout4.ExtraData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ContainerEntry_FieldIndex.Data;
                 }
                 default:

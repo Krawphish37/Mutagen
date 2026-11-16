@@ -1102,15 +1102,19 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.VNAM:
                 {
                     if (lastParsed.ShortCircuit((int)BoolGameplayOptionData_FieldIndex.Value1, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Value1");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Value1 = frame.ReadBoolean();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BoolGameplayOptionData_FieldIndex.Value1;
                 }
                 case RecordTypeInts.WNAM:
                 {
                     if (lastParsed.ShortCircuit((int)BoolGameplayOptionData_FieldIndex.Value2, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Value2");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Value2 = frame.ReadBoolean();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BoolGameplayOptionData_FieldIndex.Value2;
                 }
                 default:

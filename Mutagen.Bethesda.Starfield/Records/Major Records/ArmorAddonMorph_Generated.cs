@@ -1086,15 +1086,19 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.NAM4:
                 {
                     if (lastParsed.ShortCircuit((int)ArmorAddonMorph_FieldIndex.WorldMorph, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WorldMorph");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.WorldMorph.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddonMorph_FieldIndex.WorldMorph;
                 }
                 case RecordTypeInts.NAM5:
                 {
                     if (lastParsed.ShortCircuit((int)ArmorAddonMorph_FieldIndex.FirstPersonMorph, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FirstPersonMorph");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FirstPersonMorph.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddonMorph_FieldIndex.FirstPersonMorph;
                 }
                 default:

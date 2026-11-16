@@ -1609,12 +1609,14 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "DamageTypes");
                     item.DamageTypes.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<DamageTypeItem>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: DamageTypeItem_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: DamageTypeItem.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DamageType_FieldIndex.DamageTypes;
                 }
                 default:

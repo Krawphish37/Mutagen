@@ -1346,39 +1346,51 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.GNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.GNAM.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GroupedPackIn_FieldIndex.GNAM;
                 }
                 case RecordTypeInts.HNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HNAM.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GroupedPackIn_FieldIndex.HNAM;
                 }
                 case RecordTypeInts.INAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "INAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.INAM = BooleanBinaryTranslation<MutagenFrame>.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         byteLength: 2);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GroupedPackIn_FieldIndex.INAM;
                 }
                 case RecordTypeInts.JNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "JNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.JNAM.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GroupedPackIn_FieldIndex.JNAM;
                 }
                 case RecordTypeInts.LNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GroupedPackIn_FieldIndex.LNAM;
                 }
                 case RecordTypeInts.XGOM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "XGOM");
                     item.XGOM = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GroupedPackIn_FieldIndex.XGOM;
                 }
                 case RecordTypeInts.XWPK: // End Marker

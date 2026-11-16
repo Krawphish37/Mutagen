@@ -1698,15 +1698,33 @@ namespace Mutagen.Bethesda.Starfield
             IMovementData item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaxSpeedForward");
             item.MaxSpeedForward = Mutagen.Bethesda.Starfield.MovementSpeeds.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaxSpeedLeft");
             item.MaxSpeedLeft = Mutagen.Bethesda.Starfield.MovementSpeeds.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaxSpeedRight");
             item.MaxSpeedRight = Mutagen.Bethesda.Starfield.MovementSpeeds.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaxSpeedBack");
             item.MaxSpeedBack = Mutagen.Bethesda.Starfield.MovementSpeeds.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaxSpeedUp");
             item.MaxSpeedUp = Mutagen.Bethesda.Starfield.MovementSpeeds.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaxSpeedDown");
             item.MaxSpeedDown = Mutagen.Bethesda.Starfield.MovementSpeeds.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaxRotationSpeedPitch");
             item.MaxRotationSpeedPitch = Mutagen.Bethesda.Starfield.MovementRotationSpeeds.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaxRotationSpeedRoll");
             item.MaxRotationSpeedRoll = Mutagen.Bethesda.Starfield.MovementRotationSpeeds.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaxRotationSpeedYaw");
             item.MaxRotationSpeedYaw = Mutagen.Bethesda.Starfield.MovementRotationSpeeds.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

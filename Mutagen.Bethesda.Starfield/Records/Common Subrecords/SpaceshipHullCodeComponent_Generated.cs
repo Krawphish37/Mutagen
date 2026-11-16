@@ -1050,6 +1050,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.HULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HullCode");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HullCode = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1057,6 +1058,7 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SpaceshipHullCodeComponent_FieldIndex.HullCode;
                 }
                 default:

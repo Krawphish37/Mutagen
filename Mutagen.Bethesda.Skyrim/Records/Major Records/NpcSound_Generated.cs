@@ -1080,15 +1080,19 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.CSDI:
                 {
                     if (lastParsed.ShortCircuit((int)NpcSound_FieldIndex.Sound, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Sound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Sound.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcSound_FieldIndex.Sound;
                 }
                 case RecordTypeInts.CSDC:
                 {
                     if (lastParsed.ShortCircuit((int)NpcSound_FieldIndex.SoundChance, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SoundChance");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SoundChance = frame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcSound_FieldIndex.SoundChance;
                 }
                 default:

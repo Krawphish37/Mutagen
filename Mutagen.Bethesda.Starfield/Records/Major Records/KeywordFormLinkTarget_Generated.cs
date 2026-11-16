@@ -1061,7 +1061,9 @@ namespace Mutagen.Bethesda.Starfield
                 item.Versioning |= KeywordFormLinkTarget.VersioningBreaks.Break0;
                 return;
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Type");
             item.Type = frame.ReadUInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

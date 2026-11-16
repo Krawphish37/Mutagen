@@ -35,7 +35,7 @@
   </Object>
   <Object name="DialogResponsesAdapter" baseClass="AVirtualMachineAdapter" recordType="VMAD" objType="Subrecord">
     <Fields>
-      <RefDirect name="ScriptFragments" refName="ScriptFragments" binary="Custom" nullable="True" />
+      <RefDirect name="ScriptFragments" refName="ScriptFragments" binary="Custom" fills="ScriptFragments" nullable="True" />
     </Fields>
   </Object>
   <Object name="DialogResponse" objType="Subrecord">

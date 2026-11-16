@@ -3,7 +3,7 @@
   <!-- partialForm: a Worldspace can be a partial form (header flag 0x4000, xEdit's 'Partial Form'; 20 in the official
        add-ons) (C58/W7). It declares no SubgroupType: a partial form's children group follows its record, as in every
        plugin read, so no orphaned children group is read for it -->
-  <Object name="Worldspace" recordType="WRLD" objType="Record" customBinaryEnd="Normal" baseClass="StarfieldMajorRecord" majorFlag="true" partialForm="true" >
+  <Object name="Worldspace" recordType="WRLD" objType="Record" customBinaryEnd="Normal" customBinaryEndFills="TopCell,SubCells,SubCellsTimestamp,SubCellsUnknown" baseClass="StarfieldMajorRecord" majorFlag="true" partialForm="true" >
     <Fields>
       <RefList name="Components" refName="AComponent" />
       <RefList name="LargeReferences" refName="WorldspaceGridReference" />
@@ -25,12 +25,12 @@
       <Enum name="Flags2" enumName="Worldspace.Flag2" byteLength="1" recordType="FNAM" />
       <Data recordType="NAM0">
         <Fields>
-          <P2Float name="ObjectBoundsMin" binary="Custom" layoutEncoding="float/100" />
+          <P2Float name="ObjectBoundsMin" binary="Custom" fills="ObjectBoundsMin" layoutEncoding="float/100" />
         </Fields>
       </Data>
       <Data recordType="NAM9">
         <Fields>
-          <P2Float name="ObjectBoundsMax" binary="Custom" layoutEncoding="float/100" />
+          <P2Float name="ObjectBoundsMax" binary="Custom" fills="ObjectBoundsMax" layoutEncoding="float/100" />
         </Fields>
       </Data>
       <FormLink name="Music" refName="MusicType" recordType="ZNAM" />

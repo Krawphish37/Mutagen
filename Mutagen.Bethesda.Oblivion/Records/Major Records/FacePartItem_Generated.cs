@@ -1193,28 +1193,34 @@ namespace Mutagen.Bethesda.Oblivion
                 case RecordTypeInts.INDX:
                 {
                     if (lastParsed.ShortCircuit((int)FacePartItem_FieldIndex.Index, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = EnumBinaryTranslation<Race.FacePart, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FacePartItem_FieldIndex.Index;
                 }
                 case RecordTypeInts.MODL:
                 {
                     if (lastParsed.ShortCircuit((int)FacePartItem_FieldIndex.Model, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Oblivion.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FacePartItem_FieldIndex.Model;
                 }
                 case RecordTypeInts.ICON:
                 {
                     if (lastParsed.ShortCircuit((int)FacePartItem_FieldIndex.Icon, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Icon");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Icon = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FacePartItem_FieldIndex.Icon;
                 }
                 default:

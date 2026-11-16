@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
-  <Object name="DialogTopic" recordType="DIAL" objType="Record" majorFlag="true" partialForm="true" baseClass="StarfieldMajorRecord" customBinaryEnd="Normal" >
+  <Object name="DialogTopic" recordType="DIAL" objType="Record" majorFlag="true" partialForm="true" baseClass="StarfieldMajorRecord" customBinaryEnd="Normal" customBinaryEndFills="Responses,Timestamp,Unknown" >
     <Fields>
       <RefList name="Components" refName="AComponent" />
       <String name="Name" recordType="FULL" translated="Normal" />

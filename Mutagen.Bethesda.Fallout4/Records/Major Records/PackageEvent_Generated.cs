@@ -1206,16 +1206,20 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.INAM:
                 {
                     if (lastParsed.ShortCircuit((int)PackageEvent_FieldIndex.Idle, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Idle");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Idle.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PackageEvent_FieldIndex.Idle;
                 }
                 case RecordTypeInts.PDTO:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Topics");
                     PackageEventBinaryCreateTranslation.FillBinaryTopicsCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PackageEvent_FieldIndex.Topics;
                 }
                 default:

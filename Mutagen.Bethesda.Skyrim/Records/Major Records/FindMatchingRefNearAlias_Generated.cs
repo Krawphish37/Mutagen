@@ -1079,19 +1079,23 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.ALNA:
                 {
                     if (lastParsed.ShortCircuit((int)FindMatchingRefNearAlias_FieldIndex.AliasID, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "AliasID");
                     FindMatchingRefNearAliasBinaryCreateTranslation.FillBinaryAliasIDCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FindMatchingRefNearAlias_FieldIndex.AliasID;
                 }
                 case RecordTypeInts.ALNT:
                 {
                     if (lastParsed.ShortCircuit((int)FindMatchingRefNearAlias_FieldIndex.Type, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Type");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Type = EnumBinaryTranslation<FindMatchingRefNearAlias.TypeEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FindMatchingRefNearAlias_FieldIndex.Type;
                 }
                 default:

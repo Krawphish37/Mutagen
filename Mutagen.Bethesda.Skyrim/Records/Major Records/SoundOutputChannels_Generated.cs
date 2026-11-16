@@ -1194,9 +1194,15 @@ namespace Mutagen.Bethesda.Skyrim
             ISoundOutputChannels item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Channel0");
             item.Channel0 = Mutagen.Bethesda.Skyrim.SoundOutputChannel.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Channel1");
             item.Channel1 = Mutagen.Bethesda.Skyrim.SoundOutputChannel.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Channel2");
             item.Channel2 = Mutagen.Bethesda.Skyrim.SoundOutputChannel.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

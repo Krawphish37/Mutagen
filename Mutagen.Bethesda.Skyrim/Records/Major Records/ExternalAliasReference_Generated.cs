@@ -1080,15 +1080,19 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.ALEQ:
                 {
                     if (lastParsed.ShortCircuit((int)ExternalAliasReference_FieldIndex.Quest, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Quest");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Quest.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ExternalAliasReference_FieldIndex.Quest;
                 }
                 case RecordTypeInts.ALEA:
                 {
                     if (lastParsed.ShortCircuit((int)ExternalAliasReference_FieldIndex.AliasID, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AliasID");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AliasID = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ExternalAliasReference_FieldIndex.AliasID;
                 }
                 default:

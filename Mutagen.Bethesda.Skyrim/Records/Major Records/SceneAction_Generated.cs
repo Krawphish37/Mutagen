@@ -2216,10 +2216,12 @@ namespace Mutagen.Bethesda.Skyrim
                     if (!lastParsed.ParsedIndex.HasValue)
                     {
                         if (lastParsed.ShortCircuit((int)SceneAction_FieldIndex.Type, translationParams)) return ParseResult.Stop;
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Type");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.Type = EnumBinaryTranslation<SceneAction.TypeEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
                             reader: frame,
                             length: contentLength);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)SceneAction_FieldIndex.Type, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)SceneAction_FieldIndex.Unused)
@@ -2233,10 +2235,12 @@ namespace Mutagen.Bethesda.Skyrim
                         {
                             case 0:
                                 if (lastParsed.ShortCircuit((int)SceneAction_FieldIndex.Type, translationParams)) return ParseResult.Stop;
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Type");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.Type = EnumBinaryTranslation<SceneAction.TypeEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
                                     reader: frame,
                                     length: contentLength);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)SceneAction_FieldIndex.Type, nextRecordType);
                             case 1:
                                 frame.ReadSubrecord();
@@ -2248,37 +2252,47 @@ namespace Mutagen.Bethesda.Skyrim
                 }
                 case RecordTypeInts.NAM0:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.Name;
                 }
                 case RecordTypeInts.ALID:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ActorID");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ActorID = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.ActorID;
                 }
                 case RecordTypeInts.LNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.LNAM;
                 }
                 case RecordTypeInts.INAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.Index;
                 }
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<SceneAction.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.Flags;
                 }
                 case RecordTypeInts.SNAM:
@@ -2286,14 +2300,18 @@ namespace Mutagen.Bethesda.Skyrim
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)SceneAction_FieldIndex.Flags)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StartPhase");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.StartPhase = frame.ReadUInt32();
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)SceneAction_FieldIndex.StartPhase, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)SceneAction_FieldIndex.EndPhase)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TimerSeconds");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.TimerSeconds = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)SceneAction_FieldIndex.TimerSeconds, nextRecordType);
                     }
                     else
@@ -2301,12 +2319,16 @@ namespace Mutagen.Bethesda.Skyrim
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StartPhase");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.StartPhase = frame.ReadUInt32();
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)SceneAction_FieldIndex.StartPhase, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TimerSeconds");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.TimerSeconds = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)SceneAction_FieldIndex.TimerSeconds, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -2315,55 +2337,71 @@ namespace Mutagen.Bethesda.Skyrim
                 }
                 case RecordTypeInts.ENAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EndPhase");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EndPhase = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.EndPhase;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Packages");
                     item.Packages.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IPackageGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.PNAM),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.Packages;
                 }
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Topic");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Topic.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.Topic;
                 }
                 case RecordTypeInts.HTID:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HeadtrackActorID");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HeadtrackActorID = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.HeadtrackActorID;
                 }
                 case RecordTypeInts.DMAX:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LoopingMax");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LoopingMax = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.LoopingMax;
                 }
                 case RecordTypeInts.DMIN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LoopingMin");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LoopingMin = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.LoopingMin;
                 }
                 case RecordTypeInts.DEMO:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Emotion");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Emotion = EnumBinaryTranslation<Emotion, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.Emotion;
                 }
                 case RecordTypeInts.DEVA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EmotionValue");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EmotionValue = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.EmotionValue;
                 }
                 case RecordTypeInts.SCHR:
@@ -2372,9 +2410,11 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.QNAM:
                 case RecordTypeInts.SCRO:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unused");
                     item.Unused = Mutagen.Bethesda.Skyrim.ScenePhaseUnusedData.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneAction_FieldIndex.Unused;
                 }
                 default:

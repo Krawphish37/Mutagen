@@ -1179,13 +1179,17 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.LVLO:
                 {
                     if (lastParsed.ShortCircuit((int)LeveledNpcEntry_FieldIndex.Data, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Fallout4.LeveledNpcEntryData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledNpcEntry_FieldIndex.Data;
                 }
                 case RecordTypeInts.COED:
                 {
                     if (lastParsed.ShortCircuit((int)LeveledNpcEntry_FieldIndex.ExtraData, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ExtraData");
                     item.ExtraData = Mutagen.Bethesda.Fallout4.ExtraData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LeveledNpcEntry_FieldIndex.ExtraData;
                 }
                 default:

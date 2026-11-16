@@ -1061,8 +1061,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.MNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ImageSpaceAdapter");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ImageSpaceAdapter.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceModifiableFormComponent_FieldIndex.ImageSpaceAdapter;
                 }
                 default:

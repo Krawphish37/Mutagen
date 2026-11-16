@@ -72,7 +72,9 @@ partial class TerminalMenuItemBinaryCreateTranslation
             case RecordTypeInts.UNAM:
             case RecordTypeInts.TNAM:
             case RecordTypeInts.BNAM:
+                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.Target));
                 item.Target.CopyInFromBinary(frame);
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 break;
             default:
                 throw new ArgumentException();

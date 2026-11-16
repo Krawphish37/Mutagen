@@ -1090,17 +1090,21 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.EXCN:
                 {
                     if (lastParsed.ShortCircuit((int)ExternalDataSource_FieldIndex.Name, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ExternalDataSource_FieldIndex.Name;
                 }
                 case RecordTypeInts.EXCI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Source");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Source.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ExternalDataSource_FieldIndex.Source;
                 }
                 default:

@@ -4706,57 +4706,71 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Starfield.SceneAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<Scene.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.Flags;
                 }
                 case RecordTypeInts.HNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Phases");
                     item.Phases.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ScenePhase>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: ScenePhase_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: ScenePhase.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.Phases;
                 }
                 case RecordTypeInts.ALID:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Actors");
                     item.Actors.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<SceneActor>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: SceneActor_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: SceneActor.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.Actors;
                 }
                 case RecordTypeInts.ANAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Actions");
                     SceneBinaryCreateTranslation.FillBinaryActionsCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.Actions;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Quest");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Quest.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.Quest;
                 }
                 case RecordTypeInts.INAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LastActionIndex");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LastActionIndex = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.LastActionIndex;
                 }
                 case RecordTypeInts.VNAM:
@@ -4769,175 +4783,227 @@ namespace Mutagen.Bethesda.Starfield
                         return default(int?);
                     }
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DeathBehavior");
                     item.DeathBehavior = EnumBinaryTranslation<Scene.ActorBehaviorSetting, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 4);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "CombatBehavior");
                     item.CombatBehavior = EnumBinaryTranslation<Scene.ActorBehaviorSetting, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 4);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "PlayerDialogueBehavior");
                     item.PlayerDialogueBehavior = EnumBinaryTranslation<Scene.ActorBehaviorSetting, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 4);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ObserveCombatBehavior");
                     item.ObserveCombatBehavior = EnumBinaryTranslation<Scene.ActorBehaviorSetting, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 4);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ReactionRadiusBehavior");
                     item.ReactionRadiusBehavior = EnumBinaryTranslation<Scene.ActorBehaviorSetting, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 4);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)Scene_FieldIndex.ReactionRadiusBehavior;
                 }
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.SCQS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SetParentQuestStage");
                     item.SetParentQuestStage = Mutagen.Bethesda.Starfield.SceneSetParentQuestStage.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.SetParentQuestStage;
                 }
                 case RecordTypeInts.NNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Notes");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Notes = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.Notes;
                 }
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Template");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Template.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.Template;
                 }
                 case RecordTypeInts.BOLV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BOLV");
                     item.BOLV = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.BOLV;
                 }
                 case RecordTypeInts.XNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.Index;
                 }
                 case RecordTypeInts.SCPI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Priority");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Priority = frame.ReadUInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.Priority;
                 }
                 case RecordTypeInts.JNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OverrideSubtitlePriority");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.OverrideSubtitlePriority = EnumBinaryTranslation<DialogResponses.SubtitlePriorityLevel, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.OverrideSubtitlePriority;
                 }
                 case RecordTypeInts.SCPP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SCPP");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SCPP.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.SCPP;
                 }
                 case RecordTypeInts.SCSP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IsSpeechChallenge");
                     item.IsSpeechChallenge = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.IsSpeechChallenge;
                 }
                 case RecordTypeInts.SPMA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MandatoryNextChallenges");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MandatoryNextChallenges = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ISceneGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<ISceneGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.MandatoryNextChallenges;
                 }
                 case RecordTypeInts.SPEX:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "ExcludedChallenges");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ExcludedChallenges = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ISceneGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<ISceneGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.ExcludedChallenges;
                 }
                 case RecordTypeInts.SPRK:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChallengeRisk");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ChallengeRisk = EnumBinaryTranslation<Scene.SpeechChallengeRisk, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.ChallengeRisk;
                 }
                 case RecordTypeInts.SPRW:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChallengeReward");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ChallengeReward = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.ChallengeReward;
                 }
                 case RecordTypeInts.SPRP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChallengeRepeatable");
                     item.ChallengeRepeatable = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.ChallengeRepeatable;
                 }
                 case RecordTypeInts.SPDF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChallengeDefault");
                     item.ChallengeDefault = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.ChallengeDefault;
                 }
                 case RecordTypeInts.SPPQ:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChallengeDataMarker");
                     item.ChallengeDataMarker = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.ChallengeDataMarker;
                 }
                 case RecordTypeInts.SPKW:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "ChallengeAndKeywords");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ChallengeAndKeywords = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.ChallengeAndKeywords;
                 }
                 case RecordTypeInts.SPPK:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "ChallengePerks");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ChallengePerks = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IPerkGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IPerkGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.ChallengePerks;
                 }
                 case RecordTypeInts.SPKY:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "ChallengeOrKeywords");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ChallengeOrKeywords = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.ChallengeOrKeywords;
                 }
                 case RecordTypeInts.DEVT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ShowOneDialogueTrack");
                     item.ShowOneDialogueTrack = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Scene_FieldIndex.ShowOneDialogueTrack;
                 }
                 case RecordTypeInts.XXXX:

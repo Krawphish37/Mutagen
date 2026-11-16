@@ -18,7 +18,7 @@
       <RefList name="Cells" refName="Cell" binaryOverlay="Custom" />
     </Fields>
   </Object>
-  <Object name="Cell" recordType="CELL" baseClass="StarfieldMajorRecord" objType="Record" partialForm="true" majorFlag="true" customBinaryEnd="Normal">
+  <Object name="Cell" recordType="CELL" baseClass="StarfieldMajorRecord" objType="Record" partialForm="true" majorFlag="true" customBinaryEnd="Normal" customBinaryEndFills="Timestamp,UnknownGroupData,Persistent,PersistentTimestamp,PersistentUnknownGroupData,Temporary,TemporaryTimestamp,TemporaryUnknownGroupData,NavigationMeshes">
     <Fields>
       <RefList name="Components" refName="AComponent" />
       <String name="Name" recordType="FULL" translated="Normal" />
@@ -47,7 +47,7 @@
       <FormLink name="TimeOfDay" refName="TimeOfDayData" recordType="TODD" />
       <RefList name="LinkedReferences" refName="LinkedReferences" />
       <Bool name="IsLinkedRefTransient" boolAsMarker="XLKT" />
-      <RefList name="Traversals" refName="TraversalReference" recordType="XTV2" overflowRecordType="XXXX" binary="Custom" />
+      <RefList name="Traversals" refName="TraversalReference" recordType="XTV2" overflowRecordType="XXXX" binary="Custom" fills="Traversals,NumTraversalFluffBytes" />
       <String name="EnvironmentMap" recordType="XEMP" />
       <UInt32 name="NumTraversalFluffBytes" binary="NoGeneration" layoutSubrecord="XTV2" layoutOffset="after:Traversals" layoutEncoding="trailingZeroCount" />
       <RefList name="NavigationMeshes" binary="NoGeneration" refName="NavigationMesh" layoutGroup="CellChildren/CellTemporaryChildren" />

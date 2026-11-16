@@ -1493,10 +1493,12 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.KNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Effects");
                     AudioEffectChainBinaryCreateTranslation.FillBinaryEffectsCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AudioEffectChain_FieldIndex.Effects;
                 }
                 default:

@@ -29,17 +29,25 @@ partial class PackageIdlesBinaryCreateTranslation
     public static partial void FillBinaryAnimationsCustom(MutagenFrame frame, IPackageIdles item, PreviousParse lastParsed)
     {
         int? count = null;
+        long countAt = -1;
         for (int i = 0; i < 3; i++)
         {
             var subRecord = frame.GetSubrecord();
+            var at = ValuePositionRecorder.Here(frame);
             if (subRecord.RecordType == RecordTypes.IDLC)
             {
                 count = checked((int)subRecord.AsUInt32());
+                countAt = at;
                 frame.Position += subRecord.TotalLength;
             }
             else if (subRecord.RecordType == RecordTypes.IDLA)
             {
                 item.Animations = new();
+                if (ValuePositionRecorder.On)
+                {
+                    ValuePositionRecorder.List(frame, nameof(item.Animations));
+                    if (countAt >= 0) ValuePositionRecorder.CountAt(countAt + subRecord.HeaderLength, 4);
+                }
                 if (count == null)
                 {
                     item.Animations.SetTo(
@@ -57,10 +65,12 @@ partial class PackageIdlesBinaryCreateTranslation
                             triggeringRecord: RecordTypes.IDLA,
                             transl: FormLinkBinaryTranslation.Instance.Parse));
                 }
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             }
             else if (subRecord.RecordType == RecordTypes.IDLT)
             {
                 item.TimerSetting = subRecord.Content.Float();
+                if (at >= 0) ValuePositionRecorder.At(nameof(item.TimerSetting), at + subRecord.HeaderLength, 4);
                 frame.Position += subRecord.TotalLength;
             }
             else

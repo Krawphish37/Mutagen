@@ -1064,14 +1064,18 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.ALCS:
                 {
                     if (lastParsed.ShortCircuit((int)CollectionAlias_FieldIndex.AliasID, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AliasID");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AliasID = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CollectionAlias_FieldIndex.AliasID;
                 }
                 case RecordTypeInts.ALMI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaxInitialFillCount");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MaxInitialFillCount = frame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CollectionAlias_FieldIndex.MaxInitialFillCount;
                 }
                 default:

@@ -1534,12 +1534,14 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Models");
                     item.Models.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<DebrisModel>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: DebrisModel_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: DebrisModel.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Debris_FieldIndex.Models;
                 }
                 default:

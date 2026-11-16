@@ -3127,6 +3127,7 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -3134,190 +3135,245 @@ namespace Mutagen.Bethesda.Fallout3
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.Name;
                 }
                 case RecordTypeInts.NAM1:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Type");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Type = EnumBinaryTranslation<MediaSet.MediaSetType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.Type;
                 }
                 case RecordTypeInts.NAM2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LoopBattleDayOuter");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LoopBattleDayOuter = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.LoopBattleDayOuter;
                 }
                 case RecordTypeInts.NAM3:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ExploreDayMiddle");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ExploreDayMiddle = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.ExploreDayMiddle;
                 }
                 case RecordTypeInts.NAM4:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SuspenseDayInner");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SuspenseDayInner = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.SuspenseDayInner;
                 }
                 case RecordTypeInts.NAM5:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NightOuter");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NightOuter = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.NightOuter;
                 }
                 case RecordTypeInts.NAM6:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NightMiddle");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NightMiddle = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.NightMiddle;
                 }
                 case RecordTypeInts.NAM7:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NightInner");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NightInner = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.NightInner;
                 }
                 case RecordTypeInts.NAM8:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LoopBattleDayOuterDb");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LoopBattleDayOuterDb = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.LoopBattleDayOuterDb;
                 }
                 case RecordTypeInts.NAM9:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ExploreDayMiddleDb");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ExploreDayMiddleDb = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.ExploreDayMiddleDb;
                 }
                 case RecordTypeInts.NAM0:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SuspenseDayInnerDb");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SuspenseDayInnerDb = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.SuspenseDayInnerDb;
                 }
                 case RecordTypeInts.ANAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NightOuterDb");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NightOuterDb = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.NightOuterDb;
                 }
                 case RecordTypeInts.BNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NightMiddleDb");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NightMiddleDb = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.NightMiddleDb;
                 }
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NightInnerDb");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NightInnerDb = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.NightInnerDb;
                 }
                 case RecordTypeInts.JNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DayOuterBoundaryPercent");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DayOuterBoundaryPercent = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.DayOuterBoundaryPercent;
                 }
                 case RecordTypeInts.KNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DayMiddleBoundaryPercent");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DayMiddleBoundaryPercent = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.DayMiddleBoundaryPercent;
                 }
                 case RecordTypeInts.LNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DayInnerBoundaryPercent");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DayInnerBoundaryPercent = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.DayInnerBoundaryPercent;
                 }
                 case RecordTypeInts.MNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NightOuterBoundaryPercent");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NightOuterBoundaryPercent = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.NightOuterBoundaryPercent;
                 }
                 case RecordTypeInts.NNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NightMiddleBoundaryPercent");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NightMiddleBoundaryPercent = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.NightMiddleBoundaryPercent;
                 }
                 case RecordTypeInts.ONAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NightInnerBoundaryPercent");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NightInnerBoundaryPercent = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.NightInnerBoundaryPercent;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EnableFlags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EnableFlags = EnumBinaryTranslation<MediaSet.MediaSetEnableFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.EnableFlags;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WaitTimeMinTimeOnDaytimeMin");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.WaitTimeMinTimeOnDaytimeMin = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.WaitTimeMinTimeOnDaytimeMin;
                 }
                 case RecordTypeInts.ENAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LoopFadeOutCrossfadeOverlapNighttimeMin");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LoopFadeOutCrossfadeOverlapNighttimeMin = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.LoopFadeOutCrossfadeOverlapNighttimeMin;
                 }
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RecoveryTimeCrossfadeTimeDaytimeMax");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RecoveryTimeCrossfadeTimeDaytimeMax = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.RecoveryTimeCrossfadeTimeDaytimeMax;
                 }
                 case RecordTypeInts.GNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NighttimeMax");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NighttimeMax = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.NighttimeMax;
                 }
                 case RecordTypeInts.HNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IntroDaytime");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.IntroDaytime.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.IntroDaytime;
                 }
                 case RecordTypeInts.INAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OutroNighttime");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.OutroNighttime.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.OutroNighttime;
                 }
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DATA");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DATA = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MediaSet_FieldIndex.DATA;
                 }
                 default:

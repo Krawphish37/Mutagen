@@ -1028,7 +1028,9 @@ namespace Mutagen.Bethesda.Fallout4
             ISoundDescriptorAutoweaponData item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BaseDescriptor");
             item.BaseDescriptor.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

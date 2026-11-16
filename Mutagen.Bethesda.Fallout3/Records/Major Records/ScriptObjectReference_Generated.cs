@@ -1049,8 +1049,10 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.SCRO:
                 {
                     if (lastParsed.ShortCircuit((int)ScriptObjectReference_FieldIndex.Reference, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Reference");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Reference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScriptObjectReference_FieldIndex.Reference;
                 }
                 default:

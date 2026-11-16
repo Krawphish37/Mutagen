@@ -1051,12 +1051,16 @@ namespace Mutagen.Bethesda.Starfield
             IFurnitureMarkerEntryPoints item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Type");
             item.Type = EnumBinaryTranslation<Furniture.AnimationType, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 2);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EntryPoints");
             item.EntryPoints = EnumBinaryTranslation<Furniture.EntryPointType, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 2);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

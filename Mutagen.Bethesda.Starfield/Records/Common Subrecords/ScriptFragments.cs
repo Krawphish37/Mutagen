@@ -1,3 +1,4 @@
+using Mutagen.Bethesda.Plugins.Binary.Translations;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
 using static Mutagen.Bethesda.Starfield.ScriptFragmentsBinaryCreateTranslation;
 
@@ -21,16 +22,25 @@ partial class ScriptFragmentsBinaryCreateTranslation
 
     public static void FillFragments(MutagenFrame frame, ushort objectFormat, IScriptFragments ret)
     {
+        var at = ValuePositionRecorder.Here(frame);
         ret.ExtraBindDataVersion = frame.ReadUInt8();
+        ValuePositionRecorder.Value(frame, nameof(ret.ExtraBindDataVersion), at);
+        // The flags byte says which fragments follow (no value of its own)
         var flag = (Flag)frame.ReadUInt8();
+        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(ret.Script));
         ret.Script = AVirtualMachineAdapterBinaryCreateTranslation.ReadEntry(frame, objectFormat);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         if (flag.HasFlag(Flag.OnBegin))
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(ret.OnBegin));
             ret.OnBegin = ScriptFragment.CreateFromBinary(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
         if (flag.HasFlag(Flag.OnEnd))
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(ret.OnEnd));
             ret.OnEnd = ScriptFragment.CreateFromBinary(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
     }
 }

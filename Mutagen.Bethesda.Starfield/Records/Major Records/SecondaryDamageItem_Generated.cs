@@ -1084,14 +1084,18 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.DAMA:
                 {
                     if (lastParsed.ShortCircuit((int)SecondaryDamageItem_FieldIndex.DamageType, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DamageType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DamageType.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SecondaryDamageItem_FieldIndex.DamageType;
                 }
                 case RecordTypeInts.ACTV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ActorValue");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ActorValue.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SecondaryDamageItem_FieldIndex.ActorValue;
                 }
                 default:

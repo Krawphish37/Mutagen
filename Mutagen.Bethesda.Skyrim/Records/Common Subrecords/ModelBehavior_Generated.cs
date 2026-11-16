@@ -1318,21 +1318,26 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.MODL:
                 {
                     if (lastParsed.ShortCircuit((int)ModelBehavior_FieldIndex.File, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "File");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.File.GivenPath = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ModelBehavior_FieldIndex.File;
                 }
                 case RecordTypeInts.MODT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Data = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ModelBehavior_FieldIndex.Data;
                 }
                 case RecordTypeInts.MODS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "AlternateTextures");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AlternateTextures = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AlternateTexture>.Instance.Parse(
@@ -1340,6 +1345,7 @@ namespace Mutagen.Bethesda.Skyrim
                             reader: frame,
                             transl: AlternateTexture.TryCreateFromBinary)
                         .CastExtendedList<AlternateTexture>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ModelBehavior_FieldIndex.AlternateTextures;
                 }
                 default:

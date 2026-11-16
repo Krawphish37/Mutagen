@@ -1090,7 +1090,9 @@ namespace Mutagen.Bethesda.Fallout4
             MutagenFrame frame)
         {
             if (frame.Complete) return;
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PlaySound");
             item.PlaySound.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

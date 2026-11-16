@@ -1,4 +1,5 @@
-﻿using System.Buffers.Binary;
+﻿using Mutagen.Bethesda.Plugins.Binary.Translations;
+using System.Buffers.Binary;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
 
 namespace Mutagen.Bethesda.Starfield;
@@ -102,7 +103,9 @@ partial class VolumesComponentItemBinaryCreateTranslation
         {
             item.Ender = new VolumesUnknownEnderEmptyPadded();
         }
+        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.Ender));
         item.Ender.CopyInFromBinary(frame);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
     }
 }
 

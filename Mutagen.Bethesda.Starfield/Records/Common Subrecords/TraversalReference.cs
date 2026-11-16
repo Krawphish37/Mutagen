@@ -57,10 +57,13 @@ partial class TraversalReferenceBinaryCreateTranslation
         MutagenFrame frame,
         ITraversalReference item)
     {
+        var flagsAt = ValuePositionRecorder.Here(frame);
         var flags = frame.ReadInt32();
+        var at = ValuePositionRecorder.Here(frame);
         if (!Enums.HasFlag(flags, HasNoTraversal))
         {
             item.Traversal.SetTo(FormKeyBinaryTranslation.Instance.Parse(frame));
+            ValuePositionRecorder.Value(frame, nameof(item.Traversal), at);
         }
         else
         {
@@ -68,11 +71,21 @@ partial class TraversalReferenceBinaryCreateTranslation
         }
 
         item.Flags = GetFlags(flags);
+        // The no-traversal bit says whether the traversal follows; it isn't kept in Flags
+        if (flagsAt >= 0) ValuePositionRecorder.At(nameof(item.Flags), flagsAt, 4, ~(ulong)HasNoTraversal & 0xFFFF_FFFF);
         // C221: four half-precision floats
+        at = ValuePositionRecorder.Here(frame);
         item.Unknown2 = HalfBinaryTranslation.Instance.Parse(frame);
+        ValuePositionRecorder.Value(frame, nameof(item.Unknown2), at);
+        at = ValuePositionRecorder.Here(frame);
         item.Unknown3 = HalfBinaryTranslation.Instance.Parse(frame);
+        ValuePositionRecorder.Value(frame, nameof(item.Unknown3), at);
+        at = ValuePositionRecorder.Here(frame);
         item.Unknown4 = HalfBinaryTranslation.Instance.Parse(frame);
+        ValuePositionRecorder.Value(frame, nameof(item.Unknown4), at);
+        at = ValuePositionRecorder.Here(frame);
         item.Unknown5 = HalfBinaryTranslation.Instance.Parse(frame);
+        ValuePositionRecorder.Value(frame, nameof(item.Unknown5), at);
     }
  
     public static ExtendedList<TraversalReference> Parse( 
@@ -86,19 +99,23 @@ partial class TraversalReferenceBinaryCreateTranslation
             var remaining = checked((uint)reader.Remaining);
             try
             {
+                if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, ret.Count);
                 if (!HoldsEntry(reader.GetSpan(checked((int)Math.Min(remaining, 0x38))))
                     || !TraversalReference.TryCreateFromBinary(reader, out var subItem)
                     || Zeroed.Equals(subItem, _equalsMask))
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
                     fluffBytes = remaining;
                     reader.SkipRemainingBytes();
                     break;
-                } 
+                }
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
             
                 ret.Add(subItem); 
             }
             catch (ArgumentOutOfRangeException)
             {
+                if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
                 // Expected to occur within Starfield.esm, due to fluff bytes of unknown length
                 fluffBytes = remaining;
                 reader.SkipRemainingBytes();

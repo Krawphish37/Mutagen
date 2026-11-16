@@ -1068,20 +1068,24 @@ namespace Mutagen.Bethesda.Oblivion
                 case RecordTypeInts.INDX:
                 {
                     if (lastParsed.ShortCircuit((int)BodyPartItem_FieldIndex.Index, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = EnumBinaryTranslation<Race.BodyPart, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BodyPartItem_FieldIndex.Index;
                 }
                 case RecordTypeInts.ICON:
                 {
                     if (lastParsed.ShortCircuit((int)BodyPartItem_FieldIndex.Icon, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Icon");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Icon = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BodyPartItem_FieldIndex.Icon;
                 }
                 default:

@@ -1057,6 +1057,8 @@ public partial class Condition
             throw new ArgumentException();
         }
         var flagByte = frame.GetUInt8(subRecMeta.HeaderLength);
+        // C60: the flag byte holds the flags, the compare operator and two of the data's bools; its bit 2 picks the class
+        var flagsAt = ValuePositionRecorder.Here(frame);
         Condition.Flag flag = ConditionBinaryCreateTranslation.GetFlag(flagByte);
         Condition ret;
         if (flag.HasFlag((Condition.Flag)Condition.UseGlobal))
@@ -1073,6 +1075,15 @@ public partial class Condition
         ret.Data.UsePackageData = flag.HasFlag((Condition.Flag)ParametersUsePackData);
         ret.Flags = ret.Flags.SetFlag((Condition.Flag)ParametersUseAliases, false);
         ret.Flags = ret.Flags.SetFlag((Condition.Flag)ParametersUsePackData, false);
+        if (flagsAt >= 0)
+        {
+            var at = flagsAt + subRecMeta.HeaderLength;
+            ValuePositionRecorder.At(nameof(ret.Flags), at, 1,
+                (ulong)(ConditionBinaryCreateTranslation.FlagMask & ~(ParametersUseAliases | UseGlobal | ParametersUsePackData)));
+            ValuePositionRecorder.At(nameof(ret.CompareOperator), at, 1, ConditionBinaryCreateTranslation.CompareMask);
+            ValuePositionRecorder.At("Data.UseAliases", at, 1, ParametersUseAliases);
+            ValuePositionRecorder.At("Data.UsePackageData", at, 1, ParametersUsePackData);
+        }
         return ret;
     }
 
@@ -1102,21 +1113,27 @@ partial class ConditionBinaryCreateTranslation
         return (CompareOperator)((CompareMask & b) >> 5);
     }
 
+    /// <summary>The conditions (C60: noted as the items of the list the caller began)</summary>
     public static void FillConditionsList(IList<Condition> conditions, MutagenFrame frame, int count)
     {
         conditions.Clear();
         for (int i = 0; i < count; i++)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(frame, i);
             conditions.Add(Condition.CreateFromBinary(frame, default(TypedParseParams)));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
     }
 
+    /// <summary>The conditions (C60: noted as the items of the list the caller began)</summary>
     public static void FillConditionsList(IList<Condition> conditions, MutagenFrame frame)
     {
         conditions.Clear();
         while (frame.Reader.TryGetSubrecordHeader(RecordTypes.CTDA, out var subMeta))
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(frame, conditions.Count);
             conditions.Add(Condition.CreateFromBinary(frame, default(TypedParseParams)));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
     }
 
@@ -1132,15 +1149,19 @@ partial class ConditionBinaryCreateTranslation
     {
         if (funcData is not IConditionParameters parameters) return;
         if (!frame.TryGetSubrecord(out var subMeta)) return;
+        // C60: the strings are set through IConditionParameters, so they are named by its properties (Data.StringParameter1)
+        var at = ValuePositionRecorder.Here(frame);
         switch (subMeta.RecordType.TypeInt)
         {
             case RecordTypeInts.CIS1:
                 parameters.StringParameter1 =
                     BinaryStringUtility.ProcessWholeToZString(subMeta.Content, frame.MetaData.Encodings.NonTranslated);
+                if (at >= 0) ValuePositionRecorder.At("Data.StringParameter1", at + subMeta.HeaderLength, subMeta.ContentLength);
                 break;
             case RecordTypeInts.CIS2:
                 parameters.StringParameter2 =
                     BinaryStringUtility.ProcessWholeToZString(subMeta.Content, frame.MetaData.Encodings.NonTranslated);
+                if (at >= 0) ValuePositionRecorder.At("Data.StringParameter2", at + subMeta.HeaderLength, subMeta.ContentLength);
                 break;
             default:
                 return;
@@ -1172,21 +1193,28 @@ partial class ConditionBinaryCreateTranslation
 
     public static void FillEndingParams(MutagenFrame frame, IConditionData item)
     {
+        var at = ValuePositionRecorder.Here(frame);
         item.RunOnType =
             EnumBinaryTranslation<Condition.RunOnType, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame.SpawnWithLength(4));
+        ValuePositionRecorder.Value(frame, nameof(item.RunOnType), at);
+        at = ValuePositionRecorder.Here(frame);
         item.Reference.SetTo(
             FormLinkBinaryTranslation.Instance.Parse(
                 reader: frame,
                 defaultVal: FormKey.Null));
+        ValuePositionRecorder.Value(frame, nameof(item.Reference), at);
         // Parameter #3 is a keyword FormID when Run On is Linked Reference (xEdit wbConditionParam3Decider), and an
         // alias index or event member code otherwise, so it is only read as a link for Linked Reference. ParameterThree keeps
         // the raw value either way; 0 and -1 mean no keyword.
+        at = ValuePositionRecorder.Here(frame);
         var param3 = frame.ReadSpan(4);
         item.ParameterThree = BinaryPrimitives.ReadInt32LittleEndian(param3);
+        ValuePositionRecorder.Value(frame, nameof(item.ParameterThree), at);
         if (item.RunOnType == Condition.RunOnType.LinkedReference && item.ParameterThree != 0 && item.ParameterThree != -1)
         {
             item.LinkedReferenceKeyword.SetTo(FormKeyBinaryTranslation.Instance.Parse(param3, frame.MetaData.MasterReferences));
+            ValuePositionRecorder.Value(frame, nameof(item.LinkedReferenceKeyword), at);
         }
     }
 
@@ -2425,6 +2453,7 @@ partial class ConditionBinaryCreateTranslation
 
     public static partial void FillBinaryFunctionParseCustom(MutagenFrame frame, ICondition obj)
     {
+        var at = ValuePositionRecorder.Here(frame);
         switch (obj)
         {
             case IConditionGlobal global:
@@ -2436,10 +2465,21 @@ partial class ConditionBinaryCreateTranslation
             default:
                 throw new NotImplementedException();
         }
+        ValuePositionRecorder.Value(frame, "ComparisonValue", at);
 
+        var functionAt = ValuePositionRecorder.Here(frame);
         var functionIndex = frame.ReadUInt16();
+        at = ValuePositionRecorder.Here(frame);
         obj.Unknown2 = frame.ReadUInt16();
+        ValuePositionRecorder.Value(frame, nameof(obj.Unknown2), at);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(obj.Data));
         obj.Data = CreateDataFromBinary(frame, functionIndex);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+        // The function index picks the data's class; the event data's own Function is the event function it reads itself
+        if (functionAt >= 0 && obj.Data is not GetEventDataConditionData)
+        {
+            ValuePositionRecorder.At("Data.Function", functionAt, 2);
+        }
     }
 }
 

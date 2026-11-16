@@ -10,7 +10,9 @@ partial class PackageEventBinaryCreateTranslation
 {
     public static partial void FillBinaryTopicsCustom(MutagenFrame frame, IPackageEvent item, PreviousParse lastParsed)
     {
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.Topics));
         item.Topics.SetTo(ATopicReferenceBinaryCreateTranslation.Factory(frame));
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
     }
 }
 

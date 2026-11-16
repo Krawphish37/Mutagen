@@ -1010,7 +1010,9 @@ namespace Mutagen.Bethesda.Skyrim
             IBookTeachesNothing item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RawContent");
             item.RawContent = frame.ReadUInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

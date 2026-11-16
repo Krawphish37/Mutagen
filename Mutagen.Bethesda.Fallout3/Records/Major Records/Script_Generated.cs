@@ -1401,9 +1401,11 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.SCHR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Fields");
                     item.Fields.CopyInFromBinary(
                         frame: frame,
                         translationParams: null);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Script_FieldIndex.Fields;
                 }
                 default:

@@ -1061,8 +1061,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.FCTF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VoiceType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.VoiceType.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LinkedVoiceTypeComponent_FieldIndex.VoiceType;
                 }
                 default:

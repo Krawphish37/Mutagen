@@ -1817,21 +1817,26 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.WED0:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Sound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.Sound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundKeywordMapping_FieldIndex.Sound;
                 }
                 case RecordTypeInts.KNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Keywords");
                     item.Keywords.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.KNAM),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundKeywordMapping_FieldIndex.Keywords;
                 }
                 case RecordTypeInts.RSMC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "ReverbSounds");
                     item.ReverbSounds.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<SoundKeywordMappingItem>.Instance.ParsePerItem(
                             reader: frame,
@@ -1840,6 +1845,7 @@ namespace Mutagen.Bethesda.Starfield
                             triggeringRecord: SoundKeywordMappingItem_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: SoundKeywordMappingItem.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundKeywordMapping_FieldIndex.ReverbSounds;
                 }
                 default:

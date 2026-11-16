@@ -1265,19 +1265,25 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Static");
                     item.Static.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Unknown");
                     item.Unknown = dataFrame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)StaticPart_FieldIndex.Unknown;
                 }
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Placements");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Placements = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<StaticPlacement>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: StaticPlacement.TryCreateFromBinary)
                         .CastExtendedList<StaticPlacement>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StaticPart_FieldIndex.Placements;
                 }
                 default:

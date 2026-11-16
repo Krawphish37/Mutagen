@@ -1681,21 +1681,39 @@ namespace Mutagen.Bethesda.Skyrim
             IPlayerSkills item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "SkillValues");
             Mutagen.Bethesda.Plugins.Binary.Translations.DictBinaryTranslation<Byte>.Instance.Parse<Skill>(
                 reader: frame,
                 item: item.SkillValues,
                 transl: ByteBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "SkillOffsets");
             Mutagen.Bethesda.Plugins.Binary.Translations.DictBinaryTranslation<Byte>.Instance.Parse<Skill>(
                 reader: frame,
                 item: item.SkillOffsets,
                 transl: ByteBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Health");
             item.Health = frame.ReadUInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Magicka");
             item.Magicka = frame.ReadUInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Stamina");
             item.Stamina = frame.ReadUInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unused");
             item.Unused = frame.ReadUInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FarAwayModelDistance");
             item.FarAwayModelDistance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GearedUpWeapons");
             item.GearedUpWeapons = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unused2");
             item.Unused2 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

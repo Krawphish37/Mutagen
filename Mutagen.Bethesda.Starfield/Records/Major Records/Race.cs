@@ -132,18 +132,22 @@ partial class RaceBinaryCreateTranslation
         IRaceInternal item,
         MutagenFrame frame)
     {
+        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.SkeletalModel));
         item.SkeletalModel = Mutagen.Bethesda.Plugins.Binary.Translations.GenderedItemBinaryTranslation.Parse<SkeletalModel>(
             frame: frame,
             maleMarker: RecordTypes.MNAM,
             femaleMarker: RecordTypes.FNAM,
             transl: SkeletalModel.TryCreateFromBinary,
             existing: item.SkeletalModel);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         return (int)Race_FieldIndex.SkeletalModel;
     }
 
     public static partial void FillBinaryBipedObjectsCustom(MutagenFrame frame, IRaceInternal item, PreviousParse lastParsed)
     {
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.BipedObjects));
         FillBinaryBipedObjectsDictionary(frame, item.FormVersion, item.BipedObjects);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
     }
 
     public static void FillBinaryBipedObjectsDictionary(IMutagenReadStream frame,
@@ -154,6 +158,7 @@ partial class RaceBinaryCreateTranslation
         {
             var data = new BipedObjectData();
             dict[(BipedObject)i] = data;
+            var at = ValuePositionRecorder.Here(frame);
             var subFrame = frame.ReadSubrecord();
             if (subFrame.RecordType != RecordTypes.NAME)
             {
@@ -161,11 +166,18 @@ partial class RaceBinaryCreateTranslation
             }
 
             data.Name = subFrame.AsString(frame.MetaData.Encodings.NonTranslated);
+            // C60: the entries of the dictionary the caller began, by key
+            if (at >= 0) ValuePositionRecorder.At($"[{(BipedObject)i}].Name", at + subFrame.HeaderLength, subFrame.ContentLength);
         }
 
-        var content = frame.ReadSubrecord(RecordTypes.RBPC).Content;
+        var rbpcAt = ValuePositionRecorder.Here(frame);
+        var rbpc = frame.ReadSubrecord(RecordTypes.RBPC);
+        if (rbpcAt >= 0) rbpcAt += rbpc.HeaderLength;
+        var content = rbpc.Content;
         for (int i = 0; i < NumBipedObjectNames; i++)
         {
+            // Before form version 78 an index into the plugin's actor values, from it on a FormID
+            if (rbpcAt >= 0) ValuePositionRecorder.At($"[{(BipedObject)i}].Conditions", rbpcAt + 4 * i, 4, converted: formVersion < 78);
             FormLink<IActorValueInformationGetter> link;
             if (formVersion < 78)
             {

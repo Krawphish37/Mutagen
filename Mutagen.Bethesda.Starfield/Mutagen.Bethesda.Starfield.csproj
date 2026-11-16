@@ -30,6 +30,8 @@
     <None Include="Records\**\*.xml" Pack="true" PackagePath="loqui\Mutagen.Bethesda.Starfield\Records\%(RecursiveDir)%(Filename)%(Extension)" />
     <!-- The layouts the record xml can't describe (C186 step 2), next to it -->
     <None Include="Layouts\*.xml" Pack="true" PackagePath="loqui\Mutagen.Bethesda.Starfield\Layouts\%(Filename)%(Extension)" />
+    <!-- The generated manifest of every object's compiled properties (C60, W6), next to it -->
+    <None Include="Manifest\*.xml" Pack="true" PackagePath="loqui\Mutagen.Bethesda.Starfield\Manifest\%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Records\StarfieldGroup.xml">

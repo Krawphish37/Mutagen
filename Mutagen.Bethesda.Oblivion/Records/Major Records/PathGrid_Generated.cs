@@ -1929,30 +1929,36 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "PointToPointConnections");
                     PathGridBinaryCreateTranslation.FillBinaryPointToPointConnectionsCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PathGrid_FieldIndex.PointToPointConnections;
                 }
                 case RecordTypeInts.PGRI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "InterCellConnections");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.InterCellConnections = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<InterCellPoint>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: InterCellPoint.TryCreateFromBinary)
                         .CastExtendedList<InterCellPoint>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PathGrid_FieldIndex.InterCellConnections;
                 }
                 case RecordTypeInts.PGRL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "PointToReferenceMappings");
                     item.PointToReferenceMappings.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<PointToReferenceMapping>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: PointToReferenceMapping_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: PointToReferenceMapping.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PathGrid_FieldIndex.PointToReferenceMappings;
                 }
                 default:

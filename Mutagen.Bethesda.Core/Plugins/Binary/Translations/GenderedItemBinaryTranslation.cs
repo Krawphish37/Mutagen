@@ -19,14 +19,18 @@ internal sealed class GenderedItemBinaryTranslation
         MutagenFrame frame,
         BinarySubParseDelegate<MutagenFrame, TItem> transl)
     {
+        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Male");
         if (!transl(frame, out var male))
         {
             throw new ArgumentException();
         }
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Female");
         if (!transl(frame, out var female))
         {
             throw new ArgumentException();
         }
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         return new GenderedItem<TItem>(male, female);
     }
     
@@ -47,16 +51,20 @@ internal sealed class GenderedItemBinaryTranslation
             switch ((GenderEnum)markerRec.AsInt32())
             {
                 case GenderEnum.Male:
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Male");
                     if (!transl(frame, out male))
                     {
                         throw new ArgumentException();
                     }
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     break;
                 case GenderEnum.Female:
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Female");
                     if (!transl(frame, out female))
                     {
                         throw new ArgumentException();
                     }
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     break;
             }
         }
@@ -76,14 +84,18 @@ internal sealed class GenderedItemBinaryTranslation
         IBinaryReadStream reader,
         BinarySubParseDelegate<IBinaryReadStream, TItem> transl)
     {
+        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(reader, "Male");
         if (!transl(reader, out var male))
         {
             throw new ArgumentException();
         }
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(reader, "Female");
         if (!transl(reader, out var female))
         {
             throw new ArgumentException();
         }
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
         return new GenderedItem<TItem>(male, female);
     }
 
@@ -98,11 +110,11 @@ internal sealed class GenderedItemBinaryTranslation
         where TItem : class
     {
         TItem? male = existing?.Male, female = existing?.Female;
-        male = ParseHalf(frame, transl, fill, male, female, maleRecordConverter, new TypedParseParams(
+        male = ParseHalf(frame, "Male", transl, fill, male, female, maleRecordConverter, new TypedParseParams(
             lengthOverride: null,
             recordTypeConverter: maleRecordConverter,
             doNotShortCircuit: !shortCircuit));
-        female = ParseHalf(frame, transl, fill, female, male, femaleRecordConverter, new TypedParseParams(
+        female = ParseHalf(frame, "Female", transl, fill, female, male, femaleRecordConverter, new TypedParseParams(
             lengthOverride: null,
             recordTypeConverter: femaleRecordConverter,
             doNotShortCircuit: !shortCircuit));
@@ -117,6 +129,7 @@ internal sealed class GenderedItemBinaryTranslation
     //   is it added to them in turn (DarkStar patches: MOD2 MOD4 ... STOP FLLD FLLD)
     private static TItem? ParseHalf<TItem>(
         MutagenFrame frame,
+        string half,
         BinaryMasterParseDelegate<TItem> transl,
         BinaryMasterFillDelegate<TItem>? fill,
         TItem? held,
@@ -131,15 +144,26 @@ internal sealed class GenderedItemBinaryTranslation
         {
             if (held != null && fill != null)
             {
+                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, half);
                 fill(frame, held, translationParams);
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 return held;
             }
             var startPos = frame.Position;
-            return transl(frame, out var item, translationParams) && frame.Position != startPos ? item : held;
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, half);
+            if (transl(frame, out var item, translationParams) && frame.Position != startPos)
+            {
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                return item;
+            }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
+            return held;
         }
         if (other != null && fill != null)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, half);
             fill(frame, held, translationParams);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
         return held;
     }
@@ -153,14 +177,18 @@ internal sealed class GenderedItemBinaryTranslation
             lengthOverride: null,
             recordTypeConverter: recordTypeConverter,
             doNotShortCircuit: false);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Male");
         if (!transl(frame, out var male, p))
         {
             throw new ArgumentException();
         }
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Female");
         if (!transl(frame, out var female, p))
         {
             throw new ArgumentException();
         }
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         return new GenderedItem<TItem>(male, female);
     }
 
@@ -184,11 +212,13 @@ internal sealed class GenderedItemBinaryTranslation
                 break;
             }
             TItem? item;
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, type == maleMarker ? "Male" : "Female");
             if (skipMarker)
             {
                 frame.Position += subHeader.TotalLength;
                 if (!transl(frame, out item))
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
                     continue;
                 }
             }
@@ -197,9 +227,11 @@ internal sealed class GenderedItemBinaryTranslation
                 frame.Position += subHeader.HeaderLength;
                 if (!transl(frame.SpawnWithLength(subHeader.ContentLength), out item))
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
                     continue;
                 }
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (type == maleMarker)
             {
                 male = item;
@@ -237,11 +269,13 @@ internal sealed class GenderedItemBinaryTranslation
                 break;
             }
             TItem item;
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, type == maleMarker ? "Male" : "Female");
             if (skipMarker)
             {
                 frame.Position += subHeader.TotalLength;
                 if (!transl(frame, out var translItem))
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
                     continue;
                 }
                 item = translItem;
@@ -251,10 +285,12 @@ internal sealed class GenderedItemBinaryTranslation
                 frame.Position += subHeader.HeaderLength;
                 if (!transl(frame.SpawnWithLength(subHeader.ContentLength), out var translItem))
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
                     continue;
                 }
                 item = translItem;
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (type == maleMarker)
             {
                 male = item;
@@ -292,18 +328,24 @@ internal sealed class GenderedItemBinaryTranslation
             if (type == maleMarker)
             {
                 frame.Position += subHeader.TotalLength;
+                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Male");
                 if (transl(frame, out var item, maleRecordConverter))
                 {
                     male = item;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 }
+                else if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
             }
             else if (type == femaleMarker)
             {
                 frame.Position += subHeader.TotalLength;
+                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Female");
                 if (transl(frame, out var item, femaleRecordConverter))
                 {
                     female = item;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 }
+                else if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
             }
             else
             {
@@ -353,11 +395,13 @@ internal sealed class GenderedItemBinaryTranslation
                 break;
             }
             TItem? item;
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, type == maleMarker ? "Male" : "Female");
             if (skipMarker)
             {
                 frame.Position += subHeader.TotalLength;
                 if (!transl(frame, out item))
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
                     continue;
                 }
             }
@@ -366,9 +410,11 @@ internal sealed class GenderedItemBinaryTranslation
                 frame.Position += subHeader.HeaderLength;
                 if (!transl(frame.SpawnWithLength(subHeader.ContentLength), out item))
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
                     continue;
                 }
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (type == maleMarker)
             {
                 male = item;
@@ -413,10 +459,13 @@ internal sealed class GenderedItemBinaryTranslation
             TypedParseParams p = new TypedParseParams(null, 
                 recordTypeConverter: type == maleMarker ? null : femaleRecordConverter,
                 doNotShortCircuit: false);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, type == maleMarker ? "Male" : "Female");
             if (!transl(frame, out var item, p))
             {
+                if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
                 continue;
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (type == maleMarker)
             {
                 male = item;
@@ -462,10 +511,13 @@ internal sealed class GenderedItemBinaryTranslation
             TypedParseParams p = new TypedParseParams(null, 
                 recordTypeConverter: type == maleMarker ? null : femaleRecordConverter,
                 doNotShortCircuit: false);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, type == maleMarker ? "Male" : "Female");
             if (!transl(frame, out var item, p))
             {
+                if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
                 continue;
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (type == maleMarker)
             {
                 male = item;

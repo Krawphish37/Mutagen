@@ -1739,28 +1739,34 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.NNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Chargen_FieldIndex.NNAM;
                 }
                 case RecordTypeInts.RPRM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "RacePresets");
                     item.RacePresets.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<INpcGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.RPRM),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Chargen_FieldIndex.RacePresets;
                 }
                 case RecordTypeInts.MPGN:
                 case RecordTypeInts.MPGM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MorphGroups");
                     item.MorphGroups.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<MorphGroup>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: MorphGroup_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: MorphGroup.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Chargen_FieldIndex.MorphGroups;
                 }
                 case RecordTypeInts.FMRI:
@@ -1769,23 +1775,27 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FMRS:
                 case RecordTypeInts.FMSR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "FaceMorphs");
                     item.FaceMorphs.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<FaceMorph>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: FaceMorph_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: FaceMorph.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Chargen_FieldIndex.FaceMorphs;
                 }
                 case RecordTypeInts.FDSI:
                 case RecordTypeInts.FDSL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "FaceDials");
                     item.FaceDials.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<FaceDial>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: FaceDial_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: FaceDial.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Chargen_FieldIndex.FaceDials;
                 }
                 default:

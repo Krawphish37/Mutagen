@@ -56,16 +56,22 @@ partial class WorldspaceBinaryCreateTranslation
 {
     public static partial void FillBinaryObjectBoundsMinCustom(MutagenFrame frame, IWorldspaceInternal item)
     {
+        // Stored in units, read in cells
+        var at = ValuePositionRecorder.Here(frame);
         item.ObjectBoundsMin = new P2Float(
             frame.ReadFloat() / WorldspaceBinaryCreateTranslation.BoundsUnitsPerCell,
             frame.ReadFloat() / WorldspaceBinaryCreateTranslation.BoundsUnitsPerCell);
+        ValuePositionRecorder.Value(frame, nameof(item.ObjectBoundsMin), at, converted: true);
     }
 
     public static partial void FillBinaryObjectBoundsMaxCustom(MutagenFrame frame, IWorldspaceInternal item)
     {
+        // Stored in units, read in cells
+        var at = ValuePositionRecorder.Here(frame);
         item.ObjectBoundsMax = new P2Float(
             frame.ReadFloat() / WorldspaceBinaryCreateTranslation.BoundsUnitsPerCell,
             frame.ReadFloat() / WorldspaceBinaryCreateTranslation.BoundsUnitsPerCell);
+        ValuePositionRecorder.Value(frame, nameof(item.ObjectBoundsMax), at, converted: true);
     }
 
     public static partial void CustomBinaryEndImport(MutagenFrame frame, IWorldspaceInternal obj)

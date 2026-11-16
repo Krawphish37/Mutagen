@@ -1207,16 +1207,22 @@ namespace Mutagen.Bethesda.Skyrim
             IPerkScriptFragments item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ExtraBindDataVersion");
             item.ExtraBindDataVersion = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FileName");
             item.FileName = StringBinaryTranslation.Instance.Parse(
                 reader: frame,
                 stringBinaryType: StringBinaryType.PrependLengthUShort,
                 parseWhole: true);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Fragments");
             item.Fragments.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IndexedScriptFragment>.Instance.Parse(
                     amount: frame.ReadUInt16(),
                     reader: frame,
                     transl: IndexedScriptFragment.TryCreateFromBinary));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

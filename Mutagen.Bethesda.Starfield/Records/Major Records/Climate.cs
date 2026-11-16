@@ -1,4 +1,5 @@
-﻿using Mutagen.Bethesda.Plugins.Binary.Streams;
+﻿using Mutagen.Bethesda.Plugins.Binary.Translations;
+using Mutagen.Bethesda.Plugins.Binary.Streams;
 
 namespace Mutagen.Bethesda.Starfield;
 
@@ -27,33 +28,45 @@ partial class ClimateBinaryCreateTranslation
 
     public static partial void FillBinarySunriseBeginCustom(MutagenFrame frame, IClimateInternal item)
     {
+        var at = ValuePositionRecorder.Here(frame);
         if (GetTime(frame.Reader.ReadUInt8(), out var date))
         {
             item.SunriseBegin = date;
+            // Stored as tens of minutes in one byte
+            ValuePositionRecorder.Value(frame, nameof(item.SunriseBegin), at, converted: true);
         }
     }
 
     public static partial void FillBinarySunriseEndCustom(MutagenFrame frame, IClimateInternal item)
     {
+        var at = ValuePositionRecorder.Here(frame);
         if (GetTime(frame.Reader.ReadUInt8(), out var date))
         {
             item.SunriseEnd = date;
+            // Stored as tens of minutes in one byte
+            ValuePositionRecorder.Value(frame, nameof(item.SunriseEnd), at, converted: true);
         }
     }
 
     public static partial void FillBinarySunsetBeginCustom(MutagenFrame frame, IClimateInternal item)
     {
+        var at = ValuePositionRecorder.Here(frame);
         if (GetTime(frame.Reader.ReadUInt8(), out var date))
         {
             item.SunsetBegin = date;
+            // Stored as tens of minutes in one byte
+            ValuePositionRecorder.Value(frame, nameof(item.SunsetBegin), at, converted: true);
         }
     }
 
     public static partial void FillBinarySunsetEndCustom(MutagenFrame frame, IClimateInternal item)
     {
+        var at = ValuePositionRecorder.Here(frame);
         if (GetTime(frame.Reader.ReadUInt8(), out var date))
         {
             item.SunsetEnd = date;
+            // Stored as tens of minutes in one byte
+            ValuePositionRecorder.Value(frame, nameof(item.SunsetEnd), at, converted: true);
         }
     }
 }

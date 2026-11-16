@@ -1754,62 +1754,80 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.REPL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ImageSpaceModifier");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ImageSpaceModifier.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FxSceneAction_FieldIndex.ImageSpaceModifier;
                 }
                 case RecordTypeInts.HNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FadeOutTime");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FadeOutTime = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FxSceneAction_FieldIndex.FadeOutTime;
                 }
                 case RecordTypeInts.VCLR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ImageSpaceStrengthOrSoundVolume");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ImageSpaceStrengthOrSoundVolume = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FxSceneAction_FieldIndex.ImageSpaceStrengthOrSoundVolume;
                 }
                 case RecordTypeInts.BTXT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StartTime");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.StartTime = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FxSceneAction_FieldIndex.StartTime;
                 }
                 case RecordTypeInts.FLMV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FxFlags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FxFlags = EnumBinaryTranslation<FxSceneAction.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FxSceneAction_FieldIndex.FxFlags;
                 }
                 case RecordTypeInts.WED0:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Sound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.Sound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FxSceneAction_FieldIndex.Sound;
                 }
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FxSceneAction_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.BIPL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Reference");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Reference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FxSceneAction_FieldIndex.Reference;
                 }
                 case RecordTypeInts.LVLO:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Alias");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Alias = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FxSceneAction_FieldIndex.Alias;
                 }
                 default:

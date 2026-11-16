@@ -1130,28 +1130,34 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.MSID:
                 {
                     if (lastParsed.ShortCircuit((int)MorphValue_FieldIndex.Index, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MorphValue_FieldIndex.Index;
                 }
                 case RecordTypeInts.MSM0:
                 {
                     if (lastParsed.ShortCircuit((int)MorphValue_FieldIndex.MinName, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MinName");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MinName = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MorphValue_FieldIndex.MinName;
                 }
                 case RecordTypeInts.MSM1:
                 {
                     if (lastParsed.ShortCircuit((int)MorphValue_FieldIndex.MaxName, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaxName");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MaxName = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MorphValue_FieldIndex.MaxName;
                 }
                 default:

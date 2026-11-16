@@ -2215,14 +2215,17 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<Landscape.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Landscape_FieldIndex.Flags;
                 }
                 case RecordTypeInts.VNML:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "VertexNormals");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.VertexNormals = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.Array2dBinaryTranslation<P3UInt8>.Instance.Parse(
@@ -2230,15 +2233,19 @@ namespace Mutagen.Bethesda.Skyrim
                             size: Landscape.VertexNormalsFixedSize,
                             transl: P3UInt8BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse)
                         ;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Landscape_FieldIndex.VertexNormals;
                 }
                 case RecordTypeInts.VHGT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VertexHeightMap");
                     item.VertexHeightMap = Mutagen.Bethesda.Skyrim.LandscapeVertexHeightMap.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Landscape_FieldIndex.VertexHeightMap;
                 }
                 case RecordTypeInts.VCLR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "VertexColors");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.VertexColors = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.Array2dBinaryTranslation<P3UInt8>.Instance.Parse(
@@ -2246,11 +2253,13 @@ namespace Mutagen.Bethesda.Skyrim
                             size: Landscape.VertexColorsFixedSize,
                             transl: P3UInt8BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse)
                         ;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Landscape_FieldIndex.VertexColors;
                 }
                 case RecordTypeInts.BTXT:
                 case RecordTypeInts.ATXT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Layers");
                     item.Layers.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<BaseLayer>.Instance.Parse(
                             reader: frame,
@@ -2276,16 +2285,19 @@ namespace Mutagen.Bethesda.Skyrim
                                         throw new NotImplementedException();
                                 }
                             }));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Landscape_FieldIndex.Layers;
                 }
                 case RecordTypeInts.VTEX:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Textures");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Textures = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ILandscapeTextureGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<ILandscapeTextureGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Landscape_FieldIndex.Textures;
                 }
                 default:

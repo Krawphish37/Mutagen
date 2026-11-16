@@ -23,8 +23,12 @@ partial class SubgraphBinaryCreateTranslation
     public static partial void FillBinaryRoleCustom(MutagenFrame frame, ISubgraph item, PreviousParse lastParsed)
     {
         frame.ReadSubrecordHeader(RecordTypes.SRAF);
+        var at = ValuePositionRecorder.Here(frame);
         item.Role = (SubgraphRole)frame.ReadUInt16();
+        ValuePositionRecorder.Value(frame, nameof(item.Role), at);
+        at = ValuePositionRecorder.Here(frame);
         item.Perspective = (Perspective)frame.ReadUInt16();
+        ValuePositionRecorder.Value(frame, nameof(item.Perspective), at);
     }
 }
 

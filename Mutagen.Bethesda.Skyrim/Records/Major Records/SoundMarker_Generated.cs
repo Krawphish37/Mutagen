@@ -1658,25 +1658,33 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Skyrim.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundMarker_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundMarker_FieldIndex.FNAM;
                 }
                 case RecordTypeInts.SNDD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SNDD");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SNDD = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundMarker_FieldIndex.SNDD;
                 }
                 case RecordTypeInts.SDSC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SoundDescriptor");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SoundDescriptor.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundMarker_FieldIndex.SoundDescriptor;
                 }
                 default:

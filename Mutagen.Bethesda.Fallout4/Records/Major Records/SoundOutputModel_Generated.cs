@@ -1832,41 +1832,53 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.NAM1:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Fallout4.SoundOutputData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundOutputModel_FieldIndex.Data;
                 }
                 case RecordTypeInts.MNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Type");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Type = EnumBinaryTranslation<SoundOutputModel.TypeEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundOutputModel_FieldIndex.Type;
                 }
                 case RecordTypeInts.VNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StaticAttenuation", true);
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.StaticAttenuation = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         integerType: FloatIntegerType.UShort,
                         multiplier: null,
                         divisor: 100f);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundOutputModel_FieldIndex.StaticAttenuation;
                 }
                 case RecordTypeInts.ONAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OutputChannels");
                     item.OutputChannels = Mutagen.Bethesda.Fallout4.SoundOutputChannels.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundOutputModel_FieldIndex.OutputChannels;
                 }
                 case RecordTypeInts.ATTN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DynamicAttentuation");
                     item.DynamicAttentuation = Mutagen.Bethesda.Fallout4.DynamicAttentuationValues.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundOutputModel_FieldIndex.DynamicAttentuation;
                 }
                 case RecordTypeInts.ENAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EffectChain");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EffectChain.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundOutputModel_FieldIndex.EffectChain;
                 }
                 default:

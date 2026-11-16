@@ -1382,17 +1382,21 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.INDX:
                 {
                     if (lastParsed.ShortCircuit((int)HeadPartItem_FieldIndex.HeadPartNumber, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HeadPartNumber");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HeadPartNumber = EnumBinaryTranslation<Race.HeadPart, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadPartItem_FieldIndex.HeadPartNumber;
                 }
                 case RecordTypeInts.HEAD:
                 {
                     if (lastParsed.ShortCircuit((int)HeadPartItem_FieldIndex.Head, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Head");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Head.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadPartItem_FieldIndex.Head;
                 }
                 case RecordTypeInts.MODL:
@@ -1402,17 +1406,21 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.MODD:
                 {
                     if (lastParsed.ShortCircuit((int)HeadPartItem_FieldIndex.Model, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadPartItem_FieldIndex.Model;
                 }
                 case RecordTypeInts.ICON:
                 {
                     if (lastParsed.ShortCircuit((int)HeadPartItem_FieldIndex.Icons, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Icons");
                     item.Icons = Mutagen.Bethesda.Fallout3.Icons.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadPartItem_FieldIndex.Icons;
                 }
                 default:

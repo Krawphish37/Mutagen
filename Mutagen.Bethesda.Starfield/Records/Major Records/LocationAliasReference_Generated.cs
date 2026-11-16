@@ -1148,22 +1148,28 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ALFA:
                 {
                     if (lastParsed.ShortCircuit((int)LocationAliasReference_FieldIndex.AliasID, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AliasID");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AliasID = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LocationAliasReference_FieldIndex.AliasID;
                 }
                 case RecordTypeInts.KNAM:
                 {
                     if (lastParsed.ShortCircuit((int)LocationAliasReference_FieldIndex.Keyword, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Keyword");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Keyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LocationAliasReference_FieldIndex.Keyword;
                 }
                 case RecordTypeInts.ALRT:
                 {
                     if (lastParsed.ShortCircuit((int)LocationAliasReference_FieldIndex.RefType, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RefType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RefType.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LocationAliasReference_FieldIndex.RefType;
                 }
                 default:

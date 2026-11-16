@@ -1120,6 +1120,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.BODC:
                 {
                     if (lastParsed.ShortCircuit((int)BlueprintComponentBODSRow_FieldIndex.BODSItems, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "BODSItems");
                     item.BODSItems.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<BlueprintComponentBODSItem>.Instance.ParsePerItem(
                             reader: frame,
@@ -1128,6 +1129,7 @@ namespace Mutagen.Bethesda.Starfield
                             triggeringRecord: BlueprintComponentBODSItem_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: BlueprintComponentBODSItem.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BlueprintComponentBODSRow_FieldIndex.BODSItems;
                 }
                 default:

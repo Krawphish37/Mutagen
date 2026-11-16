@@ -3897,98 +3897,123 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.ALID:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.Name;
                 }
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<AQuestAlias.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.Flags;
                 }
                 case RecordTypeInts.ALFI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AliasIDToForceIntoWhenFilled");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AliasIDToForceIntoWhenFilled = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.AliasIDToForceIntoWhenFilled;
                 }
                 case RecordTypeInts.ALFR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ForcedReference");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ForcedReference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.ForcedReference;
                 }
                 case RecordTypeInts.ALUA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UniqueActor");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.UniqueActor.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.UniqueActor;
                 }
                 case RecordTypeInts.ALFA:
                 case RecordTypeInts.KNAM:
                 case RecordTypeInts.ALRT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Location");
                     item.Location = Mutagen.Bethesda.Fallout4.LocationAliasReference.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.Location;
                 }
                 case RecordTypeInts.ALEQ:
                 case RecordTypeInts.ALEA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "External");
                     item.External = Mutagen.Bethesda.Fallout4.ExternalAliasReference.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.External;
                 }
                 case RecordTypeInts.ALCO:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CreateReferenceToObject");
                     item.CreateReferenceToObject = Mutagen.Bethesda.Fallout4.CreateReferenceToObject.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.CreateReferenceToObject;
                 }
                 case RecordTypeInts.ALNA:
                 case RecordTypeInts.ALNT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FindMatchingRefNearAlias");
                     item.FindMatchingRefNearAlias = Mutagen.Bethesda.Fallout4.FindMatchingRefNearAlias.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.FindMatchingRefNearAlias;
                 }
                 case RecordTypeInts.ALFE:
                 case RecordTypeInts.ALFD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FindMatchingRefFromEvent");
                     item.FindMatchingRefFromEvent = Mutagen.Bethesda.Fallout4.FindMatchingRefFromEvent.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.FindMatchingRefFromEvent;
                 }
                 case RecordTypeInts.ALCC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ClosestToAlias");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ClosestToAlias = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.ClosestToAlias;
                 }
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.KSIZ:
                 case RecordTypeInts.KWDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Keywords");
                     item.Keywords = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame,
@@ -3997,11 +4022,13 @@ namespace Mutagen.Bethesda.Fallout4
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.KWDA),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.Keywords;
                 }
                 case RecordTypeInts.CNTO:
                 case RecordTypeInts.COCT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Items");
                     item.Items = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ContainerEntry>.Instance.ParsePerItem(
                             reader: frame,
@@ -4011,91 +4038,116 @@ namespace Mutagen.Bethesda.Fallout4
                             translationParams: translationParams,
                             transl: ContainerEntry.TryCreateFromBinary)
                         .CastExtendedList<ContainerEntry>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.Items;
                 }
                 case RecordTypeInts.SPOR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SpectatorOverridePackageList");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SpectatorOverridePackageList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.SpectatorOverridePackageList;
                 }
                 case RecordTypeInts.OCOR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObserveDeadBodyOverridePackageList");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ObserveDeadBodyOverridePackageList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.ObserveDeadBodyOverridePackageList;
                 }
                 case RecordTypeInts.GWOR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GuardWarnOverridePackageList");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.GuardWarnOverridePackageList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.GuardWarnOverridePackageList;
                 }
                 case RecordTypeInts.ECOR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CombatOverridePackageList");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CombatOverridePackageList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.CombatOverridePackageList;
                 }
                 case RecordTypeInts.ALLA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "LinkedAliases");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LinkedAliases = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LinkedAlias>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: LinkedAlias.TryCreateFromBinary)
                         .CastExtendedList<LinkedAlias>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.LinkedAliases;
                 }
                 case RecordTypeInts.ALDN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DisplayName");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DisplayName.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.DisplayName;
                 }
                 case RecordTypeInts.ALFV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ForcedVoice");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ForcedVoice.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.ForcedVoice;
                 }
                 case RecordTypeInts.ALDI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DeathItem");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DeathItem.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.DeathItem;
                 }
                 case RecordTypeInts.ALSP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Spells");
                     item.Spells.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ISpellGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.ALSP),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.Spells;
                 }
                 case RecordTypeInts.ALFC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Factions");
                     item.Factions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IFactionGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.ALFC),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.Factions;
                 }
                 case RecordTypeInts.ALPC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "PackageData");
                     item.PackageData.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IPackageGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.ALPC),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.PackageData;
                 }
                 case RecordTypeInts.VTCK:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VoiceTypes");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.VoiceTypes.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestReferenceAlias_FieldIndex.VoiceTypes;
                 }
                 case RecordTypeInts.ALED: // End Marker

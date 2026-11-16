@@ -1353,31 +1353,38 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.LCEP:
                 {
                     if (lastParsed.ShortCircuit((int)StartScene_FieldIndex.Scene, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Scene");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Scene.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StartScene_FieldIndex.Scene;
                 }
                 case RecordTypeInts.INTT:
                 {
                     if (lastParsed.ShortCircuit((int)StartScene_FieldIndex.PhaseIndex, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PhaseIndex");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PhaseIndex = frame.ReadUInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StartScene_FieldIndex.PhaseIndex;
                 }
                 case RecordTypeInts.SSPN:
                 {
                     if (lastParsed.ShortCircuit((int)StartScene_FieldIndex.StartPhaseForScene, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StartPhaseForScene");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.StartPhaseForScene = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StartScene_FieldIndex.StartPhaseForScene;
                 }
                 case RecordTypeInts.CTDA:
                 case RecordTypeInts.CITC:
                 {
                     if (lastParsed.ShortCircuit((int)StartScene_FieldIndex.Conditions, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.ParsePerItem(
                             reader: frame,
@@ -1387,6 +1394,7 @@ namespace Mutagen.Bethesda.Fallout4
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary)
                         .CastExtendedList<Condition>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StartScene_FieldIndex.Conditions;
                 }
                 default:

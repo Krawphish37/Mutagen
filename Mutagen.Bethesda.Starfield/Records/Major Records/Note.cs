@@ -55,20 +55,26 @@ partial class NoteBinaryCreateTranslation
         switch (sub.RecordTypeInt)
         {
             case RecordTypeInts.SNAM:
+            {
+                var at = ValuePositionRecorder.Here(frame);
                 switch (item.Data)
                 {
                     case NoteSound sound:
                         sound.Sound.SetTo(FormKeyBinaryTranslation.Instance.Parse(frame));
+                        ValuePositionRecorder.Value(frame, "Data.Sound", at);
                         break;
                     case NoteVoice voice:
                         voice.Scene.SetTo(FormKeyBinaryTranslation.Instance.Parse(frame));
+                        ValuePositionRecorder.Value(frame, "Data.Scene", at);
                         break;
                     case NoteProgram prog:
                         // xEdit: unused for a Program note. Kept as read so it writes back.
                         prog.Unknown = frame.ReadRemainingBytes();
+                        ValuePositionRecorder.Value(frame, "Data.Unknown", at);
                         break;
                     case NoteTerminal term:
                         term.Terminal.SetTo(FormKeyBinaryTranslation.Instance.Parse(frame));
+                        ValuePositionRecorder.Value(frame, "Data.Terminal", at);
                         break;
                     default:
                         throw SubrecordException.Enrich(
@@ -76,12 +82,17 @@ partial class NoteBinaryCreateTranslation
                             RecordTypes.SNAM);
                 }
                 break;
+            }
             case RecordTypeInts.PNAM:
                 switch (item.Data)
                 {
                     case NoteProgram prog:
+                    {
+                        var at = ValuePositionRecorder.Here(frame);
                         prog.File = StringBinaryTranslation.Instance.Parse(frame, StringBinaryType.NullTerminate, parseWhole: true);
+                        ValuePositionRecorder.Value(frame, "Data.File", at);
                         break;
+                    }
                     case NoteSound _:
                     case NoteVoice _:
                     case NoteTerminal _:

@@ -4242,205 +4242,267 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Fallout4.VirtualMachineAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.NAME:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Base");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Base.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.Base;
                 }
                 case RecordTypeInts.XEZN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EncounterZone");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EncounterZone.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.EncounterZone;
                 }
                 case RecordTypeInts.XRGD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "RagdollData");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RagdollData = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<RagdollData>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: RagdollData.TryCreateFromBinary)
                         .CastExtendedList<RagdollData>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.RagdollData;
                 }
                 case RecordTypeInts.XRGB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RagdollBipedRotation");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RagdollBipedRotation = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.RagdollBipedRotation;
                 }
                 case RecordTypeInts.XPRD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Patrol");
                     item.Patrol = Mutagen.Bethesda.Fallout4.Patrol.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.Patrol;
                 }
                 case RecordTypeInts.XLCM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LevelModifier");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LevelModifier = EnumBinaryTranslation<Level, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.LevelModifier;
                 }
                 case RecordTypeInts.XCNT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Count");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Count = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.Count;
                 }
                 case RecordTypeInts.XRDS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Radius");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Radius = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.Radius;
                 }
                 case RecordTypeInts.XHLT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Health", true);
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Health = PercentBinaryTranslation.Parse(
                         reader: frame,
                         integerType: FloatIntegerType.UInt);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.Health;
                 }
                 case RecordTypeInts.XLKR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "LinkedReferences");
                     item.LinkedReferences.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LinkedReferences>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: LinkedReferences_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: LinkedReferences.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.LinkedReferences;
                 }
                 case RecordTypeInts.XAPD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ActivateParents");
                     item.ActivateParents = Mutagen.Bethesda.Fallout4.ActivateParents.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.ActivateParents;
                 }
                 case RecordTypeInts.XATP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IsActivationPoint");
                     item.IsActivationPoint = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.IsActivationPoint;
                 }
                 case RecordTypeInts.XLKT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IsLinkedRefTransient");
                     item.IsLinkedRefTransient = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.IsLinkedRefTransient;
                 }
                 case RecordTypeInts.XRFG:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ReferenceGroup");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ReferenceGroup.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.ReferenceGroup;
                 }
                 case RecordTypeInts.XLYR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Layer");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Layer.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.Layer;
                 }
                 case RecordTypeInts.XMSP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaterialSwap");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MaterialSwap.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.MaterialSwap;
                 }
                 case RecordTypeInts.XLCN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PersistentLocation");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PersistentLocation.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.PersistentLocation;
                 }
                 case RecordTypeInts.XLRL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LocationReference");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LocationReference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.LocationReference;
                 }
                 case RecordTypeInts.XLRT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "LocationRefTypes");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LocationRefTypes = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ILocationReferenceTypeGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<ILocationReferenceTypeGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.LocationRefTypes;
                 }
                 case RecordTypeInts.XIS2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IsIgnoredBySandbox");
                     item.IsIgnoredBySandbox = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.IsIgnoredBySandbox;
                 }
                 case RecordTypeInts.XPLK:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "SplineConnections");
                     item.SplineConnections.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<SplineConnection>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: SplineConnection_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: SplineConnection.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.SplineConnections;
                 }
                 case RecordTypeInts.XHTW:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HeadTrackingWeight");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HeadTrackingWeight = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.HeadTrackingWeight;
                 }
                 case RecordTypeInts.XFVC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FavorCost");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FavorCost = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.FavorCost;
                 }
                 case RecordTypeInts.XESP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EnableParent");
                     item.EnableParent = Mutagen.Bethesda.Fallout4.EnableParent.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.EnableParent;
                 }
                 case RecordTypeInts.XOWN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Ownership");
                     item.Ownership = Mutagen.Bethesda.Fallout4.Ownership.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.Ownership;
                 }
                 case RecordTypeInts.XRNK:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FactionRank");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FactionRank = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.FactionRank;
                 }
                 case RecordTypeInts.XEMI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Emittance");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Emittance.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.Emittance;
                 }
                 case RecordTypeInts.XMBR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MultiBoundReference");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MultiBoundReference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.MultiBoundReference;
                 }
                 case RecordTypeInts.XIBS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IsIgnoredBySandbox2");
                     item.IsIgnoredBySandbox2 = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.IsIgnoredBySandbox2;
                 }
                 case RecordTypeInts.XSCL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Scale");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Scale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.Scale;
                 }
                 case RecordTypeInts.DATA:
@@ -4448,18 +4510,24 @@ namespace Mutagen.Bethesda.Fallout4
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 12) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Position");
                     item.Position = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 12) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Rotation");
                     item.Rotation = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)PlacedNpc_FieldIndex.Rotation;
                 }
                 case RecordTypeInts.MNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Comments");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Comments = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedNpc_FieldIndex.Comments;
                 }
                 case RecordTypeInts.XXXX:

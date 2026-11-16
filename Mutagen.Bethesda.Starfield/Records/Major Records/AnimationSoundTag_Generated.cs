@@ -1106,17 +1106,21 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.STAE:
                 {
                     if (lastParsed.ShortCircuit((int)AnimationSoundTag_FieldIndex.Tag, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Tag");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Tag = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AnimationSoundTag_FieldIndex.Tag;
                 }
                 case RecordTypeInts.STAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Sound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.Sound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AnimationSoundTag_FieldIndex.Sound;
                 }
                 default:

@@ -3681,9 +3681,11 @@ namespace Mutagen.Bethesda.Fallout4
             Fallout4MajorRecordBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "LoopingSoundExport");
             TerminalBinaryCreateTranslation.FillBinaryLoopingSoundExportCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static ParseResult FillBinaryRecordTypes(
@@ -3700,24 +3702,31 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Fallout4.VirtualMachineAdapterIndexed.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Terminal_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Fallout4.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Terminal_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.PTRN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PreviewTransform");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PreviewTransform.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Terminal_FieldIndex.PreviewTransform;
                 }
                 case RecordTypeInts.NAM0:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HeaderText");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HeaderText = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -3725,10 +3734,12 @@ namespace Mutagen.Bethesda.Fallout4
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Terminal_FieldIndex.HeaderText;
                 }
                 case RecordTypeInts.WNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WelcomeText");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.WelcomeText = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -3736,10 +3747,12 @@ namespace Mutagen.Bethesda.Fallout4
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Terminal_FieldIndex.WelcomeText;
                 }
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -3747,6 +3760,7 @@ namespace Mutagen.Bethesda.Fallout4
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Terminal_FieldIndex.Name;
                 }
                 case RecordTypeInts.MODL:
@@ -3754,14 +3768,17 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.MODT:
                 case RecordTypeInts.MODS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Fallout4.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Terminal_FieldIndex.Model;
                 }
                 case RecordTypeInts.KSIZ:
                 case RecordTypeInts.KWDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Keywords");
                     item.Keywords = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame,
@@ -3770,33 +3787,41 @@ namespace Mutagen.Bethesda.Fallout4
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.KWDA),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Terminal_FieldIndex.Keywords;
                 }
                 case RecordTypeInts.PRPS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Properties");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Properties = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ObjectProperty>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: ObjectProperty.TryCreateFromBinary)
                         .CastExtendedList<ObjectProperty>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Terminal_FieldIndex.Properties;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Terminal_FieldIndex.PNAM;
                 }
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Terminal_FieldIndex.FNAM;
                 }
                 case RecordTypeInts.CNTO:
                 case RecordTypeInts.COCT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Holotapes");
                     item.Holotapes = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<TerminalHolotapeEntry>.Instance.ParsePerItem(
                             reader: frame,
@@ -3806,41 +3831,51 @@ namespace Mutagen.Bethesda.Fallout4
                             translationParams: translationParams,
                             transl: TerminalHolotapeEntry.TryCreateFromBinary)
                         .CastExtendedList<TerminalHolotapeEntry>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Terminal_FieldIndex.Holotapes;
                 }
                 case RecordTypeInts.MNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Flags");
                     TerminalBinaryCreateTranslation.FillBinaryFlagsCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Terminal_FieldIndex.Flags;
                 }
                 case RecordTypeInts.WBDT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WorkbenchData");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.WorkbenchData = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Terminal_FieldIndex.WorkbenchData;
                 }
                 case RecordTypeInts.XMRK:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MarkerModel");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MarkerModel = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Terminal_FieldIndex.MarkerModel;
                 }
                 case RecordTypeInts.SNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "MarkerParameters");
                     TerminalBinaryCreateTranslation.FillBinaryMarkerParametersCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Terminal_FieldIndex.MarkerParameters;
                 }
                 case RecordTypeInts.BSIZ:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "BodyTexts");
                     item.BodyTexts = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<TerminalBodyText>.Instance.ParsePerItem(
                             reader: frame,
@@ -3850,10 +3885,12 @@ namespace Mutagen.Bethesda.Fallout4
                             translationParams: translationParams,
                             transl: TerminalBodyText.TryCreateFromBinary)
                         .CastExtendedList<TerminalBodyText>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Terminal_FieldIndex.BodyTexts;
                 }
                 case RecordTypeInts.ISIZ:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MenuItems");
                     item.MenuItems = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<TerminalMenuItem>.Instance.ParsePerItem(
                             reader: frame,
@@ -3863,6 +3900,7 @@ namespace Mutagen.Bethesda.Fallout4
                             translationParams: translationParams,
                             transl: TerminalMenuItem.TryCreateFromBinary)
                         .CastExtendedList<TerminalMenuItem>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Terminal_FieldIndex.MenuItems;
                 }
                 case RecordTypeInts.XXXX:

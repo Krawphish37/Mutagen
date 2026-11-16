@@ -1347,8 +1347,10 @@ namespace Mutagen.Bethesda.Starfield
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)ASceneAction_FieldIndex.EndPhase)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaxSeconds");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.MaxSeconds = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)TimerSceneAction_FieldIndex.MaxSeconds, nextRecordType);
                     }
                     else
@@ -1365,8 +1367,10 @@ namespace Mutagen.Bethesda.Starfield
                                     contentLength: contentLength,
                                     translationParams: translationParams.WithNoConverter());
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaxSeconds");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.MaxSeconds = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)TimerSceneAction_FieldIndex.MaxSeconds, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -1375,25 +1379,33 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MinSeconds");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MinSeconds = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TimerSceneAction_FieldIndex.MinSeconds;
                 }
                 case RecordTypeInts.HNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HoldForAnimationEvent");
                     item.HoldForAnimationEvent = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TimerSceneAction_FieldIndex.HoldForAnimationEvent;
                 }
                 case RecordTypeInts.SCQS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SCQS");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SCQS = frame.ReadInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TimerSceneAction_FieldIndex.SCQS;
                 }
                 case RecordTypeInts.INTV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "INTV");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.INTV = frame.ReadInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TimerSceneAction_FieldIndex.INTV;
                 }
                 default:

@@ -1419,8 +1419,10 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FMRI:
                 {
                     if (lastParsed.ShortCircuit((int)FaceMorph_FieldIndex.Index, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FaceMorph_FieldIndex.Index;
                 }
                 case RecordTypeInts.FMRU:
@@ -1429,22 +1431,26 @@ namespace Mutagen.Bethesda.Starfield
                         || lastParsed.ParsedIndex.Value <= (int)FaceMorph_FieldIndex.Index)
                     {
                         if (lastParsed.ShortCircuit((int)FaceMorph_FieldIndex.FMRU, translationParams)) return ParseResult.Stop;
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FMRU");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.FMRU = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)FaceMorph_FieldIndex.FMRU, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)FaceMorph_FieldIndex.FMRS)
                     {
                         if (lastParsed.ShortCircuit((int)FaceMorph_FieldIndex.Items, translationParams)) return ParseResult.Stop;
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Items");
                         item.Items.SetTo(
                             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<FaceMorphItem>.Instance.Parse(
                                 reader: frame,
                                 triggeringRecord: FaceMorphItem_Registration.TriggerSpecs,
                                 translationParams: translationParams,
                                 transl: FaceMorphItem.TryCreateFromBinary));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)FaceMorph_FieldIndex.Items, nextRecordType);
                     }
                     else
@@ -1453,20 +1459,24 @@ namespace Mutagen.Bethesda.Starfield
                         {
                             case 0:
                                 if (lastParsed.ShortCircuit((int)FaceMorph_FieldIndex.FMRU, translationParams)) return ParseResult.Stop;
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FMRU");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.FMRU = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)FaceMorph_FieldIndex.FMRU, nextRecordType);
                             case 1:
                                 if (lastParsed.ShortCircuit((int)FaceMorph_FieldIndex.Items, translationParams)) return ParseResult.Stop;
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Items");
                                 item.Items.SetTo(
                                     Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<FaceMorphItem>.Instance.Parse(
                                         reader: frame,
                                         triggeringRecord: FaceMorphItem_Registration.TriggerSpecs,
                                         translationParams: translationParams,
                                         transl: FaceMorphItem.TryCreateFromBinary));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)FaceMorph_FieldIndex.Items, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -1479,6 +1489,7 @@ namespace Mutagen.Bethesda.Starfield
                         || lastParsed.ParsedIndex.Value <= (int)FaceMorph_FieldIndex.FMRU)
                     {
                         if (lastParsed.ShortCircuit((int)FaceMorph_FieldIndex.Name, translationParams)) return ParseResult.Stop;
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.Name = StringBinaryTranslation.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
@@ -1486,17 +1497,20 @@ namespace Mutagen.Bethesda.Starfield
                             source: StringsSource.Normal,
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)FaceMorph_FieldIndex.Name, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)FaceMorph_FieldIndex.FMRS)
                     {
                         if (lastParsed.ShortCircuit((int)FaceMorph_FieldIndex.Items, translationParams)) return ParseResult.Stop;
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Items");
                         item.Items.SetTo(
                             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<FaceMorphItem>.Instance.Parse(
                                 reader: frame,
                                 triggeringRecord: FaceMorphItem_Registration.TriggerSpecs,
                                 translationParams: translationParams,
                                 transl: FaceMorphItem.TryCreateFromBinary));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)FaceMorph_FieldIndex.Items, nextRecordType);
                     }
                     else
@@ -1505,6 +1519,7 @@ namespace Mutagen.Bethesda.Starfield
                         {
                             case 0:
                                 if (lastParsed.ShortCircuit((int)FaceMorph_FieldIndex.Name, translationParams)) return ParseResult.Stop;
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.Name = StringBinaryTranslation.Instance.Parse(
                                     reader: frame.SpawnWithLength(contentLength),
@@ -1512,15 +1527,18 @@ namespace Mutagen.Bethesda.Starfield
                                     source: StringsSource.Normal,
                                     stringBinaryType: StringBinaryType.NullTerminate,
                                     parseWhole: true);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)FaceMorph_FieldIndex.Name, nextRecordType);
                             case 1:
                                 if (lastParsed.ShortCircuit((int)FaceMorph_FieldIndex.Items, translationParams)) return ParseResult.Stop;
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Items");
                                 item.Items.SetTo(
                                     Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<FaceMorphItem>.Instance.Parse(
                                         reader: frame,
                                         triggeringRecord: FaceMorphItem_Registration.TriggerSpecs,
                                         translationParams: translationParams,
                                         transl: FaceMorphItem.TryCreateFromBinary));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)FaceMorph_FieldIndex.Items, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -1530,22 +1548,26 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FMRS:
                 {
                     if (lastParsed.ShortCircuit((int)FaceMorph_FieldIndex.FMRS, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FMRS");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FMRS = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FaceMorph_FieldIndex.FMRS;
                 }
                 case RecordTypeInts.FMSR:
                 {
                     if (lastParsed.ShortCircuit((int)FaceMorph_FieldIndex.Items, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Items");
                     item.Items.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<FaceMorphItem>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: FaceMorphItem_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: FaceMorphItem.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FaceMorph_FieldIndex.Items;
                 }
                 default:

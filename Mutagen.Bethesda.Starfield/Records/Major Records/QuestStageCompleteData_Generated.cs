@@ -1279,8 +1279,10 @@ namespace Mutagen.Bethesda.Starfield
                     if (!lastParsed.ParsedIndex.HasValue)
                     {
                         if (lastParsed.ShortCircuit((int)QuestStageCompleteData_FieldIndex.RewardCount, translationParams)) return ParseResult.Stop;
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RewardCount");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.RewardCount = frame.ReadUInt32();
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)QuestStageCompleteData_FieldIndex.RewardCount, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)QuestStageCompleteData_FieldIndex.RewardDatas)
@@ -1294,8 +1296,10 @@ namespace Mutagen.Bethesda.Starfield
                         {
                             case 0:
                                 if (lastParsed.ShortCircuit((int)QuestStageCompleteData_FieldIndex.RewardCount, translationParams)) return ParseResult.Stop;
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RewardCount");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.RewardCount = frame.ReadUInt32();
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)QuestStageCompleteData_FieldIndex.RewardCount, nextRecordType);
                             case 1:
                                 frame.ReadSubrecord();
@@ -1311,19 +1315,23 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.CTDA:
                 {
                     if (lastParsed.ShortCircuit((int)QuestStageCompleteData_FieldIndex.RewardDatas, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "RewardDatas");
                     item.RewardDatas.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<QuestStageRewardData>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: QuestStageRewardData_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: QuestStageRewardData.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestStageCompleteData_FieldIndex.RewardDatas;
                 }
                 case RecordTypeInts.NAM1:
                 {
                     if (lastParsed.ShortCircuit((int)QuestStageCompleteData_FieldIndex.AffinityChange, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AffinityChange");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AffinityChange.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestStageCompleteData_FieldIndex.AffinityChange;
                 }
                 default:

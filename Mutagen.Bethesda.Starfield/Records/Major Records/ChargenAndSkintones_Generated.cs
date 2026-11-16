@@ -1317,49 +1317,59 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.NAM0:
                 {
                     if (lastParsed.ShortCircuit((int)ChargenAndSkintones_FieldIndex.Chargen, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Chargen");
                     item.Chargen = Mutagen.Bethesda.Starfield.Chargen.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ChargenAndSkintones_FieldIndex.Chargen;
                 }
                 case RecordTypeInts.BSTT:
                 {
                     if (lastParsed.ShortCircuit((int)ChargenAndSkintones_FieldIndex.BodySkinTones, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BodySkinTones");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BodySkinTones = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ChargenAndSkintones_FieldIndex.BodySkinTones;
                 }
                 case RecordTypeInts.HSTT:
                 {
                     if (lastParsed.ShortCircuit((int)ChargenAndSkintones_FieldIndex.HandSkinTones, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HandSkinTones");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HandSkinTones = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ChargenAndSkintones_FieldIndex.HandSkinTones;
                 }
                 case RecordTypeInts.FCTP:
                 {
                     if (lastParsed.ShortCircuit((int)ChargenAndSkintones_FieldIndex.FaceCustomTexturesBasePath, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FaceCustomTexturesBasePath");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FaceCustomTexturesBasePath = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ChargenAndSkintones_FieldIndex.FaceCustomTexturesBasePath;
                 }
                 case RecordTypeInts.FSTT:
                 {
                     if (lastParsed.ShortCircuit((int)ChargenAndSkintones_FieldIndex.FaceSkinTones, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FaceSkinTones");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FaceSkinTones = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ChargenAndSkintones_FieldIndex.FaceSkinTones;
                 }
                 default:

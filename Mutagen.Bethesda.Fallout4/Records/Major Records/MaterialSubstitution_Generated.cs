@@ -1147,36 +1147,44 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.BNAM:
                 {
                     if (lastParsed.ShortCircuit((int)MaterialSubstitution_FieldIndex.OriginalMaterial, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OriginalMaterial");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.OriginalMaterial = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MaterialSubstitution_FieldIndex.OriginalMaterial;
                 }
                 case RecordTypeInts.SNAM:
                 {
                     if (lastParsed.ShortCircuit((int)MaterialSubstitution_FieldIndex.ReplacementMaterial, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ReplacementMaterial");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ReplacementMaterial = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MaterialSubstitution_FieldIndex.ReplacementMaterial;
                 }
                 case RecordTypeInts.FNAM:
                 {
                     if (lastParsed.ShortCircuit((int)MaterialSubstitution_FieldIndex.ColorRemappingIndex, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "FNAMParsing");
                     return MaterialSubstitutionBinaryCreateTranslation.FillBinaryFNAMParsingCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 }
                 case RecordTypeInts.CNAM:
                 {
                     if (lastParsed.ShortCircuit((int)MaterialSubstitution_FieldIndex.ColorRemappingIndex, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ColorRemappingIndex");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ColorRemappingIndex = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MaterialSubstitution_FieldIndex.ColorRemappingIndex;
                 }
                 default:

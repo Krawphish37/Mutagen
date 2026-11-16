@@ -1278,9 +1278,11 @@ namespace Mutagen.Bethesda.Fallout4
             Fallout4MajorRecordBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "CustomLogic");
             ADamageTypeBinaryCreateTranslation.FillBinaryCustomLogicCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void FillBinaryCustomLogicCustom(

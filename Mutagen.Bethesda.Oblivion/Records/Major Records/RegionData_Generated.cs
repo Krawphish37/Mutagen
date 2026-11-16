@@ -1068,10 +1068,12 @@ namespace Mutagen.Bethesda.Oblivion
                 case RecordTypeInts.RDAT:
                 {
                     if (lastParsed.ShortCircuit((int)RegionData_FieldIndex.Flags, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "HeaderLogic");
                     return RegionDataBinaryCreateTranslation.FillBinaryHeaderLogicCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 }
                 default:
                     return ParseResult.Stop;

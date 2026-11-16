@@ -1443,6 +1443,7 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.WNAM:
                 {
                     if (lastParsed.ShortCircuit((int)InstanceNamingRule_FieldIndex.Name, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1450,12 +1451,14 @@ namespace Mutagen.Bethesda.Fallout4
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)InstanceNamingRule_FieldIndex.Name;
                 }
                 case RecordTypeInts.KSIZ:
                 case RecordTypeInts.KWDA:
                 {
                     if (lastParsed.ShortCircuit((int)InstanceNamingRule_FieldIndex.Keywords, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Keywords");
                     item.Keywords = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame,
@@ -1464,19 +1467,24 @@ namespace Mutagen.Bethesda.Fallout4
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.KWDA),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)InstanceNamingRule_FieldIndex.Keywords;
                 }
                 case RecordTypeInts.XNAM:
                 {
                     if (lastParsed.ShortCircuit((int)InstanceNamingRule_FieldIndex.Properties, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Properties");
                     item.Properties = Mutagen.Bethesda.Fallout4.InstanceNamingRuleProperties.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)InstanceNamingRule_FieldIndex.Properties;
                 }
                 case RecordTypeInts.YNAM:
                 {
                     if (lastParsed.ShortCircuit((int)InstanceNamingRule_FieldIndex.Index, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = frame.ReadUInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)InstanceNamingRule_FieldIndex.Index;
                 }
                 default:

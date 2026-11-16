@@ -24,6 +24,13 @@ partial class PerkRankBinaryCreateTranslation
         public SubrecordFrame? EPFT { get; set; }
         public SubrecordFrame? EPFB { get; set; }
         public List<PerkCondition>? Conditions { get; set; }
+
+        // C60: where each subrecord's content starts (with the stream's offset), while value positions are recorded
+        internal long DataAt { get; set; } = -1;
+        internal long Epf2At { get; set; } = -1;
+        internal long Epf3At { get; set; } = -1;
+        internal long EpfdAt { get; set; } = -1;
+        internal long EpfbAt { get; set; } = -1;
     }
 
     private static Payload ReadPayload<TStream>(TStream stream)
@@ -32,29 +39,37 @@ partial class PerkRankBinaryCreateTranslation
         var ret = new Payload();
         while (stream.TryReadSubrecord(out var subFrame))
         {
+            var contentAt = ValuePositionRecorder.Here(stream);
+            if (contentAt >= 0) contentAt += subFrame.HeaderLength - subFrame.TotalLength;
             switch (subFrame.RecordTypeInt)
             {
                 case RecordTypeInts.DATA:
                     ret.DATA = subFrame;
+                    ret.DataAt = contentAt;
                     break;
                 case RecordTypeInts.EPF2:
                     ret.EPF2 = subFrame;
+                    ret.Epf2At = contentAt;
                     break;
                 case RecordTypeInts.EPF3:
                     ret.EPF3 = subFrame;
+                    ret.Epf3At = contentAt;
                     break;
                 case RecordTypeInts.EPFD:
                     ret.EPFD = subFrame;
+                    ret.EpfdAt = contentAt;
                     break;
                 case RecordTypeInts.EPFT:
                     ret.EPFT = subFrame;
                     break;
                 case RecordTypeInts.EPFB:
                     ret.EPFB = subFrame;
+                    ret.EpfbAt = contentAt;
                     break;
                 case RecordTypeInts.PRKC:
                 case RecordTypeInts.CTDA:
                     stream.Position -= subFrame.TotalLength;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(stream, "Conditions");
                     ret.Conditions = ListBinaryTranslation<PerkCondition>.Instance.Parse(
                         reader: new MutagenFrame(stream),
                         transl: (MutagenFrame r, [MaybeNullWhen(false)] out PerkCondition listSubItem) =>
@@ -63,6 +78,7 @@ partial class PerkRankBinaryCreateTranslation
                                 frame: r,
                                 item: out listSubItem!);
                         });
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(stream);
                     break;
                 default:
                     stream.Position -= subFrame.TotalLength;
@@ -74,8 +90,17 @@ partial class PerkRankBinaryCreateTranslation
     }
     public static IEnumerable<APerkEffect> ParseEffects(IMutagenReadStream stream)
     {
+        var effectIndex = 0;
         while (stream.TryReadSubrecord(RecordTypes.PRKE, out var prkeFrame))
         {
+            var prkeAt = ValuePositionRecorder.Here(stream);
+            if (prkeAt >= 0)
+            {
+                prkeAt -= prkeFrame.TotalLength;
+                ValuePositionRecorder.ItemFrom(prkeAt, effectIndex);
+                prkeAt += prkeFrame.HeaderLength;
+            }
+            effectIndex++;
             var type = (Perk.EffectType)prkeFrame.Content[0];
             var rank = prkeFrame.Content[1];
             var priority = prkeFrame.Content[2];
@@ -93,6 +118,7 @@ partial class PerkRankBinaryCreateTranslation
                             Quest = FormLinkBinaryTranslation.Instance.Factory<IQuestGetter>(stream.MetaData, payload.DATA.Value.Content),
                             Stage = BinaryPrimitives.ReadUInt16LittleEndian(payload.DATA.Value.Content.Slice(4)),
                         };
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.List(stream, "Conditions");
                         effect.Conditions.SetTo(
                             Plugins.Binary.Translations.ListBinaryTranslation<PerkCondition>.Instance.Parse(
                                 reader: new MutagenFrame(stream),
@@ -102,12 +128,14 @@ partial class PerkRankBinaryCreateTranslation
                                         frame: r,
                                         item: out listSubItem!);
                                 }));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(stream);
                         break;
                     case Perk.EffectType.Ability:
                         effect = new PerkAbilityEffect()
                         {
                             Ability = FormLinkBinaryTranslation.Instance.Factory<ISpellGetter>(stream.MetaData, payload.DATA.Value.Content),
                         };
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.List(stream, "Conditions");
                         effect.Conditions.SetTo(
                             Plugins.Binary.Translations.ListBinaryTranslation<PerkCondition>.Instance.Parse(
                                 reader: new MutagenFrame(stream),
@@ -117,6 +145,7 @@ partial class PerkRankBinaryCreateTranslation
                                         frame: r,
                                         item: out listSubItem!);
                                 }));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(stream);
                         break;
                     case Perk.EffectType.EntryPoint:
                         var entryPt = (APerkEntryPointEffect.EntryType)payload.DATA.Value.Content[0];
@@ -358,13 +387,88 @@ partial class PerkRankBinaryCreateTranslation
                 throw new MalformedDataException($"Encountered an unexpected epft frame.");
             }
             stream.TryReadSubrecord(RecordTypes.PRKF, out var _);
+            if (prkeAt >= 0)
+            {
+                NoteEffect(effect, prkeAt, payload);
+                ValuePositionRecorder.End(stream);
+            }
             yield return effect;
+        }
+    }
+
+    /// <summary>C60: where an effect's values sit (PRKE's content at <paramref name="prkeAt"/>, the payload's subrecords)</summary>
+    private static void NoteEffect(APerkEffect effect, long prkeAt, Payload payload)
+    {
+        ValuePositionRecorder.At(nameof(effect.Rank), prkeAt + 1, 1);
+        ValuePositionRecorder.At(nameof(effect.Priority), prkeAt + 2, 1);
+        if (payload.EPF2 is { } epf2 && payload.Epf2At >= 0) ValuePositionRecorder.At(nameof(effect.ButtonLabel), payload.Epf2At, epf2.ContentLength);
+        if (payload.EPF3 is { } epf3 && payload.Epf3At >= 0) ValuePositionRecorder.At(nameof(effect.Flags), payload.Epf3At, epf3.ContentLength);
+        if (payload.EPFB is { } epfb && payload.EpfbAt >= 0) ValuePositionRecorder.At(nameof(effect.PerkEntryID), payload.EpfbAt, epfb.ContentLength);
+        var data = payload.DataAt;
+        var epfd = payload.EpfdAt;
+        var epfdLength = payload.EPFD?.ContentLength ?? 0;
+        switch (effect)
+        {
+            case PerkQuestEffect quest when data >= 0:
+                ValuePositionRecorder.At(nameof(quest.Quest), data, 4);
+                ValuePositionRecorder.At(nameof(quest.Stage), data + 4, 2);
+                break;
+            case PerkAbilityEffect ability when data >= 0:
+                ValuePositionRecorder.At(nameof(ability.Ability), data, 4);
+                break;
+            case APerkEntryPointEffect entryPoint when data >= 0:
+                // DATA 1 is the function, which picked the class (and Modification, where there is one)
+                ValuePositionRecorder.At(nameof(entryPoint.EntryPoint), data, 1);
+                ValuePositionRecorder.At(nameof(entryPoint.PerkConditionTabCount), data + 2, 1);
+                if (epfd < 0) break;
+                switch (entryPoint)
+                {
+                    case PerkEntryPointModifyValues values:
+                        ValuePositionRecorder.At(nameof(values.Value), epfd, 4);
+                        ValuePositionRecorder.At(nameof(values.Value2), epfd + 4, 4);
+                        break;
+                    case PerkEntryPointModifyValue value:
+                        ValuePositionRecorder.At(nameof(value.Value), epfd, 4);
+                        break;
+                    case PerkEntryPointAddRangeToValue range:
+                        ValuePositionRecorder.At(nameof(range.From), epfd, 4);
+                        ValuePositionRecorder.At(nameof(range.To), epfd + 4, 4);
+                        break;
+                    case PerkEntryPointModifyActorValue av:
+                        ValuePositionRecorder.At(nameof(av.ActorValue), epfd, 4);
+                        ValuePositionRecorder.At(nameof(av.Value), epfd + 4, 4);
+                        break;
+                    case PerkEntryPointAddLeveledItem leveled:
+                        ValuePositionRecorder.At(nameof(leveled.Item), epfd, 4);
+                        break;
+                    case PerkEntryPointAddActivateChoice choice:
+                        ValuePositionRecorder.At(nameof(choice.Spell), epfd, 4);
+                        break;
+                    case PerkEntryPointSelectSpell spell:
+                        ValuePositionRecorder.At(nameof(spell.Spell), epfd, 4);
+                        break;
+                    case PerkEntryPointSelectText selectText:
+                        ValuePositionRecorder.At(nameof(selectText.Text), epfd, epfdLength);
+                        break;
+                    case PerkEntryPointSetText setText:
+                        ValuePositionRecorder.At(nameof(setText.Text), epfd, epfdLength);
+                        break;
+                    case PerkEntryPointLegendaryMagicEffectEvent legendary:
+                        ValuePositionRecorder.At(nameof(legendary.Projectile), epfd, 4);
+                        break;
+                    case PerkEntryPointLegendaryGravitational gravitational:
+                        ValuePositionRecorder.At(nameof(gravitational.Spell), epfd, 4);
+                        break;
+                }
+                break;
         }
     }
 
     public static partial void FillBinaryEffectsCustom(MutagenFrame frame, IPerkRank item, PreviousParse lastParsed)
     {
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.Effects));
         item.Effects.SetTo(ParseEffects(frame.Reader));
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
     }
 }
 

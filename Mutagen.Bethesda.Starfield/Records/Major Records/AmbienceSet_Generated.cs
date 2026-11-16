@@ -1697,6 +1697,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ASAE:
                 case RecordTypeInts.ASAS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Sounds");
                     item.Sounds = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AmbientSoundEvent>.Instance.ParsePerItem(
                             reader: frame,
@@ -1706,20 +1707,25 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams,
                             transl: AmbientSoundEvent.TryCreateFromBinary)
                         .CastExtendedList<AmbientSoundEvent>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AmbienceSet_FieldIndex.Sounds;
                 }
                 case RecordTypeInts.ASMB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MergeBehavior");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MergeBehavior = EnumBinaryTranslation<AmbienceSet.MergeBehaviorEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AmbienceSet_FieldIndex.MergeBehavior;
                 }
                 case RecordTypeInts.WED0:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WallaExterior");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.WallaExterior = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AmbienceSet_FieldIndex.WallaExterior;
                 }
                 default:

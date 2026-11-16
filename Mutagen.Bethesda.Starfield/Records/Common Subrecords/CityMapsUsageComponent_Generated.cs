@@ -1053,8 +1053,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.MOD2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ModelPath");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ModelPath = StringBinaryTranslation.Instance.ParseNullPaddedFixedLength(frame.SpawnWithLength(contentLength), byteLength: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CityMapsUsageComponent_FieldIndex.ModelPath;
                 }
                 default:

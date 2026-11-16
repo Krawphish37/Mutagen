@@ -1,4 +1,5 @@
-﻿using Mutagen.Bethesda.Plugins.Binary.Streams;
+﻿using Mutagen.Bethesda.Plugins.Binary.Translations;
+using Mutagen.Bethesda.Plugins.Binary.Streams;
 using Noggog;
 
 namespace Mutagen.Bethesda.Starfield;
@@ -22,10 +23,13 @@ partial class PlacedPrimitiveBinaryCreateTranslation
 {
     public static partial void FillBinaryBoundsCustom(MutagenFrame frame, IPlacedPrimitive item)
     {
+        // Stored as half the size, so the bytes are half the value
+        var at = ValuePositionRecorder.Here(frame);
         item.Bounds = new P3Float(
             frame.ReadFloat() * 2,
             frame.ReadFloat() * 2,
             frame.ReadFloat() * 2);
+        ValuePositionRecorder.Value(frame, nameof(item.Bounds), at, converted: true);
     }
 }
 

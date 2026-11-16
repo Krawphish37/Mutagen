@@ -1191,18 +1191,22 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.XAPD:
                 {
                     if (lastParsed.ShortCircuit((int)ActivateParents_FieldIndex.ParentActivateOnly, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ParentActivateOnly");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ParentActivateOnly = frame.ReadBoolean();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ActivateParents_FieldIndex.ParentActivateOnly;
                 }
                 case RecordTypeInts.XAPR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Parents");
                     item.Parents.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ActivateParent>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: ActivateParent_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: ActivateParent.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ActivateParents_FieldIndex.Parents;
                 }
                 default:

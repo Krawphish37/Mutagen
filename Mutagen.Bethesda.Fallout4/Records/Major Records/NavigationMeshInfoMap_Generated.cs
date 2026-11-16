@@ -1749,29 +1749,37 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.NVER:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NavMeshVersion");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NavMeshVersion = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMeshInfoMap_FieldIndex.NavMeshVersion;
                 }
                 case RecordTypeInts.NVMI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MapInfos");
                     item.MapInfos.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavigationMapInfo>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: NavigationMapInfo_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: NavigationMapInfo.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMeshInfoMap_FieldIndex.MapInfos;
                 }
                 case RecordTypeInts.NVPP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PreferredPathing");
                     item.PreferredPathing = Mutagen.Bethesda.Fallout4.PreferredPathing.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMeshInfoMap_FieldIndex.PreferredPathing;
                 }
                 case RecordTypeInts.NVSI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NVSI");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NVSI = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMeshInfoMap_FieldIndex.NVSI;
                 }
                 default:

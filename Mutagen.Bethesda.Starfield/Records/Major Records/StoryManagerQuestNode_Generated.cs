@@ -1931,37 +1931,48 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 2) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Flags");
                     item.Flags = EnumBinaryTranslation<AStoryManagerNode.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 2);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 2) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "QuestFlags");
                     item.QuestFlags = EnumBinaryTranslation<StoryManagerQuestNode.QuestFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 2);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)StoryManagerQuestNode_FieldIndex.QuestFlags;
                 }
                 case RecordTypeInts.XNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaxConcurrentQuests");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MaxConcurrentQuests = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StoryManagerQuestNode_FieldIndex.MaxConcurrentQuests;
                 }
                 case RecordTypeInts.MNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaxNumQuestsToRun");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MaxNumQuestsToRun = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StoryManagerQuestNode_FieldIndex.MaxNumQuestsToRun;
                 }
                 case RecordTypeInts.HNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HoursUntilReset");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HoursUntilReset = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StoryManagerQuestNode_FieldIndex.HoursUntilReset;
                 }
                 case RecordTypeInts.NNAM:
                 case RecordTypeInts.RNAM:
                 case RecordTypeInts.QNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Quests");
                     item.Quests.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<StoryManagerQuest>.Instance.ParsePerItem(
                             reader: frame,
@@ -1970,6 +1981,7 @@ namespace Mutagen.Bethesda.Starfield
                             triggeringRecord: StoryManagerQuest_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: StoryManagerQuest.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StoryManagerQuestNode_FieldIndex.Quests;
                 }
                 default:

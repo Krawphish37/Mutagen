@@ -1131,17 +1131,21 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.RSMC:
                 {
                     if (lastParsed.ShortCircuit((int)SoundKeywordMappingItem_FieldIndex.Class, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Class");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Class = EnumBinaryTranslation<SoundKeywordMapping.ReverbClass, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundKeywordMappingItem_FieldIndex.Class;
                 }
                 case RecordTypeInts.RSMH:
                 {
                     if (lastParsed.ShortCircuit((int)SoundKeywordMappingItem_FieldIndex.Sound, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Sound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.Sound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundKeywordMappingItem_FieldIndex.Sound;
                 }
                 default:

@@ -2589,60 +2589,75 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.BFCB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Components");
                     item.Components.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AComponent>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: AComponent_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: AComponent.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerBranchNode_FieldIndex.Components;
                 }
                 case RecordTypeInts.NAM1:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NodeType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NodeType = EnumBinaryTranslation<PlanetContentManagerBranchNode.NodeTypeOption, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerBranchNode_FieldIndex.NodeType;
                 }
                 case RecordTypeInts.NAM2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChildSelection");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ChildSelection = EnumBinaryTranslation<PlanetContentManagerBranchNode.ChildSelectionOption, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerBranchNode_FieldIndex.ChildSelection;
                 }
                 case RecordTypeInts.NAM3:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CountCurve");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CountCurve.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerBranchNode_FieldIndex.CountCurve;
                 }
                 case RecordTypeInts.NAM4:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DistributionCurve");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DistributionCurve.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerBranchNode_FieldIndex.DistributionCurve;
                 }
                 case RecordTypeInts.NAM5:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ConsumeRequestEvenOnFailure");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ConsumeRequestEvenOnFailure = frame.ReadBoolean();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerBranchNode_FieldIndex.ConsumeRequestEvenOnFailure;
                 }
                 case RecordTypeInts.PCCB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Nodes");
                     item.Nodes.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IPlanetNodeGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.PCCB),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerBranchNode_FieldIndex.Nodes;
                 }
                 case RecordTypeInts.CTDA:
                 case RecordTypeInts.CITC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.ParsePerItem(
                             reader: frame,
@@ -2652,28 +2667,35 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary)
                         .CastExtendedList<Condition>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerBranchNode_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.KWDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Keywords");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Keywords = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerBranchNode_FieldIndex.Keywords;
                 }
                 case RecordTypeInts.PRTN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ParentNode");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ParentNode.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerBranchNode_FieldIndex.ParentNode;
                 }
                 case RecordTypeInts.PRVN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PreviousNode");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PreviousNode.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerBranchNode_FieldIndex.PreviousNode;
                 }
                 default:

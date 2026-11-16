@@ -2495,79 +2495,97 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.BFCB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Components");
                     item.Components.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AComponent>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: AComponent_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: AComponent.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SnapTemplate_FieldIndex.Components;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Parent");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Parent.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SnapTemplate_FieldIndex.Parent;
                 }
                 case RecordTypeInts.ENAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Nodes");
                     item.Nodes.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<SnapNodeEntry>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: SnapNodeEntry_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: SnapNodeEntry.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SnapTemplate_FieldIndex.Nodes;
                 }
                 case RecordTypeInts.ONAM:
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "ParentNodes");
                     item.ParentNodes.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<SnapParentNodeEntry>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: SnapParentNodeEntry_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: SnapParentNodeEntry.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SnapTemplate_FieldIndex.ParentNodes;
                 }
                 case RecordTypeInts.BNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "BoundOverride");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BoundOverride = BinaryOverlayArrayHelper.FloatSliceFromFixedSize(frame.ReadBytes(4 * 6), 6).ToArray();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SnapTemplate_FieldIndex.BoundOverride;
                 }
                 case RecordTypeInts.INAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NextNodeID");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NextNodeID = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SnapTemplate_FieldIndex.NextNodeID;
                 }
                 case RecordTypeInts.STPT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SnapPieceType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SnapPieceType = EnumBinaryTranslation<SnapTemplate.SnapPieceTypeEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SnapTemplate_FieldIndex.SnapPieceType;
                 }
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TraversalCategoryName");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TraversalCategoryName = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SnapTemplate_FieldIndex.TraversalCategoryName;
                 }
                 case RecordTypeInts.RNAM:
                 case RecordTypeInts.SNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "SnapTemplateRnamTraversal");
                     item.SnapTemplateRnamTraversal.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<SnapTemplateRnamTraversal>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: SnapTemplateRnamTraversal_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: SnapTemplateRnamTraversal.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SnapTemplate_FieldIndex.SnapTemplateRnamTraversal;
                 }
                 default:

@@ -1613,19 +1613,29 @@ namespace Mutagen.Bethesda.Starfield
                 item.Versioning |= QuestAdapter.VersioningBreaks.Break0;
                 return;
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ExtraBindDataVersion");
             item.ExtraBindDataVersion = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "FragmentCount");
             QuestAdapterBinaryCreateTranslation.FillBinaryFragmentCountCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Script");
             QuestAdapterBinaryCreateTranslation.FillBinaryScriptCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Fragments");
             QuestAdapterBinaryCreateTranslation.FillBinaryFragmentsCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Aliases");
             QuestAdapterBinaryCreateTranslation.FillBinaryAliasesCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void FillBinaryFragmentCountCustom(

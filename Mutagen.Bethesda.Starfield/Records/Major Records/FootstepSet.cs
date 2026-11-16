@@ -11,22 +11,34 @@ partial class FootstepSetBinaryCreateTranslation
 {
     public static partial ParseResult FillBinaryCountCustom(MutagenFrame frame, IFootstepSetInternal item, PreviousParse lastParsed)
     {
+        var countsAt = ValuePositionRecorder.Here(frame);
+        if (countsAt >= 0) countsAt += frame.MetaData.Constants.SubConstants.HeaderLength;
         var counts = GetListCounts(frame, frame.Length, out var dataEnd);
 
-        IEnumerable<IFormLinkGetter<IFootstepGetter>> ReadIn(int count)
+        IEnumerable<IFormLinkGetter<IFootstepGetter>> ReadIn(int count, string name, int countIndex)
         {
+            // C60: each list with its count in XCNT (countIndex) and its items in DATA
+            if (ValuePositionRecorder.On)
+            {
+                ValuePositionRecorder.List(frame, name);
+                if (countsAt >= 0) ValuePositionRecorder.CountAt(countsAt + 4 * countIndex, 4);
+            }
             for (int i = 0; i < count; i++)
             {
-                yield return new FormLink<IFootstepGetter>(FormKeyBinaryTranslation.Instance.Parse(frame));
+                var at = ValuePositionRecorder.Here(frame);
+                var link = new FormLink<IFootstepGetter>(FormKeyBinaryTranslation.Instance.Parse(frame));
+                ValuePositionRecorder.ItemValue(frame, i, at);
+                yield return link;
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         // XCNT counts are Walking ... Swimming, but DATA stores the lists the other way round (xEdit).
-        item.SwimFootsteps.SetTo(ReadIn(counts[4]));
-        item.SneakFootsteps.SetTo(ReadIn(counts[3]));
-        item.SprintFootsteps.SetTo(ReadIn(counts[2]));
-        item.RunFootsteps.SetTo(ReadIn(counts[1]));
-        item.WalkFootsteps.SetTo(ReadIn(counts[0]));
+        item.SwimFootsteps.SetTo(ReadIn(counts[4], nameof(item.SwimFootsteps), 4));
+        item.SneakFootsteps.SetTo(ReadIn(counts[3], nameof(item.SneakFootsteps), 3));
+        item.SprintFootsteps.SetTo(ReadIn(counts[2], nameof(item.SprintFootsteps), 2));
+        item.RunFootsteps.SetTo(ReadIn(counts[1], nameof(item.RunFootsteps), 1));
+        item.WalkFootsteps.SetTo(ReadIn(counts[0], nameof(item.WalkFootsteps), 0));
         frame.Position = dataEnd;
 
         return null;

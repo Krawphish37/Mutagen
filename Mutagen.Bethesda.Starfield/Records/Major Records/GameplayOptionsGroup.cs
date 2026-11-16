@@ -41,6 +41,7 @@ internal partial class GameplayOptionsGroupBinaryCreateTranslation
     {
         var bnam = frame.ReadSubrecord(RecordTypes.BNAM);
         frame = frame.SpawnAll();
+        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.Options));
         if (bnam.AsInt8() > 0)
         {
             item.Options = GameplayOptionsGroupRoot.CreateFromBinary(frame);
@@ -49,6 +50,7 @@ internal partial class GameplayOptionsGroupBinaryCreateTranslation
         {
             item.Options = GameplayOptionsGroupLeaf.CreateFromBinary(frame);
         }
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         return (int)GameplayOptionsGroup_FieldIndex.Options;
     }
 }

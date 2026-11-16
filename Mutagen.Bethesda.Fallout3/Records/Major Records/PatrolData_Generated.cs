@@ -1319,36 +1319,46 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.XPRD:
                 {
                     if (lastParsed.ShortCircuit((int)PatrolData_FieldIndex.IdleTime, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IdleTime");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.IdleTime = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PatrolData_FieldIndex.IdleTime;
                 }
                 case RecordTypeInts.XPPA:
                 {
                     if (lastParsed.ShortCircuit((int)PatrolData_FieldIndex.ScriptMarker, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ScriptMarker");
                     item.ScriptMarker = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PatrolData_FieldIndex.ScriptMarker;
                 }
                 case RecordTypeInts.INAM:
                 {
                     if (lastParsed.ShortCircuit((int)PatrolData_FieldIndex.Idle, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Idle");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Idle.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PatrolData_FieldIndex.Idle;
                 }
                 case RecordTypeInts.SCHR:
                 {
                     if (lastParsed.ShortCircuit((int)PatrolData_FieldIndex.EmbeddedScript, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EmbeddedScript");
                     item.EmbeddedScript = Mutagen.Bethesda.Fallout3.ScriptFields.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PatrolData_FieldIndex.EmbeddedScript;
                 }
                 case RecordTypeInts.TNAM:
                 {
                     if (lastParsed.ShortCircuit((int)PatrolData_FieldIndex.Topic, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Topic");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Topic.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PatrolData_FieldIndex.Topic;
                 }
                 default:

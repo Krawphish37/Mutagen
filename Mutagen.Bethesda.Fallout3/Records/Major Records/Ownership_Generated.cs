@@ -1080,15 +1080,19 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.XOWN:
                 {
                     if (lastParsed.ShortCircuit((int)Ownership_FieldIndex.Owner, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Owner");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Owner.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Ownership_FieldIndex.Owner;
                 }
                 case RecordTypeInts.XRNK:
                 {
                     if (lastParsed.ShortCircuit((int)Ownership_FieldIndex.FactionRank, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FactionRank");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FactionRank = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Ownership_FieldIndex.FactionRank;
                 }
                 default:

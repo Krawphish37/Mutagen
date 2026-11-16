@@ -1069,13 +1069,16 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FDSI:
                 {
                     if (lastParsed.ShortCircuit((int)FaceDial_FieldIndex.Index, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FaceDial_FieldIndex.Index;
                 }
                 case RecordTypeInts.FDSL:
                 {
                     if (lastParsed.ShortCircuit((int)FaceDial_FieldIndex.Label, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Label");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Label = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1083,6 +1086,7 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FaceDial_FieldIndex.Label;
                 }
                 default:

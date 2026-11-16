@@ -1484,10 +1484,12 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 case RecordTypeInts.PGRP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Points");
                     RoadBinaryCreateTranslation.FillBinaryPointsCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Road_FieldIndex.Points;
                 }
                 default:
