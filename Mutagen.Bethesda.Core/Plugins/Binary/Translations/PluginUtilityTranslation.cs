@@ -93,6 +93,33 @@ internal static class PluginUtilityTranslation
         MajorRecordFill<M> fillTyped)
         where M : IMajorRecordGetter
     {
+        // The fields the record's subrecords are read into, for PartialFormMixIn.TryGetPresentFields (C58/W7): the
+        // reader's report of each subrecord, and what every reader notes it fills, hand-written ones included (C75,
+        // through the value-position notes)
+        var present = PresentFields.Begin(record);
+        if (present == null) return MajorRecordParse(record, frame, translationParams, fillStructs, fillTyped, present: null, recording: null);
+        var started = ValuePositionRecorder.Current == null ? ValuePositionRecorder.StartPresence() : null;
+        try
+        {
+            return MajorRecordParse(record, frame, translationParams, fillStructs, fillTyped, present, ValuePositionRecorder.Current);
+        }
+        finally
+        {
+            if (started != null) ValuePositionRecorder.Stop(started);
+        }
+    }
+
+    private static M MajorRecordParse<M>(
+        M record,
+        MutagenFrame frame,
+        TypedParseParams translationParams,
+        RecordStructFill<M> fillStructs,
+        MajorRecordFill<M> fillTyped,
+        List<int>? present,
+        ValuePositionRecorder.Recording? recording)
+        where M : IMajorRecordGetter
+    {
+        var recordingFrom = recording?.Nodes.Count ?? 0;
         if (ValuePositionRecorder.On) ValuePositionRecorder.RecordStart(record, frame);
         var majorHeader = frame.Reader.GetMajorRecordHeader();
         frame.MetaData.FormVersion = (ushort?)majorHeader.FormVersion;
@@ -116,8 +143,6 @@ internal static class PluginUtilityTranslation
             }
             frame.MetaData.HeadersOnlyParentRead = true;
         }
-        // The fields the record's subrecords are read into, for PartialFormMixIn.TryGetPresentFields (C58/W7)
-        var present = PresentFields.Begin(record);
         // Where each field's subrecords start, to note records whose subrecords come in an order Mutagen does not write
         var fieldStarts = frame.MetaData.Constants.KeepSubrecordOrder ? SubrecordOrder.FieldStarts : null;
         var firstField = fieldStarts?.Count ?? 0;
@@ -223,7 +248,10 @@ internal static class PluginUtilityTranslation
 
                 lastParsed = parsed;
             }
-            if (present != null) PresentFields.Remember(record, present);
+            if (present != null)
+            {
+                PresentFields.Remember(record, present, recording == null ? [] : ValuePositionRecorder.FieldsNoted(recording, recordingFrom));
+            }
 
             if (outOfOrder && fieldStarts != null)
             {

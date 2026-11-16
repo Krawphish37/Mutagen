@@ -80,6 +80,8 @@ partial class CellBinaryCreateTranslation
         item.Traversals = TraversalReferenceBinaryCreateTranslation.Parse(frame.SpawnWithLength(len), out var fluffBytes);
         if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         item.NumTraversalFluffBytes = fluffBytes;
+        // Derived from the subrecord's length, no bytes of its own: noted as filled (C75)
+        if (ValuePositionRecorder.On) ValuePositionRecorder.Filled(nameof(item.NumTraversalFluffBytes));
     }
     
     public static partial void CustomBinaryEndImport(MutagenFrame frame, ICellInternal obj)
