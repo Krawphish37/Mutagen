@@ -48,7 +48,7 @@
     <LinkInterface>IExplodeSpawn</LinkInterface>
     <LinkInterface>IResearchResourceTarget</LinkInterface>
   </Object>
-  <Object name="BookTeachTarget" abstract="true" objType="Subrecord" />
+  <Object name="BookTeachTarget" enteredBy="Book.Teaches" abstract="true" objType="Subrecord" />
   <Object name="BookActorValue" objType="Subrecord" baseClass="BookTeachTarget" selectorValue="0">
     <Fields>
       <FormLink name="ActorValue" refName="ActorValueInformation" />

@@ -90,6 +90,21 @@
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="enteredBy" type="xs:string" >
+            <xs:annotation>
+              <xs:documentation>
+                Description only, ignored by the generator's readers (C81). An object (and its subclasses) that hand-written
+                readers make and fill, rather than its generated reader from the object's start: "Owner.Name", comma
+                separated when there are several, where Name is a CustomLogic step or binary="Custom" field of the object
+                Owner (its FillBinary&lt;Name&gt;Custom makes the object) or a static method of Owner's class or binary create
+                translation (APackageTarget.CreateFromBinary, ScriptFragments.ReadFragments). The generated order's offsets
+                aren't the fields' places then (PTDA holds a target's kind at 0, its link at 4 and CountOrDistance at 8), so
+                the property manifest gives the object enteredBy, each field filledBy="(the readers)" and no offset; value
+                positions give the places a reader read. Required on every such object by the Starfield unit test
+                PropertyManifestTests (from the compiled readers).
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="customBinaryEndWrittenFrom" type="xs:string" >
             <xs:annotation>
               <xs:documentation>
@@ -224,6 +239,36 @@
               <xs:documentation>
                 Description only (C60, W5). On a binary="Custom" field with fills="": the CustomLogic step or Custom
                 field of the same object whose reader reads this field's bytes (its fills lists the field).
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="layoutOffset" type="xs:string" >
+            <xs:annotation>
+              <xs:documentation>
+                Description only, ignored by the generator (C186). Where a hand-read field's bytes are: a byte offset in its
+                subrecord's content (layoutSubrecord names the subrecord when the field doesn't; "header" = the record
+                header, from its first byte), or in the object's bytes for an object that isn't a subrecord of its own; or
+                "after:Field". Held against the readers by the Starfield HandReadLayout* unit tests.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="layoutBits" type="xs:string" >
+            <xs:annotation>
+              <xs:documentation>
+                Description only (C186). The bits of the byte at layoutOffset that hold the value: "lo-hi" (the value is
+                those bits shifted down by lo) or one bit. Bits among them the field doesn't keep are named by
+                layoutDroppedBits (Condition.Flags: bits 0-4, dropped 1-3, so it keeps 0 and 4; C79). The bits kept are held
+                to the reader's own value-position mask by the Starfield unit test LayoutBitsReaderMaskTests.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="layoutDroppedBits" type="xs:string" >
+            <xs:annotation>
+              <xs:documentation>
+                Description only (C186). Bits stored with the value but not kept in the field, because other fields (or the
+                class) stand for them: one bit "N", a range "a-b", or a comma separated list of those. Bit numbers are of the
+                stored value (of the byte at layoutOffset when layoutBits is given). The field's value is the stored bits
+                (layoutBits, or the whole value) with these cleared.
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>

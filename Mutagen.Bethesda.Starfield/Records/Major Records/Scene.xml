@@ -62,7 +62,7 @@
       <RefDirect name="ScriptFragments" refName="SceneScriptFragments" binary="Custom" fills="ScriptFragments" nullable="True" />
     </Fields>
   </Object>
-  <Object name="SceneScriptFragments" baseClass="ScriptFragments" objType="Subrecord">
+  <Object name="SceneScriptFragments" enteredBy="SceneScriptFragments.ReadFragments" baseClass="ScriptFragments" objType="Subrecord">
     <Fields>
       <RefList name="PhaseFragments" refName="ScenePhaseFragment" counterLength="2" />
     </Fields>

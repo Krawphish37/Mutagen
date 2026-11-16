@@ -25,7 +25,7 @@
       <RefDirect name="Data" refName="ANoteData" binary="NoGeneration" selectedBy="subrecord:DNAM:UInt8" selectorEnum="Note.Types" />
     </Fields>
   </Object>
-  <Object name="ANoteData" objType="Subrecord" abstract="true" />
+  <Object name="ANoteData" enteredBy="Note.TypeParse" objType="Subrecord" abstract="true" />
   <Object name="NoteSound" objType="Subrecord" baseClass="ANoteData" selectorValue="Sound">
     <Fields>
       <!-- xEdit: SNAM FormID to SNDR. Starfield has no SNDR records, so the link is untyped. -->

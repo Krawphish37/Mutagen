@@ -8,7 +8,7 @@
       <UInt32 name="CollectionIndex" />
     </Fields>
   </Object>
-  <Object name="ALocationTarget" abstract="true" objType="Subrecord" />
+  <Object name="ALocationTarget" enteredBy="LocationTargetRadius.Target" abstract="true" objType="Subrecord" />
   <Object name="LocationTarget" baseClass="ALocationTarget" objType="Subrecord" selectorValue="NearReference">
     <Fields>
       <FormLink name="Link">

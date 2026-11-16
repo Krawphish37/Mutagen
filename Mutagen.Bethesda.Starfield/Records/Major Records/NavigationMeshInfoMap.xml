@@ -61,7 +61,7 @@
       </List>
     </Fields>
   </Object>
-  <Object name="NavmeshPathingCell" objType="Subrecord">
+  <Object name="NavmeshPathingCell" enteredBy="NavigationMapInfo.IslandAndPathingLogic" objType="Subrecord">
     <Fields>
       <UInt32 name="Crc" />
       <FormLink name="ParentWorld" refName="StarfieldMajorRecord" />

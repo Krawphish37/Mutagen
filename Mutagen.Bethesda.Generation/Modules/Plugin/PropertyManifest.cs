@@ -96,6 +96,11 @@ internal static class PropertyManifest
         CopyAttribute(obj.Node, elem, "handRead");
         CopyAttribute(obj.Node, elem, "handReadFills");
 
+        // An object entered by hand (C81): hand-written readers make it and place its fields, not its generated reader
+        // from its start, so the generated order's offsets aren't its fields' places. Said on the object or a base class.
+        var enteredBy = EnteredBy(obj);
+        if (enteredBy != null) elem.Add(new XAttribute("enteredBy", enteredBy));
+
         // Which hand-written step fills each field (CustomLogic steps and Custom fields say so with fills=; an object read
         // whole by hand, with handReadFills=)
         var filledBy = new Dictionary<string, string>();
@@ -116,18 +121,28 @@ internal static class PropertyManifest
                 filledBy.TryAdd(path.Split('.')[0], field.Name);
             }
         }
+        if (enteredBy != null)
+        {
+            foreach (var field in obj.IterateFields(expandSets: SetMarkerType.ExpandSets.TrueAndInclude, nonIntegrated: true))
+            {
+                if (field.Name != null) filledBy.TryAdd(field.Name, enteredBy);
+            }
+        }
 
         // Fixed offsets of the fields the generated reader reads in order from one stretch of bytes (a struct
         // object's fields, a data subrecord's members), as the overlay reader computes them
         // (only what that reader reads itself: a field another step fills has the XML's layoutOffset instead)
-        var offsets = new Dictionary<TypeGeneration, (int Offset, int? Length)>();
+        // Keyed by the field itself: Loqui's LoquiType equals any other LoquiType of the same target object, so a value
+        // comparer gave every Loqui field of one type in a block the last one's offset (C80, S171)
+        var offsets = new Dictionary<TypeGeneration, (int Offset, int? Length)>(ReferenceEqualityComparer.Instance);
         static bool ReadInOrder(TypeGeneration f)
         {
             var d = f.GetFieldData();
             return d.Binary is BinaryGenerationType.Normal or BinaryGenerationType.Custom
                    && d.RecordType == null && !d.HasTrigger;
         }
-        if (obj.GetObjectType() != ObjectType.Record)
+        // (none for an object entered by hand: its generated reader doesn't place its fields)
+        if (enteredBy == null && obj.GetObjectType() != ObjectType.Record)
         {
             await foreach (var len in module.IteratePassedLengths(obj, forOverlay: true, expand: SetMarkerType.ExpandSets.FalseAndInclude))
             {
@@ -135,7 +150,7 @@ internal static class PropertyManifest
                 if (FixedOffset(len) is { } off) offsets[len.Field] = (off, len.FieldLength);
             }
         }
-        foreach (var dataType in obj.Fields.OfType<DataType>())
+        foreach (var dataType in enteredBy == null ? obj.Fields.OfType<DataType>() : Enumerable.Empty<DataType>())
         {
             await foreach (var len in module.IteratePassedLengths(obj, dataType.SubFields, forOverlay: true))
             {
@@ -192,6 +207,26 @@ internal static class PropertyManifest
         }
         return elem;
     }
+
+    /// <summary>The enteredBy= of the object or its nearest base class that has one (C81)</summary>
+    private static string? EnteredBy(ObjectGeneration obj)
+    {
+        for (var cur = obj; cur != null; cur = cur.HasLoquiBaseObject ? cur.BaseClass : null)
+        {
+            if ((string?)cur.Node.Attribute("enteredBy") is { Length: > 0 } by) return by;
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// A binary="Custom" field's generated offset is where its hand-written reader starts. When the XML places the field
+    /// itself elsewhere (a numeric layoutOffset: the reader reads other fields first, as TraversalReference.Traversal's
+    /// reads Flags at 40 and the link at 44), that offset isn't the field's place, so none is given (C81)
+    /// </summary>
+    private static bool PlacedElsewhereByItsReader(ObjectGeneration obj, TypeGeneration field, int offset) =>
+        field.GetFieldData().Binary == BinaryGenerationType.Custom
+        && int.TryParse((string?)FieldNode(obj, field)?.Attribute("layoutOffset"), NumberStyles.Integer, CultureInfo.InvariantCulture, out var placed)
+        && placed != offset;
 
     private static int? FixedOffset(BinaryTranslationModule.PassedLengths len)
     {
@@ -255,7 +290,7 @@ internal static class PropertyManifest
             p.Add(new XAttribute("subrecords", string.Join(",", data.TriggeringRecordTypes.Select(t => t.Type))));
         }
         if (dataRecord != null) p.Add(new XAttribute("data", dataRecord));
-        if (offsets.TryGetValue(field, out var fieldAt)) AddOffset(p, fieldAt);
+        if (offsets.TryGetValue(field, out var fieldAt) && !PlacedElsewhereByItsReader(obj, field, fieldAt.Offset)) AddOffset(p, fieldAt);
         if (data.Binary == BinaryGenerationType.Custom)
         {
             p.Add(new XAttribute("reader", field.Name));

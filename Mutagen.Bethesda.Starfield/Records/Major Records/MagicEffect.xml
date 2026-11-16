@@ -69,7 +69,7 @@
       </ByteArray>
     </Fields>
   </Object>
-  <Object name="AMagicEffectArchetype" abstract="true" objType="Subrecord" ctorPermission="noGeneration">
+  <Object name="AMagicEffectArchetype" enteredBy="MagicEffect.Archetype" abstract="true" objType="Subrecord" ctorPermission="noGeneration">
     <HandWritten name="AssociationKey" type="IFormLinkIdentifier" from="Association" note="the association as an untyped link" />
     <HandWritten name="Type" type="MagicEffectArchetype.TypeEnum" from="class" note="the archetype type of the class; MagicEffectArchetype keeps the one read (DATA 80)" />
   </Object>

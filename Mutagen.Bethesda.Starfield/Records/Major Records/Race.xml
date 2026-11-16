@@ -178,7 +178,7 @@
       <String name="Animations" recordType="DNAM" />
     </Fields>
   </Object>
-  <Object name="BipedObjectData" objType="Subrecord">
+  <Object name="BipedObjectData" enteredBy="Race.BipedObjects" objType="Subrecord">
     <Fields>
       <String name="Name" binary="NoGeneration" />
       <FormLink name="Conditions" refName="ActorValueInformation" binary="NoGeneration" />

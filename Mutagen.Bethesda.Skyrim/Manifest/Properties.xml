@@ -1208,7 +1208,7 @@
   </Object>
   <Object name="FurnitureMarker" objType="Subrecord">
     <Property name="Enabled" type="Boolean" field="Bool" nullable="false" binary="Normal" offset="0" length="1" />
-    <Property name="DisabledEntryPoints" type="EntryPoints" field="Loqui" nullable="true" binary="Normal" offset="9" length="4" />
+    <Property name="DisabledEntryPoints" type="EntryPoints" field="Loqui" nullable="true" binary="Normal" offset="1" length="4" />
     <Property name="MarkerKeyword" type="IFormLinkNullable&lt;IKeywordGetter&gt;" field="FormLink" nullable="true" binary="Normal" offset="5" length="4" />
     <Property name="EntryPoints" type="EntryPoints" field="Loqui" nullable="true" binary="Normal" offset="9" length="4" />
   </Object>
@@ -3954,7 +3954,7 @@
     <Property name="LightFadeStartDistance" type="Single" field="Float" nullable="false" binary="Normal" data="DATA" offset="80" length="4" />
     <Property name="LightFadeEndDistance" type="Single" field="Float" nullable="false" binary="Normal" data="DATA" offset="84" length="4" />
     <Property name="Unknown" type="Int32" field="Int32" nullable="false" binary="Normal" data="DATA" offset="88" length="4" />
-    <Property name="DirectionalAmbientColors" type="AmbientColors" field="Loqui" nullable="true" binary="Normal" subrecords="DALC" offset="40" length="32" />
+    <Property name="DirectionalAmbientColors" type="AmbientColors" field="Loqui" nullable="true" binary="Normal" subrecords="DALC" />
     <Property name="DATADataTypeState" type="LightingTemplate.DATADataType" field="Enum" nullable="false" derived="DataType" from="DATA" />
   </Object>
   <Object name="LinkedDoor" objType="Subrecord">
@@ -5080,12 +5080,12 @@
     <Property name="Skin" type="IFormLinkNullable&lt;IArmorGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="WNAM" />
     <Property name="BodyTemplate" type="BodyTemplate" field="Loqui" nullable="true" binary="Custom" subrecords="BODT,BOD2" reader="BodyTemplate" />
     <Property name="Keywords" type="ExtendedList&lt;IFormLinkGetter&lt;IKeywordGetter&gt;&gt;" field="List" nullable="true" binary="Normal" subrecords="KSIZ,KWDA" />
-    <Property name="SkillBoost0" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" data="DATA" offset="12" length="2" />
-    <Property name="SkillBoost1" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" data="DATA" offset="12" length="2" />
-    <Property name="SkillBoost2" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" data="DATA" offset="12" length="2" />
-    <Property name="SkillBoost3" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" data="DATA" offset="12" length="2" />
-    <Property name="SkillBoost4" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" data="DATA" offset="12" length="2" />
-    <Property name="SkillBoost5" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" data="DATA" offset="12" length="2" />
+    <Property name="SkillBoost0" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" data="DATA" offset="0" length="2" />
+    <Property name="SkillBoost1" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" data="DATA" offset="2" length="2" />
+    <Property name="SkillBoost2" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" data="DATA" offset="4" length="2" />
+    <Property name="SkillBoost3" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" data="DATA" offset="6" length="2" />
+    <Property name="SkillBoost4" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" data="DATA" offset="8" length="2" />
+    <Property name="SkillBoost5" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" data="DATA" offset="10" length="2" />
     <Property name="SkillBoost6" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" data="DATA" offset="12" length="2" />
     <Property name="Unknown" type="Int16" field="Int16" nullable="false" binary="Normal" data="DATA" offset="14" length="2" />
     <Property name="Height" type="IGenderedItem&lt;Single&gt;" field="Gendered" nullable="false" binary="Normal" data="DATA" offset="16" length="8" />
@@ -5580,8 +5580,8 @@
     <Property name="BR" type="Byte" field="UInt8" nullable="false" binary="Normal" offset="7" length="1" />
   </Object>
   <Object name="SoundOutputChannels" objType="Subrecord" recordTypes="ONAM">
-    <Property name="Channel0" type="SoundOutputChannel" field="Loqui" nullable="false" binary="Normal" offset="16" length="8" />
-    <Property name="Channel1" type="SoundOutputChannel" field="Loqui" nullable="false" binary="Normal" offset="16" length="8" />
+    <Property name="Channel0" type="SoundOutputChannel" field="Loqui" nullable="false" binary="Normal" offset="0" length="8" />
+    <Property name="Channel1" type="SoundOutputChannel" field="Loqui" nullable="false" binary="Normal" offset="8" length="8" />
     <Property name="Channel2" type="SoundOutputChannel" field="Loqui" nullable="false" binary="Normal" offset="16" length="8" />
   </Object>
   <Object name="SoundOutputData" objType="Subrecord" recordTypes="NAM1">
@@ -5957,22 +5957,22 @@
     <Step name="CloudXSpeeds" subrecords="QNAM" />
     <Step name="CloudColors" subrecords="PNAM" />
     <Step name="CloudAlphas" subrecords="JNAM" />
-    <Property name="SkyUpperColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="256" length="16" />
-    <Property name="FogNearColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="256" length="16" />
-    <Property name="UnknownColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="256" length="16" />
-    <Property name="AmbientColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="256" length="16" />
-    <Property name="SunlightColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="256" length="16" />
-    <Property name="SunColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="256" length="16" />
-    <Property name="StarsColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="256" length="16" />
-    <Property name="SkyLowerColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="256" length="16" />
-    <Property name="HorizonColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="256" length="16" />
-    <Property name="EffectLightingColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="256" length="16" />
-    <Property name="CloudLodDiffuseColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="256" length="16" />
-    <Property name="CloudLodAmbientColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="256" length="16" />
-    <Property name="FogFarColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="256" length="16" />
-    <Property name="SkyStaticsColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="256" length="16" />
-    <Property name="WaterMultiplierColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="256" length="16" />
-    <Property name="SunGlareColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="256" length="16" />
+    <Property name="SkyUpperColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="0" length="16" />
+    <Property name="FogNearColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="16" length="16" />
+    <Property name="UnknownColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="32" length="16" />
+    <Property name="AmbientColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="48" length="16" />
+    <Property name="SunlightColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="64" length="16" />
+    <Property name="SunColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="80" length="16" />
+    <Property name="StarsColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="96" length="16" />
+    <Property name="SkyLowerColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="112" length="16" />
+    <Property name="HorizonColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="128" length="16" />
+    <Property name="EffectLightingColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="144" length="16" />
+    <Property name="CloudLodDiffuseColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="160" length="16" />
+    <Property name="CloudLodAmbientColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="176" length="16" />
+    <Property name="FogFarColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="192" length="16" />
+    <Property name="SkyStaticsColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="208" length="16" />
+    <Property name="WaterMultiplierColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="224" length="16" />
+    <Property name="SunGlareColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="240" length="16" />
     <Property name="MoonGlareColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="256" length="16" />
     <Property name="FogDistanceDayNear" type="Single" field="Float" nullable="false" binary="Normal" data="FNAM" offset="0" length="4" />
     <Property name="FogDistanceDayFar" type="Single" field="Float" nullable="false" binary="Normal" data="FNAM" offset="4" length="4" />

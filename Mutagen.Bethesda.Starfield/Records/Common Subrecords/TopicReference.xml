@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
-  <Object name="ATopicReference" abstract="true" objType="Subrecord" recordType="PDTO" />
+  <Object name="ATopicReference" enteredBy="ATopicReference.Factory" abstract="true" objType="Subrecord" recordType="PDTO" />
   <Object name="TopicReference" objType="Subrecord" baseClass="ATopicReference" selectorValue="Ref">
     <Fields>
       <FormLink name="Reference" refName="DialogTopic" />

@@ -42,7 +42,7 @@
       <RefList name="Conditions" refName="Condition" />
     </Fields>
   </Object>
-  <Object name="ATerminalMenuItemTarget" objType="Subrecord" abstract="true" />
+  <Object name="ATerminalMenuItemTarget" enteredBy="TerminalMenuItem.TypeParse" objType="Subrecord" abstract="true" />
   <Object name="TerminalMenuItemDisplayText" objType="Subrecord" baseClass="ATerminalMenuItemTarget" selectorValue="DisplayText">
     <Fields>
       <String name="DisplayText" translated="Normal" recordType="UNAM" />

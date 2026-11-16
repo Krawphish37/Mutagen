@@ -37,7 +37,7 @@
     <AdditionalContainedRecordType>CIS1</AdditionalContainedRecordType>
     <AdditionalContainedRecordType>CIS2</AdditionalContainedRecordType>
   </Object>
-  <Object name="LegendaryItemLnamEntry" objType="Subrecord">
+  <Object name="LegendaryItemLnamEntry" enteredBy="LegendaryItem.LnamEntries" objType="Subrecord">
     <Fields>
       <Enum name="Slot" enumName="LegendaryItem.StarSlot" />
       <UInt32 name="ReferenceMod" />

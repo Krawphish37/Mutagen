@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="us-ascii"?>
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
   <!-- Layout attributes (read by tools describing the bytes, ignored by the generator): layoutOffset = byte offset in the
-       subrecord's content; layoutBits = the bits of that byte ("5-7", or one bit); conditionFunction = the CTDA function
+       subrecord's content; layoutBits = the bits of that byte ("5-7", or one bit); layoutDroppedBits = bits among them
+       the field doesn't keep (Flags: bits 1 and 3 are ConditionData.UseAliases and UsePackageData, bit 2 picks
+       ConditionGlobal, so Flags holds bits 0 and 4, mask 0x11; C79); conditionFunction = the CTDA function
        index (UInt16 at offset 8, on FunctionParse) that selects a ConditionData object ("*" on UnknownConditionData: every
        index no other object claims), whose own fields start at the
        Data offset (12); layoutEncoding="uint16" = the hand-read value's width.
@@ -10,7 +12,7 @@
   <Object name="Condition" objType="Subrecord" abstract="true" recordType="CTDA" selectedBy="field:Flags:bit=2">
     <Fields>
       <Enum name="CompareOperator" enumName="CompareOperator" binary="NoGeneration" layoutOffset="0" layoutBits="5-7" />
-      <Enum name="Flags" enumName="Condition.Flag" binary="Custom" fills="Flags,CompareOperator" byteLength="1" layoutOffset="0" layoutBits="0-4" />
+      <Enum name="Flags" enumName="Condition.Flag" binary="Custom" fills="Flags,CompareOperator" byteLength="1" layoutOffset="0" layoutBits="0-4" layoutDroppedBits="1-3" />
       <ByteArray name="Unknown1" byteLength="3" nullable="False" />
       <CustomLogic name="FunctionParse" layoutOffset="8" layoutEncoding="uint16" fills="ComparisonValue,Unknown2,Data" />
       <UInt16 name="Unknown2" binary="NoGeneration" layoutOffset="10" />

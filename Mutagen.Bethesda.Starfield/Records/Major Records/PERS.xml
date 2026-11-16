@@ -10,7 +10,7 @@
       <RefList name="Items" refName="PERSItems" unknown="true" binary="NoGeneration" />
     </Fields>
   </Object>
-  <Object name="PERSItems" objType="Subrecord">
+  <Object name="PERSItems" enteredBy="PERS.ItemsParse" objType="Subrecord">
     <Fields>
       <RefList name="Items" refName="PERSItem" unknown="true" />
     </Fields>
