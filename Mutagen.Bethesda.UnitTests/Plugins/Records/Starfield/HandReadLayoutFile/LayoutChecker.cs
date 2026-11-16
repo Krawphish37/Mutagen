@@ -254,7 +254,7 @@ public sealed class LayoutChecker
         while (cur.Pos < cur.End && cur.Subs[cur.Pos].Sig == sig && (count == null || i < count))
         {
             var element = Element(list, i, e);
-            ReadContent(e, cur.Subs[cur.Pos].Data, Indexed(ctx, element, $"{listPath}[{i}]", e, i), cur.Pos);
+            ReadContent(e, cur.Subs[cur.Pos].Data, Indexed(ctx, element, ItemPath(list, listPath, i), e, i), cur.Pos);
             cur.Pos++;
             i++;
         }
@@ -337,7 +337,7 @@ public sealed class LayoutChecker
             }
             else
             {
-                itemCtx = Indexed(ctx, Element(list!, i, e), $"{listPath}[{i}]", e, i);
+                itemCtx = Indexed(ctx, Element(list!, i, e), ItemPath(list!, listPath, i), e, i);
             }
             if (startName != null) itemCtx.Texts[startName] = cur.Subs[segStart].Sig;
             RunSubs(e.Elements(), inner, itemCtx);
@@ -741,7 +741,7 @@ public sealed class LayoutChecker
             // endsAtZeros="N": an item starting with N zero bytes isn't read; it and what follows are left
             if (zeros > 0 && r.Remaining >= zeros && !r.Data.AsSpan(r.Pos, zeros).ContainsAnyExcept((byte)0)) break;
             var element = list != null ? Element(list, i, e) : ctx.Obj;
-            var itemCtx = Indexed(ctx, element, list != null ? $"{listPath}[{i}]" : ctx.Path, e, i);
+            var itemCtx = Indexed(ctx, element, list != null ? ItemPath(list, listPath, i) : ctx.Path, e, i);
             if (!open) itemCtx.Vars[LastVar] = i == count - 1 ? 1 : 0;
             if (countText == "fit" && !Fits(e, r, itemCtx)) break;
             RunContent(e.Elements(), r, itemCtx);
@@ -896,7 +896,7 @@ public sealed class LayoutChecker
         else ctx.Spans.Remove(name);
     }
 
-    private static readonly System.Text.RegularExpressions.Regex KeyIndex = new(@"\[key (-?\d+)\]");
+    private static readonly System.Text.RegularExpressions.Regex KeyIndex = new(@"\[key ([^\]]+)\]");
 
     // The checker's path of a field as a value position's path: from the record (not its class name), a dictionary entry as [key]
     private static string PositionPath(string ctxPath, string field)
@@ -1076,16 +1076,37 @@ public sealed class LayoutChecker
             return null;
         }
         if (value == null) return new ArrayList(); // a null list: the file must have none either
-        if (value is IDictionary dict) return dict.Values.Cast<object>().ToList();
+        if (value is IDictionary dict)
+        {
+            var values = new List<object?>();
+            var keys = new List<string>();
+            var entry = dict.GetEnumerator();
+            while (entry.MoveNext())
+            {
+                keys.Add(entry.Key.ToString() ?? "");
+                values.Add(entry.Value);
+            }
+            _keys.AddOrUpdate(values, keys);
+            return values;
+        }
         if (value.GetType().GetInterfaces().FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IReadOnlyDictionary<,>)) is { } rod)
         {
             // keyed by an enum or number: element i is the value under key i
             var pairs = ((IEnumerable)value).Cast<object>().ToList();
             var ordered = pairs.OrderBy(p => Convert.ToInt64(p.GetType().GetProperty("Key")!.GetValue(p))).ToList();
-            return ordered.Select(p => p.GetType().GetProperty("Value")!.GetValue(p)).ToList();
+            var values = ordered.Select(p => p.GetType().GetProperty("Value")!.GetValue(p)).ToList();
+            _keys.AddOrUpdate(values, ordered.Select(p => p.GetType().GetProperty("Key")!.GetValue(p)?.ToString() ?? "").ToList());
+            return values;
         }
         return value as IList ?? ((IEnumerable)value).Cast<object>().ToList();
     }
+
+    // C84: the keys of the dictionaries ListOf gave as lists, so an element's path names its entry ([key K]), as value
+    // positions do
+    private readonly System.Runtime.CompilerServices.ConditionalWeakTable<IList, List<string>> _keys = new();
+
+    private string ItemPath(IList list, string listPath, int i) =>
+        _keys.TryGetValue(list, out var keys) && i < keys.Count ? $"{listPath}[key {keys[i]}]" : $"{listPath}[{i}]";
 
     private object? Element(IList list, int i, XElement e) => i < list.Count ? list[i] : null;
 
