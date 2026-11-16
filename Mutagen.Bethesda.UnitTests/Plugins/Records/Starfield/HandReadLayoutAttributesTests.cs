@@ -137,7 +137,11 @@ public class HandReadLayoutAttributesTests
             return (packed >> lo) & ((1 << (hi - lo + 1)) - 1);
         }
         var op = Bits(Field(condition, "Condition", "CompareOperator"), out var opOffset);
-        var flags = Bits(Field(condition, "Condition", "Flags"), out var flagsOffset);
+        var flagsField = Field(condition, "Condition", "Flags");
+        var flags = Bits(flagsField, out var flagsOffset);
+        // C79: bits of the byte Flags doesn't keep (ConditionData's UseAliases and UsePackageData, and the class)
+        var dropped = LayoutBitsReaderMaskTests.Bits((string)flagsField.Attribute("layoutDroppedBits")!).Aggregate(0, (m, b) => m | (1 << b));
+        dropped.ShouldBe(0x0E);
         var useAliases = Bits(Field(datas, "ConditionData", "UseAliases"), out _);
         var usePackageData = Bits(Field(datas, "ConditionData", "UsePackageData"), out _);
         opOffset.ShouldBe(0);
@@ -154,8 +158,8 @@ public class HandReadLayoutAttributesTests
             ((int)c.CompareOperator).ShouldBe(op);
             c.Data.UseAliases.ShouldBe(useAliases == 1);
             c.Data.UsePackageData.ShouldBe(usePackageData == 1);
-            // Flags keeps the bits not read into other properties (0x02, 0x04 and 0x08 are)
-            ((int)c.Flags).ShouldBe(flags & ~0x0E);
+            // Flags keeps the bits not read into other properties (0x02, 0x04 and 0x08 are: layoutDroppedBits)
+            ((int)c.Flags).ShouldBe(flags & ~dropped);
             (c is IConditionGlobalGetter).ShouldBe((flags & 0x04) != 0);
             Write(c).ShouldBe(bytes);
         }
