@@ -1979,7 +1979,7 @@ namespace Mutagen.Bethesda.Skyrim
                     item.ReverbAmp = dataFrame.ReadInt8();
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DecayHfRatio");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DecayHfRatio", true);
                     item.DecayHfRatio = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte,
@@ -1995,13 +1995,13 @@ namespace Mutagen.Bethesda.Skyrim
                     item.ReverbDelayMS = dataFrame.ReadUInt8();
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DiffusionPercent");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DiffusionPercent", true);
                     item.DiffusionPercent = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DensityPercent");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DensityPercent", true);
                     item.DensityPercent = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);

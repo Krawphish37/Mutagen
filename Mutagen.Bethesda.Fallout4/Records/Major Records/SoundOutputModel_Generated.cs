@@ -1849,7 +1849,7 @@ namespace Mutagen.Bethesda.Fallout4
                 }
                 case RecordTypeInts.VNAM:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StaticAttenuation");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StaticAttenuation", true);
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.StaticAttenuation = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,

@@ -3671,7 +3671,7 @@ namespace Mutagen.Bethesda.Skyrim
                 }
                 case RecordTypeInts.DNAM:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ArmorRating");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ArmorRating", true);
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ArmorRating = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,

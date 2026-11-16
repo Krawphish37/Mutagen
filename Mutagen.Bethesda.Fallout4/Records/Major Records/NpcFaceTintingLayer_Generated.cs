@@ -1342,7 +1342,7 @@ namespace Mutagen.Bethesda.Fallout4
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Value");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Value", true);
                     item.Value = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte,

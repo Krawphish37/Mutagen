@@ -1723,7 +1723,7 @@ namespace Mutagen.Bethesda.Skyrim
                 }
                 case RecordTypeInts.VNAM:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StaticVolumeMultiplier");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StaticVolumeMultiplier", true);
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.StaticVolumeMultiplier = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
@@ -1735,7 +1735,7 @@ namespace Mutagen.Bethesda.Skyrim
                 }
                 case RecordTypeInts.UNAM:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DefaultMenuVolume");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DefaultMenuVolume", true);
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DefaultMenuVolume = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,

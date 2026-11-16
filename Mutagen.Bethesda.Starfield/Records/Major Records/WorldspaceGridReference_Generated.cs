@@ -1185,7 +1185,7 @@ namespace Mutagen.Bethesda.Starfield
             IWorldspaceGridReference item,
             MutagenFrame frame)
         {
-            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GridPosition");
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GridPosition", true);
             item.GridPosition = P2Int16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 swapCoords: true);

@@ -71,7 +71,8 @@ partial class TraversalReferenceBinaryCreateTranslation
         }
 
         item.Flags = GetFlags(flags);
-        if (flagsAt >= 0) ValuePositionRecorder.At(nameof(item.Flags), flagsAt, 4);
+        // The no-traversal bit says whether the traversal follows; it isn't kept in Flags
+        if (flagsAt >= 0) ValuePositionRecorder.At(nameof(item.Flags), flagsAt, 4, ~(ulong)HasNoTraversal & 0xFFFF_FFFF);
         // C221: four half-precision floats
         at = ValuePositionRecorder.Here(frame);
         item.Unknown2 = HalfBinaryTranslation.Instance.Parse(frame);

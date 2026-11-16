@@ -1093,7 +1093,7 @@ namespace Mutagen.Bethesda.Starfield
             if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Parent");
             item.Parent.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
-            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Coordinates");
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Coordinates", true);
             item.Coordinates = P2Int16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 swapCoords: true);

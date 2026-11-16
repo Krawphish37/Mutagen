@@ -1241,7 +1241,7 @@ namespace Mutagen.Bethesda.Fallout4
             if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Variance");
             item.Variance = frame.ReadUInt8();
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
-            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StaticAttenuation");
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StaticAttenuation", true);
             item.StaticAttenuation = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 integerType: FloatIntegerType.UShort,

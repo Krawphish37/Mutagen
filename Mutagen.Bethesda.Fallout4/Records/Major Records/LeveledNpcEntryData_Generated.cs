@@ -1287,7 +1287,7 @@ namespace Mutagen.Bethesda.Fallout4
             if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Count");
             item.Count = frame.ReadInt16();
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
-            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChanceNone");
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChanceNone", true);
             item.ChanceNone = PercentBinaryTranslation.Parse(
                 reader: frame,
                 integerType: FloatIntegerType.ByteHundred);

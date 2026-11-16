@@ -1053,7 +1053,7 @@ namespace Mutagen.Bethesda.Fallout4
             if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Priority");
             item.Priority = frame.ReadUInt16();
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
-            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DuckingDecibel");
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DuckingDecibel", true);
             item.DuckingDecibel = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 integerType: FloatIntegerType.UShort,

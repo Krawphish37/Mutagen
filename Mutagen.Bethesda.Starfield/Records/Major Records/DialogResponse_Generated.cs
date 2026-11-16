@@ -2009,7 +2009,7 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Emotion");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Emotion", true);
                     item.Emotion.SetTo(
                         FormLinkBinaryTranslation.Instance.Parse(
                             reader: frame,

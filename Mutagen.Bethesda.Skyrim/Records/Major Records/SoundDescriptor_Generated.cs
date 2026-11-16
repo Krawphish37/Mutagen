@@ -2533,7 +2533,7 @@ namespace Mutagen.Bethesda.Skyrim
                     item.Variance = dataFrame.ReadUInt8();
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 2) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "StaticAttenuation");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "StaticAttenuation", true);
                     item.StaticAttenuation = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.UShort,

@@ -2245,14 +2245,14 @@ namespace Mutagen.Bethesda.Skyrim
                     item.BackRun = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RotateInPlaceWalk");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RotateInPlaceWalk", true);
                     item.RotateInPlaceWalk = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         multiplier: 57.295799255371094f,
                         divisor: null);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RotateInPlaceRun");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RotateInPlaceRun", true);
                     item.RotateInPlaceRun = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         multiplier: 57.295799255371094f,
@@ -2264,7 +2264,7 @@ namespace Mutagen.Bethesda.Skyrim
                         return (int)MovementType_FieldIndex.RotateInPlaceRun;
                     }
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RotateWhileMovingRun");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RotateWhileMovingRun", true);
                     item.RotateWhileMovingRun = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         multiplier: 57.295799255371094f,

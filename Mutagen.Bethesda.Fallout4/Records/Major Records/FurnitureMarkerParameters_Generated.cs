@@ -1340,7 +1340,7 @@ namespace Mutagen.Bethesda.Fallout4
             if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Offset");
             item.Offset = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
-            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RotationZ");
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RotationZ", true);
             item.RotationZ = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 multiplier: 57.295799255371094f,

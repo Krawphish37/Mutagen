@@ -1601,7 +1601,7 @@ namespace Mutagen.Bethesda.Starfield
                     item.Count = dataFrame.ReadUInt16();
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ChanceNone");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ChanceNone", true);
                     item.ChanceNone = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.ByteHundred);

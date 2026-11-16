@@ -1808,7 +1808,7 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.ANAM:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ConditionActorValue");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ConditionActorValue", true);
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ConditionActorValue.SetTo(
                         FormLinkBinaryTranslation.Instance.Parse(

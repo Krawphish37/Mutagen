@@ -7382,7 +7382,7 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "WindSpeed");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "WindSpeed", true);
                     item.WindSpeed = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
@@ -7392,7 +7392,7 @@ namespace Mutagen.Bethesda.Starfield
                     item.Unknown = dataFrame.ReadUInt16();
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "TransDelta");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "TransDelta", true);
                     item.TransDelta = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte,
@@ -7400,43 +7400,43 @@ namespace Mutagen.Bethesda.Starfield
                         divisor: null);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SunGlare");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SunGlare", true);
                     item.SunGlare = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SunDamage");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SunDamage", true);
                     item.SunDamage = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "PrecipitationBeginFadeIn");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "PrecipitationBeginFadeIn", true);
                     item.PrecipitationBeginFadeIn = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "PrecipitationEndFadeOut");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "PrecipitationEndFadeOut", true);
                     item.PrecipitationEndFadeOut = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ThunderLightningBeginFadeIn");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ThunderLightningBeginFadeIn", true);
                     item.ThunderLightningBeginFadeIn = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ThunderLightningEndFadeOut");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ThunderLightningEndFadeOut", true);
                     item.ThunderLightningEndFadeOut = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ThunderLightningFrequency");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ThunderLightningFrequency", true);
                     item.ThunderLightningFrequency = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
@@ -7452,19 +7452,19 @@ namespace Mutagen.Bethesda.Starfield
                     item.LightningColor = dataFrame.ReadColor(ColorBinaryType.NoAlpha);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "VisualEffectBegin");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "VisualEffectBegin", true);
                     item.VisualEffectBegin = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "VisualEffectEnd");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "VisualEffectEnd", true);
                     item.VisualEffectEnd = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "WindDirection");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "WindDirection", true);
                     item.WindDirection = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte,
@@ -7472,7 +7472,7 @@ namespace Mutagen.Bethesda.Starfield
                         divisor: 360f);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "WindDirectionRange");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "WindDirectionRange", true);
                     item.WindDirectionRange = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte,
@@ -7480,7 +7480,7 @@ namespace Mutagen.Bethesda.Starfield
                         divisor: 180f);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "WindTurbulance");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "WindTurbulance", true);
                     item.WindTurbulance = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);

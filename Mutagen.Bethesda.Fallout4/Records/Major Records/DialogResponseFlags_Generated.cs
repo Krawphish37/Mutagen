@@ -1058,7 +1058,7 @@ namespace Mutagen.Bethesda.Fallout4
                 reader: frame,
                 length: 2);
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
-            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ResetHours");
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ResetHours", true);
             item.ResetHours = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 integerType: FloatIntegerType.UShort,

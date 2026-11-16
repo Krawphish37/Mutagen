@@ -3553,7 +3553,7 @@ namespace Mutagen.Bethesda.Fallout4
                     item.BackSprint = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "PitchStanding");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "PitchStanding", true);
                     item.PitchStanding = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         multiplier: 57.295799255371094f,
@@ -3565,77 +3565,77 @@ namespace Mutagen.Bethesda.Fallout4
                         return (int)MovementType_FieldIndex.PitchStanding;
                     }
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "PitchWalk");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "PitchWalk", true);
                     item.PitchWalk = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         multiplier: 57.295799255371094f,
                         divisor: null);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "PitchRun");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "PitchRun", true);
                     item.PitchRun = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         multiplier: 57.295799255371094f,
                         divisor: null);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "PitchSprint");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "PitchSprint", true);
                     item.PitchSprint = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         multiplier: 57.295799255371094f,
                         divisor: null);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RollStanding");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RollStanding", true);
                     item.RollStanding = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         multiplier: 57.295799255371094f,
                         divisor: null);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RollWalk");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RollWalk", true);
                     item.RollWalk = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         multiplier: 57.295799255371094f,
                         divisor: null);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RollRun");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RollRun", true);
                     item.RollRun = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         multiplier: 57.295799255371094f,
                         divisor: null);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RollSprint");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RollSprint", true);
                     item.RollSprint = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         multiplier: 57.295799255371094f,
                         divisor: null);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "YawStanding");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "YawStanding", true);
                     item.YawStanding = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         multiplier: 57.295799255371094f,
                         divisor: null);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "YawWalk");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "YawWalk", true);
                     item.YawWalk = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         multiplier: 57.295799255371094f,
                         divisor: null);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "YawRun");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "YawRun", true);
                     item.YawRun = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         multiplier: 57.295799255371094f,
                         divisor: null);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "YawSprint");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "YawSprint", true);
                     item.YawSprint = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         multiplier: 57.295799255371094f,

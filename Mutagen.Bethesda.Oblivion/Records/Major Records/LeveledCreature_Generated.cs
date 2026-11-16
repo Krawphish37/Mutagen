@@ -1741,7 +1741,7 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 case RecordTypeInts.LVLD:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChanceNone");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ChanceNone", true);
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ChanceNone = PercentBinaryTranslation.Parse(
                         reader: frame,

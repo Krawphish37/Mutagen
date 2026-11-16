@@ -5260,13 +5260,13 @@ namespace Mutagen.Bethesda.Fallout3
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "StandardManeuverDecisionDodgeChance");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "StandardManeuverDecisionDodgeChance", true);
                     item.StandardManeuverDecisionDodgeChance = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "StandardManeuverDecisionLeftRightChance");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "StandardManeuverDecisionLeftRightChance", true);
                     item.StandardManeuverDecisionLeftRightChance = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
@@ -5307,13 +5307,13 @@ namespace Mutagen.Bethesda.Fallout3
                     item.StandardManeuverDecisionIdleTimerMax = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "StandardMeleeDecisionBlockChance");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "StandardMeleeDecisionBlockChance", true);
                     item.StandardMeleeDecisionBlockChance = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "StandardMeleeDecisionAttackChance");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "StandardMeleeDecisionAttackChance", true);
                     item.StandardMeleeDecisionAttackChance = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
@@ -5334,7 +5334,7 @@ namespace Mutagen.Bethesda.Fallout3
                     item.StandardMeleeDecisionHandToHandBonusToAttack = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "StandardMeleeDecisionPowerAttackChance");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "StandardMeleeDecisionPowerAttackChance", true);
                     item.StandardMeleeDecisionPowerAttackChance = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
@@ -5391,13 +5391,13 @@ namespace Mutagen.Bethesda.Fallout3
                     item.StandardUnused5 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(2));
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "StandardMeleeDecisionAcrobaticDodgeChance");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "StandardMeleeDecisionAcrobaticDodgeChance", true);
                     item.StandardMeleeDecisionAcrobaticDodgeChance = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "StandardMeleeDecisionRushingAttackChance");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "StandardMeleeDecisionRushingAttackChance", true);
                     item.StandardMeleeDecisionRushingAttackChance = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);

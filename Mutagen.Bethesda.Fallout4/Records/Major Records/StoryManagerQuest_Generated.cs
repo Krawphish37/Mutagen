@@ -1162,7 +1162,7 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.RNAM:
                 {
                     if (lastParsed.ShortCircuit((int)StoryManagerQuest_FieldIndex.HoursUntilReset, translationParams)) return ParseResult.Stop;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HoursUntilReset");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HoursUntilReset", true);
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HoursUntilReset = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),

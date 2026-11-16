@@ -3968,14 +3968,14 @@ namespace Mutagen.Bethesda.Fallout4
                     item.CutRadius = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "GoreEffectsLocalRotateX");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "GoreEffectsLocalRotateX", true);
                     item.GoreEffectsLocalRotateX = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         multiplier: 57.295799255371094f,
                         divisor: null);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "GoreEffectsLocalRotateY");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "GoreEffectsLocalRotateY", true);
                     item.GoreEffectsLocalRotateY = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         multiplier: 57.295799255371094f,
@@ -4010,7 +4010,7 @@ namespace Mutagen.Bethesda.Fallout4
                         length: 1);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "HealthPercent");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "HealthPercent", true);
                     item.HealthPercent = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
@@ -4020,19 +4020,19 @@ namespace Mutagen.Bethesda.Fallout4
                     item.ActorValue.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ToHitChance");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ToHitChance", true);
                     item.ToHitChance = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ExplosionChance");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ExplosionChance", true);
                     item.ExplosionChance = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "NonLethalDismembermentChance");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "NonLethalDismembermentChance", true);
                     item.NonLethalDismembermentChance = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);

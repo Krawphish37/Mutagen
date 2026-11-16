@@ -1212,7 +1212,7 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.TINV:
                 {
                     if (lastParsed.ShortCircuit((int)TintLayer_FieldIndex.InterpolationValue, translationParams)) return ParseResult.Stop;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "InterpolationValue");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "InterpolationValue", true);
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.InterpolationValue = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,

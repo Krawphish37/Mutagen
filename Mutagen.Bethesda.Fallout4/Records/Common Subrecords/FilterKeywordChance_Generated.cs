@@ -1052,7 +1052,7 @@ namespace Mutagen.Bethesda.Fallout4
             if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FilterKeyword");
             item.FilterKeyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
-            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Chance");
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Chance", true);
             item.Chance = PercentBinaryTranslation.Parse(
                 reader: frame,
                 integerType: FloatIntegerType.UInt);

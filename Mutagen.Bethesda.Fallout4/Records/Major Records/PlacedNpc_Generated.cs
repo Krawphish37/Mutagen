@@ -4322,7 +4322,7 @@ namespace Mutagen.Bethesda.Fallout4
                 }
                 case RecordTypeInts.XHLT:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Health");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Health", true);
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Health = PercentBinaryTranslation.Parse(
                         reader: frame,

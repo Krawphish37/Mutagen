@@ -1806,7 +1806,7 @@ namespace Mutagen.Bethesda.Fallout4
                 }
                 case RecordTypeInts.WNAM:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WeatherAttenuationDb");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WeatherAttenuationDb", true);
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.WeatherAttenuationDb = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,

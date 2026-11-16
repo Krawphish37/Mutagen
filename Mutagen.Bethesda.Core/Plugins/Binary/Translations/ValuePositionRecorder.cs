@@ -125,6 +125,21 @@ internal static class ValuePositionRecorder
     /// <summary>A field is read from here on (a property of the object being read)</summary>
     public static void Field<TReader>(TReader frame, string name) where TReader : IBinaryReadStream => Push(frame, NodeKind.Field, name, -1);
 
+    /// <summary>
+    /// A field is read from here on whose value the reader computes from the bytes (a float stored as an integer or
+    /// scaled, a percent, swapped coordinates, a link whose max value reads as none): its bytes, not the value as read
+    /// </summary>
+    public static void Field<TReader>(TReader frame, string name, bool converted)
+        where TReader : IBinaryReadStream
+    {
+        Push(frame, NodeKind.Field, name, -1);
+        if (!converted || _current is not { Stack.Count: > 0 } c) return;
+        var i = c.Stack[^1];
+        var n = c.Nodes[i];
+        n.Converted = true;
+        c.Nodes[i] = n;
+    }
+
     /// <summary>A list, array or dictionary field is read from here on</summary>
     public static void List<TReader>(TReader frame, string name) where TReader : IBinaryReadStream => Push(frame, NodeKind.List, name, -1);
 

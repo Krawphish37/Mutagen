@@ -2913,13 +2913,13 @@ namespace Mutagen.Bethesda.Starfield
                     item.Coverage = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DirtinessMin");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DirtinessMin", true);
                     item.DirtinessMin = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DirtinessMax");
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DirtinessMax", true);
                     item.DirtinessMax = PercentBinaryTranslation.Parse(
                         reader: dataFrame,
                         integerType: FloatIntegerType.Byte);

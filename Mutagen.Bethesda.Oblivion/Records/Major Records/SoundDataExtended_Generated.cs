@@ -1239,7 +1239,7 @@ namespace Mutagen.Bethesda.Oblivion
             SoundDataBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
-            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StaticAttenuation");
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StaticAttenuation", true);
             item.StaticAttenuation = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 integerType: FloatIntegerType.UShort,

@@ -1111,7 +1111,7 @@ namespace Mutagen.Bethesda.Skyrim
             if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unknown");
             item.Unknown = frame.ReadUInt16();
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
-            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ReverbSendPercent");
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ReverbSendPercent", true);
             item.ReverbSendPercent = PercentBinaryTranslation.Parse(
                 reader: frame,
                 integerType: FloatIntegerType.Byte);

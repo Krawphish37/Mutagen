@@ -1404,7 +1404,8 @@ public class PluginTranslationModule : BinaryTranslationModule
         var note = ValuePositionNote(obj, field);
         if (note != null)
         {
-            sb.AppendLine($"if ({nameof(ValuePositionRecorder)}.{nameof(ValuePositionRecorder.On)}) {nameof(ValuePositionRecorder)}.{note}({frameAccessor}, \"{field.Name}\");");
+            var converted = note == nameof(ValuePositionRecorder.Field) && ValuePositionConverted(field) ? ", true" : null;
+            sb.AppendLine($"if ({nameof(ValuePositionRecorder)}.{nameof(ValuePositionRecorder.On)}) {nameof(ValuePositionRecorder)}.{note}({frameAccessor}, \"{field.Name}\"{converted});");
         }
         await GenerateFillSnippetRead(obj, sb, field, generator, frameAccessor);
         if (note != null)
@@ -1444,6 +1445,18 @@ public class PluginTranslationModule : BinaryTranslationModule
         if (field is ContainerType or Loqui.Generation.DictType or Array2dType) return nameof(ValuePositionRecorder.List);
         return nameof(ValuePositionRecorder.Field);
     }
+
+    /// <summary>
+    /// Whether the generated reader computes the field's value from its bytes rather than taking them as they are (C60):
+    /// a float stored as an integer or scaled, a percent, swapped coordinates, a link whose max value reads as none
+    /// </summary>
+    internal static bool ValuePositionConverted(TypeGeneration field) => field switch
+    {
+        FloatType f => f.IntegerType != null || f.HasTransformations,
+        PercentType => true,
+        FormLinkType { MaxIsNone: true } => true,
+        _ => field.CustomData.TryGetValue("Flip", out var flip) && flip is true,
+    };
 
     private async Task GenerateFillSnippetRead(ObjectGeneration obj, StructuredStringBuilder sb, TypeGeneration field, BinaryTranslationGeneration generator, string frameAccessor)
     {

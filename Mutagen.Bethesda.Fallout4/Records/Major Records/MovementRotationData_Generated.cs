@@ -1142,13 +1142,13 @@ namespace Mutagen.Bethesda.Fallout4
             if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unused1");
             item.Unused1 = frame.ReadInt32();
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
-            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Walk");
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Walk", true);
             item.Walk = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 multiplier: 57.295799255371094f,
                 divisor: null);
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
-            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Run");
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Run", true);
             item.Run = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 multiplier: 57.295799255371094f,
