@@ -57,7 +57,7 @@ public enum ValuePositionKind
 /// <param name="Index">Its place among the record's subrecords, from 0 (an XXXX overflow header counts with the subrecord
 /// it is for, not as its own)</param>
 /// <param name="Turn">Its turn among the record's subrecords of its type, from 0</param>
-/// <param name="HeaderStart">Where it starts in <see cref="RecordValuePositions.Bytes"/> (an XXXX before it included)</param>
+/// <param name="HeaderStart">Where it starts in <see cref="ValuePositions.Bytes"/> (an XXXX before it included)</param>
 /// <param name="ContentStart">Where its content starts</param>
 /// <param name="ContentLength">The length of its content</param>
 public sealed record RecordSubrecord(RecordType Type, int Index, int Turn, int HeaderStart, int ContentStart, int ContentLength)
@@ -73,7 +73,7 @@ public sealed record RecordSubrecord(RecordType Type, int Index, int Turn, int H
 /// [Key] for a dictionary entry, [x,y] for a 2D array cell; a gendered pair's halves are .Male and .Female.
 /// A <see cref="ValuePositionKind.HandRead"/> entry is named by its step instead of a property.</param>
 /// <param name="Kind">What it holds</param>
-/// <param name="Start">Where its bytes start in <see cref="RecordValuePositions.Bytes"/>. A value: its own bytes; an
+/// <param name="Start">Where its bytes start in <see cref="ValuePositions.Bytes"/>. A value: its own bytes; an
 /// object, list or step: from the first to the last byte it read, the headers of the subrecords it read included.</param>
 /// <param name="Length">How many bytes</param>
 /// <param name="Subrecord">The subrecord the bytes are in (a container's: the one it starts in); null in the record header</param>
