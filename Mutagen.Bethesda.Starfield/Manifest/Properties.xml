@@ -661,12 +661,12 @@
     <Property name="ScanWorldspaceMultGlobal" type="IFormLinkNullable&lt;IGlobalGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="NAM4" />
   </Object>
   <Object name="BiomeBTPS" objType="Subrecord">
-    <Property name="Base" type="BiomeBTPSItem" field="Loqui" nullable="false" binary="Normal" offset="192" length="32" />
-    <Property name="Flow" type="BiomeBTPSItem" field="Loqui" nullable="false" binary="Normal" offset="192" length="32" />
-    <Property name="FlatOuter" type="BiomeBTPSItem" field="Loqui" nullable="false" binary="Normal" offset="192" length="32" />
-    <Property name="FlatInner" type="BiomeBTPSItem" field="Loqui" nullable="false" binary="Normal" offset="192" length="32" />
-    <Property name="Talus" type="BiomeBTPSItem" field="Loqui" nullable="false" binary="Normal" offset="192" length="32" />
-    <Property name="Solid" type="BiomeBTPSItem" field="Loqui" nullable="false" binary="Normal" offset="192" length="32" />
+    <Property name="Base" type="BiomeBTPSItem" field="Loqui" nullable="false" binary="Normal" offset="0" length="32" />
+    <Property name="Flow" type="BiomeBTPSItem" field="Loqui" nullable="false" binary="Normal" offset="32" length="32" />
+    <Property name="FlatOuter" type="BiomeBTPSItem" field="Loqui" nullable="false" binary="Normal" offset="64" length="32" />
+    <Property name="FlatInner" type="BiomeBTPSItem" field="Loqui" nullable="false" binary="Normal" offset="96" length="32" />
+    <Property name="Talus" type="BiomeBTPSItem" field="Loqui" nullable="false" binary="Normal" offset="128" length="32" />
+    <Property name="Solid" type="BiomeBTPSItem" field="Loqui" nullable="false" binary="Normal" offset="160" length="32" />
     <Property name="Path" type="BiomeBTPSItem" field="Loqui" nullable="false" binary="Normal" offset="192" length="32" />
   </Object>
   <Object name="BiomeBTPSItem" objType="Subrecord">
@@ -1342,14 +1342,14 @@
     <Property name="SpaceGeneralCombatStrafing" type="Boolean" field="Bool" nullable="false" binary="Normal" data="CSSG" offset="80" length="1" />
     <Property name="SpaceGeneralRollsDuringBoost" type="Boolean" field="Bool" nullable="false" binary="Normal" data="CSSG" offset="81" length="1" />
     <Property name="UnknownCSSG" type="Int16" field="Int16" nullable="false" binary="Normal" data="CSSG" offset="82" length="2" />
-    <Property name="SpaceGeneralPowerWeighting" type="CombatStylePowerWeighting" field="Loqui" nullable="false" binary="Normal" data="CSSG" offset="4" length="36" />
-    <Property name="SpaceManeuverTypesMaxTime" type="CombatStyleManeuverTiming" field="Loqui" nullable="false" binary="Normal" data="CSSM" offset="32" length="32" />
+    <Property name="SpaceGeneralPowerWeighting" type="CombatStylePowerWeighting" field="Loqui" nullable="false" binary="Normal" data="CSSG" offset="84" length="36" />
+    <Property name="SpaceManeuverTypesMaxTime" type="CombatStyleManeuverTiming" field="Loqui" nullable="false" binary="Normal" data="CSSM" offset="0" length="32" />
     <Property name="SpaceManeuverTypesReentryDelays" type="CombatStyleManeuverTiming" field="Loqui" nullable="false" binary="Normal" data="CSSM" offset="32" length="32" />
     <Property name="SpaceRepairDamageThreshold" type="Single" field="Float" nullable="false" binary="Normal" data="CSSR" offset="0" length="4" />
     <Property name="SpaceRepairFarawayDistance" type="Single" field="Float" nullable="false" binary="Normal" data="CSSR" offset="4" length="4" />
     <Property name="SpaceRepairPowerToUse" type="Single" field="Float" nullable="false" binary="Normal" data="CSSR" offset="8" length="4" />
-    <Property name="SpaceRepairInClosePowerWeightingTables" type="CombatStylePowerWeighting" field="Loqui" nullable="false" binary="Normal" data="CSSR" offset="4" length="36" />
-    <Property name="SpaceRepairFarawayPowerWeightingTables" type="CombatStylePowerWeighting" field="Loqui" nullable="false" binary="Normal" data="CSSR" offset="4" length="36" />
+    <Property name="SpaceRepairInClosePowerWeightingTables" type="CombatStylePowerWeighting" field="Loqui" nullable="false" binary="Normal" data="CSSR" offset="12" length="36" />
+    <Property name="SpaceRepairFarawayPowerWeightingTables" type="CombatStylePowerWeighting" field="Loqui" nullable="false" binary="Normal" data="CSSR" offset="48" length="36" />
     <Property name="SpaceApproachingMinDistance" type="Single" field="Float" nullable="false" binary="Normal" data="CSSA" offset="0" length="4" />
     <Property name="SpaceApproachingWeighting" type="CombatStylePowerWeighting" field="Loqui" nullable="false" binary="Normal" data="CSSA" offset="4" length="36" />
     <Property name="SpaceDetectionRating1" type="Single" field="Float" nullable="false" binary="Normal" data="CSSD" offset="0" length="4" />
@@ -1984,7 +1984,7 @@
     <Property name="ObjectEffect" type="IFormLinkNullable&lt;IObjectEffectGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="EITM" />
     <Property name="ImageSpaceModifier" type="IFormLinkNullable&lt;IImageSpaceAdapterGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="MNAM" />
     <Property name="Light" type="IFormLink&lt;ILightGetter&gt;" field="FormLink" nullable="false" binary="Normal" data="ENAM" offset="0" length="4" />
-    <Property name="Sound1" type="SoundReference" field="Loqui" nullable="false" binary="Normal" data="ENAM" offset="44" length="40" />
+    <Property name="Sound1" type="SoundReference" field="Loqui" nullable="false" binary="Normal" data="ENAM" offset="4" length="40" />
     <Property name="Sound2" type="SoundReference" field="Loqui" nullable="false" binary="Normal" data="ENAM" offset="44" length="40" />
     <Property name="ImpactDataSet" type="IFormLink&lt;IImpactDataSetGetter&gt;" field="FormLink" nullable="false" binary="Normal" data="ENAM" offset="84" length="4" />
     <Property name="PlacedObject" type="IFormLink&lt;IExplodeSpawnGetter&gt;" field="FormLink" nullable="false" binary="Normal" data="ENAM" offset="88" length="4" />
@@ -4579,10 +4579,10 @@
     <Property name="Keywords" type="ExtendedList&lt;IFormLinkGetter&lt;IKeywordGetter&gt;&gt;" field="List" nullable="true" binary="Normal" subrecords="KSIZ,KWDA" />
     <Property name="Model" type="Model" field="Loqui" nullable="true" binary="Normal" subrecords="MODL,MODT,MOLM,FLLD,XFLG,MODC,MODF" />
     <Property name="Destructible" type="Destructible" field="Loqui" nullable="true" binary="Normal" subrecords="DEST,DAMC,DSDL,DSTD" />
-    <Property name="PickupSound" type="SoundReference" field="Loqui" nullable="true" binary="Normal" subrecords="PUSH" offset="16" length="40" />
-    <Property name="DropdownSound" type="SoundReference" field="Loqui" nullable="true" binary="Normal" subrecords="PDSH" offset="16" length="40" />
+    <Property name="PickupSound" type="SoundReference" field="Loqui" nullable="true" binary="Normal" subrecords="PUSH" />
+    <Property name="DropdownSound" type="SoundReference" field="Loqui" nullable="true" binary="Normal" subrecords="PDSH" />
     <Property name="EquipmentType" type="IFormLinkNullable&lt;IEquipTypeGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="ETYP" />
-    <Property name="CraftingSound" type="SoundReference" field="Loqui" nullable="true" binary="Normal" subrecords="CUSH" offset="16" length="40" />
+    <Property name="CraftingSound" type="SoundReference" field="Loqui" nullable="true" binary="Normal" subrecords="CUSH" />
     <Property name="Description" type="TranslatedString" field="String" nullable="false" binary="Normal" subrecords="DESC" />
     <Property name="Resources" type="ExtendedList&lt;ItemResource&gt;" field="List" nullable="true" binary="Normal" subrecords="CVPA" />
     <Property name="ComponentDisplayIndices" type="ExtendedList&lt;Byte&gt;" field="List" nullable="true" binary="Normal" subrecords="CDIX" />
@@ -6595,14 +6595,14 @@
     <Property name="MajorFlags" type="MoveableStatic.MajorFlag" derived="majorFlag" from="MajorRecordFlagsRaw" />
   </Object>
   <Object name="MovementData" objType="Subrecord" recordTypes="SPED">
-    <Property name="MaxSpeedForward" type="MovementSpeeds" field="Loqui" nullable="false" binary="Normal" offset="140" length="28" />
-    <Property name="MaxSpeedLeft" type="MovementSpeeds" field="Loqui" nullable="false" binary="Normal" offset="140" length="28" />
-    <Property name="MaxSpeedRight" type="MovementSpeeds" field="Loqui" nullable="false" binary="Normal" offset="140" length="28" />
-    <Property name="MaxSpeedBack" type="MovementSpeeds" field="Loqui" nullable="false" binary="Normal" offset="140" length="28" />
-    <Property name="MaxSpeedUp" type="MovementSpeeds" field="Loqui" nullable="false" binary="Normal" offset="140" length="28" />
+    <Property name="MaxSpeedForward" type="MovementSpeeds" field="Loqui" nullable="false" binary="Normal" offset="0" length="28" />
+    <Property name="MaxSpeedLeft" type="MovementSpeeds" field="Loqui" nullable="false" binary="Normal" offset="28" length="28" />
+    <Property name="MaxSpeedRight" type="MovementSpeeds" field="Loqui" nullable="false" binary="Normal" offset="56" length="28" />
+    <Property name="MaxSpeedBack" type="MovementSpeeds" field="Loqui" nullable="false" binary="Normal" offset="84" length="28" />
+    <Property name="MaxSpeedUp" type="MovementSpeeds" field="Loqui" nullable="false" binary="Normal" offset="112" length="28" />
     <Property name="MaxSpeedDown" type="MovementSpeeds" field="Loqui" nullable="false" binary="Normal" offset="140" length="28" />
-    <Property name="MaxRotationSpeedPitch" type="MovementRotationSpeeds" field="Loqui" nullable="false" binary="Normal" offset="224" length="28" />
-    <Property name="MaxRotationSpeedRoll" type="MovementRotationSpeeds" field="Loqui" nullable="false" binary="Normal" offset="224" length="28" />
+    <Property name="MaxRotationSpeedPitch" type="MovementRotationSpeeds" field="Loqui" nullable="false" binary="Normal" offset="168" length="28" />
+    <Property name="MaxRotationSpeedRoll" type="MovementRotationSpeeds" field="Loqui" nullable="false" binary="Normal" offset="196" length="28" />
     <Property name="MaxRotationSpeedYaw" type="MovementRotationSpeeds" field="Loqui" nullable="false" binary="Normal" offset="224" length="28" />
   </Object>
   <Object name="MovementDataOverride" objType="Subrecord" recordTypes="MTYP,SPED">
@@ -7024,7 +7024,7 @@
   </Object>
   <Object name="NpcRaceOverrideGeneral" objType="Subrecord">
     <Property name="ImpactMaterialType" type="IFormLink&lt;IMaterialTypeGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
-    <Property name="CorpseOpenSound" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="44" length="40" />
+    <Property name="CorpseOpenSound" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="4" length="40" />
     <Property name="CorpseCloseSound" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="44" length="40" />
     <Property name="OnCrippleExplosion" type="IFormLink&lt;IExplosionGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="84" length="4" />
     <Property name="OnCrippleDebris" type="IFormLink&lt;IDebrisGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="88" length="4" />
@@ -8536,11 +8536,11 @@
   </Object>
   <Object name="ResourceGenerationBiomeData" objType="Subrecord">
     <Property name="Common" type="ResourceGenerationBiomeCommonTier" field="Loqui" nullable="false" binary="Normal" offset="0" length="40" />
-    <Property name="Uncommon" type="ResourceGenerationBiomeTier" field="Loqui" nullable="false" binary="Normal" offset="240" length="40" />
-    <Property name="Rare" type="ResourceGenerationBiomeTier" field="Loqui" nullable="false" binary="Normal" offset="240" length="40" />
-    <Property name="Exotic" type="ResourceGenerationBiomeTier" field="Loqui" nullable="false" binary="Normal" offset="240" length="40" />
-    <Property name="Unique" type="ResourceGenerationBiomeTier" field="Loqui" nullable="false" binary="Normal" offset="240" length="40" />
-    <Property name="Special" type="ResourceGenerationBiomeTier" field="Loqui" nullable="false" binary="Normal" offset="240" length="40" />
+    <Property name="Uncommon" type="ResourceGenerationBiomeTier" field="Loqui" nullable="false" binary="Normal" offset="40" length="40" />
+    <Property name="Rare" type="ResourceGenerationBiomeTier" field="Loqui" nullable="false" binary="Normal" offset="80" length="40" />
+    <Property name="Exotic" type="ResourceGenerationBiomeTier" field="Loqui" nullable="false" binary="Normal" offset="120" length="40" />
+    <Property name="Unique" type="ResourceGenerationBiomeTier" field="Loqui" nullable="false" binary="Normal" offset="160" length="40" />
+    <Property name="Special" type="ResourceGenerationBiomeTier" field="Loqui" nullable="false" binary="Normal" offset="200" length="40" />
     <Property name="Everywhere" type="ResourceGenerationBiomeTier" field="Loqui" nullable="false" binary="Normal" offset="240" length="40" />
   </Object>
   <Object name="ResourceGenerationBiomeTier" objType="Subrecord">
@@ -8556,12 +8556,12 @@
     <Property name="Unknown4" type="Single" field="Float" nullable="false" binary="Normal" offset="36" length="4" />
   </Object>
   <Object name="ResourceGenerationCellData" objType="Subrecord">
-    <Property name="Common" type="ResourceGenerationCellTier" field="Loqui" nullable="false" binary="Normal" offset="240" length="40" />
-    <Property name="Uncommon" type="ResourceGenerationCellTier" field="Loqui" nullable="false" binary="Normal" offset="240" length="40" />
-    <Property name="Rare" type="ResourceGenerationCellTier" field="Loqui" nullable="false" binary="Normal" offset="240" length="40" />
-    <Property name="Exotic" type="ResourceGenerationCellTier" field="Loqui" nullable="false" binary="Normal" offset="240" length="40" />
-    <Property name="Unique" type="ResourceGenerationCellTier" field="Loqui" nullable="false" binary="Normal" offset="240" length="40" />
-    <Property name="Special" type="ResourceGenerationCellTier" field="Loqui" nullable="false" binary="Normal" offset="240" length="40" />
+    <Property name="Common" type="ResourceGenerationCellTier" field="Loqui" nullable="false" binary="Normal" offset="0" length="40" />
+    <Property name="Uncommon" type="ResourceGenerationCellTier" field="Loqui" nullable="false" binary="Normal" offset="40" length="40" />
+    <Property name="Rare" type="ResourceGenerationCellTier" field="Loqui" nullable="false" binary="Normal" offset="80" length="40" />
+    <Property name="Exotic" type="ResourceGenerationCellTier" field="Loqui" nullable="false" binary="Normal" offset="120" length="40" />
+    <Property name="Unique" type="ResourceGenerationCellTier" field="Loqui" nullable="false" binary="Normal" offset="160" length="40" />
+    <Property name="Special" type="ResourceGenerationCellTier" field="Loqui" nullable="false" binary="Normal" offset="200" length="40" />
     <Property name="Everywhere" type="ResourceGenerationCellTier" field="Loqui" nullable="false" binary="Normal" offset="240" length="40" />
   </Object>
   <Object name="ResourceGenerationCellTier" objType="Subrecord">
@@ -9703,15 +9703,15 @@
     <Property name="BoundObject" type="IFormLink&lt;IStarfieldMajorRecordGetter&gt;" field="FormLink" nullable="false" binary="Normal" />
   </Object>
   <Object name="VehicleWWiseData" objType="Subrecord" recordTypes="VWWD">
-    <Property name="MotorSound" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="360" length="40" />
-    <Property name="TireSoundFrontLeft" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="360" length="40" />
-    <Property name="TireSoundFrontRight" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="360" length="40" />
-    <Property name="TireSoundRearLeft" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="360" length="40" />
-    <Property name="TireSoundRearRight" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="360" length="40" />
-    <Property name="HeadlightOn" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="360" length="40" />
-    <Property name="HeadlightOff" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="360" length="40" />
-    <Property name="LandingSoundGround" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="360" length="40" />
-    <Property name="LandingSoundWater" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="360" length="40" />
+    <Property name="MotorSound" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="0" length="40" />
+    <Property name="TireSoundFrontLeft" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="40" length="40" />
+    <Property name="TireSoundFrontRight" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="80" length="40" />
+    <Property name="TireSoundRearLeft" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="120" length="40" />
+    <Property name="TireSoundRearRight" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="160" length="40" />
+    <Property name="HeadlightOn" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="200" length="40" />
+    <Property name="HeadlightOff" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="240" length="40" />
+    <Property name="LandingSoundGround" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="280" length="40" />
+    <Property name="LandingSoundWater" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="320" length="40" />
     <Property name="HornSound" type="SoundReference" field="Loqui" nullable="false" binary="Normal" offset="360" length="40" />
   </Object>
   <Object name="VehicleWeaponData" objType="Subrecord" recordTypes="VCTT">
@@ -9749,9 +9749,9 @@
   </Object>
   <Object name="VolumesComponentItem" objType="Subrecord">
     <Step name="TypeParse" fills="Ender" offset="0" length="4" />
-    <Property name="Row0" type="VolumesMatrix" field="Loqui" nullable="false" binary="Normal" offset="52" length="16" />
-    <Property name="Row1" type="VolumesMatrix" field="Loqui" nullable="false" binary="Normal" offset="52" length="16" />
-    <Property name="Row2" type="VolumesMatrix" field="Loqui" nullable="false" binary="Normal" offset="52" length="16" />
+    <Property name="Row0" type="VolumesMatrix" field="Loqui" nullable="false" binary="Normal" offset="4" length="16" />
+    <Property name="Row1" type="VolumesMatrix" field="Loqui" nullable="false" binary="Normal" offset="20" length="16" />
+    <Property name="Row2" type="VolumesMatrix" field="Loqui" nullable="false" binary="Normal" offset="36" length="16" />
     <Property name="Translation" type="VolumesMatrix" field="Loqui" nullable="false" binary="Normal" offset="52" length="16" />
     <Property name="Unknown1" type="Single" field="Float" nullable="false" binary="Normal" offset="68" length="4" />
     <Property name="Unknown2" type="Single" field="Float" nullable="false" binary="Normal" offset="72" length="4" />
@@ -9889,8 +9889,8 @@
     <Property name="EquipmentType" type="IFormLinkNullable&lt;IEquipTypeGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="ETYP" />
     <Property name="BlockBashImpactDataSet" type="IFormLinkNullable&lt;IImpactDataSetGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="BIDS" />
     <Property name="AlternateBlockMaterial" type="IFormLinkNullable&lt;IMaterialTypeGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="BAMT" />
-    <Property name="PickupSound" type="SoundReference" field="Loqui" nullable="true" binary="Normal" subrecords="PUSH" offset="240" length="40" />
-    <Property name="DropdownSound" type="SoundReference" field="Loqui" nullable="true" binary="Normal" subrecords="PDSH" offset="240" length="40" />
+    <Property name="PickupSound" type="SoundReference" field="Loqui" nullable="true" binary="Normal" subrecords="PUSH" />
+    <Property name="DropdownSound" type="SoundReference" field="Loqui" nullable="true" binary="Normal" subrecords="PDSH" />
     <Property name="Keywords" type="ExtendedList&lt;IFormLinkGetter&lt;IKeywordGetter&gt;&gt;" field="List" nullable="true" binary="Normal" subrecords="KSIZ,KWDA" />
     <Property name="Description" type="TranslatedString" field="String" nullable="true" binary="Normal" subrecords="DESC" />
     <Property name="InstanceNaming" type="IFormLinkNullable&lt;IInstanceNamingRulesGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="INRD" />
@@ -9922,12 +9922,12 @@
     <Property name="NpcsUseAmmo" type="Boolean" field="Bool" nullable="false" binary="Normal" data="WAM2" offset="21" length="1" />
     <Property name="NumberOfImpactSounds" type="Byte" field="UInt8" nullable="false" binary="Normal" data="WAM2" offset="22" length="1" />
     <Property name="WAMM" type="MemorySlice&lt;Byte&gt;" field="ByteArray" nullable="true" binary="Normal" subrecords="WAMM" />
-    <Property name="MeleeOrCreature" type="SoundReference" field="Loqui" nullable="false" binary="Normal" data="WAUD" offset="240" length="40" />
-    <Property name="PrimedExplosive" type="SoundReference" field="Loqui" nullable="false" binary="Normal" data="WAUD" offset="240" length="40" />
-    <Property name="DryFire" type="SoundReference" field="Loqui" nullable="false" binary="Normal" data="WAUD" offset="240" length="40" />
-    <Property name="Idle" type="SoundReference" field="Loqui" nullable="false" binary="Normal" data="WAUD" offset="240" length="40" />
-    <Property name="Equip" type="SoundReference" field="Loqui" nullable="false" binary="Normal" data="WAUD" offset="240" length="40" />
-    <Property name="Unequip" type="SoundReference" field="Loqui" nullable="false" binary="Normal" data="WAUD" offset="240" length="40" />
+    <Property name="MeleeOrCreature" type="SoundReference" field="Loqui" nullable="false" binary="Normal" data="WAUD" offset="0" length="40" />
+    <Property name="PrimedExplosive" type="SoundReference" field="Loqui" nullable="false" binary="Normal" data="WAUD" offset="40" length="40" />
+    <Property name="DryFire" type="SoundReference" field="Loqui" nullable="false" binary="Normal" data="WAUD" offset="80" length="40" />
+    <Property name="Idle" type="SoundReference" field="Loqui" nullable="false" binary="Normal" data="WAUD" offset="120" length="40" />
+    <Property name="Equip" type="SoundReference" field="Loqui" nullable="false" binary="Normal" data="WAUD" offset="160" length="40" />
+    <Property name="Unequip" type="SoundReference" field="Loqui" nullable="false" binary="Normal" data="WAUD" offset="200" length="40" />
     <Property name="FastEquip" type="SoundReference" field="Loqui" nullable="false" binary="Normal" data="WAUD" offset="240" length="40" />
     <Property name="SoundLevel" type="SoundLevel" field="Enum" nullable="false" binary="Normal" data="WAUD" offset="280" length="4" />
     <Property name="MeleeDetectionSoundLevel" type="SoundLevel" field="Enum" nullable="false" binary="Normal" data="WAUD" offset="284" length="4" />
@@ -10072,24 +10072,24 @@
     <Step name="CloudXSpeeds" fills="Clouds.XSpeed" subrecords="QNAM" />
     <Step name="CloudColors" fills="Clouds.Colors" subrecords="PNAM" />
     <Step name="CloudAlphas" fills="Clouds.Alphas" subrecords="JNAM" />
-    <Property name="SkyUpperColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="FogNearColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="UnknownColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="AmbientColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="SunlightColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="SunColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="StarsColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="SkyLowerColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="HorizonColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="EffectLightingColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="CloudLodDiffuseColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="CloudLodAmbientColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="FogFarColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="SkyStaticsColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="WaterMultiplierColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="SunGlareColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="MoonGlareColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="FogNearHigh" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
+    <Property name="SkyUpperColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="0" length="32" />
+    <Property name="FogNearColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="32" length="32" />
+    <Property name="UnknownColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="64" length="32" />
+    <Property name="AmbientColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="96" length="32" />
+    <Property name="SunlightColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="128" length="32" />
+    <Property name="SunColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="160" length="32" />
+    <Property name="StarsColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="192" length="32" />
+    <Property name="SkyLowerColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="224" length="32" />
+    <Property name="HorizonColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="256" length="32" />
+    <Property name="EffectLightingColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="288" length="32" />
+    <Property name="CloudLodDiffuseColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="320" length="32" />
+    <Property name="CloudLodAmbientColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="352" length="32" />
+    <Property name="FogFarColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="384" length="32" />
+    <Property name="SkyStaticsColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="416" length="32" />
+    <Property name="WaterMultiplierColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="448" length="32" />
+    <Property name="SunGlareColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="480" length="32" />
+    <Property name="MoonGlareColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="512" length="32" />
+    <Property name="FogNearHigh" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="544" length="32" />
     <Property name="FogFarHigh" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
     <Property name="NAM4" type="Single[]" field="Array" nullable="true" binary="Normal" subrecords="NAM4" />
     <Property name="FogDistanceDayNear" type="Single" field="Float" nullable="false" binary="Normal" data="FNAM" offset="0" length="4" />

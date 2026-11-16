@@ -2194,12 +2194,12 @@
   </Object>
   <Object name="MovementData" objType="Subrecord" recordTypes="SPED">
     <Property name="Versioning" type="MovementData.VersioningBreaks" field="Enum" nullable="false" derived="Break" />
-    <Property name="Left" type="MovementDirectionData" field="Loqui" nullable="false" binary="Normal" offset="48" length="16" />
-    <Property name="Right" type="MovementDirectionData" field="Loqui" nullable="false" binary="Normal" offset="48" length="16" />
-    <Property name="Forward" type="MovementDirectionData" field="Loqui" nullable="false" binary="Normal" offset="48" length="16" />
+    <Property name="Left" type="MovementDirectionData" field="Loqui" nullable="false" binary="Normal" offset="0" length="16" />
+    <Property name="Right" type="MovementDirectionData" field="Loqui" nullable="false" binary="Normal" offset="16" length="16" />
+    <Property name="Forward" type="MovementDirectionData" field="Loqui" nullable="false" binary="Normal" offset="32" length="16" />
     <Property name="Back" type="MovementDirectionData" field="Loqui" nullable="false" binary="Normal" offset="48" length="16" />
-    <Property name="Pitch" type="MovementRotationData" field="Loqui" nullable="false" binary="Normal" offset="96" length="16" />
-    <Property name="Roll" type="MovementRotationData" field="Loqui" nullable="false" binary="Normal" offset="96" length="16" />
+    <Property name="Pitch" type="MovementRotationData" field="Loqui" nullable="false" binary="Normal" offset="64" length="16" />
+    <Property name="Roll" type="MovementRotationData" field="Loqui" nullable="false" binary="Normal" offset="80" length="16" />
     <Property name="Yaw" type="MovementRotationData" field="Loqui" nullable="false" binary="Normal" offset="96" length="16" />
     <Break />
     <Property name="Unused" type="MemorySlice&lt;Byte&gt;" field="ByteArray" nullable="false" binary="Normal" offset="112" length="12" />
@@ -3834,8 +3834,8 @@
     <Property name="BR" type="Byte" field="UInt8" nullable="false" binary="Normal" offset="7" length="1" />
   </Object>
   <Object name="SoundOutputChannels" objType="Subrecord" recordTypes="ONAM">
-    <Property name="Channel0" type="SoundOutputChannel" field="Loqui" nullable="false" binary="Normal" offset="16" length="8" />
-    <Property name="Channel1" type="SoundOutputChannel" field="Loqui" nullable="false" binary="Normal" offset="16" length="8" />
+    <Property name="Channel0" type="SoundOutputChannel" field="Loqui" nullable="false" binary="Normal" offset="0" length="8" />
+    <Property name="Channel1" type="SoundOutputChannel" field="Loqui" nullable="false" binary="Normal" offset="8" length="8" />
     <Property name="Channel2" type="SoundOutputChannel" field="Loqui" nullable="false" binary="Normal" offset="16" length="8" />
   </Object>
   <Object name="SoundOutputData" objType="Subrecord" recordTypes="NAM1">
@@ -4341,24 +4341,24 @@
     <Step name="CloudXSpeeds" subrecords="QNAM" />
     <Step name="CloudColors" subrecords="PNAM" />
     <Step name="CloudAlphas" subrecords="JNAM" />
-    <Property name="SkyUpperColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="FogNearColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="UnknownColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="AmbientColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="SunlightColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="SunColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="StarsColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="SkyLowerColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="HorizonColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="EffectLightingColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="CloudLodDiffuseColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="CloudLodAmbientColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="FogFarColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="SkyStaticsColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="WaterMultiplierColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="SunGlareColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="MoonGlareColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
-    <Property name="FogNearHigh" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
+    <Property name="SkyUpperColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="0" length="32" />
+    <Property name="FogNearColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="32" length="32" />
+    <Property name="UnknownColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="64" length="32" />
+    <Property name="AmbientColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="96" length="32" />
+    <Property name="SunlightColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="128" length="32" />
+    <Property name="SunColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="160" length="32" />
+    <Property name="StarsColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="192" length="32" />
+    <Property name="SkyLowerColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="224" length="32" />
+    <Property name="HorizonColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="256" length="32" />
+    <Property name="EffectLightingColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="288" length="32" />
+    <Property name="CloudLodDiffuseColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="320" length="32" />
+    <Property name="CloudLodAmbientColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="352" length="32" />
+    <Property name="FogFarColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="384" length="32" />
+    <Property name="SkyStaticsColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="416" length="32" />
+    <Property name="WaterMultiplierColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="448" length="32" />
+    <Property name="SunGlareColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="480" length="32" />
+    <Property name="MoonGlareColor" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="512" length="32" />
+    <Property name="FogNearHigh" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="544" length="32" />
     <Property name="FogFarHigh" type="WeatherColor" field="Loqui" nullable="false" binary="Normal" data="NAM0" offset="576" length="32" />
     <Property name="NAM4" type="Single[]" field="Array" nullable="true" binary="Normal" subrecords="NAM4" />
     <Property name="FogDistanceDayNear" type="Single" field="Float" nullable="false" binary="Normal" data="FNAM" offset="0" length="4" />

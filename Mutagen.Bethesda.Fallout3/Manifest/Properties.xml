@@ -2418,12 +2418,12 @@
     <Property name="FaceGenData" type="IGenderedItem&lt;FaceGenData?&gt;" field="Gendered" nullable="true" binary="Normal" subrecords="MNAM,FNAM" />
   </Object>
   <Object name="RaceData" objType="Subrecord" recordTypes="DATA">
-    <Property name="SkillBoost0" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" offset="12" length="2" />
-    <Property name="SkillBoost1" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" offset="12" length="2" />
-    <Property name="SkillBoost2" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" offset="12" length="2" />
-    <Property name="SkillBoost3" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" offset="12" length="2" />
-    <Property name="SkillBoost4" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" offset="12" length="2" />
-    <Property name="SkillBoost5" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" offset="12" length="2" />
+    <Property name="SkillBoost0" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" offset="0" length="2" />
+    <Property name="SkillBoost1" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" offset="2" length="2" />
+    <Property name="SkillBoost2" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" offset="4" length="2" />
+    <Property name="SkillBoost3" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" offset="6" length="2" />
+    <Property name="SkillBoost4" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" offset="8" length="2" />
+    <Property name="SkillBoost5" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" offset="10" length="2" />
     <Property name="SkillBoost6" type="SkillBoost" field="Loqui" nullable="false" binary="Normal" offset="12" length="2" />
     <Property name="Unused" type="Int32" field="Int32" nullable="false" binary="Normal" offset="14" length="4" />
     <Property name="Height" type="IGenderedItem&lt;Single&gt;" field="Gendered" nullable="false" binary="Normal" offset="18" length="8" />
@@ -3015,9 +3015,9 @@
     <Property name="Sounds" type="ExtendedList&lt;WeatherSound&gt;" field="List" nullable="false" binary="Normal" subrecords="SNAM" />
   </Object>
   <Object name="WeatherCloudLayerColors" objType="Subrecord" recordTypes="PNAM">
-    <Property name="Layer0" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="72" length="24" />
-    <Property name="Layer1" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="72" length="24" />
-    <Property name="Layer2" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="72" length="24" />
+    <Property name="Layer0" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="0" length="24" />
+    <Property name="Layer1" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="24" length="24" />
+    <Property name="Layer2" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="48" length="24" />
     <Property name="Layer3" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="72" length="24" />
   </Object>
   <Object name="WeatherCloudSpeeds" objType="Subrecord" recordTypes="ONAM">
@@ -3035,15 +3035,15 @@
     <Property name="Midnight" type="Color" field="Color" nullable="false" binary="Normal" offset="20" length="4" />
   </Object>
   <Object name="WeatherColors" objType="Subrecord" recordTypes="NAM0">
-    <Property name="SkyUpper" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="216" length="24" />
-    <Property name="Fog" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="216" length="24" />
-    <Property name="UnusedA" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="216" length="24" />
-    <Property name="Ambient" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="216" length="24" />
-    <Property name="Sunlight" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="216" length="24" />
-    <Property name="Sun" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="216" length="24" />
-    <Property name="Stars" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="216" length="24" />
-    <Property name="SkyLower" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="216" length="24" />
-    <Property name="Horizon" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="216" length="24" />
+    <Property name="SkyUpper" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="0" length="24" />
+    <Property name="Fog" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="24" length="24" />
+    <Property name="UnusedA" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="48" length="24" />
+    <Property name="Ambient" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="72" length="24" />
+    <Property name="Sunlight" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="96" length="24" />
+    <Property name="Sun" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="120" length="24" />
+    <Property name="Stars" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="144" length="24" />
+    <Property name="SkyLower" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="168" length="24" />
+    <Property name="Horizon" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="192" length="24" />
     <Property name="UnusedB" type="WeatherColorSet" field="Loqui" nullable="false" binary="Normal" offset="216" length="24" />
   </Object>
   <Object name="WeatherData" objType="Subrecord" recordTypes="DATA">
