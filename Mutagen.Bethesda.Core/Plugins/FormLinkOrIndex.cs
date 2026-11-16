@@ -21,7 +21,7 @@ public class FormLinkOrIndexGetter<TMajorGetter> : IFormLinkOrIndexGetter<TMajor
     public FormLinkOrIndexGetter(IFormLinkOrIndexFlagGetter parent, FormKey key)
     {
         _parent = parent;
-        Index = default;
+        Index = 0;
         Link = new FormLinkNullable<TMajorGetter>(key);
     }
     
@@ -69,6 +69,14 @@ public class FormLinkOrIndexGetter<TMajorGetter> : IFormLinkOrIndexGetter<TMajor
     public override int GetHashCode() => FormLinkOrIndex<TMajorGetter>.EqualityComparer.GetHashCode(this);
 }
 
+/// <summary>
+/// A value that is a link or an index, by flags of its parent (a condition parameter: an alias or package data index when
+/// UseAliases or UsePackageData is set, else a link). The file stores one uint32; Mutagen keeps it both ways, Index the
+/// number and Link the FormKey it reads as, and the parent's flags say which one is written and compared (C68).<br/>
+/// Index is never left null: 0 when nothing was read (a new value, or after <see cref="Clear"/>), as an index 0 is a
+/// real value (alias 0: GetLineOfSight conditions in Starfield.esm). A null set by a caller is written, compared and
+/// copied as 0.
+/// </summary>
 public class FormLinkOrIndex<TMajorGetter> : IFormLinkOrIndex<TMajorGetter>
     where TMajorGetter : class, IMajorRecordGetter
 {
@@ -82,7 +90,7 @@ public class FormLinkOrIndex<TMajorGetter> : IFormLinkOrIndex<TMajorGetter>
     public FormLinkOrIndex(IFormLinkOrIndexFlagGetter parent)
     {
         _parent = parent;
-        Index = default;
+        Index = 0;
         Link = new FormLinkNullable<TMajorGetter>();
     }
 
@@ -96,18 +104,24 @@ public class FormLinkOrIndex<TMajorGetter> : IFormLinkOrIndex<TMajorGetter>
     public FormLinkOrIndex(IFormLinkOrIndexFlagGetter parent, FormKey key)
     {
         _parent = parent;
-        Index = default;
+        Index = 0;
         Link = new FormLinkNullable<TMajorGetter>(key);
     }
 
+    private FormLinkOrIndex(IFormLinkOrIndexFlagGetter parent, FormKey key, uint index)
+    {
+        _parent = parent;
+        Index = index;
+        Link = new FormLinkNullable<TMajorGetter>(key);
+    }
+
+    /// <summary>
+    /// The value as read from a file (the overlay): the stored uint32 as both the index and the FormKey it reads as, as
+    /// the full import's FormLinkOrIndexBinaryTranslation.ParseInto keeps it (the parent's flags may be set after it)
+    /// </summary>
     public static FormLinkOrIndex<TMajorGetter> Factory(IFormLinkOrIndexFlagGetter parent, FormKey key, uint index)
     {
-        if (parent.UseAliases || parent.UsePackageData)
-        {
-            return new FormLinkOrIndex<TMajorGetter>(parent, index);
-        }
-
-        return new FormLinkOrIndex<TMajorGetter>(parent, key);
+        return new FormLinkOrIndex<TMajorGetter>(parent, key, index);
     }
 
     [MemberNotNullWhen(false, nameof(Index))]
@@ -184,7 +198,7 @@ public class FormLinkOrIndex<TMajorGetter> : IFormLinkOrIndex<TMajorGetter>
                 return x.Link.Equals(y.Link);
             }
 
-            return x.Index == y.Index;
+            return (x.Index ?? 0) == (y.Index ?? 0);
         }
 
         public int GetHashCode(IFormLinkOrIndexGetter<TMajorGetter> obj)
@@ -193,14 +207,14 @@ public class FormLinkOrIndex<TMajorGetter> : IFormLinkOrIndex<TMajorGetter>
             {
                 return obj.Link.GetHashCode();
             }
-            return obj.Index.GetHashCode();
+            return (obj.Index ?? 0).GetHashCode();
         }
     }
 
     public void SetTo<TMajorRhs>(IFormLinkOrIndexGetter<TMajorRhs> rhs)
         where TMajorRhs : class, TMajorGetter
     {
-        Index = rhs.Index;
+        Index = rhs.Index ?? 0;
         Link.SetTo(rhs.Link);
     }
 
