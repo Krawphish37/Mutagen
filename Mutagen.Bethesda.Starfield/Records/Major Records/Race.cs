@@ -105,7 +105,7 @@ partial class RaceBinaryCreateTranslation
         IRaceInternal item,
         PreviousParse lastParsed)
     {
-        return ParseMnamFnam(frame, item, lastParsed);
+        return ParseMnamFnam(frame, item);
     }
 
     public static partial ParseResult FillBinaryFNAMLogicCustom(
@@ -113,20 +113,19 @@ partial class RaceBinaryCreateTranslation
         IRaceInternal item,
         PreviousParse lastParsed)
     {
-        return ParseMnamFnam(frame, item, lastParsed);
+        return ParseMnamFnam(frame, item);
     }
 
+    // The generated dispatch of MNAM and FNAM calls this only where the markers are the skeletal model's (before its
+    // place, or the first gendered group of a record whose subrecords come out of order), as it calls the overlay's
+    // MNAMLogicCustomParse: both readers read the skeletal model there, one logic (C58). This used to check again that
+    // nothing at or past the skeletal model had been read, and skipped markers the overlay read (with nothing read
+    // before them, the check's compare with no index said no).
     private static ParseResult ParseMnamFnam(
         MutagenFrame frame,
-        IRaceInternal item,
-        PreviousParse lastParsed)
+        IRaceInternal item)
     {
-        if (lastParsed.ParsedIndex < (int)Race_FieldIndex.SkeletalModel)
-        {
-            return ParseSkeletalModel(item, frame.SpawnAll());
-        }
-
-        return null;
+        return ParseSkeletalModel(item, frame.SpawnAll());
     }
 
     private static ParseResult ParseSkeletalModel(
