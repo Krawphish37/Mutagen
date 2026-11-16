@@ -35,9 +35,10 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
     internal bool? OwnFormIdsStyled { get; private set; }
 
     /// <summary>
-    /// The current mod's own size (its header flags): a Small or Medium mod can store its own FormIDs in two forms
+    /// The current mod's own size (its header flags): a Small or Medium mod can store its own FormIDs in two forms, its
+    /// full index (<see cref="OwnIndex"/> of Full) and the form of its size (FE + its small index, FD + its medium index)
     /// </summary>
-    internal MasterStyle OwnHeaderStyle { get; private set; }
+    public MasterStyle OwnHeaderStyle { get; private set; }
 
     /// <summary>
     /// Whether the current mod can store its own FormIDs in a form other than the one written (OwnFormIdForms, C163):
@@ -50,8 +51,10 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
     /// (the number of full masters), or for a Small mod FE + its small index, for a Medium mod FD + its medium index.
     /// A master index past the list is not one of these (it reads as the mod too, decision 6.1, and is written as before).
     /// </summary>
+    /// <param name="raw">A FormID as the mod's file stores it</param>
     /// <param name="includePastList">Also a master index past the list (it reads as the mod too; decision 6.1 revised, C189)</param>
-    internal bool IsOwnFormVariant(uint raw, bool includePastList = false)
+    /// <returns>True when it reads as one of the mod's own records but isn't the form <see cref="GetFormID"/> writes</returns>
+    public bool IsOwnFormVariant(uint raw, bool includePastList = false)
     {
         uint id;
         var top = raw >> 24;
@@ -87,9 +90,14 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
 
     /// <summary>
     /// How a FormID is stored (StoredFormIdMixIn, C203): its form by its top byte (FE Small, FD Medium, else Full), or
-    /// past the list when its index is past both the masters of that size and the mod's own place in that form
+    /// past the list when its index is past both the masters of that size and the mod's own place in that form (the
+    /// mod's own place exists in the full form and in the form of its own size only: an FE form at the small index of
+    /// a Full or Medium mod is past the list). Public since C58 (W8): the rule SFSearch's FormID forms follow.
     /// </summary>
-    internal Mutagen.Bethesda.Plugins.Records.StoredFormIdForm Classify(uint raw, out bool own)
+    /// <param name="raw">A FormID as the mod's file stores it</param>
+    /// <param name="own">Whether it reads as the mod's own record (its own place in a form, or past the list); false
+    /// for 0, the null FormID</param>
+    public Mutagen.Bethesda.Plugins.Records.StoredFormIdForm Classify(uint raw, out bool own)
     {
         ExtractFormIdInfo(new FormID(raw), out var style, out var index, out _, out _);
         uint mastersOfStyle = style switch
@@ -130,6 +138,113 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
             _ => _ownFullIndex,
         };
         return index < mastersOfStyle ? raw : (1UL << 32) | id;
+    }
+
+    /// <summary>
+    /// The index the current mod's own FormIDs take in one numbering: the number of its masters of that size. Full: the
+    /// top byte (03xxxxxx for a mod with three Full masters); Medium: FD + this index + 4 hex digits; Small: FE + this
+    /// index (3 hex digits) + 3 hex digits. An index past it, in any numbering, reads as the mod too (past the list).
+    /// </summary>
+    /// <param name="style">The numbering</param>
+    public uint OwnIndex(MasterStyle style) => style switch
+    {
+        MasterStyle.Full => _ownFullIndex,
+        MasterStyle.Medium => _ownMediumIndex,
+        MasterStyle.Small => _ownSmallIndex,
+        _ => throw new ArgumentOutOfRangeException(nameof(style), style, null)
+    };
+
+    /// <summary>
+    /// Every FormID the mod's file can store that reads back as a FormKey (C58/W8), the form <see cref="GetFormID"/>
+    /// writes first:
+    /// <list type="bullet">
+    /// <item>the null FormKey: 0 alone;</item>
+    /// <item>a master's record: its one form, its master's index in the numbering of the master's size (none when the
+    /// ID doesn't fit that numbering);</item>
+    /// <item>the mod's own record: its full index (when the ID fits 6 hex digits), and for a Small or Medium mod the form
+    /// of its size (when the ID fits 3 or 4 hex digits); with <paramref name="includePastList"/>, also every index past
+    /// the list in each numbering the ID fits, which the game and Mutagen read as the mod too (decision 6.1).</item>
+    /// </list>
+    /// A FormKey of a mod that is neither a master nor the mod itself has none. The forms are the stored values for
+    /// which <see cref="GetFormKey"/> gives the FormKey (0 aside, the null FormID).
+    /// </summary>
+    /// <param name="formKey">The FormKey</param>
+    /// <param name="includePastList">Also the indices past the list (as <see cref="Classify"/> calls them)</param>
+    public IEnumerable<FormID> EnumerateStoredForms(FormKey formKey, bool includePastList = false)
+    {
+        if (formKey == FormKey.Null)
+        {
+            yield return FormID.Null;
+            yield break;
+        }
+        var id = formKey.ID;
+        if (formKey.ModKey != CurrentMod)
+        {
+            if (TryLookupModKey(formKey.ModKey, reference: true, out var masterStyle, out var masterIndex)
+                && id <= FormID.IdMask(masterStyle))
+            {
+                yield return FormID.Factory(masterStyle, masterIndex, id);
+            }
+            yield break;
+        }
+        var seen = new HashSet<uint>();
+        uint? written = null;
+        try
+        {
+            written = GetFormID(formKey).Raw;
+        }
+        catch (TooManyMastersException)
+        {
+            // Its index doesn't fit the form it would be written in: the other forms still read as it
+        }
+        if (written is { } w && seen.Add(w)) yield return new FormID(w);
+        foreach (var raw in OwnForms(id, includePastList))
+        {
+            if (raw != 0 && seen.Add(raw)) yield return new FormID(raw);
+        }
+    }
+
+    // The mod's own forms of an ID in each numbering: its own place (full index; the FE / FD index of its own size),
+    // then the indices past the list
+    private IEnumerable<uint> OwnForms(uint id, bool includePastList)
+    {
+        if (id <= FormID.FullIdMask && _ownFullIndex < IndexCapacity(MasterStyle.Full))
+        {
+            yield return FormID.Factory(MasterStyle.Full, _ownFullIndex, id).Raw;
+        }
+        if (OwnHeaderStyle == MasterStyle.Small && id <= FormID.SmallIdMask && _ownSmallIndex < IndexCapacity(MasterStyle.Small))
+        {
+            yield return FormID.Factory(MasterStyle.Small, _ownSmallIndex, id).Raw;
+        }
+        if (OwnHeaderStyle == MasterStyle.Medium && id <= FormID.MediumIdMask && _ownMediumIndex < IndexCapacity(MasterStyle.Medium))
+        {
+            yield return FormID.Factory(MasterStyle.Medium, _ownMediumIndex, id).Raw;
+        }
+        if (!includePastList) yield break;
+        if (id <= FormID.FullIdMask)
+        {
+            for (uint index = _ownFullIndex + 1; index < IndexCapacity(MasterStyle.Full); index++)
+            {
+                yield return FormID.Factory(MasterStyle.Full, index, id).Raw;
+            }
+        }
+        if (id <= FormID.MediumIdMask)
+        {
+            // The Medium numbering's own index is the mod's own place only for a Medium mod
+            var first = _ownMediumIndex + (OwnHeaderStyle == MasterStyle.Medium ? 1u : 0u);
+            for (uint index = first; index < IndexCapacity(MasterStyle.Medium); index++)
+            {
+                yield return FormID.Factory(MasterStyle.Medium, index, id).Raw;
+            }
+        }
+        if (id <= FormID.SmallIdMask)
+        {
+            var first = _ownSmallIndex + (OwnHeaderStyle == MasterStyle.Small ? 1u : 0u);
+            for (uint index = first; index < IndexCapacity(MasterStyle.Small); index++)
+            {
+                yield return FormID.Factory(MasterStyle.Small, index, id).Raw;
+            }
+        }
     }
 
     // The indices the mod's own FormIDs take in each form: the number of masters of that size
@@ -199,6 +314,40 @@ public class SeparatedMasterPackage : IReadOnlySeparatedMasterPackage
     /// <summary>
     /// Builds the package for reading a mod from its file, deciding from the file how it stores its own FormIDs
     /// </summary>
+    /// <summary>
+    /// The package of a mod of a game with separated master numbering (Starfield) from its masters alone (C58/W8): the
+    /// masters in the order its header lists them, each with its size, and the mod's own size. No load order, master
+    /// file or mod file is read. Every master's size is given, so none is missing (C180: a master whose size isn't
+    /// known stays an error where a plugin is opened).
+    /// </summary>
+    /// <param name="currentMod">The mod</param>
+    /// <param name="ownStyle">The mod's own size (its header flags)</param>
+    /// <param name="masters">Its masters in header order, with their sizes</param>
+    /// <exception cref="ArgumentException">A master is listed twice, or is the mod itself</exception>
+    /// <exception cref="TooManyMastersException">The masters of a size need more indices than a FormID holds</exception>
+    public static SeparatedMasterPackage FromMasterStyles(
+        ModKey currentMod,
+        MasterStyle ownStyle,
+        IReadOnlyList<KeyedMasterStyle> masters)
+    {
+        var lookup = new Cache<IModMasterStyledGetter, ModKey>(x => x.ModKey);
+        var listed = new HashSet<ModKey>();
+        foreach (var master in masters)
+        {
+            if (master.ModKey == currentMod)
+            {
+                throw new ArgumentException($"{currentMod} can't be its own master", nameof(masters));
+            }
+            if (!listed.Add(master.ModKey))
+            {
+                throw new ArgumentException($"{master.ModKey} is listed twice as a master of {currentMod}", nameof(masters));
+            }
+            lookup.Set(master);
+        }
+        var collection = new MasterReferenceCollection(currentMod, masters.Select(m => new MasterReference() { Master = m.ModKey }));
+        return (SeparatedMasterPackage)Separate(currentMod, ownStyle, collection, lookup);
+    }
+
     internal static IReadOnlySeparatedMasterPackage FactoryDetecting(
         GameRelease release,
         ModKey currentModKey,

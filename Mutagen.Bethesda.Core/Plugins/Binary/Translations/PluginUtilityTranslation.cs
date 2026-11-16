@@ -102,6 +102,19 @@ internal static class PluginUtilityTranslation
             frame: frame);
         // A header FormID that isn't the one Mutagen writes for this FormKey is written back as read (RawHeaderFormIds)
         RawHeaderFormIds.Remember(record, rawFormId, frame.MetaData);
+        if (frame.MetaData.ChildRecordsHeadersOnly)
+        {
+            if (frame.MetaData.HeadersOnlyParentRead)
+            {
+                // MajorRecordReader's ChildRecordRead.Headers (C58/W9): a child is read from its header alone
+                frame.SetToFinalPosition();
+                frame.MetaData.FormVersion = null;
+                return record;
+            }
+            frame.MetaData.HeadersOnlyParentRead = true;
+        }
+        // The fields the record's subrecords are read into, for PartialFormMixIn.TryGetPresentFields (C58/W7)
+        var present = PresentFields.Begin(record);
         // Where each field's subrecords start, to note records whose subrecords come in an order Mutagen does not write
         var fieldStarts = frame.MetaData.Constants.KeepSubrecordOrder ? SubrecordOrder.FieldStarts : null;
         var firstField = fieldStarts?.Count ?? 0;
@@ -160,6 +173,7 @@ internal static class PluginUtilityTranslation
                 }
 
                 if (!parsed.KeepParsing) break;
+                if (present != null && parsed.ParsedIndex is { } presentIndex) present.Add(presentIndex);
                 if (rewritten != null && SubrecordOrder.NonCanonicalFormIdRead)
                 {
                     rewritten.Add((checked((int)(subrecordStart - contentStart)), checked((int)(Math.Max(targetFrame.Position, finalPos) - contentStart))));
@@ -202,6 +216,7 @@ internal static class PluginUtilityTranslation
 
                 lastParsed = parsed;
             }
+            if (present != null) PresentFields.Remember(record, present);
 
             if (outOfOrder && fieldStarts != null)
             {
