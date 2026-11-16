@@ -2412,6 +2412,9 @@ namespace Mutagen.Bethesda.Starfield
                 case "QualityUpgradeComponent":
                 case "IQualityUpgradeComponentGetter":
                 case "IQualityUpgradeComponent":
+                case "UnknownComponent":
+                case "IUnknownComponentGetter":
+                case "IUnknownComponent":
                     break;
                 case "DialogResponses":
                 case "IDialogResponsesGetter":

@@ -45,7 +45,7 @@
   </Object>
   <Object name="PerkRank" objType="Subrecord" >
     <Fields>
-      <RefList name="Effects" refName="APerkEffect" binary="Custom" selectedBy="subrecord:PRKE:UInt8" />
+      <RefList name="Effects" refName="APerkEffect" binary="Custom" selectedBy="subrecord:PRKE:UInt8" selectorEnum="Perk.EffectType" />
       <RefList name="Conditions" refName="Condition" />
       <RefList name="Activities" refName="Activity" counterRecType="ATCP" />
       <String name="Description" recordType="DESC" translated="DL" nullable="False" />

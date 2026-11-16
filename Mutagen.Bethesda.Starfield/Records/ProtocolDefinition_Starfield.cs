@@ -1359,6 +1359,7 @@ internal class ProtocolDefinition_Starfield : IProtocolRegistration
             UniqueOverlayListComponent_Registration.Instance,
             UniqueOverlayListComponentItem_Registration.Instance,
             UniquePatternPlacementInfoComponent_Registration.Instance,
+            UnknownComponent_Registration.Instance,
             UnknownConditionData_Registration.Instance,
             UnknownObjectModification_Registration.Instance,
             UntypedOwner_Registration.Instance,

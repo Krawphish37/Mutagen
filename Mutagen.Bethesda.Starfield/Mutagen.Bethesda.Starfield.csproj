@@ -7104,5 +7104,8 @@
     <Compile Include="Records\Major Records\NoteSound_Generated.cs">
       <DependentUpon>Note.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Common Subrecords\UnknownComponent_Generated.cs">
+      <DependentUpon>Component.xml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

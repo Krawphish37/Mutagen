@@ -8,7 +8,7 @@
       <!-- xEdit "Parameter #3": a keyword for Linked Reference (also LinkedReferenceKeyword), the alias for Quest Alias, the package data input for Package Data, an event member for Event Data (see ConditionData.cs); -1 otherwise -->
       <Int32 name="ParameterThree" default="-1" binary="NoGeneration" layoutOffset="28"/>
       <!-- Parameter 3 as a keyword when RunOnType is LinkedReference (xEdit "Linked Keyword"). Read from and written to the same 4 bytes as ParameterThree, see Condition.cs. -->
-      <FormLink name="LinkedReferenceKeyword" refName="Keyword" binary="NoGeneration" layoutOffset="28"/>
+      <FormLink name="LinkedReferenceKeyword" refName="Keyword" binary="NoGeneration" layoutOffset="28" layoutPresentWhen="field:RunOnType:is=LinkedReference;value:not=0,-1"/>
       <!-- Bits of the CTDA's first byte (Condition.Flags 0x02 and 0x08), read into these two -->
       <Bool name="UseAliases" binary="NoGeneration" layoutOffset="0" layoutBits="1"/>
       <Bool name="UsePackageData" binary="NoGeneration" layoutOffset="0" layoutBits="3"/>
@@ -1642,7 +1642,7 @@
   </Object>
   <Object name="GetCauseofDeathConditionData" conditionFunction="396" objType="Subrecord" baseClass="ConditionData" binaryOverlay="NoGeneration">
     <Fields>
-      <Enum enumName="DamageCauseType" name="FirstParameter" />
+      <Enum enumName="DamageCauseType" name="FirstParameter" engineEnum="DamageCauseType" />
       <String name="FirstUnusedStringParameter" recordType="CIS1" nullable="true" binary="NoGeneration" />
       <Int32 name="SecondParameter" />
       <String name="SecondUnusedStringParameter" recordType="CIS2" nullable="true" binary="NoGeneration" />

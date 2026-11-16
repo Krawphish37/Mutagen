@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
-  <Object name="SoundReference" objType="Subrecord" >
+  <Object name="SoundReference" engineClass="BGSAudio::WwiseSoundHook" objType="Subrecord" >
     <Fields>
-      <Guid name="StartEvent" ckName="StartEvent" />
-      <Guid name="StopEvent" ckName="StopEvent" />
-      <FormLink name="ConditionForm" refName="ConditionRecord" ckName="Condition Form" />
-      <FormLink name="EventForm" refName="WWiseEventData" ckName="Event Form" />
+      <Guid name="StartEvent" ckName="StartEvent" engineField="StartEvent" />
+      <Guid name="StopEvent" ckName="StopEvent" engineField="StopEvent" />
+      <FormLink name="ConditionForm" refName="ConditionRecord" ckName="Condition Form" engineField="pConditionForm" />
+      <FormLink name="EventForm" refName="WWiseEventData" ckName="Event Form" engineField="pEventForm" />
     </Fields>
   </Object>
 </Loqui>

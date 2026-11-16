@@ -22,6 +22,20 @@ the xml's structure, or they come from a hand-written base class. Anything that 
 These hold no data of their own beyond what the file's bytes say (the header flags, or how far a subrecord's data
 went), but they are written by the serializer and compared by equality like any field.
 
+### Gendered values in the binary
+A `<Gendered>` field holds a male and a female half. With `genderEnumRecord="SIG"` (Starfield's
+`ArmorAddon.BoneDataModifiers`, after `BSMP`), the halves follow a subrecord that says the gender
+(`GenderedItemBinaryTranslation.ParseRequired`, the overlay's `GenderedItemBinaryOverlay.Factory`):
+
+- **Reading:** up to two `SIG` subrecords in a row, in any order. Each holds an int32: 0 male, 1 female. Right after
+  it come that half's subrecords, the field's own form (for a list, the run of its item subrecords). A gender other
+  than 0 or 1 reads no half. A half the file doesn't have is empty. A later `SIG` in the same record continues the
+  same value.
+- **Writing:** both halves, always. First `SIG` 0 and the male half, then `SIG` 1 and the female half.
+
+The marker forms (`maleMarker`/`femaleMarker`, `markerType`) are read through their own attributes, which the xml
+carries.
+
 ## Loqui
 The generation is built on top of [Loqui](https://github.com/Noggog/Loqui), a code generation library that is only really used by Mutagen.  Loqui provides the xml schema and the base generation of the classes, interfaces, masks, equality, and copying.  `Mutagen.Bethesda.Generation` layers the Bethesda specific pieces on top, such as binary translation and FormLink handling.
 

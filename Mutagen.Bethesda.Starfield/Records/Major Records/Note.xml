@@ -22,7 +22,7 @@
         <RecordType>SNAM</RecordType>
         <RecordType>PNAM</RecordType>
       </CustomLogic>
-      <RefDirect name="Data" refName="ANoteData" binary="NoGeneration" selectedBy="subrecord:DNAM:UInt8" />
+      <RefDirect name="Data" refName="ANoteData" binary="NoGeneration" selectedBy="subrecord:DNAM:UInt8" selectorEnum="Note.Types" />
     </Fields>
   </Object>
   <Object name="ANoteData" objType="Subrecord" abstract="true" />

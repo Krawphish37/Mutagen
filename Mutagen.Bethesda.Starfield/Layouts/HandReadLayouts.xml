@@ -5,8 +5,13 @@
   at run time: it is a description, held against Mutagen's own parse by the unit test HandReadLayoutFileTests, which
   reads Starfield.esm and the official plugins with it and compares every value that names a field.
 
-  Record sig="XXXX" object="MutagenClass": the subrecords of one record type, in file order.
+  Record sig="XXXX" object="MutagenClass": the subrecords of one record type, in file order (TES4: the plugin header's).
   AnyRecord sig="XXXX": checked on every record (of any type) that has that subrecord.
+  Header [sig="XXXX"] object="MutagenClass": the record header, the 24 bytes before a record's subrecords (its signature,
+                                                      the size of its data, then the fields the generated FillBinaryStructs
+                                                      reads), described at the content level. With sig: that record type's
+                                                      (TES4: the plugin header's); without: every other record's. Checked
+                                                      on every record the test reads, and on each plugin's TES4.
   Define name="N" / Use name="N": a block written once and used in several places (either level).
 
   Subrecord level (inside Record, Segments, Object, Switch cases):
@@ -42,11 +47,13 @@
     prefix="true"                                     (Segments) the file holds the first N elements of a longer Mutagen
                                                       list (or dictionary)
     Generated sigs="A,B"                              subrecords here that the generated code reads; passed over
-    Object field="Prop" [optional="true"] [reader="generated"]
+    Object field="Prop" [optional="true"] [reader="generated"] [class="MutagenClass"]
                                                       the children belong to that Mutagen object (optional: when
                                                       Mutagen's is null, none of the children's subrecords may follow).
                                                       reader="generated": hand-written code picks the class, Mutagen's
-                                                      generated reader of it reads the subrecords the children pass over
+                                                      generated reader of it reads the subrecords the children pass over.
+                                                      class (both levels): the reader always makes that class here, though
+                                                      the field's type has subclasses (it picks no kind)
     Switch on="var" [mask="0x.."] / Case value="1,2" [type="MutagenClass"] / Default
                                                       chooses by a value read earlier; type: the class Mutagen must have
                                                       made for the current object in that case
@@ -58,7 +65,8 @@
   BNAM as 0 or 1, so the synthetic mod Mutagen writes can't hold one either.
 
   Content level (inside Sub, SubRepeat, Repeat, Object, Switch cases); every byte must be described:
-    U8 I8 U16 I16 U32 I32 F32                         little-endian numbers
+    U8 I8 U16 I16 U32 I32 U64 F32                     little-endian numbers
+    Guid                                              16 bytes, a .NET Guid in its own byte order (as Mutagen reads one)
     I32String [name="var"]                            int32 length, then the text (zero-terminated when not empty);
                                                       name keeps it for a Switch on text
     FormID                                            4 bytes, through the plugin's masters
@@ -82,6 +90,9 @@
                                                       (on the last, their fields are null)
     Object field="Prop", Switch                       as above
     Bit of="var" index="N|$i" [invert="true"]         one bit of a value read earlier
+    View of="var" field="Prop" [optional="true"]      no bytes: the field is a 32-bit value read earlier as a whole, seen
+                                                      as the field's type (an enum view of a flags value); optional: only
+                                                      some classes have the property (where it is missing, nothing is said)
     IfMore                                            the children only when bytes are left
     Peek offset="N" type="U8|U16|U32" name="var"      a value further on, read without moving
     TypeSwitch / Case type="A,B" / Default            chooses by the class Mutagen made for the current object
@@ -98,6 +109,53 @@
                                                       (the field is the number of bytes)
 -->
 <HandReadLayouts game="Starfield" version="1">
+
+  <!-- The record header (C57): the 24 bytes before every record's subrecords. MajorRecordFlagsRaw, FormKey and
+       VersionControl: MajorRecordBinaryCreateTranslation.FillBinaryStructs (Mutagen.Bethesda.Core); FormVersion and
+       Version2: StarfieldMajorRecordBinaryCreateTranslation.FillBinaryStructs. The rest are views of the flags, no bytes
+       of their own: IsDeleted (0x20) and IsCompressed (0x40000), hand-written on Core's MajorRecord;
+       StarfieldMajorRecordFlags (StarfieldMajorRecord.cs); MajorFlags, the record's own MajorFlag enum, which Mutagen's
+       generator adds where the record xml sets majorFlag="true". The record xml places the same fields
+       (layoutSubrecord="header" and layoutOffset on MajorRecord.xml's and StarfieldMajorRecord.xml's fields). -->
+  <Header object="StarfieldMajorRecord">
+    <Bytes length="4" why="the record's signature" />
+    <U32 why="the size of the record's data, as stored (compressed: the compressed size)" />
+    <I32 field="MajorRecordFlagsRaw" name="flags" />
+    <Bit of="flags" index="5" field="IsDeleted" />
+    <Bit of="flags" index="18" field="IsCompressed" />
+    <View of="flags" field="StarfieldMajorRecordFlags" />
+    <View of="flags" field="MajorFlags" optional="true" />
+    <FormID field="FormKey" />
+    <U32 field="VersionControl" />
+    <U16 field="FormVersion" />
+    <U16 field="Version2" />
+  </Header>
+
+  <!-- The plugin header, TES4 (C57; StarfieldModHeaderBinaryCreateTranslation, Records/StarfieldModHeader.cs):
+       - its record header: StarfieldModHeader's own fields, read by the generated FillBinaryStructs;
+       - its master list (FillBinaryMasterReferencesCustom): at the first MAST, ListBinaryTranslation<MasterReference>.Parse
+         with MAST as the item's trigger, each item read by MasterReference's generated reader (Mutagen.Bethesda.Core's
+         MasterReference.xml: MAST, the master's file name, then DATA, its file size, when there). The overlay does the
+         same (StarfieldModHeaderBinaryOverlay, ParseRepeatedTypelessSubrecord: MAST starts an item, MAST and DATA belong
+         to it). An item runs from its MAST to the next MAST or to the first subrecord that isn't its DATA. No official
+         plugin writes a master's DATA (their master lists are MAST only), so the DATA case isn't met by the real-data run.
+       The other subrecords (HEDR, OFST, DELE, CNAM, SNAM, ONAM with its XXXX, SCRN, TNAM, BNAM, INTV, INCC, CHGL) are read
+       by the generated reader as the record xml (StarfieldModHeader.xml) says. -->
+  <Header sig="TES4" object="StarfieldModHeader">
+    <Bytes length="4" expect="54455334" why="the signature, TES4" />
+    <U32 why="the size of the header's data" />
+    <U32 field="Flags" />
+    <U32 field="FormID" />
+    <I32 field="Version" />
+    <U16 field="FormVersion" />
+    <U16 field="Version2" />
+  </Header>
+  <Record sig="TES4" object="StarfieldModHeader">
+    <Segments start="MAST" field="MasterReferences" reader="generated">
+      <Sub sig="MAST"><ZString field="Master" /></Sub>
+      <Sub sig="DATA" optional="true"><U64 field="FileSize" /></Sub>
+    </Segments>
+  </Record>
 
   <!-- FSTS: XCNT holds five counts (walk, run, sprint, sneak, swim); DATA the FormIDs in the reverse order (xEdit) -->
   <Record sig="FSTS" object="FootstepSet">
@@ -448,7 +506,75 @@
   </Define>
   <Record sig="WEAP" object="Weapon"><Use name="ObjectTemplates" /></Record>
   <Record sig="ARMO" object="Armor"><Use name="ObjectTemplates" /></Record>
-  <Record sig="NPC_" object="Npc"><Use name="ObjectTemplates" /></Record>
+  <!-- NPC_ (C57): also ONA2, the race overrides (NpcRaceOverrideBinaryCreateTranslation.FillBinaryFlagParseCustom,
+       Records/Major Records/NpcRaceOverride.cs; the overlay parses the same content with it): a uint32 of
+       NpcRaceOverride.Section flags, then the sections whose flag is set, in the flags' order: Size (0x01) as one signed
+       byte (-1 is Size.Unknown), then Movement (0x02), Flight (0x04), UnarmedWeapon (0x08), FlagOverrides (0x10),
+       Bleedout (0x20), General (0x40) and ElectromagneticShock (0x80), each read by its class's generated reader (the
+       fields below, as its record xml has them). A section whose flag is clear is null. -->
+  <Record sig="NPC_" object="Npc">
+    <Use name="ObjectTemplates" />
+    <Sub sig="ONA2" optional="true" field="RaceOverrides">
+      <U32 name="sections" why="which sections follow (NpcRaceOverride.Section); Mutagen derives it from the sections it has" />
+      <Switch on="sections" mask="0x01"><Case value="0x01"><I8 field="Size" /></Case><Default><Null field="Size" /></Default></Switch>
+      <Switch on="sections" mask="0x02">
+        <Case value="0x02">
+          <Object field="Movement">
+            <F32 field="AccelerationRate" /><F32 field="DecelerationRate" /><F32 field="AngularAccelerationRate" /><F32 field="AngularTolerance" />
+          </Object>
+        </Case>
+        <Default><Null field="Movement" /></Default>
+      </Switch>
+      <Switch on="sections" mask="0x04">
+        <Case value="0x04"><Object field="Flight"><F32 field="FlightRadius" /></Object></Case>
+        <Default><Null field="Flight" /></Default>
+      </Switch>
+      <Switch on="sections" mask="0x08">
+        <Case value="0x08"><Object field="UnarmedWeapon"><F32 field="InjuredHealthPercent" /><FormID field="UnarmedWeapon" /></Object></Case>
+        <Default><Null field="UnarmedWeapon" /></Default>
+      </Switch>
+      <Switch on="sections" mask="0x10">
+        <Case value="0x10"><Object field="FlagOverrides"><U64 field="RaceDataFlags" /><U64 field="OverrideActive" /></Object></Case>
+        <Default><Null field="FlagOverrides" /></Default>
+      </Switch>
+      <Switch on="sections" mask="0x20">
+        <Case value="0x20">
+          <Object field="Bleedout">
+            <F32 field="HealthPercent" /><F32 field="Chance" /><F32 field="RecoverChance" /><F32 field="TimeMin" /><F32 field="TimeMax" />
+            <F32 field="HealthDrainRate" />
+          </Object>
+        </Case>
+        <Default><Null field="Bleedout" /></Default>
+      </Switch>
+      <Switch on="sections" mask="0x40">
+        <Case value="0x40">
+          <Object field="General">
+            <FormID field="ImpactMaterialType" />
+            <Object field="CorpseOpenSound"><Use name="SoundReference" /></Object>
+            <Object field="CorpseCloseSound"><Use name="SoundReference" /></Object>
+            <FormID field="OnCrippleExplosion" /><FormID field="OnCrippleDebris" /><FormID field="OnCrippleImpactDataSet" />
+            <F32 field="OnCrippleDebrisScale" /><U8 field="OnCrippleDebrisCount" /><U8 field="OnCrippleDecalCount" />
+            <U32 field="ActiveOverrides" />
+          </Object>
+        </Case>
+        <Default><Null field="General" /></Default>
+      </Switch>
+      <Switch on="sections" mask="0x80">
+        <Case value="0x80">
+          <Object field="ElectromagneticShock">
+            <U8 field="Supported" encoding="bool" /><F32 field="RecoverChance" /><F32 field="TimeMin" /><F32 field="TimeMax" />
+            <F32 field="RecoverChanceOnDamageReceived" /><F32 field="HealthDrainRate" /><F32 field="HealthAfterRecovery" />
+            <F32 field="ImmunityDurationAfterRecovery" />
+          </Object>
+        </Case>
+        <Default><Null field="ElectromagneticShock" /></Default>
+      </Switch>
+    </Sub>
+  </Record>
+  <!-- A sound reference (SoundReference.xml, BGSAudio::WwiseSoundHook): two Wwise GUIDs and two forms -->
+  <Define name="SoundReference">
+    <Guid field="StartEvent" /><Guid field="StopEvent" /><FormID field="ConditionForm" /><FormID field="EventForm" />
+  </Define>
   <Record sig="FLOR" object="Flora"><Use name="ObjectTemplates" /></Record>
   <Record sig="GBFM" object="GenericBaseForm"><Use name="ObjectTemplates" /></Record>
 
@@ -584,7 +710,8 @@
           </IfMore>
         </Case>
         <Case type="DialogResponsesAdapter">
-          <IfMore><Object field="ScriptFragments"><Use name="ScriptFragments" /></Object></IfMore>
+          <Note>DialogResponsesAdapterBinaryCreateTranslation makes a plain ScriptFragments, never a SceneScriptFragments</Note>
+          <IfMore><Object field="ScriptFragments" class="ScriptFragments"><Use name="ScriptFragments" /></Object></IfMore>
         </Case>
         <Case type="SceneAdapter">
           <IfMore>

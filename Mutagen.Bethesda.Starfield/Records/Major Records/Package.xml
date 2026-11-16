@@ -116,13 +116,13 @@
   <Object name="PackageDataTarget" objType="Subrecord" baseClass="APackageData" selectorValue="SingleRef,TargetSelector">
     <Fields>
       <Enum name="Type" enumName="PackageDataTarget.Types" binary="NoGeneration" />
-      <RefDirect name="Target" refName="APackageTarget" recordType="PTDA" binary="NoGeneration" nullable="False" generateClassMembers="false" selectedBy="here:Int32" />
+      <RefDirect name="Target" refName="APackageTarget" recordType="PTDA" binary="NoGeneration" nullable="False" generateClassMembers="false" selectedBy="here:Int32" selectorEnum="APackageTarget.Type" />
       <RefList name="Conditions" refName="Condition" counterRecType="CITC" binary="NoGeneration" nullable="False" />
     </Fields>
   </Object>
   <Object name="PackageDataTopic" objType="Subrecord" baseClass="APackageData" selectorValue="Topic">
     <Fields>
-      <RefList name="Topics" refName="ATopicReference" binary="NoGeneration" selectedBy="here:Int32" />
+      <RefList name="Topics" refName="ATopicReference" binary="NoGeneration" selectedBy="here:Int32" selectorEnum="ATopicReference.TopicType" />
       <ByteArray name="TPIC" recordType="TPIC" binary="NoGeneration" />
     </Fields>
   </Object>
@@ -216,7 +216,7 @@
   <Object name="PackageEvent" objType="Subrecord">
     <Fields>
       <FormLink name="Idle" refName="IdleAnimation" recordType="INAM" nullable="False" />
-      <RefList name="Topics" refName="ATopicReference" binary="Custom" selectedBy="here:Int32" />
+      <RefList name="Topics" refName="ATopicReference" binary="Custom" selectedBy="here:Int32" selectorEnum="ATopicReference.TopicType" />
     </Fields>
   </Object>
 </Loqui>

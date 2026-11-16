@@ -33,7 +33,7 @@
       </Data>
       <UInt16 name="ID" recordType="ITID" nullable="False" />
       <RefDirect name="Lock" refName="LockData" />
-      <RefDirect name="Target" refName="ATerminalMenuItemTarget" nullable="False" binary="NoGeneration" selectedBy="field:TypeParse:UInt16" />
+      <RefDirect name="Target" refName="ATerminalMenuItemTarget" nullable="False" binary="NoGeneration" selectedBy="field:TypeParse:UInt16" selectorEnum="TerminalMenuItemBinaryCreateTranslation.TypeOption" />
       <CustomLogic name="TargetParse" fills="Target">
         <RecordType>UNAM</RecordType>
         <RecordType>TNAM</RecordType>

@@ -15,11 +15,16 @@ using TempFile = Noggog.IO.TempFile;
 namespace Mutagen.Bethesda.UnitTests.Plugins.Records.Starfield;
 
 // C186 group 5: simple offsets and encodings of hand-read fields, described in attributes the generator ignores:
-//   layoutSubrecord   the subrecord holding the bytes, when the field's own xml doesn't say
+//   layoutSubrecord   the subrecord holding the bytes, when the field's own xml doesn't say; "header" (C57): the record
+//                     header, its offsets from the record's first byte (the signature at 0, the data size at 4)
 //   layoutOffset      byte offset in that subrecord (or in the object's bytes), or after:<Field>
 //   layoutEncoding    how the stored value maps to the field (uint8*10min, float/100, uint32!=0, ...)
 //   layoutDroppedBits bits stored on disk but not kept in the field (another field carries them)
-//   layoutPresentWhen when the bytes are there at all
+//   layoutPresentWhen when the bytes are there at all (for a field that shares its bytes with another, when it is read
+//                     from them; otherwise it is null): subrecord:SIG, field:<F>:null, field:<F>:notnull,
+//                     field:<F>:bit=N:clear; C57: field:<F>:is=<enum member> (F holds that value) and value:not=a,b (the
+//                     stored value, a signed number of the field's width, is none of these); ";" joins forms that must
+//                     all hold (ConditionData.LinkedReferenceKeyword, checked in HandReadLayoutAttributesTests)
 // Each test writes records, checks the bytes where the attributes say they are, and reads them back (both readers
 // where the object can be reached through a mod).
 public class HandReadLayoutEncodingTests
@@ -87,6 +92,10 @@ public class HandReadLayoutEncodingTests
         "NavmeshPathingCell.ParentCell", "NavmeshPathingCell.Grid",
         "PerkEntryPointModifyValue.Modification", "PerkEntryPointModifyValues.Modification",
         "PerkEntryPointModifyActorValue.Modification",
+        // C57: the record header (layoutSubrecord="header"), checked in RecordHeaderLayoutTests
+        "StarfieldMajorRecord.FormVersion", "StarfieldMajorRecord.Version2", "StarfieldMajorRecord.StarfieldMajorRecordFlags",
+        "StarfieldModHeader.Flags", "StarfieldModHeader.FormID", "StarfieldModHeader.Version", "StarfieldModHeader.FormVersion",
+        "StarfieldModHeader.Version2",
     ];
 
     private static IEnumerable<string> AssociationKeys() =>

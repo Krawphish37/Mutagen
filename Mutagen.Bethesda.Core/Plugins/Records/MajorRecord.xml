@@ -2,9 +2,9 @@
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
   <Object name="MajorRecord" objType="Record" abstract="true" generateEquals="false">
     <Fields>
-      <Int32 name="MajorRecordFlagsRaw" nullable="False" />
-      <FormKey name="FormKey" setPermission="Protected" nullable="False" internalSetInterface="true" copy="DeepCopyOnly" alwaysCopy="true" generateInterfaceMembers="false" />
-      <UInt32 name="VersionControl" nullable="False" />
+      <Int32 name="MajorRecordFlagsRaw" nullable="False" layoutSubrecord="header" layoutOffset="8" />
+      <FormKey name="FormKey" setPermission="Protected" nullable="False" internalSetInterface="true" copy="DeepCopyOnly" alwaysCopy="true" generateInterfaceMembers="false" layoutSubrecord="header" layoutOffset="12" />
+      <UInt32 name="VersionControl" nullable="False" layoutSubrecord="header" layoutOffset="16" />
       <String name="EditorID" recordType="EDID" generateClassMembers="false" />
       <ByteArray name="UnknownSubrecords" nullable="True" binary="NoGeneration" />
       <String name="UnknownSubrecordsSource" nullable="True" binary="NoGeneration" />

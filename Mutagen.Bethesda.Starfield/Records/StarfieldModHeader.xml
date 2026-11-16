@@ -2,11 +2,11 @@
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
   <Object name="StarfieldModHeader" recordType="TES4" objType="Record">
     <Fields>
-      <Enum name="Flags" enumName="StarfieldModHeader.HeaderFlag" byteLength="4" />
-      <UInt32 name="FormID" />
-      <Int32 name="Version" />
-      <UInt16 name="FormVersion" />
-      <UInt16 name="Version2" />
+      <Enum name="Flags" enumName="StarfieldModHeader.HeaderFlag" byteLength="4" layoutSubrecord="header" layoutOffset="8" />
+      <UInt32 name="FormID" layoutSubrecord="header" layoutOffset="12" />
+      <Int32 name="Version" layoutSubrecord="header" layoutOffset="16" />
+      <UInt16 name="FormVersion" layoutSubrecord="header" layoutOffset="20" />
+      <UInt16 name="Version2" layoutSubrecord="header" layoutOffset="22" />
       <RefDirect name="Stats" refName="ModStats" nullable="False" />
       <ByteArray name="TypeOffsets" recordType="OFST" />
       <ByteArray name="Deleted" recordType="DELE" />

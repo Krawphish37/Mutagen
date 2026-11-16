@@ -43,6 +43,17 @@ public class HandReadLayoutSyntheticTests
         "RecordNAVI/SubRepeatNVMI/RepeatUnknownCrcs/U32.",
         "AnyRecordBFCB/SegmentsComponents/TypeSwitch/CaseVolumesComponent/SubVLMS/RepeatItems/ObjectEnder/Switch/Case11/TypeSwitch/CaseVolumesUnknownEnderEmpty",
         "AnyRecordBFCB/SegmentsComponents/TypeSwitch/CaseVolumesComponent/SubVLMS/RepeatItems/ObjectEnder/Switch/Case11/TypeSwitch/CaseVolumesUnknownEnderEmptyPadded/U32Unknown1",
+        // C57: the record header of every record written, and the plugin header
+        "Header/I32MajorRecordFlagsRaw", "Header/BitIsDeleted", "Header/BitIsCompressed", "Header/ViewStarfieldMajorRecordFlags",
+        "Header/ViewMajorFlags", "Header/FormIDFormKey", "Header/U32VersionControl", "Header/U16FormVersion", "Header/U16Version2",
+        "HeaderTES4/U32Flags", "HeaderTES4/U32FormID", "HeaderTES4/I32Version", "HeaderTES4/U16FormVersion", "HeaderTES4/U16Version2",
+        "RecordTES4/SegmentsMasterReferences",
+        // C57: an NPC's race overrides (ONA2), with some sections and not others
+        "RecordNPC_/SubONA2/Switch/Case0x01/I8Size", "RecordNPC_/SubONA2/Switch/Default/NullMovement",
+        "RecordNPC_/SubONA2/Switch/Case0x04/ObjectFlight/F32FlightRadius",
+        "RecordNPC_/SubONA2/Switch/Case0x10/ObjectFlagOverrides/U64RaceDataFlags",
+        "RecordNPC_/SubONA2/Switch/Case0x40/ObjectGeneral/U32ActiveOverrides", "Define/GuidStartEvent",
+        "RecordNPC_/SubONA2/Switch/Default/NullElectromagneticShock",
     ];
 
     [Fact]
@@ -59,6 +70,7 @@ public class HandReadLayoutSyntheticTests
             AddObjectMods(mod, target);
             AddScripts(mod, target);
             AddHandReadLists(mod, target);
+            AddRaceOverrides(mod, target);
             var path = new ModPath(mod.ModKey, Path.Combine(dir, mod.ModKey.FileName));
             mod.BeginWrite.ToPath(path).WithNoLoadOrder().NoModKeySync().Write();
 
@@ -191,6 +203,29 @@ public class HandReadLayoutSyntheticTests
         var stat = new Static(mod) { EditorID = "LayoutVolumes" };
         stat.Components.Add(volumes);
         mod.Statics.Add(stat);
+    }
+
+    private static void AddRaceOverrides(StarfieldMod mod, FormKey target)
+    {
+        var general = new NpcRaceOverrideGeneral
+        {
+            CorpseOpenSound = new SoundReference { StartEvent = Guid.Parse("01020304-0506-0708-090a-0b0c0d0e0f10") },
+            OnCrippleDebrisCount = 3,
+            ActiveOverrides = (NpcRaceOverrideGeneral.ActiveOverride)0x41,
+        };
+        general.ImpactMaterialType.SetTo(target);
+        var npc = new Npc(mod)
+        {
+            EditorID = "LayoutRaceOverrides",
+            RaceOverrides = new NpcRaceOverride
+            {
+                Size = Size.Unknown,
+                Flight = new NpcRaceOverrideFlight { FlightRadius = 2.5f },
+                FlagOverrides = new NpcRaceOverrideFlags { RaceDataFlags = (Race.Flag)0x8000_0000_0000_0001, OverrideActive = Race.Flag.Playable },
+                General = general,
+            },
+        };
+        mod.Npcs.Add(npc);
     }
 
     private static void AddScripts(StarfieldMod mod, FormKey target)
