@@ -15,6 +15,8 @@ partial class MoveableStatic
         Obstacle = 0x0200_0000,
         NavMeshGenerationFilter = 0x0400_0000,
         NavMeshGenerationBoundingBox = 0x0800_0000,
+        // C55: xEdit bit 28 'Navmesh - Only Cut' (43 MSTT in Starfield.esm)
+        NavMeshGenerationOnlyCut = 0x1000_0000,
         NavMeshGenerationGround = 0x4000_0000,
     }
 

@@ -1008,6 +1008,11 @@ namespace Mutagen.Bethesda.Starfield
 
         protected override Type LinkType => typeof(IGenericBaseForm);
 
+        public MajorFlag MajorFlags
+        {
+            get => (MajorFlag)this.MajorRecordFlagsRaw;
+            set => this.MajorRecordFlagsRaw = (int)value;
+        }
         public override IEnumerable<IAssetLinkGetter> EnumerateAssetLinks(AssetLinkQuery queryCategories, IAssetLinkCache? linkCache = null, Type? assetType = null, bool iterateNestedRecords = true) => GenericBaseFormCommon.Instance.EnumerateAssetLinks(this, queryCategories, linkCache, assetType, iterateNestedRecords);
         public override IEnumerable<IAssetLink> EnumerateListedAssetLinks(bool iterateNestedRecords = true) => GenericBaseFormSetterCommon.Instance.EnumerateListedAssetLinks(this, iterateNestedRecords);
         public override void RemapAssetLinks(IReadOnlyDictionary<IAssetLinkGetter, string> mapping, AssetLinkQuery queryCategories, IAssetLinkCache? linkCache) => GenericBaseFormSetterCommon.Instance.RemapAssetLinks(this, mapping, linkCache, queryCategories);
@@ -1122,6 +1127,10 @@ namespace Mutagen.Bethesda.Starfield
         new ExtendedList<String> ObjectTemplateInstanceData { get; }
         new ExtendedList<ObjectTemplate<AObjectModification.NoneProperty>>? ObjectTemplates { get; set; }
         new NavmeshGeometry? NavmeshGeometry { get; set; }
+        #region Mutagen
+        new GenericBaseForm.MajorFlag MajorFlags { get; set; }
+        #endregion
+
     }
 
     public partial interface IGenericBaseFormInternal :
@@ -1170,6 +1179,10 @@ namespace Mutagen.Bethesda.Starfield
         IReadOnlyList<String> ObjectTemplateInstanceData { get; }
         IReadOnlyList<IObjectTemplateGetter<AObjectModification.NoneProperty>>? ObjectTemplates { get; }
         INavmeshGeometryGetter? NavmeshGeometry { get; }
+
+        #region Mutagen
+        GenericBaseForm.MajorFlag MajorFlags { get; }
+        #endregion
 
     }
 
@@ -2750,6 +2763,7 @@ namespace Mutagen.Bethesda.Starfield
         }
         protected override Type LinkType => typeof(IGenericBaseFormGetter);
 
+        public GenericBaseForm.MajorFlag MajorFlags => (GenericBaseForm.MajorFlag)this.MajorRecordFlagsRaw;
 
         #region VirtualMachineAdapter
         private int? _VirtualMachineAdapterLengthOverride;

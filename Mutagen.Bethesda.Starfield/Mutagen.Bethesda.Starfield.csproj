@@ -2449,6 +2449,15 @@
     <Compile Include="Records\Major Records\PackageScriptFragments.cs">
       <DependentUpon>Package.xml</DependentUpon>
     </Compile>
+    <Compile Include="Records\Major Records\BiomeMarker.cs">
+      <DependentUpon>BiomeMarker.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\GenericBaseForm.cs">
+      <DependentUpon>GenericBaseForm.xml</DependentUpon>
+    </Compile>
+    <Compile Include="Records\Major Records\Star.cs">
+      <DependentUpon>Star.xml</DependentUpon>
+    </Compile>
     <Compile Include="Records\Major Records\PackIn.cs">
       <DependentUpon>PackIn.xml</DependentUpon>
     </Compile>
@@ -4571,6 +4580,7 @@
       <DependentUpon>StarfieldModHeader.xml</DependentUpon>
     </Compile>
     <Compile Include="Records\RecordTypes_Generated.cs" />
+    <Compile Include="Records\StarfieldMajorFlagRegistry.cs" />
     <Compile Include="Records\RecordTypeInts_Generated.cs" />
     <Compile Include="Interfaces\IsolatedAbstractInterfaceMapping_Generated.cs" />
     <Compile Include="Interfaces\InheritingInterfaceMapping_Generated.cs" />

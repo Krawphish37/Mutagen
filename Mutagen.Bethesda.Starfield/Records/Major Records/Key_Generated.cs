@@ -1464,6 +1464,11 @@ namespace Mutagen.Bethesda.Starfield
 
         protected override Type LinkType => typeof(IKey);
 
+        public MajorFlag MajorFlags
+        {
+            get => (MajorFlag)this.MajorRecordFlagsRaw;
+            set => this.MajorRecordFlagsRaw = (int)value;
+        }
         public override IEnumerable<IAssetLinkGetter> EnumerateAssetLinks(AssetLinkQuery queryCategories, IAssetLinkCache? linkCache = null, Type? assetType = null, bool iterateNestedRecords = true) => KeyCommon.Instance.EnumerateAssetLinks(this, queryCategories, linkCache, assetType, iterateNestedRecords);
         public override IEnumerable<IAssetLink> EnumerateListedAssetLinks(bool iterateNestedRecords = true) => KeySetterCommon.Instance.EnumerateListedAssetLinks(this, iterateNestedRecords);
         public override void RemapAssetLinks(IReadOnlyDictionary<IAssetLinkGetter, string> mapping, AssetLinkQuery queryCategories, IAssetLinkCache? linkCache) => KeySetterCommon.Instance.RemapAssetLinks(this, mapping, linkCache, queryCategories);
@@ -1607,6 +1612,10 @@ namespace Mutagen.Bethesda.Starfield
         new Single Weight { get; set; }
         new Key.Flag? Flags { get; set; }
         new TranslatedString? ShortName { get; set; }
+        #region Mutagen
+        new Key.MajorFlag MajorFlags { get; set; }
+        #endregion
+
     }
 
     public partial interface IKeyInternal :
@@ -1692,6 +1701,10 @@ namespace Mutagen.Bethesda.Starfield
         Single Weight { get; }
         Key.Flag? Flags { get; }
         ITranslatedStringGetter? ShortName { get; }
+
+        #region Mutagen
+        Key.MajorFlag MajorFlags { get; }
+        #endregion
 
     }
 
@@ -3823,6 +3836,7 @@ namespace Mutagen.Bethesda.Starfield
         }
         protected override Type LinkType => typeof(IKeyGetter);
 
+        public Key.MajorFlag MajorFlags => (Key.MajorFlag)this.MajorRecordFlagsRaw;
 
         #region VirtualMachineAdapter
         private int? _VirtualMachineAdapterLengthOverride;
