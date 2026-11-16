@@ -10,7 +10,9 @@ namespace Mutagen.Bethesda.UnitTests.Plugins.Records.Starfield.HandReadLayoutFil
 // perk entry point functions 4/6/7/11/12 and two-float values, string object mod properties, container and unknown-target
 // OMODs, VMAD object format 1, bool list properties; C47: a package's topic data input with a topic subtype, the four
 // instance naming rule classes Data lacks, a navigation map info's CRCs, volume enders of type 11), held against what
-// Mutagen writes and reads back. Runs without game data, so the file is checked in every test run.
+// Mutagen writes and reads back. Runs without game data, so the file is checked in every test run. C84: also held to
+// Mutagen's value positions of every record written, and the C84 layouts' every path (NVNM with both parents and both
+// sides of form version 493, SFTR's grids, XTRV, the XCZA owners, a patrol's TNAM).
 public class HandReadLayoutSyntheticTests
 {
     private static readonly string[] Targets =
@@ -54,6 +56,28 @@ public class HandReadLayoutSyntheticTests
         "RecordNPC_/SubONA2/Switch/Case0x10/ObjectFlagOverrides/U64RaceDataFlags",
         "RecordNPC_/SubONA2/Switch/Case0x40/ObjectGeneral/U32ActiveOverrides", "Define/GuidStartEvent",
         "RecordNPC_/SubONA2/Switch/Default/NullElectromagneticShock",
+        // C84
+        "AnyRecordNVNM/SubNVNM/U32NavmeshVersion", "AnyRecordNVNM/SubNVNM/ObjectParent/Switch/Case0/FormIDUnusedWorldspaceParent",
+        "AnyRecordNVNM/SubNVNM/ObjectParent/Switch/Default/ObjectCoordinates/I16Y",
+        "AnyRecordNVNM/SubNVNM/RepeatVertices/Versioning/from", "AnyRecordNVNM/SubNVNM/RepeatVertices/Versioning/below",
+        "AnyRecordNVNM/SubNVNM/RepeatVertices/Versioning/I32Unknown", "AnyRecordNVNM/SubNVNM/RepeatTriangles/U16CoverFlags",
+        "AnyRecordNVNM/SubNVNM/RepeatEdgeLinks/I8EdgeIndex", "AnyRecordNVNM/SubNVNM/RepeatDoorTriangles/FormIDDoor",
+        "AnyRecordNVNM/SubNVNM/RepeatCover/U64Data", "AnyRecordNVNM/SubNVNM/RepeatCoverTriangleMappings/U16Triangle",
+        "AnyRecordNVNM/SubNVNM/RepeatWaypoints/U32Flags", "AnyRecordNVNM/SubNVNM/ObjectGridMaxDistance/F32Y",
+        "AnyRecordNVNM/SubNVNM/RepeatGridArrays/RepeatGridCell/I16.", "AnyRecordNVNM/SubNVNM/ConstVersioning",
+        "AnyRecordNVNM/SubNVNM/ConstUnknown3",
+        "RecordSFTR/SubFNAM/RepeatSurfacePatterns/FormID.", "RecordSFTR/SubGNAM/BytesGNAM",
+        "RecordSFTR/SubFNAM/RepeatSurfacePatterns2/FormID.", "RecordSFTR/SubGNAM/BytesGNAM2",
+        "AnyRecordXTRV/SubXTRV/FormIDTraversal", "AnyRecordXTRV/SubXTRV/BytesUnknown",
+        "AnyRecordXCZR,XCZC,XCZA/SegmentsWaterCurrentReferences/SubXCZR/FormIDReference",
+        "AnyRecordXCZR,XCZC,XCZA/SegmentsWaterCurrentReferences/SubXCZA/BytesXCZA",
+        "AnyRecordXCZR,XCZC,XCZA/ObjectCurrentZoneCell/SubXCZC/FormIDCurrentZoneCell",
+        "AnyRecordXCZR,XCZC,XCZA/ObjectCurrentZoneCell/SubXCZA/BytesXCZA",
+        "RecordREFR/ObjectPatrol/SubTNAM/FormIDTopic",
+        // C84: a value read at the place Mutagen's value positions give, and a count at its list's count
+        "AnyRecordNVNM/SubNVNM/U32NavmeshVersion/position", "AnyRecordVMAD/SubVMAD/RepeatScripts/positionCount",
+        "AnyRecordXCZR,XCZC,XCZA/ObjectCurrentZoneCell/SubXCZA/BytesXCZA/position",
+        "RecordSFTR/SubFNAM/RepeatSurfacePatterns2/FormID./position",
     ];
 
     [Fact]
@@ -71,10 +95,12 @@ public class HandReadLayoutSyntheticTests
             AddScripts(mod, target);
             AddHandReadLists(mod, target);
             AddRaceOverrides(mod, target);
+
+            AddC84(mod, target);
             var path = new ModPath(mod.ModKey, Path.Combine(dir, mod.ModKey.FileName));
             mod.BeginWrite.ToPath(path).WithNoLoadOrder().NoModKeySync().Write();
 
-            var result = HandReadLayoutFileTests.CheckPlugins(dir, [mod.ModKey.FileName]);
+            var result = HandReadLayoutFileTests.CheckPlugins(dir, [mod.ModKey.FileName], positions: HandReadLayoutFileTests.PositionsForAll);
             result.Errors.ShouldBeEmpty(string.Join(Environment.NewLine, result.Errors.Take(40)));
             Targets.Where(t => !result.Checked.ContainsKey(t)).ShouldBeEmpty();
         }
@@ -203,6 +229,77 @@ public class HandReadLayoutSyntheticTests
         var stat = new Static(mod) { EditorID = "LayoutVolumes" };
         stat.Components.Add(volumes);
         mod.Statics.Add(stat);
+    }
+
+    // C84: NVNM (a worldspace parent at form version 493, a cell parent below it), SFTR's two grids, and a placed object
+    // with XTRV, water current references (with and without XCZA), a current zone cell and a patrol with its TNAM; another
+    // whose current zone cell is an XCZA alone
+    private static void AddC84(StarfieldMod mod, FormKey target)
+    {
+        NavmeshGeometry Geometry(ANavmeshParent parent, int vertexUnknown)
+        {
+            var geometry = new NavmeshGeometry { Parent = parent, GridSize = 2, GridMaxDistance = new P2Float(1.5f, 2.5f) };
+            geometry.Vertices.Add(new NavmeshVertex { Point = new P3Float(1, 2, 3), Unknown = vertexUnknown });
+            geometry.Vertices.Add(new NavmeshVertex { Point = new P3Float(4, 5, 6), Unknown = vertexUnknown });
+            geometry.Triangles.Add(new NavmeshTriangle { Vertices = new P3Int16(0, 1, 0), EdgeLink_0_1 = -1, Height = 2, Unknown = 3, Flags = NavmeshTriangle.Flag.Door, CoverFlags = 5 });
+            var edge = new EdgeLink { Type = EdgeLink.EdgeLinkType.LedgeDown, TriangleIndex = 1, EdgeIndex = 2 };
+            edge.Mesh.SetTo(target);
+            geometry.EdgeLinks.Add(edge);
+            var door = new DoorTriangle { TriangleBeforeDoor = 0, CrcHash = 9 };
+            door.Door.SetTo(target);
+            geometry.DoorTriangles.Add(door);
+            geometry.Cover.Add(new NavmeshCover { Vertex1 = 0, Vertex2 = 1, Data = 0x0102_0304_0506_0708 });
+            geometry.CoverTriangleMappings.Add(new NavmeshCoverTriangleMap { Cover = 0, Triangle = 0 });
+            geometry.Waypoints.Add(new NavmeshWaypoint { Location = new P3Float(7, 8, 9), TriangleIndex = 0, Flags = 4 });
+            var grid = new NavmeshGridArray();
+            grid.GridCell.AddRange([1, 2, 3]);
+            geometry.GridArrays.Add(grid);
+            return geometry;
+        }
+        var world = new WorldspaceNavmeshParent { Coordinates = new P2Int16(3, -4) };
+        world.Parent.SetTo(target);
+        var cellParent = new CellNavmeshParent();
+        cellParent.Parent.SetTo(target);
+        mod.Statics.Add(new Static(mod) { EditorID = "LayoutNavmeshWorld", FormVersion = 556, NavmeshGeometry = Geometry(world, 1) });
+        mod.Statics.Add(new Static(mod) { EditorID = "LayoutNavmeshCell", FormVersion = 400, NavmeshGeometry = Geometry(cellParent, 0) });
+
+        var patterns = Enumerable.Range(0, 65536).Select(i => (IFormLinkGetter<ISurfacePatternGetter>)(i % 7 == 0 ? new FormLink<ISurfacePatternGetter>(target) : new FormLink<ISurfacePatternGetter>())).ToArray();
+        mod.SurfaceTrees.Add(new SurfaceTree(mod)
+        {
+            EditorID = "LayoutSurfaceTree",
+            SurfacePatterns = patterns,
+            GNAM = Enumerable.Range(0, 65536).Select(i => (byte)i).ToArray(),
+            SurfacePatterns2 = patterns.Reverse().ToArray(),
+            GNAM2 = new byte[65536],
+        });
+
+        var cell = new Cell(mod) { EditorID = "LayoutPlacedCell" };
+        var placed = new PlacedObject(mod) { EditorID = "LayoutPlaced", XTRV = new XTRV { Unknown = new byte[] { 1, 2, 3, 4, 5 } } };
+        placed.XTRV.Traversal.SetTo(target);
+        var current = new PlacedObjectWaterCurrentReference { XCZA = new byte[] { 9, 8, 7, 6 } };
+        current.Reference.SetTo(target);
+        var plain = new PlacedObjectWaterCurrentReference();
+        plain.Reference.SetTo(target);
+        placed.WaterCurrentReferences.AddRange([current, plain]);
+        placed.CurrentZoneCell = new PlacedObjectCurrentZoneCell { XCZA = new byte[] { 5, 5, 5, 5 } };
+        placed.CurrentZoneCell.CurrentZoneCell.SetTo(target);
+        var topic = new TopicReference();
+        topic.Reference.SetTo(target);
+        placed.Patrol = new Patrol { IdleTime = 2, Topics = { topic } };
+        placed.Patrol.Idle.SetTo(target);
+        placed.Patrol.Topic.SetTo(target);
+        cell.Temporary.Add(placed);
+        cell.Temporary.Add(new PlacedObject(mod)
+        {
+            EditorID = "LayoutPlacedZoneBytes",
+            CurrentZoneCell = new PlacedObjectCurrentZoneCell { XCZA = new byte[] { 1, 1, 1, 1 } },
+        });
+        mod.Cells.Add(new CellBlock
+        {
+            BlockNumber = 1,
+            GroupType = GroupTypeEnum.InteriorCellBlock,
+            SubBlocks = { new CellSubBlock { BlockNumber = 1, GroupType = GroupTypeEnum.InteriorCellSubBlock, Cells = { cell } } },
+        });
     }
 
     private static void AddRaceOverrides(StarfieldMod mod, FormKey target)
