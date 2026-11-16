@@ -14,7 +14,8 @@ partial class ColorRecord
     [Flags]
     public enum MajorFlag
     {
-        NonPlayable = 0x02,
+        // C55: was 0x02. xEdit bit 2 (Starfield, Fallout 4, Skyrim), as every other Starfield Non-Playable header flag
+        NonPlayable = 0x04,
     }
     
     [Flags]

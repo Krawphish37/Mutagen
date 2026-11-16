@@ -381,6 +381,8 @@
         <Compile Include="Plugins\Binary\Translations\FormIdPositionRecorder.cs" />
         <Compile Include="Plugins\Records\ValuePositionMixIn.cs" />
         <Compile Include="Plugins\Binary\Translations\ValuePositionRecorder.cs" />
+        <Compile Include="Plugins\Records\PartialFormMixIn.cs" />
+        <Compile Include="Plugins\Binary\Translations\PresentFields.cs" />
         <Compile Include="Plugins\Records\GroupLabelForms.cs" />
         <Compile Include="Plugins\Masters\MasterReferenceCollection.cs" />
         <Compile Include="Plugins\Meta\ObjectType.cs">
@@ -737,6 +739,7 @@
         <Compile Include="Plugins\Binary\Streams\WritingBundle.cs" />
         <Compile Include="Plugins\Binary\Streams\ParsingMeta.cs" />
         <Compile Include="Plugins\Binary\MajorRecordReader.cs" />
+        <Compile Include="Plugins\Binary\ChildRecordRead.cs" />
         <Compile Include="Strings\IStringsLookup.cs" />
         <Compile Include="Strings\ITranslatedString.cs" />
         <Compile Include="Strings\IStringsFolderLookup.cs" />

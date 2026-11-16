@@ -1067,6 +1067,11 @@ namespace Mutagen.Bethesda.Starfield
 
         protected override Type LinkType => typeof(IBiomeMarker);
 
+        public MajorFlag MajorFlags
+        {
+            get => (MajorFlag)this.MajorRecordFlagsRaw;
+            set => this.MajorRecordFlagsRaw = (int)value;
+        }
         public override IEnumerable<IAssetLinkGetter> EnumerateAssetLinks(AssetLinkQuery queryCategories, IAssetLinkCache? linkCache = null, Type? assetType = null, bool iterateNestedRecords = true) => BiomeMarkerCommon.Instance.EnumerateAssetLinks(this, queryCategories, linkCache, assetType, iterateNestedRecords);
         public override IEnumerable<IAssetLink> EnumerateListedAssetLinks(bool iterateNestedRecords = true) => BiomeMarkerSetterCommon.Instance.EnumerateListedAssetLinks(this, iterateNestedRecords);
         public override void RemapAssetLinks(IReadOnlyDictionary<IAssetLinkGetter, string> mapping, AssetLinkQuery queryCategories, IAssetLinkCache? linkCache) => BiomeMarkerSetterCommon.Instance.RemapAssetLinks(this, mapping, linkCache, queryCategories);
@@ -1188,6 +1193,10 @@ namespace Mutagen.Bethesda.Starfield
         new IFormLink<IKeywordGetter> MarkerType { get; set; }
         new IFormLink<ILeveledItemGetter> FloraList { get; set; }
         new IFormLink<IStarfieldMajorRecordGetter> NavmeshObject { get; set; }
+        #region Mutagen
+        new BiomeMarker.MajorFlag MajorFlags { get; set; }
+        #endregion
+
     }
 
     public partial interface IBiomeMarkerInternal :
@@ -1247,6 +1256,10 @@ namespace Mutagen.Bethesda.Starfield
         IFormLinkGetter<IKeywordGetter> MarkerType { get; }
         IFormLinkGetter<ILeveledItemGetter> FloraList { get; }
         IFormLinkGetter<IStarfieldMajorRecordGetter> NavmeshObject { get; }
+
+        #region Mutagen
+        BiomeMarker.MajorFlag MajorFlags { get; }
+        #endregion
 
     }
 
@@ -2876,6 +2889,7 @@ namespace Mutagen.Bethesda.Starfield
         }
         protected override Type LinkType => typeof(IBiomeMarkerGetter);
 
+        public BiomeMarker.MajorFlag MajorFlags => (BiomeMarker.MajorFlag)this.MajorRecordFlagsRaw;
 
         #region VirtualMachineAdapter
         private int? _VirtualMachineAdapterLengthOverride;

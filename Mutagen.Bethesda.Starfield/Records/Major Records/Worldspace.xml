@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
-  <Object name="Worldspace" recordType="WRLD" objType="Record" customBinaryEnd="Normal" customBinaryEndFills="TopCell,SubCells,SubCellsTimestamp,SubCellsUnknown" baseClass="StarfieldMajorRecord" majorFlag="true" >
+  <!-- partialForm: a Worldspace can be a partial form (header flag 0x4000, xEdit's 'Partial Form'; 20 in the official
+       add-ons) (C58/W7). It declares no SubgroupType: a partial form's children group follows its record, as in every
+       plugin read, so no orphaned children group is read for it -->
+  <Object name="Worldspace" recordType="WRLD" objType="Record" customBinaryEnd="Normal" customBinaryEndFills="TopCell,SubCells,SubCellsTimestamp,SubCellsUnknown" baseClass="StarfieldMajorRecord" majorFlag="true" partialForm="true" >
     <Fields>
       <RefList name="Components" refName="AComponent" />
       <RefList name="LargeReferences" refName="WorldspaceGridReference" />

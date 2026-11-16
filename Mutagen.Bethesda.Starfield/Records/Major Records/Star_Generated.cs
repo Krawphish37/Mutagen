@@ -831,6 +831,11 @@ namespace Mutagen.Bethesda.Starfield
 
         protected override Type LinkType => typeof(IStar);
 
+        public MajorFlag MajorFlags
+        {
+            get => (MajorFlag)this.MajorRecordFlagsRaw;
+            set => this.MajorRecordFlagsRaw = (int)value;
+        }
         public override IEnumerable<IAssetLinkGetter> EnumerateAssetLinks(AssetLinkQuery queryCategories, IAssetLinkCache? linkCache = null, Type? assetType = null, bool iterateNestedRecords = true) => StarCommon.Instance.EnumerateAssetLinks(this, queryCategories, linkCache, assetType, iterateNestedRecords);
         public override IEnumerable<IAssetLink> EnumerateListedAssetLinks(bool iterateNestedRecords = true) => StarSetterCommon.Instance.EnumerateListedAssetLinks(this, iterateNestedRecords);
         public override void RemapAssetLinks(IReadOnlyDictionary<IAssetLinkGetter, string> mapping, AssetLinkQuery queryCategories, IAssetLinkCache? linkCache) => StarSetterCommon.Instance.RemapAssetLinks(this, mapping, linkCache, queryCategories);
@@ -937,6 +942,10 @@ namespace Mutagen.Bethesda.Starfield
         new UInt32? ID { get; set; }
         new Color? Color { get; set; }
         new IFormLinkNullable<ISunPresetGetter> SunPreset { get; set; }
+        #region Mutagen
+        new Star.MajorFlag MajorFlags { get; set; }
+        #endregion
+
     }
 
     public partial interface IStarInternal :
@@ -977,6 +986,10 @@ namespace Mutagen.Bethesda.Starfield
         UInt32? ID { get; }
         Color? Color { get; }
         IFormLinkNullableGetter<ISunPresetGetter> SunPreset { get; }
+
+        #region Mutagen
+        Star.MajorFlag MajorFlags { get; }
+        #endregion
 
     }
 
@@ -2311,6 +2324,7 @@ namespace Mutagen.Bethesda.Starfield
         }
         protected override Type LinkType => typeof(IStarGetter);
 
+        public Star.MajorFlag MajorFlags => (Star.MajorFlag)this.MajorRecordFlagsRaw;
 
         public IReadOnlyList<IAComponentGetter> Components { get; private set; } = [];
         #region Keywords

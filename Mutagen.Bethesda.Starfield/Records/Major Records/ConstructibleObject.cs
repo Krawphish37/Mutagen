@@ -7,7 +7,8 @@ public partial class ConstructibleObject
     [Flags]
     public enum MajorFlag
     {
-        ListContainsVariants = 0x0008_0000
+        // C55: was 0x0008_0000, set on no COBJ. xEdit bit 26; 401 COBJ in Starfield.esm set it, 376 of them create a FLST
+        ListContainsVariants = 0x0400_0000
     }
     
     public enum LearnMethodEnum

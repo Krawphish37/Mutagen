@@ -13,7 +13,8 @@ public partial class Container
         NavMeshFilter = 0x0400_0000,
         NavMeshBoundingBox = 0x0800_0000,
         NavMeshOnlyCut = 0x1000_0000,
-        NavMeshIgnoreErosion = 0x1000_0000,
+        // C56: was 0x1000_0000, the same bit as NavMeshOnlyCut; xEdit bit 29
+        NavMeshIgnoreErosion = 0x2000_0000,
         NavMeshGround = 0x4000_0000
     }
 

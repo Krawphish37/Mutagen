@@ -1269,6 +1269,11 @@ namespace Mutagen.Bethesda.Starfield
 
         protected override Type LinkType => typeof(ILeveledBaseForm);
 
+        public MajorFlag MajorFlags
+        {
+            get => (MajorFlag)this.MajorRecordFlagsRaw;
+            set => this.MajorRecordFlagsRaw = (int)value;
+        }
         public override IEnumerable<IAssetLinkGetter> EnumerateAssetLinks(AssetLinkQuery queryCategories, IAssetLinkCache? linkCache = null, Type? assetType = null, bool iterateNestedRecords = true) => LeveledBaseFormCommon.Instance.EnumerateAssetLinks(this, queryCategories, linkCache, assetType, iterateNestedRecords);
         public override IEnumerable<IAssetLink> EnumerateListedAssetLinks(bool iterateNestedRecords = true) => LeveledBaseFormSetterCommon.Instance.EnumerateListedAssetLinks(this, iterateNestedRecords);
         public override void RemapAssetLinks(IReadOnlyDictionary<IAssetLinkGetter, string> mapping, AssetLinkQuery queryCategories, IAssetLinkCache? linkCache) => LeveledBaseFormSetterCommon.Instance.RemapAssetLinks(this, mapping, linkCache, queryCategories);
@@ -1388,6 +1393,10 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: IModeled
         /// </summary>
         new Model? Model { get; set; }
+        #region Mutagen
+        new LeveledBaseForm.MajorFlag MajorFlags { get; set; }
+        #endregion
+
     }
 
     public partial interface ILeveledBaseFormInternal :
@@ -1442,6 +1451,10 @@ namespace Mutagen.Bethesda.Starfield
         /// Aspects: IModeledGetter
         /// </summary>
         IModelGetter? Model { get; }
+        #endregion
+
+        #region Mutagen
+        LeveledBaseForm.MajorFlag MajorFlags { get; }
         #endregion
 
     }
@@ -3321,6 +3334,7 @@ namespace Mutagen.Bethesda.Starfield
         }
         protected override Type LinkType => typeof(ILeveledBaseFormGetter);
 
+        public LeveledBaseForm.MajorFlag MajorFlags => (LeveledBaseForm.MajorFlag)this.MajorRecordFlagsRaw;
 
         #region VirtualMachineAdapter
         private int? _VirtualMachineAdapterLengthOverride;

@@ -564,4 +564,43 @@ public class StringsFolderLookupOverlayTests
         fileSystem.File.Delete(table.SourcePath);
         Should.Throw<FileNotFoundException>(() => enumeration.ToArray());
     }
+
+    /// <summary>
+    /// C58/W10: where each table comes from, resolved without making a lookup or opening a table: the same list the
+    /// lookup's EnumerateTables gives, from the same rule
+    /// </summary>
+    [Theory, MutagenModAutoData]
+    internal void ResolveSources_IsWhatTheLookupReads(
+        IFileSystem fileSystem,
+        ModKey modKey,
+        DirectoryPath existingPath,
+        MutagenEncodingProvider encodingProvider)
+    {
+        uint id;
+        using (var writer = new StringsWriter(GameRelease.SkyrimSE, modKey, existingPath, encodingProvider, fileSystem))
+        {
+            id = writer.Register("Iron Sword", Language.English, StringsSource.Normal);
+            writer.Register("Épée de fer", Language.French, StringsSource.Normal);
+        }
+        var factory = EnumerationFactory(fileSystem, existingPath);
+        var resolved = factory.ResolveSources(modKey);
+        resolved.Count.ShouldBe(6);
+        resolved.ShouldBe(factory.InternalFactory(modKey).EnumerateTables().ToArray());
+        // Resolving opens no table: a file removed afterwards shows only when the lookup first reads it
+        var english = resolved.Single(x => x.Source == StringsSource.Normal && x.Language == Language.English);
+        english.FromArchive.ShouldBeFalse();
+        var lookup = factory.InternalFactory(modKey);
+        lookup.TryLookup(StringsSource.Normal, Language.English, id, out var text).ShouldBeTrue();
+        text.ShouldBe("Iron Sword");
+    }
+
+    [Theory, MutagenModAutoData]
+    internal void ResolveSources_Static_NoStrings(
+        IFileSystem fileSystem,
+        ModKey modKey,
+        DirectoryPath existingPath)
+    {
+        StringsFolderLookupOverlay.ResolveSources(GameRelease.SkyrimSE, modKey, existingPath, fileSystem: fileSystem)
+            .ShouldBeEmpty();
+    }
 }

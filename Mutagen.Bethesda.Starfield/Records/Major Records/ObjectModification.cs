@@ -16,6 +16,8 @@ partial class AObjectModification
     {
         LegendaryMod = 0x10,
         ModCollection = 0x80,
+        // C55: xEdit bit 8 (101 OMOD in Starfield.esm)
+        PropertyCollection = 0x100,
     }
 
     public enum NoneProperty

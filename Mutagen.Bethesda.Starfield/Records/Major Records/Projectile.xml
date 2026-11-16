@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
-  <Object name="Projectile" recordType="PROJ" objType="Record" baseClass="StarfieldMajorRecord">
+  <Object name="Projectile" recordType="PROJ" objType="Record" baseClass="StarfieldMajorRecord" majorFlag="true">
     <Fields>
       <RefDirect name="VirtualMachineAdapter" refName="VirtualMachineAdapter" overflowRecordType="XXXX" />
       <RefDirect name="ObjectBounds" refName="ObjectBounds" nullable="False" />

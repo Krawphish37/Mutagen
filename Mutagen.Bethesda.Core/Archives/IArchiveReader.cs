@@ -23,6 +23,14 @@ public interface IArchiveReader
     IEnumerable<string> EnumerateFilePaths() => Files.Select(f => f.Path);
 
     /// <summary>
+    /// The paths of the files <see cref="TryGetFolder"/> gives for a folder, in the same order and spelling, read as
+    /// cheaply as the archive allows (a BA2: its name table alone, no file record read) (C58/W10)
+    /// </summary>
+    /// <param name="path">Folder path, as <see cref="TryGetFolder"/> takes it</param>
+    IEnumerable<string> EnumerateFolderFilePaths(string path) =>
+        TryGetFolder(path, out var folder) ? folder.Files.Select(f => f.Path) : Enumerable.Empty<string>();
+
+    /// <summary>
     /// Attempts to locate and retrieve one file by its path, building only that file where the archive allows it (a
     /// BA2: its name table and that one file record; a BSA: the folder's files) (C201)
     /// </summary>

@@ -16,6 +16,8 @@ partial class Worldspace
     [Flags]
     public enum MajorFlag
     {
+        // C55: xEdit bit 14, as Cell/Quest/DialogTopic.PartialForm (20 WRLD in the official add-ons)
+        PartialForm = 0x0000_4000,
         CanNotWait = 0x0008_0000,
     }
 

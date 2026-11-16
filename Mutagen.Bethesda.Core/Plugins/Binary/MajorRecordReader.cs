@@ -116,7 +116,32 @@ public sealed class MajorRecordReader : IDisposable
     }
 
     /// <summary>
-    /// The bytes of the record whose header starts at a position of the file, as <see cref="Read"/> takes them: the
+    /// Reads the record whose header starts at a position of the file, with its children read as asked (C58/W9)
+    /// </summary>
+    /// <param name="position">Where the record's header starts</param>
+    /// <param name="children">For a record that holds others (a cell, a worldspace, a dialog topic, a quest): none,
+    /// their headers with the group laid out (<see cref="ChildRecordRead.Headers"/>), or all of them in full</param>
+    /// <exception cref="ArgumentException">There is a group, not a record, at the position, or the record type is not
+    /// one of the game's</exception>
+    public IMajorRecord ReadAt(long position, ChildRecordRead children)
+    {
+        return Read(ReadBytesAt(position, children), position, children);
+    }
+
+    /// <summary>
+    /// The bytes of the record whose header starts at a position of the file, as <see cref="Read(ReadOnlyMemorySlice{byte}, long, ChildRecordRead)"/>
+    /// takes them: the record, and unless <paramref name="children"/> is <see cref="ChildRecordRead.None"/> the children
+    /// group that follows it, when one does. For <see cref="ChildRecordRead.Headers"/> the children's own children groups
+    /// are left out (the group sizes changed to match); every record header is as the file holds it.
+    /// </summary>
+    public byte[] ReadBytesAt(long position, ChildRecordRead children)
+    {
+        var bytes = ReadBytesAt(position, withChildren: children != ChildRecordRead.None);
+        return children == ChildRecordRead.Headers ? WithoutGrandchildren(bytes) : bytes;
+    }
+
+    /// <summary>
+    /// The bytes of the record whose header starts at a position of the file, as <see cref="Read(ReadOnlyMemorySlice{byte}, long)"/> takes them: the
     /// record, and with <paramref name="withChildren"/> the children group that follows it, when one does.
     /// </summary>
     public byte[] ReadBytesAt(long position, bool withChildren = false)
@@ -153,9 +178,23 @@ public sealed class MajorRecordReader : IDisposable
     /// <summary>
     /// Reads a record from its bytes: they start with the record's header, and may go on with its children group
     /// </summary>
-    /// <param name="bytes">The record's bytes, as <see cref="ReadBytesAt"/> returns them</param>
+    /// <param name="bytes">The record's bytes, as <see cref="ReadBytesAt(long, bool)"/> returns them</param>
     /// <param name="position">Where the bytes start in the file, for the positions errors report</param>
     public IMajorRecord Read(ReadOnlyMemorySlice<byte> bytes, long position = 0)
+    {
+        return Read(bytes, position, ChildRecordRead.Full);
+    }
+
+    /// <summary>
+    /// Reads a record from its bytes: they start with the record's header, and may go on with its children group, read
+    /// as asked (C58/W9). <see cref="ChildRecordRead.None"/> reads the record alone, whatever follows it;
+    /// <see cref="ChildRecordRead.Headers"/> reads each child from its header alone and leaves out the children's own
+    /// children groups.
+    /// </summary>
+    /// <param name="bytes">The record's bytes, as <see cref="ReadBytesAt(long, ChildRecordRead)"/> returns them</param>
+    /// <param name="position">Where the bytes start in the file, for the positions errors report</param>
+    /// <param name="children">How its children are read</param>
+    public IMajorRecord Read(ReadOnlyMemorySlice<byte> bytes, long position, ChildRecordRead children)
     {
         var constants = _meta.Constants;
         if (bytes.Length < constants.MajorConstants.HeaderLength || new GroupHeader(constants, bytes).IsGroup)
@@ -165,9 +204,91 @@ public sealed class MajorRecordReader : IDisposable
         var recordType = new MajorRecordHeader(constants, bytes).RecordType;
         var create = GetCreator(_category, recordType)
             ?? throw new ArgumentException($"{recordType} at 0x{position:X} of {ModKey} is not a record type Mutagen reads for {_category}");
+        switch (children)
+        {
+            case ChildRecordRead.None:
+                bytes = bytes.Slice(0, checked((int)new MajorRecordHeader(constants, bytes).TotalLength));
+                break;
+            case ChildRecordRead.Headers:
+                bytes = WithoutGrandchildren(bytes);
+                break;
+        }
         // The reading state holds per-record trackers (the form version, ...), so each read has its own copy
-        var stream = new MutagenMemoryReadStream(bytes, _meta.CloneForParallelParse(), offsetReference: position);
+        var meta = _meta.CloneForParallelParse();
+        meta.ChildRecordsHeadersOnly = children == ChildRecordRead.Headers;
+        meta.HeadersOnlyParentRead = false;
+        var stream = new MutagenMemoryReadStream(bytes, meta, offsetReference: position);
         return create(new MutagenFrame(stream));
+    }
+
+    /// <summary>
+    /// A record's bytes with its children group as <see cref="ChildRecordRead.Headers"/> reads it: the groups inside it
+    /// (blocks, persistent and temporary groups) kept, each child's own children group (a group of the game's children
+    /// types that follows a record and is labelled with its FormID) left out, and the sizes of the groups that held them
+    /// made to match. Record headers and content are copied as they are.
+    /// </summary>
+    private byte[] WithoutGrandchildren(ReadOnlyMemorySlice<byte> bytes)
+    {
+        var constants = _meta.Constants;
+        var recordLength = checked((int)new MajorRecordHeader(constants, bytes).TotalLength);
+        var output = new MemoryStream(bytes.Length);
+        output.Write(bytes.Span.Slice(0, recordLength));
+        if (bytes.Length > recordLength)
+        {
+            CopyGroup(bytes.Slice(recordLength), output, constants, ChildrenGroupTypes(constants));
+        }
+        return output.ToArray();
+    }
+
+    private static HashSet<int> ChildrenGroupTypes(GameConstants constants)
+    {
+        var ret = new HashSet<int> { constants.GroupConstants.World.TopGroupType, constants.GroupConstants.Cell.TopGroupType };
+        if (constants.GroupConstants.Topic is { } topic) ret.Add(topic.TopGroupType);
+        if (constants.GroupConstants.Quest is { } quest) ret.Add(quest.TopGroupType);
+        return ret;
+    }
+
+    // Copies one group, leaving out the children groups of the records in it, with its size made to match
+    private static void CopyGroup(ReadOnlyMemorySlice<byte> group, MemoryStream output, GameConstants constants, HashSet<int> childrenTypes)
+    {
+        var header = new GroupHeader(constants, group);
+        int headerLength = constants.GroupConstants.HeaderLength;
+        var start = output.Position;
+        output.Write(group.Span.Slice(0, headerLength));
+        var end = checked((int)header.TotalLength);
+        int pos = headerLength;
+        ReadOnlyMemorySlice<byte>? lastFormId = null;
+        while (pos < end)
+        {
+            var item = group.Slice(pos);
+            var sub = new GroupHeader(constants, item);
+            if (sub.IsGroup)
+            {
+                var length = checked((int)sub.TotalLength);
+                // A record's children group follows it, labelled with its FormID
+                if (!(lastFormId is { } formId
+                      && childrenTypes.Contains(sub.GroupType)
+                      && sub.ContainedRecordTypeData.Span.SequenceEqual(formId.Span)))
+                {
+                    CopyGroup(item.Slice(0, length), output, constants, childrenTypes);
+                }
+                lastFormId = null;
+                pos += length;
+                continue;
+            }
+            var record = new MajorRecordHeader(constants, item);
+            var recordLength = checked((int)record.TotalLength);
+            output.Write(item.Span.Slice(0, recordLength));
+            lastFormId = item.Slice(constants.MajorConstants.FormIDLocationOffset, 4);
+            pos += recordLength;
+        }
+        var written = checked((uint)(output.Position - start));
+        var after = output.Position;
+        output.Position = start + constants.GroupConstants.TypeAndLengthLength - constants.GroupConstants.LengthLength;
+        Span<byte> size = stackalloc byte[4];
+        System.Buffers.Binary.BinaryPrimitives.WriteUInt32LittleEndian(size, written);
+        output.Write(size.Slice(0, constants.GroupConstants.LengthLength));
+        output.Position = after;
     }
 
     /// <summary>
@@ -180,7 +301,7 @@ public sealed class MajorRecordReader : IDisposable
         return Creators.GetOrAdd(category, BuildCreators).TryGetValue(recordType, out var creator) ? creator.Class : null;
     }
 
-    private static Func<MutagenFrame, IMajorRecord>? GetCreator(GameCategory category, RecordType recordType)
+    internal static Func<MutagenFrame, IMajorRecord>? GetCreator(GameCategory category, RecordType recordType)
     {
         return Creators.GetOrAdd(category, BuildCreators).TryGetValue(recordType, out var creator) ? creator.Create : null;
     }

@@ -20,10 +20,11 @@ partial class Static
         Obstacle = 0x0200_0000,
         NavMeshGenerationFilter = 0x0400_0000,
         NavMeshGenerationBoundingBox = 0x0800_0000,
-        /// <summary>
-        /// Sky cell only
-        /// </summary>
-        ShowInWorldMap = 0x1000_0000,
+        // C55: was ShowInWorldMap, Fallout 4's name. xEdit's Starfield name for bit 28 is 'Navmesh - Only Cut', and the 778
+        // STAT in Starfield.esm that set it are consoles, tables, counters and catwalk supports
+        NavMeshGenerationOnlyCut = 0x1000_0000,
+        // C55: xEdit bit 29 'Navmesh - Ignore Erosion' (137 STAT in Starfield.esm)
+        NavMeshGenerationIgnoreErosion = 0x2000_0000,
         NavMeshGenerationGround = 0x4000_0000,
     }
 }

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="us-ascii"?>
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
-  <Object name="Location" recordType="LCTN" objType="Record" baseClass="StarfieldMajorRecord" majorFlag="true" >
+  <!-- partialForm: a Location can be a partial form (header flag 0x4000, xEdit's 'Partial Form'; 63 in the official
+       add-ons) (C58/W7) -->
+  <Object name="Location" recordType="LCTN" objType="Record" baseClass="StarfieldMajorRecord" majorFlag="true" partialForm="true" >
     <Fields>
       <RefDirect name="VirtualMachineAdapter" refName="VirtualMachineAdapter" overflowRecordType="XXXX" />
       <RefList name="Components" refName="AComponent" />

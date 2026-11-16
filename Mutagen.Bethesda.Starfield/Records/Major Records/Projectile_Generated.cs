@@ -2277,6 +2277,11 @@ namespace Mutagen.Bethesda.Starfield
 
         protected override Type LinkType => typeof(IProjectile);
 
+        public MajorFlag MajorFlags
+        {
+            get => (MajorFlag)this.MajorRecordFlagsRaw;
+            set => this.MajorRecordFlagsRaw = (int)value;
+        }
         public override IEnumerable<IAssetLinkGetter> EnumerateAssetLinks(AssetLinkQuery queryCategories, IAssetLinkCache? linkCache = null, Type? assetType = null, bool iterateNestedRecords = true) => ProjectileCommon.Instance.EnumerateAssetLinks(this, queryCategories, linkCache, assetType, iterateNestedRecords);
         public override IEnumerable<IAssetLink> EnumerateListedAssetLinks(bool iterateNestedRecords = true) => ProjectileSetterCommon.Instance.EnumerateListedAssetLinks(this, iterateNestedRecords);
         public override void RemapAssetLinks(IReadOnlyDictionary<IAssetLinkGetter, string> mapping, AssetLinkQuery queryCategories, IAssetLinkCache? linkCache) => ProjectileSetterCommon.Instance.RemapAssetLinks(this, mapping, linkCache, queryCategories);
@@ -2441,6 +2446,10 @@ namespace Mutagen.Bethesda.Starfield
         new SoundReference? DisableSound { get; set; }
         new SoundLevel? SoundLevel { get; set; }
         new IFormLinkNullable<ICurveTableGetter> CurveTable { get; set; }
+        #region Mutagen
+        new Projectile.MajorFlag MajorFlags { get; set; }
+        #endregion
+
     }
 
     public partial interface IProjectileInternal :
@@ -2545,6 +2554,10 @@ namespace Mutagen.Bethesda.Starfield
         ISoundReferenceGetter? DisableSound { get; }
         SoundLevel? SoundLevel { get; }
         IFormLinkNullableGetter<ICurveTableGetter> CurveTable { get; }
+
+        #region Mutagen
+        Projectile.MajorFlag MajorFlags { get; }
+        #endregion
 
     }
 
@@ -5284,6 +5297,7 @@ namespace Mutagen.Bethesda.Starfield
         }
         protected override Type LinkType => typeof(IProjectileGetter);
 
+        public Projectile.MajorFlag MajorFlags => (Projectile.MajorFlag)this.MajorRecordFlagsRaw;
 
         #region VirtualMachineAdapter
         private int? _VirtualMachineAdapterLengthOverride;
