@@ -29,6 +29,8 @@ internal static class ValuePositionRecorder
         HandRead,
         Count,
         At,
+        /// <summary>A field a hand-written reader fills with no bytes of its own (a count derived from a length): no position</summary>
+        Filled,
     }
 
     internal struct Node
@@ -63,6 +65,15 @@ internal static class ValuePositionRecorder
         /// <summary>The record whose content is being read (the first one whose read started)</summary>
         public object? Record;
 
+        /// <summary>The first node noted in the record's content (after its header); -1 until the content starts</summary>
+        public int ContentNodeStart = -1;
+
+        /// <summary>
+        /// Only which fields the record's readers fill is wanted (PartialFormMixIn.TryGetPresentFields, C75): the record is
+        /// read exactly as without a recording (a compressed record is decompressed as usual)
+        /// </summary>
+        public bool PresenceOnly;
+
         /// <summary>A compressed record's content, as decompressed while recording</summary>
         public byte[]? Decompressed;
 
@@ -80,6 +91,58 @@ internal static class ValuePositionRecorder
             On = true;
         }
         return ret;
+    }
+
+    /// <summary>The recording running on this thread, if any</summary>
+    internal static Recording? Current => _current;
+
+    /// <summary>
+    /// Starts a recording that only notes which fields the record's readers fill (C75): see <see cref="Recording.PresenceOnly"/>
+    /// </summary>
+    public static Recording StartPresence()
+    {
+        var ret = Start(contentDecompressed: false);
+        ret.PresenceOnly = true;
+        return ret;
+    }
+
+    /// <summary>
+    /// The record's own fields its content's readers noted, from node <paramref name="from"/> on: the names of the notes
+    /// made directly in the record, a hand-written step being transparent (its notes are named relative to the record),
+    /// each cut to its first property ("Data.Function": Data). The record header's values aren't among them.
+    /// </summary>
+    public static IEnumerable<string> FieldsNoted(Recording recording, int from)
+    {
+        if (recording.ContentNodeStart < 0) yield break;
+        var nodes = recording.Nodes;
+        for (int i = Math.Max(from, recording.ContentNodeStart); i < nodes.Count; i++)
+        {
+            var n = nodes[i];
+            if (n.Name == null || n.Kind is NodeKind.HandRead or NodeKind.Item or NodeKind.Count || n.Dropped) continue;
+            var parent = n.Parent;
+            while (parent >= 0 && nodes[parent].Kind == NodeKind.HandRead && !nodes[parent].Dropped) parent = nodes[parent].Parent;
+            if (parent >= 0) continue;
+            var end = n.Name.IndexOfAny(['.', '[']);
+            yield return end < 0 ? n.Name : n.Name[..end];
+        }
+    }
+
+    /// <summary>
+    /// For a hand-written reader: a field it fills whose value has no bytes of its own (a count derived from a length).
+    /// No position; noted so the field counts as read from the record (PartialFormMixIn.TryGetPresentFields, C75).
+    /// </summary>
+    /// <param name="name">The field's name, relative to the object being read</param>
+    public static void Filled(string name)
+    {
+        if (_current is not { RecordStart: not null } c) return;
+        c.Nodes.Add(new Node
+        {
+            Parent = c.Stack.Count > 0 ? c.Stack[^1] : -1,
+            Kind = NodeKind.Filled,
+            Name = name,
+            Start = -1,
+            End = -1,
+        });
     }
 
     public static void Stop(Recording recording)
@@ -330,6 +393,7 @@ internal static class ValuePositionRecorder
     {
         if (_current is not { } c || !ReferenceEquals(c.Record, record) || c.ContentStart != null) return;
         c.ContentStart = frame.PositionWithOffset;
+        c.ContentNodeStart = c.Nodes.Count;
     }
 
     /// <summary>
@@ -340,7 +404,7 @@ internal static class ValuePositionRecorder
     /// <returns>False if this isn't the recorded record (it is read as usual)</returns>
     public static bool Decompress(object record, MutagenFrame frame, out MutagenFrame content)
     {
-        if (_current is not { } c || !ReferenceEquals(c.Record, record))
+        if (_current is not { } c || !ReferenceEquals(c.Record, record) || c.PresenceOnly)
         {
             content = default;
             return false;

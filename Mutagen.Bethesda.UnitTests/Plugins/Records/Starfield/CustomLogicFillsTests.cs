@@ -393,6 +393,33 @@ public class CustomLogicFillsTests
         }
     }
 
+    // C75: on a type that can be a partial form, every field of the record a hand-written reader fills is noted by that
+    // reader (a value-position note naming it: Field, List, At, Value or Filled), so PartialFormMixIn.TryGetPresentFields
+    // reports it and MergeOnto takes it. A customBinaryEnd (the child group) isn't a field of the record's bytes.
+    [Fact]
+    public void PartialFormTypes_HandReadersNoteEveryFieldTheyFill()
+    {
+        var partialFormTypes = new HashSet<string> { "Cell", "DialogTopic", "Location", "Quest", "Worldspace" };
+        var readers = Steps().Concat(CustomFields())
+            .Where(s => partialFormTypes.Contains(s.Object) && s.FillPaths.Length > 0)
+            .ToList();
+        readers.Select(s => $"{s.Object}.{s.Name}").OrderBy(x => x).ShouldBe(new[]
+        {
+            "Cell.Traversals", "Quest.AliasParse", "Quest.DialogConditions", "Quest.UnusedConditionsLogic",
+            "Worldspace.ObjectBoundsMax", "Worldspace.ObjectBoundsMin",
+        });
+        foreach (var step in readers)
+        {
+            var reader = CustomReader(step);
+            reader.ShouldNotBeNull($"{step} has no hand-written reader");
+            var noted = IlWalk.Walk(reader!, ReaderHomes(step)).Strings.ToHashSet();
+            foreach (var path in step.FillPaths)
+            {
+                noted.ShouldContain(path.Split('.')[0], $"{step} fills {path} but doesn't note it");
+            }
+        }
+    }
+
     [Fact]
     public void CustomFieldAndCustomBinaryEndFills_NameRealFields_AndMatchTheCompiledReader()
     {
@@ -427,12 +454,13 @@ public class CustomLogicFillsTests
             .Select(f => (OpCode)f.GetValue(null)!)
             .ToDictionary(o => o.Value);
 
-        public sealed record Touch(List<MethodBase> Calls, List<FieldInfo> Fields);
+        public sealed record Touch(List<MethodBase> Calls, List<FieldInfo> Fields, List<string> Strings);
 
         public static Touch Walk(MethodBase root, params Type[] alsoHome)
         {
             var calls = new List<MethodBase>();
             var fields = new List<FieldInfo>();
+            var strings = new List<string>();
             var seen = new HashSet<MethodBase>();
             var queue = new Queue<MethodBase>();
             var home = Def(root.DeclaringType!);
@@ -480,6 +508,10 @@ public class CustomLogicFillsTests
                             fields.Add(m.Module.ResolveField(BitConverter.ToInt32(il, pos), typeArgs, methodArgs)!);
                             pos += 4;
                             break;
+                        case OperandType.InlineString:
+                            strings.Add(m.Module.ResolveString(BitConverter.ToInt32(il, pos)));
+                            pos += 4;
+                            break;
                         case OperandType.InlineNone:
                             break;
                         case OperandType.ShortInlineBrTarget:
@@ -503,7 +535,7 @@ public class CustomLogicFillsTests
                     }
                 }
             }
-            return new Touch(calls, fields);
+            return new Touch(calls, fields, strings);
         }
     }
 }

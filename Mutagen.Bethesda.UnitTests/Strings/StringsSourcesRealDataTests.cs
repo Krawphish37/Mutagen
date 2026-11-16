@@ -52,6 +52,45 @@ public class StringsSourcesRealDataTests
         tables.ShouldBeGreaterThan(0);
     }
 
+    /// <summary>
+    /// C77: a resolver kept between calls gives the batch's answer (39 plugins with tables, 1,053 tables) and reads no
+    /// name table on a second call
+    /// </summary>
+    [Fact]
+    [Trait("Category", "RealData")]
+    public void RealData_DataFolder_KeptResolver()
+    {
+        var data = Environment.GetEnvironmentVariable("MUTAGEN_STARFIELD_DATA");
+        if (string.IsNullOrEmpty(data)) return; // needs the game's Data folder
+        var plugins = Directory.EnumerateFiles(data)
+            .Where(f => Path.GetExtension(f).ToLowerInvariant() is ".esm" or ".esp" or ".esl")
+            .Select(f => ModKey.FromFileName(Path.GetFileName(f)))
+            .ToArray();
+        var resolver = new StringsSourcesResolver(GameRelease.Starfield, data);
+
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        var first = resolver.ResolveSources(plugins);
+        var firstTime = watch.Elapsed;
+        watch.Restart();
+        var second = resolver.ResolveSources(plugins);
+        var secondTime = watch.Elapsed;
+        watch.Restart();
+        var single = plugins.ToDictionary(p => p, p => resolver.ResolveSources(p));
+        var singleTime = watch.Elapsed;
+
+        var reference = StringsFolderLookupOverlay.ResolveSources(GameRelease.Starfield, plugins, data);
+        foreach (var plugin in plugins)
+        {
+            first[plugin].ShouldBe(reference[plugin], plugin.FileName);
+            second[plugin].ShouldBe(reference[plugin], plugin.FileName);
+            single[plugin].ShouldBe(reference[plugin], plugin.FileName);
+        }
+        first.Values.Count(x => x.Count > 0).ShouldBe(39);
+        first.Values.Sum(x => x.Count).ShouldBe(1053);
+        _output.WriteLine($"{plugins.Length} plugins: first batch {firstTime.TotalSeconds:0.000} s, second batch {secondTime.TotalSeconds:0.000} s, " +
+                          $"a call per plugin on the kept resolver {singleTime.TotalSeconds:0.000} s ({singleTime.TotalMilliseconds / plugins.Length:0.0} ms each)");
+    }
+
     [Fact]
     [Trait("Category", "RealData")]
     public void RealData_OfficialPlugins_ResolveSourcesIsWhatTheLookupsRead()

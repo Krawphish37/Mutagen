@@ -295,6 +295,12 @@ public static class ValuePositionMixIn
             var n = nodes[i];
             var parentPrefix = n.Parent >= 0 ? prefixes[n.Parent] : string.Empty;
             dropped[i] = n.Dropped || (n.Parent >= 0 && dropped[n.Parent]);
+            if (n.Kind == ValuePositionRecorder.NodeKind.Filled)
+            {
+                // A field filled with no bytes of its own (C75): it says the field was read, and has no position
+                prefixes[i] = parentPrefix;
+                continue;
+            }
             string path = n.Kind switch
             {
                 ValuePositionRecorder.NodeKind.Item => $"{parentPrefix}[{(n.Name ?? n.Index.ToString())}]",

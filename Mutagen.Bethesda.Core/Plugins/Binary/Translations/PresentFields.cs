@@ -12,9 +12,11 @@ namespace Mutagen.Bethesda.Plugins.Binary.Translations;
 
 /// <summary>
 /// Which fields a record's bytes held (PartialFormMixIn.TryGetPresentFields, C58/W7): the field index each subrecord was
-/// read into, as the full import's reader reports it (the same report SubrecordOrder's field starts use). Noted while a
-/// record of a type that can be a partial form is read by a full import; worked out for an overlay record, when asked,
-/// by reading its bytes again with the full import's reader.
+/// read into, as the full import's reader reports it (the same report SubrecordOrder's field starts use), and every
+/// field the readers note they fill, hand-written readers included (C75: the value-position notes, ValuePositionRecorder,
+/// with a presence-only recording while the record is read). Noted while a record of a type that can be a partial form
+/// is read by a full import; worked out for an overlay record, when asked, by reading its bytes again with the full
+/// import's reader.
 /// </summary>
 internal static class PresentFields
 {
@@ -39,6 +41,44 @@ internal static class PresentFields
     public static void Remember(object record, IEnumerable<int> fields)
     {
         Noted.AddOrUpdate(record, fields.Distinct().OrderBy(x => x).ToArray());
+    }
+
+    /// <summary>
+    /// A record's fields: the reader's reported indices, and the fields its readers noted by name (the property names of
+    /// its class, as its FieldIndex enum names them)
+    /// </summary>
+    public static void Remember(IMajorRecordGetter record, IEnumerable<int> fields, IEnumerable<string> noted)
+    {
+        var byName = FieldIndices(record.Registration);
+        var all = new List<int>(fields);
+        foreach (var name in noted)
+        {
+            if (byName.TryGetValue(name, out var index)) all.Add(index);
+        }
+        Remember(record, all);
+    }
+
+    private static readonly System.Collections.Concurrent.ConcurrentDictionary<Type, IReadOnlyDictionary<string, int>> FieldIndexCache = new();
+
+    // A record class's field names and indices, from its FieldIndex enum (Location_FieldIndex, ...)
+    [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "The record classes and their FieldIndex enums are public types of the game assembly")]
+    [UnconditionalSuppressMessage("Trimming", "IL2072", Justification = "The record classes and their FieldIndex enums are public types of the game assembly")]
+    private static IReadOnlyDictionary<string, int> FieldIndices(ILoquiRegistration registration)
+    {
+        return FieldIndexCache.GetOrAdd(registration.ClassType, static cls =>
+        {
+            var ret = new Dictionary<string, int>(StringComparer.Ordinal);
+            if (cls.Assembly.GetType($"{cls.Namespace}.{cls.Name}_FieldIndex") is { IsEnum: true } fieldIndex)
+            {
+                var names = Enum.GetNames(fieldIndex);
+                var values = Enum.GetValuesAsUnderlyingType(fieldIndex);
+                for (int i = 0; i < names.Length; i++)
+                {
+                    ret[names[i]] = Convert.ToInt32(values.GetValue(i));
+                }
+            }
+            return ret;
+        });
     }
 
     public static bool TryGet(object record, [MaybeNullWhen(false)] out int[] fields)

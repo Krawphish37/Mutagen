@@ -108,8 +108,7 @@ public sealed class StringsFolderLookupOverlay : IStringsFolderLookup
         StringsReadParameters? instructions = null,
         IFileSystem? fileSystem = null)
     {
-        return new StringsFolderLookupOverlayFactoryContainer(release, fileSystem, dataPath, instructions).Resolve().Value
-            .ResolveSources(modKey);
+        return new StringsSourcesResolver(release, dataPath, instructions, fileSystem).ResolveSources(modKey);
     }
 
     /// <summary>
@@ -118,6 +117,8 @@ public sealed class StringsFolderLookupOverlay : IStringsFolderLookup
     /// them, where a call per plugin reads the archives the ini lists again for every plugin. The same lists as a call per
     /// plugin.
     /// </summary>
+    /// <remarks>A host that resolves again and again keeps a <see cref="StringsSourcesResolver"/> instead: its archive
+    /// listings last between calls (C77)</remarks>
     /// <param name="release">The game release</param>
     /// <param name="modKeys">The plugins (a load order's, say); one listed twice is resolved once</param>
     /// <param name="dataPath">The data folder (its Strings folder and archives)</param>
@@ -131,8 +132,7 @@ public sealed class StringsFolderLookupOverlay : IStringsFolderLookup
         StringsReadParameters? instructions = null,
         IFileSystem? fileSystem = null)
     {
-        return new StringsFolderLookupOverlayFactoryContainer(release, fileSystem, dataPath, instructions).Resolve().Value
-            .ResolveSources(modKeys);
+        return new StringsSourcesResolver(release, dataPath, instructions, fileSystem).ResolveSources(modKeys);
     }
 
     /// <inheritdoc />
