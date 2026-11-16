@@ -29,7 +29,14 @@ public static partial class ReflectionMixIn
         ReadOnlySpan<byte> data,
         IReadOnlySeparatedMasterPackage masters)
     {
-        var locations = ReflectionData.FindFormIds(data);
+        return ReadFormLinks(data, ReflectionData.FindFormIds(data), masters);
+    }
+
+    internal static IReadOnlyList<IFormLinkGetter<IStarfieldMajorRecordGetter>> ReadFormLinks(
+        ReadOnlySpan<byte> data,
+        IReadOnlyList<ReflectionFormIdLocation> locations,
+        IReadOnlySeparatedMasterPackage masters)
+    {
         if (locations.Count == 0) return Array.Empty<IFormLinkGetter<IStarfieldMajorRecordGetter>>();
         var ret = new IFormLinkGetter<IStarfieldMajorRecordGetter>[locations.Count];
         for (int i = 0; i < ret.Length; i++)
@@ -45,7 +52,18 @@ partial class ReflectionBinaryCreateTranslation
 {
     public static partial void CustomBinaryEndImport(MutagenFrame frame, IReflection obj)
     {
-        obj.FormLinks.SetTo(ReflectionMixIn.ReadFormLinks(obj.Data, frame.MetaData.MasterReferences));
+        var data = obj.Data;
+        var locations = ReflectionData.FindFormIds(data);
+        obj.FormLinks.SetTo(ReflectionMixIn.ReadFormLinks(data, locations, frame.MetaData.MasterReferences));
+        if (!ValuePositionRecorder.On) return;
+        // C83: each link is the 4 bytes of a FormID inside Data, which was read just before (it ends here)
+        var dataStart = ValuePositionRecorder.Pos(frame) - data.Length;
+        ValuePositionRecorder.ListFrom(nameof(obj.FormLinks), dataStart);
+        for (int i = 0; i < locations.Count; i++)
+        {
+            ValuePositionRecorder.ItemAt(i, dataStart + locations[i].Position, 4);
+        }
+        ValuePositionRecorder.End(frame);
     }
 }
 

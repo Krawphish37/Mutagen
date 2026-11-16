@@ -2910,49 +2910,49 @@ namespace Mutagen.Bethesda.Starfield
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Vertices");
             item.Vertices.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavmeshVertex>.Instance.Parse(
-                    amount: checked((int)frame.ReadUInt32()),
+                    amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4),
                     reader: frame,
                     transl: NavmeshVertex.TryCreateFromBinary));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Triangles");
             item.Triangles.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavmeshTriangle>.Instance.Parse(
-                    amount: checked((int)frame.ReadUInt32()),
+                    amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4),
                     reader: frame,
                     transl: NavmeshTriangle.TryCreateFromBinary));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "EdgeLinks");
             item.EdgeLinks.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<EdgeLink>.Instance.Parse(
-                    amount: checked((int)frame.ReadUInt32()),
+                    amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4),
                     reader: frame,
                     transl: EdgeLink.TryCreateFromBinary));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "DoorTriangles");
             item.DoorTriangles.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<DoorTriangle>.Instance.Parse(
-                    amount: checked((int)frame.ReadUInt32()),
+                    amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4),
                     reader: frame,
                     transl: DoorTriangle.TryCreateFromBinary));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Cover");
             item.Cover.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavmeshCover>.Instance.Parse(
-                    amount: checked((int)frame.ReadUInt32()),
+                    amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4),
                     reader: frame,
                     transl: NavmeshCover.TryCreateFromBinary));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "CoverTriangleMappings");
             item.CoverTriangleMappings.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavmeshCoverTriangleMap>.Instance.Parse(
-                    amount: checked((int)frame.ReadUInt32()),
+                    amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4),
                     reader: frame,
                     transl: NavmeshCoverTriangleMap.TryCreateFromBinary));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Waypoints");
             item.Waypoints.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavmeshWaypoint>.Instance.Parse(
-                    amount: checked((int)frame.ReadUInt32()),
+                    amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4),
                     reader: frame,
                     transl: NavmeshWaypoint.TryCreateFromBinary));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);

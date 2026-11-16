@@ -238,7 +238,7 @@
       <FormLink name="PcmTypeKeyword" refName="Keyword" recordType="LNAM" />
     </Fields>
   </Object>
-  <Object name="QuestCollectionAlias" objType="Subrecord" baseClass="AQuestAlias" selectorValue="ALCS,ALMI">
+  <Object name="QuestCollectionAlias" enteredBy="Quest.AliasParse" objType="Subrecord" baseClass="AQuestAlias" selectorValue="ALCS,ALMI">
     <Fields>
       <RefList name="Collection" refName="CollectionAlias" />
     </Fields>

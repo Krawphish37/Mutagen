@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml.Linq;
 using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Plugins.Analysis;
+using Mutagen.Bethesda.Plugins.Binary;
 using Mutagen.Bethesda.Plugins.Binary.Parameters;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
 using Mutagen.Bethesda.Plugins.Binary.Translations;
@@ -25,6 +26,9 @@ namespace Mutagen.Bethesda.UnitTests.Plugins.Records.Starfield.HandReadLayoutFil
 //     folder (MUTAGEN_LAYOUT_PLUGINS: a comma list, default Starfield.esm + the 32 official plugins; MUTAGEN_LAYOUT_TYPES:
 //     a comma list of record signatures, default every type the file describes); a report of the values checked per
 //     layout element goes to MUTAGEN_LAYOUT_REPORT when set.
+//   - C84, value positions: with MUTAGEN_LAYOUT_POSITIONS set (1: every record; else a comma list of signatures: a record
+//     whose type or one of whose subrecords is listed), those records are also read for Mutagen's value positions (C60),
+//     and every value the walk reads with bytes is held to where Mutagen's reader read it.
 public class HandReadLayoutFileTests
 {
     public static readonly string[] OfficialPlugins =
@@ -83,7 +87,11 @@ public class HandReadLayoutFileTests
         var types = Environment.GetEnvironmentVariable("MUTAGEN_LAYOUT_TYPES") is { Length: > 0 } typeList
             ? typeList.Split(',')
             : null;
-        var result = CheckPlugins(data, plugins, types);
+        // MUTAGEN_LAYOUT_POSITIONS (C84): 1 for every record, or a comma list of record or subrecord signatures
+        var positions = Environment.GetEnvironmentVariable("MUTAGEN_LAYOUT_POSITIONS") is { Length: > 0 } posList
+            ? (posList is "1" or "all" ? PositionsForAll : posList.Split(','))
+            : null;
+        var result = CheckPlugins(data, plugins, types, positions);
         if (Environment.GetEnvironmentVariable("MUTAGEN_LAYOUT_REPORT") is { Length: > 0 } report)
         {
             File.WriteAllText(report, result.Report());
@@ -106,9 +114,18 @@ public class HandReadLayoutFileTests
         }
     }
 
+    /// <summary>For CheckPlugins' positions: every record's value positions are read</summary>
+    public static readonly IReadOnlyCollection<string> PositionsForAll = ["*"];
+
+    // The signatures an AnyRecord entry applies to (C84: sig may list several; the record needs any of them)
+    private static string[] AnySigs(XElement anyRecord) => ((string)anyRecord.Attribute("sig")!).Split(',');
+
     // Reads every record of the described types (and every record holding an AnyRecord subrecord) in the plugins, raw
-    // and with Mutagen's full reader, and checks one against the other by the layout file
-    public static CheckResult CheckPlugins(string data, IEnumerable<string> plugins, IReadOnlyCollection<string>? types = null)
+    // and with Mutagen's full reader, and checks one against the other by the layout file. positions (C84): the records
+    // (by their type or one of their subrecords' signatures; PositionsForAll: every one) whose value positions are read too
+    // and held to the walk's
+    public static CheckResult CheckPlugins(string data, IEnumerable<string> plugins, IReadOnlyCollection<string>? types = null,
+        IReadOnlyCollection<string>? positions = null)
     {
         var doc = XDocument.Load(LayoutPath());
         var layouts = doc.Root!.Elements("Record").ToDictionary(r => (string)r.Attribute("sig")!);
@@ -149,6 +166,9 @@ public class HandReadLayoutFileTests
                 meta.StringsLookup = Mutagen.Bethesda.Strings.StringsFolderLookupOverlay.TypicalFactory(GameRelease.Starfield, modPath.ModKey, data, null);
             }
             var checker = new LayoutChecker(meta.MasterReferences, localized);
+            using var positionReader = positions == null
+                ? null
+                : MajorRecordReader.FromPath(modPath, GameRelease.Starfield, new BinaryReadParameters { MasterFlagsLookup = flags }, meta.StringsLookup);
             // TES4, the plugin header, isn't in the record locations: read at the file's start
             if (scanned.Contains("TES4"))
             {
@@ -169,7 +189,7 @@ public class HandReadLayoutFileTests
                 var recordBytes = ReadRecordBytes(stream);
                 var subs = RawSubrecords(new MemoryStream(recordBytes), out var raw);
                 if (raw.Deleted) continue;
-                var applies = anywhere.Where(a => subs.Any(x => x.Sig == (string)a.Attribute("sig")!)).ToList();
+                var applies = anywhere.Where(a => AnySigs(a).Any(s => subs.Any(x => x.Sig == s))).ToList();
                 if (layout == null && applies.Count == 0) continue;
                 var type = layout != null
                     ? Starfield.GetType($"Mutagen.Bethesda.Starfield.{(string)layout.Attribute("object")!}")!
@@ -185,6 +205,21 @@ public class HandReadLayoutFileTests
                     continue;
                 }
                 checker.Where = $"{plugin} {marker.Record} {marker.FormKey}";
+                checker.Positions = null;
+                if (positionReader != null
+                    && (ReferenceEquals(positions, PositionsForAll) || positions!.Contains(marker.Record.Type) || subs.Any(s => positions!.Contains(s.Sig))))
+                {
+                    try
+                    {
+                        checker.Positions = positionReader.ReadValuePositions(recordBytes, marker.Location.Min);
+                        if (checker.Positions.Unplaced.Count > 0) errors.Add($"{plugin} {marker.FormKey}: values with no place in the record: {string.Join(", ", checker.Positions.Unplaced.Take(5))}");
+                        records["(value positions)"] = records.GetValueOrDefault("(value positions)") + 1;
+                    }
+                    catch (Exception ex)
+                    {
+                        errors.Add($"{plugin} {marker.FormKey}: Mutagen could not read its value positions: {ex.GetBaseException().Message}");
+                    }
+                }
                 if (layout != null) checker.CheckRecord(layout, subs, record);
                 foreach (var a in applies) checker.CheckRecord(a, subs, record);
                 if ((headers.GetValueOrDefault(marker.Record.Type) ?? headers.GetValueOrDefault("")) is { } recordHeader)

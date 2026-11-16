@@ -168,6 +168,9 @@ public class PluginArrayBinaryTranslationGeneration : PluginListBinaryTranslatio
         {
             sb.AppendLine($"frame.Position += frame.{nameof(MutagenBinaryReadStream.MetaData)}.{nameof(ParsingMeta.Constants)}.{nameof(GameConstants.SubConstants)}.{nameof(RecordHeaderConstants.HeaderLength)};");
         }
-        sb.AppendLine($"{itemAccessor} = {nameof(BinaryOverlayArrayHelper)}.{nameof(BinaryOverlayArrayHelper.FloatSliceFromFixedSize)}({nodeAccessor}.ReadBytes({await gen.ExpectedLength(objGen, arr.SubTypeGeneration)} * {arr.FixedSize}), {arr.FixedSize}).ToArray();");
+        var itemLength = await gen.ExpectedLength(objGen, arr.SubTypeGeneration);
+        sb.AppendLine($"{itemAccessor} = {nameof(BinaryOverlayArrayHelper)}.{nameof(BinaryOverlayArrayHelper.FloatSliceFromFixedSize)}({nodeAccessor}.ReadBytes({itemLength} * {arr.FixedSize}), {arr.FixedSize}).ToArray();");
+        // C83: the items were read in one go; each is noted at its place
+        sb.AppendLine($"if ({nameof(ValuePositionRecorder)}.{nameof(ValuePositionRecorder.On)}) {nameof(ValuePositionRecorder)}.{nameof(ValuePositionRecorder.ItemsBefore)}({nodeAccessor}, {arr.FixedSize}, {itemLength});");
     }
 }

@@ -1083,7 +1083,7 @@ namespace Mutagen.Bethesda.Starfield
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "ExclusiveDisplaySlots");
             item.ExclusiveDisplaySlots.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<UInt32>.Instance.Parse(
-                    amount: checked((int)frame.ReadUInt32()),
+                    amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4),
                     reader: frame,
                     transl: UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);

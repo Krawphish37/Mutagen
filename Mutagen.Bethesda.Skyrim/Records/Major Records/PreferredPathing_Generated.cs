@@ -1313,14 +1313,14 @@ namespace Mutagen.Bethesda.Skyrim
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "NavmeshSets");
             item.NavmeshSets.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavmeshSet>.Instance.Parse(
-                    amount: checked((int)frame.ReadUInt32()),
+                    amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4),
                     reader: frame,
                     transl: NavmeshSet.TryCreateFromBinary));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "NavmeshTree");
             item.NavmeshTree.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavmeshNode>.Instance.Parse(
-                    amount: checked((int)frame.ReadUInt32()),
+                    amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4),
                     reader: frame,
                     transl: NavmeshNode.TryCreateFromBinary));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);

@@ -1366,14 +1366,14 @@ namespace Mutagen.Bethesda.Fallout3
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Vertices");
             item.Vertices.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<P3Float>.Instance.Parse(
-                    amount: frame.ReadUInt16(),
+                    amount: ValuePositionRecorder.Counted(frame, frame.ReadUInt16(), 2),
                     reader: frame,
                     transl: P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Triangles");
             item.Triangles.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<P3Int16>.Instance.Parse(
-                    amount: frame.ReadUInt16(),
+                    amount: ValuePositionRecorder.Counted(frame, frame.ReadUInt16(), 2),
                     reader: frame,
                     transl: P3Int16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);

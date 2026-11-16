@@ -1374,14 +1374,14 @@ namespace Mutagen.Bethesda.Starfield
                     if (ValuePositionRecorder.On) ValuePositionRecorder.List(dataFrame, "Traversals");
                     item.Traversals.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<TraversalReference>.Instance.Parse(
-                            amount: checked((int)frame.ReadUInt32()),
+                            amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4),
                             reader: frame,
                             transl: TraversalReference.TryCreateFromBinary));
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.List(dataFrame, "ActivatorTraversals");
                     item.ActivatorTraversals.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<StoredTraversalsComponentItem>.Instance.Parse(
-                            amount: checked((int)frame.ReadUInt32()),
+                            amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4),
                             reader: frame,
                             transl: StoredTraversalsComponentItem.TryCreateFromBinary));
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);

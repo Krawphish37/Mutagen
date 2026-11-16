@@ -1238,7 +1238,7 @@ namespace Mutagen.Bethesda.Starfield
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Traversals");
             item.Traversals.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<TraversalReference>.Instance.Parse(
-                    amount: checked((int)frame.ReadUInt32()),
+                    amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4),
                     reader: frame,
                     transl: TraversalReference.TryCreateFromBinary));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);

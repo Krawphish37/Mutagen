@@ -31,6 +31,8 @@ internal static class ValuePositionRecorder
         At,
         /// <summary>A field a hand-written reader fills with no bytes of its own (a count derived from a length): no position</summary>
         Filled,
+        /// <summary>The stored key of a dictionary entry (C83), named by the entry ("[3]")</summary>
+        Key,
     }
 
     internal struct Node
@@ -93,6 +95,19 @@ internal static class ValuePositionRecorder
         return ret;
     }
 
+    /// <summary>
+    /// Starts a recording of a record whose reader doesn't say where it starts (a plugin header, C82): it starts at
+    /// <paramref name="recordStart"/> and its content at <paramref name="contentStart"/> (with the stream's offset)
+    /// </summary>
+    public static Recording Start(bool contentDecompressed, long recordStart, long contentStart)
+    {
+        var ret = Start(contentDecompressed);
+        ret.RecordStart = recordStart;
+        ret.ContentStart = contentStart;
+        ret.ContentNodeStart = 0;
+        return ret;
+    }
+
     /// <summary>The recording running on this thread, if any</summary>
     internal static Recording? Current => _current;
 
@@ -118,7 +133,7 @@ internal static class ValuePositionRecorder
         for (int i = Math.Max(from, recording.ContentNodeStart); i < nodes.Count; i++)
         {
             var n = nodes[i];
-            if (n.Name == null || n.Kind is NodeKind.HandRead or NodeKind.Item or NodeKind.Count || n.Dropped) continue;
+            if (n.Name == null || n.Kind is NodeKind.HandRead or NodeKind.Item or NodeKind.Count or NodeKind.Key || n.Dropped) continue;
             var parent = n.Parent;
             while (parent >= 0 && nodes[parent].Kind == NodeKind.HandRead && !nodes[parent].Dropped) parent = nodes[parent].Parent;
             if (parent >= 0) continue;
@@ -219,6 +234,44 @@ internal static class ValuePositionRecorder
     }
 
     /// <summary>
+    /// For a hand-written reader: a list field whose read started at <paramref name="start"/> (with the stream's offset),
+    /// before the reader's place (a list found inside bytes read already); it ends at the next <see cref="End"/>
+    /// </summary>
+    public static void ListFrom(string name, long start)
+    {
+        if (_current is not { RecordStart: not null } c) return;
+        var parent = c.Stack.Count > 0 ? c.Stack[^1] : -1;
+        if (parent >= 0)
+        {
+            var p = c.Nodes[parent];
+            p.HasChildren = true;
+            c.Nodes[parent] = p;
+        }
+        c.Nodes.Add(new Node
+        {
+            Parent = parent,
+            Kind = NodeKind.List,
+            Name = name,
+            Index = -1,
+            Start = start,
+            End = -1,
+        });
+        c.Stack.Add(c.Nodes.Count - 1);
+    }
+
+    /// <summary>
+    /// For a hand-written reader: the stored key of an entry of the dictionary being read (C83: a package data input's
+    /// UNAM index), <paramref name="length"/> bytes from <paramref name="start"/>. Its path is the entry's.
+    /// </summary>
+    /// <param name="key">The entry's key, as its path names it ("[3]")</param>
+    /// <param name="start">Where the key's bytes start, with the stream's offset</param>
+    /// <param name="length">How many bytes</param>
+    public static void KeyAt(string key, long start, int length)
+    {
+        Leaf(NodeKind.Key, key, start, start + length, 0);
+    }
+
+    /// <summary>
     /// A hand-written reader step is read from here on (a CustomLogic step, a binary="Custom" field, a customBinaryEnd).
     /// What it notes inside is named relative to the object, as the object's own fields are.
     /// </summary>
@@ -266,6 +319,21 @@ internal static class ValuePositionRecorder
         Leaf(NodeKind.Item, null, start, start + length, 0, index, converted);
     }
 
+    /// <summary>
+    /// Items of the list being read that were read in one go and end here: <paramref name="count"/> values of
+    /// <paramref name="itemLength"/> bytes each, in order (C83: a fixed-size array of floats)
+    /// </summary>
+    public static void ItemsBefore<TReader>(TReader frame, int count, int itemLength)
+        where TReader : IBinaryReadStream
+    {
+        if (_current is not { RecordStart: not null }) return;
+        var start = Pos(frame) - (long)count * itemLength;
+        for (int i = 0; i < count; i++)
+        {
+            ItemAt(i, start + (long)i * itemLength, itemLength);
+        }
+    }
+
     /// <summary>The value or item begun last is read: it ends here</summary>
     public static void End<TReader>(TReader frame)
         where TReader : IBinaryReadStream
@@ -301,6 +369,21 @@ internal static class ValuePositionRecorder
     public static void CountAt(long start, int length)
     {
         Leaf(NodeKind.Count, null, start, start + length, 0);
+    }
+
+    /// <summary>
+    /// C85: for a generated reader that reads a list's count inline (a prepended count, as the list's amount): notes the
+    /// <paramref name="length"/> bytes just read as the count of the list being read, and gives the count back
+    /// </summary>
+    public static int Counted<TReader>(TReader frame, int count, int length)
+        where TReader : IBinaryReadStream
+    {
+        if (On)
+        {
+            var end = Pos(frame);
+            Leaf(NodeKind.Count, null, end - length, end, 0);
+        }
+        return count;
     }
 
     /// <summary>

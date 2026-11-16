@@ -36,7 +36,7 @@
       <Bool name="DontUseAll" byteLength="1" />
     </Fields>
   </Object>
-  <Object name="AObjectModProperty" abstract="true" objType="Subrecord">
+  <Object name="AObjectModProperty" enteredBy="ObjectTemplate.ReadProperty" abstract="true" objType="Subrecord">
     <Generic name="T" isLoqui="false" getterVariance="Out" isClass="false">
       <Where>struct</Where>
       <Where>Enum</Where>

@@ -109,7 +109,7 @@
       <Float name="VisibilityMult" recordType="WNAM" />
     </Fields>
   </Object>
-  <Object name="CloudLayer" objType="Subrecord">
+  <Object name="CloudLayer" enteredBy="Weather.Clouds,Weather.CloudColors,Weather.CloudAlphas,Weather.DisabledCloudLayers" objType="Subrecord">
     <Fields>
       <Bool name="Enabled" nullable="True" binary="NoGeneration" />
       <Float name="XSpeed" nullable="True" binary="NoGeneration" />
@@ -131,7 +131,7 @@
       <Color name="LateSunset" binaryType="Alpha" />
     </Fields>
   </Object>
-  <Object name="WeatherAlpha" objType="Subrecord">
+  <Object name="WeatherAlpha" enteredBy="Weather.CloudAlphas" objType="Subrecord">
     <Fields>
       <Float name="Sunrise" default="1f" />
       <Float name="Day" default="1f" />
@@ -155,7 +155,7 @@
       <FormLink name="LateSunset" refName="VolumetricLighting" />
     </Fields>
   </Object>
-  <Object name="WeatherAmbientColorSet" objType="Subrecord">
+  <Object name="WeatherAmbientColorSet" enteredBy="Weather.DirectionalAmbientLightingColors" objType="Subrecord">
     <Fields>
       <RefDirect name="Sunrise" refName="AmbientColors" binary="NoGeneration" />
       <RefDirect name="Day" refName="AmbientColors" binary="NoGeneration" />

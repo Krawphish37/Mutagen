@@ -61,8 +61,8 @@ internal static class PresentFields
     private static readonly System.Collections.Concurrent.ConcurrentDictionary<Type, IReadOnlyDictionary<string, int>> FieldIndexCache = new();
 
     // A record class's field names and indices, from its FieldIndex enum (Location_FieldIndex, ...)
-    [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "The record classes and their FieldIndex enums are public types of the game assembly")]
-    [UnconditionalSuppressMessage("Trimming", "IL2072", Justification = "The record classes and their FieldIndex enums are public types of the game assembly")]
+    [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "Each record class's <Class>_FieldIndex enum (internal, in the class's own assembly) is used by the class's generated code, so the trimmer keeps it with its members; were it missing, the record would report no present fields, never wrong ones")]
+    [UnconditionalSuppressMessage("Trimming", "IL2072", Justification = "Each record class's <Class>_FieldIndex enum (internal, in the class's own assembly) is used by the class's generated code, so the trimmer keeps it with its members; were it missing, the record would report no present fields, never wrong ones")]
     private static IReadOnlyDictionary<string, int> FieldIndices(ILoquiRegistration registration)
     {
         return FieldIndexCache.GetOrAdd(registration.ClassType, static cls =>

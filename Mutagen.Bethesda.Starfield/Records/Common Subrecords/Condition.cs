@@ -7,7 +7,10 @@ using Mutagen.Bethesda.Starfield.Internals;
 using Mutagen.Bethesda.Translations.Binary;
 using Noggog;
 using System.Buffers.Binary;
+using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using static Mutagen.Bethesda.Starfield.Condition;
 
 namespace Mutagen.Bethesda.Starfield;
@@ -1156,18 +1159,52 @@ partial class ConditionBinaryCreateTranslation
             case RecordTypeInts.CIS1:
                 parameters.StringParameter1 =
                     BinaryStringUtility.ProcessWholeToZString(subMeta.Content, frame.MetaData.Encodings.NonTranslated);
-                if (at >= 0) ValuePositionRecorder.At("Data.StringParameter1", at + subMeta.HeaderLength, subMeta.ContentLength);
+                if (at >= 0) NoteStringParameter(parameters, 1, at + subMeta.HeaderLength, subMeta.ContentLength);
                 break;
             case RecordTypeInts.CIS2:
                 parameters.StringParameter2 =
                     BinaryStringUtility.ProcessWholeToZString(subMeta.Content, frame.MetaData.Encodings.NonTranslated);
-                if (at >= 0) ValuePositionRecorder.At("Data.StringParameter2", at + subMeta.HeaderLength, subMeta.ContentLength);
+                if (at >= 0) NoteStringParameter(parameters, 2, at + subMeta.HeaderLength, subMeta.ContentLength);
                 break;
             default:
                 return;
         }
 
         frame.Position += subMeta.TotalLength;
+    }
+
+    /// <summary>
+    /// C60/C83: a string parameter (CIS1/CIS2) is noted by the interface's name (Data.StringParameter1) and by the
+    /// function data class's own property that holds it (FirstParameter or FirstUnusedStringParameter; SecondParameter
+    /// or SecondUnusedStringParameter), so the class's property has a position too
+    /// </summary>
+    private static void NoteStringParameter(IConditionParameters parameters, int slot, long start, int length)
+    {
+        ValuePositionRecorder.At(slot == 1 ? "Data.StringParameter1" : "Data.StringParameter2", start, length);
+        if (StringParameterProperty(parameters.GetType(), slot) is { } property)
+        {
+            ValuePositionRecorder.At($"Data.{property}", start, length);
+        }
+    }
+
+    private static readonly ConcurrentDictionary<(Type Type, int Slot), string?> StringParameterProperties = new();
+
+    /// <summary>The function data class's string property behind IConditionParameters.StringParameter1/2</summary>
+    [UnconditionalSuppressMessage("Trimming", "IL2070", Justification = "The condition data classes are generated with public properties; only used while value positions are recorded")]
+    [UnconditionalSuppressMessage("Trimming", "IL2080", Justification = "The condition data classes are generated with public properties; only used while value positions are recorded")]
+    private static string? StringParameterProperty(Type type, int slot)
+    {
+        return StringParameterProperties.GetOrAdd((type, slot), static key =>
+        {
+            var candidates = key.Slot == 1
+                ? new[] { "FirstParameter", "FirstUnusedStringParameter" }
+                : new[] { "SecondParameter", "SecondUnusedStringParameter" };
+            foreach (var name in candidates)
+            {
+                if (key.Type.GetProperty(name, BindingFlags.Public | BindingFlags.Instance)?.PropertyType == typeof(string)) return name;
+            }
+            return null;
+        });
     }
 
     public static void CustomStringImports<TStream>(TStream frame, IConditionData item)

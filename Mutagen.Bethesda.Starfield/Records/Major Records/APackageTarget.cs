@@ -21,6 +21,7 @@ partial class APackageTarget
 
     public static APackageTarget CreateFromBinary(MutagenFrame frame)
     {
+        var at = ValuePositionRecorder.Here(frame);
         var i = frame.ReadInt32();
         APackageTarget target = ((APackageTarget.Type)i) switch
         {
@@ -63,7 +64,49 @@ partial class APackageTarget
             },
         };
         target.CountOrDistance = frame.ReadInt32();
+        if (at >= 0) NotePositions(target, at);
         return target;
+    }
+
+    /// <summary>
+    /// C83: where a target's values sit (PTDA: the kind at 0, which picks the class, its value at 4, CountOrDistance at
+    /// 8), as values of the object the caller began
+    /// </summary>
+    private static void NotePositions(APackageTarget target, long at)
+    {
+        switch (target)
+        {
+            case PackageTargetSpecificReference r:
+                ValuePositionRecorder.At(nameof(r.Reference), at + 4, 4);
+                break;
+            case PackageTargetObjectID r:
+                ValuePositionRecorder.At(nameof(r.Reference), at + 4, 4);
+                break;
+            case PackageTargetObjectType r:
+                ValuePositionRecorder.At(nameof(r.Type), at + 4, 4);
+                break;
+            case PackageTargetLinkedReference r:
+                ValuePositionRecorder.At(nameof(r.Keyword), at + 4, 4);
+                break;
+            case PackageTargetAlias r:
+                ValuePositionRecorder.At(nameof(r.Alias), at + 4, 4);
+                break;
+            case PackageTargetInterruptData r:
+                ValuePositionRecorder.At(nameof(r.Data), at + 4, 4);
+                break;
+            case PackageTargetSelf r:
+                ValuePositionRecorder.At(nameof(r.Data), at + 4, 4);
+                break;
+            case PackageTargetKeyword r:
+                ValuePositionRecorder.At(nameof(r.Keyword), at + 4, 4);
+                break;
+            case PackageTargetUnknown r:
+                // A kind Mutagen has no class for is kept as the Type value
+                ValuePositionRecorder.At(nameof(r.Type), at, 4);
+                ValuePositionRecorder.At(nameof(r.Data), at + 4, 4);
+                break;
+        }
+        ValuePositionRecorder.At(nameof(target.CountOrDistance), at + 8, 4);
     }
 }
 

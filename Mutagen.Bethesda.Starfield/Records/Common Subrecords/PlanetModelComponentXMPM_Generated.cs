@@ -1289,7 +1289,7 @@ namespace Mutagen.Bethesda.Starfield
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "UnknownStrings");
             item.UnknownStrings.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<String>.Instance.Parse(
-                    amount: frame.ReadUInt16(),
+                    amount: ValuePositionRecorder.Counted(frame, frame.ReadUInt16(), 2),
                     reader: frame,
                     transl: (MutagenFrame r, [MaybeNullWhen(false)] out String listSubItem) =>
                     {
@@ -1303,7 +1303,7 @@ namespace Mutagen.Bethesda.Starfield
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "UnknownSubItems");
             item.UnknownSubItems.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<PlanetModelComponentXMPMSubItem>.Instance.Parse(
-                    amount: frame.ReadUInt16(),
+                    amount: ValuePositionRecorder.Counted(frame, frame.ReadUInt16(), 2),
                     reader: frame,
                     transl: PlanetModelComponentXMPMSubItem.TryCreateFromBinary));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
