@@ -1118,12 +1118,12 @@ namespace Mutagen.Bethesda.Starfield
             if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Value");
             item.Value = frame.ReadUInt32();
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
-            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CurveTable");
+            if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 152)) ValuePositionRecorder.Field(frame, "CurveTable");
             if (frame.MetaData.FormVersion!.Value >= 152)
             {
                 item.CurveTable.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             }
-            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 152)) ValuePositionRecorder.End(frame);
         }
 
     }

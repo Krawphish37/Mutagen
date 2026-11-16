@@ -4398,12 +4398,12 @@ namespace Mutagen.Bethesda.Fallout4
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Unknown");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value < 106)) ValuePositionRecorder.Field(dataFrame, "Unknown");
                     if (frame.MetaData.FormVersion!.Value < 106)
                     {
                         item.Unknown = dataFrame.ReadUInt8();
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value < 106)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "MembraneSourceBlendMode");
                     item.MembraneSourceBlendMode = EnumBinaryTranslation<EffectShader.BlendMode, MutagenFrame, MutagenWriter>.Instance.Parse(
@@ -4504,12 +4504,12 @@ namespace Mutagen.Bethesda.Fallout4
                         reader: dataFrame,
                         length: 4);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Unknown2");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value < 106)) ValuePositionRecorder.Field(dataFrame, "Unknown2");
                     if (frame.MetaData.FormVersion!.Value < 106)
                     {
                         item.Unknown2 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(152));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value < 106)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "HolesAnimationStartTime");
                     item.HolesAnimationStartTime = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
@@ -4526,12 +4526,12 @@ namespace Mutagen.Bethesda.Fallout4
                     if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "HolesAnimationEndValue");
                     item.HolesAnimationEndValue = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Unknown3");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value < 106)) ValuePositionRecorder.Field(dataFrame, "Unknown3");
                     if (frame.MetaData.FormVersion!.Value < 106)
                     {
                         item.Unknown3 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(44));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value < 106)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "AmbientSound");
                     item.AmbientSound.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
@@ -4545,12 +4545,12 @@ namespace Mutagen.Bethesda.Fallout4
                     item.FillColorKey3 = dataFrame.ReadColor(ColorBinaryType.Alpha);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Unknown4");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 106)) ValuePositionRecorder.Field(dataFrame, "Unknown4");
                     if (frame.MetaData.FormVersion!.Value >= 106)
                     {
                         item.Unknown4 = dataFrame.ReadUInt8();
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 106)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "FillColorKey1Scale");
                     item.FillColorKey1Scale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
@@ -4575,12 +4575,12 @@ namespace Mutagen.Bethesda.Fallout4
                     if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "FillColorKey3Time");
                     item.FillColorKey3Time = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Unknown5");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value < 106)) ValuePositionRecorder.Field(dataFrame, "Unknown5");
                     if (frame.MetaData.FormVersion!.Value < 106)
                     {
                         item.Unknown5 = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(40));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value < 106)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Flags");
                     item.Flags = EnumBinaryTranslation<EffectShader.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
@@ -4596,12 +4596,12 @@ namespace Mutagen.Bethesda.Fallout4
                     item.FillTextureScaleV = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 2) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Unknown6");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value < 106)) ValuePositionRecorder.Field(dataFrame, "Unknown6");
                     if (frame.MetaData.FormVersion!.Value < 106)
                     {
                         item.Unknown6 = dataFrame.ReadUInt16();
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value < 106)) ValuePositionRecorder.End(dataFrame);
                     return (int)EffectShader_FieldIndex.Unknown6;
                 }
                 case RecordTypeInts.MODL:

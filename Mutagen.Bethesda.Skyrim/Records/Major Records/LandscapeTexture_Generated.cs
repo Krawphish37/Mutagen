@@ -1908,7 +1908,7 @@ namespace Mutagen.Bethesda.Skyrim
                 }
                 case RecordTypeInts.INAM:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 43)) ValuePositionRecorder.Field(frame, "Flags");
                     if (frame.MetaData.FormVersion!.Value >= 43)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
@@ -1916,7 +1916,7 @@ namespace Mutagen.Bethesda.Skyrim
                             reader: frame,
                             length: contentLength);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 43)) ValuePositionRecorder.End(frame);
                     return (int)LandscapeTexture_FieldIndex.Flags;
                 }
                 default:

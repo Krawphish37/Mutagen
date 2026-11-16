@@ -3004,12 +3004,12 @@ namespace Mutagen.Bethesda.Fallout4
                     item.Damage = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "InnerRadius");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 97)) ValuePositionRecorder.Field(dataFrame, "InnerRadius");
                     if (frame.MetaData.FormVersion!.Value >= 97)
                     {
                         item.InnerRadius = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 97)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "OuterRadius");
                     item.OuterRadius = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
@@ -3035,42 +3035,42 @@ namespace Mutagen.Bethesda.Fallout4
                         length: 4);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "PlacedObjectAutoFadeDelay");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 70)) ValuePositionRecorder.Field(dataFrame, "PlacedObjectAutoFadeDelay");
                     if (frame.MetaData.FormVersion!.Value >= 70)
                     {
                         item.PlacedObjectAutoFadeDelay = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 70)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Stagger");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 91)) ValuePositionRecorder.Field(dataFrame, "Stagger");
                     if (frame.MetaData.FormVersion!.Value >= 91)
                     {
                         item.Stagger = EnumBinaryTranslation<Explosion.StaggerAmount, MutagenFrame, MutagenWriter>.Instance.Parse(
                             reader: dataFrame,
                             length: 4);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 91)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 12) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SpawnPosition");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 112)) ValuePositionRecorder.Field(dataFrame, "SpawnPosition");
                     if (frame.MetaData.FormVersion!.Value >= 112)
                     {
                         item.SpawnPosition = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 112)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SpawnSpreadDegrees");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 112)) ValuePositionRecorder.Field(dataFrame, "SpawnSpreadDegrees");
                     if (frame.MetaData.FormVersion!.Value >= 112)
                     {
                         item.SpawnSpreadDegrees = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 112)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "SpawnCount");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 112)) ValuePositionRecorder.Field(dataFrame, "SpawnCount");
                     if (frame.MetaData.FormVersion!.Value >= 112)
                     {
                         item.SpawnCount = dataFrame.ReadUInt32();
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 112)) ValuePositionRecorder.End(dataFrame);
                     return (int)Explosion_FieldIndex.SpawnCount;
                 }
                 default:

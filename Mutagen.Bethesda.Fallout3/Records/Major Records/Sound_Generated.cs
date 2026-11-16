@@ -1963,13 +1963,13 @@ namespace Mutagen.Bethesda.Fallout3
                 }
                 case RecordTypeInts.RNAM:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RandomChancePercent");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "RandomChancePercent");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.RandomChancePercent = frame.ReadUInt8();
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Sound_FieldIndex.RandomChancePercent;
                 }
                 case RecordTypeInts.SNDX:

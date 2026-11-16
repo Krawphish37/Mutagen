@@ -8960,14 +8960,14 @@ namespace Mutagen.Bethesda.Fallout4
                         transl: FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 24) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DefaultWeight");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 109)) ValuePositionRecorder.Field(dataFrame, "DefaultWeight");
                     if (frame.MetaData.FormVersion!.Value >= 109)
                     {
                         item.DefaultWeight = Mutagen.Bethesda.Plugins.Binary.Translations.GenderedItemBinaryTranslation.ParseRequired<RaceWeight>(
                             frame: frame,
                             transl: RaceWeight.TryCreateFromBinary);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 109)) ValuePositionRecorder.End(dataFrame);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(dataFrame, "Flags");
                     RaceBinaryCreateTranslation.FillBinaryFlagsCustom(
                         frame: dataFrame,
@@ -9001,14 +9001,14 @@ namespace Mutagen.Bethesda.Fallout4
                         length: 4);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "BeardBipedObject");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 124)) ValuePositionRecorder.Field(dataFrame, "BeardBipedObject");
                     if (frame.MetaData.FormVersion!.Value >= 124)
                     {
                         item.BeardBipedObject = EnumBinaryTranslation<BipedObject, MutagenFrame, MutagenWriter>.Instance.Parse(
                             reader: dataFrame,
                             length: 4);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 124)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "BodyBipedObject");
                     item.BodyBipedObject = EnumBinaryTranslation<BipedObject, MutagenFrame, MutagenWriter>.Instance.Parse(
@@ -9099,68 +9099,68 @@ namespace Mutagen.Bethesda.Fallout4
                     item.ExplodableImpactDataSet.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "OnCrippleDebrisScale");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 96)) ValuePositionRecorder.Field(dataFrame, "OnCrippleDebrisScale");
                     if (frame.MetaData.FormVersion!.Value >= 96)
                     {
                         item.OnCrippleDebrisScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 96)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "OnCrippleDebrisCount");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 96)) ValuePositionRecorder.Field(dataFrame, "OnCrippleDebrisCount");
                     if (frame.MetaData.FormVersion!.Value >= 96)
                     {
                         item.OnCrippleDebrisCount = dataFrame.ReadUInt8();
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 96)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "OnCrippleDecalCount");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 96)) ValuePositionRecorder.Field(dataFrame, "OnCrippleDecalCount");
                     if (frame.MetaData.FormVersion!.Value >= 96)
                     {
                         item.OnCrippleDecalCount = dataFrame.ReadUInt8();
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 96)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "OnCrippleExplosion");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 96)) ValuePositionRecorder.Field(dataFrame, "OnCrippleExplosion");
                     if (frame.MetaData.FormVersion!.Value >= 96)
                     {
                         item.OnCrippleExplosion.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 96)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "OnCrippleDebris");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 96)) ValuePositionRecorder.Field(dataFrame, "OnCrippleDebris");
                     if (frame.MetaData.FormVersion!.Value >= 96)
                     {
                         item.OnCrippleDebris.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 96)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "OnCrippleImpactDataSet");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 96)) ValuePositionRecorder.Field(dataFrame, "OnCrippleImpactDataSet");
                     if (frame.MetaData.FormVersion!.Value >= 96)
                     {
                         item.OnCrippleImpactDataSet.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 96)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ExplodableSubsegmentExplosion");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 118)) ValuePositionRecorder.Field(dataFrame, "ExplodableSubsegmentExplosion");
                     if (frame.MetaData.FormVersion!.Value >= 118)
                     {
                         item.ExplodableSubsegmentExplosion.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 118)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "OrientationLimitsPitch");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 98)) ValuePositionRecorder.Field(dataFrame, "OrientationLimitsPitch");
                     if (frame.MetaData.FormVersion!.Value >= 98)
                     {
                         item.OrientationLimitsPitch = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 98)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "OrientationLimitsRoll");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 98)) ValuePositionRecorder.Field(dataFrame, "OrientationLimitsRoll");
                     if (frame.MetaData.FormVersion!.Value >= 98)
                     {
                         item.OrientationLimitsRoll = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 98)) ValuePositionRecorder.End(dataFrame);
                     return (int)Race_FieldIndex.OrientationLimitsRoll;
                 }
                 case RecordTypeInts.MNAM:

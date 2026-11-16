@@ -3434,7 +3434,7 @@ namespace Mutagen.Bethesda.Fallout3
                 }
                 case RecordTypeInts.TDUM:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DumbResponse");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "DumbResponse");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
@@ -3443,7 +3443,7 @@ namespace Mutagen.Bethesda.Fallout3
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)DialogTopic_FieldIndex.DumbResponse;
                 }
                 case RecordTypeInts.DATA:

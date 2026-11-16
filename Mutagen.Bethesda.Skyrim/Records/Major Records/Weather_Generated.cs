@@ -6623,12 +6623,12 @@ namespace Mutagen.Bethesda.Skyrim
                 }
                 case RecordTypeInts.HNAM:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VolumetricLighting");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 43)) ValuePositionRecorder.Field(frame, "VolumetricLighting");
                     if (frame.MetaData.FormVersion!.Value >= 43)
                     {
                         item.VolumetricLighting = Mutagen.Bethesda.Skyrim.WeatherVolumetricLighting.CreateFromBinary(frame: frame);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 43)) ValuePositionRecorder.End(frame);
                     return (int)Weather_FieldIndex.VolumetricLighting;
                 }
                 case RecordTypeInts.DALC:
@@ -6668,13 +6668,13 @@ namespace Mutagen.Bethesda.Skyrim
                 }
                 case RecordTypeInts.GNAM:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SunGlareLensFlare");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 44)) ValuePositionRecorder.Field(frame, "SunGlareLensFlare");
                     if (frame.MetaData.FormVersion!.Value >= 44)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.SunGlareLensFlare.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 44)) ValuePositionRecorder.End(frame);
                     return (int)Weather_FieldIndex.SunGlareLensFlare;
                 }
                 default:

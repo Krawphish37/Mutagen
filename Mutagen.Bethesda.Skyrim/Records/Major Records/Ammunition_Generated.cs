@@ -3003,12 +3003,12 @@ namespace Mutagen.Bethesda.Skyrim
                         return (int)Ammunition_FieldIndex.Value;
                     }
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Weight");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 44)) ValuePositionRecorder.Field(dataFrame, "Weight");
                     if (frame.MetaData.FormVersion!.Value >= 44)
                     {
                         item.Weight = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 44)) ValuePositionRecorder.End(dataFrame);
                     return (int)Ammunition_FieldIndex.Weight;
                 }
                 case RecordTypeInts.ONAM:

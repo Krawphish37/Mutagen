@@ -3313,7 +3313,7 @@ namespace Mutagen.Bethesda.Fallout3
                 }
                 case RecordTypeInts.TCFU:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "FollowUp");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.List(frame, "FollowUp");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         item.FollowUp.SetTo(
@@ -3322,7 +3322,7 @@ namespace Mutagen.Bethesda.Fallout3
                                 triggeringRecord: translationParams.ConvertToCustom(RecordTypes.TCFU),
                                 transl: FormLinkBinaryTranslation.Instance.Parse));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)DialogResponses_FieldIndex.FollowUp;
                 }
                 case RecordTypeInts.SCHR:

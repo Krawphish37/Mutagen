@@ -1402,16 +1402,36 @@ public class PluginTranslationModule : BinaryTranslationModule
     {
         // C60: the reader notes where it reads each field, when value positions are being recorded (ValuePositionMixIn)
         var note = ValuePositionNote(obj, field);
+        // A field read only from some form or plugin version is noted only when it is read
+        var when = note == null ? null : ValuePositionVersionCheck(field, frameAccessor);
         if (note != null)
         {
             var converted = note == nameof(ValuePositionRecorder.Field) && ValuePositionConverted(field) ? ", true" : null;
-            sb.AppendLine($"if ({nameof(ValuePositionRecorder)}.{nameof(ValuePositionRecorder.On)}) {nameof(ValuePositionRecorder)}.{note}({frameAccessor}, \"{field.Name}\"{converted});");
+            sb.AppendLine($"if ({nameof(ValuePositionRecorder)}.{nameof(ValuePositionRecorder.On)}{when}) {nameof(ValuePositionRecorder)}.{note}({frameAccessor}, \"{field.Name}\"{converted});");
         }
         await GenerateFillSnippetRead(obj, sb, field, generator, frameAccessor);
         if (note != null)
         {
-            sb.AppendLine($"if ({nameof(ValuePositionRecorder)}.{nameof(ValuePositionRecorder.On)}) {nameof(ValuePositionRecorder)}.{nameof(ValuePositionRecorder.End)}({frameAccessor});");
+            sb.AppendLine($"if ({nameof(ValuePositionRecorder)}.{nameof(ValuePositionRecorder.On)}{when}) {nameof(ValuePositionRecorder)}.{nameof(ValuePositionRecorder.End)}({frameAccessor});");
         }
+    }
+
+    /// <summary>The version checks a field's read is under, as " &amp;&amp; ..." (C60); null if none</summary>
+    private string? ValuePositionVersionCheck(TypeGeneration field, string frameAccessor)
+    {
+        var data = field.GetFieldData();
+        // The Custom branch checks on the frame given; the others on the reader (as GenerateFillSnippetRead does)
+        var reader = data.Binary == BinaryGenerationType.Custom ? frameAccessor : ReaderMemberName;
+        var checks = new List<string>();
+        if (data.HasVersioning)
+        {
+            checks.Add(VersioningModule.GetVersionIfCheck(data, $"{reader}.MetaData.FormVersion!.Value"));
+        }
+        if (data.HasModHeaderVersioning)
+        {
+            checks.Add(VersioningModule.GetModHeaderVersionIfCheck(data, $"{reader}.MetaData.ModHeaderVersion!.Value"));
+        }
+        return checks.Count == 0 ? null : string.Concat(checks.Select(c => $" && ({c})"));
     }
 
     /// <summary>C60 (W6): the manifest of every object's compiled properties, beside the protocol's record XML</summary>

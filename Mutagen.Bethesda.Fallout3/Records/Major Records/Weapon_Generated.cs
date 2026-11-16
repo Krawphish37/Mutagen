@@ -9782,7 +9782,7 @@ namespace Mutagen.Bethesda.Fallout3
                 }
                 case RecordTypeInts.MWD1:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ModelMod1");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "ModelMod1");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
@@ -9791,12 +9791,12 @@ namespace Mutagen.Bethesda.Fallout3
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weapon_FieldIndex.ModelMod1;
                 }
                 case RecordTypeInts.MWD2:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ModelMod2");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "ModelMod2");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
@@ -9805,12 +9805,12 @@ namespace Mutagen.Bethesda.Fallout3
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weapon_FieldIndex.ModelMod2;
                 }
                 case RecordTypeInts.MWD3:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ModelMod1And2");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "ModelMod1And2");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
@@ -9819,12 +9819,12 @@ namespace Mutagen.Bethesda.Fallout3
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weapon_FieldIndex.ModelMod1And2;
                 }
                 case RecordTypeInts.MWD4:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ModelMod3");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "ModelMod3");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
@@ -9833,12 +9833,12 @@ namespace Mutagen.Bethesda.Fallout3
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weapon_FieldIndex.ModelMod3;
                 }
                 case RecordTypeInts.MWD5:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ModelMod1And3");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "ModelMod1And3");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
@@ -9847,12 +9847,12 @@ namespace Mutagen.Bethesda.Fallout3
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weapon_FieldIndex.ModelMod1And3;
                 }
                 case RecordTypeInts.MWD6:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ModelMod2And3");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "ModelMod2And3");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
@@ -9861,12 +9861,12 @@ namespace Mutagen.Bethesda.Fallout3
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weapon_FieldIndex.ModelMod2And3;
                 }
                 case RecordTypeInts.MWD7:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ModelMod1And2And3");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "ModelMod1And2And3");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
@@ -9875,12 +9875,12 @@ namespace Mutagen.Bethesda.Fallout3
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weapon_FieldIndex.ModelMod1And2And3;
                 }
                 case RecordTypeInts.VANM:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VatsAttackName");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "VatsAttackName");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
@@ -9889,7 +9889,7 @@ namespace Mutagen.Bethesda.Fallout3
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weapon_FieldIndex.VatsAttackName;
                 }
                 case RecordTypeInts.NNAM:
@@ -9921,112 +9921,112 @@ namespace Mutagen.Bethesda.Fallout3
                 }
                 case RecordTypeInts.WNM1:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FirstPersonModelMod1");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "FirstPersonModelMod1");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.FirstPersonModelMod1.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weapon_FieldIndex.FirstPersonModelMod1;
                 }
                 case RecordTypeInts.WNM2:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FirstPersonModelMod2");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "FirstPersonModelMod2");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.FirstPersonModelMod2.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weapon_FieldIndex.FirstPersonModelMod2;
                 }
                 case RecordTypeInts.WNM3:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FirstPersonModelMod1And2");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "FirstPersonModelMod1And2");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.FirstPersonModelMod1And2.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weapon_FieldIndex.FirstPersonModelMod1And2;
                 }
                 case RecordTypeInts.WNM4:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FirstPersonModelMod3");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "FirstPersonModelMod3");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.FirstPersonModelMod3.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weapon_FieldIndex.FirstPersonModelMod3;
                 }
                 case RecordTypeInts.WNM5:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FirstPersonModelMod1And3");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "FirstPersonModelMod1And3");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.FirstPersonModelMod1And3.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weapon_FieldIndex.FirstPersonModelMod1And3;
                 }
                 case RecordTypeInts.WNM6:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FirstPersonModelMod2And3");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "FirstPersonModelMod2And3");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.FirstPersonModelMod2And3.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weapon_FieldIndex.FirstPersonModelMod2And3;
                 }
                 case RecordTypeInts.WNM7:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FirstPersonModelMod1And2And3");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "FirstPersonModelMod1And2And3");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.FirstPersonModelMod1And2And3.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weapon_FieldIndex.FirstPersonModelMod1And2And3;
                 }
                 case RecordTypeInts.WMI1:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WeaponMod1");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "WeaponMod1");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.WeaponMod1.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weapon_FieldIndex.WeaponMod1;
                 }
                 case RecordTypeInts.WMI2:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WeaponMod2");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "WeaponMod2");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.WeaponMod2.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weapon_FieldIndex.WeaponMod2;
                 }
                 case RecordTypeInts.WMI3:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WeaponMod3");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "WeaponMod3");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.WeaponMod3.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weapon_FieldIndex.WeaponMod3;
                 }
                 case RecordTypeInts.SNAM:
@@ -10167,13 +10167,13 @@ namespace Mutagen.Bethesda.Fallout3
                 }
                 case RecordTypeInts.WMS2:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SoundMod1Shoot2D");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "SoundMod1Shoot2D");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.SoundMod1Shoot2D.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weapon_FieldIndex.SoundMod1Shoot2D;
                 }
                 case RecordTypeInts.DATA:
@@ -10544,7 +10544,7 @@ namespace Mutagen.Bethesda.Fallout3
                 }
                 case RecordTypeInts.VATS:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Vats");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.HandRead(frame, "Vats");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         WeaponBinaryCreateTranslation.FillBinaryVatsCustom(
@@ -10552,7 +10552,7 @@ namespace Mutagen.Bethesda.Fallout3
                             item: item,
                             lastParsed: lastParsed);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weapon_FieldIndex.Vats;
                 }
                 case RecordTypeInts.VNAM:

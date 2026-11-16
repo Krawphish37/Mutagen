@@ -3000,24 +3000,24 @@ namespace Mutagen.Bethesda.Fallout3
                 }
                 case RecordTypeInts._4_IAD:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ImageSpaceHighNoon");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "ImageSpaceHighNoon");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.ImageSpaceHighNoon.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weather_FieldIndex.ImageSpaceHighNoon;
                 }
                 case RecordTypeInts._5_IAD:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ImageSpaceMidnight");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "ImageSpaceMidnight");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.ImageSpaceMidnight.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Weather_FieldIndex.ImageSpaceMidnight;
                 }
                 case RecordTypeInts.DNAM:

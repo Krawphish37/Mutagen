@@ -2621,14 +2621,14 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.DEST:
                 case RecordTypeInts.DSTD:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Destructible");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "Destructible");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         item.Destructible = Mutagen.Bethesda.Fallout3.Destructible.CreateFromBinary(
                             frame: frame,
                             translationParams: translationParams.DoNotShortCircuit());
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Tree_FieldIndex.Destructible;
                 }
                 case RecordTypeInts.SNAM:

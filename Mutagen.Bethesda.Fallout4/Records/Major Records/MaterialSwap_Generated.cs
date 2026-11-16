@@ -1625,7 +1625,7 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.FNAM
                     when frame.MetaData.FormVersion >= 112:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "TreeFolder");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 112)) ValuePositionRecorder.HandRead(frame, "TreeFolder");
                     if (frame.MetaData.FormVersion!.Value >= 112)
                     {
                         MaterialSwapBinaryCreateTranslation.FillBinaryTreeFolderCustom(
@@ -1633,7 +1633,7 @@ namespace Mutagen.Bethesda.Fallout4
                             item: item,
                             lastParsed: lastParsed);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 112)) ValuePositionRecorder.End(frame);
                     return (int)MaterialSwap_FieldIndex.TreeFolder;
                 }
                 case RecordTypeInts.BNAM:

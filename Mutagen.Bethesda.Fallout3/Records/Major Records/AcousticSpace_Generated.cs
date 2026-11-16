@@ -2036,13 +2036,13 @@ namespace Mutagen.Bethesda.Fallout3
                 }
                 case RecordTypeInts.WNAM:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WallaTriggerCount");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "WallaTriggerCount");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.WallaTriggerCount = frame.ReadUInt32();
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.WallaTriggerCount;
                 }
                 case RecordTypeInts.RDAT:
@@ -2065,7 +2065,7 @@ namespace Mutagen.Bethesda.Fallout3
                 }
                 case RecordTypeInts.INAM:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IsInterior");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "IsInterior");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
@@ -2073,7 +2073,7 @@ namespace Mutagen.Bethesda.Fallout3
                             reader: frame.SpawnWithLength(contentLength),
                             byteLength: 4);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)AcousticSpace_FieldIndex.IsInterior;
                 }
                 default:

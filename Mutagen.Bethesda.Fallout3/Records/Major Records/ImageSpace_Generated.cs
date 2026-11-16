@@ -3535,12 +3535,12 @@ namespace Mutagen.Bethesda.Fallout3
                     item.HdrTreeDimmer = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "HdrSkinDimmer");
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 10)) ValuePositionRecorder.Field(dataFrame, "HdrSkinDimmer");
                     if (frame.MetaData.FormVersion!.Value >= 10)
                     {
                         item.HdrSkinDimmer = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value >= 10)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
                     if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "BloomBlurRadius");
                     item.BloomBlurRadius = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);

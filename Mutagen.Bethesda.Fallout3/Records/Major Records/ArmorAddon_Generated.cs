@@ -3122,19 +3122,19 @@ namespace Mutagen.Bethesda.Fallout3
                         return (int)ArmorAddon_FieldIndex.ModulatesVoice;
                     }
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DamageThreshold");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(dataFrame, "DamageThreshold");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         item.DamageThreshold = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Unused");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(dataFrame, "Unused");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         item.Unused = dataFrame.ReadUInt32();
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(dataFrame);
                     return (int)ArmorAddon_FieldIndex.Unused;
                 }
                 default:

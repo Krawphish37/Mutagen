@@ -4203,7 +4203,7 @@ namespace Mutagen.Bethesda.Fallout3
                 }
                 case RecordTypeInts.BNAM:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OverridesAnimationSounds");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "OverridesAnimationSounds");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
@@ -4211,7 +4211,7 @@ namespace Mutagen.Bethesda.Fallout3
                             reader: frame.SpawnWithLength(contentLength),
                             byteLength: 4);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Armor_FieldIndex.OverridesAnimationSounds;
                 }
                 case RecordTypeInts.SNAM:
@@ -4228,13 +4228,13 @@ namespace Mutagen.Bethesda.Fallout3
                 }
                 case RecordTypeInts.TNAM:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AnimationSoundsTemplate");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "AnimationSoundsTemplate");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.AnimationSoundsTemplate.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Armor_FieldIndex.AnimationSoundsTemplate;
                 }
                 default:

@@ -2838,13 +2838,13 @@ namespace Mutagen.Bethesda.Fallout3
                 }
                 case RecordTypeInts.SCRI:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Script");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "Script");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.Script.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Ammunition_FieldIndex.Script;
                 }
                 case RecordTypeInts.DEST:
@@ -2899,7 +2899,7 @@ namespace Mutagen.Bethesda.Fallout3
                 }
                 case RecordTypeInts.DAT2:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "ExtraData");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.HandRead(frame, "ExtraData");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         AmmunitionBinaryCreateTranslation.FillBinaryExtraDataCustom(
@@ -2907,7 +2907,7 @@ namespace Mutagen.Bethesda.Fallout3
                             item: item,
                             lastParsed: lastParsed);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Ammunition_FieldIndex.ExtraData;
                 }
                 case RecordTypeInts.ONAM:
@@ -2923,7 +2923,7 @@ namespace Mutagen.Bethesda.Fallout3
                 }
                 case RecordTypeInts.QNAM:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Abbreviation");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "Abbreviation");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
@@ -2932,7 +2932,7 @@ namespace Mutagen.Bethesda.Fallout3
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)Ammunition_FieldIndex.Abbreviation;
                 }
                 case RecordTypeInts.RCIL:

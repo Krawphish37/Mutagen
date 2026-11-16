@@ -13146,24 +13146,24 @@ namespace Mutagen.Bethesda.Fallout3
                 }
                 case RecordTypeInts.RDSD:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SoundIntro");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "SoundIntro");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.SoundIntro.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.SoundIntro;
                 }
                 case RecordTypeInts.RDSI:
                 {
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SoundOutro");
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.Field(frame, "SoundOutro");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.SoundOutro.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
-                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+                    if (ValuePositionRecorder.On && (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.SoundOutro;
                 }
                 default:

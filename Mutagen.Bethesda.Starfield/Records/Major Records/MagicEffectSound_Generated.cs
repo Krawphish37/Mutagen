@@ -1232,12 +1232,12 @@ namespace Mutagen.Bethesda.Starfield
                 item.Versioning |= MagicEffectSound.VersioningBreaks.Break0;
                 return;
             }
-            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unknown");
+            if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value < 518)) ValuePositionRecorder.Field(frame, "Unknown");
             if (frame.MetaData.FormVersion!.Value < 518)
             {
                 item.Unknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(3));
             }
-            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On && (frame.MetaData.FormVersion!.Value < 518)) ValuePositionRecorder.End(frame);
         }
 
     }
