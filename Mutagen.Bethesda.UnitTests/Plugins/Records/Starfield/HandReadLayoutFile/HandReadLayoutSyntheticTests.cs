@@ -269,7 +269,7 @@ public class HandReadLayoutSyntheticTests
             EditorID = "LayoutSurfaceTree",
             SurfacePatterns = patterns,
             GNAM = Enumerable.Range(0, 65536).Select(i => (byte)i).ToArray(),
-            SurfacePatterns2 = patterns.Reverse().ToArray(),
+            SurfacePatterns2 = Enumerable.Reverse(patterns).ToArray(),
             GNAM2 = new byte[65536],
         });
 
