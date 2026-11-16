@@ -319,6 +319,21 @@ internal static class ValuePositionRecorder
         Leaf(NodeKind.Item, null, start, start + length, 0, index, converted);
     }
 
+    /// <summary>
+    /// Items of the list being read that were read in one go and end here: <paramref name="count"/> values of
+    /// <paramref name="itemLength"/> bytes each, in order (C83: a fixed-size array of floats)
+    /// </summary>
+    public static void ItemsBefore<TReader>(TReader frame, int count, int itemLength)
+        where TReader : IBinaryReadStream
+    {
+        if (_current is not { RecordStart: not null }) return;
+        var start = Pos(frame) - (long)count * itemLength;
+        for (int i = 0; i < count; i++)
+        {
+            ItemAt(i, start + (long)i * itemLength, itemLength);
+        }
+    }
+
     /// <summary>The value or item begun last is read: it ends here</summary>
     public static void End<TReader>(TReader frame)
         where TReader : IBinaryReadStream
