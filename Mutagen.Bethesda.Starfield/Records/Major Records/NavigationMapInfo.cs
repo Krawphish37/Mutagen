@@ -63,7 +63,7 @@ partial class NavigationMapInfoBinaryCreateTranslation
         {
             cell.Grid = P2Int16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(frame, swapCoords: true);
             // Stored Y then X
-            ValuePositionRecorder.Value(frame, "PathingCell.Grid", at);
+            ValuePositionRecorder.Value(frame, "PathingCell.Grid", at, converted: true);
         }
         at = ValuePositionRecorder.Here(frame);
         unknownByte = frame.ReadUInt8();

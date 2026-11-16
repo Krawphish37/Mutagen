@@ -50,7 +50,7 @@ partial class NavmeshGeometryBinaryCreateTranslation
             {
                 ValuePositionRecorder.At("Parent.Parent", at, 4);
                 // Stored Y then X
-                ValuePositionRecorder.At("Parent.Coordinates", at + 4, 4);
+                ValuePositionRecorder.At("Parent.Coordinates", at + 4, 4, converted: true);
             }
             return wrld;
         }

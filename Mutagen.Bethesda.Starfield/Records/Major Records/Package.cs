@@ -193,8 +193,8 @@ partial class PackageBinaryCreateTranslation
             at += pkcuRecord.HeaderLength;
             ValuePositionRecorder.At(nameof(item.PackageTemplate), at + 4, 4);
             ValuePositionRecorder.At(nameof(item.DataInputVersion), at + 8, 4);
+            // PKCU 0-3 counts the template's typed inputs, not Data's entries (names alone add more), so it is no Count
             ValuePositionRecorder.List(frame, nameof(item.Data));
-            ValuePositionRecorder.CountAt(at, 4);
         }
 
         FillPackageData(frame.Reader, dataCount, item.Data);
@@ -505,6 +505,8 @@ partial class PackageBinaryCreateTranslation
                 case RecordTypeInts.UNAM:
                     lastPackage = dict.GetOrAdd((sbyte)subRecord.Content[0], () => new APackageData());
                     order.Add((sbyte)subRecord.Content[0]);
+                    // The order is Package.ProcedureTreeDataOrder (the readers that call this keep it)
+                    if (contentAt >= 0) ValuePositionRecorder.At($"ProcedureTreeDataOrder[{order.Count - 1}]", contentAt, 1);
                     break;
                 case RecordTypeInts.BNAM:
                     if (lastPackage == null)
