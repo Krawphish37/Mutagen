@@ -3704,6 +3704,9 @@ namespace Mutagen.Bethesda.Starfield
                 case "QualityUpgradeComponent":
                 case "IQualityUpgradeComponentGetter":
                 case "IQualityUpgradeComponent":
+                case "UnknownComponent":
+                case "IUnknownComponentGetter":
+                case "IUnknownComponent":
                     break;
                 case "APlacedTrap":
                 case "IAPlacedTrapGetter":

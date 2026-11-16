@@ -1,3 +1,4 @@
+using System.Buffers.Binary;
 using Mutagen.Bethesda.Plugins.Binary.Headers;
 using Mutagen.Bethesda.Plugins.Binary.Overlay;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
@@ -97,7 +98,10 @@ public partial class AComponent
         TypedParseParams translationParams)
     {
         var bfcb = frame.GetSubrecord(RecordTypes.BFCB);
-        var componentType = GetComponentType(bfcb);
+        if (!TryGetComponentType(bfcb, out var componentType))
+        {
+            return UnknownComponent.ReadRaw(frame, bfcb);
+        }
         switch (componentType)
         {
             case ComponentType.BGSAnimationGraph_Component:
@@ -237,9 +241,34 @@ public partial class AComponent
         }
     }
 
+    // The member names, matched exactly (C63)
+    private static readonly Dictionary<string, ComponentType> ByName =
+        Enum.GetValues<ComponentType>().ToDictionary(t => t.ToString(), StringComparer.Ordinal);
+
+    /// <summary>
+    /// The kind a BFCB names: its content is exactly a ComponentType member's name and a zero, as the game writes it
+    /// (C63). Anything else (another name, a number, white space, "A, B", no closing zero) names none: the component is
+    /// read as an <see cref="UnknownComponent"/>, kept as stored.
+    /// </summary>
+    public static bool TryGetComponentType(SubrecordFrame bfcb, out ComponentType componentType)
+    {
+        ReadOnlySpan<byte> content = bfcb.Content;
+        if (content.Length < 2 || content[^1] != 0 || content[..^1].IndexOf((byte)0) >= 0)
+        {
+            componentType = default;
+            return false;
+        }
+        return ByName.TryGetValue(MutagenEncoding._1252.GetString(content[..^1]), out componentType);
+    }
+
+    /// <summary>
+    /// The kind a BFCB names exactly (see <see cref="TryGetComponentType"/>); throws for a BFCB that names none
+    /// </summary>
     public static ComponentType GetComponentType(SubrecordFrame bfcb)
     {
-        return Enum.Parse<ComponentType>(bfcb.AsString(MutagenEncoding._1252));
+        return TryGetComponentType(bfcb, out var componentType)
+            ? componentType
+            : throw new ArgumentException($"BFCB names no component kind: {MutagenEncoding._1252.GetString(bfcb.Content)}");
     }
 }
 
@@ -273,6 +302,11 @@ partial class AComponentBinaryWriteTranslation
         MutagenWriter writer,
         IAComponentGetter item)
     {
+        if (item is IUnknownComponentGetter unknown)
+        {
+            UnknownComponent.WriteRaw(writer, unknown);
+            return;
+        }
         AComponent.ComponentType type = item switch
         {
             IAnimationGraphComponentGetter _ => AComponent.ComponentType.BGSAnimationGraph_Component,
@@ -358,7 +392,12 @@ partial class AComponentBinaryOverlay
         BinaryOverlayFactoryPackage package,
         TypedParseParams translationParams)
     {
-        var componentType = AComponent.GetComponentType(stream.GetSubrecord(RecordTypes.BFCB));
+        var bfcb = stream.GetSubrecord(RecordTypes.BFCB);
+        if (!AComponent.TryGetComponentType(bfcb, out var componentType))
+        {
+            // the catch-all has no overlay class: read and kept as stored, as a full import does
+            return UnknownComponent.ReadRaw(stream, bfcb);
+        }
         switch (componentType)
         {
             case AComponent.ComponentType.BGSAnimationGraph_Component:
@@ -496,5 +535,55 @@ partial class AComponentBinaryOverlay
             default:
                 throw new NotImplementedException();
         }
+    }
+}
+partial class UnknownComponent
+{
+    /// <summary>
+    /// A component whose BFCB names no kind exactly (C63): its BFCB's text, then every subrecord up to its BFCE as stored
+    /// (Data). The BFCE is read too. Used by both readers, with the stream after the BFCB (GetSubrecord with a type
+    /// moves past it).
+    /// </summary>
+    internal static UnknownComponent ReadRaw<TStream>(TStream stream, SubrecordFrame bfcb)
+        where TStream : IMutagenReadStream
+    {
+        var subConstants = stream.MetaData.Constants.SubConstants;
+        ReadOnlySpan<byte> content = bfcb.Content;
+        var ret = new UnknownComponent
+        {
+            TypeName = MutagenEncoding._1252.GetString(content.Length > 0 && content[^1] == 0 ? content[..^1] : content),
+        };
+        var data = new MemoryStream();
+        while (!stream.Complete)
+        {
+            var header = stream.GetSubrecordHeader();
+            if (header.RecordType == RecordTypes.BFCE)
+            {
+                stream.ReadSubrecord(RecordTypes.BFCE);
+                break;
+            }
+            var length = header.TotalLength;
+            if (header.RecordType == RecordTypes.XXXX)
+            {
+                // the next subrecord's length, then that subrecord
+                var overflow = BinaryPrimitives.ReadUInt32LittleEndian(stream.GetSpan(header.TotalLength)[subConstants.HeaderLength..]);
+                length = header.TotalLength + subConstants.HeaderLength + checked((int)overflow);
+            }
+            data.Write(stream.ReadSpan(length));
+        }
+        ret.Data = data.ToArray();
+        return ret;
+    }
+
+    /// <summary>
+    /// Writes the BFCB with the kept text and the kept subrecords; the BFCE is written by the generated writer
+    /// </summary>
+    internal static void WriteRaw(MutagenWriter writer, IUnknownComponentGetter item)
+    {
+        using (HeaderExport.Subrecord(writer, RecordTypes.BFCB))
+        {
+            writer.Write(item.TypeName, StringBinaryType.NullTerminate, MutagenEncoding._1252);
+        }
+        writer.Write(item.Data.Span);
     }
 }
