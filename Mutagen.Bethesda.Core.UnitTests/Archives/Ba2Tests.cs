@@ -134,10 +134,10 @@ public class Ba2Tests
     }
 
     /// <summary>A hand-built version 1 GNRL archive, and where its file records and name table lie.</summary>
-    private record Ba2Bytes(byte[] Bytes, long FileRecordsStart, long FileRecordsEnd, long NameTableStart);
+    internal record Ba2Bytes(byte[] Bytes, long FileRecordsStart, long FileRecordsEnd, long NameTableStart);
 
     /// <summary>Builds a version 1 GNRL archive with uncompressed files and a name table.</summary>
-    private static Ba2Bytes BuildGeneralBa2(params (string Path, byte[] Data)[] files)
+    internal static Ba2Bytes BuildGeneralBa2(params (string Path, byte[] Data)[] files)
     {
         const int headerLength = 24;
         const int recordLength = 36;
