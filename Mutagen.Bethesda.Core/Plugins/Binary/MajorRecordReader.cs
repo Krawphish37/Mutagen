@@ -301,7 +301,7 @@ public sealed class MajorRecordReader : IDisposable
         return Creators.GetOrAdd(category, BuildCreators).TryGetValue(recordType, out var creator) ? creator.Class : null;
     }
 
-    private static Func<MutagenFrame, IMajorRecord>? GetCreator(GameCategory category, RecordType recordType)
+    internal static Func<MutagenFrame, IMajorRecord>? GetCreator(GameCategory category, RecordType recordType)
     {
         return Creators.GetOrAdd(category, BuildCreators).TryGetValue(recordType, out var creator) ? creator.Create : null;
     }

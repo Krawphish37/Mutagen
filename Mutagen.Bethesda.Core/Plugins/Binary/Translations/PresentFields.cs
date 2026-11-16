@@ -1,0 +1,91 @@
+using System.Buffers.Binary;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using Loqui;
+using Mutagen.Bethesda.Plugins.Binary.Overlay;
+using Mutagen.Bethesda.Plugins.Binary.Streams;
+using Mutagen.Bethesda.Plugins.Internals;
+using Mutagen.Bethesda.Plugins.Records;
+
+namespace Mutagen.Bethesda.Plugins.Binary.Translations;
+
+/// <summary>
+/// Which fields a record's bytes held (PartialFormMixIn.TryGetPresentFields, C58/W7): the field index each subrecord was
+/// read into, as the full import's reader reports it (the same report SubrecordOrder's field starts use). Noted while a
+/// record of a type that can be a partial form is read by a full import; worked out for an overlay record, when asked,
+/// by reading its bytes again with the full import's reader.
+/// </summary>
+internal static class PresentFields
+{
+    private static readonly ConditionalWeakTable<object, int[]> Noted = new();
+
+    // Set while an overlay record's bytes are read again: the next record parsed on this thread notes its fields
+    [ThreadStatic] private static bool _noteNext;
+
+    /// <summary>
+    /// At the start of a full import's read of a record: a list to note its fields in, or null when they aren't noted
+    /// </summary>
+    public static List<int>? Begin(IMajorRecordGetter record)
+    {
+        if (_noteNext)
+        {
+            _noteNext = false;
+            return new List<int>();
+        }
+        return record.CanBePartialForm() ? new List<int>() : null;
+    }
+
+    public static void Remember(object record, IEnumerable<int> fields)
+    {
+        Noted.AddOrUpdate(record, fields.Distinct().OrderBy(x => x).ToArray());
+    }
+
+    public static bool TryGet(object record, [MaybeNullWhen(false)] out int[] fields)
+    {
+        return Noted.TryGetValue(record, out fields);
+    }
+
+    /// <summary>
+    /// An overlay record's fields: its bytes (header and content, decompressed) read again by the full import's reader of
+    /// its class, which notes them. Kept with the overlay record.
+    /// </summary>
+    public static int[]? FromOverlay(PluginBinaryOverlay overlay, IMajorRecordGetter record)
+    {
+        var meta = overlay._package.MetaData;
+        var constants = meta.Constants;
+        if (record.Registration.GetType().GetField(Constants.TriggeringRecordTypeMember, BindingFlags.Public | BindingFlags.Static)
+                ?.GetValue(null) is not RecordType recordType)
+        {
+            return null;
+        }
+        var create = MajorRecordReader.GetCreator(constants.Release.ToCategory(), recordType);
+        if (create == null) return null;
+        var header = overlay._structData;
+        var content = overlay._recordData;
+        var majorConstants = constants.MajorConstants;
+        if (header.Length != majorConstants.HeaderLength - majorConstants.TypeAndLengthLength) return null;
+        var bytes = new byte[majorConstants.HeaderLength + content.Length];
+        BinaryPrimitives.WriteInt32LittleEndian(bytes, recordType.TypeInt);
+        BinaryPrimitives.WriteUInt32LittleEndian(bytes.AsSpan(majorConstants.TypeAndLengthLength - majorConstants.LengthLength), checked((uint)content.Length));
+        header.Span.CopyTo(bytes.AsSpan(majorConstants.TypeAndLengthLength));
+        content.Span.CopyTo(bytes.AsSpan(majorConstants.HeaderLength));
+        // The overlay holds the content decompressed
+        var flagsAt = majorConstants.FlagLocationOffset;
+        BinaryPrimitives.WriteInt32LittleEndian(bytes.AsSpan(flagsAt),
+            BinaryPrimitives.ReadInt32LittleEndian(bytes.AsSpan(flagsAt)) & ~Constants.CompressedFlag);
+        IMajorRecord read;
+        _noteNext = true;
+        try
+        {
+            read = create(new MutagenFrame(new MutagenMemoryReadStream(bytes, meta.CloneForParallelParse())));
+        }
+        finally
+        {
+            _noteNext = false;
+        }
+        if (!TryGet(read, out var fields)) return null;
+        Noted.AddOrUpdate(record, fields);
+        return fields;
+    }
+}
