@@ -322,6 +322,11 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
             // The compressed content as read, to write it back while the record is unchanged
             CompressedOriginals.Remember(majorReference, compressedOriginal);
         }
+        // A FormID Mutagen writes differently read now (a field the overlay parses when the record is made, as a perk's
+        // effects) isn't read again when the record is written: noted for the write (C69)
+        var keepForms = stream.MetaData.Constants.KeepSubrecordOrder;
+        var readBefore = SubrecordOrder.NonCanonicalFormIdRead;
+        if (keepForms) SubrecordOrder.NonCanonicalFormIdRead = false;
         try
         {
             if (FillSubrecordTypes(
@@ -344,6 +349,11 @@ internal abstract class PluginBinaryOverlay : ILoquiObject
         finally
         {
             fieldStarts?.RemoveRange(firstField, fieldStarts.Count - firstField);
+            if (keepForms)
+            {
+                if (SubrecordOrder.NonCanonicalFormIdRead) Mutagen.Bethesda.Plugins.Masters.OwnFormIdForms.MarkReadNonCanonicalWhenMade(majorReference);
+                SubrecordOrder.NonCanonicalFormIdRead |= readBefore;
+            }
         }
     }
 

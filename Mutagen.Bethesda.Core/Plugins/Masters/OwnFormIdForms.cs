@@ -47,6 +47,20 @@ internal static class OwnFormIdForms
 
     private static readonly ConditionalWeakTable<object, Kept> Records = new();
 
+    // Overlay records whose construction read a FormID Mutagen writes differently (C69): an overlay parses some fields
+    // when the record is made (a perk's effects), so its write doesn't read those links again and can't notice them
+    private static readonly ConditionalWeakTable<object, object> MadeWithNonCanonical = new();
+
+    /// <summary>
+    /// Notes an overlay record whose construction read a FormID Mutagen writes differently (PluginBinaryOverlay)
+    /// </summary>
+    public static void MarkReadNonCanonicalWhenMade(object record) => MadeWithNonCanonical.AddOrUpdate(record, record);
+
+    /// <summary>
+    /// Whether an overlay record's construction read a FormID Mutagen writes differently (C69)
+    /// </summary>
+    public static bool ReadNonCanonicalWhenMade(object record) => MadeWithNonCanonical.TryGetValue(record, out _);
+
     // The kept entries being checked on this thread: the check's own write of the record uses them as they are
     [ThreadStatic] private static Kept? _checking;
 
