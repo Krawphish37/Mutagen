@@ -120,7 +120,9 @@ internal static class PropertyManifest
         // Fixed offsets of the fields the generated reader reads in order from one stretch of bytes (a struct
         // object's fields, a data subrecord's members), as the overlay reader computes them
         // (only what that reader reads itself: a field another step fills has the XML's layoutOffset instead)
-        var offsets = new Dictionary<TypeGeneration, (int Offset, int? Length)>();
+        // Keyed by the field itself: Loqui's LoquiType equals any other LoquiType of the same target object, so a value
+        // comparer gave every Loqui field of one type in a block the last one's offset (C80, S171)
+        var offsets = new Dictionary<TypeGeneration, (int Offset, int? Length)>(ReferenceEqualityComparer.Instance);
         static bool ReadInOrder(TypeGeneration f)
         {
             var d = f.GetFieldData();

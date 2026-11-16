@@ -11,7 +11,7 @@ namespace Mutagen.Bethesda.UnitTests.Plugins.Records.Starfield;
 // compiled properties in order, where the generated reader reads each, which hand-written step reads it, what a derived
 // one derives from. These tests hold the manifest to the compiled classes, so a property added by hand without being
 // declared (<HandWritten> on its object in the record XML) fails here instead of going unnoticed.
-public class PropertyManifestTests
+public partial class PropertyManifestTests
 {
     private static readonly Assembly StarfieldAssembly = typeof(Weather).Assembly;
 
