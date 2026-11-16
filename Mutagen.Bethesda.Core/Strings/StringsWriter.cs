@@ -26,6 +26,10 @@ public sealed class StringsWriter : IDisposable
     private readonly object _indexLock = new();
     private readonly HashSet<uint> _usedIndices = new();
     private readonly Dictionary<(StringsSource Source, uint Key), ValueTuple<Language, string, uint>[]> _keptStrings = new();
+    // The tables the plugin's own strings were read from (TryRegisterOriginalKey): a table whose strings are as they
+    // were read is written back as it was read, and one that changed keeps the bytes of the strings that did not
+    private StringsFolderLookupOverlay? _original;
+    private bool _originalLooked;
 
     public StringsWriter(
         GameRelease release,
@@ -105,6 +109,7 @@ public sealed class StringsWriter : IDisposable
         var entries = str.Select(x => new ValueTuple<Language, string, uint>(x.Key, x.Value, originalKey)).ToArray();
         lock (_indexLock)
         {
+            if (_original == null && translated.StringsLookup is StringsFolderLookupOverlay folder) _original = folder;
             if (_keptStrings.TryGetValue((source, originalKey), out var existing))
             {
                 if (!existing.SequenceEqual(entries)) return false;
@@ -163,6 +168,12 @@ public sealed class StringsWriter : IDisposable
     private void WriteStrings(List<ValueTuple<Language, string, uint>[]> strs, StringsSource source, IReadOnlyCollection<Language> requiredLanguages)
     {
         FileSystem.Directory.CreateDirectory(WriteDir);
+        // The tables this plugin's strings were read from, opened again (a text keeps its ID and plugin, not its table)
+        if (_original == null && !_originalLooked)
+        {
+            _originalLooked = true;
+            _original = StringsFolderLookupOverlay.ReopenLastRead(ModKey);
+        }
 
         var subLists = new Dictionary<Language, List<(string String, uint Index)>>();
         foreach (var req in requiredLanguages)
@@ -187,21 +198,65 @@ public sealed class StringsWriter : IDisposable
         foreach (var language in subLists)
         {
             var encoding = EncodingProvider.GetEncoding(_release, language.Key);
+            // The table this language's strings were read from, when the plugin is written back under its own name
+            var original = _original?.TryGetTable(source, language.Key);
+            // Each string's bytes: a string that is as it was read keeps the bytes it was read from (a table can hold
+            // bytes its encoding has no letter for: a Windows-1252 letter in a UTF-8 table would come back as a
+            // replacement character), any other is encoded
+            var bytes = new List<(uint Index, byte[] Bytes)>(language.Value.Count);
+            bool asRead = original != null;
+            var written = original != null ? new HashSet<uint>() : null;
+            foreach (var item in language.Value)
+            {
+                if (original != null
+                    && original.TryGetLocation(item.Index, out var loc)
+                    && string.Equals(original.GetStringAtLocation(loc), item.String, StringComparison.Ordinal))
+                {
+                    bytes.Add((item.Index, original.GetStringBytesAtLocation(loc).ToArray()));
+                }
+                else
+                {
+                    asRead = false;
+                    var encoded = new byte[encoding.GetByteCount(item.String)];
+                    encoding.GetBytes(item.String, encoded);
+                    bytes.Add((item.Index, encoded));
+                }
+                written?.Add(item.Index);
+            }
+            if (asRead)
+            {
+                // Nothing of this table changed: it is written back as it was read, byte for byte, with the strings no
+                // record of the plugin names (stale translations, an English table's leftovers) and its own layout
+                // (one string under several IDs stored once)
+                FileSystem.File.WriteAllBytes(
+                    Path.Combine(WriteDir.Path, StringsUtility.GetFileName(LanguageFormat, ModKey, language.Key, source)),
+                    original!.FileData.ToArray());
+                continue;
+            }
+            if (original != null)
+            {
+                // A changed table still keeps the strings no record names: nothing the plugin's tables held is dropped
+                foreach (var kv in original.Locations)
+                {
+                    if (written!.Add(kv.Key)) bytes.Add((kv.Key, original.GetStringBytesAtLocation(kv.Value).ToArray()));
+                }
+                bytes.Sort((x, y) => x.Index.CompareTo(y.Index));
+            }
             using var writer = new MutagenWriter(
                 FileSystem.FileStream.New(
                     Path.Combine(WriteDir.Path, StringsUtility.GetFileName(LanguageFormat, ModKey, language.Key, source)), 
                     FileMode.Create, FileAccess.Write),
                 meta: null!);
             // Write count
-            writer.Write(language.Value.Count);
+            writer.Write(bytes.Count);
             // Write filler for length later
             writer.WriteZeros(4);
             // Write Directory
             int size = 0;
-            foreach (var item in language.Value)
+            foreach (var item in bytes)
             {
                 writer.Write(item.Index);
-                var strLen = encoding.GetByteCount(item.String);
+                var strLen = item.Bytes.Length;
                 switch (source)
                 {
                     case StringsSource.Normal:
@@ -223,17 +278,19 @@ public sealed class StringsWriter : IDisposable
             writer.Write(size);
             writer.Position = pos;
             // Write strings
-            foreach (var item in language.Value)
+            foreach (var item in bytes)
             {
                 switch (source)
                 {
                     case StringsSource.Normal:
-                        writer.Write(item.String, StringBinaryType.NullTerminate, encoding);
+                        writer.Write(item.Bytes);
+                        writer.Write((byte)0);
                         break;
                     case StringsSource.IL:
                     case StringsSource.DL:
-                        writer.Write(encoding.GetByteCount(item.String) + 1);
-                        writer.Write(item.String, StringBinaryType.NullTerminate, encoding);
+                        writer.Write(item.Bytes.Length + 1);
+                        writer.Write(item.Bytes);
+                        writer.Write((byte)0);
                         break;
                     default:
                         throw new NotImplementedException();

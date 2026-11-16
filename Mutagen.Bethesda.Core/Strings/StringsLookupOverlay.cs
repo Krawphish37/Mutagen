@@ -14,6 +14,16 @@ public sealed class StringsLookupOverlay : IStringsLookup
 {
     private readonly Dictionary<uint, int> _locations = new();
     private ReadOnlyMemorySlice<byte> _stringData;
+    private ReadOnlyMemorySlice<byte> _fileData;
+
+    /// <summary>
+    /// The table as it was read, header, directory and strings: what StringsWriter writes back when the plugin's strings
+    /// of this table are as they were read
+    /// </summary>
+    internal ReadOnlyMemorySlice<byte> FileData => _fileData;
+
+    /// <summary>Every ID of the table with where its string starts in the strings' data (StringsWriter)</summary>
+    internal IReadOnlyDictionary<uint, int> Locations => _locations;
     private IMutagenEncoding _encoding = null!;
         
     public StringsFileFormat Type { get; private set; }
@@ -74,6 +84,7 @@ public sealed class StringsLookupOverlay : IStringsLookup
         {
             _encoding = encoding;
             Type = type;
+            _fileData = data;
             var count = BinaryPrimitives.ReadUInt32LittleEndian(data);
             var dataSize = checked((int)BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(4)));
             var indexData = data.Slice(8, checked((int)(count * 2 * 4)));

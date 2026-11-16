@@ -84,8 +84,33 @@ public sealed class StringsFolderLookupOverlay : IStringsFolderLookup
         StringsReadParameters? instructions,
         IFileSystem? fileSystem = null)
     {
+        _readFrom[modKey] = (release, dataPath, instructions, fileSystem);
         return new StringsFolderLookupOverlayFactoryContainer(release, fileSystem, dataPath, instructions).Resolve().Value
             .InternalFactory(modKey);
+    }
+
+    // Where each plugin's tables were last read from (TypicalFactory). A text read from a table keeps the ID and the
+    // plugin, not the table (TranslatedString lets the lookup go once it holds every language), so StringsWriter opens
+    // the tables again from here when the plugin is written back, to write them as they were read
+    private static readonly System.Collections.Concurrent.ConcurrentDictionary<ModKey, (GameRelease Release, DirectoryPath DataPath, StringsReadParameters? Instructions, IFileSystem? FileSystem)> _readFrom = new();
+
+    /// <summary>
+    /// The tables a plugin's strings were last read from in this process, opened again; null when none were, or they
+    /// can't be opened now. What StringsWriter holds a plugin's strings against: a table is written back as it was
+    /// read only when every string of it is still the table's own.
+    /// </summary>
+    internal static StringsFolderLookupOverlay? ReopenLastRead(ModKey modKey)
+    {
+        if (!_readFrom.TryGetValue(modKey, out var from)) return null;
+        try
+        {
+            return new StringsFolderLookupOverlayFactoryContainer(from.Release, from.FileSystem, from.DataPath, from.Instructions).Resolve().Value
+                .InternalFactory(modKey) as StringsFolderLookupOverlay;
+        }
+        catch (Exception e) when (e is IOException or UnauthorizedAccessException or ArgumentException)
+        {
+            return null;
+        }
     }
 
     /// <summary>
@@ -172,6 +197,12 @@ public sealed class StringsFolderLookupOverlay : IStringsFolderLookup
     }
 
     internal Dictionary<Language, LookupItem> Get(StringsSource source) => _dictionaries.Value.Get(source);
+
+    /// <summary>The table of one language as it was read, or null when the plugin has none (StringsWriter)</summary>
+    internal StringsLookupOverlay? TryGetTable(StringsSource source, Language language)
+    {
+        return Get(source).TryGetValue(language, out var lookup) ? lookup.StringsLookup.Value as StringsLookupOverlay : null;
+    }
 
     /// <summary>
     /// Lists every strings table the plugin has: one per source (.strings, .dlstrings, .ilstrings) and language,
