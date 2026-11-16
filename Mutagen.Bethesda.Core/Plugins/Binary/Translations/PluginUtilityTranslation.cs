@@ -796,7 +796,11 @@ internal static class PluginUtilityTranslation
                             }
                         }
                         var written = buffer.GetBuffer().AsSpan(0, checked((int)buffer.Length));
-                        if (overlayKeepsForms && SubrecordOrder.NonCanonicalFormIdRead)
+                        // The write read such a FormID, or the overlay read one when the record was made: links it parsed
+                        // then (a perk's effects) aren't read again by the write (C69)
+                        if (overlayKeepsForms
+                            && (SubrecordOrder.NonCanonicalFormIdRead
+                                || Mutagen.Bethesda.Plugins.Masters.OwnFormIdForms.ReadNonCanonicalWhenMade(item)))
                         {
                             ownForms = Mutagen.Bethesda.Plugins.Masters.OwnFormIdForms.GetIncludingPastList(item) ?? ownForms;
                         }
