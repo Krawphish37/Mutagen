@@ -1083,10 +1083,14 @@ namespace Mutagen.Bethesda.Fallout3
             IPackageLocation item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Location");
             PackageLocationBinaryCreateTranslation.FillBinaryLocationCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Radius");
             item.Radius = frame.ReadInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void FillBinaryLocationCustom(

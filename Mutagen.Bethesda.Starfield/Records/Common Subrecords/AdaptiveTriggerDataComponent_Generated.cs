@@ -1210,14 +1210,18 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.WFIR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FireEffect");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.FireEffect = Mutagen.Bethesda.Starfield.AdaptiveTriggerEffect.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AdaptiveTriggerDataComponent_FieldIndex.FireEffect;
                 }
                 case RecordTypeInts.WAIM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AdsEffect");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.AdsEffect = Mutagen.Bethesda.Starfield.AdaptiveTriggerEffect.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AdaptiveTriggerDataComponent_FieldIndex.AdsEffect;
                 }
                 default:

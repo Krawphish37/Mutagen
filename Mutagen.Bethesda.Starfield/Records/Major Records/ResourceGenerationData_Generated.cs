@@ -1499,12 +1499,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.RNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Items");
                     item.Items.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ResourceGenerationDataItem>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: ResourceGenerationDataItem_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: ResourceGenerationDataItem.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ResourceGenerationData_FieldIndex.Items;
                 }
                 default:

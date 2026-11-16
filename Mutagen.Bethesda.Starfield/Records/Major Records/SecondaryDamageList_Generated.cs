@@ -1503,6 +1503,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.DAMA:
                 case RecordTypeInts.ITMC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Damages");
                     item.Damages.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<SecondaryDamageItem>.Instance.ParsePerItem(
                             reader: frame,
@@ -1511,6 +1512,7 @@ namespace Mutagen.Bethesda.Starfield
                             triggeringRecord: SecondaryDamageItem_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: SecondaryDamageItem.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SecondaryDamageList_FieldIndex.Damages;
                 }
                 default:

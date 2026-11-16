@@ -1278,7 +1278,9 @@ namespace Mutagen.Bethesda.Fallout4
             IScriptFragments item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ExtraBindDataVersion");
             item.ExtraBindDataVersion = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

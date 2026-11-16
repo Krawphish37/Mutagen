@@ -1110,17 +1110,21 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.ICON:
                 {
                     if (lastParsed.ShortCircuit((int)Icons_FieldIndex.LargeIconFilename, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LargeIconFilename");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LargeIconFilename.GivenPath = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Icons_FieldIndex.LargeIconFilename;
                 }
                 case RecordTypeInts.MICO:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SmallIconFilename");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SmallIconFilename = AssetLinkBinaryTranslation.Instance.Parse<Fallout3TextureAssetType>(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Icons_FieldIndex.SmallIconFilename;
                 }
                 default:

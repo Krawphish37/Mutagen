@@ -2885,30 +2885,38 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Fallout3.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.Name;
                 }
                 case RecordTypeInts.BMDT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BipedData");
                     item.BipedData = Mutagen.Bethesda.Fallout3.BipedData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.BipedData;
                 }
                 case RecordTypeInts.MODL:
                 case RecordTypeInts.MODT:
                 case RecordTypeInts.MODS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaleBipedModel");
                     item.MaleBipedModel = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.MaleBipedModel;
                 }
                 case RecordTypeInts.MODB:
@@ -2917,30 +2925,38 @@ namespace Mutagen.Bethesda.Fallout3
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)ArmorAddon_FieldIndex.BipedData)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaleBipedModel");
                         item.MaleBipedModel = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
                             frame: frame,
                             translationParams: translationParams.DoNotShortCircuit());
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)ArmorAddon_FieldIndex.MaleBipedModel, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)ArmorAddon_FieldIndex.MaleBipedModel)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaleWorldModel");
                         item.MaleWorldModel = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
                             frame: frame,
                             translationParams: translationParams.With(ArmorAddon_Registration.MaleWorldModelConverter).DoNotShortCircuit());
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)ArmorAddon_FieldIndex.MaleWorldModel, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)ArmorAddon_FieldIndex.MaleMessageIcon)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FemaleBipedModel");
                         item.FemaleBipedModel = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
                             frame: frame,
                             translationParams: translationParams.With(ArmorAddon_Registration.FemaleBipedModelConverter).DoNotShortCircuit());
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)ArmorAddon_FieldIndex.FemaleBipedModel, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)ArmorAddon_FieldIndex.FemaleBipedModel)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FemaleWorldModel");
                         item.FemaleWorldModel = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
                             frame: frame,
                             translationParams: translationParams.With(ArmorAddon_Registration.FemaleWorldModelConverter).DoNotShortCircuit());
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)ArmorAddon_FieldIndex.FemaleWorldModel, nextRecordType);
                     }
                     else
@@ -2948,24 +2964,32 @@ namespace Mutagen.Bethesda.Fallout3
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaleBipedModel");
                                 item.MaleBipedModel = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
                                     frame: frame,
                                     translationParams: translationParams.DoNotShortCircuit());
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)ArmorAddon_FieldIndex.MaleBipedModel, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaleWorldModel");
                                 item.MaleWorldModel = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
                                     frame: frame,
                                     translationParams: translationParams.With(ArmorAddon_Registration.MaleWorldModelConverter).DoNotShortCircuit());
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)ArmorAddon_FieldIndex.MaleWorldModel, nextRecordType);
                             case 2:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FemaleBipedModel");
                                 item.FemaleBipedModel = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
                                     frame: frame,
                                     translationParams: translationParams.With(ArmorAddon_Registration.FemaleBipedModelConverter).DoNotShortCircuit());
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)ArmorAddon_FieldIndex.FemaleBipedModel, nextRecordType);
                             case 3:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FemaleWorldModel");
                                 item.FemaleWorldModel = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
                                     frame: frame,
                                     translationParams: translationParams.With(ArmorAddon_Registration.FemaleWorldModelConverter).DoNotShortCircuit());
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)ArmorAddon_FieldIndex.FemaleWorldModel, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -2976,27 +3000,33 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.MO2T:
                 case RecordTypeInts.MO2S:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaleWorldModel");
                     item.MaleWorldModel = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(ArmorAddon_Registration.MaleWorldModelConverter).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.MaleWorldModel;
                 }
                 case RecordTypeInts.ICON:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaleIcon");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MaleIcon = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.MaleIcon;
                 }
                 case RecordTypeInts.MICO:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaleMessageIcon");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MaleMessageIcon = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.MaleMessageIcon;
                 }
                 case RecordTypeInts.MOD3:
@@ -3004,44 +3034,54 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.MO3S:
                 case RecordTypeInts.MOSD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FemaleBipedModel");
                     item.FemaleBipedModel = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(ArmorAddon_Registration.FemaleBipedModelConverter).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.FemaleBipedModel;
                 }
                 case RecordTypeInts.MOD4:
                 case RecordTypeInts.MO4T:
                 case RecordTypeInts.MO4S:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FemaleWorldModel");
                     item.FemaleWorldModel = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(ArmorAddon_Registration.FemaleWorldModelConverter).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.FemaleWorldModel;
                 }
                 case RecordTypeInts.ICO2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FemaleIcon");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FemaleIcon = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.FemaleIcon;
                 }
                 case RecordTypeInts.MIC2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FemaleMessageIcon");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FemaleMessageIcon = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.FemaleMessageIcon;
                 }
                 case RecordTypeInts.ETYP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EquipmentType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EquipmentType = EnumBinaryTranslation<EquipType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.EquipmentType;
                 }
                 case RecordTypeInts.DATA:
@@ -3049,11 +3089,17 @@ namespace Mutagen.Bethesda.Fallout3
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Value");
                     item.Value = dataFrame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "MaxCondition");
                     item.MaxCondition = dataFrame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Weight");
                     item.Weight = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)ArmorAddon_FieldIndex.Weight;
                 }
                 case RecordTypeInts.DNAM:
@@ -3061,26 +3107,34 @@ namespace Mutagen.Bethesda.Fallout3
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 2) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DamageResistance");
                     item.DamageResistance = dataFrame.ReadInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 2) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ModulatesVoice");
                     item.ModulatesVoice = BooleanBinaryTranslation<MutagenFrame>.Instance.Parse(
                         reader: dataFrame,
                         byteLength: 2);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Complete)
                     {
                         item.DNAMDataTypeState |= ArmorAddon.DNAMDataType.Break0;
                         return (int)ArmorAddon_FieldIndex.ModulatesVoice;
                     }
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DamageThreshold");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         item.DamageThreshold = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
                     }
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Unused");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         item.Unused = dataFrame.ReadUInt32();
                     }
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)ArmorAddon_FieldIndex.Unused;
                 }
                 default:

@@ -1785,31 +1785,39 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.NVNM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NavmeshGeometry");
                     item.NavmeshGeometry = Mutagen.Bethesda.Fallout4.NavmeshGeometry.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.NavmeshGeometry;
                 }
                 case RecordTypeInts.ONAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ONAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ONAM.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.ONAM;
                 }
                 case RecordTypeInts.NNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.NNAM;
                 }
                 case RecordTypeInts.MNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "PreCutMapEntries");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PreCutMapEntries = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<PreCutMapEntry>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: PreCutMapEntry.TryCreateFromBinary)
                         .CastExtendedList<PreCutMapEntry>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.PreCutMapEntries;
                 }
                 case RecordTypeInts.XXXX:

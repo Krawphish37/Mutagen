@@ -1207,19 +1207,23 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.ONAM:
                 {
                     if (lastParsed.ShortCircuit((int)StaticPart_FieldIndex.Static, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Static");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Static.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StaticPart_FieldIndex.Static;
                 }
                 case RecordTypeInts.DATA:
                 {
                     if (lastParsed.ShortCircuit((int)StaticPart_FieldIndex.Placements, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Placements");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Placements = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<StaticPlacement>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: StaticPlacement.TryCreateFromBinary)
                         .CastExtendedList<StaticPlacement>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StaticPart_FieldIndex.Placements;
                 }
                 default:

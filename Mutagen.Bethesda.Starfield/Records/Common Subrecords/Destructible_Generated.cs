@@ -1553,36 +1553,44 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.DEST:
                 {
                     if (lastParsed.ShortCircuit((int)Destructible_FieldIndex.Data, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Starfield.DestructableData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Destructible_FieldIndex.Data;
                 }
                 case RecordTypeInts.DAMC:
                 {
                     if (lastParsed.ShortCircuit((int)Destructible_FieldIndex.Resistances, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Resistances");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Resistances = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ResistanceDestructible>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: ResistanceDestructible.TryCreateFromBinary)
                         .CastExtendedList<ResistanceDestructible>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Destructible_FieldIndex.Resistances;
                 }
                 case RecordTypeInts.DSDL:
                 {
                     if (lastParsed.ShortCircuit((int)Destructible_FieldIndex.SecondaryDamageList, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SecondaryDamageList");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SecondaryDamageList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Destructible_FieldIndex.SecondaryDamageList;
                 }
                 case RecordTypeInts.DSTD:
                 {
                     if (lastParsed.ShortCircuit((int)Destructible_FieldIndex.Stages, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Stages");
                     item.Stages.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<DestructionStage>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: DestructionStage_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: DestructionStage.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Destructible_FieldIndex.Stages;
                 }
                 default:

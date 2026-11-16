@@ -1081,14 +1081,18 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.SNAM:
                 {
                     if (lastParsed.ShortCircuit((int)SceneCollectionItem_FieldIndex.Scene, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Scene");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Scene.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneCollectionItem_FieldIndex.Scene;
                 }
                 case RecordTypeInts.XNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "XNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.XNAM = frame.ReadUInt64();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneCollectionItem_FieldIndex.XNAM;
                 }
                 default:

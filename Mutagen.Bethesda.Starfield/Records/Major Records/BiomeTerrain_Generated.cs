@@ -1563,75 +1563,91 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.LNAM:
                 {
                     if (lastParsed.ShortCircuit((int)BiomeTerrain_FieldIndex.Main, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Main");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.Main = Mutagen.Bethesda.Starfield.BiomeTerrainData.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BiomeTerrain_FieldIndex.Main;
                 }
                 case RecordTypeInts.ANAM:
                 {
                     if (lastParsed.ShortCircuit((int)BiomeTerrain_FieldIndex.Alternate, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Alternate");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.Alternate = Mutagen.Bethesda.Starfield.BiomeTerrainData.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BiomeTerrain_FieldIndex.Alternate;
                 }
                 case RecordTypeInts.TX00:
                 {
                     if (lastParsed.ShortCircuit((int)BiomeTerrain_FieldIndex.BaseNoiseDataTexture, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BaseNoiseDataTexture");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BaseNoiseDataTexture = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BiomeTerrain_FieldIndex.BaseNoiseDataTexture;
                 }
                 case RecordTypeInts.UX00:
                 {
                     if (lastParsed.ShortCircuit((int)BiomeTerrain_FieldIndex.FlowNoiseDataTexture, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FlowNoiseDataTexture");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FlowNoiseDataTexture = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BiomeTerrain_FieldIndex.FlowNoiseDataTexture;
                 }
                 case RecordTypeInts.VX00:
                 {
                     if (lastParsed.ShortCircuit((int)BiomeTerrain_FieldIndex.FlatOuterNoiseDataTexture, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FlatOuterNoiseDataTexture");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FlatOuterNoiseDataTexture = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BiomeTerrain_FieldIndex.FlatOuterNoiseDataTexture;
                 }
                 case RecordTypeInts.WX00:
                 {
                     if (lastParsed.ShortCircuit((int)BiomeTerrain_FieldIndex.FlatInnerNoiseDataTexture, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FlatInnerNoiseDataTexture");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FlatInnerNoiseDataTexture = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BiomeTerrain_FieldIndex.FlatInnerNoiseDataTexture;
                 }
                 case RecordTypeInts.XX00:
                 {
                     if (lastParsed.ShortCircuit((int)BiomeTerrain_FieldIndex.TalusNoiseDataTexture, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TalusNoiseDataTexture");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TalusNoiseDataTexture = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BiomeTerrain_FieldIndex.TalusNoiseDataTexture;
                 }
                 case RecordTypeInts.YX00:
                 {
                     if (lastParsed.ShortCircuit((int)BiomeTerrain_FieldIndex.SolidNoiseDataTexture, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SolidNoiseDataTexture");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SolidNoiseDataTexture = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BiomeTerrain_FieldIndex.SolidNoiseDataTexture;
                 }
                 default:

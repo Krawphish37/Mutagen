@@ -1217,12 +1217,14 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.RDOT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Objects");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Objects = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<RegionObject>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: RegionObject.TryCreateFromBinary)
                         .CastExtendedList<RegionObject>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionObjects_FieldIndex.Objects;
                 }
                 default:

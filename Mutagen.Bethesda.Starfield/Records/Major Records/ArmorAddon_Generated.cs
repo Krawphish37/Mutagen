@@ -3754,33 +3754,41 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Starfield.VirtualMachineAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.BFCB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Components");
                     item.Components.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AComponent>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: AComponent_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: AComponent.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.Components;
                 }
                 case RecordTypeInts.BO64:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FirstPersonFlags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FirstPersonFlags = EnumBinaryTranslation<FirstPersonFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.FirstPersonFlags;
                 }
                 case RecordTypeInts.RNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Race");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Race.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.Race;
                 }
                 case RecordTypeInts.DNAM:
@@ -3788,19 +3796,33 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "WeaponAdjust");
                     item.WeaponAdjust = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "MalePriority");
                     item.MalePriority = dataFrame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "FemalePriority");
                     item.FemalePriority = dataFrame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "UnknownMale");
                     item.UnknownMale = dataFrame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "UnknownFemale");
                     item.UnknownFemale = dataFrame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DetectionSoundValue");
                     item.DetectionSoundValue = dataFrame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "HealthBarOffset");
                     item.HealthBarOffset = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)ArmorAddon_FieldIndex.HealthBarOffset;
                 }
                 case RecordTypeInts.MOD2:
@@ -3814,6 +3836,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MO2F:
                 case RecordTypeInts.MO3F:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WorldModel");
                     item.WorldModel = Mutagen.Bethesda.Plugins.Binary.Translations.GenderedItemBinaryTranslation.Parse<Model>(
                         frame: frame,
                         femaleRecordConverter: ArmorAddon_Registration.WorldModelFemaleConverter,
@@ -3821,6 +3844,7 @@ namespace Mutagen.Bethesda.Starfield
                         transl: Model.TryCreateFromBinary,
                         existing: item.WorldModel,
                         fill: static (r, i, p) => i.CopyInFromBinary(r, p));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.WorldModel;
                 }
                 case RecordTypeInts.FLLD:
@@ -3829,6 +3853,7 @@ namespace Mutagen.Bethesda.Starfield
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)ArmorAddon_FieldIndex.HealthBarOffset)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WorldModel");
                         item.WorldModel = Mutagen.Bethesda.Plugins.Binary.Translations.GenderedItemBinaryTranslation.Parse<Model>(
                             frame: frame,
                             femaleRecordConverter: ArmorAddon_Registration.WorldModelFemaleConverter,
@@ -3836,10 +3861,12 @@ namespace Mutagen.Bethesda.Starfield
                             transl: Model.TryCreateFromBinary,
                             existing: item.WorldModel,
                             fill: static (r, i, p) => i.CopyInFromBinary(r, p));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)ArmorAddon_FieldIndex.WorldModel, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)ArmorAddon_FieldIndex.WorldModel)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FirstPersonModel");
                         item.FirstPersonModel = Mutagen.Bethesda.Plugins.Binary.Translations.GenderedItemBinaryTranslation.Parse<Model>(
                             frame: frame,
                             femaleRecordConverter: ArmorAddon_Registration.FirstPersonModelFemaleConverter,
@@ -3847,10 +3874,12 @@ namespace Mutagen.Bethesda.Starfield
                             transl: Model.TryCreateFromBinary,
                             existing: item.FirstPersonModel,
                             fill: static (r, i, p) => i.CopyInFromBinary(r, p));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)ArmorAddon_FieldIndex.FirstPersonModel, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)ArmorAddon_FieldIndex.AltSkeleton)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "ExtraLightLayers");
                         item.ExtraLightLayers.SetTo(
                             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Light.LightLayer>.Instance.Parse(
                                 reader: frame,
@@ -3861,6 +3890,7 @@ namespace Mutagen.Bethesda.Starfield
                                         reader: r.SpawnWithLength(4),
                                         item: out listSubItem);
                                 }));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)ArmorAddon_FieldIndex.ExtraLightLayers, nextRecordType);
                     }
                     else
@@ -3868,6 +3898,7 @@ namespace Mutagen.Bethesda.Starfield
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WorldModel");
                                 item.WorldModel = Mutagen.Bethesda.Plugins.Binary.Translations.GenderedItemBinaryTranslation.Parse<Model>(
                                     frame: frame,
                                     femaleRecordConverter: ArmorAddon_Registration.WorldModelFemaleConverter,
@@ -3875,8 +3906,10 @@ namespace Mutagen.Bethesda.Starfield
                                     transl: Model.TryCreateFromBinary,
                                     existing: item.WorldModel,
                                     fill: static (r, i, p) => i.CopyInFromBinary(r, p));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)ArmorAddon_FieldIndex.WorldModel, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FirstPersonModel");
                                 item.FirstPersonModel = Mutagen.Bethesda.Plugins.Binary.Translations.GenderedItemBinaryTranslation.Parse<Model>(
                                     frame: frame,
                                     femaleRecordConverter: ArmorAddon_Registration.FirstPersonModelFemaleConverter,
@@ -3884,8 +3917,10 @@ namespace Mutagen.Bethesda.Starfield
                                     transl: Model.TryCreateFromBinary,
                                     existing: item.FirstPersonModel,
                                     fill: static (r, i, p) => i.CopyInFromBinary(r, p));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)ArmorAddon_FieldIndex.FirstPersonModel, nextRecordType);
                             case 2:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "ExtraLightLayers");
                                 item.ExtraLightLayers.SetTo(
                                     Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Light.LightLayer>.Instance.Parse(
                                         reader: frame,
@@ -3896,6 +3931,7 @@ namespace Mutagen.Bethesda.Starfield
                                                 reader: r.SpawnWithLength(4),
                                                 item: out listSubItem);
                                         }));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)ArmorAddon_FieldIndex.ExtraLightLayers, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -3913,6 +3949,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MO4F:
                 case RecordTypeInts.MO5F:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FirstPersonModel");
                     item.FirstPersonModel = Mutagen.Bethesda.Plugins.Binary.Translations.GenderedItemBinaryTranslation.Parse<Model>(
                         frame: frame,
                         femaleRecordConverter: ArmorAddon_Registration.FirstPersonModelFemaleConverter,
@@ -3920,11 +3957,13 @@ namespace Mutagen.Bethesda.Starfield
                         transl: Model.TryCreateFromBinary,
                         existing: item.FirstPersonModel,
                         fill: static (r, i, p) => i.CopyInFromBinary(r, p));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.FirstPersonModel;
                 }
                 case RecordTypeInts.MOD6:
                 case RecordTypeInts.MOD7:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AltSkeleton");
                     item.AltSkeleton = Mutagen.Bethesda.Plugins.Binary.Translations.GenderedItemBinaryTranslation.Parse<String>(
                         frame: frame,
                         maleMarker: RecordTypes.MOD6,
@@ -3932,6 +3971,7 @@ namespace Mutagen.Bethesda.Starfield
                         transl: StringBinaryTranslation.Instance.Parse,
                         skipMarker: false,
                         existing: item.AltSkeleton);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.AltSkeleton;
                 }
                 case RecordTypeInts.NAM1:
@@ -3939,6 +3979,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.NAM3:
                 case RecordTypeInts.NAM2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SkinTexture");
                     item.SkinTexture = Mutagen.Bethesda.Plugins.Binary.Translations.GenderedItemBinaryTranslation.Parse<ArmorAddonSkinTexture>(
                         frame: frame,
                         femaleRecordConverter: ArmorAddon_Registration.SkinTextureFemaleConverter,
@@ -3946,6 +3987,7 @@ namespace Mutagen.Bethesda.Starfield
                         transl: ArmorAddonSkinTexture.TryCreateFromBinary,
                         existing: item.SkinTexture,
                         fill: static (r, i, p) => i.CopyInFromBinary(r, p));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.SkinTexture;
                 }
                 case RecordTypeInts.NAM6:
@@ -3953,6 +3995,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.NAM7:
                 case RecordTypeInts.NAM5:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Morphs");
                     item.Morphs = Mutagen.Bethesda.Plugins.Binary.Translations.GenderedItemBinaryTranslation.Parse<ArmorAddonMorph>(
                         frame: frame,
                         femaleRecordConverter: ArmorAddon_Registration.MorphsFemaleConverter,
@@ -3960,72 +4003,90 @@ namespace Mutagen.Bethesda.Starfield
                         transl: ArmorAddonMorph.TryCreateFromBinary,
                         existing: item.Morphs,
                         fill: static (r, i, p) => i.CopyInFromBinary(r, p));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.Morphs;
                 }
                 case RecordTypeInts.MODL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "AdditionalRaces");
                     item.AdditionalRaces.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IRaceGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.MODL),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.AdditionalRaces;
                 }
                 case RecordTypeInts.SNDD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FootstepSound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FootstepSound.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.FootstepSound;
                 }
                 case RecordTypeInts.ONAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ArtObject");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ArtObject.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.ArtObject;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BodyPartData");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BodyPartData.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.BodyPartData;
                 }
                 case RecordTypeInts.MNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ActorValueModulationGroupType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ActorValueModulationGroupType = EnumBinaryTranslation<ActorValueModulation.GroupType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.ActorValueModulationGroupType;
                 }
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ActorValueModulationEntryType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ActorValueModulationEntryType = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.ActorValueModulationEntryType;
                 }
                 case RecordTypeInts.SNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ActorValueModulationSubType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ActorValueModulationSubType = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.ActorValueModulationSubType;
                 }
                 case RecordTypeInts.VNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ActorValueModulationEntryValue");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ActorValueModulationEntryValue = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.ActorValueModulationEntryValue;
                 }
                 case RecordTypeInts.BSMP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BoneDataModifiers");
                     item.BoneDataModifiers = Mutagen.Bethesda.Plugins.Binary.Translations.GenderedItemBinaryTranslation.ParseRequired<ExtendedList<IFormLinkGetter<IBoneModifierGetter>>>(
                         frame: frame,
                         genderEnumRecord: RecordTypes.BSMP,
@@ -4041,6 +4102,7 @@ namespace Mutagen.Bethesda.Starfield
                             return true;
                         },
                         existing: item.BoneDataModifiers);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddon_FieldIndex.BoneDataModifiers;
                 }
                 case RecordTypeInts.XXXX:

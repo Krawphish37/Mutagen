@@ -740,9 +740,11 @@ namespace Mutagen.Bethesda.Fallout4
                 frame: frame,
                 translationParams: translationParams,
                 fillStructs: ConditionGlobalBinaryCreateTranslation.FillBinaryStructs);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "CustomBinaryEnd");
             ConditionGlobalBinaryCreateTranslation.CustomBinaryEndImportPublic(
                 frame: frame,
                 obj: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
         
         public override void CopyInFromBinary(
@@ -1187,10 +1189,14 @@ namespace Mutagen.Bethesda.Fallout4
             ConditionBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ComparisonValue");
             item.ComparisonValue.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Data");
             ConditionGlobalBinaryCreateTranslation.FillBinaryDataCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void FillBinaryDataCustom(

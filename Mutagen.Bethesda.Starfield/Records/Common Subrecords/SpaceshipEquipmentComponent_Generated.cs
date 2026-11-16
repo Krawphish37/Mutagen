@@ -1048,10 +1048,12 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.ESSF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Essential");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Essential = BooleanBinaryTranslation<MutagenFrame>.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         byteLength: 4);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SpaceshipEquipmentComponent_FieldIndex.Essential;
                 }
                 default:

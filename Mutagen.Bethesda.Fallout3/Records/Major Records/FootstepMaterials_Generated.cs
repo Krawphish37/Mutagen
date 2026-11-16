@@ -1491,16 +1491,36 @@ namespace Mutagen.Bethesda.Fallout3
             IFootstepMaterials item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ConcreteSolid");
             item.ConcreteSolid = StringBinaryTranslation.Instance.ParseNullPaddedFixedLength(frame, byteLength: 30);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ConcreteBroken");
             item.ConcreteBroken = StringBinaryTranslation.Instance.ParseNullPaddedFixedLength(frame, byteLength: 30);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MetalSolid");
             item.MetalSolid = StringBinaryTranslation.Instance.ParseNullPaddedFixedLength(frame, byteLength: 30);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MetalHollow");
             item.MetalHollow = StringBinaryTranslation.Instance.ParseNullPaddedFixedLength(frame, byteLength: 30);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MetalSheet");
             item.MetalSheet = StringBinaryTranslation.Instance.ParseNullPaddedFixedLength(frame, byteLength: 30);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Wood");
             item.Wood = StringBinaryTranslation.Instance.ParseNullPaddedFixedLength(frame, byteLength: 30);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Sand");
             item.Sand = StringBinaryTranslation.Instance.ParseNullPaddedFixedLength(frame, byteLength: 30);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Dirt");
             item.Dirt = StringBinaryTranslation.Instance.ParseNullPaddedFixedLength(frame, byteLength: 30);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Grass");
             item.Grass = StringBinaryTranslation.Instance.ParseNullPaddedFixedLength(frame, byteLength: 30);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Water");
             item.Water = StringBinaryTranslation.Instance.ParseNullPaddedFixedLength(frame, byteLength: 30);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

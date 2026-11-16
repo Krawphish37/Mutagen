@@ -1068,11 +1068,13 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.ICON:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LandIcon");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LandIcon = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionLand_FieldIndex.LandIcon;
                 }
                 default:

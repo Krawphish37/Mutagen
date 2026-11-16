@@ -1074,8 +1074,10 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.VTXT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AlphaLayerData");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AlphaLayerData = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AlphaLayer_FieldIndex.AlphaLayerData;
                 }
                 default:

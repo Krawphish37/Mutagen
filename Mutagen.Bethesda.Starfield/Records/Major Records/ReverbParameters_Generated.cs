@@ -1574,23 +1574,29 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Starfield.VirtualMachineAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ReverbParameters_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.RABG:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AudioBus");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AudioBus = GuidBinaryTranslation.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ReverbParameters_FieldIndex.AudioBus;
                 }
                 case RecordTypeInts.ANAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ReverbClass");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ReverbClass = EnumBinaryTranslation<ReverbParameters.Class, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ReverbParameters_FieldIndex.ReverbClass;
                 }
                 case RecordTypeInts.XXXX:

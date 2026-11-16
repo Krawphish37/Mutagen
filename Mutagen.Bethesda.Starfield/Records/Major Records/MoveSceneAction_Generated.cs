@@ -1495,50 +1495,66 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DisableCharacterController");
                     item.DisableCharacterController = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MoveSceneAction_FieldIndex.DisableCharacterController;
                 }
                 case RecordTypeInts.NVCI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OffNavmesh");
                     item.OffNavmesh = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MoveSceneAction_FieldIndex.OffNavmesh;
                 }
                 case RecordTypeInts.ALLA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TargetAlias");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TargetAlias = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MoveSceneAction_FieldIndex.TargetAlias;
                 }
                 case RecordTypeInts.REPL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TargetReference");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TargetReference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MoveSceneAction_FieldIndex.TargetReference;
                 }
                 case RecordTypeInts.HNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FrontBack");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FrontBack = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MoveSceneAction_FieldIndex.FrontBack;
                 }
                 case RecordTypeInts.VCLR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LeftRight");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LeftRight = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MoveSceneAction_FieldIndex.LeftRight;
                 }
                 case RecordTypeInts.VNML:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UpDown");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.UpDown = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MoveSceneAction_FieldIndex.UpDown;
                 }
                 case RecordTypeInts.FLMV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MoveFlags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MoveFlags = EnumBinaryTranslation<MoveSceneAction.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MoveSceneAction_FieldIndex.MoveFlags;
                 }
                 default:

@@ -1399,36 +1399,46 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.IDLF:
                 {
                     if (lastParsed.ShortCircuit((int)PackageIdles_FieldIndex.Flags, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<PackageIdles.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PackageIdles_FieldIndex.Flags;
                 }
                 case RecordTypeInts.IDLC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AnimationCount");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AnimationCount = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PackageIdles_FieldIndex.AnimationCount;
                 }
                 case RecordTypeInts.IDLT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TimerSetting");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TimerSetting = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PackageIdles_FieldIndex.TimerSetting;
                 }
                 case RecordTypeInts.IDLA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Animations");
                     PackageIdlesBinaryCreateTranslation.FillBinaryAnimationsCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PackageIdles_FieldIndex.Animations;
                 }
                 case RecordTypeInts.IDLB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unknown");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Unknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PackageIdles_FieldIndex.Unknown;
                 }
                 default:

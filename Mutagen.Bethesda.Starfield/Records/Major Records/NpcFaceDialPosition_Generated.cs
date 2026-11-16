@@ -1058,14 +1058,18 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FMSI:
                 {
                     if (lastParsed.ShortCircuit((int)NpcFaceDialPosition_FieldIndex.Index, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcFaceDialPosition_FieldIndex.Index;
                 }
                 case RecordTypeInts.FMRS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Position");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Position = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcFaceDialPosition_FieldIndex.Position;
                 }
                 default:

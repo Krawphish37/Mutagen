@@ -1162,7 +1162,10 @@ namespace Mutagen.Bethesda.Skyrim
             ILocationCoordinate item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Location");
             item.Location.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Coordinates");
             item.Coordinates.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<P2Int16>.Instance.Parse(
                     reader: frame,
@@ -1173,6 +1176,7 @@ namespace Mutagen.Bethesda.Skyrim
                             swapCoords: true);
                         return true;
                     }));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

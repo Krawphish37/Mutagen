@@ -1498,12 +1498,14 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Impacts");
                     item.Impacts.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ImpactData>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: ImpactData_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: ImpactData.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImpactDataSet_FieldIndex.Impacts;
                 }
                 default:

@@ -2720,6 +2720,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -2727,10 +2728,12 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ResearchProject_FieldIndex.Name;
                 }
                 case RecordTypeInts.DESC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Description");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Description = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -2738,82 +2741,103 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.DL,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ResearchProject_FieldIndex.Description;
                 }
                 case RecordTypeInts.BNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WorkbenchKeyword");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.WorkbenchKeyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ResearchProject_FieldIndex.WorkbenchKeyword;
                 }
                 case RecordTypeInts.CTDA:
                 case RecordTypeInts.CITC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Conditions");
                     ResearchProjectBinaryCreateTranslation.FillBinaryConditionsCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ResearchProject_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.FVPA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "RequiredItems");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RequiredItems = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ResearchProjectRequiredItem>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: ResearchProjectRequiredItem.TryCreateFromBinary)
                         .CastExtendedList<ResearchProjectRequiredItem>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ResearchProject_FieldIndex.RequiredItems;
                 }
                 case RecordTypeInts.RQPK:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "RequiredPerks");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RequiredPerks = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ResearchProjectRequiredPerk>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: ResearchProjectRequiredPerk.TryCreateFromBinary)
                         .CastExtendedList<ResearchProjectRequiredPerk>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ResearchProject_FieldIndex.RequiredPerks;
                 }
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CreatedItem");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CreatedItem.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ResearchProject_FieldIndex.CreatedItem;
                 }
                 case RecordTypeInts.NNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NumberCreated");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NumberCreated = frame.ReadUInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ResearchProject_FieldIndex.NumberCreated;
                 }
                 case RecordTypeInts.SNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SortingPriority");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SortingPriority = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ResearchProject_FieldIndex.SortingPriority;
                 }
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Tier");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Tier = EnumBinaryTranslation<ResearchProject.TierEnum, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ResearchProject_FieldIndex.Tier;
                 }
                 case RecordTypeInts.KNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CategoryKeyword");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CategoryKeyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ResearchProject_FieldIndex.CategoryKeyword;
                 }
                 case RecordTypeInts.RNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "RequiredProjects");
                     item.RequiredProjects.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IResearchProjectGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.RNAM),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ResearchProject_FieldIndex.RequiredProjects;
                 }
                 default:

@@ -1028,7 +1028,9 @@ namespace Mutagen.Bethesda.Fallout4
             IBookActorValue item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ActorValue");
             item.ActorValue.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

@@ -1186,19 +1186,23 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FMRI:
                 {
                     if (lastParsed.ShortCircuit((int)NpcFaceMorph_FieldIndex.Index, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcFaceMorph_FieldIndex.Index;
                 }
                 case RecordTypeInts.FMRG:
                 {
                     if (lastParsed.ShortCircuit((int)NpcFaceMorph_FieldIndex.MorphGroups, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MorphGroups");
                     item.MorphGroups.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NpcMorphGroup>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: NpcMorphGroup_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: NpcMorphGroup.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcFaceMorph_FieldIndex.MorphGroups;
                 }
                 default:

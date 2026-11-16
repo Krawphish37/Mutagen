@@ -16,10 +16,12 @@ public sealed class DictBinaryTranslation<TValue>
     {
         foreach (var e in EnumBinaryTranslation<TEnum, MutagenFrame, MutagenWriter>.Values)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, e.ToString());
             if (!transl(reader, out var parse))
             {
                 throw new ArgumentException();
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
             item[e] = parse;
         }
         return (IReadOnlyDictionary<TEnum, TValue>)item;

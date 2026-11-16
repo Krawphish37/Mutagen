@@ -1286,6 +1286,7 @@ namespace Mutagen.Bethesda.Starfield
             IPlanetModelComponentXMPM item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "UnknownStrings");
             item.UnknownStrings.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<String>.Instance.Parse(
                     amount: frame.ReadUInt16(),
@@ -1298,11 +1299,14 @@ namespace Mutagen.Bethesda.Starfield
                             parseWhole: false,
                             binaryType: StringBinaryType.PrependLengthUShort);
                     }));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "UnknownSubItems");
             item.UnknownSubItems.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<PlanetModelComponentXMPMSubItem>.Instance.Parse(
                     amount: frame.ReadUInt16(),
                     reader: frame,
                     transl: PlanetModelComponentXMPMSubItem.TryCreateFromBinary));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

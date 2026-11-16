@@ -1338,10 +1338,14 @@ namespace Mutagen.Bethesda.Skyrim
             IPackageScriptFragments item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ExtraBindDataVersion");
             item.ExtraBindDataVersion = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "FlagsParse");
             PackageScriptFragmentsBinaryCreateTranslation.FillBinaryFlagsParseCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void FillBinaryFlagsParseCustom(

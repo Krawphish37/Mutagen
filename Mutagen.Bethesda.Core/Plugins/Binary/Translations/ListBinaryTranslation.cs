@@ -27,6 +27,7 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
         { 
             if (!HeaderTranslation.TryGetRecordType(reader.Reader, triggeringRecord)) break; 
             var startingPos = reader.Position; 
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, ret.Count);
             MutagenFrame subFrame; 
             if (!IsLoqui) 
             { 
@@ -40,7 +41,9 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
             if (transl(subFrame, out var subItem)) 
             { 
                 ret.Add(subItem); 
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
             } 
+            else if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
  
             if (reader.Position == startingPos) 
             { 
@@ -63,6 +66,7 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
         { 
             if (!HeaderTranslation.TryGetRecordType(reader.Reader, triggeringRecord)) break; 
             var startingPos = reader.Position; 
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, ret.Count);
             MutagenFrame subFrame; 
             if (!IsLoqui) 
             { 
@@ -76,7 +80,9 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
             if (transl(subFrame, out var subItem)) 
             { 
                 ret.Add(subItem); 
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
             } 
+            else if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
  
             if (reader.Position == startingPos) 
             { 
@@ -170,10 +176,13 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
                 reader.Position += header.HeaderLength; 
             } 
             var startingPos = reader.Position; 
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, ret.Count);
             if (transl(skipHeader ? reader.SpawnWithLength(header.ContentLength) : reader, out var subItem, translationParams)) 
             { 
                 ret.Add(subItem); 
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
             } 
+            else if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
  
             if (reader.Position == startingPos) 
             { 
@@ -273,10 +282,13 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
                 reader.Position += reader.MetaData.Constants.SubConstants.HeaderLength; 
             } 
             var startingPos = reader.Position; 
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, ret.Count);
             if (transl(reader, out var subIitem)) 
             { 
                 ret.Add(subIitem); 
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
             } 
+            else if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
             if (reader.Position == startingPos) 
             { 
                 throw SubrecordException.Enrich( 
@@ -305,10 +317,13 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
                 reader.Position += reader.MetaData.Constants.SubConstants.HeaderLength; 
             } 
             var startingPos = reader.Position; 
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, ret.Count);
             if (transl(reader, out var subIitem, translationParams)) 
             { 
                 ret.Add(subIitem); 
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
             } 
+            else if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
             if (reader.Position == startingPos) 
             { 
                 throw SubrecordException.Enrich( 
@@ -335,10 +350,13 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
             if (nextRecord != itemStartMarker) break; 
             reader.Position += reader.MetaData.Constants.SubConstants.HeaderLength; 
             var startingPos = reader.Position; 
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, ret.Count);
             if (transl(reader, out var subIitem, translationParams)) 
             { 
                 ret.Add(subIitem); 
-            }
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
+            } 
+            else if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
 
             reader.TryReadSubrecord(itemEndMarker, out _);
             if (reader.Position == startingPos) 
@@ -371,12 +389,15 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
                     break;
                 }
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, ret.Count);
             if (transl(reader, out var subItem, translationParams)) 
             { 
                 ret.Add(subItem); 
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
             } 
             else 
             { 
+                if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
                 break; 
             } 
         } 
@@ -393,10 +414,13 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
         var ret = new ExtendedList<T>(); 
         for (int i = 0; i < amount; i++) 
         { 
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, ret.Count);
             if (transl(reader, out var subItem, translationParams)) 
             { 
                 ret.Add(subItem); 
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
             } 
+            else if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
         } 
         return ret; 
     } 
@@ -466,10 +490,13 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
         var startingPos = reader.Position; 
         for (int i = 0; i < amount; i++) 
         { 
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, ret.Count);
             if (transl(reader, out var subIitem, translationParams)) 
             { 
                 ret.Add(subIitem); 
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
             } 
+            else if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
         } 
         if (reader.Position == startingPos) 
         { 
@@ -501,7 +528,8 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
                 4 => checked((int)BinaryPrimitives.ReadUInt32LittleEndian(subHeader.Content)), 
                 _ => throw new NotImplementedException(), 
             }; 
-            reader.Position += subHeader.TotalLength; 
+            reader.Position += subHeader.TotalLength;
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Count(reader, reader.PositionWithOffset - subHeader.TotalLength);
             return Parse( 
                 reader, 
                 count, 
@@ -551,10 +579,13 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
             { 
                 break; 
             } 
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, ret.Count);
             if (transl(reader, out var subIitem)) 
             { 
                 ret.Add(subIitem); 
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
             } 
+            else if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
         } 
         if (ret.Count != 0 && reader.Position == startingPos)  
         { 
@@ -585,6 +616,7 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
                 _ => throw new NotImplementedException(), 
             }; 
             reader.Position += subHeader.TotalLength;
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Count(reader, reader.PositionWithOffset - subHeader.TotalLength);
             return Parse( 
                 reader, 
                 count, 
@@ -625,10 +657,13 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
             { 
                 reader.Position += reader.MetaData.Constants.SubConstants.HeaderLength; 
             } 
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, ret.Count);
             if (transl(reader, out var subIitem, translationParams)) 
             { 
                 ret.Add(subIitem); 
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
             } 
+            else if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
         } 
         if (reader.Position == startingPos) 
         { 
@@ -659,7 +694,8 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
                 4 => checked((int)BinaryPrimitives.ReadUInt32LittleEndian(subHeader.Content)), 
                 _ => throw new NotImplementedException(), 
             }; 
-            reader.Position += subHeader.TotalLength; 
+            reader.Position += subHeader.TotalLength;
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Count(reader, reader.PositionWithOffset - subHeader.TotalLength);
             return ParsePerItem( 
                 reader, 
                 count, 
@@ -698,17 +734,23 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
             if (!IsLoqui) 
             { 
                 reader.Position += reader.MetaData.Constants.SubConstants.HeaderLength;
+                if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, ret.Count);
                 if (transl(reader.SpawnWithLength(subHeader.ContentLength), out var subIitem)) 
                 { 
                     ret.Add(subIitem); 
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
                 } 
+                else if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
             }
             else
             {
+                if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, ret.Count);
                 if (transl(reader, out var subIitem)) 
                 { 
                     ret.Add(subIitem); 
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
                 } 
+                else if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
             }
         } 
         if (reader.Position == startingPos) 
@@ -738,7 +780,8 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
                 4 => checked((int)BinaryPrimitives.ReadUInt32LittleEndian(subHeader.Content)), 
                 _ => throw new NotImplementedException(), 
             }; 
-            reader.Position += subHeader.TotalLength; 
+            reader.Position += subHeader.TotalLength;
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Count(reader, reader.PositionWithOffset - subHeader.TotalLength);
             return ParsePerItem( 
                 reader, 
                 count, 
@@ -776,7 +819,8 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
                 4 => checked((int)BinaryPrimitives.ReadUInt32LittleEndian(subHeader.Content)), 
                 _ => throw new NotImplementedException(), 
             }; 
-            reader.Position += subHeader.TotalLength; 
+            reader.Position += subHeader.TotalLength;
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Count(reader, reader.PositionWithOffset - subHeader.TotalLength);
             return ParsePerItem( 
                 reader, 
                 count, 
@@ -837,10 +881,13 @@ internal sealed class ListBinaryTranslation<T> : ListBinaryTranslation<MutagenWr
             { 
                 reader.Position += reader.MetaData.Constants.SubConstants.HeaderLength; 
             } 
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, ret.Count);
             if (transl(reader, out var subIitem, translationParams)) 
             { 
                 ret.Add(subIitem); 
-            }
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
+            } 
+            else if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
             if (reader.Position == startingPos) 
             { 
                 throw SubrecordException.Enrich( 

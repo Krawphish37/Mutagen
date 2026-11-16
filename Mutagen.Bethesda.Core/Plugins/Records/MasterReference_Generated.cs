@@ -1063,14 +1063,18 @@ namespace Mutagen.Bethesda.Plugins.Records
                 case RecordTypeInts.MAST:
                 {
                     if (lastParsed.ShortCircuit((int)MasterReference_FieldIndex.Master, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Master");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Master = ModKeyBinaryTranslation.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MasterReference_FieldIndex.Master;
                 }
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FileSize");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FileSize = frame.ReadUInt64();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MasterReference_FieldIndex.FileSize;
                 }
                 default:

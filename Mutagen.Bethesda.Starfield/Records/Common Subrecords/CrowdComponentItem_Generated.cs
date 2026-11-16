@@ -1506,18 +1506,21 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.PRPS:
                 {
                     if (lastParsed.ShortCircuit((int)CrowdComponentItem_FieldIndex.Properties, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Properties");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Properties = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<CrowdComponentProperty>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: CrowdComponentProperty.TryCreateFromBinary)
                         .CastExtendedList<CrowdComponentProperty>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CrowdComponentItem_FieldIndex.Properties;
                 }
                 case RecordTypeInts.CTDA:
                 case RecordTypeInts.CITC:
                 {
                     if (lastParsed.ShortCircuit((int)CrowdComponentItem_FieldIndex.Conditions, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.ParsePerItem(
                             reader: frame,
@@ -1527,23 +1530,28 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary)
                         .CastExtendedList<Condition>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CrowdComponentItem_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.STRV:
                 {
                     if (lastParsed.ShortCircuit((int)CrowdComponentItem_FieldIndex.Name, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CrowdComponentItem_FieldIndex.Name;
                 }
                 case RecordTypeInts.FLTV:
                 {
                     if (lastParsed.ShortCircuit((int)CrowdComponentItem_FieldIndex.PopulationScale, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PopulationScale");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PopulationScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CrowdComponentItem_FieldIndex.PopulationScale;
                 }
                 default:

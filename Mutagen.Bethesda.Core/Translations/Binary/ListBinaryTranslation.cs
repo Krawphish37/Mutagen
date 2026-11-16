@@ -1,6 +1,7 @@
 using Noggog;
 using Loqui;
 using static Mutagen.Bethesda.Translations.Binary.UtilityTranslation;
+using Mutagen.Bethesda.Plugins.Binary.Translations;
 
 namespace Mutagen.Bethesda.Translations.Binary;
 
@@ -24,12 +25,15 @@ public class ListBinaryTranslation<TWriter, TReader, TItem>
         var ret = new ExtendedList<TItem>();
         while (!reader.Complete)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, ret.Count);
             if (transl(reader, out var subItem))
             {
                 ret.Add(subItem);
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
             }
             else
             {
+                if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
                 break;
             }
         }
@@ -43,12 +47,15 @@ public class ListBinaryTranslation<TWriter, TReader, TItem>
         var ret = new ExtendedList<TItem>();
         while (reader.Remaining > 1)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, ret.Count);
             if (transl(reader, out var subItem))
             {
                 ret.Add(subItem);
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
             }
             else
             {
+                if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
                 break;
             }
         }
@@ -62,12 +69,15 @@ public class ListBinaryTranslation<TWriter, TReader, TItem>
         var ret = new ExtendedList<TItem>();
         while (!reader.Complete)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, ret.Count);
             if (transl(reader, out var subItem))
             {
                 ret.Add(subItem);
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
             }
             else
             {
+                if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
                 break;
             }
         }
@@ -82,10 +92,13 @@ public class ListBinaryTranslation<TWriter, TReader, TItem>
         var ret = new ExtendedList<TItem>();
         for (int i = 0; i < amount; i++)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, ret.Count);
             if (transl(reader, out var subItem))
             {
                 ret.Add(subItem);
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
             }
+            else if (ValuePositionRecorder.On) ValuePositionRecorder.Drop();
         }
         return ret;
     }

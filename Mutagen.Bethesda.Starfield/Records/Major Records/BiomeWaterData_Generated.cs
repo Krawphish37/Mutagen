@@ -1143,25 +1143,31 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MNAM:
                 {
                     if (lastParsed.ShortCircuit((int)BiomeWaterData_FieldIndex.HasWater, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HasWater");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HasWater = frame.ReadBoolean();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BiomeWaterData_FieldIndex.HasWater;
                 }
                 case RecordTypeInts.INAM:
                 {
                     if (lastParsed.ShortCircuit((int)BiomeWaterData_FieldIndex.Water, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Water");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Water.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BiomeWaterData_FieldIndex.Water;
                 }
                 case RecordTypeInts.JNAM:
                 {
                     if (lastParsed.ShortCircuit((int)BiomeWaterData_FieldIndex.WaterMaterial, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WaterMaterial");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.WaterMaterial = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BiomeWaterData_FieldIndex.WaterMaterial;
                 }
                 default:

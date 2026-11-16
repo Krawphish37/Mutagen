@@ -1234,12 +1234,14 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.CNAM:
                 case RecordTypeInts.ALLA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "CameraShots");
                     item.CameraShots.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<CameraSceneShot>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: CameraSceneShot_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: CameraSceneShot.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CameraSceneAction_FieldIndex.CameraShots;
                 }
                 default:

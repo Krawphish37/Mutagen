@@ -1033,12 +1033,16 @@ namespace Mutagen.Bethesda.Starfield
             INpcRaceOverrideFlags item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RaceDataFlags");
             item.RaceDataFlags = EnumBinaryTranslation<Race.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 8);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OverrideActive");
             item.OverrideActive = EnumBinaryTranslation<Race.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 8);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

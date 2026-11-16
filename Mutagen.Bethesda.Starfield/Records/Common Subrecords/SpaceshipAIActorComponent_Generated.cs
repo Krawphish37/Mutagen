@@ -1061,8 +1061,10 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.SAIA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SpaceshipAIActor");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SpaceshipAIActor.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SpaceshipAIActorComponent_FieldIndex.SpaceshipAIActor;
                 }
                 default:

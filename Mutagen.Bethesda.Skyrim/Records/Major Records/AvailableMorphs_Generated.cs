@@ -1368,10 +1368,12 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.MPAI:
                 {
                     if (lastParsed.ShortCircuit((int)AvailableMorphs_FieldIndex.Nose, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Parse");
                     return AvailableMorphsBinaryCreateTranslation.FillBinaryParseCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 }
                 default:
                     return ParseResult.Stop;

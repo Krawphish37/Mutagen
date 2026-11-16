@@ -1658,27 +1658,32 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.PRKE:
                 {
                     if (lastParsed.ShortCircuit((int)PerkRank_FieldIndex.Effects, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Effects");
                     PerkRankBinaryCreateTranslation.FillBinaryEffectsCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PerkRank_FieldIndex.Effects;
                 }
                 case RecordTypeInts.CTDA:
                 {
                     if (lastParsed.ShortCircuit((int)PerkRank_FieldIndex.Conditions, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PerkRank_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.ATAN:
                 case RecordTypeInts.ATCP:
                 {
                     if (lastParsed.ShortCircuit((int)PerkRank_FieldIndex.Activities, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Activities");
                     item.Activities = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Activity>.Instance.ParsePerItem(
                             reader: frame,
@@ -1688,11 +1693,13 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams,
                             transl: Activity.TryCreateFromBinary)
                         .CastExtendedList<Activity>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PerkRank_FieldIndex.Activities;
                 }
                 case RecordTypeInts.DESC:
                 {
                     if (lastParsed.ShortCircuit((int)PerkRank_FieldIndex.Description, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Description");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Description = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1700,12 +1707,15 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.DL,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PerkRank_FieldIndex.Description;
                 }
                 case RecordTypeInts.PRUC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "QuantumEssenceUpgradeCost");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.QuantumEssenceUpgradeCost = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PerkRank_FieldIndex.QuantumEssenceUpgradeCost;
                 }
                 default:

@@ -1091,7 +1091,9 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.OPDS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectPaletteDefaults");
                     item.ObjectPaletteDefaults = Mutagen.Bethesda.Starfield.ObjectPaletteDefaults.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ObjectPaletteDefaultsComponent_FieldIndex.ObjectPaletteDefaults;
                 }
                 default:

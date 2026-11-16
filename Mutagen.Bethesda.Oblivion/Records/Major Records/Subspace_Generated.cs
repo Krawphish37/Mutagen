@@ -1354,8 +1354,10 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Point");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Point = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Subspace_FieldIndex.Point;
                 }
                 default:

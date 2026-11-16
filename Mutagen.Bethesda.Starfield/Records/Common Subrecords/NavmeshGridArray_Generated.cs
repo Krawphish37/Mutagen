@@ -1079,10 +1079,12 @@ namespace Mutagen.Bethesda.Starfield
             INavmeshGridArray item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "GridCell");
             item.GridCell.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Int16>.Instance.Parse(
                     reader: frame,
                     transl: Int16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

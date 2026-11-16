@@ -1654,14 +1654,17 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Starfield.VirtualMachineAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AnimationSoundTagSet_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.STAE:
                 case RecordTypeInts.STMS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Tags");
                     item.Tags = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AnimationSoundTag>.Instance.ParsePerItem(
                             reader: frame,
@@ -1671,6 +1674,7 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams,
                             transl: AnimationSoundTag.TryCreateFromBinary)
                         .CastExtendedList<AnimationSoundTag>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AnimationSoundTagSet_FieldIndex.Tags;
                 }
                 case RecordTypeInts.XXXX:

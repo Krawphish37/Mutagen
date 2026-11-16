@@ -1407,21 +1407,26 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ENAM:
                 {
                     if (lastParsed.ShortCircuit((int)SnapTemplateBehaviorItem_FieldIndex.Operation, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Operation");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Operation = EnumBinaryTranslation<SnapTemplateBehavior.OperationType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SnapTemplateBehaviorItem_FieldIndex.Operation;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BaseObject");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BaseObject.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SnapTemplateBehaviorItem_FieldIndex.BaseObject;
                 }
                 case RecordTypeInts.CTDA:
                 case RecordTypeInts.CITC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.ParsePerItem(
                             reader: frame,
@@ -1431,18 +1436,23 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary)
                         .CastExtendedList<Condition>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SnapTemplateBehaviorItem_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.UNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SnapTemplateNode");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SnapTemplateNode.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SnapTemplateBehaviorItem_FieldIndex.SnapTemplateNode;
                 }
                 case RecordTypeInts.VNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Keyword");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Keyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SnapTemplateBehaviorItem_FieldIndex.Keyword;
                 }
                 default:

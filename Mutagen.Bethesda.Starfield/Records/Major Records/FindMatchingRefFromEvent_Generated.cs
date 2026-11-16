@@ -1067,17 +1067,21 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ALFE:
                 {
                     if (lastParsed.ShortCircuit((int)FindMatchingRefFromEvent_FieldIndex.FromEvent, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FromEvent");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FromEvent = RecordTypeBinaryTranslation.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FindMatchingRefFromEvent_FieldIndex.FromEvent;
                 }
                 case RecordTypeInts.ALFD:
                 {
                     if (lastParsed.ShortCircuit((int)FindMatchingRefFromEvent_FieldIndex.EventData, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EventData");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EventData = EnumBinaryTranslation<GetEventDataConditionData.EventMember, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FindMatchingRefFromEvent_FieldIndex.EventData;
                 }
                 default:

@@ -1204,12 +1204,14 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 case RecordTypeInts.RDGS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Grasses");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Grasses = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IGrassGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IGrassGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionGrasses_FieldIndex.Grasses;
                 }
                 default:

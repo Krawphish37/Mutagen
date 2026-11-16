@@ -1308,35 +1308,43 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.INDX:
                 {
                     if (lastParsed.ShortCircuit((int)NavigationMeshObstacleManagerSubObject_FieldIndex.Index, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMeshObstacleManagerSubObject_FieldIndex.Index;
                 }
                 case RecordTypeInts.DATA:
                 {
                     if (lastParsed.ShortCircuit((int)NavigationMeshObstacleManagerSubObject_FieldIndex.DATAs, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "DATAs");
                     item.DATAs.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<MemorySlice<Byte>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.DATA),
                             transl: ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMeshObstacleManagerSubObject_FieldIndex.DATAs;
                 }
                 case RecordTypeInts.INTV:
                 {
                     if (lastParsed.ShortCircuit((int)NavigationMeshObstacleManagerSubObject_FieldIndex.INTV, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "INTV");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.INTV = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMeshObstacleManagerSubObject_FieldIndex.INTV;
                 }
                 case RecordTypeInts.NAM1:
                 {
                     if (lastParsed.ShortCircuit((int)NavigationMeshObstacleManagerSubObject_FieldIndex.Model, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Model = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMeshObstacleManagerSubObject_FieldIndex.Model;
                 }
                 default:

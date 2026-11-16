@@ -1514,12 +1514,14 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Objects");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Objects = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<DefaultObjectUse>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: DefaultObjectUse.TryCreateFromBinary)
                         .CastExtendedList<DefaultObjectUse>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DefaultObjectManager_FieldIndex.Objects;
                 }
                 default:

@@ -1116,24 +1116,30 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.ALID:
                 {
                     if (lastParsed.ShortCircuit((int)SceneActor_FieldIndex.ID, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ID");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ID = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneActor_FieldIndex.ID;
                 }
                 case RecordTypeInts.LNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<SceneActor.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneActor_FieldIndex.Flags;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BehaviorFlags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BehaviorFlags = EnumBinaryTranslation<SceneActor.BehaviorFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SceneActor_FieldIndex.BehaviorFlags;
                 }
                 default:

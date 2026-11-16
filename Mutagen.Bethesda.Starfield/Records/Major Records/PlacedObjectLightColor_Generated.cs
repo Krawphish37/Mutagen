@@ -1048,8 +1048,12 @@ namespace Mutagen.Bethesda.Starfield
             IPlacedObjectLightColor item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Color");
             item.Color = frame.ReadColor(ColorBinaryType.Alpha);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unknown");
             item.Unknown = frame.ReadInt64();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

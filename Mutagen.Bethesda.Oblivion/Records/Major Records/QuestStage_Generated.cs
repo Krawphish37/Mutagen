@@ -1197,8 +1197,10 @@ namespace Mutagen.Bethesda.Oblivion
                 case RecordTypeInts.INDX:
                 {
                     if (lastParsed.ShortCircuit((int)QuestStage_FieldIndex.Stage, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Stage");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Stage = frame.ReadUInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestStage_FieldIndex.Stage;
                 }
                 case RecordTypeInts.QSDT:
@@ -1208,12 +1210,14 @@ namespace Mutagen.Bethesda.Oblivion
                 case RecordTypeInts.SCHD:
                 case RecordTypeInts.SCHR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "LogEntries");
                     item.LogEntries.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LogEntry>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: LogEntry_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: LogEntry.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestStage_FieldIndex.LogEntries;
                 }
                 default:

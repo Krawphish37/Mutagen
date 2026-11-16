@@ -1317,36 +1317,46 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.SCHR:
                 {
                     if (lastParsed.ShortCircuit((int)ScenePhaseUnusedData_FieldIndex.SCHR, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SCHR");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SCHR = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScenePhaseUnusedData_FieldIndex.SCHR;
                 }
                 case RecordTypeInts.SCDA:
                 {
                     if (lastParsed.ShortCircuit((int)ScenePhaseUnusedData_FieldIndex.SCDA, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SCDA");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SCDA = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScenePhaseUnusedData_FieldIndex.SCDA;
                 }
                 case RecordTypeInts.SCTX:
                 {
                     if (lastParsed.ShortCircuit((int)ScenePhaseUnusedData_FieldIndex.SCTX, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SCTX");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SCTX = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScenePhaseUnusedData_FieldIndex.SCTX;
                 }
                 case RecordTypeInts.QNAM:
                 {
                     if (lastParsed.ShortCircuit((int)ScenePhaseUnusedData_FieldIndex.QNAM, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "QNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.QNAM = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScenePhaseUnusedData_FieldIndex.QNAM;
                 }
                 case RecordTypeInts.SCRO:
                 {
                     if (lastParsed.ShortCircuit((int)ScenePhaseUnusedData_FieldIndex.SCRO, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SCRO");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SCRO = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScenePhaseUnusedData_FieldIndex.SCRO;
                 }
                 default:

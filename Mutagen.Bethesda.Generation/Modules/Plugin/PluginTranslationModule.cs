@@ -1400,6 +1400,46 @@ public class PluginTranslationModule : BinaryTranslationModule
 
     protected override async Task GenerateFillSnippet(ObjectGeneration obj, StructuredStringBuilder sb, TypeGeneration field, BinaryTranslationGeneration generator, string frameAccessor)
     {
+        // C60: the reader notes where it reads each field, when value positions are being recorded (ValuePositionMixIn)
+        var note = ValuePositionNote(obj, field);
+        if (note != null)
+        {
+            sb.AppendLine($"if ({nameof(ValuePositionRecorder)}.{nameof(ValuePositionRecorder.On)}) {nameof(ValuePositionRecorder)}.{note}({frameAccessor}, \"{field.Name}\");");
+        }
+        await GenerateFillSnippetRead(obj, sb, field, generator, frameAccessor);
+        if (note != null)
+        {
+            sb.AppendLine($"if ({nameof(ValuePositionRecorder)}.{nameof(ValuePositionRecorder.On)}) {nameof(ValuePositionRecorder)}.{nameof(ValuePositionRecorder.End)}({frameAccessor});");
+        }
+    }
+
+    /// <summary>
+    /// Which value-position note a field's read gets (C60): a hand-written reader's step, a list, or a field. None for
+    /// what isn't a property (a data subrecord's set, whose members get their own, a marker, a break, padding), for what
+    /// isn't read, and outside records (a plugin's or group's reader).
+    /// </summary>
+    internal static string? ValuePositionNote(ObjectGeneration obj, TypeGeneration field)
+    {
+        var objType = obj.GetObjectType();
+        if (objType is ObjectType.Mod or ObjectType.Group) return null;
+        if (field is DataType or MarkerType or BreakType or ZeroType) return null;
+        if (field is CustomLogic) return nameof(ValuePositionRecorder.HandRead);
+        var data = field.GetFieldData();
+        switch (data.Binary)
+        {
+            case BinaryGenerationType.Custom:
+                return nameof(ValuePositionRecorder.HandRead);
+            case BinaryGenerationType.Normal:
+                break;
+            default:
+                return null;
+        }
+        if (field is ContainerType or Loqui.Generation.DictType or Array2dType) return nameof(ValuePositionRecorder.List);
+        return nameof(ValuePositionRecorder.Field);
+    }
+
+    private async Task GenerateFillSnippetRead(ObjectGeneration obj, StructuredStringBuilder sb, TypeGeneration field, BinaryTranslationGeneration generator, string frameAccessor)
+    {
         var fieldData = field.GetFieldData();
         if (field is DataType set)
         {
@@ -2130,6 +2170,16 @@ public class PluginTranslationModule : BinaryTranslationModule
         return false;
     }
 
+    /// <summary>The value-position note around an object's customBinaryEnd read (C60); not for a plugin or group</summary>
+    private void GenerateCustomBinaryEndNote(ObjectGeneration obj, StructuredStringBuilder sb, bool start)
+    {
+        if (obj.GetObjectType() is ObjectType.Mod or ObjectType.Group) return;
+        if (obj.GetObjectData().CustomBinaryEnd != CustomEnd.Normal) return;
+        sb.AppendLine(start
+            ? $"if ({nameof(ValuePositionRecorder)}.{nameof(ValuePositionRecorder.On)}) {nameof(ValuePositionRecorder)}.{nameof(ValuePositionRecorder.HandRead)}({ReaderMemberName}, \"CustomBinaryEnd\");"
+            : $"if ({nameof(ValuePositionRecorder)}.{nameof(ValuePositionRecorder.On)}) {nameof(ValuePositionRecorder)}.{nameof(ValuePositionRecorder.End)}({ReaderMemberName});");
+    }
+
     protected override async Task GenerateCopyInSnippet(ObjectGeneration obj, StructuredStringBuilder sb, Accessor accessor)
     {
         var data = obj.GetObjectData();
@@ -2164,12 +2214,14 @@ public class PluginTranslationModule : BinaryTranslationModule
             }
             if (data.CustomBinaryEnd != CustomEnd.Off)
             {
+                GenerateCustomBinaryEndNote(obj, sb, start: true);
                 using (var args = sb.Call(
                            $"{Utility.Await(data.CustomBinaryEnd == CustomEnd.Async)}{TranslationCreateClass(obj)}.CustomBinaryEndImport{(await AsyncImport(obj) ? null : "Public")}"))
                 {
                     args.AddPassArg(ReaderMemberName);
                     args.Add($"obj: {accessor}");
                 }
+                GenerateCustomBinaryEndNote(obj, sb, start: false);
             }
         }
         else
@@ -2321,12 +2373,14 @@ public class PluginTranslationModule : BinaryTranslationModule
             GenerateStructStateSubscriptions(obj, sb);
             if (data.CustomBinaryEnd != CustomEnd.Off)
             {
+                GenerateCustomBinaryEndNote(obj, sb, start: true);
                 using (var args = sb.Call(
                            $"{Utility.Await(data.CustomBinaryEnd == CustomEnd.Async)}{TranslationCreateClass(obj)}.CustomBinaryEndImportPublic"))
                 {
                     args.AddPassArg(ReaderMemberName);
                     args.Add($"obj: {accessor}");
                 }
+                GenerateCustomBinaryEndNote(obj, sb, start: false);
             }
         }
 

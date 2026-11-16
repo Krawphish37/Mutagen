@@ -1840,16 +1840,36 @@ namespace Mutagen.Bethesda.Starfield
             IVehicleWWiseData item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MotorSound");
             item.MotorSound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TireSoundFrontLeft");
             item.TireSoundFrontLeft = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TireSoundFrontRight");
             item.TireSoundFrontRight = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TireSoundRearLeft");
             item.TireSoundRearLeft = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TireSoundRearRight");
             item.TireSoundRearRight = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HeadlightOn");
             item.HeadlightOn = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HeadlightOff");
             item.HeadlightOff = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LandingSoundGround");
             item.LandingSoundGround = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LandingSoundWater");
             item.LandingSoundWater = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HornSound");
             item.HornSound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

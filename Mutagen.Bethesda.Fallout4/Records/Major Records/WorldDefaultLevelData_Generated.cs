@@ -1139,15 +1139,21 @@ namespace Mutagen.Bethesda.Fallout4
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         var dataFrame = frame.SpawnWithLength(contentLength);
                         if (dataFrame.Remaining < 2) return null;
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "NorthwestCellCoords");
                         item.NorthwestCellCoords = P2UInt8BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                         if (dataFrame.Remaining < 2) return null;
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "NorthwestCellSize");
                         item.NorthwestCellSize = P2UInt8BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                         return new ParseResult((int)WorldDefaultLevelData_FieldIndex.NorthwestCellSize, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)WorldDefaultLevelData_FieldIndex.NorthwestCellSize)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.Data = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)WorldDefaultLevelData_FieldIndex.Data, nextRecordType);
                     }
                     else
@@ -1159,13 +1165,19 @@ namespace Mutagen.Bethesda.Fallout4
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 var dataFrame = frame.SpawnWithLength(contentLength);
                                 if (dataFrame.Remaining < 2) return null;
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "NorthwestCellCoords");
                                 item.NorthwestCellCoords = P2UInt8BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                                 if (dataFrame.Remaining < 2) return null;
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "NorthwestCellSize");
                                 item.NorthwestCellSize = P2UInt8BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                                 return new ParseResult((int)WorldDefaultLevelData_FieldIndex.NorthwestCellSize, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.Data = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)WorldDefaultLevelData_FieldIndex.Data, nextRecordType);
                             default:
                                 throw new NotImplementedException();

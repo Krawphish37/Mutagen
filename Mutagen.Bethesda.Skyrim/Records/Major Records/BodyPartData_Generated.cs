@@ -1688,19 +1688,23 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.MODL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Skyrim.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BodyPartData_FieldIndex.Model;
                 }
                 case RecordTypeInts.BPTN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Parts");
                     item.Parts.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<BodyPart>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: BodyPart_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: BodyPart.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BodyPartData_FieldIndex.Parts;
                 }
                 default:

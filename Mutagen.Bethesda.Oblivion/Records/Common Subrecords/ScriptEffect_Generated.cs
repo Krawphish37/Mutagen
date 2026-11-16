@@ -1154,17 +1154,21 @@ namespace Mutagen.Bethesda.Oblivion
                 case RecordTypeInts.SCIT:
                 {
                     if (lastParsed.ShortCircuit((int)ScriptEffect_FieldIndex.Data, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Oblivion.ScriptEffectData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScriptEffect_FieldIndex.Data;
                 }
                 case RecordTypeInts.FULL:
                 {
                     if (lastParsed.ShortCircuit((int)ScriptEffect_FieldIndex.Name, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScriptEffect_FieldIndex.Name;
                 }
                 default:

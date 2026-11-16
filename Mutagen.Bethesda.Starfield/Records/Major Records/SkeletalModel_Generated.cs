@@ -1348,33 +1348,41 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MODF:
                 {
                     if (lastParsed.ShortCircuit((int)SkeletalModel_FieldIndex.Model, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Starfield.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(SkeletalModel_Registration.ModelConverter).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SkeletalModel_FieldIndex.Model;
                 }
                 case RecordTypeInts.NAM5:
                 {
                     if (lastParsed.ShortCircuit((int)SkeletalModel_FieldIndex.Rig, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Rig");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Rig = AssetLinkBinaryTranslation.Instance.Parse<StarfieldRigAssetType>(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SkeletalModel_FieldIndex.Rig;
                 }
                 case RecordTypeInts.NAM6:
                 {
                     if (lastParsed.ShortCircuit((int)SkeletalModel_FieldIndex.AnimationRoot, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AnimationRoot");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AnimationRoot = AssetLinkBinaryTranslation.Instance.Parse<StarfieldAnimationTextAssetType>(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SkeletalModel_FieldIndex.AnimationRoot;
                 }
                 case RecordTypeInts.DNAM:
                 {
                     if (lastParsed.ShortCircuit((int)SkeletalModel_FieldIndex.Animations, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Animations");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Animations = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SkeletalModel_FieldIndex.Animations;
                 }
                 default:

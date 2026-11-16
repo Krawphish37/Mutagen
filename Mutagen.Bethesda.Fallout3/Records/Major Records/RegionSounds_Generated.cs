@@ -1586,42 +1586,52 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.RDMD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MusicType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MusicType = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionSounds_FieldIndex.MusicType;
                 }
                 case RecordTypeInts.RDMO:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Music");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Music.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionSounds_FieldIndex.Music;
                 }
                 case RecordTypeInts.RDSI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IncidentalMediaSet");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.IncidentalMediaSet.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionSounds_FieldIndex.IncidentalMediaSet;
                 }
                 case RecordTypeInts.RDSB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "BattleMediaSets");
                     item.BattleMediaSets.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IMediaSetGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.RDSB),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionSounds_FieldIndex.BattleMediaSets;
                 }
                 case RecordTypeInts.RDSD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Sounds");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Sounds = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<RegionSound>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: RegionSound.TryCreateFromBinary)
                         .CastExtendedList<RegionSound>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionSounds_FieldIndex.Sounds;
                 }
                 default:

@@ -1789,25 +1789,30 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.WMTI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MappingTemplate");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MappingTemplate = EnumBinaryTranslation<WWiseKeywordMapping.MappingTemplateType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)WWiseKeywordMapping_FieldIndex.MappingTemplate;
                 }
                 case RecordTypeInts.WMKA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Keywords");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Keywords = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)WWiseKeywordMapping_FieldIndex.Keywords;
                 }
                 case RecordTypeInts.WMSI:
                 case RecordTypeInts.WMSS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Items");
                     item.Items = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<WWiseKeywordMappingItem>.Instance.ParsePerItem(
                             reader: frame,
@@ -1817,6 +1822,7 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams,
                             transl: WWiseKeywordMappingItem.TryCreateFromBinary)
                         .CastExtendedList<WWiseKeywordMappingItem>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)WWiseKeywordMapping_FieldIndex.Items;
                 }
                 default:

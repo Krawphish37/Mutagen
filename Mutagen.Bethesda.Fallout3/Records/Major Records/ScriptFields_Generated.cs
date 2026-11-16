@@ -1525,40 +1525,49 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.SCHR:
                 {
                     if (lastParsed.ShortCircuit((int)ScriptFields_FieldIndex.MetadataSummary, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MetadataSummary");
                     item.MetadataSummary.CopyInFromBinary(
                         frame: frame,
                         translationParams: null);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScriptFields_FieldIndex.MetadataSummary;
                 }
                 case RecordTypeInts.SCDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CompiledScript");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CompiledScript = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScriptFields_FieldIndex.CompiledScript;
                 }
                 case RecordTypeInts.SCTX:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SourceCode");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SourceCode = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.Plain,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScriptFields_FieldIndex.SourceCode;
                 }
                 case RecordTypeInts.SLSD:
                 case RecordTypeInts.SCVR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "LocalVariables");
                     item.LocalVariables.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LocalVariable>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: LocalVariable_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: LocalVariable.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScriptFields_FieldIndex.LocalVariables;
                 }
                 case RecordTypeInts.SCRV:
                 case RecordTypeInts.SCRO:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "References");
                     item.References.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AScriptReference>.Instance.Parse(
                             reader: frame,
@@ -1584,6 +1593,7 @@ namespace Mutagen.Bethesda.Fallout3
                                         throw new NotImplementedException();
                                 }
                             }));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScriptFields_FieldIndex.References;
                 }
                 default:

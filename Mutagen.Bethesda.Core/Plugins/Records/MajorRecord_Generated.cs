@@ -1813,11 +1813,17 @@ namespace Mutagen.Bethesda.Plugins.Records
             IMajorRecordInternal item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MajorRecordFlagsRaw");
             item.MajorRecordFlagsRaw = frame.ReadInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FormKey");
             item.FormKey = FormKeyBinaryTranslation.Instance.Parse(
                 reader: frame,
                 reference: false);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VersionControl");
             item.VersionControl = frame.ReadUInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static ParseResult FillBinaryRecordTypes(
@@ -1834,11 +1840,13 @@ namespace Mutagen.Bethesda.Plugins.Records
             {
                 case RecordTypeInts.EDID:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EditorID");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EditorID = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MajorRecord_FieldIndex.EditorID;
                 }
                 default:

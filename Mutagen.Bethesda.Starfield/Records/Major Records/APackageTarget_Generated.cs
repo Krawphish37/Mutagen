@@ -976,10 +976,14 @@ namespace Mutagen.Bethesda.Starfield
             IAPackageTarget item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "DataParse");
             APackageTargetBinaryCreateTranslation.FillBinaryDataParseCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CountOrDistance");
             item.CountOrDistance = frame.ReadInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void FillBinaryDataParseCustom(

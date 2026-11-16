@@ -1193,18 +1193,22 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.PRKC:
                 {
                     if (lastParsed.ShortCircuit((int)PerkCondition_FieldIndex.RunOnTabIndex, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RunOnTabIndex");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RunOnTabIndex = frame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PerkCondition_FieldIndex.RunOnTabIndex;
                 }
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PerkCondition_FieldIndex.Conditions;
                 }
                 default:

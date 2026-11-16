@@ -1209,12 +1209,14 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.RDGS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Grasses");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Grasses = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<RegionGrass>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: RegionGrass.TryCreateFromBinary)
                         .CastExtendedList<RegionGrass>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionGrasses_FieldIndex.Grasses;
                 }
                 default:

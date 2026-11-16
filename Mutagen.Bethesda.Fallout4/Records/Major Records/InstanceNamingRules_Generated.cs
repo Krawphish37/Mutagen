@@ -1566,20 +1566,24 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.UNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Target");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Target = EnumBinaryTranslation<InstanceNamingRules.RuleTarget, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)InstanceNamingRules_FieldIndex.Target;
                 }
                 case RecordTypeInts.VNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "RuleSets");
                     item.RuleSets.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<InstanceNamingRuleSet>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: InstanceNamingRuleSet_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: InstanceNamingRuleSet.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)InstanceNamingRules_FieldIndex.RuleSets;
                 }
                 default:

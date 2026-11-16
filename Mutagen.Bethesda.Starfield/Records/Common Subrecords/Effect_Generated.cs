@@ -1711,69 +1711,87 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.EFID:
                 {
                     if (lastParsed.ShortCircuit((int)Effect_FieldIndex.BaseEffect, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BaseEffect");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BaseEffect.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Effect_FieldIndex.BaseEffect;
                 }
                 case RecordTypeInts.EFIT:
                 {
                     if (lastParsed.ShortCircuit((int)Effect_FieldIndex.Data, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Starfield.EffectData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Effect_FieldIndex.Data;
                 }
                 case RecordTypeInts.CTDA:
                 {
                     if (lastParsed.ShortCircuit((int)Effect_FieldIndex.Conditions, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Effect_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.MNAM:
                 {
                     if (lastParsed.ShortCircuit((int)Effect_FieldIndex.Magnitude, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Magnitude");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Magnitude.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Effect_FieldIndex.Magnitude;
                 }
                 case RecordTypeInts.ANAM:
                 {
                     if (lastParsed.ShortCircuit((int)Effect_FieldIndex.Area, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Area");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Area.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Effect_FieldIndex.Area;
                 }
                 case RecordTypeInts.ZNAM:
                 {
                     if (lastParsed.ShortCircuit((int)Effect_FieldIndex.Duration, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Duration");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Duration.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Effect_FieldIndex.Duration;
                 }
                 case RecordTypeInts.MAGF:
                 {
                     if (lastParsed.ShortCircuit((int)Effect_FieldIndex.MAGF, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MAGF");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MAGF = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Effect_FieldIndex.MAGF;
                 }
                 case RecordTypeInts.EFIF:
                 {
                     if (lastParsed.ShortCircuit((int)Effect_FieldIndex.Flags, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<Effect.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Effect_FieldIndex.Flags;
                 }
                 case RecordTypeInts.MUID:
                 {
                     if (lastParsed.ShortCircuit((int)Effect_FieldIndex.IndexUid, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IndexUid");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.IndexUid = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Effect_FieldIndex.IndexUid;
                 }
                 default:

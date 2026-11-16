@@ -2056,56 +2056,74 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Fallout3.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.TX00:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BaseImage");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BaseImage = AssetLinkBinaryTranslation.Instance.Parse<Fallout3TextureAssetType>(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.BaseImage;
                 }
                 case RecordTypeInts.TX01:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NormalMap");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NormalMap = AssetLinkBinaryTranslation.Instance.Parse<Fallout3TextureAssetType>(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.NormalMap;
                 }
                 case RecordTypeInts.TX02:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EnvironmentMapMask");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EnvironmentMapMask = AssetLinkBinaryTranslation.Instance.Parse<Fallout3TextureAssetType>(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.EnvironmentMapMask;
                 }
                 case RecordTypeInts.TX03:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GlowMap");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.GlowMap = AssetLinkBinaryTranslation.Instance.Parse<Fallout3TextureAssetType>(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.GlowMap;
                 }
                 case RecordTypeInts.TX04:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ParallaxMap");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ParallaxMap = AssetLinkBinaryTranslation.Instance.Parse<Fallout3TextureAssetType>(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.ParallaxMap;
                 }
                 case RecordTypeInts.TX05:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EnvironmentMap");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EnvironmentMap = AssetLinkBinaryTranslation.Instance.Parse<Fallout3TextureAssetType>(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.EnvironmentMap;
                 }
                 case RecordTypeInts.DODT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Decal");
                     item.Decal = Mutagen.Bethesda.Fallout3.Decal.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.Decal;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<TextureSet.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TextureSet_FieldIndex.Flags;
                 }
                 default:

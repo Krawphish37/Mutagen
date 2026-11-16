@@ -1116,9 +1116,11 @@ namespace Mutagen.Bethesda.Skyrim
             ConditionDataBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "ValueFunctionParse");
             AGetVATSValueConditionDataBinaryCreateTranslation.FillBinaryValueFunctionParseCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void FillBinaryValueFunctionParseCustom(

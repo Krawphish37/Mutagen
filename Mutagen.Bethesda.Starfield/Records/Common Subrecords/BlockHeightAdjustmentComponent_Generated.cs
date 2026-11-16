@@ -1247,18 +1247,22 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.DAT2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "SurfaceBlocks");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SurfaceBlocks.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.Array2dBinaryTranslation<BlockHeightAdjustmentComponentItem>.Instance.Parse(
                             reader: frame,
                             size: BlockHeightAdjustmentComponent.SurfaceBlocksFixedSize,
                             transl: BlockHeightAdjustmentComponentItem.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BlockHeightAdjustmentComponent_FieldIndex.SurfaceBlocks;
                 }
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DATA");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DATA = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BlockHeightAdjustmentComponent_FieldIndex.DATA;
                 }
                 default:

@@ -1174,12 +1174,14 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.ICON:
                 {
                     if (lastParsed.ShortCircuit((int)HeadData_FieldIndex.HeadParts, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HeadParts");
                     item.HeadParts.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<HeadPartItem>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: HeadPartItem_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: HeadPartItem.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadData_FieldIndex.HeadParts;
                 }
                 default:

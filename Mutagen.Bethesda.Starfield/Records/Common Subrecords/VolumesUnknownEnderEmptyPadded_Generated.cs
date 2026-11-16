@@ -1004,7 +1004,9 @@ namespace Mutagen.Bethesda.Starfield
             IVolumesUnknownEnderEmptyPadded item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unknown1");
             item.Unknown1 = frame.ReadUInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

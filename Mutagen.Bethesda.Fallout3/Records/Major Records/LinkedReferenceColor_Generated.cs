@@ -1050,8 +1050,12 @@ namespace Mutagen.Bethesda.Fallout3
             ILinkedReferenceColor item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LinkStartColor");
             item.LinkStartColor = frame.ReadColor(ColorBinaryType.Alpha);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LinkEndColor");
             item.LinkEndColor = frame.ReadColor(ColorBinaryType.Alpha);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

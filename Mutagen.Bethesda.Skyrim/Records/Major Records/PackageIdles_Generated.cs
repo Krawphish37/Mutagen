@@ -1262,27 +1262,33 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.IDLF:
                 {
                     if (lastParsed.ShortCircuit((int)PackageIdles_FieldIndex.Type, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Type");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Type = EnumBinaryTranslation<PackageIdles.Types, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PackageIdles_FieldIndex.Type;
                 }
                 case RecordTypeInts.IDLT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "TimerSetting");
                     PackageIdlesBinaryCreateTranslation.FillBinaryTimerSettingCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PackageIdles_FieldIndex.TimerSetting;
                 }
                 case RecordTypeInts.IDLC:
                 case RecordTypeInts.IDLA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Animations");
                     PackageIdlesBinaryCreateTranslation.FillBinaryAnimationsCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PackageIdles_FieldIndex.Animations;
                 }
                 default:

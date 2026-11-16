@@ -1777,36 +1777,44 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Starfield.VirtualMachineAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)EquipType_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "SlotParents");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SlotParents = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IEquipTypeGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IEquipTypeGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)EquipType_FieldIndex.SlotParents;
                 }
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flag");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flag = EnumBinaryTranslation<EquipType.Flags, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)EquipType_FieldIndex.Flag;
                 }
                 case RecordTypeInts.ANAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ConditionActorValue");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ConditionActorValue.SetTo(
                         FormLinkBinaryTranslation.Instance.Parse(
                             reader: frame,
                             maxIsNone: true));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)EquipType_FieldIndex.ConditionActorValue;
                 }
                 case RecordTypeInts.XXXX:

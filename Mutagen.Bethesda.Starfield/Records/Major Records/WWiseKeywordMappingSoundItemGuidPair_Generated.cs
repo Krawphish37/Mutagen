@@ -1031,8 +1031,12 @@ namespace Mutagen.Bethesda.Starfield
             IWWiseKeywordMappingSoundItemGuidPair item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SwitchGroup");
             item.SwitchGroup = GuidBinaryTranslation.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SwitchState");
             item.SwitchState = GuidBinaryTranslation.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

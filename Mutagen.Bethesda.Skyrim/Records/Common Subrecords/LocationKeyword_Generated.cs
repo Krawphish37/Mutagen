@@ -1028,7 +1028,9 @@ namespace Mutagen.Bethesda.Skyrim
             ILocationKeyword item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Link");
             item.Link.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

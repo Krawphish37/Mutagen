@@ -2068,9 +2068,11 @@ namespace Mutagen.Bethesda.Fallout3
                 translationParams: translationParams,
                 fillStructs: DialogTopicBinaryCreateTranslation.FillBinaryStructs,
                 fillTyped: DialogTopicBinaryCreateTranslation.FillBinaryRecordTypes);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "CustomBinaryEnd");
             DialogTopicBinaryCreateTranslation.CustomBinaryEndImportPublic(
                 frame: frame,
                 obj: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
         
         public override void CopyInFromBinary(
@@ -3390,40 +3392,49 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.QSTI:
                 case RecordTypeInts.INFC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "AssociatedQuests");
                     item.AssociatedQuests.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<DialogTopicAssociatedQuest>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: DialogTopicAssociatedQuest_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: DialogTopicAssociatedQuest.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogTopic_FieldIndex.AssociatedQuests;
                 }
                 case RecordTypeInts.QSTR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "RemovedQuests");
                     item.RemovedQuests.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IQuestGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.QSTR),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogTopic_FieldIndex.RemovedQuests;
                 }
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogTopic_FieldIndex.Name;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Priority");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Priority = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogTopic_FieldIndex.Priority;
                 }
                 case RecordTypeInts.TDUM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DumbResponse");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
@@ -3432,6 +3443,7 @@ namespace Mutagen.Bethesda.Fallout3
                             stringBinaryType: StringBinaryType.NullTerminate,
                             parseWhole: true);
                     }
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogTopic_FieldIndex.DumbResponse;
                 }
                 case RecordTypeInts.DATA:
@@ -3439,38 +3451,46 @@ namespace Mutagen.Bethesda.Fallout3
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Type");
                     item.Type = EnumBinaryTranslation<DialogTopic.TopicType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 1);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Complete)
                     {
                         item.DATADataTypeState |= DialogTopic.DATADataType.Break0;
                         return (int)DialogTopic_FieldIndex.Type;
                     }
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Flags");
                     item.Flags = EnumBinaryTranslation<DialogTopic.TopicFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 1);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)DialogTopic_FieldIndex.Flags;
                 }
                 case RecordTypeInts.INOM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "InfoOrderMastersOnly");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.InfoOrderMastersOnly = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IDialogResponsesGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IDialogResponsesGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogTopic_FieldIndex.InfoOrderMastersOnly;
                 }
                 case RecordTypeInts.INOA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "InfoOrderAllPreviousModules");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.InfoOrderAllPreviousModules = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IDialogResponsesGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IDialogResponsesGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogTopic_FieldIndex.InfoOrderAllPreviousModules;
                 }
                 default:

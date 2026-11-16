@@ -1128,17 +1128,21 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.ATKD:
                 {
                     if (lastParsed.ShortCircuit((int)Attack_FieldIndex.AttackData, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AttackData");
                     item.AttackData = Mutagen.Bethesda.Skyrim.AttackData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Attack_FieldIndex.AttackData;
                 }
                 case RecordTypeInts.ATKE:
                 {
                     if (lastParsed.ShortCircuit((int)Attack_FieldIndex.AttackEvent, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AttackEvent");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AttackEvent = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Attack_FieldIndex.AttackEvent;
                 }
                 default:

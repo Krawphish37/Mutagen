@@ -1051,8 +1051,12 @@ namespace Mutagen.Bethesda.Skyrim
             IImageSpaceTint item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Amount");
             item.Amount = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Color");
             item.Color = frame.ReadColor(ColorBinaryType.NoAlphaFloat);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

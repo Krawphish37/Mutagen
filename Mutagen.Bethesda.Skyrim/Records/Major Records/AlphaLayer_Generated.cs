@@ -1187,12 +1187,14 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.VTXT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "AlphaLayerData");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AlphaLayerData = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AlphaLayerData>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: AlphaLayerData.TryCreateFromBinary)
                         .CastExtendedList<AlphaLayerData>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AlphaLayer_FieldIndex.AlphaLayerData;
                 }
                 default:

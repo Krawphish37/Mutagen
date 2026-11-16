@@ -1227,28 +1227,36 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ALCS:
                 {
                     if (lastParsed.ShortCircuit((int)CollectionAlias_FieldIndex.ID, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ID");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ID = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CollectionAlias_FieldIndex.ID;
                 }
                 case RecordTypeInts.ALMI:
                 {
                     if (lastParsed.ShortCircuit((int)CollectionAlias_FieldIndex.MaxInitialFillCount, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaxInitialFillCount");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MaxInitialFillCount = frame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CollectionAlias_FieldIndex.MaxInitialFillCount;
                 }
                 case RecordTypeInts.ALAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "OrbitAltitudeMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.OrbitAltitudeMult = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CollectionAlias_FieldIndex.OrbitAltitudeMult;
                 }
                 case RecordTypeInts.ALST:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ReferenceAlias");
                     item.ReferenceAlias = Mutagen.Bethesda.Starfield.QuestReferenceAlias.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CollectionAlias_FieldIndex.ReferenceAlias;
                 }
                 default:

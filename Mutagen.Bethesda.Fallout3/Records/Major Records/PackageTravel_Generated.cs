@@ -1004,7 +1004,9 @@ namespace Mutagen.Bethesda.Fallout3
             IPackageTravel item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UnusedFlags");
             item.UnusedFlags = frame.ReadUInt16();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

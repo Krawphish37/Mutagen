@@ -1283,29 +1283,35 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.BSMB:
                 {
                     if (lastParsed.ShortCircuit((int)Bone_FieldIndex.Name, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Bone_FieldIndex.Name;
                 }
                 case RecordTypeInts.BSMS:
                 {
                     if (lastParsed.ShortCircuit((int)Bone_FieldIndex.Values, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Values");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Values = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Single>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse)
                         .CastExtendedList<Single>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Bone_FieldIndex.Values;
                 }
                 case RecordTypeInts.BMMP:
                 {
                     if (lastParsed.ShortCircuit((int)Bone_FieldIndex.BMMP, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BMMP");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BMMP = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Bone_FieldIndex.BMMP;
                 }
                 default:

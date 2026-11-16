@@ -1238,12 +1238,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.BNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Animations");
                     item.Animations.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Animation>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Animation_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Animation.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AnimationSceneAction_FieldIndex.Animations;
                 }
                 default:

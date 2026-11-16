@@ -1009,7 +1009,9 @@ namespace Mutagen.Bethesda.Fallout3
             IPackageLocationAtPackageLocation item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unused");
             item.Unused = frame.ReadInt32();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

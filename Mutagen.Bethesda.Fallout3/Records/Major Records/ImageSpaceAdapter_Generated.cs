@@ -12398,632 +12398,772 @@ namespace Mutagen.Bethesda.Fallout3
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Animatable");
                     item.Animatable = BooleanBinaryTranslation<MutagenFrame>.Instance.Parse(
                         reader: dataFrame,
                         byteLength: 4);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Duration");
                     item.Duration = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 180) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(dataFrame, "Counts1");
                     ImageSpaceAdapterBinaryCreateTranslation.FillBinaryCounts1Custom(
                         frame: dataFrame,
                         item: item);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Complete)
                     {
                         item.DNAMDataTypeState |= ImageSpaceAdapter.DNAMDataType.Break0;
                         return (int)ImageSpaceAdapter_FieldIndex.Duration;
                     }
                     if (dataFrame.Remaining < 12) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(dataFrame, "Counts2");
                     ImageSpaceAdapterBinaryCreateTranslation.FillBinaryCounts2Custom(
                         frame: dataFrame,
                         item: item);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RadialBlurUseTarget");
                     item.RadialBlurUseTarget = BooleanBinaryTranslation<MutagenFrame>.Instance.Parse(
                         reader: dataFrame,
                         byteLength: 4);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 8) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "RadialBlurCenter");
                     item.RadialBlurCenter = P2FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 12) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(dataFrame, "Counts3");
                     ImageSpaceAdapterBinaryCreateTranslation.FillBinaryCounts3Custom(
                         frame: dataFrame,
                         item: item);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DepthOfFieldUseTarget");
                     item.DepthOfFieldUseTarget = dataFrame.ReadBoolean();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "DepthOfFieldFlags");
                     item.DepthOfFieldFlags = EnumBinaryTranslation<ImageSpaceAdapter.DepthOfFieldFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 1);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 2) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Unused");
                     item.Unused = dataFrame.ReadUInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 8) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(dataFrame, "Counts4");
                     ImageSpaceAdapterBinaryCreateTranslation.FillBinaryCounts4Custom(
                         frame: dataFrame,
                         item: item);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Complete)
                     {
                         item.DNAMDataTypeState |= ImageSpaceAdapter.DNAMDataType.Break1;
                         return (int)ImageSpaceAdapter_FieldIndex.Unused;
                     }
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(dataFrame, "Counts5");
                     ImageSpaceAdapterBinaryCreateTranslation.FillBinaryCounts5Custom(
                         frame: dataFrame,
                         item: item);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Complete)
                     {
                         item.DNAMDataTypeState |= ImageSpaceAdapter.DNAMDataType.Break2;
                         return (int)ImageSpaceAdapter_FieldIndex.Unused;
                     }
                     if (dataFrame.Remaining < 4) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(dataFrame, "Counts6");
                     ImageSpaceAdapterBinaryCreateTranslation.FillBinaryCounts6Custom(
                         frame: dataFrame,
                         item: item);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)ImageSpaceAdapter_FieldIndex.Unused;
                 }
                 case RecordTypeInts.BNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "BlurRadius");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BlurRadius = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.BlurRadius;
                 }
                 case RecordTypeInts.VNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "DoubleVisionStrength");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DoubleVisionStrength = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.DoubleVisionStrength;
                 }
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "TintColor");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TintColor = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ColorFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: ColorFrame.TryCreateFromBinary)
                         .CastExtendedList<ColorFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.TintColor;
                 }
                 case RecordTypeInts.NAM3:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "FadeColor");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FadeColor = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ColorFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: ColorFrame.TryCreateFromBinary)
                         .CastExtendedList<ColorFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.FadeColor;
                 }
                 case RecordTypeInts.RNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "RadialBlurStrength");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RadialBlurStrength = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.RadialBlurStrength;
                 }
                 case RecordTypeInts.SNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "RadialBlurRampUp");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RadialBlurRampUp = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.RadialBlurRampUp;
                 }
                 case RecordTypeInts.UNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "RadialBlurStart");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RadialBlurStart = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.RadialBlurStart;
                 }
                 case RecordTypeInts.NAM1:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "RadialBlurRampDown");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RadialBlurRampDown = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.RadialBlurRampDown;
                 }
                 case RecordTypeInts.NAM2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "RadialBlurDownStart");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RadialBlurDownStart = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.RadialBlurDownStart;
                 }
                 case RecordTypeInts.WNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "DepthOfFieldStrength");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DepthOfFieldStrength = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.DepthOfFieldStrength;
                 }
                 case RecordTypeInts.XNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "DepthOfFieldDistance");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DepthOfFieldDistance = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.DepthOfFieldDistance;
                 }
                 case RecordTypeInts.YNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "DepthOfFieldRange");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DepthOfFieldRange = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.DepthOfFieldRange;
                 }
                 case RecordTypeInts.NAM4:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MotionBlurStrength");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MotionBlurStrength = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.MotionBlurStrength;
                 }
                 case RecordTypeInts._0_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrEyeAdaptSpeedMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrEyeAdaptSpeedMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrEyeAdaptSpeedMult;
                 }
                 case RecordTypeInts.@IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrEyeAdaptSpeedAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrEyeAdaptSpeedAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrEyeAdaptSpeedAdd;
                 }
                 case RecordTypeInts._1_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrBlurRadiusMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrBlurRadiusMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrBlurRadiusMult;
                 }
                 case RecordTypeInts.AIAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrBlurRadiusAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrBlurRadiusAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrBlurRadiusAdd;
                 }
                 case RecordTypeInts._2_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrSkinDimmerMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrSkinDimmerMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrSkinDimmerMult;
                 }
                 case RecordTypeInts.BIAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrSkinDimmerAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrSkinDimmerAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrSkinDimmerAdd;
                 }
                 case RecordTypeInts._3_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrEmissiveMultMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrEmissiveMultMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrEmissiveMultMult;
                 }
                 case RecordTypeInts.CIAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrEmissiveMultAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrEmissiveMultAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrEmissiveMultAdd;
                 }
                 case RecordTypeInts._4_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrTargetLumMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrTargetLumMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrTargetLumMult;
                 }
                 case RecordTypeInts.DIAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrTargetLumAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrTargetLumAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrTargetLumAdd;
                 }
                 case RecordTypeInts._5_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrUpperLumClampMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrUpperLumClampMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrUpperLumClampMult;
                 }
                 case RecordTypeInts.EIAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrUpperLumClampAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrUpperLumClampAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrUpperLumClampAdd;
                 }
                 case RecordTypeInts._6_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrBrightScaleMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrBrightScaleMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrBrightScaleMult;
                 }
                 case RecordTypeInts.FIAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrBrightScaleAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrBrightScaleAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrBrightScaleAdd;
                 }
                 case RecordTypeInts._7_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrBrightClampMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrBrightClampMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrBrightClampMult;
                 }
                 case RecordTypeInts.GIAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrBrightClampAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrBrightClampAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrBrightClampAdd;
                 }
                 case RecordTypeInts._8_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrLumRampNoTexMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrLumRampNoTexMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrLumRampNoTexMult;
                 }
                 case RecordTypeInts.HIAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrLumRampNoTexAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrLumRampNoTexAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrLumRampNoTexAdd;
                 }
                 case RecordTypeInts._9_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrLumRampMinMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrLumRampMinMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrLumRampMinMult;
                 }
                 case RecordTypeInts.IIAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrLumRampMinAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrLumRampMinAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrLumRampMinAdd;
                 }
                 case RecordTypeInts._A_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrLumRampMaxMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrLumRampMaxMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrLumRampMaxMult;
                 }
                 case RecordTypeInts.JIAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrLumRampMaxAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrLumRampMaxAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrLumRampMaxAdd;
                 }
                 case RecordTypeInts._B_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrSunlightDimmerMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrSunlightDimmerMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrSunlightDimmerMult;
                 }
                 case RecordTypeInts.KIAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrSunlightDimmerAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrSunlightDimmerAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrSunlightDimmerAdd;
                 }
                 case RecordTypeInts._C_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrGrassDimmerMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrGrassDimmerMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrGrassDimmerMult;
                 }
                 case RecordTypeInts.LIAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrGrassDimmerAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrGrassDimmerAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrGrassDimmerAdd;
                 }
                 case RecordTypeInts._D_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrTreeDimmerMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrTreeDimmerMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrTreeDimmerMult;
                 }
                 case RecordTypeInts.MIAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HdrTreeDimmerAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.HdrTreeDimmerAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.HdrTreeDimmerAdd;
                 }
                 case RecordTypeInts._E_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "BloomBlurRadiusMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BloomBlurRadiusMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.BloomBlurRadiusMult;
                 }
                 case RecordTypeInts.NIAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "BloomBlurRadiusAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BloomBlurRadiusAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.BloomBlurRadiusAdd;
                 }
                 case RecordTypeInts._F_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "BloomAlphaMultInteriorMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BloomAlphaMultInteriorMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.BloomAlphaMultInteriorMult;
                 }
                 case RecordTypeInts.OIAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "BloomAlphaMultInteriorAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BloomAlphaMultInteriorAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.BloomAlphaMultInteriorAdd;
                 }
                 case RecordTypeInts._10_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "BloomAlphaMultExteriorMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BloomAlphaMultExteriorMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.BloomAlphaMultExteriorMult;
                 }
                 case RecordTypeInts.PIAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "BloomAlphaMultExteriorAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BloomAlphaMultExteriorAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.BloomAlphaMultExteriorAdd;
                 }
                 case RecordTypeInts._11_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "CinematicSaturationMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CinematicSaturationMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.CinematicSaturationMult;
                 }
                 case RecordTypeInts.QIAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "CinematicSaturationAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CinematicSaturationAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.CinematicSaturationAdd;
                 }
                 case RecordTypeInts._12_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "CinematicContrastMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CinematicContrastMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.CinematicContrastMult;
                 }
                 case RecordTypeInts.RIAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "CinematicContrastAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CinematicContrastAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.CinematicContrastAdd;
                 }
                 case RecordTypeInts._13_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "CinematicContrastAvgLumMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CinematicContrastAvgLumMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.CinematicContrastAvgLumMult;
                 }
                 case RecordTypeInts.SIAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "CinematicContrastAvgLumAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CinematicContrastAvgLumAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.CinematicContrastAvgLumAdd;
                 }
                 case RecordTypeInts._14_IAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "CinematicBrightnessMult");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CinematicBrightnessMult = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.CinematicBrightnessMult;
                 }
                 case RecordTypeInts.TIAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "CinematicBrightnessAdd");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CinematicBrightnessAdd = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<KeyFrame>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: KeyFrame.TryCreateFromBinary)
                         .CastExtendedList<KeyFrame>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.CinematicBrightnessAdd;
                 }
                 case RecordTypeInts.RDSD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SoundIntro");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.SoundIntro.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.SoundIntro;
                 }
                 case RecordTypeInts.RDSI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SoundOutro");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.SoundOutro.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
                     }
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ImageSpaceAdapter_FieldIndex.SoundOutro;
                 }
                 default:

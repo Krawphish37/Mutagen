@@ -1195,21 +1195,25 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MPGN:
                 {
                     if (lastParsed.ShortCircuit((int)MorphGroup_FieldIndex.Name, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MorphGroup_FieldIndex.Name;
                 }
                 case RecordTypeInts.MPGM:
                 {
                     if (lastParsed.ShortCircuit((int)MorphGroup_FieldIndex.Morphs, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Morphs");
                     item.Morphs.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<String>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.MPGM),
                             transl: StringBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MorphGroup_FieldIndex.Morphs;
                 }
                 default:

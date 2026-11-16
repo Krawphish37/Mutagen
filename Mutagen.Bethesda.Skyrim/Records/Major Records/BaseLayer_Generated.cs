@@ -1069,9 +1069,11 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.BTXT:
                 {
                     if (lastParsed.ShortCircuit((int)BaseLayer_FieldIndex.Header, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Header");
                     item.Header = Mutagen.Bethesda.Skyrim.LayerHeader.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BaseLayer_FieldIndex.Header;
                 }
                 default:

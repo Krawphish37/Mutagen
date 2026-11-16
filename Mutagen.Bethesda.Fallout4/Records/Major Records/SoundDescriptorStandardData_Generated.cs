@@ -1229,15 +1229,25 @@ namespace Mutagen.Bethesda.Fallout4
             ISoundDescriptorStandardData item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PercentFrequencyShift");
             item.PercentFrequencyShift = frame.ReadInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PercentFrequencyVariance");
             item.PercentFrequencyVariance = frame.ReadInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Priority");
             item.Priority = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Variance");
             item.Variance = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StaticAttenuation");
             item.StaticAttenuation = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 integerType: FloatIntegerType.UShort,
                 multiplier: null,
                 divisor: 100f);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

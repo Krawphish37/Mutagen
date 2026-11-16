@@ -1018,7 +1018,9 @@ namespace Mutagen.Bethesda.Starfield
             ITopicReferenceSubtype item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Subtype");
             item.Subtype = RecordTypeBinaryTranslation.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

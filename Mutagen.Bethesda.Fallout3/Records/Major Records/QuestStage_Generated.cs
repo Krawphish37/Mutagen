@@ -1195,8 +1195,10 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.INDX:
                 {
                     if (lastParsed.ShortCircuit((int)QuestStage_FieldIndex.Index, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = frame.ReadInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestStage_FieldIndex.Index;
                 }
                 case RecordTypeInts.QSDT:
@@ -1204,12 +1206,14 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.CNAM:
                 case RecordTypeInts.SCHR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "LogEntries");
                     item.LogEntries.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<QuestLogEntry>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: QuestLogEntry_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: QuestLogEntry.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestStage_FieldIndex.LogEntries;
                 }
                 default:

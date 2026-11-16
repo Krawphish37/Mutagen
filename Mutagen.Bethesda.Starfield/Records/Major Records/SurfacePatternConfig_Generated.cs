@@ -1734,29 +1734,35 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.ENAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SurfacePatternStyle");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SurfacePatternStyle.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SurfacePatternConfig_FieldIndex.SurfacePatternStyle;
                 }
                 case RecordTypeInts.BNAM:
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Items");
                     item.Items.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<SurfacePatternStyleConfig>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: SurfacePatternStyleConfig_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: SurfacePatternStyleConfig.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SurfacePatternConfig_FieldIndex.Items;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Rarity");
                     item.Rarity.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<SurfacePatternRarityConfig>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: SurfacePatternRarityConfig_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: SurfacePatternRarityConfig.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SurfacePatternConfig_FieldIndex.Rarity;
                 }
                 default:

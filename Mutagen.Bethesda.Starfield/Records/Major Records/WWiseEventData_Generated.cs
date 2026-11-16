@@ -1875,37 +1875,47 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Starfield.VirtualMachineAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)WWiseEventData_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.BFCB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Components");
                     item.Components.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AComponent>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: AComponent_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: AComponent.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)WWiseEventData_FieldIndex.Components;
                 }
                 case RecordTypeInts.WSED:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Start");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Start = GuidBinaryTranslation.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)WWiseEventData_FieldIndex.Start;
                 }
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Condition");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Condition.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)WWiseEventData_FieldIndex.Condition;
                 }
                 case RecordTypeInts.WTED:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "End");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.End = GuidBinaryTranslation.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)WWiseEventData_FieldIndex.End;
                 }
                 case RecordTypeInts.XXXX:

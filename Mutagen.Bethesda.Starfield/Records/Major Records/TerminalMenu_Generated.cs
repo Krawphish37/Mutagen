@@ -2225,13 +2225,16 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Starfield.VirtualMachineAdapterIndexed.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TerminalMenu_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.FULL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -2239,34 +2242,42 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TerminalMenu_FieldIndex.Name;
                 }
                 case RecordTypeInts.TMVT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ShowBodyText");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ShowBodyText = EnumBinaryTranslation<TerminalMenu.ShowBodyTextOption, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TerminalMenu_FieldIndex.ShowBodyText;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MenuButtonStyle");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MenuButtonStyle = EnumBinaryTranslation<TerminalMenu.MenuButtonStyleOption, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TerminalMenu_FieldIndex.MenuButtonStyle;
                 }
                 case RecordTypeInts.SNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Style");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Style = EnumBinaryTranslation<TerminalMenu.StyleOption, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TerminalMenu_FieldIndex.Style;
                 }
                 case RecordTypeInts.INAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "INAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.INAM = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -2274,10 +2285,12 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TerminalMenu_FieldIndex.INAM;
                 }
                 case RecordTypeInts.BSIZ:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "BodyTexts");
                     item.BodyTexts = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<TerminalMenuBodyText>.Instance.ParsePerItem(
                             reader: frame,
@@ -2287,10 +2300,12 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams,
                             transl: TerminalMenuBodyText.TryCreateFromBinary)
                         .CastExtendedList<TerminalMenuBodyText>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TerminalMenu_FieldIndex.BodyTexts;
                 }
                 case RecordTypeInts.ISIZ:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MenuItems");
                     item.MenuItems = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<TerminalMenuItem>.Instance.ParsePerItem(
                             reader: frame,
@@ -2300,6 +2315,7 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams,
                             transl: TerminalMenuItem.TryCreateFromBinary)
                         .CastExtendedList<TerminalMenuItem>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TerminalMenu_FieldIndex.MenuItems;
                 }
                 case RecordTypeInts.XXXX:

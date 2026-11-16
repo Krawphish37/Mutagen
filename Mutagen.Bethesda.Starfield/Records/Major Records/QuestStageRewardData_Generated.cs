@@ -1457,37 +1457,45 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.QRXP:
                 {
                     if (lastParsed.ShortCircuit((int)QuestStageRewardData_FieldIndex.XpAwarded, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "XpAwarded");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.XpAwarded.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestStageRewardData_FieldIndex.XpAwarded;
                 }
                 case RecordTypeInts.QRCR:
                 {
                     if (lastParsed.ShortCircuit((int)QuestStageRewardData_FieldIndex.BonusCredits, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BonusCredits");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BonusCredits.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestStageRewardData_FieldIndex.BonusCredits;
                 }
                 case RecordTypeInts.QRRD:
                 {
                     if (lastParsed.ShortCircuit((int)QuestStageRewardData_FieldIndex.Rewards, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Rewards");
                     item.Rewards.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<QuestStageReward>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: QuestStageReward_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: QuestStageReward.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestStageRewardData_FieldIndex.Rewards;
                 }
                 case RecordTypeInts.CTDA:
                 {
                     if (lastParsed.ShortCircuit((int)QuestStageRewardData_FieldIndex.Conditions, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestStageRewardData_FieldIndex.Conditions;
                 }
                 default:

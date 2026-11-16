@@ -1782,16 +1782,36 @@ namespace Mutagen.Bethesda.Fallout3
             IWeatherColors item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SkyUpper");
             item.SkyUpper = Mutagen.Bethesda.Fallout3.WeatherColorSet.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Fog");
             item.Fog = Mutagen.Bethesda.Fallout3.WeatherColorSet.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UnusedA");
             item.UnusedA = Mutagen.Bethesda.Fallout3.WeatherColorSet.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Ambient");
             item.Ambient = Mutagen.Bethesda.Fallout3.WeatherColorSet.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Sunlight");
             item.Sunlight = Mutagen.Bethesda.Fallout3.WeatherColorSet.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Sun");
             item.Sun = Mutagen.Bethesda.Fallout3.WeatherColorSet.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Stars");
             item.Stars = Mutagen.Bethesda.Fallout3.WeatherColorSet.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SkyLower");
             item.SkyLower = Mutagen.Bethesda.Fallout3.WeatherColorSet.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Horizon");
             item.Horizon = Mutagen.Bethesda.Fallout3.WeatherColorSet.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UnusedB");
             item.UnusedB = Mutagen.Bethesda.Fallout3.WeatherColorSet.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

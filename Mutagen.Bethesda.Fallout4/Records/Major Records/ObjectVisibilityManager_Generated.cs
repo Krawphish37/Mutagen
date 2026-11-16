@@ -1500,12 +1500,14 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.INDX:
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Objects");
                     item.Objects.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ObjectVisibilityManagerItem>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: ObjectVisibilityManagerItem_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: ObjectVisibilityManagerItem.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ObjectVisibilityManager_FieldIndex.Objects;
                 }
                 default:

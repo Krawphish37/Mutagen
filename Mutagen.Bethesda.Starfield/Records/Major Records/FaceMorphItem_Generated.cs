@@ -1180,23 +1180,28 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.FMSR:
                 {
                     if (lastParsed.ShortCircuit((int)FaceMorphItem_FieldIndex.Index, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FaceMorphItem_FieldIndex.Index;
                 }
                 case RecordTypeInts.FMRU:
                 {
                     if (lastParsed.ShortCircuit((int)FaceMorphItem_FieldIndex.FMRU, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FMRU");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FMRU = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FaceMorphItem_FieldIndex.FMRU;
                 }
                 case RecordTypeInts.FMRN:
                 {
                     if (lastParsed.ShortCircuit((int)FaceMorphItem_FieldIndex.Name, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1204,6 +1209,7 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FaceMorphItem_FieldIndex.Name;
                 }
                 default:

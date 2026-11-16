@@ -1156,12 +1156,14 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.ALCS:
                 {
                     if (lastParsed.ShortCircuit((int)QuestCollectionAlias_FieldIndex.Collection, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Collection");
                     item.Collection.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<CollectionAlias>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: CollectionAlias_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: CollectionAlias.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestCollectionAlias_FieldIndex.Collection;
                 }
                 default:

@@ -1699,38 +1699,50 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VCSB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "SuspensionBoneModifiers");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SuspensionBoneModifiers = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IBoneModifierGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IBoneModifierGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)VehicleConfigComponent_FieldIndex.SuspensionBoneModifiers;
                 }
                 case RecordTypeInts.VCCD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Config");
                     item.Config = Mutagen.Bethesda.Starfield.VehicleConfigData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)VehicleConfigComponent_FieldIndex.Config;
                 }
                 case RecordTypeInts.VCMT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MountedWeapon");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MountedWeapon.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)VehicleConfigComponent_FieldIndex.MountedWeapon;
                 }
                 case RecordTypeInts.VCTT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Weapon");
                     item.Weapon = Mutagen.Bethesda.Starfield.VehicleWeaponData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)VehicleConfigComponent_FieldIndex.Weapon;
                 }
                 case RecordTypeInts.VWWD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "WWise");
                     item.WWise = Mutagen.Bethesda.Starfield.VehicleWWiseData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)VehicleConfigComponent_FieldIndex.WWise;
                 }
                 case RecordTypeInts.VMRT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Material");
                     item.Material = Mutagen.Bethesda.Starfield.VehicleMaterialTable.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)VehicleConfigComponent_FieldIndex.Material;
                 }
                 default:

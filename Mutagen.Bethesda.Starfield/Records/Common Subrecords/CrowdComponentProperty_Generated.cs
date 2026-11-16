@@ -1114,12 +1114,18 @@ namespace Mutagen.Bethesda.Starfield
             ICrowdComponentProperty item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Npc");
             item.Npc.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Value");
             item.Value = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CurveTable");
             if (frame.MetaData.FormVersion!.Value >= 152)
             {
                 item.CurveTable.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

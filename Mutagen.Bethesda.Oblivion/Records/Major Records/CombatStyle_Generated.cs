@@ -1504,12 +1504,16 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 case RecordTypeInts.CSTD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Oblivion.CombatStyleData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CombatStyle_FieldIndex.Data;
                 }
                 case RecordTypeInts.CSAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Advanced");
                     item.Advanced = Mutagen.Bethesda.Oblivion.CombatStyleAdvanced.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CombatStyle_FieldIndex.Advanced;
                 }
                 default:

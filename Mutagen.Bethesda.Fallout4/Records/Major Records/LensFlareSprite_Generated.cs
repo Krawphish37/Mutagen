@@ -1175,27 +1175,33 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.DNAM:
                 {
                     if (lastParsed.ShortCircuit((int)LensFlareSprite_FieldIndex.LensFlareSpriteId, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LensFlareSpriteId");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LensFlareSpriteId = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LensFlareSprite_FieldIndex.LensFlareSpriteId;
                 }
                 case RecordTypeInts.FNAM:
                 {
                     if (lastParsed.ShortCircuit((int)LensFlareSprite_FieldIndex.Texture, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Texture");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Texture = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LensFlareSprite_FieldIndex.Texture;
                 }
                 case RecordTypeInts.LFSD:
                 {
                     if (lastParsed.ShortCircuit((int)LensFlareSprite_FieldIndex.Data, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Fallout4.LensFlareSpriteData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LensFlareSprite_FieldIndex.Data;
                 }
                 default:

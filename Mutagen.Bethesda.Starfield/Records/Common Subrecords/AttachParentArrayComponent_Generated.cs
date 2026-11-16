@@ -1184,12 +1184,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.APPR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Slots");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Slots = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AttachParentArrayComponent_FieldIndex.Slots;
                 }
                 default:

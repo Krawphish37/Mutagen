@@ -1086,15 +1086,19 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.NAM0:
                 {
                     if (lastParsed.ShortCircuit((int)ArmorAddonSkinTexture_FieldIndex.Texture, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Texture");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Texture.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddonSkinTexture_FieldIndex.Texture;
                 }
                 case RecordTypeInts.NAM2:
                 {
                     if (lastParsed.ShortCircuit((int)ArmorAddonSkinTexture_FieldIndex.SwapList, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SwapList");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SwapList.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddonSkinTexture_FieldIndex.SwapList;
                 }
                 default:

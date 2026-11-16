@@ -22,10 +22,12 @@ internal sealed class Array2dBinaryTranslation<T>
         {
             for (int x = 0; x < size.X; x++)
             {
+                if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, $"{x},{y}");
                 if (!transl(reader, out var item))
                 {
                     throw new DataException("Expected to parse item");
                 }
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
 
                 ret[x, y] = item;
             }
@@ -45,10 +47,12 @@ internal sealed class Array2dBinaryTranslation<T>
         {
             for (int x = 0; x < size.X; x++)
             {
+                if (ValuePositionRecorder.On) ValuePositionRecorder.Item(reader, $"{x},{y}");
                 if (!transl(reader, out var item, translationParams))
                 {
                     throw new DataException("Expected to parse item");
                 }
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(reader);
 
                 ret[x, y] = item;
             }

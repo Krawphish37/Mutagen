@@ -1489,41 +1489,51 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MODC:
                 case RecordTypeInts.MODF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Starfield.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetModelComponent_FieldIndex.Model;
                 }
                 case RecordTypeInts.XMPM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "XMPM");
                     item.XMPM = Mutagen.Bethesda.Starfield.PlanetModelComponentXMPM.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetModelComponent_FieldIndex.XMPM;
                 }
                 case RecordTypeInts.MCQP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RingModel");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RingModel = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetModelComponent_FieldIndex.RingModel;
                 }
                 case RecordTypeInts.XMSP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RingMaterial");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RingMaterial = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetModelComponent_FieldIndex.RingMaterial;
                 }
                 case RecordTypeInts.XLMS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RingId");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RingId = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetModelComponent_FieldIndex.RingId;
                 }
                 default:

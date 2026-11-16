@@ -1723,19 +1723,23 @@ namespace Mutagen.Bethesda.Skyrim
                 }
                 case RecordTypeInts.NAM0:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScenePhase_FieldIndex.Name;
                 }
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "StartConditions");
                     ScenePhaseBinaryCreateTranslation.FillBinaryStartConditionsCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScenePhase_FieldIndex.StartConditions;
                 }
                 case RecordTypeInts.NEXT:
@@ -1743,18 +1747,22 @@ namespace Mutagen.Bethesda.Skyrim
                     if (!lastParsed.ParsedIndex.HasValue
                         || lastParsed.ParsedIndex.Value <= (int)ScenePhase_FieldIndex.StartConditions)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "CompletionConditions");
                         ScenePhaseBinaryCreateTranslation.FillBinaryCompletionConditionsCustom(
                             frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                             item: item,
                             lastParsed: lastParsed);
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)ScenePhase_FieldIndex.CompletionConditions, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)ScenePhase_FieldIndex.Unused)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unused2");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength + contentLength; // Skip marker
                         item.Unused2 = Mutagen.Bethesda.Skyrim.ScenePhaseUnusedData.CreateFromBinary(
                             frame: frame,
                             translationParams: translationParams.DoNotShortCircuit());
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)ScenePhase_FieldIndex.Unused2, nextRecordType);
                     }
                     else
@@ -1762,16 +1770,20 @@ namespace Mutagen.Bethesda.Skyrim
                         switch (recordParseCount?.GetOrAdd(nextRecordType) ?? 0)
                         {
                             case 0:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "CompletionConditions");
                                 ScenePhaseBinaryCreateTranslation.FillBinaryCompletionConditionsCustom(
                                     frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                                     item: item,
                                     lastParsed: lastParsed);
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)ScenePhase_FieldIndex.CompletionConditions, nextRecordType);
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unused2");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength + contentLength; // Skip marker
                                 item.Unused2 = Mutagen.Bethesda.Skyrim.ScenePhaseUnusedData.CreateFromBinary(
                                     frame: frame,
                                     translationParams: translationParams.DoNotShortCircuit());
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)ScenePhase_FieldIndex.Unused2, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -1784,15 +1796,19 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.QNAM:
                 case RecordTypeInts.SCRO:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unused");
                     item.Unused = Mutagen.Bethesda.Skyrim.ScenePhaseUnusedData.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScenePhase_FieldIndex.Unused;
                 }
                 case RecordTypeInts.WNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EditorWidth");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EditorWidth = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScenePhase_FieldIndex.EditorWidth;
                 }
                 default:

@@ -1309,20 +1309,24 @@ namespace Mutagen.Bethesda.Fallout3
                     if (!lastParsed.ParsedIndex.HasValue)
                     {
                         if (lastParsed.ShortCircuit((int)BodyData_FieldIndex.Model, translationParams)) return ParseResult.Stop;
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                         item.Model = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
                             frame: frame,
                             translationParams: translationParams.DoNotShortCircuit());
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)BodyData_FieldIndex.Model, nextRecordType);
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)BodyData_FieldIndex.Model)
                     {
                         if (lastParsed.ShortCircuit((int)BodyData_FieldIndex.BodyParts, translationParams)) return ParseResult.Stop;
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "BodyParts");
                         item.BodyParts.SetTo(
                             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<BodyPartItem>.Instance.Parse(
                                 reader: frame,
                                 triggeringRecord: BodyPartItem_Registration.TriggerSpecs,
                                 translationParams: translationParams,
                                 transl: BodyPartItem.TryCreateFromBinary));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)BodyData_FieldIndex.BodyParts, nextRecordType);
                     }
                     else
@@ -1331,18 +1335,22 @@ namespace Mutagen.Bethesda.Fallout3
                         {
                             case 0:
                                 if (lastParsed.ShortCircuit((int)BodyData_FieldIndex.Model, translationParams)) return ParseResult.Stop;
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                                 item.Model = Mutagen.Bethesda.Fallout3.Model.CreateFromBinary(
                                     frame: frame,
                                     translationParams: translationParams.DoNotShortCircuit());
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)BodyData_FieldIndex.Model, nextRecordType);
                             case 1:
                                 if (lastParsed.ShortCircuit((int)BodyData_FieldIndex.BodyParts, translationParams)) return ParseResult.Stop;
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "BodyParts");
                                 item.BodyParts.SetTo(
                                     Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<BodyPartItem>.Instance.Parse(
                                         reader: frame,
                                         triggeringRecord: BodyPartItem_Registration.TriggerSpecs,
                                         translationParams: translationParams,
                                         transl: BodyPartItem.TryCreateFromBinary));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)BodyData_FieldIndex.BodyParts, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -1353,12 +1361,14 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.ICON:
                 {
                     if (lastParsed.ShortCircuit((int)BodyData_FieldIndex.BodyParts, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "BodyParts");
                     item.BodyParts.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<BodyPartItem>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: BodyPartItem_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: BodyPartItem.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)BodyData_FieldIndex.BodyParts;
                 }
                 default:

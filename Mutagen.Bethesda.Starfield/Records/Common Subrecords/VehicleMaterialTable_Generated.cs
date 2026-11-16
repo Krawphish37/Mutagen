@@ -1534,22 +1534,30 @@ namespace Mutagen.Bethesda.Starfield
             IVehicleMaterialTable item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaterialID");
             item.MaterialID = GuidBinaryTranslation.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "AudioRules");
             item.AudioRules.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<VehicleAudioRule>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt64()),
                     reader: frame,
                     transl: VehicleAudioRule.TryCreateFromBinary));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "VfxRules");
             item.VfxRules.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<VehicleVfxRule>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt64()),
                     reader: frame,
                     transl: VehicleVfxRule.TryCreateFromBinary));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "FrictionRules");
             item.FrictionRules.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<VehicleFrictionRule>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt64()),
                     reader: frame,
                     transl: VehicleFrictionRule.TryCreateFromBinary));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

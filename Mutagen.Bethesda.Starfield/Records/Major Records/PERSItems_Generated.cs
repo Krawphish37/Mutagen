@@ -1105,10 +1105,12 @@ namespace Mutagen.Bethesda.Starfield
             IPERSItems item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Items");
             item.Items.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<PERSItem>.Instance.Parse(
                     reader: frame,
                     transl: PERSItem.TryCreateFromBinary));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

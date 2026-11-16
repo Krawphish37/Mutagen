@@ -1200,21 +1200,25 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.CSDT:
                 {
                     if (lastParsed.ShortCircuit((int)CreatureSoundType_FieldIndex.Type, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Type");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Type = EnumBinaryTranslation<Creature.SoundType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CreatureSoundType_FieldIndex.Type;
                 }
                 case RecordTypeInts.CSDI:
                 {
                     if (lastParsed.ShortCircuit((int)CreatureSoundType_FieldIndex.Sounds, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Sounds");
                     item.Sounds.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<CreatureSoundItem>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: CreatureSoundItem_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: CreatureSoundItem.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)CreatureSoundType_FieldIndex.Sounds;
                 }
                 default:

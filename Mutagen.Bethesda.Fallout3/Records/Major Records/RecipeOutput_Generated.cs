@@ -1080,15 +1080,19 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.RCOD:
                 {
                     if (lastParsed.ShortCircuit((int)RecipeOutput_FieldIndex.Item, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Item");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Item.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RecipeOutput_FieldIndex.Item;
                 }
                 case RecordTypeInts.RCQY:
                 {
                     if (lastParsed.ShortCircuit((int)RecipeOutput_FieldIndex.Quantity, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Quantity");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Quantity = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RecipeOutput_FieldIndex.Quantity;
                 }
                 default:

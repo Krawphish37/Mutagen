@@ -1566,6 +1566,7 @@ namespace Mutagen.Bethesda.Oblivion
             IClassData item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "PrimaryAttributes");
             item.PrimaryAttributes.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ActorValue>.Instance.Parse(
                     reader: frame,
@@ -1576,9 +1577,13 @@ namespace Mutagen.Bethesda.Oblivion
                             reader: r.SpawnWithLength(4),
                             item: out listSubItem);
                     }));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Specialization");
             item.Specialization = EnumBinaryTranslation<Class.SpecializationFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "SecondaryAttributes");
             item.SecondaryAttributes.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ActorValue>.Instance.Parse(
                     reader: frame,
@@ -1589,18 +1594,25 @@ namespace Mutagen.Bethesda.Oblivion
                             reader: r.SpawnWithLength(4),
                             item: out listSubItem);
                     }));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
             item.Flags = EnumBinaryTranslation<ClassFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ClassServices");
             item.ClassServices = EnumBinaryTranslation<ClassService, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             if (frame.Complete)
             {
                 item.Versioning |= ClassData.VersioningBreaks.Break0;
                 return;
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Training");
             item.Training = Mutagen.Bethesda.Oblivion.ClassTraining.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

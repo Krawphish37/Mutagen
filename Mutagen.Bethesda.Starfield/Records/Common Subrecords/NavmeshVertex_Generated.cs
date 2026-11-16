@@ -1032,11 +1032,15 @@ namespace Mutagen.Bethesda.Starfield
             INavmeshVertex item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Point");
             item.Point = P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Unknown");
             if (frame.MetaData.FormVersion!.Value >= 493)
             {
                 item.Unknown = frame.ReadInt32();
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

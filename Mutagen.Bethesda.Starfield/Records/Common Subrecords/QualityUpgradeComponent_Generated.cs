@@ -1184,12 +1184,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.QUPA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "QualityMods");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.QualityMods = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IAObjectModificationGetter>>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IAObjectModificationGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QualityUpgradeComponent_FieldIndex.QualityMods;
                 }
                 default:

@@ -2536,68 +2536,84 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.NVER:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Version");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Version = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.Version;
                 }
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Fallout3.NavigationMeshData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.Data;
                 }
                 case RecordTypeInts.NVVX:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Vertices");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Vertices = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<P3Float>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: P3FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse)
                         .CastExtendedList<P3Float>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.Vertices;
                 }
                 case RecordTypeInts.NVTR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Triangles");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Triangles = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavmeshTriangle>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: NavmeshTriangle.TryCreateFromBinary)
                         .CastExtendedList<NavmeshTriangle>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.Triangles;
                 }
                 case RecordTypeInts.NVCA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "CoverTriangles");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CoverTriangles = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<UInt16>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: UInt16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse)
                         .CastExtendedList<UInt16>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.CoverTriangles;
                 }
                 case RecordTypeInts.NVDP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "DoorLinks");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DoorLinks = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavmeshDoorLink>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: NavmeshDoorLink.TryCreateFromBinary)
                         .CastExtendedList<NavmeshDoorLink>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.DoorLinks;
                 }
                 case RecordTypeInts.NVGD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NavmeshGrid");
                     item.NavmeshGrid = Mutagen.Bethesda.Fallout3.NavmeshGrid.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.NavmeshGrid;
                 }
                 case RecordTypeInts.NVEX:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "EdgeLinks");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EdgeLinks = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavmeshEdgeLink>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: NavmeshEdgeLink.TryCreateFromBinary)
                         .CastExtendedList<NavmeshEdgeLink>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMesh_FieldIndex.EdgeLinks;
                 }
                 default:

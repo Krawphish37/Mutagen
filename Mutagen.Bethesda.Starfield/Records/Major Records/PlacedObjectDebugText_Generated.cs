@@ -1112,17 +1112,21 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.XDTS:
                 {
                     if (lastParsed.ShortCircuit((int)PlacedObjectDebugText_FieldIndex.String, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "String");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.String = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedObjectDebugText_FieldIndex.String;
                 }
                 case RecordTypeInts.XDTF:
                 {
                     if (lastParsed.ShortCircuit((int)PlacedObjectDebugText_FieldIndex.Format, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Format");
                     item.Format = Mutagen.Bethesda.Starfield.PlacedObjectDebugTextFormat.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedObjectDebugText_FieldIndex.Format;
                 }
                 default:

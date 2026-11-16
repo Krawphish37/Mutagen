@@ -1490,12 +1490,15 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.EXDC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ExternalBaseTemplate");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ExternalBaseTemplate.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ExternalDataSourceComponent_FieldIndex.ExternalBaseTemplate;
                 }
                 case RecordTypeInts.EXDZ:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Sources");
                     item.Sources.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ExternalDataSource>.Instance.ParsePerItem(
                             reader: frame,
@@ -1504,10 +1507,12 @@ namespace Mutagen.Bethesda.Starfield
                             triggeringRecord: ExternalDataSource_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: ExternalDataSource.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ExternalDataSourceComponent_FieldIndex.Sources;
                 }
                 case RecordTypeInts.EXAC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "EXASs");
                     item.EXASs = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<String>.Instance.ParsePerItem(
                             reader: frame,
@@ -1516,15 +1521,18 @@ namespace Mutagen.Bethesda.Starfield
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.EXAS),
                             transl: StringBinaryTranslation.Instance.Parse)
                         .CastExtendedList<String>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ExternalDataSourceComponent_FieldIndex.EXASs;
                 }
                 case RecordTypeInts.EXBS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "TemplateSubdata");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TemplateSubdata = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ExternalDataSourceComponent_FieldIndex.TemplateSubdata;
                 }
                 default:

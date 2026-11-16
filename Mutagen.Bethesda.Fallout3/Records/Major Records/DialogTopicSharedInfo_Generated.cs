@@ -1081,14 +1081,18 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.INFC:
                 {
                     if (lastParsed.ShortCircuit((int)DialogTopicSharedInfo_FieldIndex.InfoConnection, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "InfoConnection");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.InfoConnection.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogTopicSharedInfo_FieldIndex.InfoConnection;
                 }
                 case RecordTypeInts.INFX:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "InfoIndex");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.InfoIndex = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogTopicSharedInfo_FieldIndex.InfoIndex;
                 }
                 default:

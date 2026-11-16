@@ -1192,35 +1192,43 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.ANAM:
                 {
                     if (lastParsed.ShortCircuit((int)AimAssistPosePoint_FieldIndex.StartBoneName, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StartBoneName");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.StartBoneName = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AimAssistPosePoint_FieldIndex.StartBoneName;
                 }
                 case RecordTypeInts.BNAM:
                 {
                     if (lastParsed.ShortCircuit((int)AimAssistPosePoint_FieldIndex.EndBoneName, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EndBoneName");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.EndBoneName = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AimAssistPosePoint_FieldIndex.EndBoneName;
                 }
                 case RecordTypeInts.RADR:
                 {
                     if (lastParsed.ShortCircuit((int)AimAssistPosePoint_FieldIndex.Radius, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Radius");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Radius = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AimAssistPosePoint_FieldIndex.Radius;
                 }
                 case RecordTypeInts.WTMX:
                 {
                     if (lastParsed.ShortCircuit((int)AimAssistPosePoint_FieldIndex.Weight, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Weight");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Weight = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AimAssistPosePoint_FieldIndex.Weight;
                 }
                 default:

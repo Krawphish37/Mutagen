@@ -1134,23 +1134,29 @@ namespace Mutagen.Bethesda.Oblivion
                 case RecordTypeInts.MODL:
                 {
                     if (lastParsed.ShortCircuit((int)Model_FieldIndex.File, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "File");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.File = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Model_FieldIndex.File;
                 }
                 case RecordTypeInts.MODB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BoundRadius");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BoundRadius = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Model_FieldIndex.BoundRadius;
                 }
                 case RecordTypeInts.MODT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Hashes");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Hashes = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Model_FieldIndex.Hashes;
                 }
                 default:

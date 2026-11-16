@@ -1028,7 +1028,9 @@ namespace Mutagen.Bethesda.Fallout4
             IBookPerk item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Perk");
             item.Perk.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

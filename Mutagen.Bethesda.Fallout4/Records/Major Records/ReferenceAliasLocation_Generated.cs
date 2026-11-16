@@ -1080,15 +1080,19 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.ALFA:
                 {
                     if (lastParsed.ShortCircuit((int)ReferenceAliasLocation_FieldIndex.AliasID, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AliasID");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AliasID = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ReferenceAliasLocation_FieldIndex.AliasID;
                 }
                 case RecordTypeInts.KNAM:
                 {
                     if (lastParsed.ShortCircuit((int)ReferenceAliasLocation_FieldIndex.Keyword, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Keyword");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Keyword.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ReferenceAliasLocation_FieldIndex.Keyword;
                 }
                 default:

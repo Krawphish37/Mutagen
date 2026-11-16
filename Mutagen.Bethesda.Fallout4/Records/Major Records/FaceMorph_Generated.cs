@@ -1117,13 +1117,16 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.FMRI:
                 {
                     if (lastParsed.ShortCircuit((int)FaceMorph_FieldIndex.Index, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FaceMorph_FieldIndex.Index;
                 }
                 case RecordTypeInts.FMRN:
                 {
                     if (lastParsed.ShortCircuit((int)FaceMorph_FieldIndex.Name, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1131,6 +1134,7 @@ namespace Mutagen.Bethesda.Fallout4
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)FaceMorph_FieldIndex.Name;
                 }
                 default:

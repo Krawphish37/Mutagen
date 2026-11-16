@@ -1272,20 +1272,24 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 case RecordTypeInts.RDMD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MusicType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MusicType = EnumBinaryTranslation<MusicType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionSounds_FieldIndex.MusicType;
                 }
                 case RecordTypeInts.RDSD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Sounds");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Sounds = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<RegionSound>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: RegionSound.TryCreateFromBinary)
                         .CastExtendedList<RegionSound>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RegionSounds_FieldIndex.Sounds;
                 }
                 default:

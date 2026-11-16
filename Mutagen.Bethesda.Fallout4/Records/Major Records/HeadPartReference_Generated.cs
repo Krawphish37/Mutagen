@@ -1080,15 +1080,19 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.INDX:
                 {
                     if (lastParsed.ShortCircuit((int)HeadPartReference_FieldIndex.Number, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Number");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Number = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadPartReference_FieldIndex.Number;
                 }
                 case RecordTypeInts.HEAD:
                 {
                     if (lastParsed.ShortCircuit((int)HeadPartReference_FieldIndex.Head, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Head");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Head.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadPartReference_FieldIndex.Head;
                 }
                 default:

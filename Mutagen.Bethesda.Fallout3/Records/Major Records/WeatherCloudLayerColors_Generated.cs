@@ -1278,10 +1278,18 @@ namespace Mutagen.Bethesda.Fallout3
             IWeatherCloudLayerColors item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Layer0");
             item.Layer0 = Mutagen.Bethesda.Fallout3.WeatherColorSet.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Layer1");
             item.Layer1 = Mutagen.Bethesda.Fallout3.WeatherColorSet.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Layer2");
             item.Layer2 = Mutagen.Bethesda.Fallout3.WeatherColorSet.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Layer3");
             item.Layer3 = Mutagen.Bethesda.Fallout3.WeatherColorSet.CreateFromBinary(frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

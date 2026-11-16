@@ -1913,15 +1913,20 @@ namespace Mutagen.Bethesda.Fallout4
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 2) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Slot");
                     item.Slot = EnumBinaryTranslation<TintTemplateOption.TintSlot, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: dataFrame,
                         length: 2);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     if (dataFrame.Remaining < 2) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "Index");
                     item.Index = dataFrame.ReadUInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)TintTemplateOption_FieldIndex.Index;
                 }
                 case RecordTypeInts.TTGP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1929,57 +1934,70 @@ namespace Mutagen.Bethesda.Fallout4
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TintTemplateOption_FieldIndex.Name;
                 }
                 case RecordTypeInts.TTEF:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<TintTemplateOption.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TintTemplateOption_FieldIndex.Flags;
                 }
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TintTemplateOption_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.TTET:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Textures");
                     item.Textures.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<String>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.TTET),
                             transl: StringBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TintTemplateOption_FieldIndex.Textures;
                 }
                 case RecordTypeInts.TTEB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BlendOperation");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BlendOperation = EnumBinaryTranslation<BlendOperation, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TintTemplateOption_FieldIndex.BlendOperation;
                 }
                 case RecordTypeInts.TTEC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "TemplateColors");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.TemplateColors = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<TintTemplateColor>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: TintTemplateColor.TryCreateFromBinary)
                         .CastExtendedList<TintTemplateColor>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TintTemplateOption_FieldIndex.TemplateColors;
                 }
                 case RecordTypeInts.TTED:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Default");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Default = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TintTemplateOption_FieldIndex.Default;
                 }
                 default:

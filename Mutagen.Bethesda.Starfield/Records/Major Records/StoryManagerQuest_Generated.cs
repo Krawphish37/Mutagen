@@ -1080,15 +1080,19 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.NNAM:
                 {
                     if (lastParsed.ShortCircuit((int)StoryManagerQuest_FieldIndex.Quest, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Quest");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Quest.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StoryManagerQuest_FieldIndex.Quest;
                 }
                 case RecordTypeInts.RNAM:
                 {
                     if (lastParsed.ShortCircuit((int)StoryManagerQuest_FieldIndex.DaysUntilReset, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DaysUntilReset");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DaysUntilReset = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StoryManagerQuest_FieldIndex.DaysUntilReset;
                 }
                 default:

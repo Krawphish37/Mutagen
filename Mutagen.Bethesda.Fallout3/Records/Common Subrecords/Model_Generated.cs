@@ -1411,30 +1411,37 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.MODL:
                 {
                     if (lastParsed.ShortCircuit((int)Model_FieldIndex.File, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "File");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.File = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Model_FieldIndex.File;
                 }
                 case RecordTypeInts.MODB:
                 {
                     if (lastParsed.ShortCircuit((int)Model_FieldIndex.MODB, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MODB");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MODB = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Model_FieldIndex.MODB;
                 }
                 case RecordTypeInts.MODT:
                 {
                     if (lastParsed.ShortCircuit((int)Model_FieldIndex.Hashes, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Hashes");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Hashes = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Model_FieldIndex.Hashes;
                 }
                 case RecordTypeInts.MODS:
                 {
                     if (lastParsed.ShortCircuit((int)Model_FieldIndex.AlternateTextures, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "AlternateTextures");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AlternateTextures = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AlternateTexture>.Instance.Parse(
@@ -1442,15 +1449,18 @@ namespace Mutagen.Bethesda.Fallout3
                             reader: frame,
                             transl: AlternateTexture.TryCreateFromBinary)
                         .CastExtendedList<AlternateTexture>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Model_FieldIndex.AlternateTextures;
                 }
                 case RecordTypeInts.MODD:
                 {
                     if (lastParsed.ShortCircuit((int)Model_FieldIndex.FaceGenFlags, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FaceGenFlags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FaceGenFlags = EnumBinaryTranslation<Model.FaceGenFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Model_FieldIndex.FaceGenFlags;
                 }
                 default:

@@ -1084,18 +1084,22 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.INTV:
                 {
                     if (lastParsed.ShortCircuit((int)SoundRateOfFire_FieldIndex.RotationsPerMinute, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "RotationsPerMinute");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.RotationsPerMinute = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundRateOfFire_FieldIndex.RotationsPerMinute;
                 }
                 case RecordTypeInts.FNAM:
                 {
                     if (lastParsed.ShortCircuit((int)SoundRateOfFire_FieldIndex.File, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "File");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.File = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundRateOfFire_FieldIndex.File;
                 }
                 case RecordTypeInts.ITME: // End Marker

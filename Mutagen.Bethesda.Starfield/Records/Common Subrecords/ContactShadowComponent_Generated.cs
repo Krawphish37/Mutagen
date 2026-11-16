@@ -1160,12 +1160,14 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.FLCS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Items");
                     item.Items.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ContactShadowComponentItem>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: ContactShadowComponentItem_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: ContactShadowComponentItem.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ContactShadowComponent_FieldIndex.Items;
                 }
                 default:

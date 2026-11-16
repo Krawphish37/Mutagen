@@ -2161,97 +2161,128 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.ZNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ZNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ZNAM = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.ZNAM;
                 }
                 case RecordTypeInts.YNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DoAllBeforeRepeating");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DoAllBeforeRepeating = frame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.DoAllBeforeRepeating;
                 }
                 case RecordTypeInts.XNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NumberOfTimesAllowedGlobal");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NumberOfTimesAllowedGlobal = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedGlobal;
                 }
                 case RecordTypeInts.WNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NumberOfTimesAllowedPerSystem");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NumberOfTimesAllowedPerSystem = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerSystem;
                 }
                 case RecordTypeInts.VNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SavePlacement");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SavePlacement = frame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.SavePlacement;
                 }
                 case RecordTypeInts.UNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DaysUntilResetGlobal");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DaysUntilResetGlobal.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.DaysUntilResetGlobal;
                 }
                 case RecordTypeInts.NAM1:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MinimumDensityChance");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MinimumDensityChance = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.MinimumDensityChance;
                 }
                 case RecordTypeInts.NAM2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Global");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Global.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.Global;
                 }
                 case RecordTypeInts.NAM3:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NumberOfTimesAllowedPerPlanet");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NumberOfTimesAllowedPerPlanet = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerPlanet;
                 }
                 case RecordTypeInts.NAM4:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DebugColor");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DebugColor = frame.ReadColor(ColorBinaryType.Alpha);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.DebugColor;
                 }
                 case RecordTypeInts.NAM5:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NumberOfTimesPerRequestCurve");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NumberOfTimesPerRequestCurve.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesPerRequestCurve;
                 }
                 case RecordTypeInts.NAM6:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SpawnGroupsLimitCurve");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SpawnGroupsLimitCurve.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.SpawnGroupsLimitCurve;
                 }
                 case RecordTypeInts.NAM7:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SpawnGroupDistanceOverrideCurve");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SpawnGroupDistanceOverrideCurve.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.SpawnGroupDistanceOverrideCurve;
                 }
                 case RecordTypeInts.NAM8:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AllowInvalidBiomeMarkers");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AllowInvalidBiomeMarkers = frame.ReadUInt8();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.AllowInvalidBiomeMarkers;
                 }
                 case RecordTypeInts.NAM9:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NumberOfTimesAllowedPerPlanetWorld");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NumberOfTimesAllowedPerPlanetWorld = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.NumberOfTimesAllowedPerPlanetWorld;
                 }
                 case RecordTypeInts.CTDA:
                 case RecordTypeInts.CITC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.ParsePerItem(
                             reader: frame,
@@ -2261,6 +2292,7 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary)
                         .CastExtendedList<Condition>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlanetContentManagerContentPropertiesComponent_FieldIndex.Conditions;
                 }
                 default:

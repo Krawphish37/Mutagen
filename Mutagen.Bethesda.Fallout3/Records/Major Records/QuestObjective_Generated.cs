@@ -1255,27 +1255,33 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.QOBJ:
                 {
                     if (lastParsed.ShortCircuit((int)QuestObjective_FieldIndex.Index, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestObjective_FieldIndex.Index;
                 }
                 case RecordTypeInts.NNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Description");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Description = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestObjective_FieldIndex.Description;
                 }
                 case RecordTypeInts.QSTA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Targets");
                     item.Targets.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<QuestObjectiveTarget>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: QuestObjectiveTarget_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: QuestObjectiveTarget.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestObjective_FieldIndex.Targets;
                 }
                 default:

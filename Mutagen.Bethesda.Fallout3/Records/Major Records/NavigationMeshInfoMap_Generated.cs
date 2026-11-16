@@ -1729,28 +1729,34 @@ namespace Mutagen.Bethesda.Fallout3
             {
                 case RecordTypeInts.NVER:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Version");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Version = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMeshInfoMap_FieldIndex.Version;
                 }
                 case RecordTypeInts.NVMI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Infos");
                     item.Infos.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavigationMeshInfo>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: NavigationMeshInfo_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: NavigationMeshInfo.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMeshInfoMap_FieldIndex.Infos;
                 }
                 case RecordTypeInts.NVCI:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Connections");
                     item.Connections.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<NavigationConnectionInfo>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: NavigationConnectionInfo_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: NavigationConnectionInfo.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NavigationMeshInfoMap_FieldIndex.Connections;
                 }
                 default:

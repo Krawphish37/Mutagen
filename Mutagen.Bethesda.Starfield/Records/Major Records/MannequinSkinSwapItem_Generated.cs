@@ -1081,17 +1081,21 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MSSI:
                 {
                     if (lastParsed.ShortCircuit((int)MannequinSkinSwapItem_FieldIndex.SkinSwap, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SkinSwap");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SkinSwap = EnumBinaryTranslation<Race.MannequinSkinSwapType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MannequinSkinSwapItem_FieldIndex.SkinSwap;
                 }
                 case RecordTypeInts.MSSA:
                 {
                     if (lastParsed.ShortCircuit((int)MannequinSkinSwapItem_FieldIndex.MaterialSwap, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaterialSwap");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MaterialSwap.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MannequinSkinSwapItem_FieldIndex.MaterialSwap;
                 }
                 default:

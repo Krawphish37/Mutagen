@@ -1305,14 +1305,18 @@ namespace Mutagen.Bethesda.Fallout3
             IPlayerSkills item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "SkillValues");
             Mutagen.Bethesda.Plugins.Binary.Translations.DictBinaryTranslation<Byte>.Instance.Parse<Skill>(
                 reader: frame,
                 item: item.SkillValues,
                 transl: ByteBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "SkillOffsets");
             Mutagen.Bethesda.Plugins.Binary.Translations.DictBinaryTranslation<Byte>.Instance.Parse<Skill>(
                 reader: frame,
                 item: item.SkillOffsets,
                 transl: ByteBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

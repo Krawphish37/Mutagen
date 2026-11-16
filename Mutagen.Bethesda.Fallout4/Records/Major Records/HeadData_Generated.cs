@@ -2480,57 +2480,69 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.NNAM:
                 {
                     if (lastParsed.ShortCircuit((int)HeadData_FieldIndex.NeckFatAdjustmentsScale, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NeckFatAdjustmentsScale");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.NeckFatAdjustmentsScale = Mutagen.Bethesda.Fallout4.NeckFatAdjustmentsScale.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadData_FieldIndex.NeckFatAdjustmentsScale;
                 }
                 case RecordTypeInts.INDX:
                 case RecordTypeInts.HEAD:
                 {
                     if (lastParsed.ShortCircuit((int)HeadData_FieldIndex.HeadParts, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "HeadParts");
                     item.HeadParts.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<HeadPartReference>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: HeadPartReference_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: HeadPartReference.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadData_FieldIndex.HeadParts;
                 }
                 case RecordTypeInts.RPRM:
                 {
                     if (lastParsed.ShortCircuit((int)HeadData_FieldIndex.RacePresets, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "RacePresets");
                     item.RacePresets.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<INpcGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.RPRM),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadData_FieldIndex.RacePresets;
                 }
                 case RecordTypeInts.AHCM:
                 {
                     if (lastParsed.ShortCircuit((int)HeadData_FieldIndex.AvailableHairColors, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "AvailableHairColors");
                     item.AvailableHairColors.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IColorRecordGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.AHCM),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadData_FieldIndex.AvailableHairColors;
                 }
                 case RecordTypeInts.FTSM:
                 {
                     if (lastParsed.ShortCircuit((int)HeadData_FieldIndex.FaceDetails, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "FaceDetails");
                     item.FaceDetails.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<ITextureSetGetter>>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.FTSM),
                             transl: FormLinkBinaryTranslation.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadData_FieldIndex.FaceDetails;
                 }
                 case RecordTypeInts.DFTM:
                 {
                     if (lastParsed.ShortCircuit((int)HeadData_FieldIndex.DefaultFaceTexture, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DefaultFaceTexture");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DefaultFaceTexture.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadData_FieldIndex.DefaultFaceTexture;
                 }
                 case RecordTypeInts.TTGP:
@@ -2538,12 +2550,14 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.TTGE:
                 {
                     if (lastParsed.ShortCircuit((int)HeadData_FieldIndex.TintLayers, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "TintLayers");
                     item.TintLayers.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<TintGroup>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: TintGroup_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: TintGroup.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadData_FieldIndex.TintLayers;
                 }
                 case RecordTypeInts.MPGN:
@@ -2557,34 +2571,40 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.MPGS:
                 {
                     if (lastParsed.ShortCircuit((int)HeadData_FieldIndex.MorphGroups, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "MorphGroups");
                     item.MorphGroups.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<MorphGroup>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: MorphGroup_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: MorphGroup.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadData_FieldIndex.MorphGroups;
                 }
                 case RecordTypeInts.FMRI:
                 case RecordTypeInts.FMRN:
                 {
                     if (lastParsed.ShortCircuit((int)HeadData_FieldIndex.FaceMorphs, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "FaceMorphs");
                     item.FaceMorphs.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<FaceMorph>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: FaceMorph_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: FaceMorph.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadData_FieldIndex.FaceMorphs;
                 }
                 case RecordTypeInts.WMAP:
                 {
                     if (lastParsed.ShortCircuit((int)HeadData_FieldIndex.MaleWrinkleMapPath, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaleWrinkleMapPath");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MaleWrinkleMapPath = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadData_FieldIndex.MaleWrinkleMapPath;
                 }
                 default:

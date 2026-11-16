@@ -1428,31 +1428,39 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.TINI:
                 {
                     if (lastParsed.ShortCircuit((int)TintAssets_FieldIndex.Index, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = frame.ReadUInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TintAssets_FieldIndex.Index;
                 }
                 case RecordTypeInts.TINT:
                 {
                     if (lastParsed.ShortCircuit((int)TintAssets_FieldIndex.FileName, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FileName");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FileName = AssetLinkBinaryTranslation.Instance.Parse<SkyrimTextureAssetType>(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TintAssets_FieldIndex.FileName;
                 }
                 case RecordTypeInts.TINP:
                 {
                     if (lastParsed.ShortCircuit((int)TintAssets_FieldIndex.MaskType, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaskType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MaskType = EnumBinaryTranslation<TintAssets.TintMaskType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TintAssets_FieldIndex.MaskType;
                 }
                 case RecordTypeInts.TIND:
                 {
                     if (lastParsed.ShortCircuit((int)TintAssets_FieldIndex.PresetDefault, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PresetDefault");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PresetDefault.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TintAssets_FieldIndex.PresetDefault;
                 }
                 case RecordTypeInts.TINC:
@@ -1460,12 +1468,14 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.TIRS:
                 {
                     if (lastParsed.ShortCircuit((int)TintAssets_FieldIndex.Presets, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Presets");
                     item.Presets.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<TintPreset>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: TintPreset_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: TintPreset.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TintAssets_FieldIndex.Presets;
                 }
                 default:

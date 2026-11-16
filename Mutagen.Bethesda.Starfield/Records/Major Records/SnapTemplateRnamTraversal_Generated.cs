@@ -1182,18 +1182,22 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.RNAM:
                 {
                     if (lastParsed.ShortCircuit((int)SnapTemplateRnamTraversal_FieldIndex.Traversal, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Traversal");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Traversal.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SnapTemplateRnamTraversal_FieldIndex.Traversal;
                 }
                 case RecordTypeInts.SNAM:
                 {
                     if (lastParsed.ShortCircuit((int)SnapTemplateRnamTraversal_FieldIndex.NodeIDs, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "NodeIDs");
                     item.NodeIDs.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<UInt32>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.SNAM),
                             transl: UInt32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SnapTemplateRnamTraversal_FieldIndex.NodeIDs;
                 }
                 default:

@@ -1009,6 +1009,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.WNAM:
                 {
                     if (lastParsed.ShortCircuit((int)InstanceNamingRule_FieldIndex.Text, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Text");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Text = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1016,12 +1017,14 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)InstanceNamingRule_FieldIndex.Text;
                 }
                 case RecordTypeInts.KSIZ:
                 case RecordTypeInts.KWDA:
                 {
                     if (lastParsed.ShortCircuit((int)InstanceNamingRule_FieldIndex.Keywords, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Keywords");
                     item.Keywords = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                             reader: frame,
@@ -1030,19 +1033,24 @@ namespace Mutagen.Bethesda.Starfield
                             triggeringRecord: translationParams.ConvertToCustom(RecordTypes.KWDA),
                             transl: FormLinkBinaryTranslation.Instance.Parse)
                         .CastExtendedList<IFormLinkGetter<IKeywordGetter>>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)InstanceNamingRule_FieldIndex.Keywords;
                 }
                 case RecordTypeInts.XNAM:
                 {
                     if (lastParsed.ShortCircuit((int)InstanceNamingRule_FieldIndex.Property, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Property");
                     item.Property = Mutagen.Bethesda.Starfield.InstanceNamingRuleProperty<T>.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)InstanceNamingRule_FieldIndex.Property;
                 }
                 case RecordTypeInts.YNAM:
                 {
                     if (lastParsed.ShortCircuit((int)InstanceNamingRule_FieldIndex.Index, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = frame.ReadUInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)InstanceNamingRule_FieldIndex.Index;
                 }
                 default:

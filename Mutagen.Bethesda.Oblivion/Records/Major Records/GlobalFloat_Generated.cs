@@ -1461,8 +1461,10 @@ namespace Mutagen.Bethesda.Oblivion
             {
                 case RecordTypeInts.FLTV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Data = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)GlobalFloat_FieldIndex.Data;
                 }
                 default:

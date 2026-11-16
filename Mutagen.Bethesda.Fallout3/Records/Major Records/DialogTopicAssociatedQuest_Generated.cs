@@ -1208,13 +1208,16 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.QSTI:
                 {
                     if (lastParsed.ShortCircuit((int)DialogTopicAssociatedQuest_FieldIndex.Quest, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Quest");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Quest.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogTopicAssociatedQuest_FieldIndex.Quest;
                 }
                 case RecordTypeInts.INFC:
                 {
                     if (lastParsed.ShortCircuit((int)DialogTopicAssociatedQuest_FieldIndex.SharedInfos, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "SharedInfos");
                     if (frame.MetaData.ModHeaderVersion!.Value >= 1.32f)
                     {
                         item.SharedInfos.SetTo(
@@ -1224,6 +1227,7 @@ namespace Mutagen.Bethesda.Fallout3
                                 translationParams: translationParams,
                                 transl: DialogTopicSharedInfo.TryCreateFromBinary));
                     }
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DialogTopicAssociatedQuest_FieldIndex.SharedInfos;
                 }
                 default:

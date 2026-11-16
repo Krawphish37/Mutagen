@@ -1080,15 +1080,19 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.INDX:
                 {
                     if (lastParsed.ShortCircuit((int)ArmorAddonModel_FieldIndex.AddonIndex, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AddonIndex");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.AddonIndex = frame.ReadUInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddonModel_FieldIndex.AddonIndex;
                 }
                 case RecordTypeInts.MODL:
                 {
                     if (lastParsed.ShortCircuit((int)ArmorAddonModel_FieldIndex.ArmorAddon, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ArmorAddon");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ArmorAddon.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ArmorAddonModel_FieldIndex.ArmorAddon;
                 }
                 default:

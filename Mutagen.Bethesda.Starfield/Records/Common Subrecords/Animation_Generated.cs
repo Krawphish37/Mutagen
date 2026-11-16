@@ -2170,108 +2170,144 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.BNAM:
                 {
                     if (lastParsed.ShortCircuit((int)Animation_FieldIndex.NpcAnimation, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "NpcAnimation");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.NpcAnimation.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Animation_FieldIndex.NpcAnimation;
                 }
                 case RecordTypeInts.STRV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Subgraph");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Subgraph = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Animation_FieldIndex.Subgraph;
                 }
                 case RecordTypeInts.VCLR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "BodyArchetype");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.BodyArchetype.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Animation_FieldIndex.BodyArchetype;
                 }
                 case RecordTypeInts.FLMV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FaceArchetype");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FaceArchetype.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Animation_FieldIndex.FaceArchetype;
                 }
                 case RecordTypeInts.FLAV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flavor");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flavor.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Animation_FieldIndex.Flavor;
                 }
                 case RecordTypeInts.QUAL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UseDialogueAnimation");
                     item.UseDialogueAnimation = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Animation_FieldIndex.UseDialogueAnimation;
                 }
                 case RecordTypeInts.DOFT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UseAnimationBodyArchetype");
                     item.UseAnimationBodyArchetype = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Animation_FieldIndex.UseAnimationBodyArchetype;
                 }
                 case RecordTypeInts.SOFT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "HasAnimationFaceArchetype");
                     item.HasAnimationFaceArchetype = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Animation_FieldIndex.HasAnimationFaceArchetype;
                 }
                 case RecordTypeInts.DPLT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AnimationCompleteEndsPhase");
                     item.AnimationCompleteEndsPhase = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Animation_FieldIndex.AnimationCompleteEndsPhase;
                 }
                 case RecordTypeInts.SPOR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AnimationOnlyMovement");
                     item.AnimationOnlyMovement = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Animation_FieldIndex.AnimationOnlyMovement;
                 }
                 case RecordTypeInts.OCOR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UseFlavorAnimation");
                     item.UseFlavorAnimation = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Animation_FieldIndex.UseFlavorAnimation;
                 }
                 case RecordTypeInts.LVCR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DelayStartTimeAction");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DelayStartTimeAction = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Animation_FieldIndex.DelayStartTimeAction;
                 }
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Animation_FieldIndex.Conditions;
                 }
                 case RecordTypeInts.ATAC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Action");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Action.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Animation_FieldIndex.Action;
                 }
                 case RecordTypeInts.SHRT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UseActorAnimationAction");
                     item.UseActorAnimationAction = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Animation_FieldIndex.UseActorAnimationAction;
                 }
                 case RecordTypeInts.PLRL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "AnimationHoldEvent");
                     item.AnimationHoldEvent = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Animation_FieldIndex.AnimationHoldEvent;
                 }
                 case RecordTypeInts.DTGT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DTGT");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DTGT = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Animation_FieldIndex.DTGT;
                 }
                 case RecordTypeInts.ACEP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ACEP");
                     item.ACEP = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Animation_FieldIndex.ACEP;
                 }
                 case RecordTypeInts.XNAM: // End Marker

@@ -1603,9 +1603,11 @@ namespace Mutagen.Bethesda.Fallout4
             Fallout4MajorRecordBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "FNAMParsing");
             MaterialSwapBinaryCreateTranslation.FillBinaryFNAMParsingCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static ParseResult FillBinaryRecordTypes(
@@ -1623,6 +1625,7 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.FNAM
                     when frame.MetaData.FormVersion >= 112:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "TreeFolder");
                     if (frame.MetaData.FormVersion!.Value >= 112)
                     {
                         MaterialSwapBinaryCreateTranslation.FillBinaryTreeFolderCustom(
@@ -1630,6 +1633,7 @@ namespace Mutagen.Bethesda.Fallout4
                             item: item,
                             lastParsed: lastParsed);
                     }
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MaterialSwap_FieldIndex.TreeFolder;
                 }
                 case RecordTypeInts.BNAM:
@@ -1637,10 +1641,12 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.FNAM:
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Substitutions");
                     MaterialSwapBinaryCreateTranslation.FillBinarySubstitutionsCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MaterialSwap_FieldIndex.Substitutions;
                 }
                 default:

@@ -1340,10 +1340,12 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Type");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Type = EnumBinaryTranslation<TimelineSceneAction.TimelineType, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TimelineSceneAction_FieldIndex.Type;
                 }
                 case RecordTypeInts.SNAM:
@@ -1362,8 +1364,10 @@ namespace Mutagen.Bethesda.Starfield
                     }
                     else if (lastParsed.ParsedIndex.Value <= (int)TimelineSceneAction_FieldIndex.Type)
                     {
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StartTime");
                         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                         item.StartTime = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                         return new ParseResult((int)TimelineSceneAction_FieldIndex.StartTime, nextRecordType);
                     }
                     else
@@ -1380,8 +1384,10 @@ namespace Mutagen.Bethesda.Starfield
                                     contentLength: contentLength,
                                     translationParams: translationParams.WithNoConverter());
                             case 1:
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StartTime");
                                 frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                                 item.StartTime = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                                 return new ParseResult((int)TimelineSceneAction_FieldIndex.StartTime, nextRecordType);
                             default:
                                 throw new NotImplementedException();
@@ -1390,20 +1396,26 @@ namespace Mutagen.Bethesda.Starfield
                 }
                 case RecordTypeInts.UNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.UNAM = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TimelineSceneAction_FieldIndex.UNAM;
                 }
                 case RecordTypeInts.LNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LNAM = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TimelineSceneAction_FieldIndex.LNAM;
                 }
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CNAM");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CNAM = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TimelineSceneAction_FieldIndex.CNAM;
                 }
                 default:

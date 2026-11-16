@@ -1195,22 +1195,26 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.MSSS:
                 {
                     if (lastParsed.ShortCircuit((int)MannequinSkinSwap_FieldIndex.Gender, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Gender");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Gender = EnumBinaryTranslation<MaleFemaleGender, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MannequinSkinSwap_FieldIndex.Gender;
                 }
                 case RecordTypeInts.MSSI:
                 case RecordTypeInts.MSSA:
                 {
                     if (lastParsed.ShortCircuit((int)MannequinSkinSwap_FieldIndex.Items, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Items");
                     item.Items.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<MannequinSkinSwapItem>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: MannequinSkinSwapItem_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: MannequinSkinSwapItem.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MannequinSkinSwap_FieldIndex.Items;
                 }
                 default:

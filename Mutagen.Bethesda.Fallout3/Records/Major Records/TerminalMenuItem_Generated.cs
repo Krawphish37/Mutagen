@@ -1549,59 +1549,73 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.ITXT:
                 {
                     if (lastParsed.ShortCircuit((int)TerminalMenuItem_FieldIndex.ItemText, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ItemText");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ItemText = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TerminalMenuItem_FieldIndex.ItemText;
                 }
                 case RecordTypeInts.RNAM:
                 {
                     if (lastParsed.ShortCircuit((int)TerminalMenuItem_FieldIndex.ResultText, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ResultText");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ResultText = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TerminalMenuItem_FieldIndex.ResultText;
                 }
                 case RecordTypeInts.ANAM:
                 {
                     if (lastParsed.ShortCircuit((int)TerminalMenuItem_FieldIndex.MenuItemFlags, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MenuItemFlags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MenuItemFlags = EnumBinaryTranslation<TerminalMenuItem.MenuItemFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TerminalMenuItem_FieldIndex.MenuItemFlags;
                 }
                 case RecordTypeInts.INAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DisplayNote");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.DisplayNote.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TerminalMenuItem_FieldIndex.DisplayNote;
                 }
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SubMenu");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SubMenu.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TerminalMenuItem_FieldIndex.SubMenu;
                 }
                 case RecordTypeInts.SCHR:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EmbeddedScript");
                     item.EmbeddedScript.CopyInFromBinary(
                         frame: frame,
                         translationParams: null);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TerminalMenuItem_FieldIndex.EmbeddedScript;
                 }
                 case RecordTypeInts.CTDA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: Condition_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TerminalMenuItem_FieldIndex.Conditions;
                 }
                 default:

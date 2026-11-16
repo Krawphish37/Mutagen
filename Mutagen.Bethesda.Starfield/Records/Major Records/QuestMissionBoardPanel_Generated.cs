@@ -1135,6 +1135,7 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.QMDT:
                 {
                     if (lastParsed.ShortCircuit((int)QuestMissionBoardPanel_FieldIndex.Header, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Header");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Header = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1142,11 +1143,13 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestMissionBoardPanel_FieldIndex.Header;
                 }
                 case RecordTypeInts.QMDP:
                 {
                     if (lastParsed.ShortCircuit((int)QuestMissionBoardPanel_FieldIndex.Line1, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Line1");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Line1 = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1154,11 +1157,13 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestMissionBoardPanel_FieldIndex.Line1;
                 }
                 case RecordTypeInts.QMDS:
                 {
                     if (lastParsed.ShortCircuit((int)QuestMissionBoardPanel_FieldIndex.Line2, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Line2");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Line2 = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1166,6 +1171,7 @@ namespace Mutagen.Bethesda.Starfield
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)QuestMissionBoardPanel_FieldIndex.Line2;
                 }
                 default:

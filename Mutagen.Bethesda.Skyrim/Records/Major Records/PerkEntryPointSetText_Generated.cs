@@ -1154,12 +1154,14 @@ namespace Mutagen.Bethesda.Skyrim
             APerkEntryPointEffectBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Text");
             item.Text = StringBinaryTranslation.Instance.Parse(
                 reader: frame,
                 eager: true,
                 source: StringsSource.Normal,
                 stringBinaryType: StringBinaryType.NullTerminate,
                 parseWhole: false);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

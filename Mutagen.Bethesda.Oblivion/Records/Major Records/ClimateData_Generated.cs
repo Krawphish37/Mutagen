@@ -1396,25 +1396,39 @@ namespace Mutagen.Bethesda.Oblivion
             IClimateData item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "SunriseBegin");
             ClimateDataBinaryCreateTranslation.FillBinarySunriseBeginCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "SunriseEnd");
             ClimateDataBinaryCreateTranslation.FillBinarySunriseEndCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "SunsetBegin");
             ClimateDataBinaryCreateTranslation.FillBinarySunsetBeginCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "SunsetEnd");
             ClimateDataBinaryCreateTranslation.FillBinarySunsetEndCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Volatility");
             item.Volatility = frame.ReadUInt8();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "Phase");
             ClimateDataBinaryCreateTranslation.FillBinaryPhaseCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "PhaseLength");
             ClimateDataBinaryCreateTranslation.FillBinaryPhaseLengthCustom(
                 frame: frame,
                 item: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
         public static partial void FillBinarySunriseBeginCustom(

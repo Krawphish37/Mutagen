@@ -1012,9 +1012,11 @@ namespace Mutagen.Bethesda.Fallout3
             IPackageTargetObjectType item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectType");
             item.ObjectType = EnumBinaryTranslation<Package.ObjectType, MutagenFrame, MutagenWriter>.Instance.Parse(
                 reader: frame,
                 length: 4);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

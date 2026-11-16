@@ -1125,14 +1125,18 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.MTYP:
                 {
                     if (lastParsed.ShortCircuit((int)RaceMovementType_FieldIndex.MovementType, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MovementType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MovementType.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RaceMovementType_FieldIndex.MovementType;
                 }
                 case RecordTypeInts.SPED:
                 {
                     if (lastParsed.ShortCircuit((int)RaceMovementType_FieldIndex.Overrides, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Overrides");
                     item.Overrides = Mutagen.Bethesda.Skyrim.SpeedOverrides.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)RaceMovementType_FieldIndex.Overrides;
                 }
                 default:

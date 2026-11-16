@@ -1259,15 +1259,19 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.DSTD:
                 {
                     if (lastParsed.ShortCircuit((int)DestructionStage_FieldIndex.Data, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
                     item.Data = Mutagen.Bethesda.Skyrim.DestructionStageData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DestructionStage_FieldIndex.Data;
                 }
                 case RecordTypeInts.DMDL:
                 {
                     if (lastParsed.ShortCircuit((int)DestructionStage_FieldIndex.Model, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Model");
                     item.Model = Mutagen.Bethesda.Skyrim.Model.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(DestructionStage_Registration.ModelConverter).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DestructionStage_FieldIndex.Model;
                 }
                 case RecordTypeInts.DSTF: // End Marker

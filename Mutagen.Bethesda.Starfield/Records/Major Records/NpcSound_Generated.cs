@@ -1130,15 +1130,19 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.CS3S:
                 {
                     if (lastParsed.ShortCircuit((int)NpcSound_FieldIndex.Sound, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Sound");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength; // Skip header
                     item.Sound = Mutagen.Bethesda.Starfield.SoundReference.CreateFromBinary(frame: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcSound_FieldIndex.Sound;
                 }
                 case RecordTypeInts.CS3F:
                 {
                     if (lastParsed.ShortCircuit((int)NpcSound_FieldIndex.StopConsciousLoopWhenUnconscious, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StopConsciousLoopWhenUnconscious");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.StopConsciousLoopWhenUnconscious = frame.ReadBoolean();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)NpcSound_FieldIndex.StopConsciousLoopWhenUnconscious;
                 }
                 default:

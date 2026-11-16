@@ -1240,22 +1240,28 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.HTID:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Aliases");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Aliases = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Int32>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse)
                         .CastExtendedList<Int32>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadTracking_FieldIndex.Aliases;
                 }
                 case RecordTypeInts.FNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ForceRotate");
                     item.ForceRotate = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadTracking_FieldIndex.ForceRotate;
                 }
                 case RecordTypeInts.PNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ForceRotateMustComplete");
                     item.ForceRotateMustComplete = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)HeadTracking_FieldIndex.ForceRotateMustComplete;
                 }
                 case RecordTypeInts.HNAM: // End Marker

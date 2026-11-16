@@ -979,7 +979,9 @@ namespace Mutagen.Bethesda.Skyrim
             IMorph item,
             MutagenFrame frame)
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Data");
             item.Data = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(32));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

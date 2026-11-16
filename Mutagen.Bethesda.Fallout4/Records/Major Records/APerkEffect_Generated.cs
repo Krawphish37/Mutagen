@@ -1434,19 +1434,24 @@ namespace Mutagen.Bethesda.Fallout4
                 }
                 case RecordTypeInts.EPFB:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "PerkEntryID");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.PerkEntryID = frame.ReadUInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APerkEffect_FieldIndex.PerkEntryID;
                 }
                 case RecordTypeInts.EPFT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "FunctionParameters");
                     return APerkEffectBinaryCreateTranslation.FillBinaryFunctionParametersCustom(
                         frame: frame.SpawnWithLength(frame.MetaData.Constants.SubConstants.HeaderLength + contentLength),
                         item: item,
                         lastParsed: lastParsed);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 }
                 case RecordTypeInts.EPF2:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ButtonLabel");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ButtonLabel = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1454,14 +1459,17 @@ namespace Mutagen.Bethesda.Fallout4
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APerkEffect_FieldIndex.ButtonLabel;
                 }
                 case RecordTypeInts.EPF3:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Flags");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Flags = EnumBinaryTranslation<APerkEffect.Flag, MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         length: contentLength);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)APerkEffect_FieldIndex.Flags;
                 }
                 case RecordTypeInts.PRKF: // End Marker

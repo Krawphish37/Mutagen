@@ -1165,11 +1165,13 @@ namespace Mutagen.Bethesda.Fallout4
             ScriptFragmentsBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "PhaseFragments");
             item.PhaseFragments.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ScenePhaseFragment>.Instance.Parse(
                     amount: frame.ReadUInt16(),
                     reader: frame,
                     transl: ScenePhaseFragment.TryCreateFromBinary));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

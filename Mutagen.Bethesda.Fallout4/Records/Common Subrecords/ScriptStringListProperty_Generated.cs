@@ -1152,6 +1152,7 @@ namespace Mutagen.Bethesda.Fallout4
             ScriptPropertyBinaryCreateTranslation.FillBinaryStructs(
                 item: item,
                 frame: frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Data");
             item.Data.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<String>.Instance.Parse(
                     amount: checked((int)frame.ReadUInt32()),
@@ -1164,6 +1165,7 @@ namespace Mutagen.Bethesda.Fallout4
                             parseWhole: false,
                             binaryType: StringBinaryType.PrependLengthUShort);
                     }));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
 
     }

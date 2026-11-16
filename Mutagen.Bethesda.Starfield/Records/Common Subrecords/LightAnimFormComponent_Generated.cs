@@ -1114,9 +1114,11 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.PTCL:
                 case RecordTypeInts.REFL:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Reflection");
                     item.Reflection = Mutagen.Bethesda.Starfield.Reflection.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(LightAnimFormComponent_Registration.ReflectionConverter, lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LightAnimFormComponent_FieldIndex.Reflection;
                 }
                 case RecordTypeInts.XXXX:

@@ -1474,42 +1474,53 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.LCEP:
                 {
                     if (lastParsed.ShortCircuit((int)StartScene_FieldIndex.LCEPScene, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LCEPScene");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LCEPScene.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StartScene_FieldIndex.LCEPScene;
                 }
                 case RecordTypeInts.STSC:
                 {
                     if (lastParsed.ShortCircuit((int)StartScene_FieldIndex.STSCScene, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "STSCScene");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.STSCScene.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StartScene_FieldIndex.STSCScene;
                 }
                 case RecordTypeInts.INTT:
                 {
                     if (lastParsed.ShortCircuit((int)StartScene_FieldIndex.INTTPhaseIndex, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "INTTPhaseIndex");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.INTTPhaseIndex = frame.ReadUInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StartScene_FieldIndex.INTTPhaseIndex;
                 }
                 case RecordTypeInts.ACTV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ACTVPhaseIndex");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ACTVPhaseIndex = frame.ReadUInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StartScene_FieldIndex.ACTVPhaseIndex;
                 }
                 case RecordTypeInts.SSPN:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "StartPhaseForScene");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.StartPhaseForScene = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StartScene_FieldIndex.StartPhaseForScene;
                 }
                 case RecordTypeInts.CTDA:
                 case RecordTypeInts.CITC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Conditions");
                     item.Conditions = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Condition>.Instance.ParsePerItem(
                             reader: frame,
@@ -1519,6 +1530,7 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams,
                             transl: Condition.TryCreateFromBinary)
                         .CastExtendedList<Condition>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StartScene_FieldIndex.Conditions;
                 }
                 default:

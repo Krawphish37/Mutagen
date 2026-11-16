@@ -1190,6 +1190,7 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.DATA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Worldspaces");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Worldspaces = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<UniqueOverlayListComponentItem>.Instance.Parse(
@@ -1197,6 +1198,7 @@ namespace Mutagen.Bethesda.Starfield
                             reader: frame,
                             transl: UniqueOverlayListComponentItem.TryCreateFromBinary)
                         .CastExtendedList<UniqueOverlayListComponentItem>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)UniqueOverlayListComponent_FieldIndex.Worldspaces;
                 }
                 default:

@@ -1194,33 +1194,41 @@ namespace Mutagen.Bethesda.Skyrim
                 case RecordTypeInts.TINI:
                 {
                     if (lastParsed.ShortCircuit((int)TintLayer_FieldIndex.Index, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Index");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Index = frame.ReadUInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TintLayer_FieldIndex.Index;
                 }
                 case RecordTypeInts.TINC:
                 {
                     if (lastParsed.ShortCircuit((int)TintLayer_FieldIndex.Color, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Color");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Color = frame.ReadColor(ColorBinaryType.Alpha);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TintLayer_FieldIndex.Color;
                 }
                 case RecordTypeInts.TINV:
                 {
                     if (lastParsed.ShortCircuit((int)TintLayer_FieldIndex.InterpolationValue, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "InterpolationValue");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.InterpolationValue = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(
                         reader: frame,
                         integerType: FloatIntegerType.UInt,
                         multiplier: null,
                         divisor: 100f);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TintLayer_FieldIndex.InterpolationValue;
                 }
                 case RecordTypeInts.TIAS:
                 {
                     if (lastParsed.ShortCircuit((int)TintLayer_FieldIndex.Preset, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Preset");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Preset = frame.ReadInt16();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TintLayer_FieldIndex.Preset;
                 }
                 default:

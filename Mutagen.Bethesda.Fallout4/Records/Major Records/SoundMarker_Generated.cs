@@ -1612,18 +1612,24 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.OBND:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ObjectBounds");
                     item.ObjectBounds = Mutagen.Bethesda.Fallout4.ObjectBounds.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundMarker_FieldIndex.ObjectBounds;
                 }
                 case RecordTypeInts.SDSC:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "SoundDescriptor");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.SoundDescriptor.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundMarker_FieldIndex.SoundDescriptor;
                 }
                 case RecordTypeInts.REPT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Repeat");
                     item.Repeat = Mutagen.Bethesda.Fallout4.SoundRepeat.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)SoundMarker_FieldIndex.Repeat;
                 }
                 default:

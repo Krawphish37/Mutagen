@@ -1498,12 +1498,14 @@ namespace Mutagen.Bethesda.Fallout4
             {
                 case RecordTypeInts.TNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Tags");
                     item.Tags.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<AnimationSoundTag>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: AnimationSoundTag_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: AnimationSoundTag.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AnimationSoundTagSet_FieldIndex.Tags;
                 }
                 default:

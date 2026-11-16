@@ -690,9 +690,11 @@ namespace Mutagen.Bethesda.Skyrim
                 frame: frame,
                 translationParams: translationParams,
                 fillStructs: ConditionFloatBinaryCreateTranslation.FillBinaryStructs);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.HandRead(frame, "CustomBinaryEnd");
             ConditionFloatBinaryCreateTranslation.CustomBinaryEndImportPublic(
                 frame: frame,
                 obj: item);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
         
         public override void CopyInFromBinary(

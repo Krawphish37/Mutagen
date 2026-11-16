@@ -1151,6 +1151,7 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.VNAM:
                 {
                     if (lastParsed.ShortCircuit((int)InstanceNamingRuleSet_FieldIndex.Names, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Names");
                     item.Names = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<InstanceNamingRule>.Instance.ParsePerItem(
                             reader: frame,
@@ -1160,6 +1161,7 @@ namespace Mutagen.Bethesda.Fallout4
                             translationParams: translationParams,
                             transl: InstanceNamingRule.TryCreateFromBinary)
                         .CastExtendedList<InstanceNamingRule>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)InstanceNamingRuleSet_FieldIndex.Names;
                 }
                 default:

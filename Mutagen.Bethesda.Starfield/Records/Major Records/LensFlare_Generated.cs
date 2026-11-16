@@ -1926,43 +1926,56 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.VMAD:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VirtualMachineAdapter");
                     item.VirtualMachineAdapter = Mutagen.Bethesda.Starfield.VirtualMachineAdapter.CreateFromBinary(
                         frame: frame,
                         translationParams: translationParams.With(lastParsed.LengthOverride).DoNotShortCircuit());
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LensFlare_FieldIndex.VirtualMachineAdapter;
                 }
                 case RecordTypeInts.CNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ColorInfluence");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ColorInfluence = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LensFlare_FieldIndex.ColorInfluence;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FadeDistanceRadiusScale");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FadeDistanceRadiusScale = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LensFlare_FieldIndex.FadeDistanceRadiusScale;
                 }
                 case RecordTypeInts.ENAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "ExposureInfluence");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.ExposureInfluence = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LensFlare_FieldIndex.ExposureInfluence;
                 }
                 case RecordTypeInts.MNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MinEV100");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MinEV100 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LensFlare_FieldIndex.MinEV100;
                 }
                 case RecordTypeInts.XNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MaxEV100");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MaxEV100 = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LensFlare_FieldIndex.MaxEV100;
                 }
                 case RecordTypeInts.LFSP:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Sprites");
                     item.Sprites = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<LensFlareSprite>.Instance.ParsePerItem(
                             reader: frame,
@@ -1972,6 +1985,7 @@ namespace Mutagen.Bethesda.Starfield
                             translationParams: translationParams,
                             transl: LensFlareSprite.TryCreateFromBinary)
                         .CastExtendedList<LensFlareSprite>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)LensFlare_FieldIndex.Sprites;
                 }
                 case RecordTypeInts.XXXX:

@@ -1268,41 +1268,51 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.FULL:
                 {
                     if (lastParsed.ShortCircuit((int)AudioData_FieldIndex.LocationName, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "LocationName");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.LocationName = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AudioData_FieldIndex.LocationName;
                 }
                 case RecordTypeInts.CNAM:
                 {
                     if (lastParsed.ShortCircuit((int)AudioData_FieldIndex.Location, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Location");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Location.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AudioData_FieldIndex.Location;
                 }
                 case RecordTypeInts.BNAM:
                 {
                     if (lastParsed.ShortCircuit((int)AudioData_FieldIndex.UseControllerValues, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "UseControllerValues");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.UseControllerValues = BooleanBinaryTranslation<MutagenFrame>.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         byteLength: 4);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AudioData_FieldIndex.UseControllerValues;
                 }
                 case RecordTypeInts.MNAM:
                 {
                     if (lastParsed.ShortCircuit((int)AudioData_FieldIndex.Layer2TriggerPercent, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Layer2TriggerPercent");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Layer2TriggerPercent = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AudioData_FieldIndex.Layer2TriggerPercent;
                 }
                 case RecordTypeInts.NNAM:
                 {
                     if (lastParsed.ShortCircuit((int)AudioData_FieldIndex.Layer3TriggerPercent, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Layer3TriggerPercent");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Layer3TriggerPercent = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)AudioData_FieldIndex.Layer3TriggerPercent;
                 }
                 default:

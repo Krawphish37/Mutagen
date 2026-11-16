@@ -1125,14 +1125,18 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.MTYP:
                 {
                     if (lastParsed.ShortCircuit((int)MovementDataOverride_FieldIndex.MovementType, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MovementType");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.MovementType.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MovementDataOverride_FieldIndex.MovementType;
                 }
                 case RecordTypeInts.SPED:
                 {
                     if (lastParsed.ShortCircuit((int)MovementDataOverride_FieldIndex.MovementData, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MovementData");
                     item.MovementData = Mutagen.Bethesda.Fallout4.MovementData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MovementDataOverride_FieldIndex.MovementData;
                 }
                 default:

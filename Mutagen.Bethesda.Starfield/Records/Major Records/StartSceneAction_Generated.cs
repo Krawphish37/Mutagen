@@ -1283,17 +1283,21 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.STSC:
                 case RecordTypeInts.INTT:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "StartScenes");
                     item.StartScenes.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<StartScene>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: StartScene_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: StartScene.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StartSceneAction_FieldIndex.StartScenes;
                 }
                 case RecordTypeInts.HTID:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "EndScene");
                     item.EndScene = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)StartSceneAction_FieldIndex.EndScene;
                 }
                 default:

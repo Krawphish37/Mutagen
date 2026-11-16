@@ -1094,14 +1094,18 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.XCZR:
                 {
                     if (lastParsed.ShortCircuit((int)PlacedObjectWaterCurrentReference_FieldIndex.Reference, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Reference");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Reference.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedObjectWaterCurrentReference_FieldIndex.Reference;
                 }
                 case RecordTypeInts.XCZA:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "XCZA");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.XCZA = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)PlacedObjectWaterCurrentReference_FieldIndex.XCZA;
                 }
                 default:

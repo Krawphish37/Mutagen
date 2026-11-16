@@ -1806,28 +1806,36 @@ namespace Mutagen.Bethesda.Starfield
             {
                 case RecordTypeInts.MNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MovementType_FieldIndex.Name;
                 }
                 case RecordTypeInts.SPED:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "MovementData");
                     item.MovementData = Mutagen.Bethesda.Starfield.MovementData.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MovementType_FieldIndex.MovementData;
                 }
                 case RecordTypeInts.LNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FlightAngleGain");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FlightAngleGain = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MovementType_FieldIndex.FlightAngleGain;
                 }
                 case RecordTypeInts.KNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "FastWalk");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.FastWalk = FloatBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: frame.SpawnWithLength(contentLength));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MovementType_FieldIndex.FastWalk;
                 }
                 case RecordTypeInts.INTV:
@@ -1835,13 +1843,19 @@ namespace Mutagen.Bethesda.Starfield
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     var dataFrame = frame.SpawnWithLength(contentLength);
                     if (dataFrame.Remaining < 1) return null;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "ClampMaxAnimationSpeeds");
                     item.ClampMaxAnimationSpeeds = dataFrame.ReadBoolean();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(dataFrame, "FlagsUnknown");
                     item.FlagsUnknown = ByteArrayBinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(reader: dataFrame.SpawnWithLength(3));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(dataFrame);
                     return (int)MovementType_FieldIndex.FlagsUnknown;
                 }
                 case RecordTypeInts.BOLV:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "DisplayForNonCharacters");
                     item.DisplayForNonCharacters = true;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)MovementType_FieldIndex.DisplayForNonCharacters;
                 }
                 default:

@@ -1514,12 +1514,14 @@ namespace Mutagen.Bethesda.Skyrim
             {
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Objects");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Objects = 
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<DefaultObject>.Instance.Parse(
                             reader: frame.SpawnWithLength(contentLength),
                             transl: DefaultObject.TryCreateFromBinary)
                         .CastExtendedList<DefaultObject>();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)DefaultObjectManager_FieldIndex.Objects;
                 }
                 default:

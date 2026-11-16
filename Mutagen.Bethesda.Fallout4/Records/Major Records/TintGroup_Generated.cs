@@ -1321,6 +1321,7 @@ namespace Mutagen.Bethesda.Fallout4
                 case RecordTypeInts.TTGP:
                 {
                     if (lastParsed.ShortCircuit((int)TintGroup_FieldIndex.Name, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Name");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Name = StringBinaryTranslation.Instance.Parse(
                         reader: frame.SpawnWithLength(contentLength),
@@ -1328,24 +1329,29 @@ namespace Mutagen.Bethesda.Fallout4
                         source: StringsSource.Normal,
                         stringBinaryType: StringBinaryType.NullTerminate,
                         parseWhole: true);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TintGroup_FieldIndex.Name;
                 }
                 case RecordTypeInts.TETI:
                 {
                     if (lastParsed.ShortCircuit((int)TintGroup_FieldIndex.Options, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Options");
                     item.Options.SetTo(
                         Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<TintTemplateOption>.Instance.Parse(
                             reader: frame,
                             triggeringRecord: TintTemplateOption_Registration.TriggerSpecs,
                             translationParams: translationParams,
                             transl: TintTemplateOption.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TintGroup_FieldIndex.Options;
                 }
                 case RecordTypeInts.TTGE:
                 {
                     if (lastParsed.ShortCircuit((int)TintGroup_FieldIndex.CategoryIndex, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "CategoryIndex");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.CategoryIndex = frame.ReadUInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)TintGroup_FieldIndex.CategoryIndex;
                 }
                 default:

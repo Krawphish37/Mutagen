@@ -1032,8 +1032,10 @@ namespace Mutagen.Bethesda.Fallout3
                 case RecordTypeInts.SCRV:
                 {
                     if (lastParsed.ShortCircuit((int)ScriptVariableReference_FieldIndex.VariableIndex, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "VariableIndex");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.VariableIndex = frame.ReadInt32();
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ScriptVariableReference_FieldIndex.VariableIndex;
                 }
                 default:

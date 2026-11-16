@@ -1106,13 +1106,17 @@ namespace Mutagen.Bethesda.Starfield
                 case RecordTypeInts.RNAM:
                 {
                     if (lastParsed.ShortCircuit((int)ResourceGenerationDataItem_FieldIndex.Resource, translationParams)) return ParseResult.Stop;
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Resource");
                     frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
                     item.Resource.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ResourceGenerationDataItem_FieldIndex.Resource;
                 }
                 case RecordTypeInts.DNAM:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "GenerationData");
                     item.GenerationData = Mutagen.Bethesda.Starfield.ResourceGenerationDataValues.CreateFromBinary(frame: frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)ResourceGenerationDataItem_FieldIndex.GenerationData;
                 }
                 default:
