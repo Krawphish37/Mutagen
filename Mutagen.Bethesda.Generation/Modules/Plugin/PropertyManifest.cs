@@ -92,8 +92,21 @@ internal static class PropertyManifest
             CopyAttribute(obj.Node, elem, "customBinaryEndWrittenFrom");
         }
 
-        // Which hand-written step fills each field (CustomLogic steps and Custom fields say so with fills=)
+        // An object read whole by hand (C73): the method, and the fields it fills
+        CopyAttribute(obj.Node, elem, "handRead");
+        CopyAttribute(obj.Node, elem, "handReadFills");
+
+        // Which hand-written step fills each field (CustomLogic steps and Custom fields say so with fills=; an object read
+        // whole by hand, with handReadFills=)
         var filledBy = new Dictionary<string, string>();
+        if ((string?)obj.Node.Attribute("handRead") is { Length: > 0 } handRead
+            && (string?)obj.Node.Attribute("handReadFills") is { Length: > 0 } handReadFills)
+        {
+            foreach (var path in handReadFills.Split(','))
+            {
+                filledBy.TryAdd(path.Split('.')[0], handRead);
+            }
+        }
         foreach (var field in obj.IterateFields(expandSets: SetMarkerType.ExpandSets.TrueAndInclude, nonIntegrated: true))
         {
             var fills = (string?)FieldNode(obj, field)?.Attribute("fills");

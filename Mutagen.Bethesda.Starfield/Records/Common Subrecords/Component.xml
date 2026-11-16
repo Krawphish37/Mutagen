@@ -672,8 +672,9 @@
   <!-- C63: the catch-all (selectorValue="*", as UnknownConditionData's conditionFunction="*"): a component whose BFCB
        isn't exactly a ComponentType member's name and a zero (no plugin in Data has one). Kept as stored so the record
        writes back byte for byte: TypeName, the BFCB's text; Data, every subrecord up to its BFCE as stored. Read and
-       written by hand (AComponent.cs, UnknownComponent.ReadRaw / WriteRaw); the overlay returns this class too. -->
-  <Object name="UnknownComponent" objType="Subrecord" baseClass="AComponent" selectorValue="*" binaryOverlay="NoGeneration">
+       written by hand (AComponent.cs, UnknownComponent.ReadRaw / WriteRaw); the overlay returns this class too.
+       handRead / handReadFills (C73): the method that reads it whole, and the fields it fills. -->
+  <Object name="UnknownComponent" objType="Subrecord" baseClass="AComponent" selectorValue="*" binaryOverlay="NoGeneration" handRead="ReadRaw" handReadFills="TypeName,Data">
     <Fields>
       <String name="TypeName" binary="NoGeneration" nullable="False" />
       <ByteArray name="Data" binary="NoGeneration" nullable="False" />

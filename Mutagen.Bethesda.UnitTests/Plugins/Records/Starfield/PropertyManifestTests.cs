@@ -136,4 +136,18 @@ public class PropertyManifestTests
         var unknown2 = condition.Elements("Property").Single(p => (string)p.Attribute("name")! == "Unknown2");
         ((string?)unknown2.Attribute("filledBy")).ShouldBe("FunctionParse");
     }
+
+    // C73: the components' catch-all is read whole by UnknownComponent.ReadRaw, which fills both its fields
+    [Fact]
+    public void UnknownComponent_FieldsAreFilledByItsHandReader()
+    {
+        var unknown = Manifest().Elements("Object").Single(o => (string)o.Attribute("name")! == "UnknownComponent");
+        ((string?)unknown.Attribute("handRead")).ShouldBe("ReadRaw");
+        ((string?)unknown.Attribute("handReadFills")).ShouldBe("TypeName,Data");
+        foreach (var name in new[] { "TypeName", "Data" })
+        {
+            var property = unknown.Elements("Property").Single(p => (string)p.Attribute("name")! == name);
+            ((string?)property.Attribute("filledBy")).ShouldBe("ReadRaw");
+        }
+    }
 }
