@@ -39,6 +39,8 @@
          one pack collects files from. -->
     <ItemGroup Condition="'$(TargetFramework)' == ''">
         <None Include="Plugins\Records\*.xml" Pack="true" PackagePath="loqui\Mutagen.Bethesda.Core\Plugins\Records\%(Filename)%(Extension)" />
+        <!-- The generated manifest of every object's compiled properties (C60, W6), next to it -->
+        <None Include="Plugins\Manifest\*.xml" Pack="true" PackagePath="loqui\Mutagen.Bethesda.Core\Plugins\Manifest\%(Filename)%(Extension)" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Archives\Archive.cs" />

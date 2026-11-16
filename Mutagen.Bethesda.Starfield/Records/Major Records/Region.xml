@@ -24,6 +24,7 @@
       <Enum name="Flags" enumName="RegionData.RegionDataFlag" binary="NoGeneration" layoutSubrecord="RDAT" layoutOffset="4" />
       <UInt8 name="Priority" binary="NoGeneration" layoutSubrecord="RDAT" layoutOffset="5" />
     </Fields>
+    <HandWritten name="DataType" type="RegionData.RegionDataType" from="class" subrecord="RDAT" offset="0" length="4" note="the class, picked from RDAT 0-3" />
   </Object>
   <Object name="RegionSounds" objType="Subrecord" baseClass="RegionData">
     <Fields>

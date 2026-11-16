@@ -5,7 +5,7 @@
       <Float name="IdleTime" recordType="XPRD" nullable="False" />
       <CustomLogic name="PatrolScriptMarker" recordType="XPPA" fills="" writtenFrom="marker" />
       <FormLink name="Idle" recordType="INAM" refName="IdleAnimation" nullable="False" />
-      <RefList name="Topics" refName="ATopicReference" binary="Custom" selectedBy="here:Int32" />
+      <RefList name="Topics" refName="ATopicReference" binary="Custom" fills="Topics" selectedBy="here:Int32" />
       <FormLink name="Topic" recordType="TNAM" refName="DialogTopic" />
     </Fields>
   </Object>

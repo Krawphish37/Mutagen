@@ -12,9 +12,9 @@
       <RefList name="Components" refName="AComponent" />
       <Data recordType="ACBS">
         <Fields>
-          <Enum name="Flags" enumName="Npc.Flag" byteLength="4" binary="Custom" layoutDroppedBits="7" />
+          <Enum name="Flags" enumName="Npc.Flag" byteLength="4" binary="Custom" fills="Flags" layoutDroppedBits="7" />
           <Int16 name="XpValueOffset" />
-          <RefDirect name="Level" refName="ANpcLevel" binary="Custom" generateClassMembers="false" byteLength="2" selectedBy="field:Flags:bit=7" layoutOffset="6" />
+          <RefDirect name="Level" refName="ANpcLevel" binary="Custom" fills="Level,Flags" generateClassMembers="false" byteLength="2" selectedBy="field:Flags:bit=7" layoutOffset="6" />
           <Int16 name="CalcMinLevel" />
           <Int16 name="CalcMaxLevel" />
           <Int16 name="DispositionBase" />

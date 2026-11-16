@@ -4,7 +4,7 @@
     <Fields>
       <String name="Name" recordType="NNAM" translated="Normal" />
       <String name="Description" recordType="DNAM" translated="Normal" />
-      <RefDirect name="Data" refName="AGameplayOptionData" recordType="TNAM" binary="Custom" />
+      <RefDirect name="Data" refName="AGameplayOptionData" recordType="TNAM" binary="Custom" fills="Data" />
       <RefList name="Rewards" refName="GameplayOptionReward" />
       <List name="Keywords" counterRecType="KSIZ" recordType="KWDA">
         <FormLink refName="Keyword" />

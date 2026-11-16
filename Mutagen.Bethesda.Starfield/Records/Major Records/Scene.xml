@@ -6,7 +6,7 @@
       <Enum name="Flags" enumName="Scene.Flag" byteLength="4" recordType="FNAM" />
       <RefList name="Phases" refName="ScenePhase" />
       <RefList name="Actors" refName="SceneActor" />
-      <RefList name="Actions" refName="ASceneAction" recordType="ANAM" binary="Custom" selectedBy="subrecord:ANAM:UInt16" />
+      <RefList name="Actions" refName="ASceneAction" recordType="ANAM" binary="Custom" fills="Actions" selectedBy="subrecord:ANAM:UInt16" />
       <FormLink name="Quest" refName="Quest" recordType="PNAM" />
       <UInt32 name="LastActionIndex" recordType="INAM" />
       <!-- CK 1.16.244.0, Scene > Edit Actor Behavior: the five scene-wide "Set all" overrides (Fallout 4 has the first four).
@@ -59,7 +59,7 @@
   </Object>
   <Object name="SceneAdapter" baseClass="AVirtualMachineAdapter" recordType="VMAD" objType="Subrecord">
     <Fields>
-      <RefDirect name="ScriptFragments" refName="SceneScriptFragments" binary="Custom" nullable="True" />
+      <RefDirect name="ScriptFragments" refName="SceneScriptFragments" binary="Custom" fills="ScriptFragments" nullable="True" />
     </Fields>
   </Object>
   <Object name="SceneScriptFragments" baseClass="ScriptFragments" objType="Subrecord">
@@ -86,8 +86,8 @@
     <Fields>
       <Marker name="StartMarker" recordType="HNAM" nullable="False" />
       <String name="Name" recordType="NAM0" />
-      <RefList name="StartConditions" refName="Condition" binary="Custom" />
-      <RefList name="CompletionConditions" refName="Condition" binary="Custom" markerType="NEXT" endMarkerType="NEXT" />
+      <RefList name="StartConditions" refName="Condition" binary="Custom" fills="StartConditions" />
+      <RefList name="CompletionConditions" refName="Condition" binary="Custom" fills="CompletionConditions" markerType="NEXT" endMarkerType="NEXT" />
       <UInt32 name="EditorWidth" recordType="WNAM" />
       <Enum name="Flags" enumName="ScenePhase.Flag" byteLength="2" recordType="FNAM" />
       <RefDirect name="PhaseSetParentQuestStage" refName="SceneSetParentQuestStage" />

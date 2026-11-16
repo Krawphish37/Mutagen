@@ -1413,6 +1413,13 @@ public class PluginTranslationModule : BinaryTranslationModule
         }
     }
 
+    /// <summary>C60 (W6): the manifest of every object's compiled properties, beside the protocol's record XML</summary>
+    public override async Task FinalizeGeneration(ProtocolGeneration proto)
+    {
+        await base.FinalizeGeneration(proto);
+        await PropertyManifest.Write(proto, this);
+    }
+
     /// <summary>
     /// Which value-position note a field's read gets (C60): a hand-written reader's step, a list, or a field. None for
     /// what isn't a property (a data subrecord's set, whose members get their own, a marker, a break, padding), for what

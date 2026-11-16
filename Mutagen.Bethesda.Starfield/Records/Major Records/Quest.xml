@@ -20,7 +20,7 @@
       </List>
       <String name="Filter" recordType="FLTR" />
       <String name="Summary" recordType="NAM3" />
-      <RefList name="DialogConditions" refName="Condition" binary="Custom" />
+      <RefList name="DialogConditions" refName="Condition" binary="Custom" fills="DialogConditions" />
       <CustomLogic name="UnusedConditionsLogic" recordType="NEXT" fills="UnusedConditions" />
       <RefList name="UnusedConditions" refName="Condition" binary="NoGeneration" nullable="True" />
       <RefList name="Stages" refName="QuestStage" />
@@ -57,9 +57,9 @@
       <Break />
       <UInt8 name="ExtraBindDataVersion" default="3" />
       <CustomLogic name="FragmentCount" byteLength="2" fills="Script,Fragments,Aliases" />
-      <RefDirect name="Script" refName="ScriptEntry" binary="Custom" />
-      <RefList name="Fragments" refName="QuestScriptFragment" binary="Custom" />
-      <RefList name="Aliases" refName="QuestFragmentAlias" binary="Custom" />
+      <RefDirect name="Script" refName="ScriptEntry" binary="Custom" fills="" readBy="FragmentCount" />
+      <RefList name="Fragments" refName="QuestScriptFragment" binary="Custom" fills="" readBy="FragmentCount" />
+      <RefList name="Aliases" refName="QuestFragmentAlias" binary="Custom" fills="" readBy="FragmentCount" />
     </Fields>
   </Object>
   <Object name="QuestScriptFragment" objType="Subrecord">
@@ -74,10 +74,10 @@
   </Object>
   <Object name="QuestFragmentAlias" objType="Subrecord">
     <Fields>
-      <RefDirect name="Property" refName="ScriptObjectProperty" binary="Custom" />
+      <RefDirect name="Property" refName="ScriptObjectProperty" binary="Custom" fills="Property" />
       <Int16 name="Version" default="6" />
       <UInt16 name="ObjectFormat" default="2" />
-      <RefList name="Scripts" refName="ScriptEntry" binary="Custom" />
+      <RefList name="Scripts" refName="ScriptEntry" binary="Custom" fills="Scripts" />
     </Fields>
   </Object>
   <Object name="QuestData" objType="Subrecord" recordType="DNAM">
@@ -291,7 +291,7 @@
   </Object>
   <Object name="FindMatchingRefNearAlias" objType="Subrecord">
     <Fields>
-      <Int16 name="AliasID" recordType="ALNA" binary="Custom" layoutEncoding="int32" />
+      <Int16 name="AliasID" recordType="ALNA" binary="Custom" fills="AliasID" layoutEncoding="int32" />
       <Enum name="Type" enumName="FindMatchingRefNearAlias.TypeEnum" byteLength="4" recordType="ALNT" />
       <FormLink name="RefType" recordType="ALNR" refName="LocationReferenceType" />
     </Fields>

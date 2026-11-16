@@ -31,7 +31,7 @@
           <FormLink name="ThirdActorValue" refName="ActorValueInformation" />
           <Float name="ScriptEffectAIDelayTime" />
           <Float name="ScriptEffectAIScore" />
-          <RefDirect name="Archetype" binary="Custom" refName="AMagicEffectArchetype" byteLength="4" defaultType="MagicEffectArchetype" selectedBy="here:Int32" layoutOffset="80" />
+          <RefDirect name="Archetype" binary="Custom" fills="Archetype" refName="AMagicEffectArchetype" byteLength="4" defaultType="MagicEffectArchetype" selectedBy="here:Int32" layoutOffset="80" />
           <Float name="SpellmakingArea" />
           <Float name="SpellmakingCastingTime" />
           <Float name="BaseCost" />
@@ -70,6 +70,8 @@
     </Fields>
   </Object>
   <Object name="AMagicEffectArchetype" abstract="true" objType="Subrecord" ctorPermission="noGeneration">
+    <HandWritten name="AssociationKey" type="IFormLinkIdentifier" from="Association" note="the association as an untyped link" />
+    <HandWritten name="Type" type="MagicEffectArchetype.TypeEnum" from="class" note="the archetype type of the class; MagicEffectArchetype keeps the one read (DATA 80)" />
   </Object>
   <Object name="MagicEffectArchetype" objType="Subrecord" baseClass="AMagicEffectArchetype" binaryOverlay="NoGeneration" selectorValue="*">
     <Fields>

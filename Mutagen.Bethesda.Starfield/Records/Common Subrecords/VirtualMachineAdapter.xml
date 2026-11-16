@@ -4,13 +4,13 @@
     <Fields>
       <Int16 name="Version" default="6" />
       <UInt16 name="ObjectFormat" default="2" />
-      <RefList name="Scripts" refName="ScriptEntry" binary="Custom" />
+      <RefList name="Scripts" refName="ScriptEntry" binary="Custom" fills="Scripts" />
     </Fields>
   </Object>
   <Object name="VirtualMachineAdapter" objType="Subrecord" baseClass="AVirtualMachineAdapter" recordType="VMAD" />
   <Object name="VirtualMachineAdapterIndexed" baseClass="AVirtualMachineAdapter" recordType="VMAD" objType="Subrecord">
     <Fields>
-      <RefDirect name="ScriptFragments" refName="ScriptFragmentsIndexed" binary="Custom" nullable="True" />
+      <RefDirect name="ScriptFragments" refName="ScriptFragmentsIndexed" binary="Custom" fills="ScriptFragments" nullable="True" />
     </Fields>
   </Object>
   <Object name="ScriptEntry" objType="Subrecord">

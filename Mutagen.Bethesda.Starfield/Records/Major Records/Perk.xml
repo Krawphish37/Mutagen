@@ -24,7 +24,7 @@
   </Object>
   <Object name="PerkAdapter" baseClass="AVirtualMachineAdapter" recordType="VMAD" objType="Subrecord">
     <Fields>
-      <RefDirect name="ScriptFragments" refName="PerkScriptFragments" binary="Custom" nullable="True" />
+      <RefDirect name="ScriptFragments" refName="PerkScriptFragments" binary="Custom" fills="ScriptFragments" nullable="True" />
     </Fields>
   </Object>
   <Object name="PerkScriptFragments" objType="Subrecord">
@@ -45,7 +45,7 @@
   </Object>
   <Object name="PerkRank" objType="Subrecord" >
     <Fields>
-      <RefList name="Effects" refName="APerkEffect" binary="Custom" selectedBy="subrecord:PRKE:UInt8" />
+      <RefList name="Effects" refName="APerkEffect" binary="Custom" fills="Effects" selectedBy="subrecord:PRKE:UInt8" />
       <RefList name="Conditions" refName="Condition" />
       <RefList name="Activities" refName="Activity" counterRecType="ATCP" />
       <String name="Description" recordType="DESC" translated="DL" nullable="False" />

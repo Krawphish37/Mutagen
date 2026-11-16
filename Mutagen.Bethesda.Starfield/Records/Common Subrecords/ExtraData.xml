@@ -2,7 +2,7 @@
 <Loqui xmlns="http://tempuri.org/LoquiSource.xsd">
   <Object name="ExtraData" recordType="COED" objType="Subrecord">
     <Fields>
-      <RefDirect name="Owner" refName="OwnerTarget" generateClassMembers="false" binary="Custom" byteLength="8" selectedBy="linkTarget" />
+      <RefDirect name="Owner" refName="OwnerTarget" generateClassMembers="false" binary="Custom" fills="Owner" byteLength="8" selectedBy="linkTarget" />
       <Float name="ItemCondition" />
     </Fields>
   </Object>

@@ -17,7 +17,7 @@
       <FormLink name="RankTemplate" refName="LegendaryItem" recordType="ENAM" />
       <FormLink name="AddIntoLegendary" refName="LegendaryItem" recordType="MNAM" />
       <RefList name="LegendaryMods" refName="LegendaryMod" recordType="BNAM" />
-      <RefList name="LnamEntries" refName="LegendaryItemLnamEntry" recordType="LNAM" binary="Custom" />
+      <RefList name="LnamEntries" refName="LegendaryItemLnamEntry" recordType="LNAM" binary="Custom" fills="LnamEntries" />
       <RefList name="IncludeFilters" refName="LegendaryFilter" recordType="CNAM" />
       <RefList name="ExcludeFilters" refName="LegendaryFilter" recordType="DNAM" />
       <RefList name="RerollCosts" refName="LegendaryItemRankCost" recordType="FNAM" />
