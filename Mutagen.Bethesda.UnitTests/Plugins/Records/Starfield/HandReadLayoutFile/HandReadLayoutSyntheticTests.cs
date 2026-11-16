@@ -74,6 +74,13 @@ public class HandReadLayoutSyntheticTests
         "AnyRecordXCZR,XCZC,XCZA/ObjectCurrentZoneCell/SubXCZC/FormIDCurrentZoneCell",
         "AnyRecordXCZR,XCZC,XCZA/ObjectCurrentZoneCell/SubXCZA/BytesXCZA",
         "RecordREFR/ObjectPatrol/SubTNAM/FormIDTopic",
+        // C85: NVNM's seven list counts at their Count positions
+        "AnyRecordNVNM/SubNVNM/RepeatVertices/positionCount", "AnyRecordNVNM/SubNVNM/RepeatTriangles/positionCount",
+        "AnyRecordNVNM/SubNVNM/RepeatEdgeLinks/positionCount", "AnyRecordNVNM/SubNVNM/RepeatDoorTriangles/positionCount",
+        "AnyRecordNVNM/SubNVNM/RepeatCover/positionCount", "AnyRecordNVNM/SubNVNM/RepeatCoverTriangleMappings/positionCount",
+        "AnyRecordNVNM/SubNVNM/RepeatWaypoints/positionCount",
+        // C86: a navmesh spline's reflection blob and the FormID inside it
+        "AnyRecordXNSE/SubXNSE", "Define/BytesData", "Define/BytesData/position", "Define/ReflectionFormLinksFormLinks/links",
         // C84: a value read at the place Mutagen's value positions give, and a count at its list's count
         "AnyRecordNVNM/SubNVNM/U32NavmeshVersion/position", "AnyRecordVMAD/SubVMAD/RepeatScripts/positionCount",
         "AnyRecordXCZR,XCZC,XCZA/ObjectCurrentZoneCell/SubXCZA/BytesXCZA/position",
@@ -288,6 +295,9 @@ public class HandReadLayoutSyntheticTests
         placed.Patrol = new Patrol { IdleTime = 2, Topics = { topic } };
         placed.Patrol.Idle.SetTo(target);
         placed.Patrol.Topic.SetTo(target);
+        // C86: a navmesh spline's reflection blob (Starfield.esm's 3E8CA3), its one FormID rewritten to target
+        placed.NavMeshSplineExtraData = new Reflection { Data = Convert.FromHexString(ReflectionDataTests.PlacedObjectXnse) };
+        placed.NavMeshSplineExtraData.FormLinks.Add(new FormLink<IStarfieldMajorRecordGetter>(target));
         cell.Temporary.Add(placed);
         cell.Temporary.Add(new PlacedObject(mod)
         {

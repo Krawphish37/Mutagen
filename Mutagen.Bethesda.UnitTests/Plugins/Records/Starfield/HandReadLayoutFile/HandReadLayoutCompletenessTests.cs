@@ -24,7 +24,6 @@ public class HandReadLayoutCompletenessTests
         ["ResearchProject.Conditions"] = "conditions (CTDA, then CIS1, CIS2) by the condition reader",
         ["ScenePhase.StartConditions"] = "conditions (CTDA, then CIS1, CIS2) by the condition reader",
         ["ScenePhase.CompletionConditions"] = "conditions (CTDA, then CIS1, CIS2) by the condition reader, between NEXT markers",
-        ["Reflection.FormLinks"] = "not a layout: the FormIDs ReflectionData.FindFormIds finds in the reflection blob",
     };
 
     private static string RecordsDir()

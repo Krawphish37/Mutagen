@@ -101,6 +101,13 @@
                                                       as the field's type (an enum view of a flags value); optional: only
                                                       some classes have the property (where it is missing, nothing is said)
     IfMore                                            the children only when bytes are left
+    ReflectionFormLinks field="List"                  (C86) no bytes: the FormIDs that Bethesda's reflection format (BETH,
+                                                      STRT, TYPE, CLAS, then OBJT/DIFF with LIST/MAPC/USER/USRD) stores in
+                                                      the bytes the Bytes element before it read: its pointers to forms and
+                                                      the plain FormID fields ReflectionData.PlainFormIdFields lists, in
+                                                      stored order, each through the plugin's masters. Mutagen's public
+                                                      ReflectionData.FindFormIds finds them (ReflectionData documents the
+                                                      format); the format is self-describing, so it isn't laid out here
     Peek offset="N" type="U8|U16|U32|FormID" name="var"
                                                       a value further on, read without moving (FormID, C84: kept as FormID
                                                       name keeps one, 0 when null)
@@ -1076,9 +1083,22 @@
       </TypeSwitch>
     </Segments>
   </AnyRecord>
+  <!-- C86: a reflection subrecord (Records/Common Subrecords/Reflection.cs): Data is the subrecord's bytes whole (the
+       generated reader, ByteArray); FormLinks are the FormIDs stored inside them (ReflectionBinaryCreateTranslation
+       .CustomBinaryEndImport, ReflectionMixIn.ReadFormLinks). A blob over 65,535 bytes has its length in an XXXX. -->
+  <Define name="Reflection">
+    <Bytes field="Data" />
+    <ReflectionFormLinks field="FormLinks" />
+  </Define>
+  <!-- C86: XNSE, a placed object's navmesh spline extra data (PlacedObject.xml NavMeshSplineExtraData: a Reflection read
+       under XNSE). Its FormIDs are NavMeshSplineExtraData::ChunkDataRef.RefID, a plain UInt32 field. -->
+  <AnyRecord sig="XNSE">
+    <Sub sig="XNSE" field="NavMeshSplineExtraData"><Use name="Reflection" /></Sub>
+  </AnyRecord>
   <!-- C84: NVNM, a navigation mesh's geometry, on any record that has one (NAVM; ACTI, DOOR, GBFM and STAT keep one too).
        NavmeshGeometryBinaryCreateTranslation.FillBinaryStructs (generated, NavmeshGeometry.xml) with the hand-written
-       GetBinaryParent (Records/Common Subrecords/NavmeshGeometry.cs):
+       GetBinaryParent (Records/Common Subrecords/NavmeshGeometry.cs). Each list's uint32 count is its Count value
+       position (C85):
        - the version and CRC;
        - the parent: a FormID; null makes a CellNavmeshParent (that null FormID is UnusedWorldspaceParent, then the cell's
          FormID), else a WorldspaceNavmeshParent (the worldspace, then the grid cell stored Y then X);

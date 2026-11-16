@@ -466,6 +466,9 @@ public sealed class LayoutChecker
     private Reader? _valueReader;
     private int _valueStart;
 
+    // C86: the bytes the last Bytes element read (a ReflectionFormLinks reads its FormIDs from them)
+    private byte[]? _lastBytes;
+
     private void RunContent(IEnumerable<XElement> items, Reader r, Ctx ctx)
     {
         foreach (var e in items)
@@ -566,6 +569,7 @@ public sealed class LayoutChecker
                 {
                     var n = e.Attribute("length") is { } l ? (int)Number(l.Value, ctx) : r.Remaining;
                     var bytes = r.Take(n).ToArray();
+                    _lastBytes = bytes;
                     // encoding="length": the field is the number of bytes
                     Value(e, ctx, (string?)e.Attribute("encoding") == "length" ? (double)bytes.Length : bytes);
                     break;
@@ -706,6 +710,29 @@ public sealed class LayoutChecker
                             else if (!IsDefault(v)) Fail(ctx, e, $"form version {formVersion} is below {min}, but Mutagen has {f} {Show(v)}");
                         }
                     }
+                    break;
+                }
+                case "ReflectionFormLinks":
+                {
+                    // C86: no bytes: the FormIDs Bethesda's reflection format stores in the bytes the Bytes element before
+                    // it read, in order, through the plugin's masters (ReflectionData.FindFormIds, public)
+                    Count(e);
+                    var blob = _lastBytes ?? throw new InvalidDataException("ReflectionFormLinks without a Bytes before it");
+                    var found = Mutagen.Bethesda.Starfield.ReflectionData.FindFormIds(blob)
+                        .Select(l => FormKeyBinaryTranslation.Instance.Parse(blob.AsSpan(l.Position, 4), _masters))
+                        .ToList();
+                    var field = (string)e.Attribute("field")!;
+                    if (!Resolve(ctx.Obj, field, out var links) || links is not IEnumerable linkList)
+                    {
+                        Fail(ctx, e, $"no list {field} on {ctx.Obj?.GetType().Name ?? "null"}");
+                        break;
+                    }
+                    var mutagen = linkList.Cast<IFormLinkGetter>().Select(l => l.FormKeyNullable ?? FormKey.Null).ToList();
+                    if (!mutagen.SequenceEqual(found))
+                    {
+                        Fail(ctx, e, $"the blob holds {string.Join(",", found)}, Mutagen's {field} {string.Join(",", mutagen)}");
+                    }
+                    if (!_trial && found.Count > 0) Checked[$"{LayoutKey(e)}/links"] = Checked.GetValueOrDefault($"{LayoutKey(e)}/links") + found.Count;
                     break;
                 }
                 case "Note": break;
