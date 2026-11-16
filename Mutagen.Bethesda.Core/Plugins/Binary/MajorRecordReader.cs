@@ -141,7 +141,7 @@ public sealed class MajorRecordReader : IDisposable
     }
 
     /// <summary>
-    /// The bytes of the record whose header starts at a position of the file, as <see cref="Read"/> takes them: the
+    /// The bytes of the record whose header starts at a position of the file, as <see cref="Read(ReadOnlyMemorySlice{byte}, long)"/> takes them: the
     /// record, and with <paramref name="withChildren"/> the children group that follows it, when one does.
     /// </summary>
     public byte[] ReadBytesAt(long position, bool withChildren = false)
@@ -178,7 +178,7 @@ public sealed class MajorRecordReader : IDisposable
     /// <summary>
     /// Reads a record from its bytes: they start with the record's header, and may go on with its children group
     /// </summary>
-    /// <param name="bytes">The record's bytes, as <see cref="ReadBytesAt"/> returns them</param>
+    /// <param name="bytes">The record's bytes, as <see cref="ReadBytesAt(long, bool)"/> returns them</param>
     /// <param name="position">Where the bytes start in the file, for the positions errors report</param>
     public IMajorRecord Read(ReadOnlyMemorySlice<byte> bytes, long position = 0)
     {

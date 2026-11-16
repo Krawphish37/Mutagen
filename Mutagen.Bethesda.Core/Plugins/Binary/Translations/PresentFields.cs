@@ -50,6 +50,7 @@ internal static class PresentFields
     /// An overlay record's fields: its bytes (header and content, decompressed) read again by the full import's reader of
     /// its class, which notes them. Kept with the overlay record.
     /// </summary>
+    [UnconditionalSuppressMessage("Trimming", "IL2075", Justification = "The record classes are registered with Loqui and their registrations' fields are public")]
     public static int[]? FromOverlay(PluginBinaryOverlay overlay, IMajorRecordGetter record)
     {
         var meta = overlay._package.MetaData;

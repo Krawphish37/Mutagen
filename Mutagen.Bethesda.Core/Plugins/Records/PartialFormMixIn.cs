@@ -44,6 +44,7 @@ public static class PartialFormMixIn
     /// </summary>
     public static bool CanBePartialForm(this IMajorRecordGetter record) => CanBePartialForm(record.Registration);
 
+    [UnconditionalSuppressMessage("Trimming", "IL2075", Justification = "The record classes are registered with Loqui and their registrations' properties are public")]
     private static bool CanBePartialForm(ILoquiRegistration registration)
     {
         return Formable.GetOrAdd(registration.ClassType, static (_, r) =>
