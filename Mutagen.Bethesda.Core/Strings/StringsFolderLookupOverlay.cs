@@ -112,6 +112,29 @@ public sealed class StringsFolderLookupOverlay : IStringsFolderLookup
             .ResolveSources(modKey);
     }
 
+    /// <summary>
+    /// <see cref="ResolveSources(GameRelease, ModKey, DirectoryPath, StringsReadParameters?, IFileSystem?)"/> for many
+    /// plugins at once (C74): the Strings folder is listed once and each archive's strings listing is read once for all of
+    /// them, where a call per plugin reads the archives the ini lists again for every plugin. The same lists as a call per
+    /// plugin.
+    /// </summary>
+    /// <param name="release">The game release</param>
+    /// <param name="modKeys">The plugins (a load order's, say); one listed twice is resolved once</param>
+    /// <param name="dataPath">The data folder (its Strings folder and archives)</param>
+    /// <param name="instructions">Strings folder or archive folder overrides, as for <see cref="TypicalFactory"/></param>
+    /// <param name="fileSystem">The file system</param>
+    /// <returns>Each plugin's tables</returns>
+    public static IReadOnlyDictionary<ModKey, IReadOnlyList<StringsTableSource>> ResolveSources(
+        GameRelease release,
+        IEnumerable<ModKey> modKeys,
+        DirectoryPath dataPath,
+        StringsReadParameters? instructions = null,
+        IFileSystem? fileSystem = null)
+    {
+        return new StringsFolderLookupOverlayFactoryContainer(release, fileSystem, dataPath, instructions).Resolve().Value
+            .ResolveSources(modKeys);
+    }
+
     /// <inheritdoc />
     public bool TryLookup(StringsSource source, Language language, uint key, [MaybeNullWhen(false)] out string str)
     {

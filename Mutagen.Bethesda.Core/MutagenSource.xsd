@@ -72,6 +72,24 @@
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="handRead" type="xs:string" >
+            <xs:annotation>
+              <xs:documentation>
+                Description only, ignored by the generator (C73). An object no generated reader reads, read whole by hand:
+                the name of the static method of its class that does (a selector's catch-all, as UnknownComponent.ReadRaw
+                for a component whose BFCB names no kind). handReadFills says which fields it assigns.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="handReadFills" type="xs:string" >
+            <xs:annotation>
+              <xs:documentation>
+                Description only (C73). The fields the handRead method assigns, as a CustomLogic step's fills says. The
+                manifest gives each of them filledBy="(the method)". Held against the compiled method by the Starfield unit
+                test CustomLogicFillsTests.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="customBinaryEndWrittenFrom" type="xs:string" >
             <xs:annotation>
               <xs:documentation>

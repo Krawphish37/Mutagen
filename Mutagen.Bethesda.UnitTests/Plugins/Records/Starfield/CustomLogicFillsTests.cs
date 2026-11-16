@@ -352,6 +352,47 @@ public class CustomLogicFillsTests
         }
     }
 
+    // C73: an object read whole by hand, with no generated reader (UnknownComponent, the components' catch-all): handRead=
+    // names the static method of its class that reads it, handReadFills= the fields it assigns
+    private static List<(Step Step, XElement Node)> HandReadObjects() =>
+        Directory.EnumerateFiles(RecordsDir(), "*.xml", SearchOption.AllDirectories)
+            .SelectMany(f => XDocument.Load(f).Root!.Elements(Loqui + "Object"))
+            .Where(o => o.Attribute("handRead") != null)
+            .Select(o => (new Step(
+                (string)o.Attribute("name")!,
+                (string)o.Attribute("handRead")!,
+                (string?)o.Attribute("handReadFills"),
+                null,
+                []), o))
+            .ToList();
+
+    [Fact]
+    public void HandReadObjects_SayWhatTheirReaderFills_AndMatchTheCompiledReader()
+    {
+        var all = HandReadObjects();
+        all.Select(x => x.Step.Object).ShouldBe(new[] { "UnknownComponent" });
+        foreach (var (step, node) in all)
+        {
+            step.Fills.ShouldNotBeNullOrEmpty($"{step.Object} has handRead but no handReadFills");
+            var cls = FindType(step.Object);
+            var hierarchy = Hierarchy(cls);
+            foreach (var path in step.FillPaths)
+            {
+                Resolves(hierarchy, path).ShouldBeTrue($"{step.Object}: handReadFills names {path}, which is no field");
+            }
+            // Its fields no generated reader reads are all filled by it
+            foreach (var field in node.Element(Loqui + "Fields")!.Elements()
+                         .Where(e => (string?)e.Attribute("binary") == "NoGeneration"))
+            {
+                step.FillPaths.ShouldContain((string)field.Attribute("name")!, $"{step.Object}: nothing says what fills it");
+            }
+            var reader = cls.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+                .SingleOrDefault(m => m.Name == step.Name && m.GetMethodBody() != null);
+            reader.ShouldNotBeNull($"{step.Object} has no method {step.Name}");
+            CheckFills(step, reader!);
+        }
+    }
+
     [Fact]
     public void CustomFieldAndCustomBinaryEndFills_NameRealFields_AndMatchTheCompiledReader()
     {

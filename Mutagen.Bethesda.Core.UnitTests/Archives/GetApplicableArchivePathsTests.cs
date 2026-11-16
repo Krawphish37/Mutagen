@@ -189,4 +189,45 @@ public class GetApplicableArchivePathsTests
             Path.Combine(dataDir.Path, $"{TestConstants.MasterModKey2.Name}.bsa")
         ]);
     }
+
+    // C74: the batch form gives each plugin what a call per plugin gives, the data folder listed once
+    [Theory, MutagenContainerAutoData]
+    public void Batch_IsThePerPluginAnswer(
+        IFileSystem fs,
+        ManualLoadOrderProvider loadOrderProvider,
+        ManualArchiveIniListings manualArchiveIniListings,
+        IDataDirectoryProvider dataDir,
+        GetApplicableArchivePaths sut)
+    {
+        loadOrderProvider.SetTo("Skyrim.esm", "MyMod.esp", $"{TestConstants.MasterModKey2.FileName}");
+        manualArchiveIniListings.SetTo(SomeExplicitListingBsa2, SomeExplicitListingBsa, UnusedExplicitListingBsa);
+        fs.File.WriteAllText(Path.Combine(dataDir.Path, $"{TestConstants.MasterModKey2.Name}.bsa"), string.Empty);
+        fs.File.WriteAllText(Path.Combine(dataDir.Path, $"{TestConstants.MasterModKey2.Name} - Textures.bsa"), string.Empty);
+        fs.File.WriteAllText(Path.Combine(dataDir.Path, $"{TestConstants.MasterModKey2.Name} - Meshes.bsa"), string.Empty);
+        fs.File.WriteAllText(Path.Combine(dataDir.Path, SomeExplicitListingBsa), string.Empty);
+        fs.File.WriteAllText(Path.Combine(dataDir.Path, SomeExplicitListingBsa2), string.Empty);
+        fs.File.WriteAllText(Path.Combine(dataDir.Path, MyModBsa), string.Empty);
+        fs.File.WriteAllText(Path.Combine(dataDir.Path, SkyrimBsa), string.Empty);
+        var mods = new[] { TestConstants.MasterModKey2, ModKey.FromFileName("MyMod.esp"), TestConstants.Skyrim, ModKey.FromFileName("Other.esp"), ModKey.Null, TestConstants.MasterModKey2 };
+        var batch = sut.Get(mods);
+        batch.Keys.ShouldBe(mods.Distinct());
+        foreach (var mod in mods.Distinct())
+        {
+            batch[mod].ShouldBe(sut.Get(mod).ToArray(), mod.ToString());
+        }
+        batch[TestConstants.MasterModKey2].Count.ShouldBe(5);
+        batch[ModKey.Null].ShouldBeEmpty();
+        // Through the interface's own default (one call per plugin) too
+        var viaInterface = ((IGetApplicableArchivePaths)new PerPluginOnly(sut)).Get(mods);
+        foreach (var mod in mods.Distinct())
+        {
+            viaInterface[mod].ShouldBe(batch[mod]);
+        }
+    }
+
+    private sealed class PerPluginOnly(IGetApplicableArchivePaths inner) : IGetApplicableArchivePaths
+    {
+        public IEnumerable<FilePath> Get() => inner.Get();
+        public IEnumerable<FilePath> Get(ModKey modKey) => inner.Get(modKey);
+    }
 }
