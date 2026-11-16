@@ -24,12 +24,15 @@ partial class APlacedTrapBinaryCreateTranslation
 {
     public static partial ParseResult FillBinaryTrapFormCustom(MutagenFrame frame, IAPlacedTrapInternal item, PreviousParse lastParsed)
     {
+        var at = ValuePositionRecorder.Here(frame);
         var subRec = frame.ReadSubrecord();
         if (subRec.Content.Length != 4)
         {
             throw new ArgumentException("Unexpected length");
         }
         var form = FormKeyBinaryTranslation.Instance.Parse(subRec.Content, frame.MetaData.MasterReferences);
+        // C60: the trap's projectile, or a hazard's hazard
+        if (at >= 0) ValuePositionRecorder.At(item is IPlacedHazard ? "Hazard" : "Projectile", at + subRec.HeaderLength, 4);
         switch (item)
         {
             case IPlacedArrow arrow:

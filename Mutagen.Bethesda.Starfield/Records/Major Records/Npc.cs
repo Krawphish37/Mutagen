@@ -199,12 +199,15 @@ partial class NpcBinaryCreateTranslation
 
     public static partial void FillBinaryFlagsCustom(MutagenFrame frame, INpcInternal item)
     {
-        // Read normally
+        // Read normally; the PC-level-multiplier bit goes into Level's class (FillBinaryLevelCustom)
+        var at = ValuePositionRecorder.Here(frame);
         item.Flags = (Npc.Flag)frame.ReadUInt32();
+        if (at >= 0) ValuePositionRecorder.At(nameof(item.Flags), at, 4, ~(ulong)PcLevelMultFlag & 0xFFFF_FFFF);
     }
 
     public static partial void FillBinaryLevelCustom(MutagenFrame frame, INpcInternal item)
     {
+        var at = ValuePositionRecorder.Here(frame);
         if (Enums.HasFlag((uint)item.Flags, PcLevelMultFlag))
         {
             var raw = frame.ReadUInt16();
@@ -214,6 +217,8 @@ partial class NpcBinaryCreateTranslation
             {
                 LevelMult = f
             };
+            // Stored as thousandths in a uint16, so not as the float it reads as
+            if (at >= 0) ValuePositionRecorder.At("Level.LevelMult", at, 2, converted: true);
         }
         else
         {
@@ -221,6 +226,7 @@ partial class NpcBinaryCreateTranslation
             {
                 Level = frame.ReadInt16()
             };
+            if (at >= 0) ValuePositionRecorder.At("Level.Level", at, 2);
         }
 
         // Clear out PcLevelMult flag, as that information is kept in the field type above

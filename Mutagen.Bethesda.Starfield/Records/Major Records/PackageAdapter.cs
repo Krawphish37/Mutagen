@@ -1,4 +1,5 @@
-﻿using Mutagen.Bethesda.Plugins.Binary.Overlay;
+﻿using Mutagen.Bethesda.Plugins.Binary.Translations;
+using Mutagen.Bethesda.Plugins.Binary.Overlay;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
 
 namespace Mutagen.Bethesda.Starfield;
@@ -7,7 +8,9 @@ partial class PackageAdapterBinaryCreateTranslation
 {
     public static partial void FillBinaryScriptFragmentsCustom(MutagenFrame frame, IPackageAdapter item)
     {
+        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.ScriptFragments));
         item.ScriptFragments = PackageScriptFragmentsBinaryCreateTranslation.ReadFragments(frame: frame, objectFormat: item.ObjectFormat);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
     }
 }
 

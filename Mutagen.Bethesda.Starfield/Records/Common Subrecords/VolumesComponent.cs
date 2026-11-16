@@ -19,12 +19,17 @@ partial class VolumesComponentBinaryCreateTranslation
         PreviousParse lastParsed)
     {
         frame.Position += frame.MetaData.Constants.SubConstants.HeaderLength;
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.Items));
+        var countAt = ValuePositionRecorder.Here(frame);
+        var count = checked((int)frame.ReadUInt32());
+        if (countAt >= 0) ValuePositionRecorder.Count(frame, countAt);
         item.Items =
             ListBinaryTranslation<VolumesComponentItem>.Instance.Parse(
-                    amount: checked((int)frame.ReadUInt32()),
+                    amount: count,
                     reader: frame,
                     transl: VolumesComponentItem.TryCreateFromBinary)
                 .CastExtendedList<VolumesComponentItem>();
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
     }
 }
 

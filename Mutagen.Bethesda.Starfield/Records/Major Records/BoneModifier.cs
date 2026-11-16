@@ -25,6 +25,7 @@ partial class BoneModifierBinaryCreateTranslation
         var dataTypeStr = StringBinaryTranslation.Instance.Parse(frame, StringBinaryType.PrependLengthWithNullIfContent, parseWhole: true);
         var dataType = Enum.Parse<DataType>(dataTypeStr);
         ABoneModifierData data;
+        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.Data));
         switch (dataType)
         {
             case DataType.LookAtChain:
@@ -42,6 +43,7 @@ partial class BoneModifierBinaryCreateTranslation
             default:
                 throw new ArgumentOutOfRangeException();
         }
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
 
         item.Data = data;
     }

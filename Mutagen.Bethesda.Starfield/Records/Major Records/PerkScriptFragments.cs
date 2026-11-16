@@ -15,13 +15,22 @@ partial class PerkScriptFragmentsBinaryCreateTranslation
 
     public static void FillFragments(MutagenFrame frame, ushort objectFormat, IPerkScriptFragments item)
     {
+        var at = ValuePositionRecorder.Here(frame);
         item.ExtraBindDataVersion = frame.ReadUInt8();
+        ValuePositionRecorder.Value(frame, nameof(item.ExtraBindDataVersion), at);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.Script));
         item.Script = AVirtualMachineAdapterBinaryCreateTranslation.ReadEntry(frame, objectFormat);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.Fragments));
+        var fragmentsCountAt = ValuePositionRecorder.Here(frame);
+        var fragmentsCount = frame.ReadUInt16();
+        if (fragmentsCountAt >= 0) ValuePositionRecorder.Count(frame, fragmentsCountAt);
         item.Fragments.SetTo(
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<PerkScriptFragment>.Instance.Parse(
-                amount: frame.ReadUInt16(),
+                amount: fragmentsCount,
                 reader: frame,
                 transl: PerkScriptFragment.TryCreateFromBinary));
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
     }
 }
 

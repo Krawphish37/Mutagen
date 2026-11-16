@@ -38,12 +38,16 @@ partial class IdleMarkerBinaryCreateTranslation
 
     public static ExtendedList<IFormLinkGetter<IIdleAnimationGetter>> ParseAnimations(IMutagenReadStream stream)
     {
+        var at = ValuePositionRecorder.Here(stream);
         var subFrame = stream.ReadSubrecord();
+        if (at >= 0) at += subFrame.HeaderLength;
         var ret = new ExtendedList<IFormLinkGetter<IIdleAnimationGetter>>();
         int pos = 0;
         while (pos < subFrame.Content.Length)
         {
             ret.Add(FormLinkBinaryTranslation.Instance.Factory<IIdleAnimationGetter>(stream.MetaData, subFrame.Content.Slice(pos)));
+            // C60: the items of the list the caller began
+            if (at >= 0) ValuePositionRecorder.ItemAt(ret.Count - 1, at + pos, 4);
             pos += 4;
         }
         return ret;
@@ -51,7 +55,9 @@ partial class IdleMarkerBinaryCreateTranslation
 
     public static partial void FillBinaryAnimationsCustom(MutagenFrame frame, IIdleMarkerInternal item, PreviousParse lastParsed)
     {
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.Animations));
         item.Animations = ParseAnimations(frame);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
     }
 }
 

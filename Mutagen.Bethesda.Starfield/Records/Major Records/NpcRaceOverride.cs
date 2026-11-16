@@ -1,4 +1,5 @@
-﻿using Mutagen.Bethesda.Plugins.Binary.Overlay;
+﻿using Mutagen.Bethesda.Plugins.Binary.Translations;
+using Mutagen.Bethesda.Plugins.Binary.Overlay;
 using Mutagen.Bethesda.Plugins.Binary.Streams;
 using Noggog;
 
@@ -29,39 +30,56 @@ partial class NpcRaceOverrideBinaryCreateTranslation
         MutagenFrame frame,
         INpcRaceOverride item)
     {
+        // The section flags say which sections follow (no value of their own)
         var sections = (NpcRaceOverride.Section)frame.ReadUInt32();
         if (sections.HasFlag(NpcRaceOverride.Section.Size))
         {
             // Stored as a signed byte; -1 is Size.Unknown
+            var at = ValuePositionRecorder.Here(frame);
             item.Size = (Size)(sbyte)frame.ReadUInt8();
+            ValuePositionRecorder.Value(frame, nameof(item.Size), at);
         }
         if (sections.HasFlag(NpcRaceOverride.Section.Movement))
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.Movement));
             item.Movement = NpcRaceOverrideMovement.CreateFromBinary(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
         if (sections.HasFlag(NpcRaceOverride.Section.Flight))
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.Flight));
             item.Flight = NpcRaceOverrideFlight.CreateFromBinary(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
         if (sections.HasFlag(NpcRaceOverride.Section.UnarmedWeapon))
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.UnarmedWeapon));
             item.UnarmedWeapon = NpcRaceOverrideUnarmedWeapon.CreateFromBinary(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
         if (sections.HasFlag(NpcRaceOverride.Section.FlagOverrides))
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.FlagOverrides));
             item.FlagOverrides = NpcRaceOverrideFlags.CreateFromBinary(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
         if (sections.HasFlag(NpcRaceOverride.Section.Bleedout))
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.Bleedout));
             item.Bleedout = NpcRaceOverrideBleedout.CreateFromBinary(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
         if (sections.HasFlag(NpcRaceOverride.Section.General))
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.General));
             item.General = NpcRaceOverrideGeneral.CreateFromBinary(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
         if (sections.HasFlag(NpcRaceOverride.Section.ElectromagneticShock))
         {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.ElectromagneticShock));
             item.ElectromagneticShock = NpcRaceOverrideElectromagneticShock.CreateFromBinary(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         }
     }
 

@@ -37,41 +37,56 @@ partial class LocationTargetRadiusBinaryCreateTranslation
 {
     public static ALocationTarget GetLocationTarget(MutagenFrame frame)
     {
+        // C60: noted as Target's values (the caller reads Target); the type picks the class
+        var at = ValuePositionRecorder.Here(frame);
         var type = (LocationTargetRadius.LocationType)frame.ReadInt32();
+        var valueName = "Target.Link";
+        ALocationTarget ret;
         switch (type)
         {
             case LocationTargetRadius.LocationType.NearReference:
-                return new LocationTarget()
+                ret = new LocationTarget()
                 {
                     Link = FormKeyBinaryTranslation.Instance.Parse(frame).ToLink<IPlacedGetter>()
                 };
+                break;
             case LocationTargetRadius.LocationType.InCell:
-                return new LocationCell()
+                ret = new LocationCell()
                 {
                     Link = FormKeyBinaryTranslation.Instance.Parse(frame).ToLink<ICellGetter>()
                 };
+                break;
             case LocationTargetRadius.LocationType.ObjectID:
-                return new LocationObjectId()
+                ret = new LocationObjectId()
                 {
                     Link = FormKeyBinaryTranslation.Instance.Parse(frame).ToLink<IObjectIdGetter>()
                 };
+                break;
             case LocationTargetRadius.LocationType.ObjectType:
-                return new LocationObjectType()
+                ret = new LocationObjectType()
                 {
                     Type = (TargetObjectType)frame.ReadInt32()
                 };
+                valueName = "Target.Type";
+                break;
             case LocationTargetRadius.LocationType.LinkedReference:
-                return new LocationKeyword()
+                ret = new LocationKeyword()
                 {
                     Link = FormKeyBinaryTranslation.Instance.Parse(frame).ToLink<IKeywordGetter>()
                 };
+                break;
             default:
-                return new LocationFallback()
+                ret = new LocationFallback()
                 {
                     Type = type,
                     Data = frame.ReadInt32()
                 };
+                if (at >= 0) ValuePositionRecorder.At("Target.Type", at, 4);
+                valueName = "Target.Data";
+                break;
         }
+        if (at >= 0) ValuePositionRecorder.At(valueName, at + 4, 4);
+        return ret;
     }
 
     public static partial void FillBinaryTargetCustom(MutagenFrame frame, ILocationTargetRadius item)

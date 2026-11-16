@@ -34,7 +34,11 @@ partial class LeveledSpaceCellBinaryCreateTranslation
     
     public static partial void FillBinaryChanceNoneCustom(MutagenFrame frame, ILeveledSpaceCellInternal item, PreviousParse lastParsed)
     {
-        item.ChanceNone = GetChance(frame.ReadSubrecord(), frame.MetaData.FormVersion!.Value);
+        var at = ValuePositionRecorder.Here(frame);
+        var sub = frame.ReadSubrecord();
+        item.ChanceNone = GetChance(sub, frame.MetaData.FormVersion!.Value);
+        // A byte (of 255) before form version FloatChanceNoneVersion, a float from it on
+        if (at >= 0) ValuePositionRecorder.At(nameof(item.ChanceNone), at + sub.HeaderLength, sub.ContentLength, converted: sub.ContentLength == 1);
     }
 }
 

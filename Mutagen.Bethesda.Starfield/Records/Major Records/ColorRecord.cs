@@ -36,6 +36,7 @@ partial class ColorRecordBinaryCreateTranslation
         IColorRecordInternal item,
         PreviousParse lastParsed)
     {
+        var cnamAt = ValuePositionRecorder.Here(frame);
         var cnam = frame.ReadSubrecord(RecordTypes.CNAM, readSafe: true);
         var pos = frame.Position;
         if (!frame.SpawnAll().TryScanToRecord(RecordTypes.FNAM, out var fnam, ColorRecord_Registration.TriggerSpecs.AllRecordTypes))
@@ -48,6 +49,7 @@ partial class ColorRecordBinaryCreateTranslation
             {
                 Index = cnam.AsFloat(),
             };
+            if (cnamAt >= 0) ValuePositionRecorder.At("Data.Index", cnamAt + cnam.HeaderLength, 4);
         }
         else
         {
@@ -55,16 +57,20 @@ partial class ColorRecordBinaryCreateTranslation
             {
                 Color = cnam.Content.ReadColor(Plugins.Binary.Translations.ColorBinaryType.Alpha)
             };
+            if (cnamAt >= 0) ValuePositionRecorder.At("Data.Color", cnamAt + cnam.HeaderLength, cnam.ContentLength);
         }
         frame.Position = pos;
     }
 
     public static partial void FillBinaryFlagsCustom(MutagenFrame frame, IColorRecordInternal item, PreviousParse lastParsed)
     {
+        var at = ValuePositionRecorder.Here(frame);
         var fnam = frame.ReadSubrecord(RecordTypes.FNAM);
         var val = fnam.AsInt32();
         Enums.SetFlag(ref val, RemappingIndexFlag, false);
         item.Flags = (ColorRecord.Flag)val;
+        // The remapping-index bit picks Data's class instead
+        if (at >= 0) ValuePositionRecorder.At(nameof(item.Flags), at + fnam.HeaderLength, 4, ~(ulong)(uint)RemappingIndexFlag & 0xFFFF_FFFF);
     }
 }
 

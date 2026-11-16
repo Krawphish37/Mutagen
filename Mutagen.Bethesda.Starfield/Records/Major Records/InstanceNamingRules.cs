@@ -38,6 +38,7 @@ internal partial class InstanceNamingRulesBinaryCreateTranslation
         var unam = frame.ReadSubrecord(RecordTypes.UNAM);
         frame = frame.SpawnAll();
         var type = (TargetType)unam.AsInt32();
+        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.Rules));
         switch (type)
         {
             case TargetType.Armor:
@@ -64,6 +65,7 @@ internal partial class InstanceNamingRulesBinaryCreateTranslation
             default:
                 throw new ArgumentOutOfRangeException();
         }
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         return (int)InstanceNamingRules_FieldIndex.Rules;
     }
 }

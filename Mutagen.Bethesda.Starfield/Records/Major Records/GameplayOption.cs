@@ -40,10 +40,14 @@ internal partial class GameplayOptionBinaryCreateTranslation
         switch ((Type)type.AsUInt8())
         {
             case Type.Bool:
+                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.Data));
                 item.Data = BoolGameplayOptionData.CreateFromBinary(frame);
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 return;
             case Type.Float:
+                if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.Data));
                 item.Data = FloatGameplayOptionData.CreateFromBinary(frame);
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                 return;
             default:
                     throw new NotImplementedException();

@@ -30,7 +30,11 @@ partial class LeveledItemBinaryCreateTranslation
 {
     public static partial void FillBinaryChanceNoneCustom(MutagenFrame frame, ILeveledItemInternal item, PreviousParse lastParsed)
     {
-        item.ChanceNone = LeveledNpcBinaryCreateTranslation.GetChance(frame.ReadSubrecord(), frame.MetaData.FormVersion!.Value);
+        var at = ValuePositionRecorder.Here(frame);
+        var sub = frame.ReadSubrecord();
+        item.ChanceNone = LeveledNpcBinaryCreateTranslation.GetChance(sub, frame.MetaData.FormVersion!.Value);
+        // A byte (of 255) before form version FloatChanceNoneVersion, a float from it on
+        if (at >= 0) ValuePositionRecorder.At(nameof(item.ChanceNone), at + sub.HeaderLength, sub.ContentLength, converted: sub.ContentLength == 1);
     }
 }
 

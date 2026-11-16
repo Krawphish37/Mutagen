@@ -16,8 +16,10 @@ partial class GameSettingBoolBinaryCreateTranslation
 {
     public static partial void FillBinaryDataCustom(MutagenFrame frame, IGameSettingBoolInternal item, PreviousParse lastParsed)
     {
+        var at = ValuePositionRecorder.Here(frame);
         var subFrame = frame.ReadSubrecord();
         item.Data = (bool)(BinaryPrimitives.ReadUInt32LittleEndian(subFrame.Content) != 0);
+        if (at >= 0) ValuePositionRecorder.At(nameof(item.Data), at + subFrame.HeaderLength, 4);
     }
 }
 

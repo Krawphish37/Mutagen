@@ -33,11 +33,16 @@ partial class RegionDataBinaryCreateTranslation
     public static partial ParseResult FillBinaryHeaderLogicCustom(MutagenFrame frame, IRegionData item, PreviousParse lastParsed)
     {
         frame.ReadSubrecordHeader(RecordTypes.RDAT);
+        // RDAT 0-3: the data type, which picked the class (RegionData.DataType)
         frame.Position += 4;
+        var at = ValuePositionRecorder.Here(frame);
         item.Flags = EnumBinaryTranslation<RegionData.RegionDataFlag, MutagenFrame, MutagenWriter>.Instance.Parse(
             reader: frame,
             length: 1);
+        ValuePositionRecorder.Value(frame, nameof(item.Flags), at);
+        at = ValuePositionRecorder.Here(frame);
         item.Priority = frame.ReadUInt8();
+        ValuePositionRecorder.Value(frame, nameof(item.Priority), at);
         frame.Position += 2;
         return (int)RegionData_FieldIndex.Priority;
     }

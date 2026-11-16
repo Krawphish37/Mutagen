@@ -18,27 +18,52 @@ partial class ObjectTemplateBinaryCreateTranslation<T>
         PreviousParse lastParsed)
     {
         frame.ReadSubrecordHeader(RecordTypes.OBTS);
+        // The two counts come first; the lists they count are read last
+        var countsAt = ValuePositionRecorder.Here(frame);
         var includeCount = frame.ReadUInt32();
         var propertyCount = frame.ReadUInt32();
+        var at = ValuePositionRecorder.Here(frame);
         item.LevelMin = frame.ReadUInt16();
+        ValuePositionRecorder.Value(frame, nameof(item.LevelMin), at);
+        at = ValuePositionRecorder.Here(frame);
         item.LevelMax = frame.ReadUInt16();
+        ValuePositionRecorder.Value(frame, nameof(item.LevelMax), at);
+        at = ValuePositionRecorder.Here(frame);
         item.AddonIndex = frame.ReadInt16();
+        ValuePositionRecorder.Value(frame, nameof(item.AddonIndex), at);
+        at = ValuePositionRecorder.Here(frame);
         item.Default = BooleanBinaryTranslation<MutagenFrame>.Instance.Parse(frame, 1);
+        ValuePositionRecorder.Value(frame, nameof(item.Default), at);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.Keywords));
+        at = ValuePositionRecorder.Here(frame);
+        var keywordCount = frame.ReadUInt8();
+        if (at >= 0) ValuePositionRecorder.Count(frame, at);
         item.Keywords.SetTo(
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>
                 .Instance.Parse(
-                    amount: frame.ReadUInt8(),
+                    amount: keywordCount,
                     reader: frame,
                     transl: FormLinkBinaryTranslation.Instance.Parse));
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+        at = ValuePositionRecorder.Here(frame);
         item.MinLevelForRanks = frame.ReadUInt8();
+        ValuePositionRecorder.Value(frame, nameof(item.MinLevelForRanks), at);
+        at = ValuePositionRecorder.Here(frame);
         item.AltLevelsPerTier = frame.ReadUInt8();
+        ValuePositionRecorder.Value(frame, nameof(item.AltLevelsPerTier), at);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.Includes));
+        if (countsAt >= 0) ValuePositionRecorder.CountAt(countsAt, 4);
         item.Includes.SetTo(
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ObjectTemplateInclude>.Instance
                 .Parse(
                     reader: frame,
                     amount: checked((int)includeCount),
                     transl: ObjectTemplateInclude.TryCreateFromBinary));
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.Properties));
+        if (countsAt >= 0) ValuePositionRecorder.CountAt(countsAt + 4, 4);
         item.Properties.SetTo(ReadProperties(frame, checked((int)propertyCount)));
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         return (int)ObjectTemplate_FieldIndex.Properties;
     }
 
@@ -46,8 +71,49 @@ partial class ObjectTemplateBinaryCreateTranslation<T>
     {
         for (int i = 0; i < count; i++)
         {
-            yield return ReadProperty(stream.MetaData, stream.ReadSpan(24));
+            var at = ValuePositionRecorder.Here(stream);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(stream, i);
+            var property = ReadProperty(stream.MetaData, stream.ReadSpan(24));
+            if (at >= 0) NoteProperty(at, property);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(stream);
+            yield return property;
         }
+    }
+
+    /// <summary>C60: where a property's values sit in its 24 bytes (from <paramref name="at"/>)</summary>
+    private static void NoteProperty(long at, AObjectModProperty<T> property)
+    {
+        ValuePositionRecorder.At("FunctionType", at + 4, 1);
+        ValuePositionRecorder.At(nameof(property.Property), at + 8, 4);
+        switch (property)
+        {
+            case ObjectModBoolProperty<T> b:
+                ValuePositionRecorder.At(nameof(b.Value), at + 12, 1);
+                ValuePositionRecorder.At(nameof(b.Value2), at + 16, 1);
+                break;
+            case ObjectModStringProperty<T> s:
+                ValuePositionRecorder.At(nameof(s.Value), at + 12, 4);
+                ValuePositionRecorder.At(nameof(s.Unused), at + 16, 4);
+                break;
+            case ObjectModEnumProperty<T> e:
+                ValuePositionRecorder.At(nameof(e.EnumIntValue), at + 12, 4);
+                ValuePositionRecorder.At(nameof(e.Unused), at + 16, 4);
+                break;
+            case ObjectModFormLinkIntProperty<T> fi:
+                ValuePositionRecorder.At(nameof(fi.Record), at + 12, 4);
+                ValuePositionRecorder.At(nameof(fi.Value), at + 16, 4);
+                break;
+            case ObjectModFormLinkFloatProperty<T> ff:
+                ValuePositionRecorder.At(nameof(ff.Record), at + 12, 4);
+                ValuePositionRecorder.At(nameof(ff.Value), at + 16, 4);
+                break;
+            default:
+                // Int and Float
+                ValuePositionRecorder.At("Value", at + 12, 4);
+                ValuePositionRecorder.At("Value2", at + 16, 4);
+                break;
+        }
+        ValuePositionRecorder.At(nameof(property.Step), at + 20, 4);
     }
 
     public static AObjectModProperty<T> ReadProperty(ParsingMeta meta, ReadOnlySpan<byte> data)

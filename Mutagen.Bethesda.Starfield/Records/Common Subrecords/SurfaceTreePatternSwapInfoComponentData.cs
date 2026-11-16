@@ -11,18 +11,30 @@ partial class SurfaceTreePatternSwapInfoComponentDataBinaryCreateTranslation
 {
     public static partial void FillBinaryDataLogicCustom(MutagenFrame frame, ISurfaceTreePatternSwapInfoComponentData item)
     {
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.Data));
+        var at = ValuePositionRecorder.Here(frame);
         var count = checked((int)frame.ReadUInt32());
+        if (at >= 0) ValuePositionRecorder.Count(frame, at);
         for (int i = 0; i < count; i++)
         {
             var entry = new SurfaceTreePatternSwapInfoItem();
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(frame, i);
+            at = ValuePositionRecorder.Here(frame);
             entry.SurfacePattern.SetTo(FormKeyBinaryTranslation.Instance.Parse(frame));
+            ValuePositionRecorder.Value(frame, nameof(entry.SurfacePattern), at);
+            at = ValuePositionRecorder.Here(frame);
             entry.Unknown = (sbyte)frame.ReadUInt8();
+            ValuePositionRecorder.Value(frame, nameof(entry.Unknown), at);
             if (i < count - 1)
             {
+                at = ValuePositionRecorder.Here(frame);
                 entry.Unknown2 = frame.ReadUInt32();
+                ValuePositionRecorder.Value(frame, nameof(entry.Unknown2), at);
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             item.Data.Add(entry);
         }
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
     }
 }
 

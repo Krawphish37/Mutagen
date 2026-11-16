@@ -17,6 +17,7 @@ partial class PERSBinaryCreateTranslation
     {
         frame = frame.SpawnAll();
         item.Items.Clear();
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.Items));
         // An XXXX gives the length of the DAT2 right after it only; any other DAT2 has its own length (C50: the length
         // was kept, so a later DAT2 without an XXXX was read with the earlier one's)
         int? contentLen = null;
@@ -33,16 +34,26 @@ partial class PERSBinaryCreateTranslation
                 contentLen = null;
                 frame.Position += subRec.HeaderLength;
 
+                if (ValuePositionRecorder.On)
+                {
+                    ValuePositionRecorder.Item(frame, item.Items.Count);
+                    ValuePositionRecorder.List(frame, "Items");
+                }
                 var items = Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<PERSItem>.Instance.Parse(
                     reader: frame.SpawnWithLength(length),
                     transl: PERSItem.TryCreateFromBinary);
+                if (ValuePositionRecorder.On)
+                {
+                    ValuePositionRecorder.End(frame);
+                    ValuePositionRecorder.End(frame);
+                }
                 item.Items.Add(new PERSItems()
                 {
                     Items = items
                 });
             }
         }
-        
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         return (int)PERS_FieldIndex.Items;
     }
 }

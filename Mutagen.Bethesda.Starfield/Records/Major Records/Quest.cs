@@ -85,7 +85,9 @@ partial class QuestBinaryCreateTranslation
     public static partial void FillBinaryDialogConditionsCustom(MutagenFrame frame, IQuestInternal item,
         PreviousParse lastParsed)
     {
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.DialogConditions));
         ConditionBinaryCreateTranslation.FillConditionsList(item.DialogConditions, frame);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
     }
 
     public static partial ParseResult FillBinaryUnusedConditionsLogicCustom(MutagenFrame frame, IQuestInternal item,
@@ -98,7 +100,9 @@ partial class QuestBinaryCreateTranslation
         }
 
         item.UnusedConditions = new();
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.UnusedConditions));
         ConditionBinaryCreateTranslation.FillConditionsList(item.UnusedConditions, frame);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         return null;
     }
 
@@ -115,24 +119,31 @@ partial class QuestBinaryCreateTranslation
         PreviousParse lastParsed)
     {
         frame = frame.SpawnAll();
+        var nextAliasAt = ValuePositionRecorder.Here(frame);
         if (frame.TryReadSubrecord(RecordTypes.ANAM, out var nextAliasId))
         {
             item.NextAliasID = nextAliasId.AsUInt32();
+            if (nextAliasAt >= 0) ValuePositionRecorder.At(nameof(item.NextAliasID), nextAliasAt + nextAliasId.HeaderLength, nextAliasId.ContentLength);
         }
         item.Aliases = new();
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.Aliases));
         while (frame.TryGetSubrecord(_expectedAliasRecords, out var subRec))
         {
             switch (subRec.RecordTypeInt)
             {
                 case RecordTypeInts.ALST:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Item(frame, item.Aliases.Count);
                     var ret = QuestReferenceAlias.CreateFromBinary(frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     item.Aliases.Add(ret);
                     break;
                 }
                 case RecordTypeInts.ALLS:
                 {
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.Item(frame, item.Aliases.Count);
                     var ret = QuestLocationAlias.CreateFromBinary(frame);
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     item.Aliases.Add(ret);
                     break;
                 }
@@ -140,10 +151,20 @@ partial class QuestBinaryCreateTranslation
                 case RecordTypeInts.ALMI:
                 {
                     var ret = new QuestCollectionAlias();
+                    if (ValuePositionRecorder.On)
+                    {
+                        ValuePositionRecorder.Item(frame, item.Aliases.Count);
+                        ValuePositionRecorder.List(frame, nameof(ret.Collection));
+                    }
                     ret.Collection.SetTo(
                         ListBinaryTranslation<CollectionAlias>.Instance.Parse(
                             frame,
                             CollectionAlias.TryCreateFromBinary));
+                    if (ValuePositionRecorder.On)
+                    {
+                        ValuePositionRecorder.End(frame);
+                        ValuePositionRecorder.End(frame);
+                    }
                     item.Aliases.Add(ret);
                     break;
                 }
@@ -151,9 +172,11 @@ partial class QuestBinaryCreateTranslation
                     frame.Position += subRec.TotalLength;
                     break;
                 default:
+                    if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
                     return (int)Quest_FieldIndex.Aliases;
             }
         }
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
 
         return (int)Quest_FieldIndex.Aliases;
     }

@@ -72,11 +72,19 @@ partial class MagicEffectBinaryCreateTranslation
         // Jump back and read in association FormKey
         var curPos = frame.Position;
         frame.Position -= 80;
+        var associationAt = ValuePositionRecorder.Here(frame);
         FormKey associatedItemKey = FormKeyBinaryTranslation.Instance.Parse(frame);
         frame.Position = curPos;
 
         // Finish reading archetype
+        var typeAt = ValuePositionRecorder.Here(frame);
         MagicEffectArchetype.TypeEnum archetypeEnum = (MagicEffectArchetype.TypeEnum)frame.ReadInt32();
+        if (typeAt >= 0)
+        {
+            // The type picks the class; it is also the archetype's Type. The association sits 80 bytes before it.
+            ValuePositionRecorder.At("Archetype.Type", typeAt, 4);
+            ValuePositionRecorder.At("Archetype.Association", associationAt, 4);
+        }
         AMagicEffectArchetype archetype;
         switch (archetypeEnum)
         {

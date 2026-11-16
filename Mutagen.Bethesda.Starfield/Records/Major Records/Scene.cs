@@ -104,12 +104,15 @@ partial class SceneBinaryCreateTranslation
         var ret = new ExtendedList<ASceneAction>();
         while (frame.TryReadSubrecord(RecordTypes.ANAM, out var subRec))
         {
+            // The ANAM before an action gives its type, which picks the class; another ANAM ends it
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Item(frame, ret.Count);
             ret.Add(ReadSceneAction(subRec, frame));
 
             try
             {
                 // Footer
                 frame.ReadSubrecord(RecordTypes.ANAM);
+                if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
             }
             catch (Exception e)
             {
@@ -126,7 +129,9 @@ partial class SceneBinaryCreateTranslation
         ISceneInternal item,
         PreviousParse lastParsed)
     {
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.Actions));
         item.Actions = ReadSceneActions(frame);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
     }
 }
 

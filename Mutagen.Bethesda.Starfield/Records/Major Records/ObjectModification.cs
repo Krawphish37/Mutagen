@@ -105,24 +105,48 @@ partial class AObjectModificationBinaryCreateTranslation
         PreviousParse lastParsed)
     {
         frame.ReadSubrecordHeader(RecordTypes.DATA);
+        // The two counts come first; the lists they count are read last
+        var countsAt = ValuePositionRecorder.Here(frame);
         var includeCount = frame.ReadInt32();
         var propertyCount = frame.ReadInt32();
+        var at = ValuePositionRecorder.Here(frame);
         item.Unknown = frame.ReadUInt16();
+        ValuePositionRecorder.Value(frame, nameof(item.Unknown), at);
+        var nameAt = ValuePositionRecorder.Here(frame);
         var dataName = StringBinaryTranslation.Instance.Parse(frame, StringBinaryType.PrependLengthWithNullIfContent, parseWhole: true);
+        if (item is IUnknownObjectModificationInternal) ValuePositionRecorder.Value(frame, "ObjectModificationTargetName", nameAt);
+        at = ValuePositionRecorder.Here(frame);
         item.MaxRank = frame.ReadUInt8();
+        ValuePositionRecorder.Value(frame, nameof(item.MaxRank), at);
+        at = ValuePositionRecorder.Here(frame);
         item.LevelTierScaledOffset = frame.ReadUInt8();
+        ValuePositionRecorder.Value(frame, nameof(item.LevelTierScaledOffset), at);
+        at = ValuePositionRecorder.Here(frame);
         item.AttachPoint.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
+        ValuePositionRecorder.Value(frame, nameof(item.AttachPoint), at);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.AttachParentSlots));
+        at = ValuePositionRecorder.Here(frame);
+        var slotCount = frame.ReadInt32();
+        if (at >= 0) ValuePositionRecorder.Count(frame, at);
         item.AttachParentSlots.SetTo(
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IFormLinkGetter<IKeywordGetter>>.Instance.Parse(
                 reader: frame,
-                amount: frame.ReadInt32(),
+                amount: slotCount,
                 transl: FormLinkBinaryTranslation.Instance.Parse));
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+        at = ValuePositionRecorder.Here(frame);
         item.Unknown3 = frame.ReadUInt32();
+        ValuePositionRecorder.Value(frame, nameof(item.Unknown3), at);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.Includes));
+        if (countsAt >= 0) ValuePositionRecorder.CountAt(countsAt, 4);
         item.Includes.SetTo(
             Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<ObjectModInclude>.Instance.Parse(
                 reader: frame,
                 amount: includeCount,
                 transl: ObjectModInclude.TryCreateFromBinary));
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Properties");
+        if (countsAt >= 0) ValuePositionRecorder.CountAt(countsAt + 4, 4);
         switch (item)
         {
             case IArmorModificationInternal armorMod:
@@ -161,6 +185,7 @@ partial class AObjectModificationBinaryCreateTranslation
             default:
                 throw new NotImplementedException();
         }
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         return (int)AObjectModification_FieldIndex.Model;
     }
 }

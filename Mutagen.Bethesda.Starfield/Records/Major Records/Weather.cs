@@ -41,12 +41,25 @@ partial class WeatherBinaryCreateTranslation
         return null;
     }
 
+    /// <summary>C60: the eight times of day of a cloud layer's alphas or colors, each <paramref name="size"/> bytes</summary>
+    private static void NoteEight(string prefix, long at, int size)
+    {
+        string[] names = { "Sunrise", "Day", "Sunset", "Night", "EarlySunrise", "LateSunrise", "EarlySunset", "LateSunset" };
+        for (int i = 0; i < names.Length; i++)
+        {
+            ValuePositionRecorder.At($"{prefix}.{names[i]}", at + size * i, size);
+        }
+    }
+
     public static void FillBinaryCloudAlphas(MutagenFrame frame, CloudLayer[] clouds, uint formVersion)
     {
         frame.ReadSubrecordHeader();
         for (int i = 0; i < NumLayers; i++)
         {
             if (frame.Complete) break;
+            // C60: the cloud layers are the items of Clouds
+            var at = ValuePositionRecorder.Here(frame);
+            if (at >= 0) NoteEight($"Clouds[{i}].Alphas", at, 4);
             clouds[i].Alphas = new WeatherAlpha()
             {
                 Sunrise = frame.ReadFloat(),
@@ -74,6 +87,8 @@ partial class WeatherBinaryCreateTranslation
         for (int i = 0; i < NumLayers; i++)
         {
             if (frame.Complete) return;
+            var at = ValuePositionRecorder.Here(frame);
+            if (at >= 0) NoteEight($"Clouds[{i}].Colors", at, 4);
             clouds[i].Colors = new WeatherColor()
             {
                 Sunrise = frame.ReadColor(ColorBinaryType.Alpha),
@@ -98,7 +113,10 @@ partial class WeatherBinaryCreateTranslation
         frame.ReadSubrecordHeader();
         for (int i = 0; i < NumLayers; i++)
         {
+            var at = ValuePositionRecorder.Here(frame);
             clouds[i].YSpeed = ConvertToSpeed(frame.ReadUInt8());
+            // Stored as a byte (ConvertToSpeed)
+            ValuePositionRecorder.Value(frame, $"Clouds[{i}].YSpeed", at, converted: true);
         }
     }
 
@@ -113,7 +131,10 @@ partial class WeatherBinaryCreateTranslation
         frame.ReadSubrecordHeader();
         for (int i = 0; i < NumLayers; i++)
         {
+            var at = ValuePositionRecorder.Here(frame);
             clouds[i].XSpeed = ConvertToSpeed(frame.ReadUInt8());
+            // Stored as a byte (ConvertToSpeed)
+            ValuePositionRecorder.Value(frame, $"Clouds[{i}].XSpeed", at, converted: true);
         }
     }
 
@@ -125,13 +146,16 @@ partial class WeatherBinaryCreateTranslation
 
     public static void FillBinaryDisabledCloudLayers(MutagenFrame frame, CloudLayer[] clouds)
     {
+        var at = ValuePositionRecorder.Here(frame);
         var subRec = frame.ReadSubrecord();
+        if (at >= 0) at += subRec.HeaderLength;
         var raw = BinaryPrimitives.ReadUInt32LittleEndian(subRec.Content);
         uint index = 1;
         for (int i = 0; i < NumLayers; i++)
         {
-            // Inverse because we're exposing as enabled
+            // Inverse because we're exposing as enabled: the bit is set when the layer is disabled
             clouds[i].Enabled = !Enums.HasFlag(raw, index);
+            if (at >= 0) ValuePositionRecorder.At($"Clouds[{i}].Enabled", at, 4, index, converted: true);
             index <<= 1;
         }
     }
@@ -143,27 +167,31 @@ partial class WeatherBinaryCreateTranslation
 
     public static WeatherAmbientColorSet GetBinaryDirectionalAmbientLightingColors(MutagenFrame frame)
     {
-        AmbientColors Parse()
+        // C60: noted with the caller's name for the set
+        AmbientColors Parse(string name)
         {
             var subMeta = frame.GetSubrecordHeader();
             if (subMeta.RecordType != RecordTypes.DALC)
             {
                 return new AmbientColors();
             }
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, $"DirectionalAmbientLightingColors.{name}");
             frame.ReadSubrecordHeader();
-            return AmbientColors.CreateFromBinary(frame.SpawnWithLength(subMeta.ContentLength, checkFraming: false));
+            var ret = AmbientColors.CreateFromBinary(frame.SpawnWithLength(subMeta.ContentLength, checkFraming: false));
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+            return ret;
         }
 
         return new WeatherAmbientColorSet()
         {
-            Sunrise = Parse(),
-            Day = Parse(),
-            Sunset = Parse(),
-            Night = Parse(),
-            EarlySunrise = Parse(),
-            LateSunrise = Parse(),
-            EarlySunset = Parse(),
-            LateSunset = Parse(),
+            Sunrise = Parse(nameof(WeatherAmbientColorSet.Sunrise)),
+            Day = Parse(nameof(WeatherAmbientColorSet.Day)),
+            Sunset = Parse(nameof(WeatherAmbientColorSet.Sunset)),
+            Night = Parse(nameof(WeatherAmbientColorSet.Night)),
+            EarlySunrise = Parse(nameof(WeatherAmbientColorSet.EarlySunrise)),
+            LateSunrise = Parse(nameof(WeatherAmbientColorSet.LateSunrise)),
+            EarlySunset = Parse(nameof(WeatherAmbientColorSet.EarlySunset)),
+            LateSunset = Parse(nameof(WeatherAmbientColorSet.LateSunset)),
         };
     }
 }

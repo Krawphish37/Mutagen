@@ -22,13 +22,17 @@ partial class ScenePhaseBinaryCreateTranslation
 {
     public static partial void FillBinaryStartConditionsCustom(MutagenFrame frame, IScenePhase item, PreviousParse lastParsed)
     {
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.StartConditions));
         ConditionBinaryCreateTranslation.FillConditionsList(item.StartConditions, frame);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
     }
 
     public static partial void FillBinaryCompletionConditionsCustom(MutagenFrame frame, IScenePhase item, PreviousParse lastParsed)
     {
         frame.ReadSubrecord(RecordTypes.NEXT);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.CompletionConditions));
         ConditionBinaryCreateTranslation.FillConditionsList(item.CompletionConditions, frame);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         frame.ReadSubrecord(RecordTypes.NEXT);
     }
 }

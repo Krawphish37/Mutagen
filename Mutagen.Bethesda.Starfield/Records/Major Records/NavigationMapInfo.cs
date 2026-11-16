@@ -36,24 +36,50 @@ partial class NavigationMapInfoBinaryCreateTranslation
 
     internal static void ReadTail(MutagenFrame frame, out NavmeshIslandData? island, out NavmeshPathingCell cell, out byte unknownByte, out List<uint> crcs)
     {
-        island = frame.ReadUInt8() != 0 ? NavmeshIslandData.CreateFromBinary(frame) : null;
+        // C60: noted with the names the caller gives them (IslandData, PathingCell, UnknownByte, UnknownCrcs)
+        if (frame.ReadUInt8() != 0)
+        {
+            if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "IslandData");
+            island = NavmeshIslandData.CreateFromBinary(frame);
+            if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
+        }
+        else
+        {
+            island = null;
+        }
+        var at = ValuePositionRecorder.Here(frame);
         cell = new NavmeshPathingCell { Crc = frame.ReadUInt32() };
+        ValuePositionRecorder.Value(frame, "PathingCell.Crc", at);
+        at = ValuePositionRecorder.Here(frame);
         cell.ParentWorld.SetTo(FormKeyBinaryTranslation.Instance.Parse(frame));
+        ValuePositionRecorder.Value(frame, "PathingCell.ParentWorld", at);
+        at = ValuePositionRecorder.Here(frame);
         if (cell.ParentWorld.IsNull)
         {
             cell.ParentCell.SetTo(FormKeyBinaryTranslation.Instance.Parse(frame));
+            ValuePositionRecorder.Value(frame, "PathingCell.ParentCell", at);
         }
         else
         {
             cell.Grid = P2Int16BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse(frame, swapCoords: true);
+            // Stored Y then X
+            ValuePositionRecorder.Value(frame, "PathingCell.Grid", at);
         }
+        at = ValuePositionRecorder.Here(frame);
         unknownByte = frame.ReadUInt8();
+        ValuePositionRecorder.Value(frame, "UnknownByte", at);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "UnknownCrcs");
+        at = ValuePositionRecorder.Here(frame);
         var count = checked((int)frame.ReadUInt32());
+        if (at >= 0) ValuePositionRecorder.Count(frame, at);
         crcs = new List<uint>(count);
         for (int i = 0; i < count; i++)
         {
+            at = ValuePositionRecorder.Here(frame);
             crcs.Add(frame.ReadUInt32());
+            ValuePositionRecorder.ItemValue(frame, i, at);
         }
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
     }
 }
 

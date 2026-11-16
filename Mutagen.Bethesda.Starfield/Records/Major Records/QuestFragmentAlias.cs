@@ -1,4 +1,5 @@
-﻿using Mutagen.Bethesda.Plugins.Binary.Streams;
+﻿using Mutagen.Bethesda.Plugins.Binary.Translations;
+using Mutagen.Bethesda.Plugins.Binary.Streams;
 using Noggog;
 
 namespace Mutagen.Bethesda.Starfield;
@@ -14,13 +15,17 @@ partial class QuestFragmentAliasBinaryCreateTranslation
         frame.Position = pos;
 
         var obj = new ScriptObjectProperty();
+        if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, nameof(item.Property));
         AVirtualMachineAdapterBinaryCreateTranslation.FillObject(frame, obj, format);
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
         item.Property = obj;
     }
 
     public static partial void FillBinaryScriptsCustom(MutagenFrame frame, IQuestFragmentAlias item)
     {
+        if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, nameof(item.Scripts));
         item.Scripts.AddRange(AVirtualMachineAdapterBinaryCreateTranslation.ReadEntries(frame, item.ObjectFormat));
+        if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
     }
 }
 

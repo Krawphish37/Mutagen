@@ -166,6 +166,25 @@ public class ValuePositionTests
                 new RecordType("CTDA"), 6, 0, 1, 1, 0));
         One(positions, "ConditionalEntries[0].Conditions[0].FunctionParse", ValuePositionKind.HandRead).Offset.ShouldBe(4);
 
+        // A hand-written reader's values (the CTDA): bits of the first byte, the comparison value, the function index,
+        // and the data's fields (generated ones and the ending parameters the hand-written reader reads)
+        const string c = "ConditionalEntries[0].Conditions[0].";
+        var flags = One(positions, c + "Flags", ValuePositionKind.Value);
+        (flags.Offset, flags.Length, flags.BitMask).ShouldBe((0, 1, 0x11UL));
+        One(positions, c + "CompareOperator", ValuePositionKind.Value).BitMask.ShouldBe(0xE0UL);
+        One(positions, c + "Data.UseAliases", ValuePositionKind.Value).BitMask.ShouldBe(0x02UL);
+        One(positions, c + "Data.UsePackageData", ValuePositionKind.Value).BitMask.ShouldBe(0x08UL);
+        (One(positions, c + "ComparisonValue", ValuePositionKind.Value) is { Offset: 4, Length: 4 }).ShouldBeTrue();
+        (One(positions, c + "Data.Function", ValuePositionKind.Value) is { Offset: 8, Length: 2 }).ShouldBeTrue();
+        (One(positions, c + "Unknown2", ValuePositionKind.Value) is { Offset: 10, Length: 2 }).ShouldBeTrue();
+        One(positions, c + "Data", ValuePositionKind.Object).Offset.ShouldBe(12);
+        (One(positions, c + "Data.FirstParameter", ValuePositionKind.Value) is { Offset: 12, Length: 4 }).ShouldBeTrue();
+        (One(positions, c + "Data.SecondParameter", ValuePositionKind.Value) is { Offset: 16, Length: 4 }).ShouldBeTrue();
+        (One(positions, c + "Data.RunOnType", ValuePositionKind.Value) is { Offset: 20, Length: 4 }).ShouldBeTrue();
+        (One(positions, c + "Data.Reference", ValuePositionKind.Value) is { Offset: 24, Length: 4 }).ShouldBeTrue();
+        (One(positions, c + "Data.ParameterThree", ValuePositionKind.Value) is { Offset: 28, Length: 4 }).ShouldBeTrue();
+        positions[c + "Data.LinkedReferenceKeyword"].ShouldBeEmpty();
+
         // The bytes of a position are the value's
         positions.Slice(One(positions, "EditorID", ValuePositionKind.Value)).ToArray().ShouldBe(Encoding.ASCII.GetBytes("List\0"));
         positions.Slice(One(positions, "Items[1]", ValuePositionKind.Value)).ToArray().ShouldBe(Le(0x01000801u));
