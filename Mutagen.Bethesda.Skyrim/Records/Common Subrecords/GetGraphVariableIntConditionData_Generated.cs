@@ -458,32 +458,32 @@ namespace Mutagen.Bethesda.Skyrim
         #region Mutagen
         object? IConditionParameters.Parameter1
         {
+            get => GraphVariable;
+            set => GraphVariable = value is null or string ? (string?)value : throw new ArgumentException("Parameter1 is a string");
+        }
+        object? IConditionParametersGetter.Parameter1
+        {
+            get => GraphVariable;
+        }
+        Type? IConditionParametersGetter.Parameter1Type
+        {
+            get => typeof(string);
+        }
+        object? IConditionParameters.Parameter2
+        {
             get => null;
             set
             {
 
             }
         }
-        object? IConditionParametersGetter.Parameter1
-        {
-            get => null;
-        }
-        Type? IConditionParametersGetter.Parameter1Type
-        {
-            get => null;
-        }
-        object? IConditionParameters.Parameter2
-        {
-            get => GraphVariable;
-            set => GraphVariable = (value is String v ? v : throw new ArgumentException());
-        }
         object? IConditionParametersGetter.Parameter2
         {
-            get => GraphVariable;
+            get => null;
         }
         Type? IConditionParametersGetter.Parameter2Type
         {
-            get => typeof(String);
+            get => null;
         }
         #endregion
 

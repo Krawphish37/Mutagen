@@ -490,6 +490,35 @@ namespace Mutagen.Bethesda.Starfield
         }
         #endregion
 
+        #region Mutagen
+        object? IConditionParameters.Parameter1
+        {
+            get => ParameterOne;
+            set => ParameterOne = (value is Int32 v ? v : throw new ArgumentException());
+        }
+        object? IConditionParametersGetter.Parameter1
+        {
+            get => ParameterOne;
+        }
+        Type? IConditionParametersGetter.Parameter1Type
+        {
+            get => typeof(Int32);
+        }
+        object? IConditionParameters.Parameter2
+        {
+            get => ParameterTwo;
+            set => ParameterTwo = (value is Int32 v ? v : throw new ArgumentException());
+        }
+        object? IConditionParametersGetter.Parameter2
+        {
+            get => ParameterTwo;
+        }
+        Type? IConditionParametersGetter.Parameter2Type
+        {
+            get => typeof(Int32);
+        }
+        #endregion
+
         #region Binary Translation
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         protected override object BinaryWriteTranslator => UnknownConditionDataBinaryWriteTranslation.Instance;

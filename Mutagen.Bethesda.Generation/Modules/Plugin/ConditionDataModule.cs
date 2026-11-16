@@ -1,4 +1,5 @@
-﻿using Loqui.Generation;
+using Loqui.Generation;
+using Mutagen.Bethesda.Generation.Modules.Binary;
 using Noggog;
 using Noggog.StructuredStrings;
 using Noggog.StructuredStrings.CSharp;
@@ -14,7 +15,40 @@ public class ConditionDataModule : GenerationModule
         data.GenerateConditionData = obj.Node.GetAttribute("generateConditionData", defaultVal: true);
         return base.PreLoad(obj);
     }
-    
+
+    /// <summary>
+    /// A condition's two parameters, as the game reads them from the CTDA (C60, after C58/W19): the CTDA has two
+    /// parameter slots (two Int32s, the fields the data's generated reader reads; a field another step fills, binary=
+    /// "NoGeneration" like UnknownConditionData's Function, isn't one) and two string parameters (the class's String
+    /// fields: Starfield's CIS1/CIS2 subrecords, by their record type, else in order). Parameter N is the N-th string when
+    /// the class uses it (not named Unused*), the slot being unused then; else the N-th slot. Taking simply the first two
+    /// fields mapped the string-parameter classes and UnknownConditionData wrong.
+    /// </summary>
+    public static IReadOnlyList<(TypeGeneration? Field, bool IsString)> Parameters(ObjectGeneration obj)
+    {
+        var strings = obj.Fields.Where(f => f is Loqui.Generation.StringType).ToList();
+        var slots = obj.Fields
+            .Where(f => f is not Loqui.Generation.StringType
+                        && f.GetFieldData() is { RecordType: null, Binary: not BinaryGenerationType.NoGeneration })
+            .ToList();
+        TypeGeneration? StringFor(int i) =>
+            strings.FirstOrDefault(f => f.GetFieldData().RecordType?.Type == $"CIS{i}")
+            ?? (strings.All(f => f.GetFieldData().RecordType == null) && strings.Count >= i ? strings[i - 1] : null);
+        var ret = new List<(TypeGeneration? Field, bool IsString)>();
+        for (int i = 1; i <= 2; i++)
+        {
+            if (StringFor(i) is { } str && !str.Name.Contains("Unused"))
+            {
+                ret.Add((str, true));
+            }
+            else
+            {
+                ret.Add((slots.Count >= i ? slots[i - 1] : null, false));
+            }
+        }
+        return ret;
+    }
+
     public override async Task GenerateInClass(ObjectGeneration obj, StructuredStringBuilder sb)
     {
         await base.GenerateInClass(obj, sb);
@@ -26,11 +60,10 @@ public class ConditionDataModule : GenerationModule
         if (obj.GetObjectData().GenerateConditionData == false) return;
 
         var i = 1;
-        foreach (var field in obj.Fields)
+        foreach (var (field, isString) in Parameters(obj))
         {
-            if (i > 2) break;
-            if (field.Name.Contains("UnusedStringParameter")) continue;
-            var isUnusedParameter = field.Name.Contains("Unused");
+            if (field == null) break;
+            var isUnusedParameter = !isString && field.Name.Contains("Unused");
 
             // Parameter property
             sb.AppendLine($"object? IConditionParameters.Parameter{i}");
@@ -45,6 +78,11 @@ public class ConditionDataModule : GenerationModule
                         sb.AppendLine();
                     }
                 }
+                else if (isString)
+                {
+                    sb.AppendLine($"get => {field.Name};");
+                    sb.AppendLine($"set => {field.Name} = value is null or string ? (string?)value : throw new ArgumentException(\"Parameter{i} is a string\");");
+                }
                 else
                 {
                     var name = field.Name;
@@ -53,7 +91,7 @@ public class ConditionDataModule : GenerationModule
                     sb.AppendLine($"set => {name} = (value is {setterTypeName} v ? v : throw new ArgumentException());");
                 }
             }
-            
+
             sb.AppendLine($"object? IConditionParametersGetter.Parameter{i}");
             using (sb.CurlyBrace())
             {
@@ -74,6 +112,10 @@ public class ConditionDataModule : GenerationModule
                 if (isUnusedParameter)
                 {
                     sb.AppendLine("get => null;");
+                }
+                else if (isString)
+                {
+                    sb.AppendLine("get => typeof(string);");
                 }
                 else
                 {

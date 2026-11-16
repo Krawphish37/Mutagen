@@ -482,19 +482,16 @@ namespace Mutagen.Bethesda.Skyrim
         }
         object? IConditionParameters.Parameter2
         {
-            get => null;
-            set
-            {
-
-            }
+            get => VariableName;
+            set => VariableName = value is null or string ? (string?)value : throw new ArgumentException("Parameter2 is a string");
         }
         object? IConditionParametersGetter.Parameter2
         {
-            get => null;
+            get => VariableName;
         }
         Type? IConditionParametersGetter.Parameter2Type
         {
-            get => null;
+            get => typeof(string);
         }
         #endregion
 
