@@ -94,7 +94,9 @@ public static class StreamHeaderMixIn
             header = default;
             return false;
         }
-        header = new ModHeader(constants, stream.ReadMemory(constants.ModHeaderLength, readSafe: readSafe));
+        // C66: without progressing, as documented (it read past the header, so TryGetModHeaderFrame and
+        // TryReadModHeaderFrame built their frame from the bytes after it)
+        header = new ModHeader(constants, stream.GetMemory(constants.ModHeaderLength, readSafe: readSafe));
         return true;
     }
 
@@ -1204,7 +1206,8 @@ public static class StreamHeaderMixIn
     {
         if (subRecords)
         {
-            return constants.VariableHeader(stream.GetMemory(constants.SubConstants.HeaderLength, readSafe: readSafe), ObjectType.Subrecord);
+            // C66: progressing, as documented and as the group and record cases do
+            return constants.VariableHeader(stream.ReadMemory(constants.SubConstants.HeaderLength, readSafe: readSafe), ObjectType.Subrecord);
         }
         RecordType rec = new RecordType(stream.GetInt32());
         if (rec == Constants.Group)
@@ -1745,7 +1748,10 @@ public static class StreamHeaderMixIn
     }
 
     /// <summary>
-    /// Retrieves a SubrecordFrame struct from the stream, without progressing its position.
+    /// Retrieves a SubrecordFrame struct of a specific type from the stream, <b>progressing its position</b> past it
+    /// (unlike the other GetSubrecord overloads: the same as <see cref="ReadSubrecord{TStream}(TStream, RecordType, bool)"/>).
+    /// Its callers (Starfield's AComponent readers, GameplayOption) rely on that; to look without moving, use
+    /// <see cref="TryGetSubrecord{TStream}(TStream, RecordType, out SubrecordFrame, int, bool)"/> (C66).
     /// </summary>
     /// <param name="stream">Source stream</param>
     /// <param name="targetType">RecordType to require for a successful query</param>
@@ -1754,6 +1760,8 @@ public static class StreamHeaderMixIn
     /// If false, future stream movement may corrupt and misalign underlying data the header references.<br/>
     /// If true, extra data copies may occur depending on the underling stream type.
     /// </param>
+    /// <exception cref="System.ArgumentException">Thrown when the subrecord is not of the target type (the position is
+    /// left where it was)</exception>
     /// <returns>A SubrecordFrame struct</returns>
     public static SubrecordFrame GetSubrecord<TStream>(this TStream stream, RecordType targetType, bool readSafe = true)
         where TStream : IMutagenReadStream
