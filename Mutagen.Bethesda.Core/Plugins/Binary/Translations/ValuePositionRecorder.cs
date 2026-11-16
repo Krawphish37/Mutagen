@@ -304,6 +304,21 @@ internal static class ValuePositionRecorder
     }
 
     /// <summary>
+    /// C85: for a generated reader that reads a list's count inline (a prepended count, as the list's amount): notes the
+    /// <paramref name="length"/> bytes just read as the count of the list being read, and gives the count back
+    /// </summary>
+    public static int Counted<TReader>(TReader frame, int count, int length)
+        where TReader : IBinaryReadStream
+    {
+        if (On)
+        {
+            var end = Pos(frame);
+            Leaf(NodeKind.Count, null, end - length, end, 0);
+        }
+        return count;
+    }
+
+    /// <summary>
     /// A value of the object being read, whose bytes were read already: <paramref name="length"/> bytes from
     /// <paramref name="start"/> (with the stream's offset, as <see cref="MutagenFrame.PositionWithOffset"/> gives it),
     /// optionally only the bits of <paramref name="bitMask"/> (of the little-endian value of those bytes)

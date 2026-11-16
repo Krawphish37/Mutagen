@@ -1149,7 +1149,7 @@ namespace Mutagen.Bethesda.Fallout4
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Data");
             item.Data.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<Int32>.Instance.Parse(
-                    amount: checked((int)frame.ReadUInt32()),
+                    amount: ValuePositionRecorder.Counted(frame, checked((int)frame.ReadUInt32()), 4),
                     reader: frame,
                     transl: Int32BinaryTranslation<MutagenFrame, MutagenWriter>.Instance.Parse));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);

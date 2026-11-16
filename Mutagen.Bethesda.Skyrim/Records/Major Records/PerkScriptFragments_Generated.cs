@@ -1219,7 +1219,7 @@ namespace Mutagen.Bethesda.Skyrim
             if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Fragments");
             item.Fragments.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<IndexedScriptFragment>.Instance.Parse(
-                    amount: frame.ReadUInt16(),
+                    amount: ValuePositionRecorder.Counted(frame, frame.ReadUInt16(), 2),
                     reader: frame,
                     transl: IndexedScriptFragment.TryCreateFromBinary));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
