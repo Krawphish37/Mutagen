@@ -327,7 +327,11 @@ public static class ValuePositionMixIn
             };
             if (kind == ValuePositionKind.HandRead && end == start && !n.HasChildren) continue;
             var place = Place(path, kind, leaf, (int)start, (int)end, n.BitMask, headerLength, subrecords);
-            positions.Add(n.Converted ? place with { Converted = true } : place);
+            // An item of a list of converted values is converted too
+            var converted = n.Converted
+                || (leaf && n.Kind == ValuePositionRecorder.NodeKind.Item && n.Parent >= 0
+                    && nodes[n.Parent] is { Kind: ValuePositionRecorder.NodeKind.List, Converted: true });
+            positions.Add(converted ? place with { Converted = true } : place);
         }
         return new RecordValuePositions(record, bytes, headerLength, compressed, subrecords, positions, unplaced);
     }

@@ -1165,7 +1165,7 @@ namespace Mutagen.Bethesda.Fallout4
             if (ValuePositionRecorder.On) ValuePositionRecorder.Field(frame, "Location");
             item.Location.SetTo(FormLinkBinaryTranslation.Instance.Parse(reader: frame));
             if (ValuePositionRecorder.On) ValuePositionRecorder.End(frame);
-            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Coordinates");
+            if (ValuePositionRecorder.On) ValuePositionRecorder.List(frame, "Coordinates", true);
             item.Coordinates.SetTo(
                 Mutagen.Bethesda.Plugins.Binary.Translations.ListBinaryTranslation<P2Int16>.Instance.Parse(
                     reader: frame,

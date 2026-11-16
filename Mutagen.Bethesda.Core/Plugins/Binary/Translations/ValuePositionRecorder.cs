@@ -143,6 +143,18 @@ internal static class ValuePositionRecorder
     /// <summary>A list, array or dictionary field is read from here on</summary>
     public static void List<TReader>(TReader frame, string name) where TReader : IBinaryReadStream => Push(frame, NodeKind.List, name, -1);
 
+    /// <summary>A list is read from here on whose items the reader computes from their bytes (see the Field overload)</summary>
+    public static void List<TReader>(TReader frame, string name, bool converted)
+        where TReader : IBinaryReadStream
+    {
+        Push(frame, NodeKind.List, name, -1);
+        if (!converted || _current is not { Stack.Count: > 0 } c) return;
+        var i = c.Stack[^1];
+        var n = c.Nodes[i];
+        n.Converted = true;
+        c.Nodes[i] = n;
+    }
+
     /// <summary>
     /// A hand-written reader step is read from here on (a CustomLogic step, a binary="Custom" field, a customBinaryEnd).
     /// What it notes inside is named relative to the object, as the object's own fields are.

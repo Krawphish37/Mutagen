@@ -1406,7 +1406,13 @@ public class PluginTranslationModule : BinaryTranslationModule
         var when = note == null ? null : ValuePositionVersionCheck(field, frameAccessor);
         if (note != null)
         {
-            var converted = note == nameof(ValuePositionRecorder.Field) && ValuePositionConverted(field) ? ", true" : null;
+            // A list of such values marks its items (the list translation notes them)
+            var converted = note switch
+            {
+                nameof(ValuePositionRecorder.Field) when ValuePositionConverted(field) => ", true",
+                nameof(ValuePositionRecorder.List) when field is ContainerType { SubTypeGeneration: { } sub } && ValuePositionConverted(sub) => ", true",
+                _ => null,
+            };
             sb.AppendLine($"if ({nameof(ValuePositionRecorder)}.{nameof(ValuePositionRecorder.On)}{when}) {nameof(ValuePositionRecorder)}.{note}({frameAccessor}, \"{field.Name}\"{converted});");
         }
         await GenerateFillSnippetRead(obj, sb, field, generator, frameAccessor);
