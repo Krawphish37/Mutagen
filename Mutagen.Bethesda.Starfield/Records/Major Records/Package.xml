@@ -60,7 +60,7 @@
       <RefDirect name="ScriptFragments" refName="PackageScriptFragments" binary="Custom" fills="ScriptFragments" nullable="True" />
     </Fields>
   </Object>
-  <Object name="PackageScriptFragments" objType="Subrecord">
+  <Object name="PackageScriptFragments" enteredBy="PackageScriptFragments.ReadFragments" objType="Subrecord">
     <Fields>
       <UInt8 name="ExtraBindDataVersion" default="3" />
       <RefDirect name="Script" refName="ScriptEntry" binary="NoGeneration" />
@@ -78,7 +78,7 @@
       </List>
     </Fields>
   </Object>
-  <Object name="APackageData" objType="Subrecord" selectedBy="dataInputType">
+  <Object name="APackageData" enteredBy="Package.FillPackageData,Package.AbsorbPackageData" objType="Subrecord" selectedBy="dataInputType">
     <Fields>
       <String name="Name" recordType="BNAM" binary="NoGeneration" nullable="True" />
       <Enum name="Flags" enumName="APackageData.Flag" recordType="PNAM" nullable="True" binary="NoGeneration" />
@@ -127,7 +127,7 @@
       <ByteArray name="TPIC" recordType="TPIC" binary="NoGeneration" />
     </Fields>
   </Object>
-  <Object name="APackageTarget" abstract="true" objType="Subrecord">
+  <Object name="APackageTarget" enteredBy="APackageTarget.CreateFromBinary" abstract="true" objType="Subrecord">
     <Fields>
       <CustomLogic name="DataParse" byteLength="8" fills="" writtenFrom="class" />
       <Int32 name="CountOrDistance" byteLength="4" />

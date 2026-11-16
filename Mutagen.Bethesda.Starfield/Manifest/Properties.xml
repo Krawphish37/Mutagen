@@ -6,24 +6,24 @@
     <Property name="Target" type="String" field="String" nullable="false" binary="Normal" />
     <Property name="MaxAnimationDistance" type="Single" field="Float" nullable="false" binary="Normal" />
   </Object>
-  <Object name="AColorRecordData" objType="Subrecord" abstract="true" />
+  <Object name="AColorRecordData" objType="Subrecord" abstract="true" enteredBy="ColorRecord.Data" />
   <Object name="AComponent" objType="Subrecord" abstract="true" recordTypes="BFCB">
     <Step name="BFCBString" fills="" writtenFrom="class" subrecords="BFCB" />
   </Object>
   <Object name="AGameplayOptionData" objType="Subrecord" />
   <Object name="AGameplayOptionsNode" objType="Subrecord" abstract="true" />
   <Object name="AInstanceNamingRules" objType="Subrecord" abstract="true" />
-  <Object name="ALocationTarget" objType="Subrecord" abstract="true" />
-  <Object name="AMagicEffectArchetype" objType="Subrecord" abstract="true">
+  <Object name="ALocationTarget" objType="Subrecord" abstract="true" enteredBy="LocationTargetRadius.Target" />
+  <Object name="AMagicEffectArchetype" objType="Subrecord" abstract="true" enteredBy="MagicEffect.Archetype">
     <Property name="AssociationKey" type="IFormLinkIdentifier" from="Association" note="the association as an untyped link" derived="handWritten" />
     <Property name="Type" type="MagicEffectArchetype.TypeEnum" from="class" note="the archetype type of the class; MagicEffectArchetype keeps the one read (DATA 80)" derived="handWritten" />
   </Object>
-  <Object name="ANavmeshParent" objType="Subrecord" abstract="true" />
-  <Object name="ANoteData" objType="Subrecord" abstract="true" />
-  <Object name="ANpcLevel" objType="Subrecord" abstract="true" />
-  <Object name="AObjectModProperty" objType="Subrecord" abstract="true" generics="T">
-    <Property name="Property" type="T" field="Enum" nullable="false" binary="Normal" offset="0" length="1" />
-    <Property name="Step" type="Single" field="Float" nullable="false" binary="Normal" offset="1" length="4" />
+  <Object name="ANavmeshParent" objType="Subrecord" abstract="true" enteredBy="NavmeshGeometry.Parent" />
+  <Object name="ANoteData" objType="Subrecord" abstract="true" enteredBy="Note.TypeParse" />
+  <Object name="ANpcLevel" objType="Subrecord" abstract="true" enteredBy="Npc.Level" />
+  <Object name="AObjectModProperty" objType="Subrecord" abstract="true" generics="T" enteredBy="ObjectTemplate.ReadProperty">
+    <Property name="Property" type="T" field="Enum" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
+    <Property name="Step" type="Single" field="Float" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
   </Object>
   <Object name="AObjectModification" baseClass="StarfieldMajorRecord" objType="Record" abstract="true" recordTypes="OMOD">
     <Property name="VirtualMachineAdapter" type="VirtualMachineAdapter" field="Loqui" nullable="true" binary="Normal" subrecords="VMAD" />
@@ -46,26 +46,26 @@
     <Property name="Filter" type="String" field="String" nullable="true" binary="Normal" subrecords="FLTR" />
     <Property name="MajorFlags" type="AObjectModification.MajorFlag" derived="majorFlag" from="MajorRecordFlagsRaw" />
   </Object>
-  <Object name="APackageData" objType="Subrecord" recordTypes="BNAM,PNAM">
-    <Property name="Name" type="String" field="String" nullable="true" binary="NoGeneration" subrecords="BNAM" />
-    <Property name="Flags" type="APackageData.Flag" field="Enum" nullable="true" binary="NoGeneration" subrecords="PNAM" />
+  <Object name="APackageData" objType="Subrecord" recordTypes="BNAM,PNAM" enteredBy="Package.FillPackageData,Package.AbsorbPackageData">
+    <Property name="Name" type="String" field="String" nullable="true" binary="NoGeneration" subrecords="BNAM" filledBy="Package.FillPackageData,Package.AbsorbPackageData" />
+    <Property name="Flags" type="APackageData.Flag" field="Enum" nullable="true" binary="NoGeneration" subrecords="PNAM" filledBy="Package.FillPackageData,Package.AbsorbPackageData" />
   </Object>
-  <Object name="APackageTarget" objType="Subrecord" abstract="true">
-    <Step name="DataParse" fills="" writtenFrom="class" offset="0" length="8" />
-    <Property name="CountOrDistance" type="Int32" field="Int32" nullable="false" binary="Normal" offset="8" length="4" />
+  <Object name="APackageTarget" objType="Subrecord" abstract="true" enteredBy="APackageTarget.CreateFromBinary">
+    <Step name="DataParse" fills="" writtenFrom="class" />
+    <Property name="CountOrDistance" type="Int32" field="Int32" nullable="false" binary="Normal" filledBy="APackageTarget.CreateFromBinary" />
   </Object>
-  <Object name="APerkEffect" objType="Subrecord" abstract="true" recordTypes="PRKE">
-    <Property name="Rank" type="Byte" field="UInt8" nullable="false" binary="NoGeneration" data="PRKE" />
-    <Property name="Priority" type="Byte" field="UInt8" nullable="false" binary="NoGeneration" data="PRKE" />
-    <Property name="Conditions" type="ExtendedList&lt;PerkCondition&gt;" field="List" nullable="false" binary="NoGeneration" subrecords="PRKC" />
+  <Object name="APerkEffect" objType="Subrecord" abstract="true" recordTypes="PRKE" enteredBy="PerkRank.Effects">
+    <Property name="Rank" type="Byte" field="UInt8" nullable="false" binary="NoGeneration" data="PRKE" filledBy="PerkRank.Effects" />
+    <Property name="Priority" type="Byte" field="UInt8" nullable="false" binary="NoGeneration" data="PRKE" filledBy="PerkRank.Effects" />
+    <Property name="Conditions" type="ExtendedList&lt;PerkCondition&gt;" field="List" nullable="false" binary="NoGeneration" subrecords="PRKC" filledBy="PerkRank.Effects" />
     <Step name="FunctionParameters" fills="" writtenFrom="class" subrecords="EPFT" />
-    <Property name="PerkEntryID" type="UInt16" field="UInt16" nullable="true" binary="Normal" subrecords="EPFB" />
-    <Property name="ButtonLabel" type="TranslatedString" field="String" nullable="true" binary="Normal" subrecords="EPF2" />
-    <Property name="Flags" type="APerkEffect.Flag" field="Enum" nullable="true" binary="Normal" subrecords="EPF3" />
+    <Property name="PerkEntryID" type="UInt16" field="UInt16" nullable="true" binary="Normal" subrecords="EPFB" filledBy="PerkRank.Effects" />
+    <Property name="ButtonLabel" type="TranslatedString" field="String" nullable="true" binary="Normal" subrecords="EPF2" filledBy="PerkRank.Effects" />
+    <Property name="Flags" type="APerkEffect.Flag" field="Enum" nullable="true" binary="Normal" subrecords="EPF3" filledBy="PerkRank.Effects" />
   </Object>
-  <Object name="APerkEntryPointEffect" baseClass="APerkEffect" objType="Subrecord" abstract="true" recordTypes="PRKE">
-    <Property name="EntryPoint" type="APerkEntryPointEffect.EntryType" field="Enum" nullable="false" binary="Normal" offset="0" length="1" />
-    <Property name="PerkConditionTabCount" type="Byte" field="UInt8" nullable="false" binary="Normal" offset="1" length="1" />
+  <Object name="APerkEntryPointEffect" baseClass="APerkEffect" objType="Subrecord" abstract="true" recordTypes="PRKE" enteredBy="PerkRank.Effects">
+    <Property name="EntryPoint" type="APerkEntryPointEffect.EntryType" field="Enum" nullable="false" binary="Normal" filledBy="PerkRank.Effects" />
+    <Property name="PerkConditionTabCount" type="Byte" field="UInt8" nullable="false" binary="Normal" filledBy="PerkRank.Effects" />
   </Object>
   <Object name="APlacedTrap" baseClass="StarfieldMajorRecord" objType="Record" abstract="true" recordTypes="VMAD,BFCB,NAME,XEMI,XLRT,XRGD,XLYR,XRFG,XPCS,XIS2,XRNK,XLKR,XLKT,XOWN,XEZN,XHTW,XESP,XATP,XSCL,DATA">
     <Property name="VirtualMachineAdapter" type="VirtualMachineAdapter" field="Loqui" nullable="true" binary="Normal" subrecords="VMAD" />
@@ -107,14 +107,14 @@
     <Property name="PreviousSibling" type="IFormLinkNullable&lt;IAStoryManagerNodeGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="SNAM" />
     <Property name="Conditions" type="ExtendedList&lt;Condition&gt;" field="List" nullable="false" binary="Normal" subrecords="CTDA,CITC" />
   </Object>
-  <Object name="ATerminalMenuItemTarget" objType="Subrecord" abstract="true" />
-  <Object name="ATopicReference" objType="Subrecord" abstract="true" recordTypes="PDTO" />
+  <Object name="ATerminalMenuItemTarget" objType="Subrecord" abstract="true" enteredBy="TerminalMenuItem.TypeParse" />
+  <Object name="ATopicReference" objType="Subrecord" abstract="true" recordTypes="PDTO" enteredBy="ATopicReference.Factory" />
   <Object name="AVirtualMachineAdapter" objType="Subrecord" abstract="true" recordTypes="VMAD">
     <Property name="Version" type="Int16" field="Int16" nullable="false" binary="Normal" offset="0" length="2" />
     <Property name="ObjectFormat" type="UInt16" field="UInt16" nullable="false" binary="Normal" offset="2" length="2" />
     <Property name="Scripts" type="ExtendedList&lt;ScriptEntry&gt;" field="List" nullable="false" binary="Custom" offset="4" reader="Scripts" fills="Scripts" />
   </Object>
-  <Object name="AVolumesUnknownEnder" objType="Subrecord" abstract="true" />
+  <Object name="AVolumesUnknownEnder" objType="Subrecord" abstract="true" enteredBy="VolumesComponentItem.TypeParse,VolumesComponentItem.Ender" />
   <Object name="AcousticSpace" baseClass="StarfieldMajorRecord" objType="Record" recordTypes="ASPC">
     <Property name="VirtualMachineAdapter" type="VirtualMachineAdapter" field="Loqui" nullable="true" binary="Normal" subrecords="VMAD" />
     <Property name="ObjectBounds" type="ObjectBounds" field="Loqui" nullable="false" binary="Normal" subrecords="OBND" />
@@ -778,9 +778,9 @@
     <Property name="Water" type="IFormLinkNullable&lt;IWaterGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="INAM" />
     <Property name="WaterMaterial" type="String" field="String" nullable="true" binary="Normal" subrecords="JNAM" />
   </Object>
-  <Object name="BipedObjectData" objType="Subrecord">
-    <Property name="Name" type="String" field="String" nullable="false" binary="NoGeneration" />
-    <Property name="Conditions" type="IFormLink&lt;IActorValueInformationGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" />
+  <Object name="BipedObjectData" objType="Subrecord" enteredBy="Race.BipedObjects">
+    <Property name="Name" type="String" field="String" nullable="false" binary="NoGeneration" filledBy="Race.BipedObjects" />
+    <Property name="Conditions" type="IFormLink&lt;IActorValueInformationGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" filledBy="Race.BipedObjects" />
   </Object>
   <Object name="BlockCellHeightGridComponent" baseClass="AComponent" objType="Subrecord" recordTypes="BFCB">
     <Property name="DATA" type="MemorySlice&lt;Byte&gt;" field="ByteArray" nullable="true" binary="Normal" subrecords="DATA" />
@@ -975,18 +975,18 @@
     <Property name="InventoryArt" type="IFormLinkNullable&lt;IStaticGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="INAM" />
     <Property name="Scene" type="IFormLinkNullable&lt;ISceneGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="GNAM" />
   </Object>
-  <Object name="BookActorValue" baseClass="BookTeachTarget" objType="Subrecord">
-    <Property name="ActorValue" type="IFormLink&lt;IActorValueInformationGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
+  <Object name="BookActorValue" baseClass="BookTeachTarget" objType="Subrecord" enteredBy="Book.Teaches">
+    <Property name="ActorValue" type="IFormLink&lt;IActorValueInformationGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="Book.Teaches" />
   </Object>
-  <Object name="BookPerk" baseClass="BookTeachTarget" objType="Subrecord">
-    <Property name="Perk" type="IFormLink&lt;IPerkGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
+  <Object name="BookPerk" baseClass="BookTeachTarget" objType="Subrecord" enteredBy="Book.Teaches">
+    <Property name="Perk" type="IFormLink&lt;IPerkGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="Book.Teaches" />
   </Object>
-  <Object name="BookSpell" baseClass="BookTeachTarget" objType="Subrecord">
-    <Property name="Spell" type="IFormLink&lt;ISpellGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
+  <Object name="BookSpell" baseClass="BookTeachTarget" objType="Subrecord" enteredBy="Book.Teaches">
+    <Property name="Spell" type="IFormLink&lt;ISpellGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="Book.Teaches" />
   </Object>
-  <Object name="BookTeachTarget" objType="Subrecord" abstract="true" />
-  <Object name="BookTeachesNothing" baseClass="BookTeachTarget" objType="Subrecord">
-    <Property name="RawContent" type="UInt32" field="UInt32" nullable="false" binary="Normal" offset="0" length="4" />
+  <Object name="BookTeachTarget" objType="Subrecord" abstract="true" enteredBy="Book.Teaches" />
+  <Object name="BookTeachesNothing" baseClass="BookTeachTarget" objType="Subrecord" enteredBy="Book.Teaches">
+    <Property name="RawContent" type="UInt32" field="UInt32" nullable="false" binary="Normal" filledBy="Book.Teaches" />
   </Object>
   <Object name="BoolGameplayOptionData" baseClass="AGameplayOptionData" objType="Subrecord" recordTypes="VNAM,WNAM">
     <Property name="Value1" type="Boolean" field="Bool" nullable="true" binary="Normal" subrecords="VNAM" />
@@ -1145,9 +1145,9 @@
     <Property name="Offset" type="Single" field="Float" nullable="false" binary="Normal" offset="0" length="4" />
     <Property name="HeightMap" type="IArray2d&lt;Byte&gt;" field="Array2d" nullable="false" binary="Normal" offset="4" length="2500" />
   </Object>
-  <Object name="CellNavmeshParent" baseClass="ANavmeshParent" objType="Subrecord">
-    <Property name="UnusedWorldspaceParent" type="IFormLink&lt;IWorldspaceGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
-    <Property name="Parent" type="IFormLink&lt;ICellGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="4" length="4" />
+  <Object name="CellNavmeshParent" baseClass="ANavmeshParent" objType="Subrecord" enteredBy="NavmeshGeometry.Parent">
+    <Property name="UnusedWorldspaceParent" type="IFormLink&lt;IWorldspaceGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="NavmeshGeometry.Parent" />
+    <Property name="Parent" type="IFormLink&lt;ICellGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="NavmeshGeometry.Parent" />
   </Object>
   <Object name="CellShipBlueprintSnapLink" objType="Subrecord">
     <Property name="ParentReference" type="IFormLink&lt;IPlacedObjectGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
@@ -1208,12 +1208,12 @@
     <Property name="Chance" type="Int32" field="Int32" nullable="false" binary="Normal" offset="4" length="4" />
     <Property name="Global" type="IFormLink&lt;IGlobalGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="8" length="4" />
   </Object>
-  <Object name="CloudLayer" objType="Subrecord">
-    <Property name="Enabled" type="Boolean" field="Bool" nullable="true" binary="NoGeneration" />
-    <Property name="XSpeed" type="Single" field="Float" nullable="true" binary="NoGeneration" />
-    <Property name="YSpeed" type="Single" field="Float" nullable="true" binary="NoGeneration" />
-    <Property name="Colors" type="WeatherColor" field="Loqui" nullable="true" binary="NoGeneration" />
-    <Property name="Alphas" type="WeatherAlpha" field="Loqui" nullable="true" binary="NoGeneration" />
+  <Object name="CloudLayer" objType="Subrecord" enteredBy="Weather.Clouds,Weather.CloudColors,Weather.CloudAlphas,Weather.DisabledCloudLayers">
+    <Property name="Enabled" type="Boolean" field="Bool" nullable="true" binary="NoGeneration" filledBy="Weather.Clouds,Weather.CloudColors,Weather.CloudAlphas,Weather.DisabledCloudLayers" />
+    <Property name="XSpeed" type="Single" field="Float" nullable="true" binary="NoGeneration" filledBy="Weather.Clouds,Weather.CloudColors,Weather.CloudAlphas,Weather.DisabledCloudLayers" />
+    <Property name="YSpeed" type="Single" field="Float" nullable="true" binary="NoGeneration" filledBy="Weather.Clouds,Weather.CloudColors,Weather.CloudAlphas,Weather.DisabledCloudLayers" />
+    <Property name="Colors" type="WeatherColor" field="Loqui" nullable="true" binary="NoGeneration" filledBy="Weather.Clouds,Weather.CloudColors,Weather.CloudAlphas,Weather.DisabledCloudLayers" />
+    <Property name="Alphas" type="WeatherAlpha" field="Loqui" nullable="true" binary="NoGeneration" filledBy="Weather.Clouds,Weather.CloudColors,Weather.CloudAlphas,Weather.DisabledCloudLayers" />
   </Object>
   <Object name="Clouds" baseClass="StarfieldMajorRecord" objType="Record" recordTypes="CLDF">
     <Property name="Reflection" type="Reflection" field="Loqui" nullable="true" binary="Normal" subrecords="REFL" />
@@ -1234,8 +1234,8 @@
     <Property name="Name" type="String" field="String" nullable="true" binary="Normal" subrecords="MNAM" />
     <Property name="CollidesWith" type="ExtendedList&lt;IFormLinkGetter&lt;ICollisionLayerGetter&gt;&gt;" field="List" nullable="true" binary="Normal" subrecords="CNAM" />
   </Object>
-  <Object name="ColorData" baseClass="AColorRecordData" objType="Subrecord">
-    <Property name="Color" type="Color" field="Color" nullable="false" binary="Normal" offset="0" length="4" />
+  <Object name="ColorData" baseClass="AColorRecordData" objType="Subrecord" enteredBy="ColorRecord.Data">
+    <Property name="Color" type="Color" field="Color" nullable="false" binary="Normal" filledBy="ColorRecord.Data" />
   </Object>
   <Object name="ColorRecord" baseClass="StarfieldMajorRecord" objType="Record" recordTypes="CLFM">
     <Property name="VirtualMachineAdapter" type="VirtualMachineAdapter" field="Loqui" nullable="true" binary="Normal" subrecords="VMAD" />
@@ -1244,8 +1244,8 @@
     <Property name="Conditions" type="ExtendedList&lt;Condition&gt;" field="List" nullable="false" binary="Normal" subrecords="CTDA" />
     <Property name="MajorFlags" type="ColorRecord.MajorFlag" derived="majorFlag" from="MajorRecordFlagsRaw" />
   </Object>
-  <Object name="ColorRemappingIndex" baseClass="AColorRecordData" objType="Subrecord">
-    <Property name="Index" type="Single" field="Float" nullable="false" binary="Normal" offset="0" length="4" />
+  <Object name="ColorRemappingIndex" baseClass="AColorRecordData" objType="Subrecord" enteredBy="ColorRecord.Data">
+    <Property name="Index" type="Single" field="Float" nullable="false" binary="Normal" filledBy="ColorRecord.Data" />
   </Object>
   <Object name="CombatStyle" baseClass="StarfieldMajorRecord" objType="Record" recordTypes="CSTY">
     <Property name="OffensiveMult" type="Single" field="Float" nullable="false" binary="Normal" data="CSGD" offset="0" length="4" />
@@ -2084,9 +2084,9 @@
     <Property name="IdleChatterMinTime" type="Single" field="Float" nullable="false" binary="Normal" offset="8" length="4" />
     <Property name="IdleChatterMaxTime" type="Single" field="Float" nullable="false" binary="Normal" offset="12" length="4" />
   </Object>
-  <Object name="FactionOwner" baseClass="OwnerTarget" objType="Subrecord">
-    <Property name="Faction" type="IFormLink&lt;IFactionGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
-    <Property name="RequiredRank" type="Int32" field="Int32" nullable="false" binary="Normal" offset="4" length="4" />
+  <Object name="FactionOwner" baseClass="OwnerTarget" objType="Subrecord" enteredBy="ExtraData.Owner">
+    <Property name="Faction" type="IFormLink&lt;IFactionGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="ExtraData.Owner" />
+    <Property name="RequiredRank" type="Int32" field="Int32" nullable="false" binary="Normal" filledBy="ExtraData.Owner" />
   </Object>
   <Object name="FactionPrisons" objType="Subrecord">
     <Property name="PrisonDoorMarker" type="IFormLink&lt;IPlacedObjectGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
@@ -5829,10 +5829,10 @@
     <Property name="ReferencedModIndex" type="UInt32" field="UInt32" nullable="false" binary="Normal" offset="4" length="4" />
     <Property name="Keyword" type="IFormLink&lt;IKeywordGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="8" length="4" />
   </Object>
-  <Object name="LegendaryItemLnamEntry" objType="Subrecord">
-    <Property name="Slot" type="LegendaryItem.StarSlot" field="Enum" nullable="false" binary="Normal" offset="0" length="4" />
-    <Property name="ReferenceMod" type="UInt32" field="UInt32" nullable="false" binary="Normal" offset="4" length="4" />
-    <Property name="Conditions" type="ExtendedList&lt;Condition&gt;" field="List" nullable="true" binary="Normal" subrecords="CTDA,CITC" />
+  <Object name="LegendaryItemLnamEntry" objType="Subrecord" enteredBy="LegendaryItem.LnamEntries">
+    <Property name="Slot" type="LegendaryItem.StarSlot" field="Enum" nullable="false" binary="Normal" filledBy="LegendaryItem.LnamEntries" />
+    <Property name="ReferenceMod" type="UInt32" field="UInt32" nullable="false" binary="Normal" filledBy="LegendaryItem.LnamEntries" />
+    <Property name="Conditions" type="ExtendedList&lt;Condition&gt;" field="List" nullable="true" binary="Normal" subrecords="CTDA,CITC" filledBy="LegendaryItem.LnamEntries" />
   </Object>
   <Object name="LegendaryItemQualityCost" objType="Subrecord">
     <Property name="Tier" type="UInt32" field="UInt32" nullable="false" binary="Normal" offset="0" length="4" />
@@ -6227,8 +6227,8 @@
     <Property name="SecondParameter" type="Int32" field="Int32" nullable="false" binary="Normal" offset="4" length="4" />
     <Property name="SecondUnusedStringParameter" type="String" field="String" nullable="true" binary="NoGeneration" subrecords="CIS2" />
   </Object>
-  <Object name="LocationCell" baseClass="ALocationTarget" objType="Subrecord">
-    <Property name="Link" type="IFormLink&lt;ICellGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
+  <Object name="LocationCell" baseClass="ALocationTarget" objType="Subrecord" enteredBy="LocationTargetRadius.Target">
+    <Property name="Link" type="IFormLink&lt;ICellGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="LocationTargetRadius.Target" />
   </Object>
   <Object name="LocationCellEnablePoint" objType="Subrecord">
     <Property name="Actor" type="IFormLink&lt;IPlacedGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
@@ -6257,9 +6257,9 @@
     <Property name="Location" type="IFormLink&lt;IComplexLocationGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
     <Property name="Coordinates" type="ExtendedList&lt;P2Int16&gt;" field="List" nullable="false" binary="Normal" offset="4" />
   </Object>
-  <Object name="LocationFallback" baseClass="ALocationTarget" objType="Subrecord">
-    <Property name="Type" type="LocationTargetRadius.LocationType" field="Enum" nullable="false" binary="Normal" offset="0" length="4" />
-    <Property name="Data" type="Int32" field="Int32" nullable="false" binary="Normal" offset="4" length="4" />
+  <Object name="LocationFallback" baseClass="ALocationTarget" objType="Subrecord" enteredBy="LocationTargetRadius.Target">
+    <Property name="Type" type="LocationTargetRadius.LocationType" field="Enum" nullable="false" binary="Normal" filledBy="LocationTargetRadius.Target" />
+    <Property name="Data" type="Int32" field="Int32" nullable="false" binary="Normal" filledBy="LocationTargetRadius.Target" />
   </Object>
   <Object name="LocationHasKeywordConditionData" baseClass="ConditionData" objType="Subrecord">
     <Property name="FirstParameter" type="IFormLinkOrIndex&lt;IKeywordGetter&gt;" field="FormLinkOrIndex" nullable="false" binary="Normal" offset="0" length="4" />
@@ -6279,14 +6279,14 @@
     <Property name="SecondParameter" type="Int32" field="Int32" nullable="false" binary="Normal" offset="4" length="4" />
     <Property name="SecondUnusedStringParameter" type="String" field="String" nullable="true" binary="NoGeneration" subrecords="CIS2" />
   </Object>
-  <Object name="LocationKeyword" baseClass="ALocationTarget" objType="Subrecord">
-    <Property name="Link" type="IFormLink&lt;IKeywordGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
+  <Object name="LocationKeyword" baseClass="ALocationTarget" objType="Subrecord" enteredBy="LocationTargetRadius.Target">
+    <Property name="Link" type="IFormLink&lt;IKeywordGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="LocationTargetRadius.Target" />
   </Object>
-  <Object name="LocationObjectId" baseClass="ALocationTarget" objType="Subrecord">
-    <Property name="Link" type="IFormLink&lt;IObjectIdGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
+  <Object name="LocationObjectId" baseClass="ALocationTarget" objType="Subrecord" enteredBy="LocationTargetRadius.Target">
+    <Property name="Link" type="IFormLink&lt;IObjectIdGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="LocationTargetRadius.Target" />
   </Object>
-  <Object name="LocationObjectType" baseClass="ALocationTarget" objType="Subrecord">
-    <Property name="Type" type="TargetObjectType" field="Enum" nullable="false" binary="Normal" offset="0" length="4" />
+  <Object name="LocationObjectType" baseClass="ALocationTarget" objType="Subrecord" enteredBy="LocationTargetRadius.Target">
+    <Property name="Type" type="TargetObjectType" field="Enum" nullable="false" binary="Normal" filledBy="LocationTargetRadius.Target" />
   </Object>
   <Object name="LocationOrParentHasKeywordConditionData" baseClass="ConditionData" objType="Subrecord">
     <Property name="FirstParameter" type="IFormLinkOrIndex&lt;IKeywordGetter&gt;" field="FormLinkOrIndex" nullable="false" binary="Normal" offset="0" length="4" />
@@ -6314,8 +6314,8 @@
     <Property name="Type" type="Keyword.TypeEnum" field="Enum" nullable="true" binary="Normal" subrecords="TNAM" />
     <Property name="FNAM" type="MemorySlice&lt;Byte&gt;" field="ByteArray" nullable="true" binary="Normal" subrecords="FNAM" />
   </Object>
-  <Object name="LocationTarget" baseClass="ALocationTarget" objType="Subrecord">
-    <Property name="Link" type="IFormLink&lt;IPlacedGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
+  <Object name="LocationTarget" baseClass="ALocationTarget" objType="Subrecord" enteredBy="LocationTargetRadius.Target">
+    <Property name="Link" type="IFormLink&lt;IPlacedGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="LocationTargetRadius.Target" />
   </Object>
   <Object name="LocationTargetRadius" objType="Subrecord">
     <Property name="Versioning" type="LocationTargetRadius.VersioningBreaks" field="Enum" nullable="false" derived="Break" />
@@ -6387,36 +6387,36 @@
     <Property name="DATADataTypeState" type="MagicEffect.DATADataType" field="Enum" nullable="false" derived="DataType" from="DATA" />
     <Property name="MajorFlags" type="MagicEffect.MajorFlag" derived="majorFlag" from="MajorRecordFlagsRaw" />
   </Object>
-  <Object name="MagicEffectArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord">
-    <Property name="Type" type="MagicEffectArchetype.TypeEnum" field="Enum" nullable="false" binary="NoGeneration" />
-    <Property name="Association" type="IFormLink&lt;IStarfieldMajorRecordGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" />
+  <Object name="MagicEffectArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord" enteredBy="MagicEffect.Archetype">
+    <Property name="Type" type="MagicEffectArchetype.TypeEnum" field="Enum" nullable="false" binary="NoGeneration" filledBy="MagicEffect.Archetype" />
+    <Property name="Association" type="IFormLink&lt;IStarfieldMajorRecordGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" filledBy="MagicEffect.Archetype" />
   </Object>
-  <Object name="MagicEffectBoundArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord">
-    <Property name="Association" type="IFormLink&lt;IBindableEquipmentGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" />
+  <Object name="MagicEffectBoundArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord" enteredBy="MagicEffect.Archetype">
+    <Property name="Association" type="IFormLink&lt;IBindableEquipmentGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" filledBy="MagicEffect.Archetype" />
   </Object>
-  <Object name="MagicEffectCloakArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord">
-    <Property name="Association" type="IFormLink&lt;ISpellGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" />
+  <Object name="MagicEffectCloakArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord" enteredBy="MagicEffect.Archetype">
+    <Property name="Association" type="IFormLink&lt;ISpellGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" filledBy="MagicEffect.Archetype" />
   </Object>
-  <Object name="MagicEffectDamageTypeModArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord">
-    <Property name="Association" type="IFormLink&lt;IDamageTypeGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" />
+  <Object name="MagicEffectDamageTypeModArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord" enteredBy="MagicEffect.Archetype">
+    <Property name="Association" type="IFormLink&lt;IDamageTypeGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" filledBy="MagicEffect.Archetype" />
   </Object>
-  <Object name="MagicEffectEnhanceWeaponArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord">
-    <Property name="Association" type="IFormLink&lt;IObjectEffectGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" />
+  <Object name="MagicEffectEnhanceWeaponArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord" enteredBy="MagicEffect.Archetype">
+    <Property name="Association" type="IFormLink&lt;IObjectEffectGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" filledBy="MagicEffect.Archetype" />
   </Object>
-  <Object name="MagicEffectGravityWielderArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord">
-    <Property name="Association" type="IFormLink&lt;IGravityWielderEffectDataGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" />
+  <Object name="MagicEffectGravityWielderArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord" enteredBy="MagicEffect.Archetype">
+    <Property name="Association" type="IFormLink&lt;IGravityWielderEffectDataGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" filledBy="MagicEffect.Archetype" />
   </Object>
-  <Object name="MagicEffectGuideArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord">
-    <Property name="Association" type="IFormLink&lt;IHazardGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" />
+  <Object name="MagicEffectGuideArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord" enteredBy="MagicEffect.Archetype">
+    <Property name="Association" type="IFormLink&lt;IHazardGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" filledBy="MagicEffect.Archetype" />
   </Object>
-  <Object name="MagicEffectImmunityModArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord">
-    <Property name="Association" type="IFormLink&lt;IDamageTypeGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" />
+  <Object name="MagicEffectImmunityModArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord" enteredBy="MagicEffect.Archetype">
+    <Property name="Association" type="IFormLink&lt;IDamageTypeGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" filledBy="MagicEffect.Archetype" />
   </Object>
-  <Object name="MagicEffectLightArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord">
-    <Property name="Association" type="IFormLink&lt;ILightGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" />
+  <Object name="MagicEffectLightArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord" enteredBy="MagicEffect.Archetype">
+    <Property name="Association" type="IFormLink&lt;ILightGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" filledBy="MagicEffect.Archetype" />
   </Object>
-  <Object name="MagicEffectPeakValueModArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord">
-    <Property name="Association" type="IFormLink&lt;IKeywordGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" />
+  <Object name="MagicEffectPeakValueModArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord" enteredBy="MagicEffect.Archetype">
+    <Property name="Association" type="IFormLink&lt;IKeywordGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" filledBy="MagicEffect.Archetype" />
   </Object>
   <Object name="MagicEffectSound" objType="Subrecord" recordTypes="ESSH">
     <Property name="Versioning" type="MagicEffectSound.VersioningBreaks" field="Enum" nullable="false" derived="Break" />
@@ -6425,17 +6425,17 @@
     <Break />
     <Property name="Unknown" type="MemorySlice&lt;Byte&gt;" field="ByteArray" nullable="false" binary="Normal" offset="41" length="3" />
   </Object>
-  <Object name="MagicEffectSpawnHazardArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord">
-    <Property name="Association" type="IFormLink&lt;IHazardGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" />
+  <Object name="MagicEffectSpawnHazardArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord" enteredBy="MagicEffect.Archetype">
+    <Property name="Association" type="IFormLink&lt;IHazardGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" filledBy="MagicEffect.Archetype" />
   </Object>
-  <Object name="MagicEffectSummonCreatureArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord">
-    <Property name="Association" type="IFormLink&lt;INpcGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" />
+  <Object name="MagicEffectSummonCreatureArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord" enteredBy="MagicEffect.Archetype">
+    <Property name="Association" type="IFormLink&lt;INpcGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" filledBy="MagicEffect.Archetype" />
   </Object>
-  <Object name="MagicEffectSummonDuplicateArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord">
-    <Property name="Association" type="IFormLink&lt;ISpellGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" />
+  <Object name="MagicEffectSummonDuplicateArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord" enteredBy="MagicEffect.Archetype">
+    <Property name="Association" type="IFormLink&lt;ISpellGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" filledBy="MagicEffect.Archetype" />
   </Object>
-  <Object name="MagicEffectTrackDamageArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord">
-    <Property name="Association" type="IFormLink&lt;ITrackDamageEffectDataGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" />
+  <Object name="MagicEffectTrackDamageArchetype" baseClass="AMagicEffectArchetype" objType="Subrecord" enteredBy="MagicEffect.Archetype">
+    <Property name="Association" type="IFormLink&lt;ITrackDamageEffectDataGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" filledBy="MagicEffect.Archetype" />
   </Object>
   <Object name="MagicTargetFormComponent" baseClass="AComponent" objType="Subrecord" recordTypes="BFCB" />
   <Object name="MannequinSkinSwap" objType="Subrecord" recordTypes="MSSS,MSSI,MSSA">
@@ -6751,11 +6751,11 @@
     <Property name="NavMesh" type="IFormLink&lt;INavigationMeshGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
     <Property name="NodeIndex" type="UInt32" field="UInt32" nullable="false" binary="Normal" offset="4" length="4" />
   </Object>
-  <Object name="NavmeshPathingCell" objType="Subrecord">
-    <Property name="Crc" type="UInt32" field="UInt32" nullable="false" binary="Normal" offset="0" length="4" />
-    <Property name="ParentWorld" type="IFormLink&lt;IStarfieldMajorRecordGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="4" length="4" />
-    <Property name="ParentCell" type="IFormLink&lt;ICellGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" />
-    <Property name="Grid" type="P2Int16" field="P2Int16" nullable="false" binary="NoGeneration" />
+  <Object name="NavmeshPathingCell" objType="Subrecord" enteredBy="NavigationMapInfo.IslandAndPathingLogic">
+    <Property name="Crc" type="UInt32" field="UInt32" nullable="false" binary="Normal" filledBy="NavigationMapInfo.IslandAndPathingLogic" />
+    <Property name="ParentWorld" type="IFormLink&lt;IStarfieldMajorRecordGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="NavigationMapInfo.IslandAndPathingLogic" />
+    <Property name="ParentCell" type="IFormLink&lt;ICellGetter&gt;" field="FormLink" nullable="false" binary="NoGeneration" filledBy="NavigationMapInfo.IslandAndPathingLogic" />
+    <Property name="Grid" type="P2Int16" field="P2Int16" nullable="false" binary="NoGeneration" filledBy="NavigationMapInfo.IslandAndPathingLogic" />
   </Object>
   <Object name="NavmeshSet" objType="Subrecord">
     <Property name="Navmeshes" type="ExtendedList&lt;IFormLinkGetter&lt;INavigationMeshGetter&gt;&gt;" field="List" nullable="false" binary="Normal" offset="0" />
@@ -6809,18 +6809,18 @@
     <Step name="DataParse" fills="Data.Sound,Data.Scene,Data.Unknown,Data.File,Data.Terminal" subrecords="SNAM,PNAM" />
     <Property name="Data" type="ANoteData" field="Loqui" nullable="false" binary="NoGeneration" filledBy="TypeParse" />
   </Object>
-  <Object name="NoteProgram" baseClass="ANoteData" objType="Subrecord">
-    <Property name="File" type="String" field="String" nullable="true" binary="Normal" offset="0" />
-    <Property name="Unknown" type="MemorySlice&lt;Byte&gt;" field="ByteArray" nullable="true" binary="Normal" />
+  <Object name="NoteProgram" baseClass="ANoteData" objType="Subrecord" enteredBy="Note.TypeParse">
+    <Property name="File" type="String" field="String" nullable="true" binary="Normal" filledBy="Note.TypeParse" />
+    <Property name="Unknown" type="MemorySlice&lt;Byte&gt;" field="ByteArray" nullable="true" binary="Normal" filledBy="Note.TypeParse" />
   </Object>
-  <Object name="NoteSound" baseClass="ANoteData" objType="Subrecord">
-    <Property name="Sound" type="IFormLinkNullable&lt;IStarfieldMajorRecordGetter&gt;" field="FormLink" nullable="true" binary="Normal" offset="0" length="4" />
+  <Object name="NoteSound" baseClass="ANoteData" objType="Subrecord" enteredBy="Note.TypeParse">
+    <Property name="Sound" type="IFormLinkNullable&lt;IStarfieldMajorRecordGetter&gt;" field="FormLink" nullable="true" binary="Normal" filledBy="Note.TypeParse" />
   </Object>
-  <Object name="NoteTerminal" baseClass="ANoteData" objType="Subrecord">
-    <Property name="Terminal" type="IFormLinkNullable&lt;ITerminalGetter&gt;" field="FormLink" nullable="true" binary="Normal" offset="0" length="4" />
+  <Object name="NoteTerminal" baseClass="ANoteData" objType="Subrecord" enteredBy="Note.TypeParse">
+    <Property name="Terminal" type="IFormLinkNullable&lt;ITerminalGetter&gt;" field="FormLink" nullable="true" binary="Normal" filledBy="Note.TypeParse" />
   </Object>
-  <Object name="NoteVoice" baseClass="ANoteData" objType="Subrecord">
-    <Property name="Scene" type="IFormLinkNullable&lt;ISceneGetter&gt;" field="FormLink" nullable="true" binary="Normal" offset="0" length="4" />
+  <Object name="NoteVoice" baseClass="ANoteData" objType="Subrecord" enteredBy="Note.TypeParse">
+    <Property name="Scene" type="IFormLinkNullable&lt;ISceneGetter&gt;" field="FormLink" nullable="true" binary="Normal" filledBy="Note.TypeParse" />
   </Object>
   <Object name="Npc" baseClass="StarfieldMajorRecord" objType="Record" recordTypes="NPC_">
     <Property name="VirtualMachineAdapter" type="VirtualMachineAdapter" field="Loqui" nullable="true" binary="Normal" subrecords="VMAD" />
@@ -6946,8 +6946,8 @@
     <Property name="Index" type="UInt32" field="UInt32" nullable="true" binary="Normal" subrecords="FMRI" />
     <Property name="MorphGroups" type="ExtendedList&lt;NpcMorphGroup&gt;" field="List" nullable="false" binary="Normal" subrecords="FMRG" />
   </Object>
-  <Object name="NpcLevel" baseClass="ANpcLevel" objType="Subrecord">
-    <Property name="Level" type="Int16" field="Int16" nullable="false" binary="Normal" offset="0" length="2" />
+  <Object name="NpcLevel" baseClass="ANpcLevel" objType="Subrecord" enteredBy="Npc.Level">
+    <Property name="Level" type="Int16" field="Int16" nullable="false" binary="Normal" filledBy="Npc.Level" />
   </Object>
   <Object name="NpcModification" baseClass="AObjectModification" objType="Record" recordTypes="OMOD">
     <Property name="Properties" type="ExtendedList&lt;AObjectModProperty&lt;Npc.Property&gt;&gt;" field="List" nullable="false" binary="NoGeneration" />
@@ -6960,9 +6960,9 @@
     <Property name="MorphGroup" type="String" field="String" nullable="false" binary="Normal" subrecords="FMRG" />
     <Property name="BlendIntensity" type="Single" field="Float" nullable="false" binary="Normal" subrecords="FMRS" />
   </Object>
-  <Object name="NpcOwner" baseClass="OwnerTarget" objType="Subrecord">
-    <Property name="Npc" type="IFormLink&lt;INpcGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
-    <Property name="Global" type="IFormLink&lt;IGlobalGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="4" length="4" />
+  <Object name="NpcOwner" baseClass="OwnerTarget" objType="Subrecord" enteredBy="ExtraData.Owner">
+    <Property name="Npc" type="IFormLink&lt;INpcGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="ExtraData.Owner" />
+    <Property name="Global" type="IFormLink&lt;IGlobalGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="ExtraData.Owner" />
   </Object>
   <Object name="NpcRDSA" objType="Subrecord">
     <Property name="ReactionType" type="Npc.ReactionTypeOption" field="Enum" nullable="false" binary="Normal" offset="0" length="4" />
@@ -7088,30 +7088,30 @@
     <Property name="WornRestrictions" type="IFormLink&lt;IFormListGetter&gt;" field="FormLink" nullable="false" binary="Normal" data="ENIT" offset="23" length="4" />
     <Property name="Effects" type="ExtendedList&lt;Effect&gt;" field="List" nullable="false" binary="Normal" subrecords="EFID,EFIT,CTDA,MNAM,ANAM,ZNAM,MAGF,EFIF,MUID" />
   </Object>
-  <Object name="ObjectModBoolProperty" baseClass="AObjectModProperty" objType="Subrecord" generics="T">
-    <Property name="Value" type="Boolean" field="Bool" nullable="false" binary="Normal" offset="5" length="1" />
-    <Property name="Value2" type="Boolean" field="Bool" nullable="false" binary="Normal" offset="6" length="1" />
-    <Property name="FunctionType" type="ObjectModProperty.BoolFunctionType" field="Enum" nullable="false" binary="Normal" offset="7" length="4" />
+  <Object name="ObjectModBoolProperty" baseClass="AObjectModProperty" objType="Subrecord" generics="T" enteredBy="ObjectTemplate.ReadProperty">
+    <Property name="Value" type="Boolean" field="Bool" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
+    <Property name="Value2" type="Boolean" field="Bool" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
+    <Property name="FunctionType" type="ObjectModProperty.BoolFunctionType" field="Enum" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
   </Object>
-  <Object name="ObjectModEnumProperty" baseClass="AObjectModProperty" objType="Subrecord" generics="T">
-    <Property name="EnumIntValue" type="UInt32" field="UInt32" nullable="false" binary="Normal" offset="5" length="4" />
-    <Property name="Unused" type="UInt32" field="UInt32" nullable="false" binary="Normal" offset="9" length="4" />
-    <Property name="FunctionType" type="ObjectModProperty.EnumFunctionType" field="Enum" nullable="false" binary="Normal" offset="13" length="4" />
+  <Object name="ObjectModEnumProperty" baseClass="AObjectModProperty" objType="Subrecord" generics="T" enteredBy="ObjectTemplate.ReadProperty">
+    <Property name="EnumIntValue" type="UInt32" field="UInt32" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
+    <Property name="Unused" type="UInt32" field="UInt32" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
+    <Property name="FunctionType" type="ObjectModProperty.EnumFunctionType" field="Enum" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
   </Object>
-  <Object name="ObjectModFloatProperty" baseClass="AObjectModProperty" objType="Subrecord" generics="T">
-    <Property name="Value" type="Single" field="Float" nullable="false" binary="Normal" offset="5" length="4" />
-    <Property name="Value2" type="Single" field="Float" nullable="false" binary="Normal" offset="9" length="4" />
-    <Property name="FunctionType" type="ObjectModProperty.FloatFunctionType" field="Enum" nullable="false" binary="Normal" offset="13" length="4" />
+  <Object name="ObjectModFloatProperty" baseClass="AObjectModProperty" objType="Subrecord" generics="T" enteredBy="ObjectTemplate.ReadProperty">
+    <Property name="Value" type="Single" field="Float" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
+    <Property name="Value2" type="Single" field="Float" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
+    <Property name="FunctionType" type="ObjectModProperty.FloatFunctionType" field="Enum" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
   </Object>
-  <Object name="ObjectModFormLinkFloatProperty" baseClass="AObjectModProperty" objType="Subrecord" generics="T">
-    <Property name="Record" type="IFormLink&lt;IStarfieldMajorRecordGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="5" length="4" />
-    <Property name="Value" type="Single" field="Float" nullable="false" binary="Normal" offset="9" length="4" />
-    <Property name="FunctionType" type="ObjectModProperty.FloatFunctionType" field="Enum" nullable="false" binary="Normal" offset="13" length="4" />
+  <Object name="ObjectModFormLinkFloatProperty" baseClass="AObjectModProperty" objType="Subrecord" generics="T" enteredBy="ObjectTemplate.ReadProperty">
+    <Property name="Record" type="IFormLink&lt;IStarfieldMajorRecordGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
+    <Property name="Value" type="Single" field="Float" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
+    <Property name="FunctionType" type="ObjectModProperty.FloatFunctionType" field="Enum" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
   </Object>
-  <Object name="ObjectModFormLinkIntProperty" baseClass="AObjectModProperty" objType="Subrecord" generics="T">
-    <Property name="Record" type="IFormLink&lt;IStarfieldMajorRecordGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="5" length="4" />
-    <Property name="Value" type="UInt32" field="UInt32" nullable="false" binary="Normal" offset="9" length="4" />
-    <Property name="FunctionType" type="ObjectModProperty.FormLinkFunctionType" field="Enum" nullable="false" binary="Normal" offset="13" length="4" />
+  <Object name="ObjectModFormLinkIntProperty" baseClass="AObjectModProperty" objType="Subrecord" generics="T" enteredBy="ObjectTemplate.ReadProperty">
+    <Property name="Record" type="IFormLink&lt;IStarfieldMajorRecordGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
+    <Property name="Value" type="UInt32" field="UInt32" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
+    <Property name="FunctionType" type="ObjectModProperty.FormLinkFunctionType" field="Enum" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
   </Object>
   <Object name="ObjectModInclude" objType="Subrecord">
     <Property name="Mod" type="IFormLink&lt;IAObjectModificationGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
@@ -7119,15 +7119,15 @@
     <Property name="Optional" type="Boolean" field="Bool" nullable="false" binary="Normal" offset="5" length="1" />
     <Property name="DoNotUseAll" type="Boolean" field="Bool" nullable="false" binary="Normal" offset="6" length="1" />
   </Object>
-  <Object name="ObjectModIntProperty" baseClass="AObjectModProperty" objType="Subrecord" generics="T">
-    <Property name="Value" type="UInt32" field="UInt32" nullable="false" binary="Normal" offset="5" length="4" />
-    <Property name="Value2" type="UInt32" field="UInt32" nullable="false" binary="Normal" offset="9" length="4" />
-    <Property name="FunctionType" type="ObjectModProperty.FloatFunctionType" field="Enum" nullable="false" binary="Normal" offset="13" length="4" />
+  <Object name="ObjectModIntProperty" baseClass="AObjectModProperty" objType="Subrecord" generics="T" enteredBy="ObjectTemplate.ReadProperty">
+    <Property name="Value" type="UInt32" field="UInt32" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
+    <Property name="Value2" type="UInt32" field="UInt32" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
+    <Property name="FunctionType" type="ObjectModProperty.FloatFunctionType" field="Enum" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
   </Object>
-  <Object name="ObjectModStringProperty" baseClass="AObjectModProperty" objType="Subrecord" generics="T">
-    <Property name="Value" type="String" field="String" nullable="false" binary="Normal" offset="5" />
-    <Property name="Unused" type="UInt32" field="UInt32" nullable="false" binary="Normal" />
-    <Property name="FunctionType" type="ObjectModProperty.FloatFunctionType" field="Enum" nullable="false" binary="Normal" />
+  <Object name="ObjectModStringProperty" baseClass="AObjectModProperty" objType="Subrecord" generics="T" enteredBy="ObjectTemplate.ReadProperty">
+    <Property name="Value" type="String" field="String" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
+    <Property name="Unused" type="UInt32" field="UInt32" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
+    <Property name="FunctionType" type="ObjectModProperty.FloatFunctionType" field="Enum" nullable="false" binary="Normal" filledBy="ObjectTemplate.ReadProperty" />
   </Object>
   <Object name="ObjectModification" baseClass="AObjectModification" objType="Record" recordTypes="OMOD">
     <Property name="Properties" type="ExtendedList&lt;AObjectModProperty&lt;AObjectModification.NoneProperty&gt;&gt;" field="List" nullable="false" binary="NoGeneration" />
@@ -7261,7 +7261,7 @@
     <Property name="OverlayWorldspace" type="IFormLink&lt;IWorldspaceGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
     <Property name="Point" type="P2Int" field="P2Int32" nullable="false" binary="Normal" offset="4" length="8" />
   </Object>
-  <Object name="OwnerTarget" objType="Subrecord" abstract="true" />
+  <Object name="OwnerTarget" objType="Subrecord" abstract="true" enteredBy="ExtraData.Owner" />
   <Object name="Ownership" objType="Subrecord" recordTypes="XOWN">
     <Property name="Owner" type="IFormLink&lt;IOwnerGetter&gt;" field="FormLink" nullable="false" binary="Normal" data="XOWN" offset="0" length="4" />
     <Property name="OwnerUnknown" type="MemorySlice&lt;Byte&gt;" field="ByteArray" nullable="false" binary="Normal" data="XOWN" offset="4" length="4" />
@@ -7278,8 +7278,8 @@
     <Property name="Unknown1" type="UInt32" field="UInt32" nullable="false" binary="Normal" offset="4" length="4" />
     <Property name="Unknown2" type="UInt32" field="UInt32" nullable="false" binary="Normal" offset="8" length="4" />
   </Object>
-  <Object name="PERSItems" objType="Subrecord">
-    <Property name="Items" type="ExtendedList&lt;PERSItem&gt;" field="List" nullable="false" binary="Normal" offset="0" />
+  <Object name="PERSItems" objType="Subrecord" enteredBy="PERS.ItemsParse">
+    <Property name="Items" type="ExtendedList&lt;PERSItem&gt;" field="List" nullable="false" binary="Normal" filledBy="PERS.ItemsParse" />
   </Object>
   <Object name="PTTA" objType="Subrecord" recordTypes="PTTA">
     <Property name="Unknown" type="Int32" field="Int32" nullable="false" binary="Normal" offset="0" length="4" />
@@ -7357,32 +7357,32 @@
     <Property name="FlagsOverride" type="PackageFlagsOverride" field="Loqui" nullable="true" binary="Custom" subrecords="PFO2" reader="FlagsOverride" fills="FlagsOverride,FlagsOverrideUnused" />
     <Property name="FlagsOverrideUnused" type="PackageFlagsOverride" field="Loqui" nullable="true" binary="NoGeneration" subrecords="PFO2" filledBy="FlagsOverride" />
   </Object>
-  <Object name="PackageDataBool" baseClass="APackageData" objType="Subrecord" recordTypes="BNAM,PNAM">
-    <Property name="Data" type="Boolean" field="Bool" nullable="false" binary="NoGeneration" />
+  <Object name="PackageDataBool" baseClass="APackageData" objType="Subrecord" recordTypes="BNAM,PNAM" enteredBy="Package.FillPackageData,Package.AbsorbPackageData">
+    <Property name="Data" type="Boolean" field="Bool" nullable="false" binary="NoGeneration" filledBy="Package.FillPackageData,Package.AbsorbPackageData" />
   </Object>
-  <Object name="PackageDataFloat" baseClass="APackageData" objType="Subrecord" recordTypes="BNAM,PNAM">
-    <Property name="Data" type="Single" field="Float" nullable="false" binary="NoGeneration" />
+  <Object name="PackageDataFloat" baseClass="APackageData" objType="Subrecord" recordTypes="BNAM,PNAM" enteredBy="Package.FillPackageData,Package.AbsorbPackageData">
+    <Property name="Data" type="Single" field="Float" nullable="false" binary="NoGeneration" filledBy="Package.FillPackageData,Package.AbsorbPackageData" />
   </Object>
-  <Object name="PackageDataInt" baseClass="APackageData" objType="Subrecord" recordTypes="BNAM,PNAM">
-    <Property name="Data" type="UInt32" field="UInt32" nullable="false" binary="NoGeneration" />
+  <Object name="PackageDataInt" baseClass="APackageData" objType="Subrecord" recordTypes="BNAM,PNAM" enteredBy="Package.FillPackageData,Package.AbsorbPackageData">
+    <Property name="Data" type="UInt32" field="UInt32" nullable="false" binary="NoGeneration" filledBy="Package.FillPackageData,Package.AbsorbPackageData" />
   </Object>
-  <Object name="PackageDataLocation" baseClass="APackageData" objType="Subrecord" recordTypes="BNAM,PNAM">
-    <Property name="Location" type="LocationTargetRadius" field="Loqui" nullable="false" binary="NoGeneration" subrecords="PLDT" />
+  <Object name="PackageDataLocation" baseClass="APackageData" objType="Subrecord" recordTypes="BNAM,PNAM" enteredBy="Package.FillPackageData,Package.AbsorbPackageData">
+    <Property name="Location" type="LocationTargetRadius" field="Loqui" nullable="false" binary="NoGeneration" subrecords="PLDT" filledBy="Package.FillPackageData,Package.AbsorbPackageData" />
   </Object>
-  <Object name="PackageDataObjectList" baseClass="APackageData" objType="Subrecord" recordTypes="BNAM,PNAM">
-    <Property name="Data" type="Single" field="Float" nullable="true" binary="NoGeneration" />
+  <Object name="PackageDataObjectList" baseClass="APackageData" objType="Subrecord" recordTypes="BNAM,PNAM" enteredBy="Package.FillPackageData,Package.AbsorbPackageData">
+    <Property name="Data" type="Single" field="Float" nullable="true" binary="NoGeneration" filledBy="Package.FillPackageData,Package.AbsorbPackageData" />
   </Object>
-  <Object name="PackageDataScene" baseClass="APackageData" objType="Subrecord" recordTypes="BNAM,PNAM">
-    <Property name="Scene" type="IFormLinkNullable&lt;ISceneGetter&gt;" field="FormLink" nullable="true" binary="NoGeneration" />
+  <Object name="PackageDataScene" baseClass="APackageData" objType="Subrecord" recordTypes="BNAM,PNAM" enteredBy="Package.FillPackageData,Package.AbsorbPackageData">
+    <Property name="Scene" type="IFormLinkNullable&lt;ISceneGetter&gt;" field="FormLink" nullable="true" binary="NoGeneration" filledBy="Package.FillPackageData,Package.AbsorbPackageData" />
   </Object>
-  <Object name="PackageDataTarget" baseClass="APackageData" objType="Subrecord" recordTypes="BNAM,PNAM">
-    <Property name="Type" type="PackageDataTarget.Types" field="Enum" nullable="false" binary="NoGeneration" />
-    <Property name="Target" type="APackageTarget" field="Loqui" nullable="false" binary="NoGeneration" subrecords="PTDA" classMember="handWritten" />
-    <Property name="Conditions" type="ExtendedList&lt;Condition&gt;" field="List" nullable="false" binary="NoGeneration" subrecords="CTDA,CITC" />
+  <Object name="PackageDataTarget" baseClass="APackageData" objType="Subrecord" recordTypes="BNAM,PNAM" enteredBy="Package.FillPackageData,Package.AbsorbPackageData">
+    <Property name="Type" type="PackageDataTarget.Types" field="Enum" nullable="false" binary="NoGeneration" filledBy="Package.FillPackageData,Package.AbsorbPackageData" />
+    <Property name="Target" type="APackageTarget" field="Loqui" nullable="false" binary="NoGeneration" subrecords="PTDA" filledBy="Package.FillPackageData,Package.AbsorbPackageData" classMember="handWritten" />
+    <Property name="Conditions" type="ExtendedList&lt;Condition&gt;" field="List" nullable="false" binary="NoGeneration" subrecords="CTDA,CITC" filledBy="Package.FillPackageData,Package.AbsorbPackageData" />
   </Object>
-  <Object name="PackageDataTopic" baseClass="APackageData" objType="Subrecord" recordTypes="BNAM,PNAM">
-    <Property name="Topics" type="ExtendedList&lt;ATopicReference&gt;" field="List" nullable="false" binary="NoGeneration" subrecords="PDTO" />
-    <Property name="TPIC" type="MemorySlice&lt;Byte&gt;" field="ByteArray" nullable="true" binary="NoGeneration" subrecords="TPIC" />
+  <Object name="PackageDataTopic" baseClass="APackageData" objType="Subrecord" recordTypes="BNAM,PNAM" enteredBy="Package.FillPackageData,Package.AbsorbPackageData">
+    <Property name="Topics" type="ExtendedList&lt;ATopicReference&gt;" field="List" nullable="false" binary="NoGeneration" subrecords="PDTO" filledBy="Package.FillPackageData,Package.AbsorbPackageData" />
+    <Property name="TPIC" type="MemorySlice&lt;Byte&gt;" field="ByteArray" nullable="true" binary="NoGeneration" subrecords="TPIC" filledBy="Package.FillPackageData,Package.AbsorbPackageData" />
   </Object>
   <Object name="PackageEvent" objType="Subrecord" recordTypes="INAM">
     <Property name="Idle" type="IFormLink&lt;IIdleAnimationGetter&gt;" field="FormLink" nullable="false" binary="Normal" subrecords="INAM" />
@@ -7408,40 +7408,40 @@
   <Object name="PackageSceneAction" baseClass="ASceneAction" objType="Subrecord" recordTypes="NAM0">
     <Property name="Packages" type="ExtendedList&lt;IFormLinkGetter&lt;IPackageGetter&gt;&gt;" field="List" nullable="false" binary="Normal" subrecords="PNAM" />
   </Object>
-  <Object name="PackageScriptFragments" objType="Subrecord">
-    <Property name="ExtraBindDataVersion" type="Byte" field="UInt8" nullable="false" binary="Normal" offset="0" length="1" />
-    <Property name="Script" type="ScriptEntry" field="Loqui" nullable="false" binary="NoGeneration" />
-    <Property name="OnBegin" type="ScriptFragment" field="Loqui" nullable="true" binary="NoGeneration" />
-    <Property name="OnEnd" type="ScriptFragment" field="Loqui" nullable="true" binary="NoGeneration" />
-    <Property name="OnChange" type="ScriptFragment" field="Loqui" nullable="true" binary="NoGeneration" />
+  <Object name="PackageScriptFragments" objType="Subrecord" enteredBy="PackageScriptFragments.ReadFragments">
+    <Property name="ExtraBindDataVersion" type="Byte" field="UInt8" nullable="false" binary="Normal" filledBy="PackageScriptFragments.ReadFragments" />
+    <Property name="Script" type="ScriptEntry" field="Loqui" nullable="false" binary="NoGeneration" filledBy="PackageScriptFragments.ReadFragments" />
+    <Property name="OnBegin" type="ScriptFragment" field="Loqui" nullable="true" binary="NoGeneration" filledBy="PackageScriptFragments.ReadFragments" />
+    <Property name="OnEnd" type="ScriptFragment" field="Loqui" nullable="true" binary="NoGeneration" filledBy="PackageScriptFragments.ReadFragments" />
+    <Property name="OnChange" type="ScriptFragment" field="Loqui" nullable="true" binary="NoGeneration" filledBy="PackageScriptFragments.ReadFragments" />
   </Object>
-  <Object name="PackageTargetAlias" baseClass="APackageTarget" objType="Subrecord">
-    <Property name="Alias" type="Int32" field="Int32" nullable="false" binary="Normal" offset="12" length="4" />
+  <Object name="PackageTargetAlias" baseClass="APackageTarget" objType="Subrecord" enteredBy="APackageTarget.CreateFromBinary">
+    <Property name="Alias" type="Int32" field="Int32" nullable="false" binary="Normal" filledBy="APackageTarget.CreateFromBinary" />
   </Object>
-  <Object name="PackageTargetInterruptData" baseClass="APackageTarget" objType="Subrecord">
-    <Property name="Data" type="UInt32" field="UInt32" nullable="false" binary="Normal" offset="12" length="4" />
+  <Object name="PackageTargetInterruptData" baseClass="APackageTarget" objType="Subrecord" enteredBy="APackageTarget.CreateFromBinary">
+    <Property name="Data" type="UInt32" field="UInt32" nullable="false" binary="Normal" filledBy="APackageTarget.CreateFromBinary" />
   </Object>
-  <Object name="PackageTargetKeyword" baseClass="APackageTarget" objType="Subrecord">
-    <Property name="Keyword" type="IFormLink&lt;IKeywordGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="12" length="4" />
+  <Object name="PackageTargetKeyword" baseClass="APackageTarget" objType="Subrecord" enteredBy="APackageTarget.CreateFromBinary">
+    <Property name="Keyword" type="IFormLink&lt;IKeywordGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="APackageTarget.CreateFromBinary" />
   </Object>
-  <Object name="PackageTargetLinkedReference" baseClass="APackageTarget" objType="Subrecord">
-    <Property name="Keyword" type="IFormLink&lt;IKeywordGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="12" length="4" />
+  <Object name="PackageTargetLinkedReference" baseClass="APackageTarget" objType="Subrecord" enteredBy="APackageTarget.CreateFromBinary">
+    <Property name="Keyword" type="IFormLink&lt;IKeywordGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="APackageTarget.CreateFromBinary" />
   </Object>
-  <Object name="PackageTargetObjectID" baseClass="APackageTarget" objType="Subrecord">
-    <Property name="Reference" type="IFormLink&lt;IObjectIdGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="12" length="4" />
+  <Object name="PackageTargetObjectID" baseClass="APackageTarget" objType="Subrecord" enteredBy="APackageTarget.CreateFromBinary">
+    <Property name="Reference" type="IFormLink&lt;IObjectIdGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="APackageTarget.CreateFromBinary" />
   </Object>
-  <Object name="PackageTargetObjectType" baseClass="APackageTarget" objType="Subrecord">
-    <Property name="Type" type="TargetObjectType" field="Enum" nullable="false" binary="Normal" offset="12" length="4" />
+  <Object name="PackageTargetObjectType" baseClass="APackageTarget" objType="Subrecord" enteredBy="APackageTarget.CreateFromBinary">
+    <Property name="Type" type="TargetObjectType" field="Enum" nullable="false" binary="Normal" filledBy="APackageTarget.CreateFromBinary" />
   </Object>
-  <Object name="PackageTargetSelf" baseClass="APackageTarget" objType="Subrecord">
-    <Property name="Data" type="Int32" field="Int32" nullable="false" binary="Normal" offset="12" length="4" />
+  <Object name="PackageTargetSelf" baseClass="APackageTarget" objType="Subrecord" enteredBy="APackageTarget.CreateFromBinary">
+    <Property name="Data" type="Int32" field="Int32" nullable="false" binary="Normal" filledBy="APackageTarget.CreateFromBinary" />
   </Object>
-  <Object name="PackageTargetSpecificReference" baseClass="APackageTarget" objType="Subrecord">
-    <Property name="Reference" type="IFormLink&lt;IPlacedGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="12" length="4" />
+  <Object name="PackageTargetSpecificReference" baseClass="APackageTarget" objType="Subrecord" enteredBy="APackageTarget.CreateFromBinary">
+    <Property name="Reference" type="IFormLink&lt;IPlacedGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="APackageTarget.CreateFromBinary" />
   </Object>
-  <Object name="PackageTargetUnknown" baseClass="APackageTarget" objType="Subrecord">
-    <Property name="Data" type="Int32" field="Int32" nullable="false" binary="Normal" offset="12" length="4" />
-    <Property name="Type" type="Int32" field="Int32" nullable="false" binary="Normal" offset="16" length="4" />
+  <Object name="PackageTargetUnknown" baseClass="APackageTarget" objType="Subrecord" enteredBy="APackageTarget.CreateFromBinary">
+    <Property name="Data" type="Int32" field="Int32" nullable="false" binary="Normal" filledBy="APackageTarget.CreateFromBinary" />
+    <Property name="Type" type="Int32" field="Int32" nullable="false" binary="Normal" filledBy="APackageTarget.CreateFromBinary" />
   </Object>
   <Object name="PapyrusScriptsComponent" baseClass="AComponent" objType="Subrecord" recordTypes="BFCB" />
   <Object name="ParticleSystemComponent" baseClass="AComponent" objType="Subrecord" recordTypes="BFCB">
@@ -7458,8 +7458,8 @@
     <Property name="Topics" type="ExtendedList&lt;ATopicReference&gt;" field="List" nullable="false" binary="Custom" subrecords="PDTO" reader="Topics" fills="Topics" />
     <Property name="Topic" type="IFormLinkNullable&lt;IDialogTopicGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="TNAM" />
   </Object>
-  <Object name="PcLevelMult" baseClass="ANpcLevel" objType="Subrecord">
-    <Property name="LevelMult" type="Single" field="Float" nullable="false" binary="NoGeneration" />
+  <Object name="PcLevelMult" baseClass="ANpcLevel" objType="Subrecord" enteredBy="Npc.Level">
+    <Property name="LevelMult" type="Single" field="Float" nullable="false" binary="NoGeneration" filledBy="Npc.Level" />
   </Object>
   <Object name="Perk" baseClass="StarfieldMajorRecord" objType="Record" recordTypes="PERK">
     <Property name="VirtualMachineAdapter" type="PerkAdapter" field="Loqui" nullable="true" binary="Normal" subrecords="VMAD" />
@@ -7476,8 +7476,8 @@
     <Property name="BackgroundSkills" type="ExtendedList&lt;IFormLinkGetter&lt;IPerkGetter&gt;&gt;" field="List" nullable="false" binary="Normal" subrecords="RNAM" />
     <Property name="MajorFlags" type="Perk.MajorFlag" derived="majorFlag" from="MajorRecordFlagsRaw" />
   </Object>
-  <Object name="PerkAbilityEffect" baseClass="APerkEffect" objType="Subrecord" recordTypes="PRKE">
-    <Property name="Ability" type="IFormLink&lt;ISpellGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
+  <Object name="PerkAbilityEffect" baseClass="APerkEffect" objType="Subrecord" recordTypes="PRKE" enteredBy="PerkRank.Effects">
+    <Property name="Ability" type="IFormLink&lt;ISpellGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="PerkRank.Effects" />
   </Object>
   <Object name="PerkAdapter" baseClass="AVirtualMachineAdapter" objType="Subrecord" recordTypes="VMAD">
     <Property name="ScriptFragments" type="PerkScriptFragments" field="Loqui" nullable="true" binary="Custom" reader="ScriptFragments" fills="ScriptFragments" />
@@ -7486,55 +7486,55 @@
     <Property name="RunOnTabIndex" type="Byte" field="UInt8" nullable="false" binary="Normal" subrecords="PRKC" />
     <Property name="Conditions" type="ExtendedList&lt;Condition&gt;" field="List" nullable="false" binary="Normal" subrecords="CTDA" />
   </Object>
-  <Object name="PerkEntryPointAbsoluteValue" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE">
-    <Property name="Negative" type="Boolean" field="Bool" nullable="false" binary="Normal" offset="2" length="1" />
+  <Object name="PerkEntryPointAbsoluteValue" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE" enteredBy="PerkRank.Effects">
+    <Property name="Negative" type="Boolean" field="Bool" nullable="false" binary="Normal" filledBy="PerkRank.Effects" />
   </Object>
-  <Object name="PerkEntryPointAddActivateChoice" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE">
-    <Property name="Spell" type="IFormLinkNullable&lt;ISpellGetter&gt;" field="FormLink" nullable="true" binary="Normal" offset="2" length="4" />
+  <Object name="PerkEntryPointAddActivateChoice" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE" enteredBy="PerkRank.Effects">
+    <Property name="Spell" type="IFormLinkNullable&lt;ISpellGetter&gt;" field="FormLink" nullable="true" binary="Normal" filledBy="PerkRank.Effects" />
   </Object>
-  <Object name="PerkEntryPointAddLeveledItem" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE">
-    <Property name="Item" type="IFormLink&lt;ILeveledItemGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="2" length="4" />
+  <Object name="PerkEntryPointAddLeveledItem" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE" enteredBy="PerkRank.Effects">
+    <Property name="Item" type="IFormLink&lt;ILeveledItemGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="PerkRank.Effects" />
   </Object>
-  <Object name="PerkEntryPointAddRangeToValue" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE">
-    <Property name="From" type="Single" field="Float" nullable="false" binary="Normal" offset="2" length="4" />
-    <Property name="To" type="Single" field="Float" nullable="false" binary="Normal" offset="6" length="4" />
+  <Object name="PerkEntryPointAddRangeToValue" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE" enteredBy="PerkRank.Effects">
+    <Property name="From" type="Single" field="Float" nullable="false" binary="Normal" filledBy="PerkRank.Effects" />
+    <Property name="To" type="Single" field="Float" nullable="false" binary="Normal" filledBy="PerkRank.Effects" />
   </Object>
-  <Object name="PerkEntryPointLegendaryGravitational" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE">
-    <Property name="Spell" type="IFormLink&lt;ISpellGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="2" length="4" />
+  <Object name="PerkEntryPointLegendaryGravitational" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE" enteredBy="PerkRank.Effects">
+    <Property name="Spell" type="IFormLink&lt;ISpellGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="PerkRank.Effects" />
   </Object>
-  <Object name="PerkEntryPointLegendaryMagicEffectEvent" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE">
-    <Property name="Projectile" type="IFormLink&lt;IProjectileGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="2" length="4" />
+  <Object name="PerkEntryPointLegendaryMagicEffectEvent" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE" enteredBy="PerkRank.Effects">
+    <Property name="Projectile" type="IFormLink&lt;IProjectileGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="PerkRank.Effects" />
   </Object>
-  <Object name="PerkEntryPointModifyActorValue" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE">
-    <Property name="ActorValue" type="IFormLink&lt;IActorValueInformationGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="2" length="4" />
-    <Property name="Value" type="Single" field="Float" nullable="false" binary="Normal" offset="6" length="4" />
-    <Property name="Modification" type="PerkEntryPointModifyActorValue.ModificationType" field="Enum" nullable="false" binary="Normal" offset="10" length="4" />
+  <Object name="PerkEntryPointModifyActorValue" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE" enteredBy="PerkRank.Effects">
+    <Property name="ActorValue" type="IFormLink&lt;IActorValueInformationGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="PerkRank.Effects" />
+    <Property name="Value" type="Single" field="Float" nullable="false" binary="Normal" filledBy="PerkRank.Effects" />
+    <Property name="Modification" type="PerkEntryPointModifyActorValue.ModificationType" field="Enum" nullable="false" binary="Normal" filledBy="PerkRank.Effects" />
   </Object>
-  <Object name="PerkEntryPointModifyValue" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE">
-    <Property name="Modification" type="PerkEntryPointModifyValue.ModificationType" field="Enum" nullable="false" binary="Normal" offset="2" length="4" />
-    <Property name="Value" type="Single" field="Float" nullable="true" binary="Normal" subrecords="EPFD" />
+  <Object name="PerkEntryPointModifyValue" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE" enteredBy="PerkRank.Effects">
+    <Property name="Modification" type="PerkEntryPointModifyValue.ModificationType" field="Enum" nullable="false" binary="Normal" filledBy="PerkRank.Effects" />
+    <Property name="Value" type="Single" field="Float" nullable="true" binary="Normal" subrecords="EPFD" filledBy="PerkRank.Effects" />
   </Object>
-  <Object name="PerkEntryPointModifyValues" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE">
-    <Property name="Modification" type="PerkEntryPointModifyValue.ModificationType" field="Enum" nullable="false" binary="Normal" offset="2" length="4" />
-    <Property name="Value" type="Single" field="Float" nullable="true" binary="Normal" offset="6" length="4" />
-    <Property name="Value2" type="Single" field="Float" nullable="true" binary="Normal" offset="10" length="4" />
+  <Object name="PerkEntryPointModifyValues" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE" enteredBy="PerkRank.Effects">
+    <Property name="Modification" type="PerkEntryPointModifyValue.ModificationType" field="Enum" nullable="false" binary="Normal" filledBy="PerkRank.Effects" />
+    <Property name="Value" type="Single" field="Float" nullable="true" binary="Normal" filledBy="PerkRank.Effects" />
+    <Property name="Value2" type="Single" field="Float" nullable="true" binary="Normal" filledBy="PerkRank.Effects" />
   </Object>
-  <Object name="PerkEntryPointSelectSpell" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE">
-    <Property name="Spell" type="IFormLink&lt;ISpellGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="2" length="4" />
+  <Object name="PerkEntryPointSelectSpell" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE" enteredBy="PerkRank.Effects">
+    <Property name="Spell" type="IFormLink&lt;ISpellGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="PerkRank.Effects" />
   </Object>
-  <Object name="PerkEntryPointSelectText" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE">
-    <Property name="Text" type="String" field="String" nullable="false" binary="Normal" offset="2" />
+  <Object name="PerkEntryPointSelectText" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE" enteredBy="PerkRank.Effects">
+    <Property name="Text" type="String" field="String" nullable="false" binary="Normal" filledBy="PerkRank.Effects" />
   </Object>
-  <Object name="PerkEntryPointSetText" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE">
-    <Property name="Text" type="TranslatedString" field="String" nullable="false" binary="Normal" offset="2" />
+  <Object name="PerkEntryPointSetText" baseClass="APerkEntryPointEffect" objType="Subrecord" recordTypes="PRKE" enteredBy="PerkRank.Effects">
+    <Property name="Text" type="TranslatedString" field="String" nullable="false" binary="Normal" filledBy="PerkRank.Effects" />
   </Object>
   <Object name="PerkPlacement" objType="Subrecord" recordTypes="PRKR">
     <Property name="Perk" type="IFormLink&lt;IPerkGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
     <Property name="Rank" type="Byte" field="UInt8" nullable="false" binary="Normal" offset="4" length="1" />
   </Object>
-  <Object name="PerkQuestEffect" baseClass="APerkEffect" objType="Subrecord" recordTypes="PRKE">
-    <Property name="Quest" type="IFormLink&lt;IQuestGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
-    <Property name="Stage" type="UInt16" field="UInt16" nullable="false" binary="Normal" offset="4" length="2" />
+  <Object name="PerkQuestEffect" baseClass="APerkEffect" objType="Subrecord" recordTypes="PRKE" enteredBy="PerkRank.Effects">
+    <Property name="Quest" type="IFormLink&lt;IQuestGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="PerkRank.Effects" />
+    <Property name="Stage" type="UInt16" field="UInt16" nullable="false" binary="Normal" filledBy="PerkRank.Effects" />
   </Object>
   <Object name="PerkRank" objType="Subrecord" recordTypes="PRKE,CTDA,ATAN,ATCP,DESC">
     <Property name="Effects" type="ExtendedList&lt;APerkEffect&gt;" field="List" nullable="false" binary="Custom" subrecords="PRKE" reader="Effects" fills="Effects" />
@@ -7549,10 +7549,10 @@
     <Property name="ScriptName" type="String" field="String" nullable="false" binary="Normal" offset="5" />
     <Property name="FragmentName" type="String" field="String" nullable="false" binary="Normal" />
   </Object>
-  <Object name="PerkScriptFragments" objType="Subrecord">
-    <Property name="ExtraBindDataVersion" type="Byte" field="UInt8" nullable="false" binary="NoGeneration" />
-    <Property name="Script" type="ScriptEntry" field="Loqui" nullable="false" binary="NoGeneration" />
-    <Property name="Fragments" type="ExtendedList&lt;PerkScriptFragment&gt;" field="List" nullable="false" binary="NoGeneration" />
+  <Object name="PerkScriptFragments" objType="Subrecord" enteredBy="PerkScriptFragments.ReadFragments">
+    <Property name="ExtraBindDataVersion" type="Byte" field="UInt8" nullable="false" binary="NoGeneration" filledBy="PerkScriptFragments.ReadFragments" />
+    <Property name="Script" type="ScriptEntry" field="Loqui" nullable="false" binary="NoGeneration" filledBy="PerkScriptFragments.ReadFragments" />
+    <Property name="Fragments" type="ExtendedList&lt;PerkScriptFragment&gt;" field="List" nullable="false" binary="NoGeneration" filledBy="PerkScriptFragments.ReadFragments" />
   </Object>
   <Object name="PhotoModeFeature" baseClass="StarfieldMajorRecord" objType="Record" recordTypes="PMFT">
     <Property name="Name" type="TranslatedString" field="String" nullable="true" binary="Normal" subrecords="FULL" />
@@ -8178,8 +8178,8 @@
     <Property name="Fragments" type="ExtendedList&lt;QuestScriptFragment&gt;" field="List" nullable="false" binary="Custom" reader="Fragments" fills="" />
     <Property name="Aliases" type="ExtendedList&lt;QuestFragmentAlias&gt;" field="List" nullable="false" binary="Custom" reader="Aliases" fills="" />
   </Object>
-  <Object name="QuestCollectionAlias" baseClass="AQuestAlias" objType="Subrecord" recordTypes="ALCS,ALMI">
-    <Property name="Collection" type="ExtendedList&lt;CollectionAlias&gt;" field="List" nullable="false" binary="Normal" subrecords="ALCS,ALMI" />
+  <Object name="QuestCollectionAlias" baseClass="AQuestAlias" objType="Subrecord" recordTypes="ALCS,ALMI" enteredBy="Quest.AliasParse">
+    <Property name="Collection" type="ExtendedList&lt;CollectionAlias&gt;" field="List" nullable="false" binary="Normal" subrecords="ALCS,ALMI" filledBy="Quest.AliasParse" />
   </Object>
   <Object name="QuestData" objType="Subrecord" recordTypes="DNAM">
     <Property name="Flags" type="Quest.Flag" field="Enum" nullable="false" binary="Normal" offset="0" length="4" />
@@ -8714,32 +8714,32 @@
     <Property name="ScriptName" type="String" field="String" nullable="false" binary="Normal" offset="6" />
     <Property name="FragmentName" type="String" field="String" nullable="false" binary="Normal" />
   </Object>
-  <Object name="SceneScriptFragments" baseClass="ScriptFragments" objType="Subrecord">
-    <Property name="PhaseFragments" type="ExtendedList&lt;ScenePhaseFragment&gt;" field="List" nullable="false" binary="Normal" offset="1" />
+  <Object name="SceneScriptFragments" baseClass="ScriptFragments" objType="Subrecord" enteredBy="SceneScriptFragments.ReadFragments">
+    <Property name="PhaseFragments" type="ExtendedList&lt;ScenePhaseFragment&gt;" field="List" nullable="false" binary="Normal" filledBy="SceneScriptFragments.ReadFragments" />
   </Object>
   <Object name="SceneSetParentQuestStage" objType="Subrecord" recordTypes="SCQS">
     <Property name="OnBegin" type="Int16" field="Int16" nullable="false" binary="Normal" offset="0" length="2" />
     <Property name="OnEnd" type="Int16" field="Int16" nullable="false" binary="Normal" offset="2" length="2" />
   </Object>
-  <Object name="ScriptBoolListProperty" baseClass="ScriptProperty" objType="Subrecord">
-    <Property name="Data" type="ExtendedList&lt;Boolean&gt;" field="List" nullable="false" binary="Normal" offset="0" />
+  <Object name="ScriptBoolListProperty" baseClass="ScriptProperty" objType="Subrecord" enteredBy="AVirtualMachineAdapter.ParseProperty">
+    <Property name="Data" type="ExtendedList&lt;Boolean&gt;" field="List" nullable="false" binary="Normal" filledBy="AVirtualMachineAdapter.ParseProperty" />
   </Object>
-  <Object name="ScriptBoolProperty" baseClass="ScriptProperty" objType="Subrecord">
-    <Property name="Data" type="Boolean" field="Bool" nullable="false" binary="Normal" offset="0" length="1" />
+  <Object name="ScriptBoolProperty" baseClass="ScriptProperty" objType="Subrecord" enteredBy="AVirtualMachineAdapter.ParseProperty">
+    <Property name="Data" type="Boolean" field="Bool" nullable="false" binary="Normal" filledBy="AVirtualMachineAdapter.ParseProperty" />
   </Object>
-  <Object name="ScriptEntry" objType="Subrecord">
-    <Property name="Name" type="String" field="String" nullable="false" binary="NoGeneration" />
-    <Property name="Flags" type="ScriptEntry.Flag" field="Enum" nullable="false" binary="NoGeneration" />
-    <Property name="Properties" type="ExtendedList&lt;ScriptProperty&gt;" field="List" nullable="false" binary="NoGeneration" />
+  <Object name="ScriptEntry" objType="Subrecord" enteredBy="AVirtualMachineAdapter.ReadEntry">
+    <Property name="Name" type="String" field="String" nullable="false" binary="NoGeneration" filledBy="AVirtualMachineAdapter.ReadEntry" />
+    <Property name="Flags" type="ScriptEntry.Flag" field="Enum" nullable="false" binary="NoGeneration" filledBy="AVirtualMachineAdapter.ReadEntry" />
+    <Property name="Properties" type="ExtendedList&lt;ScriptProperty&gt;" field="List" nullable="false" binary="NoGeneration" filledBy="AVirtualMachineAdapter.ReadEntry" />
   </Object>
-  <Object name="ScriptEntryStructs" objType="Subrecord">
-    <Property name="Members" type="ExtendedList&lt;ScriptProperty&gt;" field="List" nullable="false" binary="Normal" offset="0" />
+  <Object name="ScriptEntryStructs" objType="Subrecord" enteredBy="AVirtualMachineAdapter.ParseProperty">
+    <Property name="Members" type="ExtendedList&lt;ScriptProperty&gt;" field="List" nullable="false" binary="Normal" filledBy="AVirtualMachineAdapter.ParseProperty" />
   </Object>
-  <Object name="ScriptFloatListProperty" baseClass="ScriptProperty" objType="Subrecord">
-    <Property name="Data" type="ExtendedList&lt;Single&gt;" field="List" nullable="false" binary="Normal" offset="0" />
+  <Object name="ScriptFloatListProperty" baseClass="ScriptProperty" objType="Subrecord" enteredBy="AVirtualMachineAdapter.ParseProperty">
+    <Property name="Data" type="ExtendedList&lt;Single&gt;" field="List" nullable="false" binary="Normal" filledBy="AVirtualMachineAdapter.ParseProperty" />
   </Object>
-  <Object name="ScriptFloatProperty" baseClass="ScriptProperty" objType="Subrecord">
-    <Property name="Data" type="Single" field="Float" nullable="false" binary="Normal" offset="0" length="4" />
+  <Object name="ScriptFloatProperty" baseClass="ScriptProperty" objType="Subrecord" enteredBy="AVirtualMachineAdapter.ParseProperty">
+    <Property name="Data" type="Single" field="Float" nullable="false" binary="Normal" filledBy="AVirtualMachineAdapter.ParseProperty" />
   </Object>
   <Object name="ScriptFragment" objType="Subrecord">
     <Property name="ExtraBindDataVersion" type="Byte" field="UInt8" nullable="false" binary="Normal" offset="0" length="1" />
@@ -8752,52 +8752,52 @@
     <Property name="ScriptName" type="String" field="String" nullable="false" binary="Normal" offset="5" />
     <Property name="FragmentName" type="String" field="String" nullable="false" binary="Normal" />
   </Object>
-  <Object name="ScriptFragments" objType="Subrecord">
-    <Property name="ExtraBindDataVersion" type="Byte" field="UInt8" nullable="false" binary="Normal" offset="0" length="1" />
-    <Property name="Script" type="ScriptEntry" field="Loqui" nullable="false" binary="NoGeneration" />
-    <Property name="OnBegin" type="ScriptFragment" field="Loqui" nullable="true" binary="NoGeneration" />
-    <Property name="OnEnd" type="ScriptFragment" field="Loqui" nullable="true" binary="NoGeneration" />
+  <Object name="ScriptFragments" objType="Subrecord" enteredBy="ScriptFragments.ReadFragments">
+    <Property name="ExtraBindDataVersion" type="Byte" field="UInt8" nullable="false" binary="Normal" filledBy="ScriptFragments.ReadFragments" />
+    <Property name="Script" type="ScriptEntry" field="Loqui" nullable="false" binary="NoGeneration" filledBy="ScriptFragments.ReadFragments" />
+    <Property name="OnBegin" type="ScriptFragment" field="Loqui" nullable="true" binary="NoGeneration" filledBy="ScriptFragments.ReadFragments" />
+    <Property name="OnEnd" type="ScriptFragment" field="Loqui" nullable="true" binary="NoGeneration" filledBy="ScriptFragments.ReadFragments" />
   </Object>
-  <Object name="ScriptFragmentsIndexed" objType="Subrecord">
-    <Property name="ExtraBindDataVersion" type="Byte" field="UInt8" nullable="false" binary="NoGeneration" />
-    <Property name="Script" type="ScriptEntry" field="Loqui" nullable="false" binary="NoGeneration" />
-    <Property name="Fragments" type="ExtendedList&lt;ScriptFragmentIndexed&gt;" field="List" nullable="false" binary="NoGeneration" />
+  <Object name="ScriptFragmentsIndexed" objType="Subrecord" enteredBy="VirtualMachineAdapterIndexed.ParseScriptFragments">
+    <Property name="ExtraBindDataVersion" type="Byte" field="UInt8" nullable="false" binary="NoGeneration" filledBy="VirtualMachineAdapterIndexed.ParseScriptFragments" />
+    <Property name="Script" type="ScriptEntry" field="Loqui" nullable="false" binary="NoGeneration" filledBy="VirtualMachineAdapterIndexed.ParseScriptFragments" />
+    <Property name="Fragments" type="ExtendedList&lt;ScriptFragmentIndexed&gt;" field="List" nullable="false" binary="NoGeneration" filledBy="VirtualMachineAdapterIndexed.ParseScriptFragments" />
   </Object>
-  <Object name="ScriptIntListProperty" baseClass="ScriptProperty" objType="Subrecord">
-    <Property name="Data" type="ExtendedList&lt;Int32&gt;" field="List" nullable="false" binary="Normal" offset="0" />
+  <Object name="ScriptIntListProperty" baseClass="ScriptProperty" objType="Subrecord" enteredBy="AVirtualMachineAdapter.ParseProperty">
+    <Property name="Data" type="ExtendedList&lt;Int32&gt;" field="List" nullable="false" binary="Normal" filledBy="AVirtualMachineAdapter.ParseProperty" />
   </Object>
-  <Object name="ScriptIntProperty" baseClass="ScriptProperty" objType="Subrecord">
-    <Property name="Data" type="Int32" field="Int32" nullable="false" binary="Normal" offset="0" length="4" />
+  <Object name="ScriptIntProperty" baseClass="ScriptProperty" objType="Subrecord" enteredBy="AVirtualMachineAdapter.ParseProperty">
+    <Property name="Data" type="Int32" field="Int32" nullable="false" binary="Normal" filledBy="AVirtualMachineAdapter.ParseProperty" />
   </Object>
-  <Object name="ScriptObjectListProperty" baseClass="ScriptProperty" objType="Subrecord">
-    <Property name="Objects" type="ExtendedList&lt;ScriptObjectProperty&gt;" field="List" nullable="false" binary="Normal" offset="0" />
+  <Object name="ScriptObjectListProperty" baseClass="ScriptProperty" objType="Subrecord" enteredBy="AVirtualMachineAdapter.ParseProperty">
+    <Property name="Objects" type="ExtendedList&lt;ScriptObjectProperty&gt;" field="List" nullable="false" binary="Normal" filledBy="AVirtualMachineAdapter.ParseProperty" />
   </Object>
-  <Object name="ScriptObjectProperty" baseClass="ScriptProperty" objType="Subrecord">
-    <Property name="Object" type="IFormLink&lt;IStarfieldMajorRecordGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
-    <Property name="Alias" type="Int16" field="Int16" nullable="false" binary="Normal" offset="4" length="2" />
-    <Property name="Unused" type="UInt16" field="UInt16" nullable="false" binary="Normal" offset="6" length="2" />
+  <Object name="ScriptObjectProperty" baseClass="ScriptProperty" objType="Subrecord" enteredBy="AVirtualMachineAdapter.ParseProperty">
+    <Property name="Object" type="IFormLink&lt;IStarfieldMajorRecordGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="AVirtualMachineAdapter.ParseProperty" />
+    <Property name="Alias" type="Int16" field="Int16" nullable="false" binary="Normal" filledBy="AVirtualMachineAdapter.ParseProperty" />
+    <Property name="Unused" type="UInt16" field="UInt16" nullable="false" binary="Normal" filledBy="AVirtualMachineAdapter.ParseProperty" />
   </Object>
-  <Object name="ScriptProperty" objType="Subrecord">
-    <Property name="Name" type="String" field="String" nullable="false" binary="NoGeneration" />
-    <Property name="Flags" type="ScriptProperty.Flag" field="Enum" nullable="false" binary="NoGeneration" />
+  <Object name="ScriptProperty" objType="Subrecord" enteredBy="AVirtualMachineAdapter.ParseProperty">
+    <Property name="Name" type="String" field="String" nullable="false" binary="NoGeneration" filledBy="AVirtualMachineAdapter.ParseProperty" />
+    <Property name="Flags" type="ScriptProperty.Flag" field="Enum" nullable="false" binary="NoGeneration" filledBy="AVirtualMachineAdapter.ParseProperty" />
   </Object>
-  <Object name="ScriptStringListProperty" baseClass="ScriptProperty" objType="Subrecord">
-    <Property name="Data" type="ExtendedList&lt;String&gt;" field="List" nullable="false" binary="Normal" offset="0" />
+  <Object name="ScriptStringListProperty" baseClass="ScriptProperty" objType="Subrecord" enteredBy="AVirtualMachineAdapter.ParseProperty">
+    <Property name="Data" type="ExtendedList&lt;String&gt;" field="List" nullable="false" binary="Normal" filledBy="AVirtualMachineAdapter.ParseProperty" />
   </Object>
-  <Object name="ScriptStringProperty" baseClass="ScriptProperty" objType="Subrecord">
-    <Property name="Data" type="String" field="String" nullable="false" binary="Normal" offset="0" />
+  <Object name="ScriptStringProperty" baseClass="ScriptProperty" objType="Subrecord" enteredBy="AVirtualMachineAdapter.ParseProperty">
+    <Property name="Data" type="String" field="String" nullable="false" binary="Normal" filledBy="AVirtualMachineAdapter.ParseProperty" />
   </Object>
-  <Object name="ScriptStructListProperty" baseClass="ScriptProperty" objType="Subrecord">
-    <Property name="Structs" type="ExtendedList&lt;ScriptEntryStructs&gt;" field="List" nullable="false" binary="Normal" offset="0" />
+  <Object name="ScriptStructListProperty" baseClass="ScriptProperty" objType="Subrecord" enteredBy="AVirtualMachineAdapter.ParseProperty">
+    <Property name="Structs" type="ExtendedList&lt;ScriptEntryStructs&gt;" field="List" nullable="false" binary="Normal" filledBy="AVirtualMachineAdapter.ParseProperty" />
   </Object>
-  <Object name="ScriptStructProperty" baseClass="ScriptProperty" objType="Subrecord">
-    <Property name="Members" type="ExtendedList&lt;ScriptEntry&gt;" field="List" nullable="false" binary="Normal" offset="0" />
+  <Object name="ScriptStructProperty" baseClass="ScriptProperty" objType="Subrecord" enteredBy="AVirtualMachineAdapter.ParseProperty">
+    <Property name="Members" type="ExtendedList&lt;ScriptEntry&gt;" field="List" nullable="false" binary="Normal" filledBy="AVirtualMachineAdapter.ParseProperty" />
   </Object>
-  <Object name="ScriptVariableListProperty" baseClass="ScriptProperty" objType="Subrecord">
-    <Property name="Data" type="ExtendedList&lt;Int32&gt;" field="List" nullable="false" binary="Normal" offset="0" />
+  <Object name="ScriptVariableListProperty" baseClass="ScriptProperty" objType="Subrecord" enteredBy="AVirtualMachineAdapter.ParseProperty">
+    <Property name="Data" type="ExtendedList&lt;Int32&gt;" field="List" nullable="false" binary="Normal" filledBy="AVirtualMachineAdapter.ParseProperty" />
   </Object>
-  <Object name="ScriptVariableProperty" baseClass="ScriptProperty" objType="Subrecord">
-    <Property name="Data" type="Int32" field="Int32" nullable="false" binary="Normal" offset="0" length="4" />
+  <Object name="ScriptVariableProperty" baseClass="ScriptProperty" objType="Subrecord" enteredBy="AVirtualMachineAdapter.ParseProperty">
+    <Property name="Data" type="Int32" field="Int32" nullable="false" binary="Normal" filledBy="AVirtualMachineAdapter.ParseProperty" />
   </Object>
   <Object name="SeasonalIngredientProduction" objType="Subrecord" recordTypes="PFPC">
     <Property name="Spring" type="Byte" field="UInt8" nullable="false" binary="Normal" offset="0" length="1" />
@@ -9275,10 +9275,10 @@
     <Property name="Data" type="ExtendedList&lt;SurfaceTreePatternSwapInfoItem&gt;" field="List" nullable="false" binary="NoGeneration" filledBy="DataLogic" />
     <Property name="Unknown" type="MemorySlice&lt;Byte&gt;" field="ByteArray" nullable="false" binary="Normal" />
   </Object>
-  <Object name="SurfaceTreePatternSwapInfoItem" objType="Subrecord">
-    <Property name="SurfacePattern" type="IFormLink&lt;ISurfacePatternGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
-    <Property name="Unknown" type="SByte" field="Int8" nullable="false" binary="Normal" offset="4" length="1" />
-    <Property name="Unknown2" type="UInt32" field="UInt32" nullable="true" binary="NoGeneration" />
+  <Object name="SurfaceTreePatternSwapInfoItem" objType="Subrecord" enteredBy="SurfaceTreePatternSwapInfoComponentData.DataLogic">
+    <Property name="SurfacePattern" type="IFormLink&lt;ISurfacePatternGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="SurfaceTreePatternSwapInfoComponentData.DataLogic" />
+    <Property name="Unknown" type="SByte" field="Int8" nullable="false" binary="Normal" filledBy="SurfaceTreePatternSwapInfoComponentData.DataLogic" />
+    <Property name="Unknown2" type="UInt32" field="UInt32" nullable="true" binary="NoGeneration" filledBy="SurfaceTreePatternSwapInfoComponentData.DataLogic" />
   </Object>
   <Object name="SystemBodyHasKeywordConditionData" baseClass="ConditionData" objType="Subrecord">
     <Property name="FirstParameter" type="IFormLinkOrIndex&lt;IKeywordGetter&gt;" field="FormLinkOrIndex" nullable="false" binary="Normal" offset="0" length="4" />
@@ -9391,17 +9391,17 @@
     <Step name="TargetParse" fills="Target" subrecords="UNAM,TNAM,BNAM" />
     <Property name="Conditions" type="ExtendedList&lt;Condition&gt;" field="List" nullable="false" binary="Normal" subrecords="CTDA" />
   </Object>
-  <Object name="TerminalMenuItemDataslate" baseClass="ATerminalMenuItemTarget" objType="Subrecord" recordTypes="BNAM">
-    <Property name="Dataslate" type="IFormLinkNullable&lt;IBookGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="BNAM" />
+  <Object name="TerminalMenuItemDataslate" baseClass="ATerminalMenuItemTarget" objType="Subrecord" recordTypes="BNAM" enteredBy="TerminalMenuItem.TypeParse">
+    <Property name="Dataslate" type="IFormLinkNullable&lt;IBookGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="BNAM" filledBy="TerminalMenuItem.TypeParse" />
   </Object>
-  <Object name="TerminalMenuItemDisplayText" baseClass="ATerminalMenuItemTarget" objType="Subrecord" recordTypes="UNAM">
-    <Property name="DisplayText" type="TranslatedString" field="String" nullable="true" binary="Normal" subrecords="UNAM" />
+  <Object name="TerminalMenuItemDisplayText" baseClass="ATerminalMenuItemTarget" objType="Subrecord" recordTypes="UNAM" enteredBy="TerminalMenuItem.TypeParse">
+    <Property name="DisplayText" type="TranslatedString" field="String" nullable="true" binary="Normal" subrecords="UNAM" filledBy="TerminalMenuItem.TypeParse" />
   </Object>
-  <Object name="TerminalMenuItemForceRedraw" baseClass="ATerminalMenuItemTarget" objType="Subrecord" />
-  <Object name="TerminalMenuItemReturnToDesktop" baseClass="ATerminalMenuItemTarget" objType="Subrecord" />
-  <Object name="TerminalMenuItemReturnToPrevious" baseClass="ATerminalMenuItemTarget" objType="Subrecord" />
-  <Object name="TerminalMenuItemSubmenu" baseClass="ATerminalMenuItemTarget" objType="Subrecord" recordTypes="TNAM">
-    <Property name="Submenu" type="IFormLinkNullable&lt;ITerminalMenuGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="TNAM" />
+  <Object name="TerminalMenuItemForceRedraw" baseClass="ATerminalMenuItemTarget" objType="Subrecord" enteredBy="TerminalMenuItem.TypeParse" />
+  <Object name="TerminalMenuItemReturnToDesktop" baseClass="ATerminalMenuItemTarget" objType="Subrecord" enteredBy="TerminalMenuItem.TypeParse" />
+  <Object name="TerminalMenuItemReturnToPrevious" baseClass="ATerminalMenuItemTarget" objType="Subrecord" enteredBy="TerminalMenuItem.TypeParse" />
+  <Object name="TerminalMenuItemSubmenu" baseClass="ATerminalMenuItemTarget" objType="Subrecord" recordTypes="TNAM" enteredBy="TerminalMenuItem.TypeParse">
+    <Property name="Submenu" type="IFormLinkNullable&lt;ITerminalMenuGetter&gt;" field="FormLink" nullable="true" binary="Normal" subrecords="TNAM" filledBy="TerminalMenuItem.TypeParse" />
   </Object>
   <Object name="TextureSet" baseClass="StarfieldMajorRecord" objType="Record" recordTypes="TXST">
     <Property name="VirtualMachineAdapter" type="VirtualMachineAdapter" field="Loqui" nullable="true" binary="Normal" subrecords="VMAD" />
@@ -9436,11 +9436,11 @@
     <Property name="SCQS" type="Int16" field="Int16" nullable="true" binary="Normal" subrecords="SCQS" />
     <Property name="INTV" type="Int16" field="Int16" nullable="true" binary="Normal" subrecords="INTV" />
   </Object>
-  <Object name="TopicReference" baseClass="ATopicReference" objType="Subrecord" recordTypes="PDTO">
-    <Property name="Reference" type="IFormLink&lt;IDialogTopicGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
+  <Object name="TopicReference" baseClass="ATopicReference" objType="Subrecord" recordTypes="PDTO" enteredBy="ATopicReference.Factory">
+    <Property name="Reference" type="IFormLink&lt;IDialogTopicGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="ATopicReference.Factory" />
   </Object>
-  <Object name="TopicReferenceSubtype" baseClass="ATopicReference" objType="Subrecord" recordTypes="PDTO">
-    <Property name="Subtype" type="RecordType" field="Record" nullable="false" binary="Normal" offset="0" length="4" />
+  <Object name="TopicReferenceSubtype" baseClass="ATopicReference" objType="Subrecord" recordTypes="PDTO" enteredBy="ATopicReference.Factory">
+    <Property name="Subtype" type="RecordType" field="Record" nullable="false" binary="Normal" filledBy="ATopicReference.Factory" />
   </Object>
   <Object name="TrackDamageEffectData" baseClass="StarfieldMajorRecord" objType="Record" recordTypes="TDED">
     <Property name="Reflection" type="Reflection" field="Loqui" nullable="true" binary="Normal" subrecords="REFL" />
@@ -9484,7 +9484,7 @@
     <Property name="To" type="P3Float" field="P3Float" nullable="false" binary="Normal" offset="16" length="12" />
     <Property name="UnknownVector" type="P3Float" field="P3Float" nullable="false" binary="Normal" offset="28" length="12" />
     <Property name="Flags" type="TraversalReference.Flag" field="Enum" nullable="false" binary="NoGeneration" filledBy="Traversal" />
-    <Property name="Traversal" type="IFormLinkNullable&lt;ITraversalGetter&gt;" field="FormLink" nullable="true" binary="Custom" offset="40" reader="Traversal" fills="Traversal,Flags,Unknown2,Unknown3,Unknown4,Unknown5" />
+    <Property name="Traversal" type="IFormLinkNullable&lt;ITraversalGetter&gt;" field="FormLink" nullable="true" binary="Custom" reader="Traversal" fills="Traversal,Flags,Unknown2,Unknown3,Unknown4,Unknown5" />
     <Property name="Unknown2" type="Half" field="Half" nullable="false" binary="NoGeneration" filledBy="Traversal" />
     <Property name="Unknown3" type="Half" field="Half" nullable="false" binary="NoGeneration" filledBy="Traversal" />
     <Property name="Unknown4" type="Half" field="Half" nullable="false" binary="NoGeneration" filledBy="Traversal" />
@@ -9518,9 +9518,9 @@
     <Property name="Properties" type="ExtendedList&lt;AObjectModProperty&lt;AObjectModification.NoneProperty&gt;&gt;" field="List" nullable="false" binary="NoGeneration" />
     <Property name="ObjectModificationTargetName" type="String" field="String" nullable="true" binary="NoGeneration" />
   </Object>
-  <Object name="UntypedOwner" baseClass="OwnerTarget" objType="Subrecord">
-    <Property name="OwnerData" type="IFormLink&lt;IStarfieldMajorRecordGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
-    <Property name="VariableData" type="IFormLink&lt;IStarfieldMajorRecordGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="4" length="4" />
+  <Object name="UntypedOwner" baseClass="OwnerTarget" objType="Subrecord" enteredBy="ExtraData.Owner">
+    <Property name="OwnerData" type="IFormLink&lt;IStarfieldMajorRecordGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="ExtraData.Owner" />
+    <Property name="VariableData" type="IFormLink&lt;IStarfieldMajorRecordGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="ExtraData.Owner" />
   </Object>
   <Object name="UseLeftSideCameraConditionData" baseClass="ConditionData" objType="Subrecord">
     <Property name="FirstParameter" type="Int32" field="Int32" nullable="false" binary="Normal" offset="0" length="4" />
@@ -9764,21 +9764,21 @@
     <Property name="Z" type="Single" field="Float" nullable="false" binary="Normal" offset="8" length="4" />
     <Property name="W" type="Single" field="Float" nullable="false" binary="Normal" offset="12" length="4" />
   </Object>
-  <Object name="VolumesUnknownEnderDouble" baseClass="AVolumesUnknownEnder" objType="Subrecord">
-    <Property name="Unknown1" type="Single" field="Float" nullable="false" binary="Normal" offset="0" length="4" />
-    <Property name="Unknown2" type="Single" field="Float" nullable="false" binary="Normal" offset="4" length="4" />
+  <Object name="VolumesUnknownEnderDouble" baseClass="AVolumesUnknownEnder" objType="Subrecord" enteredBy="VolumesComponentItem.TypeParse,VolumesComponentItem.Ender">
+    <Property name="Unknown1" type="Single" field="Float" nullable="false" binary="Normal" filledBy="VolumesComponentItem.TypeParse,VolumesComponentItem.Ender" />
+    <Property name="Unknown2" type="Single" field="Float" nullable="false" binary="Normal" filledBy="VolumesComponentItem.TypeParse,VolumesComponentItem.Ender" />
   </Object>
-  <Object name="VolumesUnknownEnderEmpty" baseClass="AVolumesUnknownEnder" objType="Subrecord" />
-  <Object name="VolumesUnknownEnderEmptyPadded" baseClass="AVolumesUnknownEnder" objType="Subrecord">
-    <Property name="Unknown1" type="UInt32" field="UInt32" nullable="false" binary="Normal" offset="0" length="4" />
+  <Object name="VolumesUnknownEnderEmpty" baseClass="AVolumesUnknownEnder" objType="Subrecord" enteredBy="VolumesComponentItem.TypeParse,VolumesComponentItem.Ender" />
+  <Object name="VolumesUnknownEnderEmptyPadded" baseClass="AVolumesUnknownEnder" objType="Subrecord" enteredBy="VolumesComponentItem.TypeParse,VolumesComponentItem.Ender">
+    <Property name="Unknown1" type="UInt32" field="UInt32" nullable="false" binary="Normal" filledBy="VolumesComponentItem.TypeParse,VolumesComponentItem.Ender" />
   </Object>
-  <Object name="VolumesUnknownEnderSingle" baseClass="AVolumesUnknownEnder" objType="Subrecord">
-    <Property name="Unknown1" type="Single" field="Float" nullable="false" binary="Normal" offset="0" length="4" />
+  <Object name="VolumesUnknownEnderSingle" baseClass="AVolumesUnknownEnder" objType="Subrecord" enteredBy="VolumesComponentItem.TypeParse,VolumesComponentItem.Ender">
+    <Property name="Unknown1" type="Single" field="Float" nullable="false" binary="Normal" filledBy="VolumesComponentItem.TypeParse,VolumesComponentItem.Ender" />
   </Object>
-  <Object name="VolumesUnknownEnderTrio" baseClass="AVolumesUnknownEnder" objType="Subrecord">
-    <Property name="Unknown1" type="Single" field="Float" nullable="false" binary="Normal" offset="0" length="4" />
-    <Property name="Unknown2" type="Single" field="Float" nullable="false" binary="Normal" offset="4" length="4" />
-    <Property name="Unknown3" type="Single" field="Float" nullable="false" binary="Normal" offset="8" length="4" />
+  <Object name="VolumesUnknownEnderTrio" baseClass="AVolumesUnknownEnder" objType="Subrecord" enteredBy="VolumesComponentItem.TypeParse,VolumesComponentItem.Ender">
+    <Property name="Unknown1" type="Single" field="Float" nullable="false" binary="Normal" filledBy="VolumesComponentItem.TypeParse,VolumesComponentItem.Ender" />
+    <Property name="Unknown2" type="Single" field="Float" nullable="false" binary="Normal" filledBy="VolumesComponentItem.TypeParse,VolumesComponentItem.Ender" />
+    <Property name="Unknown3" type="Single" field="Float" nullable="false" binary="Normal" filledBy="VolumesComponentItem.TypeParse,VolumesComponentItem.Ender" />
   </Object>
   <Object name="VolumetricLighting" baseClass="StarfieldMajorRecord" objType="Record" recordTypes="VOLI">
     <Property name="Reflection" type="Reflection" field="Loqui" nullable="true" binary="Normal" subrecords="REFL" />
@@ -10145,25 +10145,25 @@
     <Property name="VolatilityMult" type="Single" field="Float" nullable="true" binary="Normal" subrecords="VNAM" />
     <Property name="VisibilityMult" type="Single" field="Float" nullable="true" binary="Normal" subrecords="WNAM" />
   </Object>
-  <Object name="WeatherAlpha" objType="Subrecord">
-    <Property name="Sunrise" type="Single" field="Float" nullable="false" binary="Normal" offset="0" length="4" />
-    <Property name="Day" type="Single" field="Float" nullable="false" binary="Normal" offset="4" length="4" />
-    <Property name="Sunset" type="Single" field="Float" nullable="false" binary="Normal" offset="8" length="4" />
-    <Property name="Night" type="Single" field="Float" nullable="false" binary="Normal" offset="12" length="4" />
-    <Property name="EarlySunrise" type="Single" field="Float" nullable="false" binary="Normal" offset="16" length="4" />
-    <Property name="LateSunrise" type="Single" field="Float" nullable="false" binary="Normal" offset="20" length="4" />
-    <Property name="EarlySunset" type="Single" field="Float" nullable="false" binary="Normal" offset="24" length="4" />
-    <Property name="LateSunset" type="Single" field="Float" nullable="false" binary="Normal" offset="28" length="4" />
+  <Object name="WeatherAlpha" objType="Subrecord" enteredBy="Weather.CloudAlphas">
+    <Property name="Sunrise" type="Single" field="Float" nullable="false" binary="Normal" filledBy="Weather.CloudAlphas" />
+    <Property name="Day" type="Single" field="Float" nullable="false" binary="Normal" filledBy="Weather.CloudAlphas" />
+    <Property name="Sunset" type="Single" field="Float" nullable="false" binary="Normal" filledBy="Weather.CloudAlphas" />
+    <Property name="Night" type="Single" field="Float" nullable="false" binary="Normal" filledBy="Weather.CloudAlphas" />
+    <Property name="EarlySunrise" type="Single" field="Float" nullable="false" binary="Normal" filledBy="Weather.CloudAlphas" />
+    <Property name="LateSunrise" type="Single" field="Float" nullable="false" binary="Normal" filledBy="Weather.CloudAlphas" />
+    <Property name="EarlySunset" type="Single" field="Float" nullable="false" binary="Normal" filledBy="Weather.CloudAlphas" />
+    <Property name="LateSunset" type="Single" field="Float" nullable="false" binary="Normal" filledBy="Weather.CloudAlphas" />
   </Object>
-  <Object name="WeatherAmbientColorSet" objType="Subrecord">
-    <Property name="Sunrise" type="AmbientColors" field="Loqui" nullable="false" binary="NoGeneration" />
-    <Property name="Day" type="AmbientColors" field="Loqui" nullable="false" binary="NoGeneration" />
-    <Property name="Sunset" type="AmbientColors" field="Loqui" nullable="false" binary="NoGeneration" />
-    <Property name="Night" type="AmbientColors" field="Loqui" nullable="false" binary="NoGeneration" />
-    <Property name="EarlySunrise" type="AmbientColors" field="Loqui" nullable="false" binary="NoGeneration" />
-    <Property name="LateSunrise" type="AmbientColors" field="Loqui" nullable="false" binary="NoGeneration" />
-    <Property name="EarlySunset" type="AmbientColors" field="Loqui" nullable="false" binary="NoGeneration" />
-    <Property name="LateSunset" type="AmbientColors" field="Loqui" nullable="false" binary="NoGeneration" />
+  <Object name="WeatherAmbientColorSet" objType="Subrecord" enteredBy="Weather.DirectionalAmbientLightingColors">
+    <Property name="Sunrise" type="AmbientColors" field="Loqui" nullable="false" binary="NoGeneration" filledBy="Weather.DirectionalAmbientLightingColors" />
+    <Property name="Day" type="AmbientColors" field="Loqui" nullable="false" binary="NoGeneration" filledBy="Weather.DirectionalAmbientLightingColors" />
+    <Property name="Sunset" type="AmbientColors" field="Loqui" nullable="false" binary="NoGeneration" filledBy="Weather.DirectionalAmbientLightingColors" />
+    <Property name="Night" type="AmbientColors" field="Loqui" nullable="false" binary="NoGeneration" filledBy="Weather.DirectionalAmbientLightingColors" />
+    <Property name="EarlySunrise" type="AmbientColors" field="Loqui" nullable="false" binary="NoGeneration" filledBy="Weather.DirectionalAmbientLightingColors" />
+    <Property name="LateSunrise" type="AmbientColors" field="Loqui" nullable="false" binary="NoGeneration" filledBy="Weather.DirectionalAmbientLightingColors" />
+    <Property name="EarlySunset" type="AmbientColors" field="Loqui" nullable="false" binary="NoGeneration" filledBy="Weather.DirectionalAmbientLightingColors" />
+    <Property name="LateSunset" type="AmbientColors" field="Loqui" nullable="false" binary="NoGeneration" filledBy="Weather.DirectionalAmbientLightingColors" />
   </Object>
   <Object name="WeatherColor" objType="Subrecord">
     <Property name="Versioning" type="WeatherColor.VersioningBreaks" field="Enum" nullable="false" derived="Break" />
@@ -10270,9 +10270,9 @@
     <Property name="NorthwestCellCoords" type="P2Int16" field="P2Int16" nullable="false" binary="Normal" offset="8" length="4" />
     <Property name="SoutheastCellCoords" type="P2Int16" field="P2Int16" nullable="false" binary="Normal" offset="12" length="4" />
   </Object>
-  <Object name="WorldspaceNavmeshParent" baseClass="ANavmeshParent" objType="Subrecord">
-    <Property name="Parent" type="IFormLink&lt;IWorldspaceGetter&gt;" field="FormLink" nullable="false" binary="Normal" offset="0" length="4" />
-    <Property name="Coordinates" type="P2Int16" field="P2Int16" nullable="false" binary="Normal" offset="4" length="4" />
+  <Object name="WorldspaceNavmeshParent" baseClass="ANavmeshParent" objType="Subrecord" enteredBy="NavmeshGeometry.Parent">
+    <Property name="Parent" type="IFormLink&lt;IWorldspaceGetter&gt;" field="FormLink" nullable="false" binary="Normal" filledBy="NavmeshGeometry.Parent" />
+    <Property name="Coordinates" type="P2Int16" field="P2Int16" nullable="false" binary="Normal" filledBy="NavmeshGeometry.Parent" />
   </Object>
   <Object name="WorldspaceParent" objType="Subrecord" recordTypes="WNAM">
     <Property name="Worldspace" type="IFormLink&lt;IWorldspaceGetter&gt;" field="FormLink" nullable="false" binary="Normal" subrecords="WNAM" />

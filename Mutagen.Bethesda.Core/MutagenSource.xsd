@@ -90,6 +90,21 @@
               </xs:documentation>
             </xs:annotation>
           </xs:attribute>
+          <xs:attribute name="enteredBy" type="xs:string" >
+            <xs:annotation>
+              <xs:documentation>
+                Description only, ignored by the generator's readers (C81). An object (and its subclasses) that hand-written
+                readers make and fill, rather than its generated reader from the object's start: "Owner.Name", comma
+                separated when there are several, where Name is a CustomLogic step or binary="Custom" field of the object
+                Owner (its FillBinary&lt;Name&gt;Custom makes the object) or a static method of Owner's class or binary create
+                translation (APackageTarget.CreateFromBinary, ScriptFragments.ReadFragments). The generated order's offsets
+                aren't the fields' places then (PTDA holds a target's kind at 0, its link at 4 and CountOrDistance at 8), so
+                the property manifest gives the object enteredBy, each field filledBy="(the readers)" and no offset; value
+                positions give the places a reader read. Required on every such object by the Starfield unit test
+                PropertyManifestTests (from the compiled readers).
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="customBinaryEndWrittenFrom" type="xs:string" >
             <xs:annotation>
               <xs:documentation>

@@ -199,7 +199,7 @@
       <Float name="W" />
     </Fields>
   </Object>
-  <Object name="AVolumesUnknownEnder" abstract="true" objType="Subrecord" >
+  <Object name="AVolumesUnknownEnder" enteredBy="VolumesComponentItem.TypeParse,VolumesComponentItem.Ender" abstract="true" objType="Subrecord" >
     <Fields>
     </Fields>
   </Object>
@@ -573,7 +573,7 @@
       <ByteArray name="Unknown" />
     </Fields>
   </Object>
-  <Object name="SurfaceTreePatternSwapInfoItem" objType="Subrecord" >
+  <Object name="SurfaceTreePatternSwapInfoItem" enteredBy="SurfaceTreePatternSwapInfoComponentData.DataLogic" objType="Subrecord" >
     <Fields>
       <FormLink name="SurfacePattern" refName="SurfacePattern" />
       <Int8 name="Unknown" />

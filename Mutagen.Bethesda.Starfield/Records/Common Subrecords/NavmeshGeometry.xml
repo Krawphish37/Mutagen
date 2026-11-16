@@ -21,7 +21,7 @@
       <Int32 name="Unknown3" />
     </Fields>
   </Object>
-  <Object name="ANavmeshParent" abstract="true" objType="Subrecord">
+  <Object name="ANavmeshParent" enteredBy="NavmeshGeometry.Parent" abstract="true" objType="Subrecord">
   </Object>
   <Object name="WorldspaceNavmeshParent" objType="Subrecord" baseClass="ANavmeshParent" selectorValue="notnull">
     <Fields>

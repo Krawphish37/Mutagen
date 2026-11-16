@@ -27,7 +27,7 @@
       <RefDirect name="ScriptFragments" refName="PerkScriptFragments" binary="Custom" fills="ScriptFragments" nullable="True" />
     </Fields>
   </Object>
-  <Object name="PerkScriptFragments" objType="Subrecord">
+  <Object name="PerkScriptFragments" enteredBy="PerkScriptFragments.ReadFragments" objType="Subrecord">
     <Fields>
       <UInt8 name="ExtraBindDataVersion" default="2" binary="NoGeneration" />
       <RefDirect name="Script" refName="ScriptEntry" binary="NoGeneration" />
@@ -52,7 +52,7 @@
       <UInt32 name="QuantumEssenceUpgradeCost" recordType="PRUC" />
     </Fields>
   </Object>
-  <Object name="APerkEffect" objType="Subrecord" abstract="true" endMarkerType="PRKF" >
+  <Object name="APerkEffect" enteredBy="PerkRank.Effects" objType="Subrecord" abstract="true" endMarkerType="PRKF" >
     <Fields>
       <Data recordType="PRKE">
         <Fields>

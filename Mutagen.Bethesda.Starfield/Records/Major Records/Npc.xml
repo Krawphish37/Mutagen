@@ -200,7 +200,7 @@
       </FormLink>
     </Fields>
   </Object>
-  <Object name="ANpcLevel" abstract="true" objType="Subrecord" />
+  <Object name="ANpcLevel" enteredBy="Npc.Level" abstract="true" objType="Subrecord" />
   <Object name="NpcLevel" baseClass="ANpcLevel" objType="Subrecord" selectorValue="0">
     <Fields>
       <Int16 name="Level" />

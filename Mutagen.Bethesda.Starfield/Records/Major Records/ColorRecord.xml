@@ -8,7 +8,7 @@
       <RefList name="Conditions" refName="Condition" />
     </Fields>
   </Object>
-  <Object name="AColorRecordData" objType="Subrecord" abstract="true" />
+  <Object name="AColorRecordData" enteredBy="ColorRecord.Data" objType="Subrecord" abstract="true" />
   <Object name="ColorData" objType="Subrecord" baseClass="AColorRecordData" selectorValue="0">
     <Fields>
       <Color name="Color" binaryType="Alpha" />
