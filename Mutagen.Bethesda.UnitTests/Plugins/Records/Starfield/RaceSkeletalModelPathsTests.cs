@@ -36,8 +36,8 @@ public class RaceSkeletalModelPathsTests
         foreach (var race in read)
         {
             race.SkeletalModel.ShouldNotBeNull();
-            race.SkeletalModel!.Male!.Model!.File.GivenPath.ShouldBe("m.nif");
-            race.SkeletalModel.Female!.Model!.File.GivenPath.ShouldBe("f.nif");
+            race.SkeletalModel!.Male!.Model!.File!.GivenPath.ShouldBe("m.nif");
+            race.SkeletalModel.Female!.Model!.File!.GivenPath.ShouldBe("f.nif");
         }
         read[0].SkeletalModel!.Equals(read[1].SkeletalModel).ShouldBeTrue();
     }
