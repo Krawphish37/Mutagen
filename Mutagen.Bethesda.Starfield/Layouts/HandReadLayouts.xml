@@ -81,7 +81,9 @@
     ZString [length="N"]                              text up to a zero byte (length: a fixed field, cut at the zero)
     LString                                           a translated string: uint32 strings ID in a localized plugin
                                                       (compared with TranslatedString.StringsKey), else a ZString
-    Const field="Prop" value="v|$var"                 no bytes: a field Mutagen derives from a value read earlier
+    Const field="Prop" value="v|$var"                 no bytes: a field Mutagen derives from a value read earlier, or
+                                                      leaves at the value a new object has (a script object list
+                                                      item's Name and Flags)
     WString                                           uint16 length, then the text
     Bytes [length="N|$var"]                           raw bytes (to the end of the subrecord without length)
     P3F32 / P3I16                                     three floats / three int16: a P3Float / P3Int16 (X, Y, Z)
@@ -656,7 +658,11 @@
         </Repeat>
       </Case>
       <Case value="11" type="ScriptObjectListProperty">
-        <U32 name="itemCount" /><Repeat count="$itemCount" field="Objects"><Use name="ScriptObject" /></Repeat>
+        <U32 name="itemCount" />
+        <Repeat count="$itemCount" field="Objects">
+          <Note>each item is a new ScriptObjectProperty: only its object is read, its name and flags stay as a new one has them</Note>
+          <Const field="Name" value="" /><Const field="Flags" value="Edited" /><Use name="ScriptObject" />
+        </Repeat>
       </Case>
       <Case value="12" type="ScriptStringListProperty">
         <U32 name="itemCount" /><Repeat count="$itemCount" field="Data"><WString field="." /></Repeat>
@@ -682,7 +688,10 @@
   <Define name="ScriptEntry">
     <WString field="Name" lengthName="nameLength" />
     <Switch on="nameLength">
-      <Case value="0" />
+      <Case value="0">
+        <Note>a script with no name is only its name: its flags and properties stay as a new one has them</Note>
+        <Const field="Flags" value="Local" /><Null field="Properties" />
+      </Case>
       <Default>
         <U8 field="Flags" />
         <U16 name="propertyCount" />
@@ -721,7 +730,10 @@
             <Repeat count="$aliasCount" field="Aliases">
               <Note>the object is read in the alias's own object format, which follows it (offset 10)</Note>
               <Peek offset="10" type="U16" name="objectFormat" />
-              <Object field="Property"><Use name="ScriptObject" /></Object>
+              <Object field="Property">
+                <Note>a new ScriptObjectProperty: only its object is read, its name and flags stay as a new one has them</Note>
+                <Const field="Name" value="" /><Const field="Flags" value="Edited" /><Use name="ScriptObject" />
+              </Object>
               <I16 field="Version" />
               <U16 field="ObjectFormat" name="objectFormat" />
               <U16 name="scriptCount" />
