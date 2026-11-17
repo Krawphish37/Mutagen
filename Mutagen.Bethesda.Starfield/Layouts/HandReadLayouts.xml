@@ -706,8 +706,8 @@
     <U8 field="ExtraBindDataVersion" />
     <U8 name="fragmentFlags" />
     <Object field="Script"><Use name="ScriptEntry" /></Object>
-    <Switch on="fragmentFlags" mask="0x1"><Case value="1"><Object field="OnBegin"><Use name="ScriptFragment" /></Object></Case><Default /></Switch>
-    <Switch on="fragmentFlags" mask="0x2"><Case value="2"><Object field="OnEnd"><Use name="ScriptFragment" /></Object></Case><Default /></Switch>
+    <Switch on="fragmentFlags" mask="0x1"><Case value="1"><Object field="OnBegin"><Use name="ScriptFragment" /></Object></Case><Default><Null field="OnBegin" /></Default></Switch>
+    <Switch on="fragmentFlags" mask="0x2"><Case value="2"><Object field="OnEnd"><Use name="ScriptFragment" /></Object></Case><Default><Null field="OnEnd" /></Default></Switch>
   </Define>
   <AnyRecord sig="VMAD">
     <Sub sig="VMAD" field="VirtualMachineAdapter">
@@ -761,7 +761,7 @@
           <IfMore>
             <Object field="ScriptFragments">
               <Use name="ScriptFragments" />
-              <Switch on="fragmentFlags" mask="0x4"><Case value="4"><Object field="OnChange"><Use name="ScriptFragment" /></Object></Case><Default /></Switch>
+              <Switch on="fragmentFlags" mask="0x4"><Case value="4"><Object field="OnChange"><Use name="ScriptFragment" /></Object></Case><Default><Null field="OnChange" /></Default></Switch>
             </Object>
           </IfMore>
         </Case>
