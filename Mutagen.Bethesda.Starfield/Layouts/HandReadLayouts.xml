@@ -258,7 +258,9 @@
          PNAM (its flags) per input: the k-th UNAM's entry takes the k-th block. The entries a template's names add
          later (below) come after these in the dictionary, so the blocks are its first entries (prefix).
        - FillBinaryProcedureTreeCustom: after XNAM, PackageBranch items each starting at ANAM, each read by its generated
-         reader; then AbsorbPackageData (also FillBinaryDataInputNamesCustom when the tree is empty): UNAM (the key of an
+         reader, but for PFO2 (PackageBranchBinaryCreateTranslation.FillBinaryFlagsOverrideCustom, Records/Major
+         Records/PackageBranch.cs): the branch's flags override, and when another PFO2 follows it at once, that one is
+         FlagsOverrideUnused; then AbsorbPackageData (also FillBinaryDataInputNamesCustom when the tree is empty): UNAM (the key of an
          entry), BNAM (its name), PNAM (its flags); the keys in that order are ProcedureTreeDataOrder.
        - an event (POBA, POEA or POCA, then INAM) holds topics (PackageEventBinaryCreateTranslation.FillBinaryTopicsCustom). -->
   <Record sig="PACK" object="Package">
@@ -318,7 +320,9 @@
     </Segments>
     <Generated sigs="XNAM" />
     <Segments start="ANAM" field="ProcedureTree" reader="generated" at="cursor">
-      <Generated sigs="NNAM,CITC,CTDA,CIS1,CIS2,PRCB,PNAM,FNAM,PKC2,PFO2" />
+      <Generated sigs="NNAM,CITC,CTDA,CIS1,CIS2,PRCB,PNAM,FNAM,PKC2" />
+      <Sub sig="PFO2" optional="true" field="FlagsOverride"><Use name="PackageFlagsOverride" /></Sub>
+      <Sub sig="PFO2" optional="true" at="cursor" field="FlagsOverrideUnused"><Use name="PackageFlagsOverride" /></Sub>
     </Segments>
     <Segments start="UNAM" field="Data" key="I8" keyList="ProcedureTreeDataOrder" reader="generated" at="cursor">
       <Sub sig="UNAM"><I8 name="key" /></Sub>
@@ -350,6 +354,16 @@
     </SubRepeat>
   </Define>
 
+  <!-- A package branch's flags override (PFO2, 12 bytes): the flags and interrupt flags to set and to clear, the
+       preferred speed and 3 bytes after it. PackageFlagsOverride's generated reader. -->
+  <Define name="PackageFlagsOverride">
+    <U32 field="SetFlags" />
+    <U32 field="ClearFlags" />
+    <U16 field="SetInterruptFlags" />
+    <U16 field="ClearInterruptFlags" />
+    <U8 field="PreferredSpeed" />
+    <Bytes length="3" field="PreferredSpeedUnknown" />
+  </Define>
   <!-- A package target (PTDA): an int32 picks the class (0 a specific reference, 1 an object ID, 2 an object type, 3 a
        linked reference, 4 an alias, 5 interrupt data, 6 self, 7 a keyword, any other an unknown target, which keeps the
        number), then its 4 bytes, then CountOrDistance. APackageTarget.CreateFromBinary (Records/Major Records/APackageTarget.cs). -->
